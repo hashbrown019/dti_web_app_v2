@@ -8,6 +8,8 @@ c._HOST = c.SERVER_HOST
 c._USER = c.SERVER_USER
 c._PASSWORD = c.SERVER_PASSWORD
 c._DATABASE = c.SERVER_DATABASE
+
+# ======================================================================
 print(" * Providing Imports Flask app")
 
 from flask import Flask, session, jsonify, request, redirect
@@ -22,7 +24,7 @@ from views import webrep
 from controllers import api
 from controllers import apiV2
 from controllers import migrations
-from controllers.GLOBALS_ import Globals_
+from controllers.public_vars import public_vars
 
 from templates.home.form_c import bp_app as bp_c
 from templates.home.form_c import excel_migration as e_m
@@ -55,12 +57,14 @@ app.register_blueprint(bp_c.app)
 app.register_blueprint(e_m.app)
 
 
-Globals_(app)
+public_vars(app)
 
 @app.route("/")
 def index():return redirect("/login")
 
 print(" * Running Flask app")
 
+
+# =============================================================
 if __name__ == '__main__':
 	app.run()

@@ -10,6 +10,7 @@ c._PASSWORD = c.LOCAL_PASSWORD
 c._DATABASE = c.LOCAL_DATABASE
 c.PORT = 80
 
+# ===========================================================================
 print(" * LOCAL Launch")
 
 from flask import Flask, session, jsonify, request, redirect
@@ -18,7 +19,7 @@ from flask_minify import Minify
 
 from views.login import login
 from views.home  import home
-from modules.GLOBALS_ import Globals_
+from modules.public_vars import public_vars
 
 app = Flask(__name__)
 # Minify(app=app, html=True, js=True, cssless=True)
@@ -47,5 +48,5 @@ def index():return redirect("/login")
 # 	pass
 
 # app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG,ssl_context='adhoc')
-Globals_(app)
+public_vars(app)
 app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG)
