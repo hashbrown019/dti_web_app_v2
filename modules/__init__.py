@@ -1,1 +1,1 @@
-print(" * Initializing Modules")
+print(" (*) Initializing Modules")

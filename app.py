@@ -8,7 +8,6 @@ c._HOST = c.SERVER_HOST
 c._USER = c.SERVER_USER
 c._PASSWORD = c.SERVER_PASSWORD
 c._DATABASE = c.SERVER_DATABASE
-
 print(" * Providing Imports Flask app")
 
 from flask import Flask, session, jsonify, request, redirect
