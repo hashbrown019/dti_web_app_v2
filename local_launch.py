@@ -20,6 +20,9 @@ from flask_minify import Minify
 from views.login import login
 from views.home  import home
 from modules.public_vars import public_vars
+from controllers.inbound import inbound
+
+
 
 app = Flask(__name__)
 # Minify(app=app, html=True, js=True, cssless=True)
@@ -31,6 +34,11 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 app.register_blueprint(login.app)
 app.register_blueprint(home.app)
+
+# ==================================
+inbound_ = inbound(app)
+inbound_._test_()
+# ====================================
 
 
 @app.route("/")
