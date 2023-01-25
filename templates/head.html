@@ -1,0 +1,95 @@
+<head>
+	<title>DTI Rapid MIS</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link class="x-links" rel="stylesheet" href="../static/css/x.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/other.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/other2.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/loader.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/scroll_bar.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/css">
+	<link class="x-links" rel="stylesheet" href="../static/css/chip.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/font-awesome.min.css">
+	<link class="x-links" rel="stylesheet" href="../../static/css/scroll_bar.css">
+	<link rel="icon" href="../static/img/icon.png">
+
+	<script type="text/javascript" src="../static/js/Variables.js"></script>
+	<script type="text/javascript" src="../static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../static/js/Brorn.min.js"></script>
+	<!-- <script type="module" src="../static/js/index.js"></script> -->
+	<script type="text/javascript" src="../static/js/index.js"></script>
+	<!-- <script type="module" src="../static/js/Bootloader.js"></script> -->
+	<!-- <script type="text/javascript" src="../static/js/Bootloader.js"></script> -->
+
+	<script src="../static/js/amcharts/index.js"></script>
+	<script src="../static/js/amcharts/xy.js"></script>
+	<script src="../static/js/amcharts/Animated.js"></script>
+	<script src="../static/js/amcharts/hierarchy.js"></script>
+	
+	<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/geodata/philippinesLow.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/geodata/data/countries2.js"></script>
+
+	<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+	integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+	crossorigin=""></script> -->
+	 
+	<script type="text/javascript" src="../static/js/leaflet/leaflet.js"></script>
+	<script type="text/javascript" src="../static/js/leaflet/leaflet-panel-layers.js"></script>
+	<link rel="stylesheet" href="../static/css/leaflet.css">
+	<link rel="stylesheet" href="../../static/css/leaflet-panel-layers.css">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'bootstrap-4.0.0-dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'bootstrap-4.0.0-dist/css/bootstrap-datepicker.min.css') }}">
+    <script src="{{ url_for('static', filename= 'jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'jquery1.11.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'bootstrap-4.0.0-dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'base.js') }}"></script>
+</head> 
+
+<div id="SPINNER_LOADER" class="x-modal x-display-container">
+	<span onclick="document.getElementById('SPINNER_LOADER').style.display='none'" class="x-padding x-text-yellow x-display-topright"><b>Minimize_</b></span>
+	<div class="x-display-middle x-center">
+		<h1 class="fa fa-spin fa-circle-o-notch x-text-white x-jumbo"></h1><br>
+		<b class="x-text-white"> Loading, Please wait</b>
+		<div id="SPINNER_LOADER_LOADING_BAR_CONTAINER" class="x-round x-light-grey" style="display:none;width: 50vw;">
+			<div id="SPINNER_LOADER_LOADING_BAR" class="x-round x-container x-green" style="width:0%">&nbsp;</div>
+		</div>
+		<div id="SPINNER_LOADER_MSG" class="x-text-white x-container x-padding">
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	let SPINNER_LOADER = {
+		show : function(){
+			var elem_container = $ID("SPINNER_LOADER_LOADING_BAR_CONTAINER");
+			var elem = $ID("SPINNER_LOADER_LOADING_BAR");
+			elem_container.style.display = "none"
+			elem.style.width = '0%'; 
+			var elem_container = $ID("SPINNER_LOADER_LOADING_BAR_CONTAINER");
+			$ID("SPINNER_LOADER").style.display = "block";
+			this.message('<span>This may take a while.<br>This will disappear after the loading is done</span>');
+			return elem;
+		},
+		hide : function(){$ID("SPINNER_LOADER").style.display = "none";},
+		destroy : function(){$ID("SPINNER_LOADER").style.display = "none";},
+		message : function(msg_){$ID("SPINNER_LOADER_MSG").innerHTML = msg_;return $ID("SPINNER_LOADER_MSG")},
+		loading : function(percent){
+			var elem = $ID("SPINNER_LOADER_LOADING_BAR");
+			var elem_container = $ID("SPINNER_LOADER_LOADING_BAR_CONTAINER");
+			elem_container.style.display = "block"
+			elem.style.width = percent + '%';
+			return elem;
+		},
+	};
+</script>
+<!-- https://cdn.amcharts.com/lib/5/geodata/philippinesLow.js -->
