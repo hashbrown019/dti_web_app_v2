@@ -17,15 +17,15 @@ IS_DEBUG = True
 SQLITE_DB_LOCAL = "assets/sqlite_db/dti_rapidxi.db"
 SQLITE_DB_SERVER = "/var/www/html/DTI-Web-App/assets/sqlite_db/dti_rapidxi.db"
 
-RECORDS_SERVER = "/var/www/html/DTI-Web-App/assets/records"
+RECORDS_SERVER = "/var/www/html/DTI-Web-App/assets"
 # SQLITE_DB_SERVER = "/home/crisnotbrown/DTI-Web-App/assets/sqlite_db/dti_rapidxi.db"
 SQLITE_DB = "none"
 
-RECORDS_LOCAL = "assets/records/"
+RECORDS_LOCAL = "assets/"
 SQLITE_DB_SERVER = "/var/www/html/DTI-Web-App/assets/sqlite_db/dti_rapidxi.db"
 
-RECORDS_SERVER = "/var/www/html/DTI-Web-App/assets/records"
-# RECORDS_SERVER = "/home/crisnotbrown/DTI-Web-App/assets/records"
+RECORDS_SERVER = "/var/www/html/DTI-Web-App/assets"
+# RECORDS_SERVER = "/home/crisnotbrown/DTI-Web-App/assets"
 RECORDS = "none"
 
 
@@ -39,14 +39,17 @@ LOCAL_PORT=3306
 LOCAL_HOST = "localhost"
 LOCAL_USER = "root"
 LOCAL_PASSWORD = ""
-LOCAL_DATABASE = "dti_rapidxi"
+LOCAL_DATABASE = "mis_2023"
 
+# LOCAL_DATABASE = "dti_rapidxi"
 
 SERVER_PORT=3306
 SERVER_HOST = "dtirapid.mysql.pythonanywhere-services.com"
 SERVER_USER = "dtirapid"
 SERVER_PASSWORD = "ruralagro"
 SERVER_DATABASE = "dtirapid$dti_rapidxi"
+
+DB_CRED = []
 
 _SERVER_PORT=3306
 _HOST = "not initialized"

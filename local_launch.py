@@ -8,6 +8,7 @@ c._HOST = c.LOCAL_HOST
 c._USER = c.LOCAL_USER
 c._PASSWORD = c.LOCAL_PASSWORD
 c._DATABASE = c.LOCAL_DATABASE
+c.DB_CRED = [c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE]
 c.PORT = 80
 
 # ===========================================================================
