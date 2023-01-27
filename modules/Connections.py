@@ -2,6 +2,8 @@ import mysql.connector as connects # TEMPORARY DISABLED
 import sqlite3
 import socket
 
+
+
 class sqlite:
 	def __init__(self, database):
 		super(sqlite, self).__init__()
@@ -45,6 +47,7 @@ class mysql:
 		self.user=user
 		self.password=password
 		self.database=database
+		self.err_page = 1 
 
 	def info(self):
 		return connects
@@ -60,15 +63,35 @@ class mysql:
 		return mydb
 
 	def do(self,sql):
-		conn = mysql.init_db(self)
-		cur = conn.cursor()
-		cur.execute(sql)
-		conn.commit()
-		return cur.lastrowid
+		if(self.err_page==1):
+			conn = mysql.init_db(self)
+			cur = conn.cursor()
+			cur.execute(sql)
+			conn.commit()
+			return cur.lastrowid
+		else:
+			try:
+				conn = mysql.init_db(self)
+				cur = conn.cursor()
+				cur.execute(sql)
+				conn.commit()
+				return cur.lastrowid
+			except Exception as e:
+				return {"response":"error","message":str(e), "sql":sql}
 
 	def select(self,sql):
-		conn = mysql.init_db(self)
-		cur = conn.cursor(dictionary=True)
-		cur.execute(sql)
-		rows = cur.fetchall()
-		return rows
+		if(self.err_page==1):
+			conn = mysql.init_db(self)
+			cur = conn.cursor(dictionary=True)
+			cur.execute(sql)
+			rows = cur.fetchall()
+			return rows
+		else:
+			try:
+				conn = mysql.init_db(self)
+				cur = conn.cursor(dictionary=True)
+				cur.execute(sql)
+				rows = cur.fetchall()
+				return rows
+			except Exception as e:
+				return {"response":"error","message":str(e), "sql":sql}
