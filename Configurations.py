@@ -41,6 +41,12 @@ LOCAL_USER = "root"
 LOCAL_PASSWORD = ""
 LOCAL_DATABASE = "mis_2023"
 
+# LOCAL_PORT=3306
+# LOCAL_HOST = "database-1.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com"
+# LOCAL_USER = "admin"
+# LOCAL_PASSWORD = "password!"
+# LOCAL_DATABASE = "mis_2023"
+
 # LOCAL_DATABASE = "dti_rapidxi"
 
 SERVER_PORT=3306
