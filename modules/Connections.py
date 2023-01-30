@@ -95,3 +95,24 @@ class mysql:
 				return rows
 			except Exception as e:
 				return {"response":"error","message":str(e), "sql":sql}
+
+	# ==========FUNCTION ON MULTIPLE SIMULTANEUS TRANSACTION==========================================
+	# function(sql, mysql.init_db(self) )
+	# returns a connection that has to be committed before closing transaction
+	# conn.commit()
+	def db_ready(self): # READY for MULTIPLE SIMULTANEUS TRANSACTION
+		conn = mysql.init_db(self)
+		cur = conn.cursor()
+		return [conn,cur]
+
+
+	def do_(self,sql,db_ready_func):
+		if(self.err_page==1):
+			db_ready_func[1].execute(sql)
+			return db_ready_func[0] # RETURNS a conn (connection) to close
+		else:
+			try:
+				db_ready_func[1].execute(sql)
+				return db_ready_func[0] # RETURNS a conn (connection) to close
+			except Exception as e:
+				return {"response":"error","message":str(e), "sql":sql}

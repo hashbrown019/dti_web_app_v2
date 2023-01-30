@@ -22,7 +22,7 @@ from views.login import login
 from views.home  import home
 from modules.public_vars import public_vars
 from controllers.inbound import inbound
-
+from apis import api
 
 
 app = Flask(__name__)
@@ -35,6 +35,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 app.register_blueprint(login.app)
 app.register_blueprint(home.app)
+app.register_blueprint(api.app)
 
 # ==================================
 inbound_ = inbound(app)

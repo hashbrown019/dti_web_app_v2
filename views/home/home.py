@@ -4,11 +4,8 @@ from modules.Connections import mysql,sqlite
 import Configurations as c
 import os
 import json
-from controllers.block_to_sql import form_migration
 
 app = Blueprint("home",__name__,template_folder='pages')
-
-form_mig = form_migration(__name__)
 
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 rapid= sqlite("assets\\db\\dti_rapidxi.db")
@@ -55,10 +52,3 @@ class _main:
 		page = request.form['subform_temp']
 		return render_template("home/form_a/{}.html".format(page));
 		# sample commit
-
-
-	# =======================================================================================
-	@app.route("/api/block_sql/all",methods=["POST","GET"]) # GE
-	def mobile_migrate_to_sql():
-		return form_mig.get_all()
-
