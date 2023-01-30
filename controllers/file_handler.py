@@ -85,16 +85,26 @@ class form_a1_handler:
 				if(path.find("@profile")>=0):
 					loads_.desc = "inserted [{}] * {}".format(_counter,path)
 					# res.append(path)
+					# try:
 					try:
 						data_ = self.profile_info_farmer(path)
 						self.push_mysql(data_,path)
 						res.append(path)
 						_counter = _counter + 1
-						pass
-					except Exception as e:
-						print("ERROR : |"+str(e))
-			if(_counter == 4):
-				break
+					except ValueError:
+						print("json error")
+						# return ({"response":"error","message":ValueError})
+					except Exception as ex:
+						template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+						message = template.format(type(ex).__name__, ex.args)
+						print(message)
+						return ({"response":"error","message":message})
+
+					# 	pass
+					# except Exception as e:
+					# 	print("ERROR : |"+str(e))
+			# if(_counter == 4):
+			# 	break
 		# res = migrations.excel_popu()
 		# res = res + migrations.excel_popu()
 		random.shuffle(res)
@@ -136,7 +146,7 @@ class form_a1_handler:
 			datum_ = datum.replace("-","_")
 			fields = fields + ",`"+ datum_ +"`"
 			datum_val = data_[datum]
-			vals = vals + ",'"+ str(datum_val) +"'"
+			vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
 			
 		fields = fields[1:]
 		vals = vals[1:]
@@ -148,7 +158,7 @@ class form_a1_handler:
 		shutil.move(
 			c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
 			# c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+FILENAME,
-			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/"+FILENAME
+			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/a1/"+FILENAME
 		)
 		pass
 # =====================================================================================================
@@ -177,11 +187,16 @@ class form_a2_handler:
 						self.push_mysql(data_,path)
 						res.append(path)
 						_counter = _counter + 1
-						pass
-					except Exception as e:
-						print("ERROR : |"+str(e))
-			if(_counter == 4):
-				break
+					except ValueError:
+						print("json error")
+						# return ({"response":"error","message":ValueError})
+					except Exception as ex:
+						template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+						message = template.format(type(ex).__name__, ex.args)
+						print(message)
+						return ({"response":"error","message":message})
+			# if(_counter == 4):
+			# 	break
 		random.shuffle(res)
 		return res
 
@@ -216,7 +231,7 @@ class form_a2_handler:
 			datum_ = datum.replace("-","_")
 			fields = fields + ",`"+ datum_ +"`"
 			datum_val = data_[datum]
-			vals = vals + ",'"+ str(datum_val) +"'"
+			vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
 			
 		fields = fields[1:]
 		vals = vals[1:]
@@ -228,6 +243,311 @@ class form_a2_handler:
 		shutil.move(
 			# c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+FILENAME,
 			c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
-			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/"+FILENAME
+			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/a2/"+FILENAME
 		)
+		pass
+# =====================================================================================================
+# =====================================================================================================
+# ================HOUSE HOLd PROFILE=====================================================================================
+# =====================================================================================================
+class form_a3_handler:
+	def __init__(self,args):
+		super(form_a3_handler, self).__init__()
+		self.args = args
+
+	def get_all_file_farmer_hh_profile(self):
+		res = []
+		dir_path = c.RECORDS+"/objects/profiling_forms/queued/pf_a/";
+		# dir_path = c.RECORDS+"/objects/profiling_forms/queued/_temp_/";
+		_title = "----";
+		loads_ = tqdm(os.listdir(dir_path),  desc =_title,ascii ="►>○•|█");
+		_counter = 0
+		for path in loads_:
+			if os.path.isfile(os.path.join(dir_path, path)):
+				if(path.find("@hh_profile")>=0):
+					loads_.desc = "inserted [{}] * {}".format(_counter,path)
+					# res.append(path)
+					try:
+						data_ = self.profile_info_farmer(path)
+						self.push_mysql(data_,path)
+						res.append(path)
+						_counter = _counter + 1
+					except ValueError:
+						print("json error")
+						# return ({"response":"error","message":ValueError})
+					except Exception as ex:
+						template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+						message = template.format(type(ex).__name__, ex.args)
+						print(message)
+						return ({"response":"error","message":message})
+			# if(_counter == 4):
+			# 	break
+		random.shuffle(res)
+		return res
+
+	def profile_info_farmer(self,path):
+		f = open(c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+ path, "r")
+		# f = open(c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+ path, "r")
+		strsd = f.read()
+		f.close()
+		prof_1 = "ERROR"
+		prof_1 = json.loads(json.loads(strsd));
+		prof_1['SOURCE'] = "MOBILE";
+		return prof_1
+
+	def push_mysql(sef,data_,FILENAME):
+		fields = ""
+		vals = ""
+		
+		for datum in data_:
+			datum_ = datum.replace("-","_")
+			fields = fields + ",`"+ datum_ +"`"
+			datum_val = data_[datum]
+			vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
+			
+		fields = fields[1:]
+		vals = vals[1:]
+
+		sql = ("INSERT INTO `form_a_hh_profile` ({}) VALUES ({})".format(fields,vals))
+		rapid_mysql.do(sql)
+
+
+		shutil.move(
+			# c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+FILENAME,
+			c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
+			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/a3/"+FILENAME
+		)
+		pass
+# =====================================================================================================
+# =====================================================================================================
+# ================PRODUCTION COST=====================================================================================
+# =====================================================================================================
+class form_a4_handler:
+	def __init__(self,args):
+		super(form_a4_handler, self).__init__()
+		self.args = args
+
+	def get_all_file_farmer_prod_cost(self):
+		res = []
+		dir_path = c.RECORDS+"/objects/profiling_forms/queued/pf_a/";
+		# dir_path = c.RECORDS+"/objects/profiling_forms/queued/_temp_/";
+		_title = "----";
+		loads_ = tqdm(os.listdir(dir_path),  desc =_title,ascii ="►>○•|█");
+		_counter = 0
+		for path in loads_:
+			if os.path.isfile(os.path.join(dir_path, path)):
+				if(path.find("@prod_cost")>=0):
+					loads_.desc = "inserted [{}] * {}".format(_counter,path)
+					# res.append(path)
+					try:
+						data_ = self.profile_info_farmer(path)
+						self.push_mysql(data_,path)
+						res.append(path)
+						_counter = _counter + 1
+					except ValueError:
+						print("json error")
+						# return ({"response":"error","message":ValueError})
+					except Exception as ex:
+						template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+						message = template.format(type(ex).__name__, ex.args)
+						print(message)
+						return ({"response":"error","message":message})
+			# if(_counter == 4):
+			# 	break
+		random.shuffle(res)
+		return res
+
+	def profile_info_farmer(self,path):
+		f = open(c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+ path, "r")
+		# f = open(c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+ path, "r")
+		strsd = f.read()
+		f.close()
+		prof_1 = "ERROR"
+		prof_1 = json.loads(json.loads(strsd));
+		prof_1['SOURCE'] = "MOBILE";
+		return prof_1
+
+	def push_mysql(sef,data_,FILENAME):
+		fields = ""
+		vals = ""
+		
+		for datum in data_:
+			datum_ = datum.replace("-","_")
+			fields = fields + ",`"+ datum_ +"`"
+			datum_val = data_[datum]
+			vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
+			
+		fields = fields[1:]
+		vals = vals[1:]
+
+		sql = ("INSERT INTO `form_a_prod_cost` ({}) VALUES ({})".format(fields,vals))
+		rapid_mysql.do(sql)
+
+
+		shutil.move(
+			# c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+FILENAME,
+			c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
+			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/a4/"+FILENAME
+		)
+		pass
+# =====================================================================================================
+# =====================================================================================================
+# ================WORKERS AND LABORERS=====================================================================================
+# =====================================================================================================
+class form_a5_handler:
+	def __init__(self,args):
+		super(form_a5_handler, self).__init__()
+		self.args = args
+
+	def get_all_file_farmer_workers_laborers(self):
+		res = []
+		dir_path = c.RECORDS+"/objects/profiling_forms/queued/pf_a/";
+		# dir_path = c.RECORDS+"/objects/profiling_forms/queued/_temp_/";
+		_title = "----";
+		loads_ = tqdm(os.listdir(dir_path),  desc =_title,ascii ="►>○•|█");
+		_counter = 0
+		for path in loads_:
+			if os.path.isfile(os.path.join(dir_path, path)):
+				if(path.find("@workers_laborers")>=0):
+					loads_.desc = "inserted [{}] * {}".format(_counter,path)
+					# res.append(path)
+					try:
+						data_ = self.profile_info_farmer(path)
+						self.push_mysql(data_,path)
+						res.append(path)
+						_counter = _counter + 1
+					except ValueError:
+						print("json error")
+						# return ({"response":"error","message":ValueError})
+					except Exception as ex:
+						template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+						message = template.format(type(ex).__name__, ex.args)
+						print(message)
+						return ({"response":"error","message":message})
+			# if(_counter == 4):
+			# 	break
+		random.shuffle(res)
+		return res
+
+	def profile_info_farmer(self,path):
+		f = open(c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+ path, "r")
+		# f = open(c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+ path, "r")
+		strsd = f.read()
+		f.close()
+		prof_1 = "ERROR"
+		prof_1 = json.loads(json.loads(strsd));
+		prof_1['SOURCE'] = "MOBILE";
+		return prof_1
+
+	def push_mysql(sef,data_,FILENAME):
+		fields = ""
+		vals = ""
+		
+		for datum in data_:
+			datum_ = datum.replace("-","_")
+			fields = fields + ",`"+ datum_ +"`"
+			datum_val = data_[datum]
+			vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
+			
+		fields = fields[1:]
+		vals = vals[1:]
+
+		sql = ("INSERT INTO `form_a_farm_workers_laborers` ({}) VALUES ({})".format(fields,vals))
+		rapid_mysql.do(sql)
+
+
+		shutil.move(
+			# c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+FILENAME,
+			c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
+			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/a5/"+FILENAME
+		)
+		pass
+
+
+# =====================================================================================================
+# =====================================================================================================
+# ================WORKERS AND LABORERS=====================================================================================
+# =====================================================================================================
+class form_a6_handler:
+	def __init__(self,args):
+		super(form_a6_handler, self).__init__()
+		self.args = args
+
+	def get_all_file_farmer_post_harvest(self):
+		res = []
+		dir_path = c.RECORDS+"/objects/profiling_forms/queued/pf_a/";
+		# dir_path = c.RECORDS+"/objects/profiling_forms/queued/_temp_/";
+		_title = "----";
+		loads_ = tqdm(os.listdir(dir_path),  desc =_title,ascii ="►>○•|█");
+		_counter = 0
+		for path in loads_:
+			if os.path.isfile(os.path.join(dir_path, path)):
+				if(path.find("@post_harvest")>=0):
+					loads_.desc = "inserted [{}] * {}".format(_counter,path)
+					# res.append(path)
+					try:
+						data_ = self.profile_info_farmer(path)
+						self.push_mysql(data_,path)
+						res.append(path)
+						_counter = _counter + 1
+						# break
+					except ValueError:
+						print("json error")
+						# return ({"response":"error","message":ValueError})
+					except Exception as ex:
+						template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+						message = template.format(type(ex).__name__, ex.args)
+						print(message)
+						return ({"response":"error","message":message})
+			# if(_counter == 100):
+			# 	break
+		random.shuffle(res)
+		return res
+
+	def profile_info_farmer(self,path):
+		f = open(c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+ path, "r")
+		# f = open(c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+ path, "r")
+		strsd = f.read()
+		f.close()
+		prof_1 = "ERROR"
+		prof_1 = json.loads(json.loads(strsd));
+		prof_1['SOURCE'] = "MOBILE";
+		return prof_1
+
+	def push_mysql(sef,data_,FILENAME):
+		post_harvest_fields = {"record_num":[],"record_duplicate_id":[],"farmer_code":[],"is_synced":[],"datetime":[],"post_harv-type_faci_equip":[],"post_harv-type_faci_equip_name":[],"farmer-coords_long":[],"farmer-coords_lat":[],"addr_region":[],"addr_prov":[],"addr_city":[],"addr_brgy":[],"addr_street_purok_sitio":[],"post_harv-ph_product_form":[],"post_harv-phcropothers":[],"post_harv-capacity":[],"post_harv-capacity_unit":[],"post_harv-capacity_unit_time":[],"post_harv-photo":[],"form-remarks":[],"USER_ID":[]}
+		fields = ""
+		vals = ""
+		# if(data_["farmer_code"] == "BMCnJlXQCzZqxyfZAWqXxq0AlmSnIRmg14VP7r6E6JMGn6tSiuL61XzPG42mmgG0j9aazYYz1Yrb"):
+		if("addr_prov1" in data_):
+			print("===================================")
+
+			print("FARMER_CODE_ID ::: {}".format(data_["farmer_code"]))
+			for datum in data_:
+				for ph_field in post_harvest_fields:
+					if(ph_field in datum):
+						post_harvest_fields[ph_field].append(data_[datum])
+
+
+			print("===================================")
+			print(post_harvest_fields)
+			# val = None + 1
+		# for datum in data_:
+		# 	datum_ = datum.replace("-","_")
+		# 	fields = fields + ",`"+ datum_ +"`"
+		# 	datum_val = data_[datum]
+		# 	vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
+			
+		# fields = fields[1:]
+		# vals = vals[1:]
+
+		# sql = ("INSERT INTO `form_a_farm_post_harvest` ({}) VALUES ({})".format(fields,vals))
+		# rapid_mysql.do(sql)
+
+
+		# shutil.move(
+		# 	# c.RECORDS+"/objects/profiling_forms/queued/_temp_/"+FILENAME,
+		# 	c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
+		# 	c.RECORDS+"/objects/profiling_forms/migrated/pf_a/a6/"+FILENAME
+		# )
 		pass
