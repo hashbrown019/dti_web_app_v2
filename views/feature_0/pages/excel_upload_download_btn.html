@@ -1,0 +1,103 @@
+<div class="x-container x-padding">
+	<b class="x-large x-text-green">Spreadsheet Management</b>
+</div>
+<div class="x-button x-text-orange x-hover-orange" onclick="export_farmer_excel()">
+	<b>Export Data</b> | <span class="fa fa-download"></span>
+</div>
+<div class="x-button x-text-blue x-hover-blue" onclick="import_farmer_excel()">
+	<b>Import Spreadsheet</b> | <span class="fa fa-upload"></span>
+</div>
+
+
+
+<script type="text/javascript">
+function import_farmer_excel(argument) {
+	excel_upload_dialog = $dialog({
+		title : "import",
+		subtitle : "Spreadsheet Uploader for Farmer's Profiles",
+		content :(`
+			<div class="x-container">
+				<div class="x-row">
+					<input id="excel_file" type="file" class="x-col l8 x-input x-file x-border"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple>
+					<button class="x-input x-btn x-green x-col l4" onclick="upload_excel()">
+						Upload
+					</button>
+				</div>
+				<div class="x-padding x-container" style="overflow-y:scroll;height: 60vh;">
+					<hr>
+					<b class="x-text-teal">Uploaded Spreadsheets</b><br>
+					<div id="ls_uploaded_excel" class="x-container" >
+						<div class="x-padding x-center">
+							<span class="fa fa-circle-o-notch fa-spin x-xlarge"></span><br>
+							<b class="x-text-grey">Now loading. Please wait . . .</b> 
+						</div>
+					</div>
+				</div>
+				<hr>
+			</div>
+		`)
+	})
+	excel_upload_dialog.show()
+	get_uploaded_excel()
+}
+function upload_excel(){
+	excel_upload_dialog.hide()
+	SPINNER_LOADER.show()
+	var uploader_id  = ("{{USER_DATA['id']}}")
+	$send({
+		action : "/excel_upload",
+		data : $DATA({"uploader" : uploader_id}).appendFile($ID("excel_file")),
+		method : POST,
+		func : function(res){
+			get_uploaded_excel()
+		}
+	})
+}
+function get_uploaded_excel(){
+	var uploader_id  = ("{{USER_DATA['id']}}")
+	$send({
+		action : "/feature_0/get_uploaded_excel",
+		method : POST,
+		func : function(res){
+			excel_upload_dialog.show()
+			var ls_excel = JSON.parse(res)
+			var ls_excel_card = ""
+
+			for (var i = 0; i < ls_excel.length; i++) {
+				var colr  = "green"
+				var note  = "Synced"
+				var del_ = ""
+				del_ = (`
+					<b class="x-text-red" onclick="confirm_delete_excel('`+ls_excel[i]["key"]+`')">
+						Delete 
+						<span class="fa fa-trash"></span> 
+					</b>
+					&nbsp; | &nbsp;
+					<b class="x-text-blue" onclick="download_excel('`+ls_excel[i]["key"]+`')">
+						Download 
+						<span class="fa fa-download"></span> 
+					</b>
+				`)
+				ls_excel_card += (`
+					<div class="x-row x-padding x-border-dashed x-border-light-grey">
+						<div class="x-container x-col l2">
+							<b class="x-pale-`+colr+` x-text-`+colr+` x-leftbar x-border-`+colr+`">[`+note+`]</b>
+						</div>
+						<div class="x-container x-col l5">
+							<span class="x-small">`+ls_excel[i]["key"]+`</span>
+						</div>
+						<div class="x-container x-col l2">
+							<span>`+ls_excel[i]["total"]+`</span>
+						</div>
+						<div class="x-container x-col l3">
+							`+del_+`
+						</div>
+					</div>
+				`)
+			}
+			$ID("ls_uploaded_excel").innerHTML = ls_excel_card
+			SPINNER_LOADER.hide()
+		}
+	})
+}
+</script>

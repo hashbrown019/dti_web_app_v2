@@ -20,6 +20,8 @@ from flask_minify import Minify
 
 from views.login import login
 from views.home  import home
+from views.feature_0  import feature_0 
+
 from modules.public_vars import public_vars
 from controllers.inbound import inbound
 from apis import api
@@ -36,6 +38,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.register_blueprint(login.app)
 app.register_blueprint(home.app)
 app.register_blueprint(api.app)
+app.register_blueprint(feature_0.app)
 
 # ==================================
 inbound_ = inbound(app)

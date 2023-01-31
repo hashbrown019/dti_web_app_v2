@@ -79,17 +79,17 @@ class mysql:
 			except Exception as e:
 				return {"response":"error","message":str(e), "sql":sql}
 
-	def select(self,sql):
+	def select(self,sql,dict_=True):
 		if(self.err_page==1):
 			conn = mysql.init_db(self)
-			cur = conn.cursor(dictionary=True)
+			cur = conn.cursor(dictionary=dict_)
 			cur.execute(sql)
 			rows = cur.fetchall()
 			return rows
 		else:
 			try:
 				conn = mysql.init_db(self)
-				cur = conn.cursor(dictionary=True)
+				cur = conn.cursor(dictionary=dict_)
 				cur.execute(sql)
 				rows = cur.fetchall()
 				return rows
@@ -100,19 +100,26 @@ class mysql:
 	# function(sql, mysql.init_db(self) )
 	# returns a connection that has to be committed before closing transaction
 	# conn.commit()
+
+	def db_ready_commit(self,conn):return conn.commit()
 	def db_ready(self): # READY for MULTIPLE SIMULTANEUS TRANSACTION
 		conn = mysql.init_db(self)
 		cur = conn.cursor()
-		return [conn,cur]
-
-
+		db_ = {"conn":conn,"cur":cur,"commit":conn.commit}
+		return Struct_obj(db_)
+		
 	def do_(self,sql,db_ready_func):
 		if(self.err_page==1):
-			db_ready_func[1].execute(sql)
-			return db_ready_func[0] # RETURNS a conn (connection) to close
+			db_ready_func.cur.execute(sql)
+			return db_ready_func.conn # RETURNS a conn (connection) to close
 		else:
 			try:
-				db_ready_func[1].execute(sql)
-				return db_ready_func[0] # RETURNS a conn (connection) to close
+				db_ready_func.cur.execute(sql)
+				return db_ready_func.conn # RETURNS a conn (connection) to close
 			except Exception as e:
 				return {"response":"error","message":str(e), "sql":sql}
+
+# ===============================================================================
+class Struct_obj:
+    def __init__(self, entries):
+        self.__dict__.update(**entries)

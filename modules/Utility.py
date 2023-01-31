@@ -38,7 +38,3 @@ class obj_handling:
 			mimetype ="text/plain",
 			download_name=dl_name
 		)
-
-class Struct_obj:
-    def __init__(self, **entries):
-        self.__dict__.update(entries)

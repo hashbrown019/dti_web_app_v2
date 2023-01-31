@@ -27,7 +27,13 @@ class data_handlers:
 
 	@app.route("/api/excel_sql/all",methods=["POST","GET"]) # GE
 	def excel_sql():
+		# content = form_mig_excel.get_all_uploaded_excel_data_f_a("all","all","all")
 		content = form_mig_excel.get_all_uploaded_excel_data_f_a()
-		return "Done"
+		return jsonify(content)
 		# return objh.txt_file_dl("skkrt.sql",content)
 		# return objh.obj_file_dl("skkrt.objdmp",content)
+
+# def get_all_uploaded_excel_data_heads():
+# 	excel_f_a_heads = c.RECORDS+"/settings/db_sql_excel_form_a.head"
+# 	reader = open(excel_f_a_heads,"r");excel_f_a_heads = json.loads(reader.read());reader.close()
+# 	return excel_f_a_heads

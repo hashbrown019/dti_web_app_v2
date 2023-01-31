@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://www.xschools.com/xcss/tryxcss_templates_analytics.htm -->
+<html>
+	{% include 'head.html' %}
+	<body class="x-light-grey">
+
+		<!-- Top container -->
+		<div class="x-bar x-top x-white x-large" style="z-index:4">
+			<button class="x-bar-item x-button x-hide-large x-hover-none x-hover-text-light-grey" onclick="x_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
+			<div class="x-bar-item x-right x-small">
+				<button class="x-btn x-border x-round" onclick="logout()"> <span class="x-text-red fa fa-power-off"></span> Logout</button>
+			</div>
+		</div>
+
+		<!-- Sidebar/menu -->
+		<nav class="x-sidebar x-collapse x-white x-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+			<div class="x-container x-row">
+				<div class="x-col s4">
+					<img src="../static/img/avatar2.png" class="x-circle x-margin-right" style="width:46px">
+				</div>
+				<div class="x-col s8 x-bar">
+					<span class=""><strong>{{USER_DATA['name']}}</strong></span><br>
+					<span class="x-small">{{USER_DATA['job']}}@{{USER_DATA['username']}}</span><br>
+					<a href="#" class="x-bar-item x-button"><i class="fa fa-envelope"></i></a>
+					<a href="#" class="x-bar-item x-button"><i class="fa fa-user"></i></a>
+					<a href="#" class="x-bar-item x-button"><i class="fa fa-cog"></i></a>
+				</div>
+			</div>
+			<hr>
+			<div class="x-container">
+				<h5><b>Options</b></h5>
+			</div>
+			<div class="x-bar-block">
+				<a href="#" class="x-bar-item x-button x-padding-16 x-hide-large x-dark-grey x-hover-black" onclick="x_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
+				<a href="#" class="x-bar-item x-button x-padding x-blue"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
+				<a href="#" class="x-bar-item x-button x-padding"><i class="fa fa-eye fa-fw"></i>&nbsp; lists</a>
+				<a href="#" class="x-bar-item x-button x-padding"><i class="fa fa-users fa-fw"></i>&nbsp; Forms</a>
+				<a href="#" class="x-bar-item x-button x-padding"><i class="fa fa-history fa-fw"></i>&nbsp; History</a>
+				<a href="#" class="x-bar-item x-button x-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a><hr>
+				{% include 'excel_upload_download_btn.html' %}
+			</div>
+		</nav>
+
+
+		<!-- Overlay effect when opening sidebar on small screens -->
+		<div class="x-overlay x-hide-large x-animate-opacity" onclick="x_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+		<!-- !PAGE CONTENT! -->
+		<div class="x-main" style="margin-left:300px;margin-top:43px;">
+
+			<!-- Header -->
+			<header class="x-container" style="padding-top:22px">
+				<span class="x-text-blue x-xxlarge"><b><i class="fa fa-dashboard"></i> Profiling Form A</b></span><br>
+				<span class="x-large">
+					&nbsp;Showing figures for
+					<b class="x-xlarge">{{dash_data_['area_reg']}}</b>
+				</span>
+			</header>
+			<!-- ================================================== -->
+			<div class="x-container x-row">
+				<div class="x-container x-col l2 x-padding">
+					<div class="x-container x-center x-padding x-round-large x-teal">
+						<b id="total_num_farmer" class="_money_tag x-xxlarge">{{dash_data_['all_farmer_count']}}</span></b><br>
+						<span class="x-small _money_tag">
+							Number of Profiles <br>
+							<b>New Excel Template</b> and 
+							<b>Mobile MIS</b>
+						</span>
+					</div>
+					<!-- TEMPORARY HIDDEN FOR DEV -->
+				</div>
+				<div class="x-container x-col l2 x-padding">
+					<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-orange">
+						<b id="total_num_farmer_with_dip" class="x-xxlarge _money_tag">{{dash_data_['with_dip']}}</b><br>
+						<span class="x-small">
+							Number of Profiles <br>
+							<b>With DIP's</b>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-col l2 x-padding">
+					<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-blue">
+						<b id="total_num_farmer_with_fo" class="x-xxlarge _money_tag">{{dash_data_['with_fo']}}</b><br>
+						<span class="x-small">
+							Number of Profiles <br>
+							<b>With FO's</b>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-col l2 x-padding">
+					<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-green">
+						<b id="total_num_farmer_head" class="x-xxlarge _money_tag">{{dash_data_['is_hh_head_num']}}</b><br>
+						<span class="x-small">
+							Number of Profiles <br>
+							<b>Head of the Houshold</b>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-col l2 x-padding">
+					<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-green">
+						<b id="total_num_farmer_geotagged" class="x-xxlarge _money_tag">{{dash_data_['all_farmer_count']}}</b><br>
+						<span class="x-small">
+							<b class="x-small">Geotagged</b><br>
+							<b class="x-tiny x-text-grey">That has Map Coordinates</b>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-col l2 x-padding">
+					<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-green">
+						<div class="x-round-large x-small" style="display:block"> 
+							<span class="x-text-grey">Male :<b class="x-text-black _money_tag" id="count_all_male">{{dash_data_['all_sex_male']}}</b></span><br>
+							<span class="x-text-grey">Female :<b class="x-text-black _money_tag" id="count_all_female">{{dash_data_['all_sex_female']}}</b></span><br>
+							<span class="x-text-grey">Untagged :<b class="x-text-black _money_tag" id="count_all_sex_untagged">{{dash_data_['all_sex_untag']}}</b></span><br>
+						</div>
+						<span class="x-small">
+							<b class="x-small">Farmer Sex</b><br>
+							<b class="x-tiny x-text-grey">Untagged are unfilled fields</b>
+						</span>
+					</div>
+				</div>
+			</div>
+			<!-- =========================================== -->
+			<div class="x-panel">
+				<div class="x-row-padding" style="margin:0 -16px">
+					<div class="x-col l5">
+						<h5>Regions</h5>
+						<div>
+							{% include 'maps/dash_map1.html' %}
+							<!-- <img src="../static/img/region.jpg" style="width:100%" alt="Google Regional Map"> -->
+						</div>
+					</div>
+					<div class="x-col l2">
+						<h5>Feeds</h5>
+						<table class="x-table x-striped x-white">
+							<tbody>
+								<tr class="x-teal">
+									<th>Commodities</th>
+									<th>Count</th>
+								</tr>
+								{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
+								<tr>
+									<td><b>{{comdty_name[0]}}</b></td>
+									<td class="_money_tag x-right">{{comdty_name[1]}}</td>
+								</tr>
+								{% endfor %}
+
+								<tr class="x-center x-grey">
+									<td>See Other Results</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="x-container">
+				<h5>General Stats</h5>
+				<p>New Visitors</p>
+				<div class="x-grey">
+					<div class="x-container x-center x-padding x-green" style="width:25%">+25%</div>
+				</div>
+
+				<p>New Users</p>
+				<div class="x-grey">
+					<div class="x-container x-center x-padding x-orange" style="width:50%">50%</div>
+				</div>
+
+				<p>Bounce Rate</p>
+				<div class="x-grey">
+					<div class="x-container x-center x-padding x-red" style="width:75%">75%</div>
+				</div>
+			</div>
+			<hr>
+
+			<div class="x-container">
+				<h5>Countries</h5>
+				<table class="x-table x-striped x-bordered x-border x-hoverable x-white">
+					<tbody><tr>
+						<td>United States</td>
+						<td>65%</td>
+					</tr>
+					<tr>
+						<td>UK</td>
+						<td>15.7%</td>
+					</tr>
+					<tr>
+						<td>Russia</td>
+						<td>5.6%</td>
+					</tr>
+					<tr>
+						<td>Spain</td>
+						<td>2.1%</td>
+					</tr>
+					<tr>
+						<td>India</td>
+						<td>1.9%</td>
+					</tr>
+					<tr>
+						<td>France</td>
+						<td>1.5%</td>
+					</tr>
+				</tbody></table><br>
+				<button class="x-button x-dark-grey">More Countries &nbsp;<i class="fa fa-arrow-right"></i></button>
+			</div>
+			<hr>
+			<div class="x-container">
+				<h5>Recent Users</h5>
+				<ul class="x-ul x-card-4 x-white">
+					<li class="x-padding-16">
+						<img src="../static/img/avatar2.png" class="x-left x-circle x-margin-right" style="width:35px">
+						<span class="x-xlarge">Mike</span><br>
+					</li>
+					<li class="x-padding-16">
+						<img src="../static/img/avatar5.png" class="x-left x-circle x-margin-right" style="width:35px">
+						<span class="x-xlarge">Jill</span><br>
+					</li>
+					<li class="x-padding-16">
+						<img src="../static/img/avatar6.png" class="x-left x-circle x-margin-right" style="width:35px">
+						<span class="x-xlarge">Jane</span><br>
+					</li>
+				</ul>
+			</div>
+			<hr>
+
+			<div class="x-container">
+				<h5>Recent Comments</h5>
+				<div class="x-row">
+					<div class="x-col m2 text-center">
+						<img class="x-circle" src="../static/img/avatar3.png" style="width:96px;height:96px">
+					</div>
+					<div class="x-col m10 x-container">
+						<h4>John <span class="x-opacity x-medium">Sep 29, 2014, 9:12 PM</span></h4>
+						<p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
+					</div>
+				</div>
+
+				<div class="x-row">
+					<div class="x-col m2 text-center">
+						<img class="x-circle" src="../static/img/avatar1.png" style="width:96px;height:96px">
+					</div>
+					<div class="x-col m10 x-container">
+						<h4>Bo <span class="x-opacity x-medium">Sep 28, 2014, 10:15 PM</span></h4>
+						<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="x-container x-dark-grey x-padding-32">
+				<div class="x-row">
+					<div class="x-container x-third">
+						<h5 class="x-bottombar x-border-green">Demographic</h5>
+						<p>Language</p>
+						<p>Country</p>
+						<p>City</p>
+					</div>
+					<div class="x-container x-third">
+						<h5 class="x-bottombar x-border-red">System</h5>
+						<p>Browser</p>
+						<p>OS</p>
+						<p>More</p>
+					</div>
+					<div class="x-container x-third">
+						<h5 class="x-bottombar x-border-orange">Target</h5>
+						<p>Users</p>
+						<p>Active</p>
+						<p>Geo</p>
+						<p>Interests</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer -->
+			<footer class="x-container x-padding-16 x-light-grey">
+				<h4>FOOTER</h4>
+				<p>Powered by <a href="" target="_blank">x.css</a></p>
+			</footer>
+
+			<!-- End page content -->
+		</div>
+
+		<script>
+		// Get the Sidebar
+		var mySidebar = document.getElementById("mySidebar");
+		var overlayBg = document.getElementById("myOverlay");
+		function x_open() {
+			if (mySidebar.style.display === 'block') {mySidebar.style.display = 'none';overlayBg.style.display = "none";} 
+			else {mySidebar.style.display = 'block';overlayBg.style.display = "block";}
+		}
+
+		// Close the sidebar with the close button
+		function x_close() {mySidebar.style.display = "none";overlayBg.style.display = "none";}
+		function logout() {
+			redirectto("/logout");
+		}
+
+
+		// ====================================================
+		_MONEY_TAGS_ = document.getElementsByClassName('_money_tag')
+		for (var i = 0; i < _MONEY_TAGS_.length; i++) {
+			var tags___ = Money(parseInt(_MONEY_TAGS_[i].innerText))
+			if(tags___ == NaN || tags___ == 'NaN'){
+				console.warn(" * Trying to put a '_money_tag' className in an Element that has no Integer or Interegable string  ")
+			}else{
+				_MONEY_TAGS_[i].innerText = Money(parseInt(_MONEY_TAGS_[i].innerText))
+			}
+		}
+		</script>
+	</body>
+</html>

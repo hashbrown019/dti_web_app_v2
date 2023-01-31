@@ -4,7 +4,7 @@ import Configurations as c
 from modules.Connections import mysql,sqlite
 from controllers.value_cleaner import file_handler
 
-rapid_sqlite = sqlite(c.SQLITE_DB)
+# rapid_sqlite = sqlite(c.SQLITE_DB)
 rapid_mysql = mysql(*c.DB_CRED)
 
 
