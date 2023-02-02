@@ -44,9 +44,11 @@ inbound_ = inbound(app)
 inbound_._test_()
 # ====================================
 
-print(" * Running Flask app")
-
+print(" * Checking Database")
 rapid_mysql = mysql(*c.DB_CRED)
+rapid_mysql.select("SELECT * from `users`")
+print(" * Checking Database DONE")
+
 # =============================================================
 if __name__ == '__main__':
 	app.run()
