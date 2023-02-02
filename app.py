@@ -49,6 +49,8 @@ inbound_ = inbound(app)
 inbound_._test_()
 # ====================================
 
+@app.route("/")
+def index():return redirect("/login")
 
 # =============================================================
 if __name__ == '__main__':
