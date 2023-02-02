@@ -1,0 +1,282 @@
+
+<!-- !PAGE CONTENT! -->
+<div class="x-main" style="margin-left:200px;margin-top:43px;">
+
+	<!-- Header -->
+	<header class="x-container" style="padding-top:22px">
+		<span class="x-text-blue x-xlarge"><b><i class="fa fa-dashboard"></i> Profiling Form A || Dashboard</b></span><br>
+		<span class="x-large">
+			&nbsp;Showing figures for
+			<b class="x-xlarge">{{dash_data_['area_reg']}}</b>
+		</span>
+	</header>
+	<!-- ================================================== -->
+	<div class="x-container x-row">
+		<div class="x-container x-col l2 x-padding">
+			<div class="x-container x-center x-padding x-round-large x-teal">
+				<b id="total_num_farmer" class="_money_tag x-xxlarge">{{dash_data_['all_farmer_count']}}</span></b><br>
+				<span class="x-small _money_tag">
+					Number of Profiles <br>
+					<b>New Excel Template</b> and 
+					<b>Mobile MIS</b>
+				</span>
+			</div>
+			<!-- TEMPORARY HIDDEN FOR DEV -->
+		</div>
+		<div class="x-container x-col l2 x-padding">
+			<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-orange">
+				<b id="total_num_farmer_with_dip" class="x-xxlarge _money_tag">{{dash_data_['with_dip']}}</b><br>
+				<span class="x-small">
+					Number of Profiles <br>
+					<b>With DIP's</b>
+				</span>
+			</div>
+		</div>
+		<div class="x-container x-col l2 x-padding">
+			<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-blue">
+				<b id="total_num_farmer_with_fo" class="x-xxlarge _money_tag">{{dash_data_['with_fo']}}</b><br>
+				<span class="x-small">
+					Number of Profiles <br>
+					<b>With FO's</b>
+				</span>
+			</div>
+		</div>
+		<div class="x-container x-col l2 x-padding">
+			<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-green">
+				<b id="total_num_farmer_head" class="x-xxlarge _money_tag">{{dash_data_['is_hh_head_num']}}</b><br>
+				<span class="x-small">
+					Number of Profiles <br>
+					<b>Head of the Houshold</b>
+				</span>
+			</div>
+		</div>
+		<div class="x-container x-col l2 x-padding">
+			<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-green">
+				<b id="total_num_farmer_geotagged" class="x-xxlarge _money_tag">{{dash_data_['all_farmer_count']}}</b><br>
+				<span class="x-small">
+					<b class="x-small">Geotagged</b><br>
+					<b class="x-tiny x-text-grey">That has Map Coordinates</b>
+				</span>
+			</div>
+		</div>
+		<div class="x-container x-col l2 x-padding">
+			<div class="x-container x-center x-padding x-round-large x-border-dashed x-border-green">
+				<div class="x-round-large x-small" style="display:block"> 
+					<span class="x-text-grey">Male :<b class="x-text-black _money_tag" id="count_all_male">{{dash_data_['all_sex_male']}}</b></span><br>
+					<span class="x-text-grey">Female :<b class="x-text-black _money_tag" id="count_all_female">{{dash_data_['all_sex_female']}}</b></span><br>
+					<!-- <span class="x-text-grey">Untagged :<b class="x-text-black _money_tag" id="count_all_sex_untagged">{{dash_data_['all_sex_untag']}}</b></span><br> -->
+				</div>
+				<span class="x-small">
+					<b class="x-small">Farmer Sex</b><br>
+					<b class="x-tiny x-text-grey">Untagged are unfilled fields</b>
+				</span>
+			</div>
+		</div>
+	</div>
+	<!-- =========================================== -->
+	<div class="x-panel">
+		<div class="x-row-padding" style="margin:0 -16px">
+			<div class="x-col l5">
+				<h5><b>Areas Covered</b></h5>
+				<div>
+					{% include 'maps/dash_map1.html' %}
+					<!-- <img src="../static/img/region.jpg" style="width:100%" alt="Google Regional Map"> -->
+				</div>
+			</div>
+			<div class="x-col l2">
+				<h5><b>Value Chain commodity</b></h5>
+				<div class="" style="overflow-y:scroll;height: 520px;">
+					<table class="x-table x-striped x-white">
+						<tbody>
+							<tr class="x-teal">
+								<th>Commodities</th>
+								<th>Count</th>
+							</tr>
+							{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
+							<tr>
+								<td><b>{{comdty_name[0]}}</b></td>
+								<td class="_money_tag x-right">{{comdty_name[1]}}</td>
+							</tr>
+							{% endfor %}
+
+							<tr class="x-center x-grey">
+								<td>See Other Results</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="x-col l2">
+				<h5><b>Enumerators for Mobile</b></h5>
+				<div class="" style="overflow-y:scroll;height: 520px;">
+					<table class="x-table x-striped x-white">
+						<thead>
+							<tr class="x-blue">
+								<th>Name</th>
+								<th># of inputs</th>
+							</tr>
+						</thead>
+						<tbody class="x-container">
+							{% for enum_name in dash_data_['enumerator']['mobile']%}
+							<tr>
+								<td><b>{{enum_name['key']}}</b></td>
+								<td class="_money_tag x-right">
+									{{enum_name['total']}}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="x-col l2">
+				<h5><b>Enumerators for Excel</b></h5>
+				<div class="" style="overflow-y:scroll;height: 520px;">
+					<table class="x-table x-striped x-white">
+						<thead>
+							<tr class="x-blue">
+								<th>Name</th>
+								<th># of inputs</th>
+							</tr>
+						</thead>
+						<tbody class="x-container">
+							{% for enum_name in dash_data_['enumerator']['excel']%}
+							<tr>
+								<td><b>{{enum_name['key']}}</b></td>
+								<td class="_money_tag x-right">
+									{{enum_name['total']}}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="x-container">
+		<h5>General Stats</h5>
+		<p>New Visitors</p>
+		<div class="x-grey">
+			<div class="x-container x-center x-padding x-green" style="width:25%">+25%</div>
+		</div>
+
+		<p>New Users</p>
+		<div class="x-grey">
+			<div class="x-container x-center x-padding x-orange" style="width:50%">50%</div>
+		</div>
+
+		<p>Bounce Rate</p>
+		<div class="x-grey">
+			<div class="x-container x-center x-padding x-red" style="width:75%">75%</div>
+		</div>
+	</div>
+	<hr>
+
+	<div class="x-container">
+		<h5>Countries</h5>
+		<table class="x-table x-striped x-bordered x-border x-hoverable x-white">
+			<tbody><tr>
+				<td>United States</td>
+				<td>65%</td>
+			</tr>
+			<tr>
+				<td>UK</td>
+				<td>15.7%</td>
+			</tr>
+			<tr>
+				<td>Russia</td>
+				<td>5.6%</td>
+			</tr>
+			<tr>
+				<td>Spain</td>
+				<td>2.1%</td>
+			</tr>
+			<tr>
+				<td>India</td>
+				<td>1.9%</td>
+			</tr>
+			<tr>
+				<td>France</td>
+				<td>1.5%</td>
+			</tr>
+		</tbody></table><br>
+		<button class="x-button x-dark-grey">More Countries &nbsp;<i class="fa fa-arrow-right"></i></button>
+	</div>
+	<hr>
+	<div class="x-container">
+		<h5>Recent Users</h5>
+		<ul class="x-ul x-card-4 x-white">
+			<li class="x-padding-16">
+				<img src="../static/img/avatar2.png" class="x-left x-circle x-margin-right" style="width:35px">
+				<span class="x-xlarge">Mike</span><br>
+			</li>
+			<li class="x-padding-16">
+				<img src="../static/img/avatar5.png" class="x-left x-circle x-margin-right" style="width:35px">
+				<span class="x-xlarge">Jill</span><br>
+			</li>
+			<li class="x-padding-16">
+				<img src="../static/img/avatar6.png" class="x-left x-circle x-margin-right" style="width:35px">
+				<span class="x-xlarge">Jane</span><br>
+			</li>
+		</ul>
+	</div>
+	<hr>
+
+	<div class="x-container">
+		<h5>Recent Comments</h5>
+		<div class="x-row">
+			<div class="x-col m2 text-center">
+				<img class="x-circle" src="../static/img/avatar3.png" style="width:96px;height:96px">
+			</div>
+			<div class="x-col m10 x-container">
+				<h4>John <span class="x-opacity x-medium">Sep 29, 2014, 9:12 PM</span></h4>
+				<p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
+			</div>
+		</div>
+
+		<div class="x-row">
+			<div class="x-col m2 text-center">
+				<img class="x-circle" src="../static/img/avatar1.png" style="width:96px;height:96px">
+			</div>
+			<div class="x-col m10 x-container">
+				<h4>Bo <span class="x-opacity x-medium">Sep 28, 2014, 10:15 PM</span></h4>
+				<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="x-container x-dark-grey x-padding-32">
+		<div class="x-row">
+			<div class="x-container x-third">
+				<h5 class="x-bottombar x-border-green">Demographic</h5>
+				<p>Language</p>
+				<p>Country</p>
+				<p>City</p>
+			</div>
+			<div class="x-container x-third">
+				<h5 class="x-bottombar x-border-red">System</h5>
+				<p>Browser</p>
+				<p>OS</p>
+				<p>More</p>
+			</div>
+			<div class="x-container x-third">
+				<h5 class="x-bottombar x-border-orange">Target</h5>
+				<p>Users</p>
+				<p>Active</p>
+				<p>Geo</p>
+				<p>Interests</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="x-container x-padding-16 x-light-grey">
+		<h4>FOOTER</h4>
+		<p>Powered by <a href="" target="_blank">x.css</a></p>
+	</footer>
+
+	<!-- End page content -->
+</div>

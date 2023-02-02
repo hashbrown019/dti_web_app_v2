@@ -167,3 +167,28 @@ div,span{
 .x-dropdown_multiple.visible .dd_items {
 	display: block;
 }
+
+/*==========================*/
+[title_]:hover:after {
+	opacity: 1;
+	transition: all 0.1s ease 0.1s;
+	visibility: visible;
+}
+[title_]:after {
+	content: attr(title_);
+	background-color: white;
+	color: #111;
+	font-size: 100%;
+	position: absolute;
+	padding: 1px 5px 2px 5px;
+	border-radius: 5px 5px 5px 5px;
+	bottom: -1.6em;
+	left: 100%;
+	white-space: nowrap;
+	opacity: 0;
+	z-index: 99999;
+	visibility: hidden;
+}
+[title_] {
+	position: relative;
+}

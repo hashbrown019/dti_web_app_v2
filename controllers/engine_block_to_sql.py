@@ -211,7 +211,7 @@ class form_a5_handler:
 
 # =====================================================================================================
 # =====================================================================================================
-# ================WORKERS AND LABORERS=====================================================================================
+# ================form_a_farm_post_harvest=====================================================================================
 # =====================================================================================================
 class form_a6_handler:
 	def __init__(self,args):
@@ -260,6 +260,8 @@ class form_a6_handler:
 			datum_ = datum.replace("-","_")
 			fields = fields + ",`"+ datum_ +"`"
 			datum_val = post_harvest_fields[datum]
+			if(datum=="farmer_code"): datum_val = str(datum_val).replace("[","").replace("]","")  # REMOVE BRACKERS FROM STRING IN ID
+			if(datum=="USER_ID"): datum_val = str(datum_val).replace("[","").replace("]","")  # REMOVE BRACKERS FROM STRING IN ID
 			vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
 			
 		fields = fields[1:]; vals = vals[1:]
@@ -305,6 +307,8 @@ class form_a7_handler:
 			datum_ = datum.replace("-","_")
 			fields = fields + ",`"+ datum_ +"`"
 			datum_val = marketing_sales_fields[datum]
+			if(datum=="farmer_code"): datum_val = str(datum_val).replace("[","").replace("]","")  # REMOVE BRACKERS FROM STRING IN ID
+			if(datum=="USER_ID"): datum_val = str(datum_val).replace("[","").replace("]","")
 			vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
 			
 		fields = fields[1:]; vals = vals[1:]
@@ -381,6 +385,8 @@ class form_a9_handler:
 			datum_ = datum.replace("-","_").replace("[]","_array")
 			fields = fields + ",`"+ datum_ +"`"
 			datum_val = feedback_fields[datum]
+			if(datum=="farmer_code"): datum_val = str(datum_val).replace("[","").replace("]","")  # REMOVE BRACKERS FROM STRING IN ID
+			if(datum=="USER_ID"): datum_val = str(datum_val).replace("[","").replace("]","")
 			vals = vals + ",'"+ str(datum_val).replace("'"," ").replace('''"'''," ") +"'"
 			
 		fields = fields[1:]; vals = vals[1:]

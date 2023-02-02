@@ -1,0 +1,220 @@
+<div class="x-main" style="margin-left:300px;margin-top:43px;">
+	<header class="x-container" style="padding-top:22px">
+		<span class="x-text-blue x-xlarge"><b><i class="fa fa-dashboard"></i> Profiling Form A || Lists</b></span><br>
+		<span class="x-large">
+			&nbsp;Showing figures for
+			<b class="x-xlarge">{{dash_data_['area_reg']}}</b>
+		</span>
+	</header>
+	<div class="x-container">
+		<div class="x-row">
+			<h2>Advance Filter</h2>
+			<div class="x-col l2 x-container x-round">
+				<div class="x-container x-card x-padding">
+					<b>Commodity</b>
+					<select class="x-input x-select" onchange="put_COMMODITY(this.value)">
+						<option value="all" disabled selected>Select Option</option>
+						{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
+							<option value="{{comdty_name[0]}}">{{comdty_name[0]}}</option>
+						{% endfor %}
+					</select>
+					<br>
+					<div id="COMMODITY_selected">
+					</div>
+				</div>
+			</div>
+			<div class="x-col l2 x-container x-round">
+				<div class="x-container x-card x-padding">
+					<b>Farmers Org</b>
+					<select class="x-input x-select" onchange="put_FO(this.value)">
+						<option value="all" disabled selected>Select Option</option>
+						<optgroup label="Mobile Inputs">
+
+							{% for comdty_name in dash_data_['ls_arr']['fo']['mobile']%}
+								<option value="{{comdty_name}}">{{comdty_name}}</option>
+							{% endfor %}
+						</optgroup>
+						<optgroup label="Excel Inputs">
+							{% for comdty_name in dash_data_['ls_arr']['fo']['excel']%}
+								<option value="{{comdty_name}}">{{comdty_name}}</option>
+							{% endfor %}
+						</optgroup>
+					</select>
+					<br>
+					<div id="FO_selected">
+					</div>
+				</div>
+			</div>
+			<div class="x-col l2 x-container x-round">
+				<div class="x-container x-card x-padding">
+					<b>DIP's</b>
+					<select class="x-input x-select" onchange="put_DIP(this.value)">
+						<option value="all" disabled selected>Select Option</option>
+						<optgroup label="Mobile Inputs">
+
+							{% for comdty_name in dash_data_['ls_arr']['dip']['mobile']%}
+								<option value="{{comdty_name}}">{{comdty_name}}</option>
+							{% endfor %}
+						</optgroup>
+						<optgroup label="Excel Inputs">
+							{% for comdty_name in dash_data_['ls_arr']['dip']['excel']%}
+								<option value="{{comdty_name}}">{{comdty_name}}</option>
+							{% endfor %}
+						</optgroup>
+					</select>
+					<br>
+					<div id="DIP_selected">
+					</div>
+				</div>
+			</div>
+			<div class="x-col l2 x-container x-round">
+				<div class="x-container x-card x-padding">
+					<b>Sex</b>
+					<select class="x-input x-select" onchange="put_SEX(this.value)">
+						<option value="all" disabled selected>Select Option</option>
+						<optgroup label="Mobile Inputs">
+
+							{% for sex in dash_data_['sex']['mobile']%}
+								<option value="{{sex}}">{{sex}}</option>
+							{% endfor %}
+						</optgroup>
+						<optgroup label="Excel Inputs">
+							{% for sex in dash_data_['sex']['excel']%}
+								<option value="{{sex}}">{{sex}}</option>
+							{% endfor %}
+						</optgroup>
+					</select>
+					<br>
+					<div id="SEX_selected">
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="x-row">
+			<button class="x-btn x-round x-green" onclick="filter_all()">
+				Filter <span class="fa fa-filter"></span>
+			</button>
+		</div>
+	</div>
+	<div class="x-container">
+		<table class="x-table x-striped x-bordered">
+			<tr class="x-green">
+				<th>Name</th>
+				<th>Address</th>
+				<th>Primary Crop</th>
+				<th>DIP</th>
+				<th>Farmers Org</th>
+			</tr>
+		</table>
+		<div style="overflow:auto;height: 70vh;">
+			<table class="x-table x-striped x-bordered">
+				<tbody id="list_farmers"  style="">
+					<tr>
+						<td>Name</td>
+						<td>Address</td>
+						<td>Primary Crop</td>
+						<td>DIP</td>
+						<td>Farmers Org</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script>
+	var badge = (`
+		<span class="x-small x-animate-opacity" style="margin-left: 2px;margin-top:1px;border:0px" onclick="this.remove()">
+			<span class="x-text-blue x-round">
+				<u class="vals x-hover-text-red" title_="Click to remove [||VALUE||]">||VALUE||</u>
+			</span>
+		</span>
+		`)
+	function put_COMMODITY(val){
+		var COMMODITY_badge_cont = $ID("COMMODITY_selected")
+		COMMODITY_badge_cont.innerHTML+= badge.replaceAll("||VALUE||",val)
+	}
+	function put_FO(val){
+		var FO_badge_cont = $ID("FO_selected")
+		FO_badge_cont.innerHTML+= badge.replaceAll("||VALUE||",val)
+	}
+	function put_DIP(val){
+		var DIP_badge_cont = $ID("DIP_selected")
+		DIP_badge_cont.innerHTML+= badge.replaceAll("||VALUE||",val)
+	}
+	function put_SEX(val){
+		var SEX_badge_cont = $ID("SEX_selected")
+		SEX_badge_cont.innerHTML+= badge.replaceAll("||VALUE||",val)
+	}
+	// ============================================================
+	function filter_all(){
+		var COMMODITY_data = [], FO_data = [], DIP_data = [], SEX_data = []
+
+		var COMMODITY_badge_cont = $ID("COMMODITY_selected").getElementsByClassName('vals')
+		for (var i = 0; i < COMMODITY_badge_cont.length; i++) {
+			COMMODITY_data.push(COMMODITY_badge_cont[i].innerText)
+		}
+
+		var FO_badge_cont = $ID("FO_selected").getElementsByClassName('vals')
+		for (var i = 0; i < FO_badge_cont.length; i++) {
+			FO_data.push(FO_badge_cont[i].innerText)
+		}
+
+		var DIP_badge_cont = $ID("DIP_selected").getElementsByClassName('vals')
+		for (var i = 0; i < DIP_badge_cont.length; i++) {
+			DIP_data.push(DIP_badge_cont[i].innerText)
+		}
+
+		var SEX_badge_cont = $ID("SEX_selected").getElementsByClassName('vals')
+		for (var i = 0; i < SEX_badge_cont.length; i++) {
+			SEX_data.push(SEX_badge_cont[i].innerText)
+		}
+
+		var data = {
+			"COMMODITY_data": COMMODITY_data,
+			"FO_data": FO_data,
+			"DIP_data": DIP_data,
+			"SEX_data": SEX_data,
+		}
+
+		println(data)
+
+
+		REQ_ERR_DIALOG = true
+		$send({
+			action : "/feature_0/filter_list_farmers",
+			data : JSON.stringify(data),
+			method : POST,
+			func : function (rest){
+				res = JSON.parse(rest)
+				list_farmer_data = ""
+				for (var count = 0; count < res.length; count++) {
+					res[count]
+					list_farmer_data += (`
+						<tr>
+							<td>`+res[count]['f_name']+" "+res[count]['m_name']+" "+res[count]['l_name']+`</td>
+							<td>`+res[count]['addr_city']+ " "+res[count]['addr_prov']+" "+res[count]['addr_region']+`</t>
+							<td>`+res[count]['farmer_primary_crop']+`</td>
+							<td>`+res[count]['farmer_dip_ref']+`</td>
+							<td>`+res[count]['farmer_dip_ref']+`</td>
+						</tr>
+					`)
+					// if(count >=20){break}
+				}
+				$ID('list_farmers').innerHTML = list_farmer_data
+
+
+			},
+			err : function(res){
+				println(res)
+			},
+			headers : {
+				"Content-Type": "application/json",
+			}
+		})
+
+	}
+</script>
+
+
+
