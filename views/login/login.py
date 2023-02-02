@@ -9,7 +9,8 @@ app = Blueprint("login",__name__,template_folder='pages')
 
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 # rapid= sqlite("assets\\db\\dti_rapidxi.db")
-rapid= sqlite(c.SQLITE_DB)
+# rapid= sqlite(c.SQLITE_DB)
+rapid_mysql = mysql(*c.DB_CRED)
 
 class _main:
 	def __init__(self, arg):
