@@ -45,7 +45,7 @@ inbound_._test_()
 
 print(" * Running Flask app")
 
-
+rapid_mysql = mysql(*c.DB_CRED)
 # =============================================================
 if __name__ == '__main__':
 	app.run()
