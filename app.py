@@ -8,7 +8,7 @@ c._HOST = c.SERVER_HOST
 c._USER = c.SERVER_USER
 c._PASSWORD = c.SERVER_PASSWORD
 c._DATABASE = c.SERVER_DATABASE
-c.DB_CRED = [c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE] # DEV
+c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE] # DEV
 # ======================================================================
 print(" * Providing Imports Flask app")
 
