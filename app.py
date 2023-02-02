@@ -25,10 +25,10 @@ from controllers.inbound import inbound
 from apis import api
 from modules.Connections import mysql,sqlite
 
-print(" * Checking Database")
-rapid_mysql = mysql(*c.DB_CRED)
-print(rapid_mysql.select("SELECT * from `users`"))
-print(" * Checking Database DONE")
+# print(" * Checking Database")
+# rapid_mysql = mysql(*c.DB_CRED)
+# print(rapid_mysql.select("SELECT * from `users`"))
+# print(" * Checking Database DONE")
 
 
 app = Flask(__name__)
