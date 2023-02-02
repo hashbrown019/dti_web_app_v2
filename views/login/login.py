@@ -38,7 +38,7 @@ class _main:
 	def login_auth():
 		username = request.form['user_name']
 		password = request.form['password']
-		log_res = rapid.select("SELECT * from `users` WHERE `username` = '{}' AND `password`='{}';".format(username,password))
+		log_res = rapid_mysql.select("SELECT * from `users` WHERE `username` = '{}' AND `password`='{}';".format(username,password))
 		if(len(log_res)!=0):
 			log_res[0]['password'] = "********";
 			session["USER_DATA"] = log_res
