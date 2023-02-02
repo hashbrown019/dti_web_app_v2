@@ -461,11 +461,11 @@ class file_to_sql:
 	def insert_sql_move_file(mv_file_to,table,fields,vals,FILENAME):
 		sql = ("INSERT INTO `{}` ({}) VALUES ({})".format(table,fields,vals))
 		rapid_mysql.do(sql)
-		shutil.copy(
-			c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
-			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/{}/{}".format(mv_file_to,FILENAME)
-		)
-		# shutil.move(
+		# shutil.copy(
 		# 	c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
 		# 	c.RECORDS+"/objects/profiling_forms/migrated/pf_a/{}/{}".format(mv_file_to,FILENAME)
 		# )
+		shutil.move(
+			c.RECORDS+"/objects/profiling_forms/queued/pf_a/"+FILENAME,
+			c.RECORDS+"/objects/profiling_forms/migrated/pf_a/{}/{}".format(mv_file_to,FILENAME)
+		)
