@@ -441,19 +441,19 @@ class form_migration:
 					__a[9] = __a[9] + 1
 				__a[0] == _counter
 				loads_.desc = ('''inserted [{}] A1 [{}]  A2 [{}] A3 [{}] A4 [{}] A5 [{}] A6 [{}] A7 [{}] A8 [{}] A9 [{}] ''').format(*__a)
-				# try:
-				data_ = _CLASS_.profile_info_farmer(path)
-				_CLASS_.push_mysql(data_,path)
-				res.append(path)
-				_counter = _counter + 1
-				# except ValueError:
-				# 	print("json error || [{}]".format(path))
-				# 	# return ({"response":"error","message":ValueError})
-				# except Exception as ex:
-				# 	template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-				# 	message = template.format(type(ex).__name__, ex.args)
-				# 	print(message)
-				# 	return ({"response":"error","message":message,"file":path})
+				try:
+					data_ = _CLASS_.profile_info_farmer(path)
+					_CLASS_.push_mysql(data_,path)
+					res.append(path)
+					_counter = _counter + 1
+				except ValueError:
+					print("json error || [{}]".format(path))
+					# return ({"response":"error","message":ValueError})
+				except Exception as ex:
+					template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+					message = template.format(type(ex).__name__, ex.args)
+					print(message)
+					return ({"response":"error","message":message,"file":path})
 		random.shuffle(res)
 		return res
 
