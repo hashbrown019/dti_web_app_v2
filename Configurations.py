@@ -15,17 +15,17 @@ _PORT = 5000
 IS_DEBUG = True
 
 SQLITE_DB_LOCAL = "assets/sqlite_db/dti_rapidxi.db"
-SQLITE_DB_SERVER = "/var/www/html/DTI-Web-App/assets/sqlite_db/dti_rapidxi.db"
+SQLITE_DB_SERVER = "/var/www/html/dti_web_app_v2/assets/sqlite_db/dti_rapidxi.db"
 SQLITE_DB = "none"
 
-RECORDS_SERVER = "/var/www/html/DTI-Web-App/assets"
+RECORDS_SERVER = "/var/www/html/dti_web_app_v2/assets/"
 RECORDS_LOCAL = "assets/"
 RECORDS = "none"
 
 
 M_APPVER_LOCAL = ""
-M_APPVER_SERVER = "/home/dtirapid/DTI-Web-App/"
-# M_APPVER_SERVER = "/home/crisnotbrown/DTI-Web-App/"
+M_APPVER_SERVER = "/home/dtirapid/dti_web_app_v2/"
+# M_APPVER_SERVER = "/home/crisnotbrown/dti_web_app_v2/"
 M_APPVER = "none"
 # --- DATABASE---- #
 
@@ -89,4 +89,4 @@ __STORE = {}
 # }
 
 
-# sudo rsync -a --info=progress2 --ignore-existing "dtirapid@ssh.pythonanywhere.com:DTI-Web-App/assets/*" "/var/www/html/DTI-Web-App/assets/"
+# sudo rsync -a --info=progress2 --ignore-existing "dtirapid@ssh.pythonanywhere.com:dti_web_app_v2/assets/*" "/var/www/html/dti_web_app_v2/assets/"
