@@ -24,9 +24,10 @@ from modules.public_vars import public_vars
 from controllers.inbound import inbound
 from apis import api
 from modules.Connections import mysql,sqlite
+
 print(" * Checking Database")
 rapid_mysql = mysql(*c.DB_CRED)
-rapid_mysql.select("SELECT * from `users`")
+print(rapid_mysql.select("SELECT * from `users`"))
 print(" * Checking Database DONE")
 
 
