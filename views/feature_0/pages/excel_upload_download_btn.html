@@ -46,11 +46,38 @@ function upload_excel(){
 		action : "/excel_upload",
 		data : $DATA({"uploader" : uploader_id}).appendFile($ID("excel_file")),
 		method : POST,
-		func : function(res){
-			get_uploaded_excel()
+		func : function(r){
+			var res = JSON.parse(r)
+			if(res['status']=="failed"){
+				diadata = {
+					type :"error",
+					title : "Excel Upload Failed",
+					content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+					buttons : ['Finished Transaction'],
+					buttons_actions : [done_transac_excel]
+				}
+			}
+			if(res['status']=="success"){
+				diadata = {
+					title : "Excel Upload Success",
+					type :"success",
+					content : "Your upload had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+					buttons : ['Finished Transaction'],
+					buttons_actions : [done_transac_excel]
+				}
+			}
+			// get_uploaded_excel()
+			var dialog = $dialog(diadata)
+			dialog.show()
+			SPINNER_LOADER.hide()
 		}
 	})
 }
+function done_transac_excel(){
+	location.reload()
+}
+
+
 function get_uploaded_excel(){
 	var uploader_id  = ("{{USER_DATA['id']}}")
 	$send({
@@ -69,6 +96,11 @@ function get_uploaded_excel(){
 					<b class="x-text-red" onclick="confirm_delete_excel('`+ls_excel[i]["key"]+`')">
 						Delete 
 						<span class="fa fa-trash"></span> 
+					</b>
+					&nbsp; | &nbsp;
+					<b class="x-text-blue" onclick="download_excel('`+ls_excel[i].file_name+`')">
+						Download 
+						<span class="fa fa-download"></span> 
 					</b>
 				`)
 				ls_excel_card += (`
@@ -113,27 +145,25 @@ function confirm_delete_excel(fff){
 
 
 function download_excel(fff){
-	// let a= document.createElement('a');
-	// a.target= '_blank';
-	// a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");
-	// a.click();
+	let a= document.createElement('a');
+	a.target= '_blank';
+	a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");
+	a.click();
 }
 
 function delete_excel(fff){
-	// SPINNER_LOADER.show()
-	// download_excel(fff)
-	// $send({
-	// 	action : "/delete_excel",
-	// 	method : POST,
-	// 	data : $DATA({"file":fff.replace("#","@@").replace("#","@@")}),
-	// 	func : function(res){
-	// 		get_uploaded_excel()
-	// 		SPINNER_LOADER.hide()
-
-	// 		excel_upload_dialog.destroy()
-	// 		get_uploaded_excel()
-	// 	}
-	// })
+	SPINNER_LOADER.show()
+	download_excel(fff)
+	$send({
+		action : "/delete_excel",
+		method : POST,
+		data : $DATA({"file":fff.replace("#","@@").replace("#","@@")}),
+		func : function(res){
+			SPINNER_LOADER.hide()
+			excel_upload_dialog.destroy()
+			location.reload()
+		}
+	})
 	del_dialog01.destroy()
 }
 

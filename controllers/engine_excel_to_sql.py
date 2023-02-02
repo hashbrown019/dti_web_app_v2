@@ -18,7 +18,6 @@ warnings.filterwarnings('ignore')
 rapid_mysql = mysql(*c.DB_CRED)
 # rapid_mysql.err_page = 0
 
-
 class form_excel_a_handler:
 	def __init__(self,args):
 		super(form_excel_a_handler, self).__init__()
@@ -30,6 +29,8 @@ class form_excel_a_handler:
 		return self.excel_popu_a()
 
 	def excel_popu_a(self):
+		msg = "Unfinished"
+		status = "Unfinished"
 		self.record_counter = 0
 		# dir_path = c.RECORDS+"/objects/spreadsheets/_temp_/"
 		dir_path = c.RECORDS+"/objects/spreadsheets/queued/"
@@ -50,24 +51,79 @@ class form_excel_a_handler:
 					try:
 						resp = self.push_mysql(self.readRows(file_name, sheet),path)
 						if(resp["err"]):
+							msg = "Error in Moving to Database"
+							status = "failed"
 							return resp["msg"]
 							# return resp["msg"]["sql"]
 						else:
 							self.move_to_done_files(path)
 							FROM_EXCEL_RPOFILES[resp["data"]["file"]] = resp["data"]["count"]
+							msg = "Moved to Database"
+							status = "success"
 						counter = counter + 1
 					except Exception as e:
 						if("No sheet named <'VC FORM A'>" in str(e)):
 							print("  --- ERROR in XLRD Parser (ignoring file [{}]) || {}".format(path,e))
 							self.move_to_failed_files(path)
+							msg = "No <'VC FORM A'> Found"
+							status = "failed"
 						elif("Unsupported format, or corrupt file" in str(e)):
 							print("  --- ERROR in XLRD Parser (ignoring file [{}]) || {}".format(path,e))
 							self.move_to_failed_files(path)
+							msg = "Corrupt File"
+							status = "failed"
 						else:
 							raise e
 			# if(counter >= 3):
 			# 	break
-		return FROM_EXCEL_RPOFILES
+		return {"status":status,"msg":msg,"success_files":FROM_EXCEL_RPOFILES}
+
+	def excel_popu_individual(self,_NAME_):
+		msg = "Unfinished"
+		status = "Unfinished"
+		self.record_counter = 0
+		# dir_path = c.RECORDS+"/objects/spreadsheets/_temp_/"
+		dir_path = c.RECORDS+"/objects/spreadsheets/queued/"
+		FROM_EXCEL_RPOFILES = {}
+		# FROM_EXCEL_RPOFILES = []
+		# loads_ = tqdm(os.listdir(dir_path))
+		counter = 0
+		# for path in loads_:os.listdir(dir_path)
+		PATH__ = os.path.join(dir_path, _NAME_)
+		if os.path.isfile(PATH__):
+			# if (("._DELETED_FILE_" not in str(path)) or ("~$" not in str(path))):	
+			file_name =  PATH__ 
+			sheet =  "VC FORM A" 
+			print("\n= Scanning [{}]".format(_NAME_))
+			try:
+				resp = self.push_mysql(self.readRows(file_name, sheet),_NAME_)
+				if(resp["err"]):
+					msg = "Error in Moving to Database"
+					status = "failed"
+					return resp["msg"]
+					# return resp["msg"]["sql"]
+				else:
+					self.move_to_done_files(_NAME_)
+					FROM_EXCEL_RPOFILES[resp["data"]["file"]] = resp["data"]["count"]
+					msg = "Moved to Database"
+					status = "success"
+				counter = counter + 1
+			except Exception as e:
+				if("No sheet named <'VC FORM A'>" in str(e)):
+					print("  --- ERROR in XLRD Parser (ignoring file [{}]) || {}".format(_NAME_,e))
+					self.move_to_failed_files(_NAME_)
+					msg = "No <'VC FORM A'> Found"
+					status = "failed"
+				elif("Unsupported format, or corrupt file" in str(e)):
+					print("  --- ERROR in XLRD Parser (ignoring file [{}]) || {}".format(_NAME_,e))
+					self.move_to_failed_files(_NAME_)
+					msg = "Corrupt File"
+					status = "failed"
+				else:
+					raise e
+			# if(counter >= 3):
+			# 	break
+		return {"status":status,"msg":msg,"success_files":FROM_EXCEL_RPOFILES}
 
 # /////////////////// 94#2023-01-16#Profile_AGUSAN_DEL_SUR1.xlsx
 	def push_mysql(self, rows, user_id):

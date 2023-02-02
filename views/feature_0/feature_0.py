@@ -1,13 +1,17 @@
-from flask import Blueprint, render_template, request, session, redirect, jsonify, Response
+from flask import Blueprint, render_template, request, session, redirect, jsonify, Response,send_file
 from flask_session import Session
 from modules.Connections import mysql,sqlite
 import Configurations as c
-import os, random, json
+import os, random, json, shutil
 from controllers.outbound import outbound as outb
+from werkzeug.utils import secure_filename
+
+from controllers.engine_excel_to_sql import form_excel_a_handler
 
 app = Blueprint("feature_0",__name__,template_folder='pages')
-
+_excel = form_excel_a_handler(__name__)
 rapid_mysql = mysql(*c.DB_CRED)
+
 outbound = outb(app,rapid_mysql,session)
 
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
@@ -58,11 +62,48 @@ class _main:
 	def getsesh():
 		return session["USER_DATA"][0]
 
+
+	# ========================================================================
 	@app.route("/migrations/export_excel",methods=["POST","GET"])
 	def export_excel():
 		print(" *  Getting Data ")
 		return outbound.export_excel()
 
+	@app.route("/excel_upload",methods=["POST","GET"])
+	def excel_upload():
+		from datetime import date, datetime
+		today = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
+		uploader = request.form['uploader']
+		excel_ = request.files
+		UPLOAD_NAME = "NONE"
+		for excel in excel_:
+			f = excel_[excel]
+			UPLOAD_NAME = uploader+"#"+today+"#"+secure_filename(f.filename)
+			f.save(os.path.join(c.RECORDS+"/objects/spreadsheets/queued/",UPLOAD_NAME ))
+		uploadstate = _excel.excel_popu_individual(UPLOAD_NAME)
+		return uploadstate
+
+	@app.route("/download_excel/<excel_file>",methods=["POST","GET"])
+	def download_excel(excel_file):
+		# excel_file = request.form['file']
+		print(excel_file)
+		def_name = excel_file.split("@@")[2]
+		excel_file = excel_file.replace("@@","#")
+		return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
+	
+	@app.route("/delete_excel/",methods=["POST","GET"])
+	def delete_excel():
+		excel_file = request.form['file']
+		# print(excel_file)
+		def_name = excel_file.split("@@")[2]
+		excel_file = excel_file.replace("@@","#")
+
+		shutil.move(
+			c.RECORDS+"/objects/spreadsheets/migrated/{}".format(excel_file),
+			c.RECORDS+"/objects/spreadsheets/deleted/{}".format(excel_file)
+		)
+		rapid_mysql.do("DELETE FROM `excel_import_form_a` WHERE `file_name`='{}' ;".format(excel_file))
+		return jsonify({"status":"done"})
 # ==============================================================================
 # ==============================================================================
 # ==============================================================================
