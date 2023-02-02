@@ -44,13 +44,13 @@ app.register_blueprint(home.app)
 app.register_blueprint(api.app)
 app.register_blueprint(feature_0.app)
 
+@app.route("/")
+def index():return redirect("/login")
 # ==================================
 inbound_ = inbound(app)
 inbound_._test_()
 # ====================================
 
-@app.route("/")
-def index():return redirect("/login")
 
 # =============================================================
 if __name__ == '__main__':
