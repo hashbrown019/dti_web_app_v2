@@ -24,6 +24,10 @@ from modules.public_vars import public_vars
 from controllers.inbound import inbound
 from apis import api
 from modules.Connections import mysql,sqlite
+print(" * Checking Database")
+rapid_mysql = mysql(*c.DB_CRED)
+rapid_mysql.select("SELECT * from `users`")
+print(" * Checking Database DONE")
 
 
 app = Flask(__name__)
@@ -44,10 +48,6 @@ inbound_ = inbound(app)
 inbound_._test_()
 # ====================================
 
-print(" * Checking Database")
-rapid_mysql = mysql(*c.DB_CRED)
-rapid_mysql.select("SELECT * from `users`")
-print(" * Checking Database DONE")
 
 # =============================================================
 if __name__ == '__main__':
