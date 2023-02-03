@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint,request, flash, render_template, url_for,redirect
-from modules.Connection import mysql
+from modules.Connections import mysql
 from decimal import Decimal
 
 db = mysql('localhost','root','','formc')
