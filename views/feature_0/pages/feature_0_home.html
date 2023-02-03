@@ -5,24 +5,24 @@
 	<body class="x-light-grey">
 
 		<!-- Top container -->
-		<div class="x-bar x-top x-white x-large" style="z-index:4">
+		<header class="x-header x-bar x-top x-white x-large" style="z-index:9;">
 			<div class="x-container x-padding x-left"  onclick="x_open()">
 				<div class="x-col s4">
 					<img src="../static/img/avatar2.png" class="x-circle x-margin-right" style="width:46px">
 				</div>
 				<div class="x-col s8 x-bar">
-					<span class=""><strong>{{USER_DATA['name']}}</strong></span><br>
+					<span class=""><strong>{{USER_DATA['name']}}</strong></span> || 
 					<span class="x-small">{{USER_DATA['job']}}@{{USER_DATA['username']}}</span>
 				</div>
 			</div>
 			<div class="x-bar-item x-right x-small x-right">
+				{% include 'notification.html' %}
 				{% include 'excel_upload_download_btn.html' %}
 				<button class="x-btn x-border x-round" onclick="logout()"> <span class="x-text-red fa fa-power-off"></span> Logout</button>
 			</div>
-		</div>
-
+		</header>
 		<!-- Sidebar/menu -->
-		<nav class="x-sidebar x-collapse x-white x-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+		<nav class="x-sidebar x-collapse x-white x-animate-left" style="width:200px;margin-top: 60px;" id="mySidebar"><br>
 			<div class="x-container x-row">
 				<div class="x-col s12 x-bar">
 					<a href="#" class="x-bar-item x-button"><i class="fa fa-envelope"></i></a>

@@ -4,6 +4,7 @@ from modules.Connections import mysql,sqlite
 import Configurations as c
 import os, random, json, shutil
 from controllers.outbound import outbound as outb
+from controllers.inbound import inbound as inb
 from werkzeug.utils import secure_filename
 
 from controllers.engine_excel_to_sql import form_excel_a_handler
@@ -13,6 +14,7 @@ _excel = form_excel_a_handler(__name__)
 rapid_mysql = mysql(*c.DB_CRED)
 
 outbound = outb(app,rapid_mysql,session)
+inbound = inb(app,rapid_mysql,session)
 
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 
@@ -63,11 +65,35 @@ class _main:
 		return session["USER_DATA"][0]
 
 
+
+	@app.route("/notification/web_safe_encode/<strs>",methods=["POST","GET"])
+	def web_safe_encode(strs):
+		return inbound.web_safe_encode(strs)
+
+	@app.route("/notification/web_safe_decode/<strs>",methods=["POST","GET"])
+	def web_safe_decode(strs):
+		return inbound.web_safe_decode(strs)
+
+	@app.route("/notification/get_notif",methods=["POST","GET"])
+	def get_notif():
+		return inbound.get_notif()
+
+	@app.route("/notification/get_notif_unseen",methods=["POST","GET"])
+	def get_notif_unseen():
+		return inbound.get_notif_unseen()
+
+	@app.route("/notification/set_notif_seen",methods=["POST","GET"])
+	def set_notif_seen():
+		notif_id = request.form['notif_id']
+		return inbound.set_notif_seen(notif_id)
+
+
 	# ========================================================================
-	@app.route("/migrations/export_excel",methods=["POST","GET"])
-	def export_excel():
+	@app.route("/migrations/export_excel_mobile",methods=["POST","GET"])
+	def export_excel_mobile():
+		mobile_export_selection = request.form['form']
 		print(" *  Getting Data ")
-		return outbound.export_excel()
+		return outbound.export_excel_mobile(mobile_export_selection)
 
 	@app.route("/excel_upload",methods=["POST","GET"])
 	def excel_upload():
@@ -90,6 +116,10 @@ class _main:
 		def_name = excel_file.split("@@")[2]
 		excel_file = excel_file.replace("@@","#")
 		return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
+
+	@app.route("/download_excel_from_notif/<excel_file>",methods=["POST","GET"])
+	def download_excel_from_notif(excel_file):
+		return send_file(c.RECORDS+"/objects/spreadsheets/exports/"+excel_file, as_attachment=True,download_name=excel_file)
 	
 	@app.route("/delete_excel/",methods=["POST","GET"])
 	def delete_excel():

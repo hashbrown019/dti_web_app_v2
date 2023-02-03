@@ -41,8 +41,6 @@ app.register_blueprint(api.app)
 app.register_blueprint(feature_0.app)
 
 # ==================================
-inbound_ = inbound(app)
-inbound_._test_()
 # ====================================
 
 

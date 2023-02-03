@@ -1,0 +1,100 @@
+<span class="notification" onclick="show_notif()">
+	<span>Notif <span class="fa fa-bell"></span></span>
+	<span id="badge_holder">
+		
+	</span>
+</span>
+<script>
+function show_notif() {
+	var export_dialog = $dialog({
+		title : "Notification Panel",
+		subtitle : "Notifications and Announcement will be posted here :)",
+		content :(`
+				<div id="notif_display" style="overflow-y:scroll;height: 60vh;">
+					<div class="x-center">
+						<h3 class="x-text-grey">No Notification Found</h3>
+					</div>
+				</div>
+			`)
+	})
+	export_dialog.show()
+	get_notif()
+}
+
+window.setInterval(get_notif_unseen,1000)
+function get_notif_unseen() {
+	$send({
+		action : "/notification/get_notif_unseen",
+		method: POST,
+		func : function(re){
+			res = JSON.parse(re)[0]
+			try{
+				var num_notif = parseInt(res["num_notif"])
+				if(num_notif != 0){
+					$ID('badge_holder').innerHTML = '<span class="badge">'+num_notif+'</span>'
+				}
+			}catch(e){
+				println(e)
+			}
+		}
+	})
+}
+function get_notif(){
+	var notif_string = ""
+	$send({
+		action : "/notification/get_notif",
+		method: POST,
+		func : function(re){
+			notifs = JSON.parse(re)
+			if(notifs.length != 0){
+				for (var i = 0; i < notifs.length; i++) {
+					var seen = ((notifs[i]['status'] =="unseen") ? 'x-border x-hover-red x-border-red' : 'x-border x-border-grey x-hover-grey')
+					var type_ = ((notifs[i]['type'] =="export_excel") ? 'x-border x-hover-red x-border-red' : 'x-border x-border-grey x-hover-grey')
+
+					notif_string +=(`
+						<div class="x-padding">
+							<div class="x-card x-padding x-block `+seen+` " onclick="`+notifs[i]['action']+`('`+notifs[i]['args']+`','`+notifs[i]['id']+`')">
+								<b class="x-large">`+(notifs[i]['name'])+`</b><br>
+								<span>`+web_safe_decode(notifs[i]['content'])+`</span>
+							</div>
+						</div>
+					`)
+				}
+				$ID('notif_display').innerHTML = notif_string
+			}
+		}
+	})
+}
+
+
+function web_safe_str(strs,type){
+	var notif_string = ""
+	$send({
+		action : "/notification/get_notif",
+		method: POST,
+		func : function(re){
+		}
+	})
+}
+
+function dlexcel(args,id){
+	$send({
+		action : "/notification/set_notif_seen",
+		method: POST,
+		data : $DATA({"notif_id":id}),
+		func : function(re){
+			get_notif()
+			download_excelfrom_notif(args)
+		}
+	})
+
+}
+
+
+function download_excelfrom_notif(fff){
+	let a= document.createElement('a');
+	a.target= '_blank';
+	a.href= '/download_excel_from_notif/'+fff;
+	a.click();
+}
+</script>

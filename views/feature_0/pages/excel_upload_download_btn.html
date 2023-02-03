@@ -6,9 +6,49 @@
 	<b>Import Spreadsheet</b> | <span class="fa fa-upload"></span>
 </div>
 
-
-
 <script type="text/javascript">
+REQ_ERR_DIALOG = true
+function export_farmer_excel(argument) {
+	println(" Getting Data ")
+
+	var export_dialog = $dialog({
+		title : "Data Export Wizard",
+		subtitle : "Data export from mobile uploads or excle upload or both :)",
+		content :(`{% include 'export_modal.html'%}`),
+		on_destroy : function(){
+			println("HELLO")
+		}
+	})
+	export_dialog.show()
+}
+function mobile_export(){
+	var mobile_export_selection = $ID('mobile_export_selection').value
+	$send({
+		action : "/migrations/export_excel_mobile",
+		method : POST,
+		data : $DATA({"form":mobile_export_selection}),
+		func : function (res){
+			println(" Generating Table")
+			var RES = JSON.parse(res) 
+			printtable(res)
+			println(" Generating Table ended")
+			get_notif()
+		}
+
+	})
+}
+
+
+
+function download_excel(fff){
+	let a= document.createElement('a');
+	a.target= '_blank';
+	a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");
+	a.click();
+	get_notif()
+}
+
+
 function import_farmer_excel(argument) {
 	excel_upload_dialog = $dialog({
 		title : "import",
@@ -144,13 +184,6 @@ function confirm_delete_excel(fff){
 
 
 
-function download_excel(fff){
-	let a= document.createElement('a');
-	a.target= '_blank';
-	a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");
-	a.click();
-}
-
 function delete_excel(fff){
 	SPINNER_LOADER.show()
 	download_excel(fff)
@@ -167,22 +200,5 @@ function delete_excel(fff){
 	del_dialog01.destroy()
 }
 
-
-
-function export_farmer_excel(argument) {
-	println(" Getting Data ")
-	$send({
-		action : "/migrations/export_excel",
-		method : POST,
-		func : function (res){
-			println(" Generating Table")
-			var RES = JSON.parse(res) 
-			printtable(res)
-			println(" Generating Table ended")
-		}
-
-	})
-	// staytuned()
-}
 
 </script>
