@@ -1,6 +1,7 @@
-from flask import Flask, Blueprint,request, flash, render_template, url_for,redirect
+from flask import Flask, Blueprint,request, flash, render_template, url_for,redirect, session
 from modules.Connections import mysql
 from decimal import Decimal
+from flask_session import Session
 
 db = mysql('localhost','root','','formc')
 app = Blueprint("form_c",__name__,template_folder="pages")
@@ -419,6 +420,7 @@ def update():
 
 @app.route("/formcdashboard")
 def formcdashboard():
+    USER_INFO = session["USER_DATA"]
     data_count_entry=db.select("SELECT * FROM data")
     datatable=db.select("SELECT * FROM data")
     data_lastmonth = db.select("SELECT * FROM data WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
@@ -439,7 +441,7 @@ def formcdashboard():
     all = data_count_cacao + data_count_coffee + data_count_coconut + data_count_pfn
     return render_template("formcdashboard.html",count_entry=len(data_count_entry), tabledata=data_count_entry, count_reg_business=len(data_count_reg_business), 
     count_position_firm=len(data_count_position_firm), count_cacao=len(data_count_cacao), count_coffee=len(data_count_coffee), count_pfn=len(data_count_pfn),
-    count_coconut=len(data_count_coconut), datatable=datatable, data_lastmonth=len(data_lastmonth), data_currmonth=len(data_currmonth),percentage = round(percentage,2))
+    count_coconut=len(data_count_coconut), datatable=datatable, data_lastmonth=len(data_lastmonth), data_currmonth=len(data_currmonth),percentage = round(percentage,2),USER_INFO=USER_INFO)
 
 @app.route("/formcdashboardfilter",methods=['POST','GET'])
 def formcdashboardfilter():
