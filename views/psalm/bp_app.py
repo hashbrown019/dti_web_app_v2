@@ -3,7 +3,7 @@ from modules.Connections import mysql
 from decimal import Decimal
 
 db = mysql('localhost','root','','formc')
-app = Blueprint("form_c",__name__,template_folder="templates")
+app = Blueprint("form_c",__name__,template_folder="pages")
 
 
 
