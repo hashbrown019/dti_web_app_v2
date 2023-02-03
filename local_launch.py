@@ -13,6 +13,8 @@ c.PORT = 80
 
 # ===========================================================================
 print(" * LOCAL Launch")
+print(" * LOCAL Launch")
+
 
 from flask import Flask, session, jsonify, request, redirect
 from flask_cors import CORS,cross_origin
