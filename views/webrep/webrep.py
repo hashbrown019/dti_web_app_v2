@@ -34,9 +34,9 @@ class _main:
 	# ==================================================================
 
 
-	@app.app_errorhandler(404)
-	def _404(err):
-		return render_template("webrep/error/404.html"), 404
+	# @app.app_errorhandler(404)
+	# def _404(err):
+	# 	return render_template("webrep/error/404.html"), 404
 
 
 	def moderator(segment,page):
