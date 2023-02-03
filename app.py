@@ -47,8 +47,6 @@ app.register_blueprint(feature_0.app)
 @app.route("/")
 def index():return redirect("/login")
 # ==================================
-inbound_ = inbound(app)
-inbound_._test_()
 # ====================================
 
 
