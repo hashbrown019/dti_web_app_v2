@@ -22,8 +22,8 @@ class _main:
 
 	@app.route("/rapid/<_>",methods=["POST","GET"])
 	def home_(_):
-		if(_!="home.html"):
-			return _main._404(404)
+		# if(_!="home.html"):
+		# 	return _main._404(404)
 		return render_template("webrep/home.html")
 	# ===========================================================/
 
