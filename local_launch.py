@@ -23,7 +23,8 @@ from flask_minify import Minify
 from views.login import login
 from views.home  import home
 from views.webrep  import webrep
-from views.feature_0  import feature_0 
+from views.feature_0  import feature_0
+from views.psalm  import bp_app
 
 from modules.public_vars import public_vars
 from controllers.inbound import inbound
