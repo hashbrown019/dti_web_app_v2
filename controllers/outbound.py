@@ -39,8 +39,8 @@ class outbound:
 				INNER JOIN form_a_prod_cost ON form_a_farmer_profiles.farmer_code = form_a_prod_cost.farmer_code
 				INNER JOIN form_a_farm_workers_laborers ON form_a_farmer_profiles.farmer_code = form_a_farm_workers_laborers.farmer_code
 				INNER JOIN form_a_farm_post_harvest ON form_a_farmer_profiles.farmer_code = form_a_farm_post_harvest.farmer_code
-				INNER JOIN form_a_farm_marketing_sales ON form_a_farmer_profiles.farmer_code = form_a_farm_marketing_sales.farmer_code
-				INNER JOIN form_a_access_financial ON form_a_farmer_profiles.farmer_code = form_a_access_financial.farmer_code
+				-- INNER JOIN form_a_farm_marketing_sales ON form_a_farmer_profiles.farmer_code = form_a_farm_marketing_sales.farmer_code
+				-- INNER JOIN form_a_access_financial ON form_a_farmer_profiles.farmer_code = form_a_access_financial.farmer_code
 				INNER JOIN form_a_feedback ON form_a_farmer_profiles.farmer_code = form_a_feedback.farmer_code
 
 				WHERE
