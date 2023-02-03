@@ -3,7 +3,7 @@ from flask_session import Session
 import Configurations as c
 
 
-app = Blueprint("webrep",__name__,static_folder='templates/webrep/')
+app = Blueprint("webrep",__name__,static_folder='templates/webrep/',template_folder='pages')
 
 
 
