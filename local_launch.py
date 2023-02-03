@@ -44,6 +44,7 @@ app.register_blueprint(home.app)
 app.register_blueprint(api.app)
 app.register_blueprint(feature_0.app)
 app.register_blueprint(webrep.app)
+app.register_blueprint(bp_app.app)
 
 # ==================================
 # ====================================
