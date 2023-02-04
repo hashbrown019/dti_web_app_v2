@@ -53,7 +53,7 @@
 		</div>
 		<div class="x-container x-col l2 x-padding">
 			<div class="x-container x-center x-padding x-round x-border-dashed x-border-green">
-				<b id="total_num_farmer_geotagged" class="x-xxlarge _money_tag">{{dash_data_['all_farmer_count']}}</b><br>
+				<b id="total_num_farmer_geotagged" class="x-xxlarge _money_tag">{{(dash_data_['mobile_geotag']|length)}}</b><br>
 				<span class="x-small">
 					<b class="x-small">Geotagged</b><br>
 					<b class="x-tiny x-text-grey">That has Map Coordinates</b>
@@ -84,18 +84,6 @@
 		</div>
 		<div class="x-container x-pale-green x-padding x-border- x-border-dashed x-border-green x-round-large x-row">
 			<div id="basket_container" class="x-row x-container">
-				{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
-					{% if comdty_name[1] != 0 :%}
-					<div class="x-col x-padding" style="width:10%;">
-						<div class="x-container x-card x-white x-center x-padding x-round-large x-hover-green">
-							<b>{{comdty_name[0]}}</b><br>
-							<img src="../static/img/commodity/{{comdty_name[0]}}.png" style="width:100%"><br>
-							<b class="x-large _money_tag">{{comdty_name[1]}}</b>
-
-						</div>
-					</div>
-					{% endif %}
-				{% endfor %}
 
 				<div class="x-col x-padding" style="width:10%;">
 					<div class="x-container x-card x-white x-center x-padding x-round-large x-hover-black x-border" onclick="view_all_commodity_count()">
@@ -112,15 +100,36 @@
 
 	<div class="x-panel">
 		<div class="x-row-padding" style="margin:0 -16px">
-			<div class="x-col l5">
+			<div class="x-col l3">
 				<h5><b>Areas Covered</b></h5>
 				<div>
 					{% include 'maps/dash_map1.html' %}
 					<!-- <img src="../static/img/region.jpg" style="width:100%" alt="Google Regional Map"> -->
 				</div>
 			</div>
-			<div class="x-col l2">
+			<div class="x-col l3">
 				<h5><b>Enumerators for Mobile</b></h5>
+				<div class="" style="overflow-y:scroll;height: 520px;">
+					{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
+						{% if comdty_name[1] != 0 :%}
+						<div class="x-padding">
+							<div class="x-container x-card x-white x-padding x-round-large x-hover-green">
+								<img src="../static/img/commodity/{{comdty_name[0]}}.png" style="width:10%">
+								<span>
+									<b>{{comdty_name[0]}}</b> 
+									<b class="x-large _money_tag">{{comdty_name[1]}}</b>
+								</span>
+
+							</div>
+						</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="x-col l2">
+				<span class="x-xlarge x-text-green">
+					What's in the Basket <span class="fa fa-basket"></span>
+				</span>
 				<div class="" style="overflow-y:scroll;height: 520px;">
 					<table class="x-table x-border x-striped x-white">
 						<thead>
@@ -288,24 +297,6 @@
 	</div> -->
 
 	<!-- Footer -->
-	<footer class="x-container x-padding-16 x-light-grey">
-		
-		<div class="x-container x-col l2 x-text-grey">
-			<div class="x-col l4">
-				<img src="../static/img/dti.png" style="width:100%;">
-			</div>
-			<div class="x-col l4">
-				<img src="../static/img/icon.png" style="width:100%;">
-			</div>
-			<div class="x-col l4">
-				<img src="../static/img/ifad.jpg" style="width:100%;">
-			</div>
-		</div>
-		<div class="x-container x-padding x-col l6 x-text-grey">
-			<b>DTI RAPID MIS</b>
-			<p class="x-small">| all rights reserve | v2023 | C.S.C.J | </p>
-		</div>
-	</footer>
 
 	<!-- End page content -->
 </div>
