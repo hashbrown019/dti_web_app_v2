@@ -46,4 +46,4 @@ def before_request():
 				pass
 	pass
 
-app.run(debug=c.IS_DEBUG)
+app.run()
