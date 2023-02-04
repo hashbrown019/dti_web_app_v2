@@ -791,9 +791,6 @@ def formcdashboardfilter():
     ldn_pfnsql+nc_pfnsql+sk_pfnsql+srng_pfnsql+zdn_pfnsql+zs_pfnsql+zds_pfnsql+
     ddo_pfnsql+do_pfnsql+ddn_pfnsql+dds_pfnsql+doc_pfnsql),datatable=datatable)
 
-
-
-
 @app.route("/menu")
 def menu():
     return render_template("menu.html")
