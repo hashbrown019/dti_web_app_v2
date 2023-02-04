@@ -20,20 +20,21 @@ function show_notif() {
 	get_notif()
 }
 
-window.setInterval(get_notif_unseen,2000)
+window.setInterval(get_notif_unseen,3000)
 function get_notif_unseen() {
 	$send({
 		action : "/notification/get_notif_unseen",
 		method: POST,
 		func : function(re){
 			res = JSON.parse(re)[0]
-			try{
+			if(res != undefined){
+				if('num_notif' in res)
 				var num_notif = parseInt(res["num_notif"])
 				if(num_notif != 0){
-					$ID('badge_holder').innerHTML = '<span class="badge x-animate-fading_">'+num_notif+'</span>'
+					if(num_notif != undefined){
+						$ID('badge_holder').innerHTML = '<span class="badge x-animate-fading_">'+num_notif+'</span>'
+					}
 				}
-			}catch(e){
-				println(e)
 			}
 		}
 	})
