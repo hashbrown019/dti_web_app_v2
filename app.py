@@ -24,7 +24,7 @@ from modules.public_vars import public_vars
 from controllers.inbound import inbound
 from apis import api
 from modules.Connections import mysql,sqlite
-
+from views.psalm  import bp_app
 # print(" * Checking Database")
 # rapid_mysql = mysql(*c.DB_CRED)
 # print(rapid_mysql.select("SELECT * from `users`"))
@@ -43,6 +43,7 @@ app.register_blueprint(login.app)
 app.register_blueprint(home.app)
 app.register_blueprint(api.app)
 app.register_blueprint(feature_0.app)
+app.register_blueprint(bp_app.app)
 
 @app.route("/")
 def index():return redirect("/login")
