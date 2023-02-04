@@ -45,5 +45,3 @@ def before_request():
 				# return redirect('/home')
 				pass
 	pass
-
-app.run()
