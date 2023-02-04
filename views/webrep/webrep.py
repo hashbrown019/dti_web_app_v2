@@ -18,25 +18,24 @@ class _main:
 
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
-		return render_template("webrep/home.html")
+		return render_template("home.html")
 
 	@app.route("/rapid/<_>",methods=["POST","GET"])
 	def home_(_):
 		if(_!="home.html"):
 			return _main._404(404)
-		return render_template("webrep/home.html")
+		return render_template("home.html")
 	# ===========================================================/
 
 	@app.route("/rapid/<segment>/<page>",methods=["POST","GET"])
 	def page_loader(segment,page):
 		_main.moderator(segment,page)
-		return render_template("webrep/{}/{}".format(segment,page))
+		return render_template("{}/{}".format(segment,page))
 	# ==================================================================
-
 
 	@app.app_errorhandler(404)
 	def _404(err):
-		return render_template("webrep/error/404.html"), 404
+		return render_template("error/404.html"), 404
 
 
 	def moderator(segment,page):

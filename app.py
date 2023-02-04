@@ -9,48 +9,14 @@ c._USER = c.SERVER_USER
 c._PASSWORD = c.SERVER_PASSWORD
 c._DATABASE = c.SERVER_DATABASE
 c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE] # DEV
+c.PORT = 80
 # ======================================================================
 print(" * Providing Imports Flask app")
 
-from flask import Flask, session, jsonify, request, redirect
-from flask_cors import CORS,cross_origin
-from flask_minify import Minify
+import start_point as sp
 
-from views.login import login
-from views.home  import home
-from views.feature_0  import feature_0 
+app = sp.app
 
-from modules.public_vars import public_vars
-from controllers.inbound import inbound
-from apis import api
-from modules.Connections import mysql,sqlite
-from views.psalm  import bp_app
-# print(" * Checking Database")
-# rapid_mysql = mysql(*c.DB_CRED)
-# print(rapid_mysql.select("SELECT * from `users`"))
-# print(" * Checking Database DONE")
-
-
-app = Flask(__name__)
-# Minify(app=app, html=True, js=True, cssless=True)
-app.config['JSON_SORT_KEYS'] = False
-app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
-app.secret_key=c.SECRET_KEY
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
-
-app.register_blueprint(login.app)
-app.register_blueprint(home.app)
-app.register_blueprint(api.app)
-app.register_blueprint(feature_0.app)
-app.register_blueprint(bp_app.app)
-
-@app.route("/")
-def index():return redirect("/login")
-# ==================================
-# ====================================
-
-
-# =============================================================
-if __name__ == '__main__':
-	app.run()
+# app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG,ssl_context='adhoc')
+# app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG)
+app.run()
