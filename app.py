@@ -19,4 +19,3 @@ app = sp.app
 
 # app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG,ssl_context='adhoc')
 # app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG)
-app.run()
