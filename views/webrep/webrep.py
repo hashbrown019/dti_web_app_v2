@@ -3,7 +3,7 @@ from flask_session import Session
 import Configurations as c
 
 
-app = Blueprint("webrep",__name__,static_folder='templates/webrep/',template_folder='pages')
+app = Blueprint("webrep",__name__,template_folder='pages')
 
 
 
@@ -22,8 +22,8 @@ class _main:
 
 	@app.route("/rapid/<_>",methods=["POST","GET"])
 	def home_(_):
-		# if(_!="home.html"):
-		# 	return _main._404(404)
+		if(_!="home.html"):
+			return _main._404(404)
 		return render_template("webrep/home.html")
 	# ===========================================================/
 
@@ -34,9 +34,9 @@ class _main:
 	# ==================================================================
 
 
-	# @app.app_errorhandler(404)
-	# def _404(err):
-	# 	return render_template("webrep/error/404.html"), 404
+	@app.app_errorhandler(404)
+	def _404(err):
+		return render_template("webrep/error/404.html"), 404
 
 
 	def moderator(segment,page):

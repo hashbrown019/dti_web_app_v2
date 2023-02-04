@@ -21,24 +21,44 @@ function export_farmer_excel(argument) {
 	})
 	export_dialog.show()
 }
-function mobile_export(){
-	var mobile_export_selection = $ID('mobile_export_selection').value
-	$send({
-		action : "/migrations/export_excel_mobile",
-		method : POST,
-		data : $DATA({"form":mobile_export_selection}),
-		func : function (res){
-			println(" Generating Table")
-			var RES = JSON.parse(res) 
-			printtable(res)
-			println(" Generating Table ended")
-			get_notif()
-		}
+function _export(args){
+	show_notif_instrc()
+	if(args==0){
+		var mobile_export_selection = $ID('mobile_export_selection').value
+		$send({
+			action : "/migrations/export_excel_mobile",
+			method : POST,
+			data : $DATA({"form":mobile_export_selection}),
+			func : function (res){
+				println(" Generating Table")
+				var RES = JSON.parse(res) 
+				printtable(res)
+				println(" Generating Table ended")
+				get_notif()
+			}
 
-	})
+		})
+	}
+	if(args==1){
+		$send({
+			action : "/migrations/export_excel_excel",
+			method : POST,
+			func : function (res){
+				println(" Generating Table")
+				var RES = JSON.parse(res) 
+				printtable(res)
+				println(" Generating Table ended")
+				get_notif()
+			}
+
+		})
+	}
 }
 
-
+function show_notif_instrc(){
+	$ID('export_panel').style.display = 'none'
+	$ID('export_panel_ins').style.display = 'block'
+}
 
 function download_excel(fff){
 	let a= document.createElement('a');

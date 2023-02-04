@@ -95,6 +95,11 @@ class _main:
 		print(" *  Getting Data ")
 		return outbound.export_excel_mobile(mobile_export_selection)
 
+	@app.route("/migrations/export_excel_excel",methods=["POST","GET"])
+	def export_excel_excel():
+		print(" *  Getting Data ")
+		return outbound.export_excel_excel()
+
 	@app.route("/excel_upload",methods=["POST","GET"])
 	def excel_upload():
 		from datetime import date, datetime
