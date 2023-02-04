@@ -38,10 +38,10 @@ class _main:
 
 	@app.route("/feature_home",methods=["POST","GET"])
 	def feature_0page():
-		_main.settings(request.args)
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		Filter.position_data_filter() # initialize restrictions
 		if(_main.is_on_session()):
+			_main.settings(request.args)
 			return render_template("feature_0_home.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
 		else:
 			return redirect("/login?force_url=1")

@@ -6,7 +6,7 @@ from flask_session import Session
 db = mysql('localhost','root','','formc')
 app = Blueprint("form_c",__name__,template_folder="pages")
 
-
+def is_on_session(): return ('USER_DATA' in session)
 
 @app.route('/formc')
 def index():
@@ -420,6 +420,11 @@ def update():
 
 @app.route("/formcdashboard")
 def formcdashboard():
+    if(is_on_session()):
+        pass
+    else:
+        return redirect("/login?force_url=1")
+        
     USER_INFO = session["USER_DATA"]
     data_count_entry=db.select("SELECT * FROM data")
     datatable=db.select("SELECT * FROM data")
@@ -793,7 +798,10 @@ def formcdashboardfilter():
 
 @app.route("/menu")
 def menu():
-    return render_template("menu.html")
+    if(is_on_session()):
+        return render_template("menu.html")
+    else:
+        return redirect("/login?force_url=1")
 
 
 @app.route("/cform")
