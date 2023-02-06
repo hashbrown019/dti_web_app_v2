@@ -428,21 +428,14 @@ function myFunction3() {
         
     });
 
-    $(document).ready(function(){
-      var map = {};
-      $('#filter1').each(function () {
-        if (map[this.value]) {
-          $(this).remove()
+    var code = {};
+    $("select[name='filter1'] > option").each(function () {
+        if(code[this.text]) {
+            $(this).remove();
+        } else {
+            code[this.text] = this.value;
         }
-        map[this.value] = true;
-      });
-      
-
-      $("#filter2").val(function(idt, val) {
-         $(this).siblings('[value="'+ val +'"]').remove();
-      });
-   });
-
+    });
     
     
 
