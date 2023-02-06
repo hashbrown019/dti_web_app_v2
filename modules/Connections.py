@@ -62,6 +62,7 @@ class mysql:
 			database=self.database)
 		return mydb
 
+
 	def do(self,sql):
 		if(self.err_page==1):
 			conn = mysql.init_db(self)
