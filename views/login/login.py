@@ -49,7 +49,7 @@ class _main:
 	@app.route("/logout")
 	def logout():
 		session.clear()
-		return redirect("/home")
+		return redirect("/")
 		# return jsonify(session )
 
 	@app.route("/get_session")
