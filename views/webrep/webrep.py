@@ -4,6 +4,7 @@ import Configurations as c
 
 
 app = Blueprint("webrep",__name__,template_folder='pages')
+# app = Blueprint("webrep",__name__,url_prefix='/webrep',template_folder='pages')
 
 
 
@@ -15,7 +16,6 @@ class _main:
 	app.errorhandler(404)
 
 	# ======================================================================================================
-
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
 		return render_template("home.html")
@@ -33,6 +33,7 @@ class _main:
 		return render_template("{}/{}".format(segment,page))
 	# ==================================================================
 
+
 	@app.app_errorhandler(404)
 	def _404(err):
 		return render_template("error/404.html"), 404
@@ -40,8 +41,4 @@ class _main:
 
 	def moderator(segment,page):
 		pass;
-
-		# /rapid/whatwedo/
-		# /rapid/whatwedo/
-		# /rapid/whatwedo/
-		# /rapid/whatwedo/
+	#sample EDIT
