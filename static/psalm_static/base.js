@@ -428,6 +428,20 @@ function myFunction3() {
         
     });
 
+    $(document).ready(function(){
+      var map = {};
+      $('#filter1').each(function () {
+        if (map[this.value]) {
+          $(this).remove()
+        }
+        map[this.value] = true;
+      });
+      
+
+      $("#filter2").val(function(idt, val) {
+         $(this).siblings('[value="'+ val +'"]').remove();
+      });
+   });
 
     
     

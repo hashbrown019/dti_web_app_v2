@@ -457,8 +457,6 @@ def formcdashboardfilter():
     if request.method == 'POST':
         filter1 = request.form.get('filter1')
         filter2 = request.form.get('filter2')
-        filter3 = request.form.get('filter3')
-        filter4 = request.form.get('filter4')
     # filtering industry cluster - form enterprise
     datatable=db.select("SELECT * FROM form_c")
     coffee_singlesolesql=db.select("SELECT `industry_cluster`,`form_interprise` from form_c where industry_cluster='coffee' AND form_interprise='Single/Sole'")
