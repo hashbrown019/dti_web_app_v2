@@ -203,7 +203,8 @@ def insert():
             flash(f"An error occured !", "error")
         else:
             flash(f"Record Saved!", "success")
-    return render_template("formc.html")
+    return redirect("/cform")
+    
 
 
 @app.route('/update',methods=['POST','GET'])
@@ -482,8 +483,8 @@ def formcdashboardfilter():
     #------------------------------------
 
     # filtering gender - form enterprise
-    male_singlesolesql=db.select("SELECT `sex`,`form_interprise` from form_c where sex='male' AND form_interprise='Single/Sole'")
-    female_singlesolesql=db.select("SELECT `sex`,`form_interprise` from form_c where sex='female'  AND form_interprise='Single/Sole'")
+    male_singlesolesql=db.select("SELECT * from form_c where sex='male' AND form_interprise='Single/Sole'")
+    female_singlesolesql=db.select("SELECT * from form_c where sex='female'  AND form_interprise='Single/Sole'")
 
     male_partnershipsql=db.select("SELECT `sex`,`form_interprise` from form_c where sex='male' AND form_interprise='Partnership'")
     female_partnershipsql=db.select("SELECT `sex`,`form_interprise` from form_c where sex='female'  AND form_interprise='Partnership'")
@@ -797,7 +798,7 @@ def formcdashboardfilter():
     ddo_coconutsql+do_coconutsql+ddn_coconutsql+dds_coconutsql+doc_coconutsql),total_pfnaddr=len(adn_pfnsql+ads_pfnsql+sds_pfnsql+
     magui_pfnsql+ns_pfnsql+leyte_pfnsql+sleyte_pfnsql+mo_pfnsql+bukd_pfnsql+
     ldn_pfnsql+nc_pfnsql+sk_pfnsql+srng_pfnsql+zdn_pfnsql+zs_pfnsql+zds_pfnsql+
-    ddo_pfnsql+do_pfnsql+ddn_pfnsql+dds_pfnsql+doc_pfnsql),datatable=datatable)
+    ddo_pfnsql+do_pfnsql+ddn_pfnsql+dds_pfnsql+doc_pfnsql),datatable=datatable,maless=male_singlesolesql, femaless=female_singlesolesql)
 
 @app.route("/menu")
 def menu():
