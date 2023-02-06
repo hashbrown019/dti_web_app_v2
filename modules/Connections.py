@@ -93,7 +93,6 @@ class mysql:
 				cur = conn.cursor(dictionary=dict_)
 				cur.execute(sql)
 				rows = cur.fetchall()
-				return {"response":"done","message":cur.lastrowid, "sql":sql}
 				return rows
 			except Exception as e:
 				return {"response":"error","message":str(e), "sql":sql}
