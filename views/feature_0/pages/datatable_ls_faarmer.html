@@ -1,0 +1,47 @@
+
+<table class="display" id="table_id">
+	<thead>
+		<tr class="x-rapid-teal-heavy">
+			<th>ID</th>
+			<th>First Name</th>
+			<th>Middle Name</th>
+			<th>Last Name</th>
+			<th>Ext Name</th>
+			<th>Sex</th>
+			<th>Primary Crop</th>
+			<th>Farmers Org</th>
+			<th>Region</th>
+			<th>Province</th>
+			<th>City/Municipality</th>
+			<th>DIP Ref</th>
+		</tr>
+	</thead>
+	<tbody id="list_farmers" style="">
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	let TABLE = undefined
+	function onloads(){
+		TABLE = new DataTable('#table_id', {
+			scrollY:'60vh'
+		});
+
+		println($('#table_id thead th'))
+
+		$('#table_id thead th')
+        .clone(true)
+        .addClass('filters')
+        .appendTo('#table_id thead')
+
+		showing_table()
+	}
+
+	function showing_table(){
+		TABLE.ajax.url('/feature_0/filter_list_farmers')
+		TABLE.ajax.reload()
+		// TABLE.ajax.reload()
+	}
+
+
+</script>

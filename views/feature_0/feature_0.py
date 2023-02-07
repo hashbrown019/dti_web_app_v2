@@ -34,8 +34,6 @@ class _main:
 		# outbound.session = session
 		return redirect("/feature_home#dashboard")
 
-
-
 	@app.route("/feature_home",methods=["POST","GET"])
 	def feature_0page():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
@@ -194,9 +192,9 @@ class _main:
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a` {} ;'''.format(Filter.position_data_filter())
-		all_farmer_small_data = rapid_mysql.select(sql_mobile) + rapid_mysql.select(sql_excel)
+		all_farmer_small_data = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False)
 		random.shuffle(all_farmer_small_data)
-		return all_farmer_small_data
+		return jsonify({ "data" : all_farmer_small_data})
 
 	@app.route("/feature_0/dashboard_home_",methods=["POST","GET"])
 	def dashboard_home_sql_driven_():

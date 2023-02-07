@@ -2,17 +2,17 @@
 <!-- saved from url=(0064)https://www.xschools.com/xcss/tryxcss_templates_analytics.htm -->
 <html>
 	{% include 'head.html' %}
-	<body class="x-light-grey">
+	<body class="x-light-grey" onload="onloads()">
 
 		<!-- Top container -->
 		<header class="x-header x-bar x-top x-rapid-teal-heavy x-large" style="z-index:9;">
-			<div class="x-container x-padding x-left"  onclick="x_open()">
-				<div class="x-col s4">
+			<div class="x-container x-padding x-left x-rapid-macha-dark"  onclick="x_open()" style="width:200px;">
+				<div class="x-col l4">
 					<img src="../static/img/avatar2.png" class="x-circle x-margin-right" style="width:46px">
 				</div>
-				<div class="x-col s8 x-bar">
-					<span class=""><strong>{{USER_DATA['name']}}</strong></span> || 
-					<span class="x-small">{{USER_DATA['job']}}@{{USER_DATA['username']}}</span>
+				<div class="x-col l8">
+					<span class=""><strong>{{USER_DATA['name']}}</strong></span><br>
+					<span class="x-tiny">{{USER_DATA['job']}}</span>
 				</div>
 			</div>
 			<div class="x-bar-item x-right x-small x-right">
@@ -35,12 +35,12 @@
 			<div class="x-bar-block">
 				<a href="#" class="x-bar-item x-button x-padding-16 x-hide-large x-dark-grey x-hover-black" onclick="x_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
 				<a href="#dashboard" class="x-bar-item x-button x-padding" onclick="show_view('dashboard','page_content')"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
-				<a class="x-bar-item x-button x-padding" onclick="not_ready('lists','page_content')"><i class="fa fa-eye fa-fw"></i>&nbsp; lists</a>
+				<a href="#lists" class="x-bar-item x-button x-padding" onclick="show_view('lists','page_content')"><i class="fa fa-eye fa-fw"></i>&nbsp; lists</a>
 				<a class="x-bar-item x-button x-padding" onclick="not_ready('forms','page_content')"><i class="fa fa-users fa-fw"></i>&nbsp; Forms</a>
 				<a class="x-bar-item x-button x-padding" onclick="not_ready('history','page_content')"><i class="fa fa-history fa-fw"></i>&nbsp; History</a>
 				<a class="x-bar-item x-button x-padding" onclick="not_ready('settings','page_content')"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>				
 			</div>
-			<div class="x-rowx-center">
+			<div class="x-rowx-center" style="display: fixed;bottom: 100px;">
 				<div class="x-container x-row x-padding">
 					<button class="x-block x-btn x-border x-round x-border-orange" onclick="goto('/menu')"> <span class="x-text-orange x-hover-orange fa fa-home"></span> Home</button>
 				</div>

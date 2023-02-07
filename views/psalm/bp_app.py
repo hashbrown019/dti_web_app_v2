@@ -801,7 +801,7 @@ def formcdashboardfilter():
 @app.route("/menu")
 def menu():
     if(is_on_session()):
-        return render_template("menu.html")
+        return render_template("menu.html",user_data=session["USER_DATA"][0])
     else:
         return redirect("/login?force_url=1")
 
