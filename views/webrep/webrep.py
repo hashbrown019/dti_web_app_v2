@@ -22,10 +22,10 @@ class _main:
 	# ======================================================================================================
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
-		return redirect("/RAPID_GROWTH_REPOSITORY")
+		return redirect("/hi_there")
 
-	@app.route("/RAPID_GROWTH_REPOSITORY",methods=["POST","GET"])
-	def RAPID_GROWTH_REPOSITORY():
+	@app.route("/hi_there",methods=["POST","GET"])
+	def hi_there():
 		return render_template("home/home.html")
 
 	@app.route("/rapid/<_>",methods=["POST","GET"])
