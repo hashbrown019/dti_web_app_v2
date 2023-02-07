@@ -15,9 +15,14 @@
 		<!-- CSS only -->
 		<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- JavaScript Bundle with Popper -->
+	<!-- JavaScript Bundle with Popper -->
 		<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
 		<script src="../../static/webrepstatic/js/bootstrap-autocomplete.min.js"></script>
+	<!-- drag & drop file -->
+		<link href="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.css" rel="stylesheet">
+		<script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
+
+
 		<title>Knowledge Admin</title>
 	</head>
 
@@ -473,10 +478,10 @@
 					</div>
 					<div class="modal-body">
 
-						<form class="row g-3 needs-validation" >
+						<form class="row g-3 needs-validation" id="form_for_upload_document">
 								<div class="col-md-6">
-									<label for="formUnit" class="form-label small fw-bolder">Unit</label>
-									<select class="form-select" id="formUnit" required>
+									<label for="Unit" class="form-label small fw-bolder">Unit</label>
+									<select class="form-select" id="Unit" required>
 										<option>NPCO</option>
 										<option>RCU</option>
 										<option>PCU</option>
@@ -487,16 +492,16 @@
 								</div>
 								
 								<div class="col-md-6">
-									<label for="formDesignation" class="form-label small fw-bolder">Designation</label>
-									<input type="text" class="form-control" id="formDesignation" required>
+									<label for="Designation" class="form-label small fw-bolder">Designation</label>
+									<input type="text" class="form-control" id="Designation" required>
 									<div class="invalid-feedback">
 										Please provide a Designation.
 									</div>
 								</div>
 								
 								<div class="col-md-12">
-									<label for="formTitle" class="form-label form-label-lg small fw-bolder">Title of Document</label>
-									<input type="text" class="form-control small fw-bolder" id="formTitle" required>
+									<label for="Title" class="form-label form-label-lg small fw-bolder">Title of Document</label>
+									<input type="text" class="form-control small fw-bolder" id="Title" required>
 									<div class="invalid-feedback">
 										Please provide a Title of Document.
 									</div>
@@ -557,32 +562,48 @@
 								</div>
 
 								<div class="col-md-4">
-									<label for="formDate" class="form-label small fw-bolder">Date Approved</label>
-									<input type="date" class="form-control" id="formDate" placeholder="Select Date" required>
+									<label for="Date" class="form-label small fw-bolder">Date Approved</label>
+									<input type="date" class="form-control" id="Date" placeholder="Select Date" required>
 									<div class="invalid-feedback">
 										Please provide a date approve.
 									</div>
 								</div>
 
 								 <div class="col-md-12">
-									<label for="formDescription" class="form-label small fw-bolder">Short Description of Title/Topic/Name of Document</label>
-									<textarea class="form-control" id="formDescription" rows="3"></textarea>
+									<label for="Description" class="form-label small fw-bolder">Short Description of Title/Topic/Name of Document</label>
+									<textarea class="form-control" id="Description" rows="3"></textarea>
 									<div class="invalid-feedback">
 										Please provide a Title of Document.
 									</div>
 								</div>
 
-								<div class="col-md-12">
-									<label for="formFile" class="form-label small fw-bolder">Please upload your files</label>
-									<input class="form-control" type="file" id="formFile">
+								<div id="drag-drop-area-doc" style="height: 200px;">
+						    	<label for="File" class="form-label small fw-bolder">Please upload your files</label>
+						    </div>				    
+						    <script>
+						      var uppy = Uppy.Core()
+						        .use(Uppy.Dashboard, {
+						          inline: true,
+						          target: '#drag-drop-area-doc'
+						        })
+						        .use(Uppy.Tus, {endpoint:''}) //you can put upload URL here, where you want to upload images
+						 
+						      uppy.on('complete', (result) => {
+						        console.log('Upload complete! We’ve uploaded these files:', result.successful)
+						      })
+						    </script>
+
+								<!-- <div class="col-md-12">
+									<label for="File" class="form-label small fw-bolder">Please upload your files</label>
+									<input class="form-control" type="file" id="File">
 									<div class="invalid-feedback">
 										Please provide a Title of Document.
 									</div>
-								</div>
+								</div> -->
 
 
-								<div class="col-md-12">
-									<label for="formAccess" class="form-label fw-bolder small">General Access</label>
+								<div class="col-md-12 mt-5">
+									<label for="Access" class="form-label fw-bolder small">General Access</label>
 										<div class="container border border-light rounded-3 ">
 											<div class="row d-flex align-items-start mb-2">
 												<div class="col-5 mt-3">
@@ -602,22 +623,19 @@
 										<div class="mb-3" id="forRestricted" hidden>
 												<div class="container mt-2 mb-2">
 													<!-- <input type="text" id="accessPeople" class="form-control" placeholder="Add people can access"> -->
-
-
-															<div class="autocomplete" style="width:300px;">
-																<input id="myInput" type="text" name="myCountry" placeholder="Name" value="">
+															<div class="col-7  autocomplete ">
+																<input class="form-control rounded-3" id="myInput" type="text" name="myCountry" placeholder="Add people can access" value="">
+															</div>
+															<span class="small text-muted">&nbsp or &nbsp</span>
+															<div class="col-4  autocomplete">
+																<input class="form-control rounded-3" id="myInput" type="text" name="myCountry" placeholder="Add Unit" value="">
 															</div>
 															{% include '_templates_/autocomplete.html' %}
-
-
 														<div class="container">
 															<p class="mt-3">People with access</p>
-
 														<!-- Users -->
 														<div id="users_added_ls">
 														</div>
-
-
 														</div>
 												</div>
 										</div>
@@ -627,21 +645,21 @@
 												// e.preventDefault();
 												formAccess = JSON.parse(this.value);
 
-												set_show(formAccess)
+												set_show_doc(formAccess)
 											});
 
 
-											function set_show(true_ba){
+											function set_show_doc(true_ba){
 												$("#forRestricted").attr("hidden",true_ba)
 												$("#restrictedDesc").attr("hidden",true_ba)
 												$("#PublicDesc").attr("hidden",!true_ba)
 											}
 
-											set_show(false)
+											set_show_doc(false)
 										</script>
 								</div>
 
-								<div class="col-md-12 d-flex align-items-center">
+								<div class="col-md-12 d-flex align-items-center" id="email_notification">
 									<input class="form-check-input small me-2" type="checkbox" value="" id="formNotification" >
 								  <label class="form-check-label small text-muted" for="formNotification">
 								    Receive notifications in your email?
@@ -657,7 +675,6 @@
 			</div>
 		</div>
 	<!-- Upload MODAL (MULTIMEDIA)-->
-	<!-- Upload MODAL (MULTIMEDIA)-->
 		<div class="modal fade " id="uploadMultimedia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down">
 				<div class="modal-content">
@@ -665,13 +682,12 @@
 						<h1 class="modal-title fs-5" id="staticBackdropLabel">Upload Multimedia</h1>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class=" modal-body">
+					<div class="modal-body">
 
-						<form class="row g-3 needs-validation" >							 
-
+						<form class="row g-3 needs-validation" id="form_for_upload_multimedia">
 								<div class="col-md-6">
-									<label for="MulformUnit" class="form-label">Unit</label>
-									<select class="form-select" id="MulformUnit" required>
+									<label for="Unit" class="form-label small fw-bolder">Unit</label>
+									<select class="form-select" id="Unit" required>
 										<option>NPCO</option>
 										<option>RCU</option>
 										<option>PCU</option>
@@ -682,85 +698,158 @@
 								</div>
 								
 								<div class="col-md-6">
-									<label for="MulformDesignation" class="form-label">Designation</label>
-									<input type="text" class="form-control" id="MulformDesignation" required>
+									<label for="Designation" class="form-label small fw-bolder">Designation</label>
+									<input type="text" class="form-control" id="Designation" required>
 									<div class="invalid-feedback">
 										Please provide a Designation.
 									</div>
 								</div>
+								
+								<div class="col-md-12">
+									<label for="Title" class="form-label form-label-lg small fw-bolder">Title of Multimedia (Extracted from the activity/event?)</label>
+									<input type="text" class="form-control small fw-bolder" id="Title" required>
+									<div class="invalid-feedback">
+										Please provide a Title of Document.
+									</div>
+								</div>
 
-								<div class="col-md-6">
-									<label for="MulForm" class="form-label">Form</label>
-									<select class="form-select" id="MulForm" required>
+								<div class="col-md-4">
+									<label for="formCategory" class="form-label small fw-bolder">Form</label>
+									<select class="form-select" id="formCategory" required>
 										<option>AUDIO</option>
 										<option>INTERVIEW</option>
 										<option>PHOTO</option>
-										<option>VIDEOS</option>
+										<option>VIDEO</option>
+										<option>Others</option>
 									</select>
 									<div class="invalid-feedback">
 										Please select a Unit.
 									</div>
 								</div>
+									<script type="text/javascript">
+										$(document).on('change', '#formCategory', function(e){  
+											e.preventDefault();
+											el = $("#OthersForm");
+											formCategory = this.value;
+											console.log(el)
+											if (formCategory == "Others") {
+												el.show();
 
-								<div class="col-md-6">
-									<label for="MulformDate" class="form-label">Date Approved</label>
-									<input type="date" class="form-control" id="MulformDate" required>
-									<div class="invalid-feedback">
-										Please provide a date approve.
-									</div>
-								</div>
-								
-								<div class="col-md-12">
-									<label for="MulformTitle" class="form-label form-label-lg">Title Of Multimedia (Extracted From What Activity/Event)</label>
-									<input type="text" class="form-control" id="MulformTitle" required>
-									<div class="invalid-feedback">
-										Please provide a Title of Document.
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="MulformDesc" class="form-label">Short Description of Title/Topic/Name of File</label>
-									<input type="text" class="form-control" id="MulformDesc" required>
-									<div class="invalid-feedback">
-										Please provide a Title of Document.
-									</div>
+											}
+											else {
+												el.hide();
+											}
+										});
+									</script>
+								<div class="col-md-4" id="OthersForm" style="display: none;">
+									<label for="formCategory" class="form-label small fw-bolder">Others:</label>
+									<input type="text" name="Others" id="Others" class="form-control" placeholder="please specify">
 								</div>
 
-								<div class="col-md-12">
-									<label for="MulformTags" class="form-label">Tags/Search Keywords</label>
-									<input type="text" class="form-control" id="MulformTags" required>
-									<div class="invalid-feedback">
-										Please provide a Title of Document.
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="MulformFiles" class="form-label">Please upload your files</label>
-									<input class="form-control" type="file" id="MulformFiles">
-									<div class="invalid-feedback">
-										Please provide a Title of Document.
-									</div>
-								</div>
-
-								<div class="col-md-6">
-									<label for="MulformAccess" class="form-label">Who can Access? (PLS PUT EMAIL ADDRESS/ES)</label>
-									<input type="text" class="form-control" id="MulformAccess" placeholder="Skip this form for Public access">
+								<div class="col-md-4">
+									<label for="Date" class="form-label small fw-bolder">Date Recorded/Taken/Produced</label>
+									<input type="date" class="form-control" id="Date" placeholder="Select Date" required>
 									<div class="invalid-feedback">
 										Please provide a date approve.
 									</div>
 								</div>
 
-								<div class="col-md-6">
-									<label for="MulformNotification" class="form-label">Do you want to receive notifications in your email?</label>
-									<select class="form-select" id="MulformNotification" required>
-										<option>YES</option>
-										<option>NO</option>
-									</select>
+								 <div class="col-md-12">
+									<label for="Description" class="form-label small fw-bolder">Short Description of Title/Topic/Name of Document</label>
+									<textarea class="form-control" id="Description" rows="3"></textarea>
 									<div class="invalid-feedback">
-										Please select a Unit.
+										Please provide a Title of Document.
 									</div>
 								</div>
+							<!-- Drag & Drop File -->
+						    <div id="drag-drop-area" style="height: 200px;">
+						    	<label for="File" class="form-label small fw-bolder">Please upload your files</label>
+						    </div>				    
+						    <script>
+						      var uppy = Uppy.Core()
+						        .use(Uppy.Dashboard, {
+						          inline: true,
+						          target: '#drag-drop-area'
+						        })
+						        .use(Uppy.Tus, {endpoint:''}) //you can put upload URL here, where you want to upload images
+						 
+						      uppy.on('complete', (result) => {
+						        console.log('Upload complete! We’ve uploaded these files:', result.successful)
+						      })
+						    </script>
 
+								<!-- <div class="col-md-12">
+									<label for="File" class="form-label small fw-bolder">Please upload your files</label>
+									<input class="form-control " type="file" id="File" multiple>
+									<div class="invalid-feedback">
+										Please provide a Title of Document.
+									</div>
+								</div> -->
+
+
+								<div class="col-md-12 mt-5">
+									<label for="Access" class="form-label fw-bolder small">General Access</label>
+										<div class="container border border-light rounded-3 ">
+											<div class="row d-flex align-items-start mb-2">
+												<div class="col-5 mt-3">
+													<select class="form-select border-0 fw-bolder bg-light" id="formAccessMul">
+														<option class="text-secondary" value=false >Restricted</option>
+														<option class="text-success" value=true >Public</option>
+													</select>	
+												</div>
+												<div class="col-7" id="restrictedDescMul" hidden>
+													<p class="small text-muted mt-4" id="">Only people who have access can open this file</p>																							
+												</div>
+												<div class="col-7" id="PublicDescMul" hidden>
+													<p class="small text-muted mt-4" id="">Anyone can access this file</p>																							
+												</div>
+											</div>
+									<!-- Restricted -->
+										<div class="mb-3" id="forRestrictedMul" hidden>
+												<div class="container mt-2 mb-2">
+													<!-- <input type="text" id="accessPeople" class="form-control" placeholder="Add people can access"> -->
+															<div class="col-7  autocomplete ">
+																<input class="form-control rounded-3" id="myInput" type="text" name="myCountry" placeholder="Add people can access" value="">
+															</div>
+															<span class="small text-muted">&nbsp or &nbsp</span>
+															<div class="col-4  autocomplete">
+																<input class="form-control rounded-3" id="myInput" type="text" name="myCountry" placeholder="Add Unit" value="">
+															</div>
+															{% include '_templates_/autocomplete.html' %}
+														<div class="container">
+															<p class="mt-3">People with access</p>
+														<!-- Users -->
+														<div id="users_added_ls">
+														</div>
+														</div>
+												</div>
+										</div>
+										</div>
+										<script type="text/javascript">
+											$(document).on('change', '#formAccessMul', function(e){  
+												// e.preventDefault();
+												formAccessMul = JSON.parse(this.value);
+
+												set_show_mul(formAccessMul)
+											});
+
+
+											function set_show_mul(true_ba){
+												$("#forRestrictedMul").attr("hidden",true_ba)
+												$("#restrictedDescMul").attr("hidden",true_ba)
+												$("#PublicDescMul").attr("hidden",!true_ba)
+											}
+
+											set_show_mul(false)
+										</script>
+								</div>
+
+								<div class="col-md-12 d-flex align-items-center" id="email_notification">
+									<input class="form-check-input small me-2" type="checkbox" value="" id="formNotification" >
+								  <label class="form-check-label small text-muted" for="formNotification">
+								    Receive notifications in your email?
+								  </label>
+								</div>
 					</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -770,7 +859,6 @@
 				</div>
 			</div>
 		</div>
-
 	<!-- Upload MODAL (PUBLICATION)-->
 		<div class="modal fade " id="uploadPublication" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down">
@@ -779,13 +867,12 @@
 						<h1 class="modal-title fs-5" id="staticBackdropLabel">Upload Publication</h1>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class=" modal-body">
+					<div class="modal-body">
 
-						<form class="row g-3 needs-validation" >
-
+						<form class="row g-3 needs-validation" id="form_for_upload_publication">
 								<div class="col-md-6">
-									<label for="validationCustom03" class="form-label">Unit</label>
-									<select class="form-select" id="validationCustom03" required>
+									<label for="Unit" class="form-label small fw-bolder">Unit</label>
+									<select class="form-select" id="Unit" required>
 										<option>NPCO</option>
 										<option>RCU</option>
 										<option>PCU</option>
@@ -796,109 +883,158 @@
 								</div>
 								
 								<div class="col-md-6">
-									<label for="validationCustom04" class="form-label">Designation</label>
-									<input type="text" class="form-control" id="validationCustom04" required>
+									<label for="Designation" class="form-label small fw-bolder">Designation</label>
+									<input type="text" class="form-control" id="Designation" required>
 									<div class="invalid-feedback">
 										Please provide a Designation.
 									</div>
 								</div>
 								
 								<div class="col-md-12">
-									<label for="validationCustom05" class="form-label form-label-lg">Title of Publication (Extracted from what activity/event, if any?)</label>
-									<input type="text" class="form-control" id="validationCustom05" required>
+									<label for="Title" class="form-label form-label-lg small fw-bolder">Title of Multimedia (Extracted from the activity/event?)</label>
+									<input type="text" class="form-control small fw-bolder" id="Title" required>
 									<div class="invalid-feedback">
-										Please provide a Title of Document. 
+										Please provide a Title of Document.
 									</div>
 								</div>
 
 								<div class="col-md-4">
-									<label for="formPlatform" class="form-label">Platform</label>
-									<select class="form-select" id="formPlatform" name="formPlatform" required>
-										<option>Stories from the field</option>
-										<option>Lessons learned</option>
-										<option>Policy briefs</option>
-										<option>Reports and studies</option>
-										<option>Technical guidelines</option>
-										<option>Working papers</option>
-										<option>How-to-do-notes</option>
-										<option>Research publications</option>
-										<option>Inputs to government policies and strategies (Value Chain Governance)</option>
-										<option>Articles (newspaper/magazine)</option>
-										<option>Social Media Posts</option>
-										<option>Blog posts</option>
-										<option>Newsletters</option>
-										<option>Press releases</option>
-										<option>Interviews</option>
-										<option>Infographics</option>
+									<label for="formCategory" class="form-label small fw-bolder">Form</label>
+									<select class="form-select" id="formCategory" required>
+										<option>AUDIO</option>
+										<option>INTERVIEW</option>
+										<option>PHOTO</option>
+										<option>VIDEO</option>
 										<option>Others</option>
 									</select>
 									<div class="invalid-feedback">
 										Please select a Unit.
 									</div>
 								</div>
-								<script type="text/javascript">
-									$(document).on('change', '#formPlatform', function(e){  
-										e.preventDefault();
-										el = $("#OthersForm");
-										formPlatform = this.value;
-										console.log(el)
-										if (formPlatform == "Others") {
-											el.show();
+									<script type="text/javascript">
+										$(document).on('change', '#formCategory', function(e){  
+											e.preventDefault();
+											el = $("#OthersForm");
+											formCategory = this.value;
+											console.log(el)
+											if (formCategory == "Others") {
+												el.show();
 
-										}
-										else {
-											el.hide();
-										}
-									});
-								</script>
+											}
+											else {
+												el.hide();
+											}
+										});
+									</script>
 								<div class="col-md-4" id="OthersForm" style="display: none;">
-									<label for="formPlatform" class="form-label">Others:</label>
+									<label for="formCategory" class="form-label small fw-bolder">Others:</label>
 									<input type="text" name="Others" id="Others" class="form-control" placeholder="please specify">
 								</div>
 
 								<div class="col-md-4">
-									<label for="validationCustom07" class="form-label">Date Released/Published</label>
-									<input type="date" class="form-control" id="validationCustom07" required>
+									<label for="Date" class="form-label small fw-bolder">Date Recorded/Taken/Produced</label>
+									<input type="date" class="form-control" id="Date" placeholder="Select Date" required>
 									<div class="invalid-feedback">
 										Please provide a date approve.
 									</div>
 								</div>
 
 								 <div class="col-md-12">
-									<label for="validationCustom08" class="form-label">Short Description of Title/Topic/Name of Document</label>
-									<input type="text" class="form-control" id="validationCustom08" required>
+									<label for="Description" class="form-label small fw-bolder">Short Description of Title/Topic/Name of Document</label>
+									<textarea class="form-control" id="Description" rows="3"></textarea>
 									<div class="invalid-feedback">
 										Please provide a Title of Document.
 									</div>
 								</div>
+							<!-- Drag & Drop File -->
+						    <div id="drag-drop-area-pub" style="height: 200px;">
+						    	<label for="File" class="form-label small fw-bolder">Please upload your files</label>
+						    </div>				    
+						    <script>
+						      var uppy = Uppy.Core()
+						        .use(Uppy.Dashboard, {
+						          inline: true,
+						          target: '#drag-drop-area-pub'
+						        })
+						        .use(Uppy.Tus, {endpoint:''}) //you can put upload URL here, where you want to upload images
+						 
+						      uppy.on('complete', (result) => {
+						        console.log('Upload complete! We’ve uploaded these files:', result.successful)
+						      })
+						    </script>
 
-								<div class="col-md-12">
-									<label for="formFile" class="form-label">Please upload your files</label>
-									<input class="form-control" type="file" id="formFile">
+								<!-- <div class="col-md-12">
+									<label for="File" class="form-label small fw-bolder">Please upload your files</label>
+									<input class="form-control " type="file" id="File" multiple>
 									<div class="invalid-feedback">
 										Please provide a Title of Document.
 									</div>
+								</div> -->
+
+
+								<div class="col-md-12 mt-5">
+									<label for="Access" class="form-label fw-bolder small">General Access</label>
+										<div class="container border border-light rounded-3 ">
+											<div class="row d-flex align-items-start mb-2">
+												<div class="col-5 mt-3">
+													<select class="form-select border-0 fw-bolder bg-light" id="formAccessPub">
+														<option class="text-secondary" value=false >Restricted</option>
+														<option class="text-success" value=true >Public</option>
+													</select>	
+												</div>
+												<div class="col-7" id="restrictedDescPub" hidden>
+													<p class="small text-muted mt-4" id="">Only people who have access can open this file</p>																							
+												</div>
+												<div class="col-7" id="PublicDescPub" hidden>
+													<p class="small text-muted mt-4" id="">Anyone can access this file</p>																							
+												</div>
+											</div>
+									<!-- Restricted -->
+										<div class="mb-3" id="forRestrictedPub" hidden>
+												<div class="container mt-2 mb-2">
+													<!-- <input type="text" id="accessPeople" class="form-control" placeholder="Add people can access"> -->
+															<div class="col-7  autocomplete ">
+																<input class="form-control rounded-3" id="myInput" type="text" name="myCountry" placeholder="Add people can access" value="">
+															</div>
+															<span class="small text-muted">&nbsp or &nbsp</span>
+															<div class="col-4  autocomplete">
+																<input class="form-control rounded-3" id="myInput" type="text" name="myCountry" placeholder="Add Unit" value="">
+															</div>
+															{% include '_templates_/autocomplete.html' %}
+														<div class="container">
+															<p class="mt-3">People with access</p>
+														<!-- Users -->
+														<div id="users_added_ls">
+														</div>
+														</div>
+												</div>
+										</div>
+										</div>
+										<script type="text/javascript">
+											$(document).on('change', '#formAccessPub', function(e){  
+												// e.preventDefault();
+												formAccessPub = JSON.parse(this.value);
+
+												set_show_pub(formAccessPub)
+											});
+
+
+											function set_show_pub(true_ba){
+												$("#forRestrictedMul").attr("hidden",true_ba)
+												$("#restrictedDescPub").attr("hidden",true_ba)
+												$("#PublicDescPub").attr("hidden",!true_ba)
+											}
+
+											set_show_pub(false)
+										</script>
 								</div>
 
-								<div class="col-md-6">
-									<label for="validationCustom09" class="form-label">Who can Access? (PLS PUT EMAIL ADDRESS/ES)</label>
-									<input type="text" class="form-control" id="validationCustom09" placeholder="Skip this form for Public access">
-									<div class="invalid-feedback">
-										Please provide a date approve.
-									</div>
+								<div class="col-md-12 d-flex align-items-center" id="email_notification">
+									<input class="form-check-input small me-2" type="checkbox" value="" id="formNotification" >
+								  <label class="form-check-label small text-muted" for="formNotification">
+								    Receive notifications in your email?
+								  </label>
 								</div>
-
-								<div class="col-md-6">
-									<label for="validationCustom10" class="form-label">Do you want to receive notifications in your email?</label>
-									<select class="form-select" id="validationCustom10" required>
-										<option>YES</option>
-										<option>NO</option>
-									</select>
-									<div class="invalid-feedback">
-										Please select a Unit.
-									</div>
-								</div>
-
 					</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -967,7 +1103,7 @@
 
 
 			<button type="button" class="btn btn-secondary justify-content-start">close</button>
-			<button type="button" class="btn btn-success"  data-bs-dismiss="modal" data-bs-target="#uploadDocument">Edit</button>
+			<button type="button" class="btn btn-success"  data-bs-dismiss="modal" data-bs-target="#uploadPublication">Edit</button>
 			<button type="button" class="btn btn-danger">Delete</button>
 			<button type="button" class="btn btn-primary">Download</button>
 		  </div>
