@@ -169,10 +169,10 @@ class _main:
 				`addr_region`,
 				`addr_prov`,
 				`addr_city`,
-				`farmer_dip_ref`
+				`farmer_dip_ref`,
+				`farmer_code` as 'reference'
 				-- `farmer_head_of_house`,
 				-- `farmer_civil_status`,
-				`SOURCE`
 			FROM `form_a_farmer_profiles` {} ;'''.format(Filter.position_data_filter())
 
 		sql_excel = '''
@@ -188,7 +188,8 @@ class _main:
 				`frmer_prof_@_frmer_addr_@_region` as `addr_region`,
 				`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
 				`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
-				`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`
+				`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
+				`file_name` as 'reference'
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a` {} ;'''.format(Filter.position_data_filter())

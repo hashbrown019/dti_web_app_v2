@@ -14,6 +14,7 @@
 			<th>Province</th>
 			<th>City/Municipality</th>
 			<th>DIP Ref</th>
+			<th>Reference Code</th>
 		</tr>
 	</thead>
 	<tbody id="list_farmers" style="">
@@ -30,6 +31,7 @@
 			<td>Loading Province</td>
 			<td>Loading City/Municipality</td>
 			<td>Loading DIP Ref</td>
+			<th>Loading Reference Code</th>
 		</tr>
 	</tbody>
 </table>
@@ -44,16 +46,13 @@
 	}
 
 	function showing_table_ls_farmer(){
-
-		println($('#table_id thead th'))
-
-		$('#table_id thead th')
-		.clone(true)
-		.addClass('filters')
-		.appendTo('#table_id thead')
 		TABLE.ajax.url('/feature_0/filter_list_farmers')
 		TABLE.ajax.reload()
-		// TABLE.ajax.reload()
+
+		$('#table_id tbody').on('mousedown', 'tr', function () {
+			var data = TABLE.row(this).data();
+			alert('You clicked on ' + data[0] + "'s row");
+		})
 	}
 
 
