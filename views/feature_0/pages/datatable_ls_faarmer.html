@@ -1,7 +1,7 @@
 
-<table class="display" id="table_id">
-	<thead>
-		<tr class="x-rapid-teal-heavy">
+<table class="display" id="table_id" style="width:100%">
+	<thead class="x-rapid-teal-heavy" style="width:100%">
+		<tr class="">
 			<th>ID</th>
 			<th>First Name</th>
 			<th>Middle Name</th>
@@ -14,33 +14,45 @@
 			<th>Province</th>
 			<th>City/Municipality</th>
 			<th>DIP Ref</th>
+			<th>Reference Code</th>
 		</tr>
 	</thead>
 	<tbody id="list_farmers" style="">
+		<tr>
+			<td>Loading ID</td>
+			<td>Loading First Name</td>
+			<td>Loading Middle Name</td>
+			<td>Loading Last Name</td>
+			<td>Loading Ext Name</td>
+			<td>Loading Sex</td>
+			<td>Loading Primary Crop</td>
+			<td>Loading Farmers Org</td>
+			<td>Loading Region</td>
+			<td>Loading Province</td>
+			<td>Loading City/Municipality</td>
+			<td>Loading DIP Ref</td>
+			<th>Loading Reference Code</th>
+		</tr>
 	</tbody>
 </table>
 
 <script type="text/javascript">
-	let TABLE = undefined
-	function onloads(){
-		TABLE = new DataTable('#table_id', {
-			scrollY:'60vh'
+	let TABLE = new DataTable('#table_id', {
+			scrollY:'60vh',
+			scrollX:true,
 		});
+	function onloads(){
 
-		println($('#table_id thead th'))
-
-		$('#table_id thead th')
-        .clone(true)
-        .addClass('filters')
-        .appendTo('#table_id thead')
-
-		showing_table()
 	}
 
-	function showing_table(){
+	function showing_table_ls_farmer(){
 		TABLE.ajax.url('/feature_0/filter_list_farmers')
 		TABLE.ajax.reload()
-		// TABLE.ajax.reload()
+
+		$('#table_id tbody').on('mousedown', 'tr', function () {
+			var data = TABLE.row(this).data();
+			alert('You clicked on ' + data[0] + "'s row");
+		})
 	}
 
 
