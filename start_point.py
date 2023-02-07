@@ -30,7 +30,7 @@ app.register_blueprint(webrep.app)
 app.register_blueprint(bp_app.app)
 
 @app.route("/")
-def index():return redirect("/rapid/home/home.html")
+def index():return redirect("/webrep")
 
 
 @app.before_request
