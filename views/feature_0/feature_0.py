@@ -195,7 +195,8 @@ class _main:
 			FROM `excel_import_form_a` {} ;'''.format(Filter.position_data_filter())
 		all_farmer_small_data = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False)
 		random.shuffle(all_farmer_small_data)
-		return jsonify({ "data" : all_farmer_small_data})
+		return jsonify(all_farmer_small_data)
+		# return ({ "data" : all_farmer_small_data})
 
 	@app.route("/feature_0/dashboard_home_",methods=["POST","GET"])
 	def dashboard_home_sql_driven_():

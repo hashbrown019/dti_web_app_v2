@@ -47,7 +47,7 @@ class _main:
 	@app.route("/logout")
 	def logout():
 		session.clear()
-		return redirect("/")
+		return redirect("/webrep")
 		# return jsonify(session )
 
 	@app.route("/get_session")
