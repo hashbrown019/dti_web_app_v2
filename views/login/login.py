@@ -32,6 +32,7 @@ class _main:
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		return render_template("login_v2.html")
 
+
 	@app.route("/login_auth",methods=["POST"])
 	def login_auth():
 		username = request.form['user_name']
