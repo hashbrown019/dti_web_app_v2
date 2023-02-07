@@ -33,7 +33,7 @@ class _main:
 
 	@app.route("/rapid/<segment>/<page>",methods=["POST","GET"])
 	def page_loader(segment,page):
-		if(page.lower()=="knowledgeAdmin.html".lower()):
+		if(page.lower()=="adminKnowledgeCenter.html".lower()):
 			if(_main.is_on_session()):
 			    return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
 			else:
