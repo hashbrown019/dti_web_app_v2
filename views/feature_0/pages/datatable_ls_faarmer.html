@@ -1,4 +1,4 @@
-
+<button onclick="showing_table_ls_farmer()" > refresh </button>
 <table class="display" id="table_id" style="width:100%">
 	<thead class="x-rapid-teal-heavy" style="width:100%">
 		<tr class="">
@@ -39,11 +39,12 @@
 	let TABLE
 
 	function onloads(){
-		showing_table_ls_farmer()
+		// showing_table_ls_farmer()
 	}
 
 	function showing_table_ls_farmer(){
 		println(" -- Getting List Farmers")
+		SPINNER_LOADER.show()
 		$send({
 			action : "/feature_0/filter_list_farmers",
 			method : POST,
@@ -51,8 +52,28 @@
 				println(" -- Getting List Farmers Done")
 				res = JSON.parse(rest)
 				create_table(res)
+				SPINNER_LOADER.hide()
 			},
-			err : function(res){println(res)}
+			err : function(res){println(res)},
+			progress : function(e){
+				// var response_length = parseFloat(headerMap(e)['total'])
+				println(e)
+				var response_length = parseFloat(e.total)
+				var response_loaded = parseFloat(e.loaded)
+				var percent_  = (response_loaded / response_length) * 100;
+				var percent_rounded = Math.round(percent_ * 100) / 100
+				SPINNER_LOADER.loading(Math.round(percent_))
+				SPINNER_LOADER.message(`
+					<span>
+						Gathering 
+						<b>`+Math.round(percent_)+`%</b><br>
+						<span class="x-small">
+							[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+							<i>`+(response_length-response_loaded)+` bytes remaining</i>
+						</span>
+					</span>
+				`);
+			}
 		})
 		// TABLE.ajax.url('/feature_0/filter_list_farmers')
 
@@ -62,7 +83,6 @@
 
 	function create_table (data_){
 		println(" -- Creating Data Table")
-		println(data_)
 		TABLE = new DataTable('#table_id', {
 			"scrollY":'60vh',
 			"scrollX":true,
@@ -93,4 +113,9 @@
 		})
 	}
 
+	function show_t(){
+		SPINNER_LOADER.show()
+		window.setTimeout(showing_table_ls_farmer,1500)
+		// showing_table_ls_farmer()
+	}
 </script>
