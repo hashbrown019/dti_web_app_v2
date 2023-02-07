@@ -37,9 +37,17 @@
 </table>
 
 <script type="text/javascript">
+	var init_counter = 0
 	let TABLE = new DataTable('#table_id', {
-			scrollY:'60vh',
-			scrollX:true,
+			"scrollY":'60vh',
+			"scrollX":true,
+			"fnDrawCallback" :  function(...args){
+				if(init_counter == 1){
+					set_search_field()
+					init_counter = 0
+				}
+				init_counter +=1
+			}
 		});
 	function onloads(){
 
@@ -47,13 +55,27 @@
 
 	function showing_table_ls_farmer(){
 		TABLE.ajax.url('/feature_0/filter_list_farmers')
-		TABLE.ajax.reload()
 
+		TABLE.ajax.reload()
 		$('#table_id tbody').on('mousedown', 'tr', function () {
 			var data = TABLE.row(this).data();
 			alert('You clicked on ' + data[0] + "'s row");
 		})
+
 	}
 
+	function set_search_field(){
+		$('#table_id thead th').each( function (i) {
+			var title = $('#table_id thead th').eq( $(this).index() ).text();
+			$(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
+		} );
+
+		$(TABLE.table().container() ).on('keyup', 'thead input', function () {
+			TABLE
+				.column( $(this).data('index') )
+				.search( this.value )
+				.draw();
+		} );
+	}
 
 </script>

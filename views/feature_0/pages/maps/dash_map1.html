@@ -13,16 +13,15 @@
 		// var marker = new L.Marker([7.0344744,125.7581447]);
 		// marker.addTo(map)
 
-		{% for geots in dash_data_['mobile_geotag'] %}
-			try{
-				var geotag_ = [parseFloat("{{geots['farmer_coords_long']}}"),parseFloat("{{geots['farmer_coords_lat']}}")]
-				var marker = new L.Marker(geotag_);
-				marker.addTo(map)
-			}catch{
+		// {% for geots in dash_data_['mobile_geotag'] %}
+		// 	try{
+		// 		var geotag_ = [parseFloat("{{geots['farmer_coords_long']}}"),parseFloat("{{geots['farmer_coords_lat']}}")]
+		// 		var marker = new L.Marker(geotag_);
+		// 		marker.addTo(map)
+		// 	}catch{
 				
-			}
-				
-		{% endfor %}
+		// 	}
+		// {% endfor %}
 	}
 	dash_map1()
 </script>
