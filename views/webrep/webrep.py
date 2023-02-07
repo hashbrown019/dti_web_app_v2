@@ -35,11 +35,11 @@ class _main:
 	def page_loader(segment,page):
 		if(page.lower()=="knowledgeAdmin.html".lower()):
 			if(_main.is_on_session()):
-			    return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =is_on_session(),user_data=session["USER_DATA"])
+			    return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
 			else:
 			    return redirect("/login?force_url=1")
 		_main.moderator(segment,page)
-		return render_template("{}/{}".format(segment,page))
+		return render_template("{}/{}".format(segment,page),is_session =_main.is_on_session())
 	# ==================================================================
 
 
