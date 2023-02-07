@@ -48,12 +48,13 @@
 		$send({
 			action : "/feature_0/filter_list_farmers",
 			method : POST,
-			a_sync : false,
+			// a_sync : false,
 			func : function (rest){
 				println(" -- Getting List Farmers Done")
 				res = JSON.parse(rest)
 				create_table(res)
 				SPINNER_LOADER.hide()
+				window.setInterval(get_notif_unseen,1000)
 			},
 			err : function(res){println(res)},
 			progress : function(e){
