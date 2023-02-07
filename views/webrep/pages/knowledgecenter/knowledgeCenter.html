@@ -184,9 +184,18 @@
               <a class="nav-link" role="button" href="/rapid/knowledgecenter/knowledgeCenter.html">Knowledge</a>
           </li>                     
         </ul>
-        <div class="">
-            <a type="button" class="btn btn-outline-dark rounded-2" data-bs-toggle="modal" data-bs-target="#loginModal" href="http://dtirapid.ph">Login</a>
-        </div>
+        ===============
+        {{user_data }}
+        ==============
+        {% if is_session :%}
+          <div class="">
+              <a type="button" class="btn btn-outline-dark rounded-2 btn-danger"  href="/logout">Logout</a>
+          </div>
+        {% else : %}
+          <div class="">
+              <a type="button" class="btn btn-outline-dark rounded-2 "  href="/login">Login</a>
+          </div>
+        {% endif %}
      </div>
   </nav>
 
