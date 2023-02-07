@@ -22,13 +22,17 @@ class _main:
 	# ======================================================================================================
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
-		return render_template("home.html")
+		return redirect("/hi_there")
+
+	@app.route("/hi_there",methods=["POST","GET"])
+	def hi_there():
+		return render_template("home/home.html")
 
 	@app.route("/rapid/<_>",methods=["POST","GET"])
 	def home_(_):
-		if(_!="home.html"):
+		if(_!="home/home.html"):
 			return _main._404(404)
-		return render_template("home.html")
+		return render_template("home/home.html")
 	# ===========================================================/
 
 	@app.route("/rapid/<segment>/<page>",methods=["POST","GET"])
