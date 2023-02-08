@@ -96,9 +96,11 @@
 						{% if comdty_name[1] != 0 :%}
 						<div class="x-padding">
 							<div class="x-container x-card x-white x-padding x-round-large x-hover-green">
-								<img src="../static/img/commodity/{{comdty_name[0]}}.png" style="width:10%">
-								<span>
+								<span class="x-col x-left" style="width:70%">
+									<img src="../static/img/commodity/{{comdty_name[0]}}.png" style="width:10%">
 									<b>{{comdty_name[0]}}</b> 
+								</span>
+								<span class="x-col x-right x-right-align" style="width:30%">
 									<b class="x-large _money_tag">{{comdty_name[1]}}</b>
 								</span>
 
@@ -106,59 +108,73 @@
 						</div>
 						{% endif %}
 					{% endfor %}
-					<div class="x-padding" style="">
-						<div class="x-container x-card x-white x-padding x-round-large x-hover-green" onclick="view_all_commodity_count()">
-							<b>Others</b><br>
-							<img src="../static/img/commodity/others.png" style="width:10%"><br>
-							<b class="x-tiny">View all commodity</b>
+
+					<div class="x-padding">
+						<div class="x-container x-card x-white x-padding x-round-large x-hover-black x-border-black" onclick="view_all_commodity_count()">
+							<span class="x-col x-left" style="width:70%">
+								<img src="../static/img/commodity/others.png" style="width:10%">
+								<b>Others</b> 
+							</span>
+							<span class="x-col x-right x-right-align" style="width:30%">
+								<b class="x-tiny">View all commodity</b>
+							</span>
+
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="x-col l2">
-				<h5><b>Enumerators for Mobile</b></h5>
-				<div class="" style="overflow-y:scroll;height: 520px;">
-					<table class="x-table x-border x-striped x-white">
-						<thead>
-							<tr class="x-rapid-teal-heavy">
-								<th>Name</th>
-								<th># of inputs</th>
-							</tr>
-						</thead>
-						<tbody class="x-container">
-							{% for enum_name in dash_data_['enumerator']['mobile']%}
-							<tr>
-								<td><b>{{enum_name['key']}}</b></td>
-								<td class="_money_tag x-right">
-									{{enum_name['total']}}
-								</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="x-col l2">
-				<h5><b>Enumerators for Excel</b></h5>
-				<div class="" style="overflow-y:scroll;height: 520px;">
-					<table class="x-table x-border x-striped x-white">
-						<thead>
-							<tr class="x-rapid-teal-heavy">
-								<th>Name</th>
-								<th># of inputs</th>
-							</tr>
-						</thead>
-						<tbody class="x-container">
-							{% for enum_name in dash_data_['enumerator']['excel']%}
-							<tr>
-								<td><b>{{enum_name['key']}}</b></td>
-								<td class="_money_tag x-right">
-									{{enum_name['total']}}
-								</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+			<div class="x-col l2" >
+				<h5><b>Enumerators</b></h5>
+				<div  style="overflow-y:scroll;height: 520px;">
+					<div class="x-bar x-rapid-teal-heavy">
+						<button class="x-bar-item x-button" onclick="show_view('mobile','Enumerators')">Mobile</button>
+						<button class="x-bar-item x-button" onclick="show_view('Excel','Enumerators')">Excel</button>
+					</div>
+
+					<div id="mobile" class="Enumerators x-animate-top" style="">
+						<div class="">
+							<table class="x-table x-border x-striped x-white">
+								<thead>
+									<tr class="x-rapid-teal-heavy">
+										<th>Name <span class="x-tiny x-text-light-grey"><br>(Mobile)</span> </th>
+										<th># of inputs</th>
+									</tr>
+								</thead>
+								<tbody class="x-container">
+									{% for enum_name in dash_data_['enumerator']['mobile']%}
+									<tr>
+										<td><b>{{enum_name['key']}}</b></td>
+										<td class="_money_tag x-right">
+											{{enum_name['total']}}
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div id="Excel" class="Enumerators x-animate-top" style="display: none;">
+						<div class="">
+							<table class="x-table x-border x-striped x-white">
+								<thead>
+									<tr class="x-rapid-teal-heavy">
+										<th>Name <span class="x-tiny x-text-light-grey"><br>(Excel)</span> </th>
+										<th># of inputs</th>
+									</tr>
+								</thead>
+								<tbody class="x-container">
+									{% for enum_name in dash_data_['enumerator']['excel']%}
+									<tr>
+										<td><b>{{enum_name['key']}}</b></td>
+										<td class="_money_tag x-right">
+											{{enum_name['total']}}
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
