@@ -30,42 +30,42 @@
 								
 								<div class="col-md-12">
 									<label for="Title" class="form-label form-label-lg small fw-bolder">Title of Multimedia (Extracted from the activity/event?)</label>
-									<input type="text" class="form-control small fw-bolder" id="Title" required>
+									<input type="text" class="form-control fw-bolder" id="Title" required>
 									<div class="invalid-feedback">
 										Please provide a Title of Document.
 									</div>
 								</div>
 
 								<div class="col-md-4">
-									<label for="formCategory" class="form-label small fw-bolder">Form</label>
-									<select class="form-select" id="formCategory" required>
+									<label for="forms" class="form-label small fw-bolder">Form</label>
+									<select class="form-select" id="forms" required>
 										<option>AUDIO</option>
 										<option>INTERVIEW</option>
 										<option>PHOTO</option>
 										<option>VIDEO</option>
-										<option>Others</option>
+										<option value="Others">Others</option>
 									</select>
 									<div class="invalid-feedback">
 										Please select a Unit.
 									</div>
 								</div>
 									<script type="text/javascript">
-										$(document).on('change', '#formCategory', function(e){  
-											e.preventDefault();
-											el = $("#OthersForm");
-											formCategory = this.value;
-											console.log(el)
-											if (formCategory == "Others") {
-												el.show();
-
-											}
-											else {
-												el.hide();
-											}
-										});
-									</script>
-								<div class="col-md-4" id="OthersForm" style="display: none;">
-									<label for="formCategory" class="form-label small fw-bolder">Others:</label>
+									$(document).on('change', '#forms', function(e){  
+										e.preventDefault();
+										othersForm = $("#OthersForm_mul");
+										forms = this.value;
+										if (forms == "Others") {
+											console.log("TRUE")
+											$("#OthersForm_mul").attr("hidden",false)
+										}
+										else {
+											console.log("FALSE")
+											$("#OthersForm_mul").attr("hidden",true)
+										}
+									});
+								</script>
+								<div class="col-md-4" id="OthersForm_mul" hidden>
+									<label for="forms" class="form-label small fw-bolder">Others:</label>
 									<input type="text" name="Others" id="Others" class="form-control" placeholder="please specify">
 								</div>
 
@@ -84,6 +84,15 @@
 										Please provide a Title of Document.
 									</div>
 								</div>
+
+								<div class="col-md-12">
+									<label for="tags" class="form-label small fw-bolder">Tags/Search Keywords</label>
+									<input class="form-control" id="tags" rows="3"></input>
+									<div class="invalid-feedback">
+										Please provide a Title of Document.
+									</div>
+								</div>
+
 							<!-- Drag & Drop File -->
 							<div id="drag-drop-area" style="height: 200px;">
 								<label for="File" class="form-label small fw-bolder">Please upload your files</label>

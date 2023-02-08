@@ -1,0 +1,170 @@
+<html>
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-890" lang="en-us">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="../../static/webrepstatic/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&display=swap" rel="stylesheet">
+	<!-- fontawesomeCDN -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<script src="js/jquery.min.js"></script>
+
+	<!-- CSS only -->
+	<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
+
+
+	<!-- JavaScript Bundle with Popper -->
+	<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
+	<link href="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.css" rel="stylesheet">
+	<script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
+
+	<title >Create Article</title>
+</head>
+
+<body>
+
+	{% include 'main/navbarpages.html' %}
+<!-- Back Arrow -->
+	<div class="container text-start mt-5">
+		<a class=" texttheme" href="/rapid/admin/adminKnowledgeCenter.html">
+			<span><i class="fa-solid fa-arrow-left-long"></i></span>
+		</a>
+	</div>
+
+<!-- Title -->
+	<div class="container d-flex justify-content-between text-start mt-5">
+		<div class="">
+			<h5 class="display-5 texttheme" >Create article</h5>
+		</div>
+
+		
+		<div class="mt-4">
+			<a class="" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-custom-class="custom-tooltip"
+        data-bs-title="This top tooltip is themed via CSS variables."  
+        id="doneCreate">Done</a>
+		</div>
+		<button type="button" class="btn btn-secondary"
+        data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-custom-class="custom-tooltip"
+        data-bs-title="This top tooltip is themed via CSS variables.">
+		  	Done
+		</button>
+	</div>
+
+
+<!-- Arcticle News -->
+	<div class="container shadow-sm p-3 bg-body rounded">
+		<div class="container row">
+			<div class="col-3 border-end border-light">
+				<form class=" row g-3 needs-validation" id="form_for_createPost1">
+					<div class="col-md-12">
+						<label for="postAuthor" class="form-label small fw-bolder">Author name</label>
+						<input class="form-control" id="postAuthor" rows="3" placeholder=""></input>
+						<div class="invalid-feedback">
+							Please provide an Authur name.
+						</div>
+					</div>
+					<div class="col-12">
+						<label for="postContent" class="form-label small fw-bolder">Content</label>
+						<select class="form-select" id="postContent" required>
+							<option>News</option>
+							<option>Story</option>
+							<option>Event</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Content.
+						</div>
+					</div>			
+					<div class="col-12">
+						<label for="Unit" class="form-label small fw-bolder">Category</label>
+						<select class="form-select" id="postCategory" required>
+							<option>All</option>
+							<option>Coffee</option>
+							<option>Cacao</option>
+							<option>Coconut</option>
+							<option>Processed Fruits & Nuts</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Category.
+						</div>
+					</div>
+					<div class="col-12">
+						<label for="Unit" class="form-label small fw-bolder">RCU's</label>
+						<select class="form-select" id="postCategory" required>
+							<option>RCU VIII</option>
+							<option>RCU IX</option>
+							<option>RCU X</option>
+							<option>RCU XI</option>
+							<option>RCU XII</option>
+							<option>RCU XIII</option>
+							<option>BARMM</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Category.
+						</div>
+					</div>
+					<div class="col-12">
+						<label for="postGA" class="form-label small fw-bolder">General Access</label>
+						<select class="form-select" id="postGA" required>
+							<option>Only me</option>
+							<option>Public</option>
+							<option>Administrators</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a General Access.
+						</div>
+					</div>				
+				</form>
+			</div>
+			<div class="col-9">
+				<form class="row g-3 needs-validation" id="form_for_createPost2">
+					<div class="col-md-12">
+						<label for="postheader" class="form-label small fw-bolder">Create heading title</label>
+						<input class="form-control" id="postheader" rows="3"></input>
+						<div class="invalid-feedback">
+							Please provide heading title.
+						</div>
+					</div>
+
+					<div class="col-12">
+						<label for="postContent" class="form-label small fw-bolder">Add text content</label>
+						<textarea class="form-control" id="postContent" rows="3" style="height: 200px;"></textarea>
+						<div class="invalid-feedback">
+							Please provide a text content.
+						</div>
+					</div>
+
+					
+				
+					<div id="drag-drop-area-createCon" style="height: 200px;">
+						<label for="drag-drop-area-createCon" class="form-label small fw-bolder">Upload image content <span class="text-muted fst-italic small fw-lighter"> &nbsp(The uploaded image name serve as a caption of the photo)</span></label>
+					</div>                
+						<script>
+							var uppy = Uppy.Core()
+							.use(Uppy.Dashboard, {
+								inline: true,
+								target: '#drag-drop-area-createCon'
+							})
+							.use(Uppy.Tus, {endpoint:''}) //you can put upload URL here, where you want to upload images
+					 
+							uppy.on('complete', (result) => {
+							console.log('Upload complete! We’ve uploaded these files:', result.successful)
+							})
+						</script>
+				</form>
+				<div class="mt-5">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{% include 'main/footer.html' %}
+
+
+</body>
+</html>
