@@ -115,7 +115,7 @@ class _main:
 
 		t1 = threading.Thread(target=_excel.excel_popu_individual,args=(UPLOAD_NAME,) )
 		t1.start()
-		t1.join()
+		# t1.join()
 		return {"status":"success","msg":"Processing in Progress. Please Wait. Refresh page to view changes","success_files":UPLOAD_NAME}
 		# uploadstate = _excel.excel_popu_individual(UPLOAD_NAME)
 		# return uploadstate
