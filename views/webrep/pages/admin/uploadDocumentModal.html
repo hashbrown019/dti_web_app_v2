@@ -117,19 +117,19 @@
 
 							<div id="drag-drop-area-doc" style="height: 200px;">
 							<label for="File" class="form-label small fw-bolder">Please upload your files</label>
-						</div>                  
-						<script>
-							var uppy = Uppy.Core()
-							.use(Uppy.Dashboard, {
-								inline: true,
-								target: '#drag-drop-area-doc'
-							})
-							.use(Uppy.Tus, {endpoint:''}) //you can put upload URL here, where you want to upload images
-					 
-							uppy.on('complete', (result) => {
-							console.log('Upload complete! We’ve uploaded these files:', result.successful)
-							})
-						</script>
+							</div>                  
+							<script>
+								var uppy = Uppy.Core()
+								.use(Uppy.Dashboard, {
+									inline: true,
+									target: '#drag-drop-area-doc'
+								})
+								.use(Uppy.Tus, {endpoint:''}) //you can put upload URL here, where you want to upload images
+						 
+								uppy.on('complete', (result) => {
+								console.log('Upload complete! We’ve uploaded these files:', result.successful)
+								})
+							</script>
 
 							<!-- <div class="col-md-12">
 								<label for="File" class="form-label small fw-bolder">Please upload your files</label>
