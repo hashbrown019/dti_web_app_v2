@@ -15,15 +15,17 @@
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
         
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="/formcdashboard"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="/formcdashboard">Dashboard</a></li>
-                </ol>
-              </nav>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links">
+                      <li class="breadcrumb-item"><a href="/menu"><i class="fas fa-home text-default"></i></a></li>
+                      <li class="breadcrumb-item"><a href="/formcdashboard" class="text-default">Dashboard</a></li>
+           
+                      
+                    </ol>
+                  </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#modal-filter">Filters</a>
+              <a class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#modal-filter"><i class="fa fa-filter" aria-hidden="true"></i> Filters</a>
             </div>
 
             
@@ -85,7 +87,7 @@
           </div>
           <!-- Card stats -->
           <!--cards form enterprise/gender-->
-          {% if (filter1) == 'Form Enterprise' and (filter2) == 'Gender' or (filter1) == 'Gender' and (filter2) == 'Form Enterprise' %}
+          {% if (filter1) == 'fe' and (filter2) == 'g' or (filter1) == 'g' and (filter2) == 'fe' %}
           <div class="row" style="justify-content: center;">
             <div class="col-xl-3 col-md-6">
               <div class="card  card-stats bg-single" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -268,7 +270,7 @@
 
 
        <!--cards business addr/gender-->
-       {% if (filter1) == 'Business Address' and (filter2) == 'Gender' or (filter1) == 'Gender' and (filter2) == 'Business Address' %}
+       {% if (filter1) == 'ba' and (filter2) == 'g' or (filter1) == 'g' and (filter2) == 'ba' %}
        <div class="row" style="justify-content: center;">
          <div class="col-xl-3 col-md-6">
            <div class="card  card-stats bg-male" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -729,7 +731,7 @@
 
 
           <!--cards form enterprise/industry cluster-->
-          {% if (filter1) == 'Form Enterprise' and (filter2) == 'Industry Cluster' or (filter1) == 'Industry Cluster' and (filter2) == 'Form Enterprise' %}
+          {% if (filter1) == 'fe' and (filter2) == 'ic' or (filter1) == 'ic' and (filter2) == 'fe' %}
           <div class="row" style="justify-content: center;">
             <div class="col-xl-3 col-md-6">
               <div class="card card-stats bg-single" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -969,7 +971,7 @@
 
 
            <!--cards form enterprise/business addr-->
-           {% if (filter1) == 'Form Enterprise' and (filter2) == 'Business Address' or (filter1) == 'Business Address' and (filter2) == 'Form Enterprise' %}
+           {% if (filter1) == 'fe' and (filter2) == 'ba' or (filter1) == 'ba' and (filter2) == 'fe' %}
            <div class="row" style="justify-content: center;">
              <div class="col-xl-3 col-md-6">
                <div class="card card-stats bg-single" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -1729,7 +1731,7 @@
           <!--end card-->
 
            <!--cards industry cluster/business addr-->
-           {% if (filter1) == 'Industry Cluster' and (filter2) == 'Business Address' or (filter1) == 'Business Address' and (filter2) == 'Industry Cluster' %}
+           {% if (filter1) == 'ic' and (filter2) == 'ba' or (filter1) == 'ba' and (filter2) == 'ic' %}
            <div class="row">
              <div class="col-xl-3 col-md-6">
                <div class="card card-stats bg-coffee" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -2631,7 +2633,7 @@
 
 <!--cards industry cluster/gender-->
 
-          {% if (filter1) == 'Industry Cluster' and (filter2) == 'Gender' or (filter1) == 'Gender' and (filter2) == 'Industry Cluster' %}
+          {% if (filter1) == 'ic' and (filter2) == 'g' or (filter1) == 'g' and (filter2) == 'ic' %}
           <div class="row">
             <div class="col-xl-3 col-md-6">
               <div class="card card-stats bg-coffee" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -2880,7 +2882,7 @@
               <td>{{ row['vc_stakeholders'] }}</td>
               <td>{{ row['industry_cluster'] }} {{ row['pfn_specify'] }}</td>
               <td>{{ row['form_interprise'] }}</td>
-              <td><a style="color: #5e72e4;" data-toggle="modal" data-target="#modaledit{{row['id']}}" href="/update/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> view</i></span></a>
+              <td><a style="color: #5e72e4;" data-toggle="modal" data-target="#modaledit{{row['id']}}" href="/update/{{row['id']}}"><span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
               </td>
 
        

@@ -11,7 +11,7 @@
 
 
 
-    <div class="card" style="width:70%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="card" style="width:50%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
         <div class="card-header" style="background-color: #334257;">
             <h3 style="color: white;">Spreadsheet Management</h3>
@@ -19,30 +19,44 @@
     
         <div class="card-body" style="background-color: #b4cde4;;">
     
-            <form style="margin-left: 2%; margin-right: 2%;" >
+            <form style="margin-left: 2%; margin-right: 2%;" action="/importcsv" method="POST"  enctype="multipart/form-data">
                 {% include "sweetalert.html" %}
                 <div class="form-group">
                     <div class="form-row" >
              
-                        <div class="col-md-6">
+                        <div class="col">
                             <strong>
                                 <label for="position">Import Data</label>
                             </strong><br>
-                            <a href="" style="width: 60%;" class="btn btn-primary"  > <span><i class="fa-solid fa-file-arrow-up"></i></span> Import</a>
+                            <div class="file-upload">
+                                <div class="file-select">
+                                  <div class="file-select-button" id="fileName">Choose File</div>
+                                  <div class="file-select-name" id="noFile">No file chosen...</div> 
+                                  <input multiple type="file"accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="chooseFile" id="chooseFile">
+                                 
+                                </div>
+                              </div>
+                              <br>
+                              <button type="submit"  class="btn btn-md btn-default"><span><i class="fa-solid fa-file-arrow-down"></i></span> Import</button>
                         </div>
-                        
-                        <div class="col-md-6">
+                        </div>
+                    </form>
+                    <br> <br>
+                    <form >
+                    <div class="form-row" >
+                        <div class="col">
     
                             <strong>
                                 <label for="name">Export Data</label>
                             </strong><br>
-                            <a href="/menu"  style="width: 60%;" class="btn btn-md btn-default"><span><i class="fa-solid fa-file-arrow-down"></i></span> Export</a>
+                            <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span> Export</button>
                             
                         </div>
                     </div>
                 </div>
+            </form>
                 <br>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <div class="form-row" >
                         
                         
@@ -120,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-    
+            -->
     
             
     

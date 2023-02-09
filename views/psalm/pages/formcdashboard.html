@@ -26,7 +26,7 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#modal-filter">Filters</a>
+              <a class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#modal-filter"><i class="fa fa-filter" aria-hidden="true"></i> Filters</a>
             </div>
 
             
@@ -50,27 +50,26 @@
         
                             <div class="col-md-6">
                                 <strong> <label for="exampleFormControlSelect1">Filter #1</label></strong>
-                                <select class="form-control form_data_c" id="filter1" name="filter1" id="filter1">
+                                <select class="form-control form_data_c" id="filter1" name="filter1" >
                                     <option value="" selected disabled>Please select</option>
-                                    <option>Form Enterprise</option>
-                                    <option>Industry Cluster</option>
-                                    <option>Business Address</option>
-                                    <option>Gender</option>
+                                    <option value="fe">Form Enterprise</option>
+                                    <option value="ic">Industry Cluster</option>
+                                    <option value="ba">Business Address</option>
+                                    <option value="g">Gender</option>
                                 </select> 
                             </div>
         
                             <div class="col-md-6">
                                 <strong> <label for="exampleFormControlSelect1">Filter #2</label></strong>
-                                <select class="form-control form_data_c" id="filter2" name="filter2" id="filter2">
+                                <select class="form-control form_data_c" id="filter2" name="filter2">
                                  
                                     <option value="" selected disabled>Please select</option>
-                                    <option>Form Enterprise</option>
-                                    <option>Industry Cluster</option>
-                                    <option>Business Address</option>
-                                    <option>Gender</option>
+                                    <option class="filter2_opt" id="fe" value="fe">Form Enterprise</option>
+                                    <option class="filter2_opt" id="ic" value="ic">Industry Cluster</option>
+                                    <option class="filter2_opt" id="ba" value="ba">Business Address</option>
+                                    <option class="filter2_opt" id="g" value="g">Gender</option>
                                 </select> 
                             </div>
-        
                         </div>
                     </div>
                     
@@ -167,7 +166,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Firm/ Company</h5>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Business Owner</h5>
                       <span class="h1 font-weight-bold mb-0">{{ count_position_firm }}</span>
                     </div>
                     <div class="col-auto">
@@ -255,7 +254,7 @@
         <p style=" border-radius: 16px; background-color: #1a0d00; height: 10px; margin-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>&nbsp;<h4>Coffee: {{ count_coffee }}</h4>&nbsp;&nbsp;&nbsp;
           <p style=" border-radius: 16px; background-color: #5c5c3d; height: 10px; margin-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>&nbsp;<h4>Coconut: {{ count_coconut }}</h4>&nbsp;&nbsp;&nbsp;
           <p style=" border-radius: 16px; background-color: #994d00; height: 10px; margin-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>&nbsp;<h4>Cacao: {{ count_cacao }}</h4>&nbsp;&nbsp;&nbsp;
-          <p style=" border-radius: 16px; background-color: #006666; height: 10px; margin-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>&nbsp;<h4>PFN: {{ count_pfn }}</h4>
+          <p style=" border-radius: 16px; background-color: #006666; height: 10px; margin-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>&nbsp;<h4>PFN: {{ totalpfn }}</h4>
 
        
         </div>
@@ -267,7 +266,7 @@
         
             <div class="col">
               <ul class="nav nav-pills justify-content-end">
-                <li class="nav-item mr-2 mr-md-0" data-toggle="chart"  data-target="#chart-pie" data-update='{"data":{"datasets":[{"data":[{{ count_cacao }},{{ count_coffee }},{{ count_coconut }},{{ count_pfn }} ] }] }}' >
+                <li class="nav-item mr-2 mr-md-0" data-toggle="chart"  data-target="#chart-pie" data-update='{"data":{"datasets":[{"data":[{{ count_cacao }},{{ count_coffee }},{{ count_coconut }},{{ totalpfn }} ] }] }}' >
                   <a href="#" id="viewchart" class="nav-link py-2 px-3 active" data-toggle="tab"  style="display: none;">
                     
                   </a>
@@ -356,12 +355,12 @@
     <div class="modal-content">
       <div class="modal-header" style="background-color: #172b4d;">
         <h5 class="modal-title text-white" id="exampleModalLabel">Form C Details</h5>       
-        <button type="button" id="xbutton" class="close sweetalerts" data-dismiss="modal" aria-label="Close">
+        <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
           <span class="text-white" aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" id="modalbodyedit">
-        <div class="card" style="width:80%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <div class="card" style="width:100%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
           <div class="card-header" style="background-color: #334257;">
               <h3 style="color: white;">C-1 Respondent’s Profile</h3>
@@ -456,7 +455,7 @@
       </div>
       
       
-      <div class="card" style="width:80%;  margin: 0 auto; float: none; margin-top: 30px; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      <div class="card" style="width:100%;  margin: 0 auto; float: none; margin-top: 30px; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
           <style>
       
               th,td{
@@ -1754,7 +1753,8 @@
                                   <thead style="background-color: #334257 ;">
                                       <tr style="color: white;">
                                           <th scope="col">Type of Labor/Workers</th>
-                                          <th scope="col">Number of Workers (Qty)</th>
+                                          <th scope="col">Number of Workers (Qty) MALE</th>
+                                          <th scope="col">Number of Workers (Qty) FEMALE</th>
                                           <th scope="col">Member of IP Group?(Y/N)</th>
                                           <th scope="col">Ave. # of workdays/mo.</th>
                                           <th scope="col">Ave. Salary/ Wage/month</th>
@@ -1775,7 +1775,8 @@
                           </div>
       
                       </td>
-                      <td><textarea class="form-control form_data_c" value="{{ row['inhouse_num_workers'] }}" id="inhouse_num_workers" name="inhouse_num_workers">{{ row['inhouse_num_workers'] }}</textarea></td>
+                      <td><textarea class="form-control form_data_c" value="{{ row['inhouse_num_workersmale'] }}" id="inhouse_num_workersmale" name="inhouse_num_workersmale">{{ row['inhouse_num_workersmale'] }}</textarea></td>
+                      <td><textarea class="form-control form_data_c" value="{{ row['inhouse_num_workersfemale'] }}" id="inhouse_num_workersfemale" name="inhouse_num_workersfemale">{{ row['inhouse_num_workersfemale'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['inhouse_memb_ip_group'] }}" id="inhouse_memb_ip_group" name="inhouse_memb_ip_group">{{ row['inhouse_memb_ip_group'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['inhouse_ave_workdays'] }}" id="inhouse_ave_workdays" name="inhouse_ave_workdays">{{ row['inhouse_ave_workdays'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['inhouse_ave_salary'] }}" id="inhouse_ave_salary" name="inhouse_ave_salary">{{ row['inhouse_ave_salary'] }}</textarea></td>
@@ -1795,7 +1796,8 @@
       
                       </td>
       
-                      <td><textarea class="form-control form_data_c" value="{{ row['sub_cont_num_workers'] }}" id="sub_cont_num_workers" name="sub_cont_num_workers">{{ row['sub_cont_num_workers'] }}</textarea></td>
+                      <td><textarea class="form-control form_data_c" value="{{ row['sub_cont_num_workersmale'] }}" id="sub_cont_num_workersmale" name="sub_cont_num_workersmale">{{ row['sub_cont_num_workersmale'] }}</textarea></td>
+                      <td><textarea class="form-control form_data_c" value="{{ row['sub_cont_num_workersfemale'] }}" id="sub_cont_num_workersfemale" name="sub_cont_num_workersfemale">{{ row['sub_cont_num_workersfemale'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c"  value="{{ row['sub_cont_memb_ip_group'] }}" id="sub_cont_memb_ip_group" name="sub_cont_memb_ip_group">{{ row['sub_cont_memb_ip_group'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['sub_cont_ave_workdays'] }}" id="sub_cont_ave_workdays" name="sub_cont_ave_workdays">{{ row['sub_cont_ave_workdays'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['sub_cont_ave_salary'] }}" id="sub_cont_ave_salary" name="sub_cont_ave_salary">{{ row['sub_cont_ave_salary'] }}</textarea></td>
@@ -1809,7 +1811,8 @@
                                   </div>
                               </div>
                           </div>
-                      <td><textarea class="form-control form_data_c" value="{{ row['piece_rate_num_workers'] }}" id="piece_rate_num_workers" name="piece_rate_num_workers">{{ row['piece_rate_num_workers'] }}</textarea></td>
+                      <td><textarea class="form-control form_data_c" value="{{ row['piece_rate_num_workersmale'] }}" id="piece_rate_num_workersmale" name="piece_rate_num_workersmale">{{ row['piece_rate_num_workersmale'] }}</textarea></td>
+                      <td><textarea class="form-control form_data_c" value="{{ row['piece_rate_num_workersfemale'] }}" id="piece_rate_num_workersfemale" name="piece_rate_num_workersfemale">{{ row['piece_rate_num_workersfemale'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['piece_rate_memb_ip_group'] }}" id="piece_rate_memb_ip_group" name="piece_rate_memb_ip_group">{{ row['piece_rate_memb_ip_group'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['piece_rate_ave_workdays'] }}" id="piece_rate_ave_workdays" name="piece_rate_ave_workdays">{{ row['piece_rate_ave_workdays'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['piece_rate_ave_salary'] }}" id="piece_rate_ave_salary" name="piece_rate_ave_salary">{{ row['piece_rate_ave_salary'] }}</textarea></td>
@@ -1826,7 +1829,8 @@
                                   </div>
                               </div>
                           </div>
-                      <td><textarea class="form-control form_data_c" value="{{ row['total_num_workers'] }}" id="total_num_workers" name="total_num_workers">{{ row['total_num_workers'] }}</textarea></td>
+                      <td><textarea class="form-control form_data_c" value="{{ row['total_num_workersmale'] }}" id="total_num_workersmale" name="total_num_workersmale">{{ row['total_num_workersmale'] }}</textarea></td>
+                      <td><textarea class="form-control form_data_c" value="{{ row['total_num_workersfemale'] }}" id="total_num_workersfemale" name="total_num_workersfemale">{{ row['total_num_workersfemale'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['total_memb_ip_group'] }}" id="total_memb_ip_group" name="total_memb_ip_group">{{ row['total_memb_ip_group'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c"  value="{{ row['total_ave_workdays'] }}" id="total_ave_workdays" name="total_ave_workdays">{{ row['total_ave_workdays'] }}</textarea></td>
                       <td><textarea class="form-control form_data_c" value="{{ row['total_ave_salary'] }}" id="total_ave_salary" name="total_ave_salary">{{ row['total_ave_salary'] }}</textarea></td>
@@ -1853,7 +1857,7 @@
       
       
       
-      <div class="card" style="width:80%;   margin: 0 auto; float: none; margin-top: 30px; margin-bottom: 150px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      <div class="card" style="width:100%;   margin: 0 auto; float: none; margin-top: 30px; margin-bottom: 150px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
       
           <div class="card-header" style="background-color: #334257;">
               <h3 style="color: white;">C-3 Challenges in business operations and support needed</h3>
@@ -2244,7 +2248,7 @@
           </div>
           <div class="modal-footer bg-light">
              <button type="submit" id="saveupdate" class="btn btn-primary" style="justify-content: right;">Save changes</button>
-            <button type="button" id="closebtn" class="btn btn-warning sweetalerts" data-dismiss="modal">Close</button>
+            <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
       </div>
     </form>
       

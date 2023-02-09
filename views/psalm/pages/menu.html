@@ -22,18 +22,22 @@
 </style>
 <body id="container_b">
 
-<div class="float-right">
-  
-<div class="card text-white sl-primary" style="max-width: 18rem; padding: 1px;height: auto;border-radius: 0px 0px 0px 0px;">
+<div class=" text-white sl-primary" style=" position: absolute; right: 0; max-width: 18rem; padding: 1px;height: auto;border-radius: 0px 0px 0px 0px;">
   <!-- <div class="card-header">{{user_data['name']}}</div> -->
   <div class="card-body">
     <!-- <h5 class="card-title">Primary card title</h5> -->
-    <div class=""><span class="fa fa-user"></span> {{user_data['name']}}</div>
-    <a href="/logout" class="btn btn-block btn-danger">Logout</a>
-  </div>
+    <div class=""><span class="fa fa-user"> </span>&nbsp; {{user_data['name']}}</div><br>
+    <div id="button-container">
+      <button onclick="location.href='/logout';" class="danger-button">
+        Logout
+        <span class="round"></span>
+      </button>
+    </div>
+</div>
 </div>
 
-</div>
+
+
 
 
 <div class="container">
@@ -55,7 +59,7 @@
         <p class="card__title">Admin Knowledge Center</p>
         
          <div id="button-container">
-           <button onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" class="primary-button">
+           <button onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" class="admin-button"><i class="fa-solid fa-arrow-up-right-from-square"></i>
              Open
              <span class="round"></span>
            </button>
@@ -81,7 +85,7 @@
          <p class="card__title">PROFILING</p>
          <br>
           <div id="button-container">
-            <button class="primary-button" data-toggle="modal" data-target="#profilingmodal">
+            <button class="prof-button" data-toggle="modal" data-target="#profilingmodal"><i class="fa-solid fa-list-ul"></i>
               Open
               <span class="round"></span>
             </button>
@@ -106,7 +110,7 @@
           <p class="card__title">DATA CAPTURE FORM</p>
 
            <div id="button-container">
-            <button class="primary-button" data-toggle="modal" data-target="#dcfmodal">
+            <button class="dcf-button" data-toggle="modal" data-target="#dcfmodal"><i class="fa-solid fa-arrow-up-right-from-square"></i>
               Open
               <span class="round"></span>
             </button>
@@ -130,7 +134,7 @@
           <p class="card__title">FMI</p>
           <br>
            <div id="button-container">
-            <button class="primary-button" data-toggle="modal" data-target="#fmimodal">
+            <button class="fmi-button" data-toggle="modal" data-target="#fmimodal"><i class="fa-solid fa-arrow-up-right-from-square"></i>
               Open
               <span class="round"></span>
             </button>
@@ -155,7 +159,7 @@
           <p class="card__title">FUND TRACKER</p>
           <br>
            <div id="button-container">
-            <button class="primary-button"  data-toggle="modal" data-target="#fundmodal">
+            <button class="fund-button"  data-toggle="modal" data-target="#fundmodal"><i class="fa-solid fa-arrow-up-right-from-square"></i>
               Open
               <span class="round"></span>
             </button>
@@ -168,8 +172,8 @@
  
 <div class="modal fade" id="profilingmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modalprof modal-header " >
+    <div class="modal-content prof-content">
+      <div class="modalprof modal-header prof-header " >
         <h4 class="modal-title w-100 text-center" id="exampleModalLongTitle">PROFILING</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
@@ -184,8 +188,8 @@
              
       </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      <div class="modal-footer prof-footer">
+        <button type="button" class="btn text-white" style="background-color: #3366cc;" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -193,8 +197,8 @@
 
 <div class="modal fade" id="dcfmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modaldcf modal-header " >
+    <div class="modal-content dcf-content">
+      <div class="modaldcf modal-header dcf-header " >
         <h4 class="modal-title w-100 text-center" id="exampleModalLongTitle">DATA CAPTURE FORM</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
@@ -211,8 +215,8 @@
             <button class='sp_sheet'>Spreadsheet Management</button>
       </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      <div class="modal-footer dcf-footer">
+        <button type="button" class="btn" style="background-color: #009999;" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

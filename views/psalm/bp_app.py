@@ -3,6 +3,9 @@ from modules.Connections import mysql
 from decimal import Decimal
 from flask_session import Session
 import Configurations as c
+import xlrd
+from werkzeug.utils import secure_filename
+import os
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -13,6 +16,145 @@ def is_on_session(): return ('USER_DATA' in session)
 @app.route('/formc')
 def index():
     return render_template("index.html")
+
+@app.route('/importcsv',methods = ['GET','POST'])
+def importcsv():
+    from datetime import date, datetime
+    today = str(datetime.today()).replace("-","").replace(" ","").replace(":","").replace(".","")
+    uploader = session["USER_DATA"][0]["id"]
+    if request.method == "POST":
+        files = request.files
+        for file in files:
+            f = files[file]
+            UPLOAD_NAME = str(uploader)+"#"+str(today)+"#"+secure_filename(f.filename)
+            f.save(os.path.join(c.RECORDS+"/objects/spreadsheets_c/queued/",UPLOAD_NAME ))
+            excel_upload_open(os.path.join(c.RECORDS+"/objects/spreadsheets_c/queued/",UPLOAD_NAME ))
+            
+            
+    return redirect("/spreadsheet")
+
+def excel_upload_open(path):  
+    book = xlrd.open_workbook(path)
+    sheet = book.sheet_by_index(0)
+    data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+    header = data[4]
+    
+    for row in data[6:]:
+        name = row[1]                                                                      
+        position_firm = row[2]                                                                                                     
+        sex = row[3]                                                               
+        age = row[4]                                                               
+        contact_details = row[5]                                                   
+        email_add = row[6]                                                         
+        vc_stakeholders = row[7]                                                   
+        industry_cluster = row[8]                                                                                                       
+        reg_businessname = row[9]                                                  
+        business_addr = row[10]                                                     
+        form_interprise = row[11]                                                                                                  
+        issued_by_business_reg = row[12]                                                                                   
+        issued_by_product_reg = row[13]                                                                                      
+        issued_by_cert_reg = row[14]                                                                                           
+        issued_by_lic_op = row[15]                                                                                                                                             
+        issued_by_iso_cert = row[16]                                                                                           
+        issued_by_gapgmp_cert = row[17]                                                                                     
+        issued_by_organic = row[18]                                                                                             
+        issued_by_halal = row[19]                                                                                                                                            
+        issued_by_other_cert = row[20]                                                                                                                                        
+        type_enterprise = row[21]                                                   
+        store_capacity_organic = row[22]                                            
+        store_capacity_synthetic = row[25]                                          
+        potential_organic = row[23]                                                 
+        potential_synthetic = row[26]                                               
+        other_info_organic = row[24]                                                
+        other_info_synthetic = row[27]                                              
+        store_capacity_pesticides = row[28]                                         
+        store_capacity_herbicides = row[31]                                         
+        potential_pesticides = row[29]                                              
+        potential_herbicides = row[32]                                              
+        other_info_pesticides = row[30]                                             
+        other_info_herbicides = row[33]                                             
+        store_capacity_vermicast_compost = row[34]                                  
+        potential_vermicast_compost = row[35]                                       
+        other_info_vermicast_compost = row[36]                                      
+        store_capacity_seedlings = row[37]                                          
+        potential_seedlings = row[38]                                               
+        other_info_seedlings = row[39]                                              
+        others_specific_products = row[40]                                          
+        store_capacity_others_specific_products = row[41]                           
+        potential_others_specific_products = row[42]                                
+        other_info_others_specific_products = row[43]                               
+        area_capacity_drying = row[44]                                              
+        potential_exp_drying = row[45]                                              
+        other_info_drying = row[46]                                                 
+        area_capacity_storage_hauling = row[47]                                     
+        potential_exp_storage_hauling = row[48]                                     
+        other_info_storage_hauling = row[49]                                        
+        current_capacity_semi_processing = row[50]                                  
+        potential_exp_semi_processing = row[51]                                     
+        other_info_semi_processing = row[52]                                        
+        current_capacity_final_product = row[53]                                    
+        potential_exp_final_product = row[54]                                       
+        other_info_final_product = row[55]                                          
+        volume_consolidation = row[56]                                              
+        potential_consolidation = row[57]                                           
+        other_info_consolidation = row[58]                                          
+        production_pack_label = row[59]                                             
+        potential_pack_label = row[60]                                              
+        other_info_pack_label = row[61]                                             
+        loan_portfo_micro_financing = row[62]                                       
+        potential_micro_financing = row[63]                                         
+        other_info_micro_financing = row[64]                                        
+        loan_portfo_insurance = row[65]                                             
+        potential_insurance = row[66]                                               
+        other_info_insurance = row[67]                                              
+        prodsales_product_service = row[68]                                         
+        prodsales_sales_vol = row[69]                                               
+        prodsales_unit_selling = row[70]                                            
+        prodsales_unit_measurement = row[71]                                        
+        prodsales_payment_terms = row[72]                                                                                                                                         
+        raw_materials = row[73]                                                     
+        volume_supply = row[74]                                                     
+        quality_requirement = row[75]                                               
+        unit_measurement_raw = row[76]                                                                                           
+        distrib_point_local_cust = row[77]                                          
+        sales_vol_local_cust = row[78]                                              
+        payment_terms_local_cust = row[79]                                                                                                                                                                                                                           
+        inhouse_num_workersmale = row[80]
+        inhouse_num_workersfemale = row[81]                                                  
+        inhouse_memb_ip_group = row[82]                                                 
+        inhouse_ave_workdays = row[83]                                                  
+        inhouse_ave_salary = row[84]                                                    
+        sub_cont_num_workersmale = row[85]
+        sub_cont_num_workersfemale = row[86]                                                   
+        sub_cont_memb_ip_group = row[87]                                                
+        sub_cont_ave_workdays = row[88]                                                 
+        sub_cont_ave_salary = row[89]                                                   
+        piece_rate_num_workersmale = row[90]
+        piece_rate_num_workersfemale = row[91]                                                 
+        piece_rate_memb_ip_group = row[92]                                              
+        piece_rate_ave_workdays = row[93]                                               
+        piece_rate_ave_salary = row[94]                                                                                                      
+        form_interprise2 = row[95]                                                                                                  
+        pricing = row[96]                                                                                                                    
+        quality_raw = row[97]                                                                                                             
+        quality_final_prod = row[98]                                                                                               
+        other_specifyc3 = row[99]                                                       
+        existing_comm = row[100]                                                                                                           
+        prov_supp_assis = row[101]                                                                                                     
+        business_prodc3 = row[102]                                                                                                                                                                                                                                                               
+        member_livelihood = row[105]                                                                           
+        what_cluster_industry = row[106]               
+        querycsv = ("INSERT INTO form_c ( name,position_firm, sex, age, contact_details, email_add,vc_stakeholders, industry_cluster,reg_businessname,business_addr, form_interprise, issued_by_business_reg,issued_by_product_reg,issued_by_cert_reg, issued_by_lic_op,issued_by_iso_cert, issued_by_gapgmp_cert,issued_by_organic,issued_by_halal,issued_by_other_cert, type_enterprise, store_capacity_organic,store_capacity_synthetic,potential_organic,potential_synthetic,other_info_organic, other_info_synthetic, store_capacity_pesticides, store_capacity_herbicides, potential_pesticides, potential_herbicides, other_info_pesticides,other_info_herbicides,store_capacity_vermicast_compost,potential_vermicast_compost,other_info_vermicast_compost, store_capacity_seedlings,potential_seedlings,other_info_seedlings, others_specific_products,store_capacity_others_specific_products,potential_others_specific_products,other_info_others_specific_products, area_capacity_drying, potential_exp_drying, other_info_drying,area_capacity_storage_hauling,potential_exp_storage_hauling,other_info_storage_hauling,current_capacity_semi_processing,potential_exp_semi_processing,other_info_semi_processing,current_capacity_final_product, potential_exp_final_product,other_info_final_product,volume_consolidation, potential_consolidation, other_info_consolidation,production_pack_label,potential_pack_label, other_info_pack_label,loan_portfo_micro_financing,potential_micro_financing, other_info_micro_financing,loan_portfo_insurance,potential_insurance,other_info_insurance, prodsales_product_service, prodsales_sales_vol,prodsales_unit_selling,prodsales_unit_measurement,prodsales_payment_terms, raw_materials, volume_supply, quality_requirement,unit_measurement_raw, distrib_point_local_cust,sales_vol_local_cust, payment_terms_local_cust,inhouse_num_workersmale, inhouse_num_workersfemale, inhouse_memb_ip_group,inhouse_ave_workdays, inhouse_ave_salary, sub_cont_num_workersmale,sub_cont_num_workersfemale,sub_cont_memb_ip_group,sub_cont_ave_workdays,sub_cont_ave_salary,piece_rate_num_workersmale,piece_rate_num_workersfemale, piece_rate_memb_ip_group,piece_rate_ave_workdays, piece_rate_ave_salary,form_interprise2,pricing,quality_raw,quality_final_prod, other_specifyc3, existing_comm, prov_supp_assis, business_prodc3,member_livelihood,what_cluster_industry) VALUES ('{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}')".
+        format(name,position_firm, sex, age, contact_details, email_add,vc_stakeholders, industry_cluster,reg_businessname,business_addr, form_interprise, issued_by_business_reg,issued_by_product_reg,issued_by_cert_reg, issued_by_lic_op,issued_by_iso_cert, issued_by_gapgmp_cert,issued_by_organic,issued_by_halal,issued_by_other_cert, type_enterprise, store_capacity_organic,store_capacity_synthetic,potential_organic,potential_synthetic,other_info_organic, other_info_synthetic, store_capacity_pesticides, store_capacity_herbicides, potential_pesticides, potential_herbicides, other_info_pesticides,other_info_herbicides,store_capacity_vermicast_compost,potential_vermicast_compost,other_info_vermicast_compost, store_capacity_seedlings,potential_seedlings,other_info_seedlings, others_specific_products,store_capacity_others_specific_products,potential_others_specific_products,other_info_others_specific_products, area_capacity_drying, potential_exp_drying, other_info_drying,area_capacity_storage_hauling,potential_exp_storage_hauling,other_info_storage_hauling,current_capacity_semi_processing,potential_exp_semi_processing,other_info_semi_processing,current_capacity_final_product, potential_exp_final_product,other_info_final_product,volume_consolidation, potential_consolidation, other_info_consolidation,production_pack_label,potential_pack_label, other_info_pack_label,loan_portfo_micro_financing,potential_micro_financing, other_info_micro_financing,loan_portfo_insurance,potential_insurance,other_info_insurance, prodsales_product_service, prodsales_sales_vol,prodsales_unit_selling,prodsales_unit_measurement,prodsales_payment_terms, raw_materials, volume_supply, quality_requirement,unit_measurement_raw, distrib_point_local_cust,sales_vol_local_cust, payment_terms_local_cust,inhouse_num_workersmale, inhouse_num_workersfemale, inhouse_memb_ip_group,inhouse_ave_workdays, inhouse_ave_salary, sub_cont_num_workersmale,sub_cont_num_workersfemale,sub_cont_memb_ip_group,sub_cont_ave_workdays,sub_cont_ave_salary,piece_rate_num_workersmale,piece_rate_num_workersfemale, piece_rate_memb_ip_group,piece_rate_ave_workdays, piece_rate_ave_salary,form_interprise2,pricing,quality_raw,quality_final_prod, other_specifyc3, existing_comm, prov_supp_assis, business_prodc3,member_livelihood,what_cluster_industry))
+        insert=db.do(querycsv)
+        
+    if(insert["response"]=="error"):
+        flash(f"An error occured !", "error")
+        print(name)
+    else:
+        flash(f"Record Saved!", "success")  
+        print(str(insert))
+    return "done"
 
 @app.route('/insert', methods = ['POST'])
 def insert():
@@ -142,19 +284,23 @@ def insert():
         distrib_point_others_specify_marketing = request.form.get('distrib_point_others_specify_marketing')
         sales_vol_others_specify_marketing = request.form.get('sales_vol_others_specify_marketing')
         payment_terms_others_specify_marketing = request.form.get('payment_terms_others_specify_marketing')
-        inhouse_num_workers = request.form.get('inhouse_num_workers')
+        inhouse_num_workersmale = request.form.get('inhouse_num_workersmale')
+        inhouse_num_workersfemale = request.form.get('inhouse_num_workersfemale')
         inhouse_memb_ip_group = request.form.get('inhouse_memb_ip_group')
         inhouse_ave_workdays = request.form.get('inhouse_ave_workdays')
         inhouse_ave_salary = request.form.get('inhouse_ave_salary')
-        sub_cont_num_workers = request.form.get('sub_cont_num_workers')
+        sub_cont_num_workersmale = request.form.get('sub_cont_num_workersmale')
+        sub_cont_num_workersfemale = request.form.get('sub_cont_num_workersfemale')
         sub_cont_memb_ip_group = request.form.get('sub_cont_memb_ip_group')
         sub_cont_ave_workdays = request.form.get('sub_cont_ave_workdays')
         sub_cont_ave_salary = request.form.get('sub_cont_ave_salary')
-        piece_rate_num_workers = request.form.get('piece_rate_num_workers')
+        piece_rate_num_workersmale = request.form.get('piece_rate_num_workersmale')
+        piece_rate_num_workersfemale = request.form.get('piece_rate_num_workersfemale')
         piece_rate_memb_ip_group = request.form.get('piece_rate_memb_ip_group')
         piece_rate_ave_workdays = request.form.get('piece_rate_ave_workdays')
         piece_rate_ave_salary = request.form.get('piece_rate_ave_salary')
-        total_num_workers = request.form.get('total_num_workers')
+        total_num_workersmale = request.form.get('total_num_workersmale')
+        total_num_workersfemale = request.form.get('total_num_workerfesmale')
         total_memb_ip_group = request.form.get('total_memb_ip_group')
         total_ave_workdays = request.form.get('total_ave_workdays')
         total_ave_salary = request.form.get('total_ave_salary')
@@ -194,9 +340,9 @@ def insert():
 
 
         
-
-        formc_data = db.do("INSERT INTO form_c ( name, position_firm, member_indegenous, sex, age, contact_details, email_add, vc_stakeholders, industry_cluster, pfn_specify, reg_businessname, business_addr, form_interprise, interprise_other, issued_by_business_reg, expired_date_business_reg, issued_by_product_reg, expired_date_product_reg, issued_by_cert_reg, expired_date_cert_reg, issued_by_lic_op, expired_date_lic_op, iso_cert_specific, issued_by_iso_cert, expired_date_iso_cert, issued_by_gapgmp_cert, expired_date_gapgmp_cert, issued_by_organic, expired_date_organic, issued_by_halal, expired_date_halal, other_cert_specify, issued_by_other_cert, expired_date_other_cert, none_of_the_above, type_enterprise, store_capacity_organic, store_capacity_synthetic, potential_organic, potential_synthetic, other_info_organic, other_info_synthetic, store_capacity_pesticides, store_capacity_herbicides, potential_pesticides, potential_herbicides, other_info_pesticides, other_info_herbicides, store_capacity_vermicast_compost, potential_vermicast_compost, other_info_vermicast_compost, store_capacity_seedlings, potential_seedlings, other_info_seedlings, others_specific_products, store_capacity_others_specific_products, potential_others_specific_products, other_info_others_specific_products, area_capacity_drying, potential_exp_drying, other_info_drying, area_capacity_storage_hauling, potential_exp_storage_hauling, other_info_storage_hauling, current_capacity_semi_processing, potential_exp_semi_processing, other_info_semi_processing, current_capacity_final_product, potential_exp_final_product, other_info_final_product, volume_consolidation, potential_consolidation, other_info_consolidation, production_pack_label, potential_pack_label, other_info_pack_label, loan_portfo_micro_financing, potential_micro_financing, other_info_micro_financing, loan_portfo_insurance, potential_insurance, other_info_insurance, prodsales_product_service, prodsales_sales_vol, prodsales_unit_selling, prodsales_unit_measurement,prodsales_payment_terms, prodsales_product_service2, prodsales_sales_vol2, prodsales_unit_selling2, prodsales_unit_measurement2,prodsales_payment_terms2, prodsales_product_service3, prodsales_sales_vol3, prodsales_unit_selling3, prodsales_unit_measurement3,prodsales_payment_terms3, direct_farm, public_market, trader_conso, raw_materials, volume_supply, quality_requirement, unit_measurement_raw, raw_materials2, volume_supply2, quality_requirement2, unit_measurement_raw2, raw_materials3, volume_supply3, quality_requirement3, unit_measurement_raw3, distrib_point_local_cust, sales_vol_local_cust, payment_terms_local_cust, distrib_point_middleman, sales_vol_middleman, payment_terms_middleman, distrib_point_export, sales_vol_export, payment_terms_export, others_specify_marketing, distrib_point_others_specify_marketing, sales_vol_others_specify_marketing, payment_terms_others_specify_marketing, inhouse_num_workers, inhouse_memb_ip_group, inhouse_ave_workdays, inhouse_ave_salary, sub_cont_num_workers, sub_cont_memb_ip_group, sub_cont_ave_workdays, sub_cont_ave_salary, piece_rate_num_workers, piece_rate_memb_ip_group, piece_rate_ave_workdays, piece_rate_ave_salary, total_num_workers, total_memb_ip_group, total_ave_workdays, total_ave_salary, form_interprise2, ifyes_form_interprise, pricing, ifyes_pricing, quality_raw, ifyes_quality_raw, quality_final_prod, ifyes_quality_final_prod, other_specifyc3, existing_comm, ifyes_existing_comm, prov_supp_assis, ifyes_prov_supp_assis, business_prodc3, ifyes_business_prodc3, ifnoc3, capability, tech_equip, access_market, commu_key_part, political, chamber_commerce, trade_assoc, coopera, commu_key_part2, other_orgs_checkbox, other_orgs_pls_spec, name_org, location_org, member_livelihood, ifyes_member_livelihood, what_cluster_industry) VALUES ('{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}')". 
-        format( name, position_firm, member_indegenous, sex, age, contact_details, email_add, vc_stakeholders, industry_cluster, pfn_specify, reg_businessname, business_addr, form_interprise, interprise_other, issued_by_business_reg, expired_date_business_reg, issued_by_product_reg, expired_date_product_reg, issued_by_cert_reg, expired_date_cert_reg, issued_by_lic_op, expired_date_lic_op, iso_cert_specific, issued_by_iso_cert, expired_date_iso_cert, issued_by_gapgmp_cert, expired_date_gapgmp_cert, issued_by_organic, expired_date_organic, issued_by_halal, expired_date_halal, other_cert_specify, issued_by_other_cert, expired_date_other_cert, none_of_the_above, type_enterprise, store_capacity_organic, store_capacity_synthetic, potential_organic, potential_synthetic, other_info_organic, other_info_synthetic, store_capacity_pesticides, store_capacity_herbicides, potential_pesticides, potential_herbicides, other_info_pesticides, other_info_herbicides, store_capacity_vermicast_compost, potential_vermicast_compost, other_info_vermicast_compost, store_capacity_seedlings, potential_seedlings, other_info_seedlings, others_specific_products, store_capacity_others_specific_products, potential_others_specific_products, other_info_others_specific_products, area_capacity_drying, potential_exp_drying, other_info_drying, area_capacity_storage_hauling, potential_exp_storage_hauling, other_info_storage_hauling, current_capacity_semi_processing, potential_exp_semi_processing, other_info_semi_processing, current_capacity_final_product, potential_exp_final_product, other_info_final_product, volume_consolidation, potential_consolidation, other_info_consolidation, production_pack_label, potential_pack_label, other_info_pack_label, loan_portfo_micro_financing, potential_micro_financing, other_info_micro_financing, loan_portfo_insurance, potential_insurance, other_info_insurance, prodsales_product_service, prodsales_sales_vol, prodsales_unit_selling, prodsales_unit_measurement,prodsales_payment_terms, prodsales_product_service2, prodsales_sales_vol2, prodsales_unit_selling2, prodsales_unit_measurement2,prodsales_payment_terms2, prodsales_product_service3, prodsales_sales_vol3, prodsales_unit_selling3, prodsales_unit_measurement3,prodsales_payment_terms3, direct_farm, public_market, trader_conso, raw_materials, volume_supply, quality_requirement, unit_measurement_raw, raw_materials2, volume_supply2, quality_requirement2, unit_measurement_raw2, raw_materials3, volume_supply3, quality_requirement3, unit_measurement_raw3, distrib_point_local_cust, sales_vol_local_cust, payment_terms_local_cust, distrib_point_middleman, sales_vol_middleman, payment_terms_middleman, distrib_point_export, sales_vol_export, payment_terms_export, others_specify_marketing, distrib_point_others_specify_marketing, sales_vol_others_specify_marketing, payment_terms_others_specify_marketing, inhouse_num_workers, inhouse_memb_ip_group, inhouse_ave_workdays, inhouse_ave_salary, sub_cont_num_workers, sub_cont_memb_ip_group, sub_cont_ave_workdays, sub_cont_ave_salary, piece_rate_num_workers, piece_rate_memb_ip_group, piece_rate_ave_workdays, piece_rate_ave_salary, total_num_workers, total_memb_ip_group, total_ave_workdays, total_ave_salary, form_interprise2, ifyes_form_interprise, pricing, ifyes_pricing, quality_raw, ifyes_quality_raw, quality_final_prod, ifyes_quality_final_prod, other_specifyc3, existing_comm, ifyes_existing_comm, prov_supp_assis, ifyes_prov_supp_assis, business_prodc3, ifyes_business_prodc3, ifnoc3, capability, tech_equip, access_market, commu_key_part, political, chamber_commerce, trade_assoc, coopera, commu_key_part2, other_orgs_checkbox, other_orgs_pls_spec, name_org, location_org, member_livelihood, ifyes_member_livelihood, what_cluster_industry))
+        
+        formc_data = db.do("INSERT INTO form_c ( name ,position_firm ,member_indegenous ,sex ,age ,contact_details ,email_add ,vc_stakeholders , industry_cluster ,pfn_specify , reg_businessname ,business_addr ,form_interprise , interprise_other ,issued_by_business_reg ,expired_date_business_reg ,issued_by_product_reg ,expired_date_product_reg , issued_by_cert_reg ,expired_date_cert_reg ,issued_by_lic_op ,expired_date_lic_op ,  iso_cert_specific ,issued_by_iso_cert ,expired_date_iso_cert ,issued_by_gapgmp_cert ,expired_date_gapgmp_cert , issued_by_organic ,expired_date_organic , issued_by_halal , expired_date_halal ,other_cert_specify ,issued_by_other_cert , expired_date_other_cert ,  none_of_the_above ,type_enterprise , store_capacity_organic ,store_capacity_synthetic , potential_organic ,potential_synthetic ,  other_info_organic ,other_info_synthetic , store_capacity_pesticides ,store_capacity_herbicides ,potential_pesticides , potential_herbicides , other_info_pesticides ,other_info_herbicides ,store_capacity_vermicast_compost , potential_vermicast_compost ,  other_info_vermicast_compost , store_capacity_seedlings , potential_seedlings ,  other_info_seedlings , others_specific_products , store_capacity_others_specific_products ,  potential_others_specific_products ,other_info_others_specific_products ,  area_capacity_drying , potential_exp_drying , other_info_drying ,area_capacity_storage_hauling ,potential_exp_storage_hauling ,other_info_storage_hauling ,current_capacity_semi_processing , potential_exp_semi_processing ,other_info_semi_processing ,current_capacity_final_product ,potential_exp_final_product ,  other_info_final_product , volume_consolidation , potential_consolidation ,  other_info_consolidation , production_pack_label ,potential_pack_label , other_info_pack_label ,loan_portfo_micro_financing ,  potential_micro_financing ,other_info_micro_financing ,loan_portfo_insurance ,potential_insurance ,  other_info_insurance , prodsales_product_service ,prodsales_sales_vol ,  prodsales_unit_selling ,prodsales_unit_measurement ,prodsales_payment_terms ,  prodsales_product_service2 ,prodsales_sales_vol2 , prodsales_unit_selling2 ,  prodsales_unit_measurement2 ,  prodsales_payment_terms2 , prodsales_product_service3 ,prodsales_sales_vol3 , prodsales_unit_selling3 ,  prodsales_unit_measurement3 ,  prodsales_payment_terms3 , direct_farm , public_market ,trader_conso ,raw_materials ,volume_supply ,quality_requirement ,  unit_measurement_raw , raw_materials2 ,  volume_supply2 ,  quality_requirement2 , unit_measurement_raw2 ,raw_materials3 ,  volume_supply3 ,  quality_requirement3 , unit_measurement_raw3 ,distrib_point_local_cust , sales_vol_local_cust , payment_terms_local_cust , distrib_point_middleman ,  sales_vol_middleman ,  payment_terms_middleman ,  distrib_point_export , sales_vol_export ,payment_terms_export , others_specify_marketing , distrib_point_others_specify_marketing ,sales_vol_others_specify_marketing ,payment_terms_others_specify_marketing ,inhouse_num_workersmale ,  inhouse_num_workersfemale ,inhouse_memb_ip_group ,inhouse_ave_workdays , inhouse_ave_salary ,sub_cont_num_workersmale , sub_cont_num_workersfemale ,sub_cont_memb_ip_group ,sub_cont_ave_workdays ,sub_cont_ave_salary ,  piece_rate_num_workersmale,piece_rate_num_workersfemale ,piece_rate_memb_ip_group , piece_rate_ave_workdays ,  piece_rate_ave_salary ,total_num_workersmale ,total_num_workersfemale ,  total_memb_ip_group ,  total_ave_workdays ,total_ave_salary ,form_interprise2 ,ifyes_form_interprise ,pricing , ifyes_pricing ,quality_raw , ifyes_quality_raw ,quality_final_prod ,ifyes_quality_final_prod , other_specifyc3 , existing_comm ,ifyes_existing_comm ,  prov_supp_assis , ifyes_prov_supp_assis ,business_prodc3 , ifyes_business_prodc3 ,ifnoc3 ,  capability ,  tech_equip ,  access_market ,commu_key_part ,  political ,chamber_commerce ,trade_assoc , coopera , commu_key_part2 , other_orgs_checkbox ,  other_orgs_pls_spec ,  name_org ,location_org ,member_livelihood ,ifyes_member_livelihood ,  what_cluster_industry) VALUES ('{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}','{}','{}', '{}', '{}','{}', '{}', '{}','{}', '{}', '{}', '{}', '{}')". 
+        format( name ,position_firm ,member_indegenous ,sex ,age ,contact_details ,email_add ,vc_stakeholders , industry_cluster ,pfn_specify , reg_businessname ,business_addr ,form_interprise , interprise_other ,issued_by_business_reg ,expired_date_business_reg ,issued_by_product_reg ,expired_date_product_reg , issued_by_cert_reg ,expired_date_cert_reg ,issued_by_lic_op ,expired_date_lic_op ,  iso_cert_specific ,issued_by_iso_cert ,expired_date_iso_cert ,issued_by_gapgmp_cert ,expired_date_gapgmp_cert , issued_by_organic ,expired_date_organic , issued_by_halal , expired_date_halal ,other_cert_specify ,issued_by_other_cert , expired_date_other_cert ,  none_of_the_above ,type_enterprise , store_capacity_organic ,store_capacity_synthetic , potential_organic ,potential_synthetic ,  other_info_organic ,other_info_synthetic , store_capacity_pesticides ,store_capacity_herbicides ,potential_pesticides , potential_herbicides , other_info_pesticides ,other_info_herbicides ,store_capacity_vermicast_compost , potential_vermicast_compost ,  other_info_vermicast_compost , store_capacity_seedlings , potential_seedlings ,  other_info_seedlings , others_specific_products , store_capacity_others_specific_products ,  potential_others_specific_products ,other_info_others_specific_products ,  area_capacity_drying , potential_exp_drying , other_info_drying ,area_capacity_storage_hauling ,potential_exp_storage_hauling ,other_info_storage_hauling ,current_capacity_semi_processing , potential_exp_semi_processing ,other_info_semi_processing ,current_capacity_final_product ,potential_exp_final_product ,  other_info_final_product , volume_consolidation , potential_consolidation ,  other_info_consolidation , production_pack_label ,potential_pack_label , other_info_pack_label ,loan_portfo_micro_financing ,  potential_micro_financing ,other_info_micro_financing ,loan_portfo_insurance ,potential_insurance ,  other_info_insurance , prodsales_product_service ,prodsales_sales_vol ,  prodsales_unit_selling ,prodsales_unit_measurement ,prodsales_payment_terms ,  prodsales_product_service2 ,prodsales_sales_vol2 , prodsales_unit_selling2 ,  prodsales_unit_measurement2 ,  prodsales_payment_terms2 , prodsales_product_service3 ,prodsales_sales_vol3 , prodsales_unit_selling3 ,  prodsales_unit_measurement3 ,  prodsales_payment_terms3 , direct_farm , public_market ,trader_conso ,raw_materials ,volume_supply ,quality_requirement ,  unit_measurement_raw , raw_materials2 ,  volume_supply2 ,  quality_requirement2 , unit_measurement_raw2 ,raw_materials3 ,  volume_supply3 ,  quality_requirement3 , unit_measurement_raw3 ,distrib_point_local_cust , sales_vol_local_cust , payment_terms_local_cust , distrib_point_middleman ,  sales_vol_middleman ,  payment_terms_middleman ,  distrib_point_export , sales_vol_export ,payment_terms_export , others_specify_marketing , distrib_point_others_specify_marketing ,sales_vol_others_specify_marketing ,payment_terms_others_specify_marketing ,inhouse_num_workersmale ,  inhouse_num_workersfemale ,inhouse_memb_ip_group ,inhouse_ave_workdays , inhouse_ave_salary ,sub_cont_num_workersmale , sub_cont_num_workersfemale ,sub_cont_memb_ip_group ,sub_cont_ave_workdays ,sub_cont_ave_salary ,  piece_rate_num_workersmale,piece_rate_num_workersfemale ,piece_rate_memb_ip_group , piece_rate_ave_workdays ,  piece_rate_ave_salary ,total_num_workersmale ,total_num_workersfemale ,  total_memb_ip_group ,  total_ave_workdays ,total_ave_salary ,form_interprise2 ,ifyes_form_interprise ,pricing , ifyes_pricing ,quality_raw , ifyes_quality_raw ,quality_final_prod ,ifyes_quality_final_prod , other_specifyc3 , existing_comm ,ifyes_existing_comm ,  prov_supp_assis , ifyes_prov_supp_assis ,business_prodc3 , ifyes_business_prodc3 ,ifnoc3 ,  capability ,  tech_equip ,  access_market ,commu_key_part ,  political ,chamber_commerce ,trade_assoc , coopera , commu_key_part2 , other_orgs_checkbox ,  other_orgs_pls_spec ,  name_org ,location_org ,member_livelihood ,ifyes_member_livelihood ,  what_cluster_industry))
         #return str(formc_data)
      
         if(formc_data["response"]=="error"):
@@ -337,19 +483,23 @@ def update():
         distrib_point_others_specify_marketing = request.form.get('distrib_point_others_specify_marketing')
         sales_vol_others_specify_marketing = request.form.get('sales_vol_others_specify_marketing')
         payment_terms_others_specify_marketing = request.form.get('payment_terms_others_specify_marketing')
-        inhouse_num_workers = request.form.get('inhouse_num_workers')
+        inhouse_num_workersmale = request.form.get('inhouse_num_workersmale')
+        inhouse_num_workersfemale = request.form.get('inhouse_num_workersfemale')
         inhouse_memb_ip_group = request.form.get('inhouse_memb_ip_group')
         inhouse_ave_workdays = request.form.get('inhouse_ave_workdays')
         inhouse_ave_salary = request.form.get('inhouse_ave_salary')
-        sub_cont_num_workers = request.form.get('sub_cont_num_workers')
+        sub_cont_num_workersmale = request.form.get('sub_cont_num_workersmale')
+        sub_cont_num_workersfemale = request.form.get('sub_cont_num_workersfemale')
         sub_cont_memb_ip_group = request.form.get('sub_cont_memb_ip_group')
         sub_cont_ave_workdays = request.form.get('sub_cont_ave_workdays')
         sub_cont_ave_salary = request.form.get('sub_cont_ave_salary')
-        piece_rate_num_workers = request.form.get('piece_rate_num_workers')
+        piece_rate_num_workersmale = request.form.get('piece_rate_num_workersmale')
+        piece_rate_num_workersfemale = request.form.get('piece_rate_num_workersfemale')
         piece_rate_memb_ip_group = request.form.get('piece_rate_memb_ip_group')
         piece_rate_ave_workdays = request.form.get('piece_rate_ave_workdays')
         piece_rate_ave_salary = request.form.get('piece_rate_ave_salary')
-        total_num_workers = request.form.get('total_num_workers')
+        total_num_workersmale = request.form.get('total_num_workersmale')
+        total_num_workersfemale = request.form.get('total_num_workersfemale')
         total_memb_ip_group = request.form.get('total_memb_ip_group')
         total_ave_workdays = request.form.get('total_ave_workdays')
         total_ave_salary = request.form.get('total_ave_salary')
@@ -402,14 +552,14 @@ def update():
                          unit_measurement_raw='{}', raw_materials2='{}', volume_supply2='{}', quality_requirement2='{}', unit_measurement_raw2='{}', raw_materials3='{}', volume_supply3='{}', quality_requirement3='{}', 
                          unit_measurement_raw3='{}', distrib_point_local_cust='{}', sales_vol_local_cust='{}', payment_terms_local_cust='{}', distrib_point_middleman='{}', sales_vol_middleman='{}', payment_terms_middleman='{}', 
                          distrib_point_export='{}', sales_vol_export='{}', payment_terms_export='{}', others_specify_marketing='{}', distrib_point_others_specify_marketing='{}', sales_vol_others_specify_marketing='{}', 
-                         payment_terms_others_specify_marketing='{}', inhouse_num_workers='{}', inhouse_memb_ip_group='{}', inhouse_ave_workdays='{}', inhouse_ave_salary='{}', sub_cont_num_workers='{}', sub_cont_memb_ip_group='{}', 
-                         sub_cont_ave_workdays='{}', sub_cont_ave_salary='{}', piece_rate_num_workers='{}', piece_rate_memb_ip_group='{}', piece_rate_ave_workdays='{}', piece_rate_ave_salary='{}', total_num_workers='{}', 
+                         payment_terms_others_specify_marketing='{}', inhouse_num_workersmale='{}',inhouse_num_workersfemale='{}', inhouse_memb_ip_group='{}', inhouse_ave_workdays='{}', inhouse_ave_salary='{}', sub_cont_num_workersmale='{}',sub_cont_num_workersfemale='{}', sub_cont_memb_ip_group='{}', 
+                         sub_cont_ave_workdays='{}', sub_cont_ave_salary='{}', piece_rate_num_workersmale='{}',piece_rate_num_workersfemale='{}', piece_rate_memb_ip_group='{}', piece_rate_ave_workdays='{}', piece_rate_ave_salary='{}', total_num_workersmale='{}', total_num_workersfemale='{}',
                          total_memb_ip_group='{}', total_ave_workdays='{}', total_ave_salary='{}', form_interprise2='{}', ifyes_form_interprise='{}', pricing='{}', ifyes_pricing='{}', quality_raw='{}', ifyes_quality_raw='{}', quality_final_prod='{}',
                          ifyes_quality_final_prod='{}', other_specifyc3='{}', existing_comm='{}', ifyes_existing_comm='{}', prov_supp_assis='{}', ifyes_prov_supp_assis='{}', business_prodc3='{}', ifyes_business_prodc3='{}', ifnoc3='{}', 
                          capability='{}', tech_equip='{}', access_market='{}', commu_key_part='{}', political='{}', chamber_commerce='{}', trade_assoc='{}', coopera='{}', commu_key_part2='{}', other_orgs_checkbox='{}', other_orgs_pls_spec='{}',
                           name_org='{}', location_org='{}', member_livelihood='{}', ifyes_member_livelihood='{}', what_cluster_industry='{}'
                WHERE id={}
-            """.format(name, position_firm, member_indegenous, sex, age, contact_details, email_add, vc_stakeholders, industry_cluster, pfn_specify, reg_businessname, business_addr, form_interprise, interprise_other, issued_by_business_reg, expired_date_business_reg, issued_by_product_reg, expired_date_product_reg, issued_by_cert_reg, expired_date_cert_reg, issued_by_lic_op, expired_date_lic_op, iso_cert_specific, issued_by_iso_cert, expired_date_iso_cert, issued_by_gapgmp_cert, expired_date_gapgmp_cert, issued_by_organic, expired_date_organic, issued_by_halal, expired_date_halal, other_cert_specify, issued_by_other_cert, expired_date_other_cert, none_of_the_above, type_enterprise, store_capacity_organic, store_capacity_synthetic, potential_organic, potential_synthetic, other_info_organic, other_info_synthetic, store_capacity_pesticides, store_capacity_herbicides, potential_pesticides, potential_herbicides, other_info_pesticides, other_info_herbicides, store_capacity_vermicast_compost, potential_vermicast_compost, other_info_vermicast_compost, store_capacity_seedlings, potential_seedlings, other_info_seedlings, others_specific_products, store_capacity_others_specific_products, potential_others_specific_products, other_info_others_specific_products, area_capacity_drying, potential_exp_drying, other_info_drying, area_capacity_storage_hauling, potential_exp_storage_hauling, other_info_storage_hauling, current_capacity_semi_processing, potential_exp_semi_processing, other_info_semi_processing, current_capacity_final_product, potential_exp_final_product, other_info_final_product, volume_consolidation, potential_consolidation, other_info_consolidation, production_pack_label, potential_pack_label, other_info_pack_label, loan_portfo_micro_financing, potential_micro_financing, other_info_micro_financing, loan_portfo_insurance, potential_insurance, other_info_insurance, prodsales_product_service, prodsales_sales_vol, prodsales_unit_selling, prodsales_unit_measurement,prodsales_payment_terms, prodsales_product_service2, prodsales_sales_vol2, prodsales_unit_selling2, prodsales_unit_measurement2,prodsales_payment_terms2, prodsales_product_service3, prodsales_sales_vol3, prodsales_unit_selling3, prodsales_unit_measurement3,prodsales_payment_terms3, direct_farm, public_market, trader_conso, raw_materials, volume_supply, quality_requirement, unit_measurement_raw, raw_materials2, volume_supply2, quality_requirement2, unit_measurement_raw2, raw_materials3, volume_supply3, quality_requirement3, unit_measurement_raw3, distrib_point_local_cust, sales_vol_local_cust, payment_terms_local_cust, distrib_point_middleman, sales_vol_middleman, payment_terms_middleman, distrib_point_export, sales_vol_export, payment_terms_export, others_specify_marketing, distrib_point_others_specify_marketing, sales_vol_others_specify_marketing, payment_terms_others_specify_marketing, inhouse_num_workers, inhouse_memb_ip_group, inhouse_ave_workdays, inhouse_ave_salary, sub_cont_num_workers, sub_cont_memb_ip_group, sub_cont_ave_workdays, sub_cont_ave_salary, piece_rate_num_workers, piece_rate_memb_ip_group, piece_rate_ave_workdays, piece_rate_ave_salary, total_num_workers, total_memb_ip_group, total_ave_workdays, total_ave_salary, form_interprise2, ifyes_form_interprise, pricing, ifyes_pricing, quality_raw, ifyes_quality_raw, quality_final_prod, ifyes_quality_final_prod, other_specifyc3, existing_comm, ifyes_existing_comm, prov_supp_assis, ifyes_prov_supp_assis, business_prodc3, ifyes_business_prodc3, ifnoc3, capability, tech_equip, access_market, commu_key_part, political, chamber_commerce, trade_assoc, coopera, commu_key_part2, other_orgs_checkbox, other_orgs_pls_spec, name_org, location_org, member_livelihood, ifyes_member_livelihood, what_cluster_industry, id)
+            """.format(name ,position_firm ,member_indegenous ,sex ,age ,contact_details ,email_add ,vc_stakeholders , industry_cluster ,pfn_specify , reg_businessname ,business_addr ,form_interprise , interprise_other ,issued_by_business_reg ,expired_date_business_reg ,issued_by_product_reg ,expired_date_product_reg , issued_by_cert_reg ,expired_date_cert_reg ,issued_by_lic_op ,expired_date_lic_op ,  iso_cert_specific ,issued_by_iso_cert ,expired_date_iso_cert ,issued_by_gapgmp_cert ,expired_date_gapgmp_cert , issued_by_organic ,expired_date_organic , issued_by_halal , expired_date_halal ,other_cert_specify ,issued_by_other_cert , expired_date_other_cert ,  none_of_the_above ,type_enterprise , store_capacity_organic ,store_capacity_synthetic , potential_organic ,potential_synthetic ,  other_info_organic ,other_info_synthetic , store_capacity_pesticides ,store_capacity_herbicides ,potential_pesticides , potential_herbicides , other_info_pesticides ,other_info_herbicides ,store_capacity_vermicast_compost , potential_vermicast_compost ,  other_info_vermicast_compost , store_capacity_seedlings , potential_seedlings ,  other_info_seedlings , others_specific_products , store_capacity_others_specific_products ,  potential_others_specific_products ,other_info_others_specific_products ,  area_capacity_drying , potential_exp_drying , other_info_drying ,area_capacity_storage_hauling ,potential_exp_storage_hauling ,other_info_storage_hauling ,current_capacity_semi_processing , potential_exp_semi_processing ,other_info_semi_processing ,current_capacity_final_product ,potential_exp_final_product ,  other_info_final_product , volume_consolidation , potential_consolidation ,  other_info_consolidation , production_pack_label ,potential_pack_label , other_info_pack_label ,loan_portfo_micro_financing ,  potential_micro_financing ,other_info_micro_financing ,loan_portfo_insurance ,potential_insurance ,  other_info_insurance , prodsales_product_service ,prodsales_sales_vol ,  prodsales_unit_selling ,prodsales_unit_measurement ,prodsales_payment_terms ,  prodsales_product_service2 ,prodsales_sales_vol2 , prodsales_unit_selling2 ,  prodsales_unit_measurement2 ,  prodsales_payment_terms2 , prodsales_product_service3 ,prodsales_sales_vol3 , prodsales_unit_selling3 ,  prodsales_unit_measurement3 ,  prodsales_payment_terms3 , direct_farm , public_market ,trader_conso ,raw_materials ,volume_supply ,quality_requirement ,  unit_measurement_raw , raw_materials2 ,  volume_supply2 ,  quality_requirement2 , unit_measurement_raw2 ,raw_materials3 ,  volume_supply3 ,  quality_requirement3 , unit_measurement_raw3 ,distrib_point_local_cust , sales_vol_local_cust , payment_terms_local_cust , distrib_point_middleman ,  sales_vol_middleman ,  payment_terms_middleman ,  distrib_point_export , sales_vol_export ,payment_terms_export , others_specify_marketing , distrib_point_others_specify_marketing ,sales_vol_others_specify_marketing ,payment_terms_others_specify_marketing ,inhouse_num_workersmale ,  inhouse_num_workersfemale ,inhouse_memb_ip_group ,inhouse_ave_workdays , inhouse_ave_salary ,sub_cont_num_workersmale , sub_cont_num_workersfemale ,sub_cont_memb_ip_group ,sub_cont_ave_workdays ,sub_cont_ave_salary ,  piece_rate_num_workersmale,piece_rate_num_workersfemale ,piece_rate_memb_ip_group , piece_rate_ave_workdays ,  piece_rate_ave_salary ,total_num_workersmale ,total_num_workersfemale ,  total_memb_ip_group ,  total_ave_workdays ,total_ave_salary ,form_interprise2 ,ifyes_form_interprise ,pricing , ifyes_pricing ,quality_raw , ifyes_quality_raw ,quality_final_prod ,ifyes_quality_final_prod , other_specifyc3 , existing_comm ,ifyes_existing_comm ,  prov_supp_assis , ifyes_prov_supp_assis ,business_prodc3 , ifyes_business_prodc3 ,ifnoc3 ,  capability ,  tech_equip ,  access_market ,commu_key_part ,  political ,chamber_commerce ,trade_assoc , coopera , commu_key_part2 , other_orgs_checkbox ,  other_orgs_pls_spec ,  name_org ,location_org ,member_livelihood ,ifyes_member_livelihood ,  what_cluster_industry, id)
         db.err_page = "asdasd"
         last_row_update_id = db.do(sql)
         if(last_row_update_id["response"]=="error"):
@@ -435,28 +585,32 @@ def formcdashboard():
     data_lastmonth = db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
     data_currmonth= db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
     data_count_reg_business = db.select("SELECT reg_businessname FROM form_c")
-    data_count_position_firm = db.select("SELECT position_firm FROM form_c")
+    data_count_position_firm = db.select("SELECT position_firm FROM form_c where position_firm LIKE '%owner%'")
     data_count_cacao = db.select("SELECT * FROM form_c where industry_cluster = 'cacao'")
     data_count_coffee = db.select("SELECT * FROM form_c where industry_cluster = 'coffee'")
     data_count_coconut = db.select("SELECT * FROM form_c where industry_cluster = 'coconut'")
     data_count_pfn = db.select("SELECT `pfn_specify` FROM form_c WHERE `pfn_specify` != '' OR `pfn_specify` != ' ' ;")
+    pfnmix = db.select("SELECT industry_cluster, pfn_specify FROM form_c WHERE industry_cluster NOT LIKE '%cacao%' and industry_cluster NOT LIKE '%coffee%' and industry_cluster NOT LIKE '%coconut%' AND industry_cluster != '' AND industry_cluster!= ' '")
+    intpfn= len(data_count_pfn)
+    intpfnmix = len(pfnmix)
+    totalpfn = intpfn + intpfnmix
+    print(totalpfn)
     thismonth=len(data_currmonth)
     lastmonth=len(data_lastmonth)
     subperc= thismonth - lastmonth
     percentage= (subperc / lastmonth)
-    print(lastmonth)
-    print(thismonth)
-    print(subperc)
     all = data_count_cacao + data_count_coffee + data_count_coconut + data_count_pfn
     return render_template("formcdashboard.html",count_entry=len(data_count_entry), tabledata=data_count_entry, count_reg_business=len(data_count_reg_business), 
     count_position_firm=len(data_count_position_firm), count_cacao=len(data_count_cacao), count_coffee=len(data_count_coffee), count_pfn=len(data_count_pfn),
-    count_coconut=len(data_count_coconut), datatable=datatable, data_lastmonth=len(data_lastmonth), data_currmonth=len(data_currmonth),percentage = round(percentage,2),USER_INFO=USER_INFO)
+    count_coconut=len(data_count_coconut), datatable=datatable, data_lastmonth=len(data_lastmonth), data_currmonth=len(data_currmonth),percentage = round(percentage,2),USER_INFO=USER_INFO,totalpfn =totalpfn)
 
 @app.route("/formcdashboardfilter",methods=['POST','GET'])
 def formcdashboardfilter():
     if request.method == 'POST':
         filter1 = request.form.get('filter1')
         filter2 = request.form.get('filter2')
+        filter3 = request.form.get('filter3')
+        filter4 = request.form.get('filter4')
     # filtering industry cluster - form enterprise
     datatable=db.select("SELECT * FROM form_c")
     coffee_singlesolesql=db.select("SELECT `industry_cluster`,`form_interprise` from form_c where industry_cluster='coffee' AND form_interprise='Single/Sole'")

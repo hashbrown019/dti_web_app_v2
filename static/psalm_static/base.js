@@ -427,15 +427,24 @@ function myFunction3() {
         });
         
     });
+    $(document).on("change","#filter1",(elem)=>{
+        for (let count = 0; count < $(".filter2_opt").length; count++) { $(".filter2_opt")[count].style.display = "block"}
+        $("#"+elem.target.value)[0].style.display = "none"
+    })
 
-    var code = {};
-    $("select[name='filter1'] > option").each(function () {
-        if(code[this.text]) {
-            $(this).remove();
-        } else {
-            code[this.text] = this.value;
+
+    $('#chooseFile').bind('change', function () {
+        var filename = $("#chooseFile").val();
+        if (/^\s*$/.test(filename)) {
+          $(".file-upload").removeClass('active');
+          $("#noFile").text("No file chosen..."); 
         }
-    });
+        else {
+          $(".file-upload").addClass('active');
+          $("#noFile").text(filename.replace("C:\\fakepath\\", "")); 
+        }
+      });
+      
     
     
 
