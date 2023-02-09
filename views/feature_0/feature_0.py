@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 from controllers.engine_excel_to_sql import form_excel_a_handler
 
-import _thread as thread
+import threading
 import time
 
 app = Blueprint("feature_0",__name__,template_folder='pages')
@@ -113,7 +113,9 @@ class _main:
 			UPLOAD_NAME = uploader+"#"+today+"#"+secure_filename(f.filename)
 			f.save(os.path.join(c.RECORDS+"/objects/spreadsheets/queued/",UPLOAD_NAME ))
 
-		thread.start_new_thread( _excel.excel_popu_individual,(UPLOAD_NAME,) )
+		t1 = threading.Thread(target=_excel.excel_popu_individual,args=(UPLOAD_NAME,) )
+		t1.start()
+		t1.join()
 		return {"status":"success","msg":"Processing in Progress. Please Wait. Refresh page to view changes","success_files":UPLOAD_NAME}
 		# uploadstate = _excel.excel_popu_individual(UPLOAD_NAME)
 		# return uploadstate
