@@ -170,41 +170,42 @@
 
 					<div class=" mt-5">					
 						<label class="fs-5 "></label>
-						<button type="submit" class="btn btn-outline-success me-2 mt-1" role="button" id="search" onclick="searchFiles()"><i class="fa-solid fa-magnifying-glass "></i>&nbspSearch</button>
-							<script>
-								function searchFiles() {
-								  var x = document.getElementById("searchResult");
-								  if (x.style.display === "none") {
-									x.style.display = "block";
+						<button type="submit" class="btn btn-outline-success me-2 mt-1" id="search"><i class="fa-solid fa-magnifying-glass "></i>&nbspSearch</button>
+							<!-- <script>
+								function searchbutton() {
+								  var z = document.getElementById("searchRes");
+								  if (z.style.display === "none") {
+									z.style.display = "block";
+								  } else {
+									z.style.display = "none";
 								  }
 								}
-							</script>
-
+							</script> -->
 					</div>	
 				</form>
 
-<!-- Search Result Modal -->
-		<div class="container mt-5" id="searchResult" style="display: none;">
-			<div class="">
-				<div class="">
-				  <div class="">
-					<h5 class="display-5 searchFont" id="staticBackdropLabel">Searched Results</h5>
-				  </div>
-					<div class="container col-12">
-						<div class="row mt-3" >                                     
-							<div class="col-sm-6 col-lg-4 mb-3">
-								<div class="card card_size">
-									<div class="card-body">
-										<h5 class="card-title"> Example file</h5>
-										<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-										<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-									</div>
-								</div>
-							</div>				                      
+<!-- Search Result  -->
+	<div class=" container text-secondary mt-5" style="display: none;">				
+		<h1>No Result</h1>
+	</div>
+ <div class="container mt-5" id="searchRes" style="display: block;">
+	  <div class="">
+		<h5 class="display-5 searchFont" id="staticBackdropLabel">Searched Results</h5>
+	  </div>
+		<div class="container col-12">
+			<div class="row mt-3" >                                     
+				<div class="col-sm-6 col-lg-4 mb-3">
+					<div class="card card_size">
+						<div class="card-body">
+							<h5 class="card-title"> Example file</h5>
+							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
 						</div>
 					</div>
-				</div>
-			</div>	
-		</div>
+				</div>				                      
+			</div>
+		</div>				
+	</div>
+
 	</div>
 </div>
