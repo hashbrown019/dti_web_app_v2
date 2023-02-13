@@ -1,4 +1,4 @@
-<!-- Search Area -->
+ <!-- Search Area -->
 	<div class="container shadow-lg p-3  bg-body rounded mt-2" id="searchdiv" style="display: none;">
 			<div class=" ">         
 				<form class="row row-cols-xxl-auto g-3 align-items-center mt-1">
@@ -8,196 +8,289 @@
 				  </div>
 
 				  <div class="col-12 ">
-					<label class="fs-5 searchFont mb-2" for="seachDatatype">Data Type:</label>
-					<select class="form-select form-select-md" id="seachDatatype">
-					  <option selected>Choose...</option>
-					  <option value="1">Document</option>
-					  <option value="2">Multimedia</option>
-					  <option value="3">Publication</option>
+					<label class="fs-5 searchFont mb-2" for="searchDatatype">Data Type:</label>
+					<select class="form-select form-select-md" id="searchDatatype">
+					  <option value="all">All</option>
+					  <option value="Document">Document</option>
+					  <option value="Multimedia">Multimedia</option>
+					  <option value="Publication">Publication</option>
+					</select>
+				  </div>
+<!-- 
+				  	<script type="text/javascript">
+						$(document).on('change', '#searchDatatype', function(e){  
+							e.preventDefault();
+							searchDoc = $("#searchDoc");
+							searchPub = $("#searchPub");
+							searchMul = $("#searchMul");
+
+							searchDatatype = this.value;
+							
+							if (searchDatatype == "Document") {
+								searchDoc.show();
+								searchMul.hide();
+								searchpub.hide();
+							}
+
+							if (searchDatatype == "Multimedia") {
+								searchMul.show();
+								searchDoc.hide();
+								searchpub.hide();
+							}
+
+							if (searchDatatype == "Publication") {
+								searchPub.show();
+								searchMul.hide();
+								searchDoc.hide();
+							}else{
+								searchpub.hide();
+								searchMul.hide();
+								searchDoc.hide();
+							}
+
+						});
+					</script> -->
+				  
+				  <div class="col-12 " id="searchDoc" style="display:none;">
+					<label class="fs-5 searchFont mb-2" for="searchFileTypeDocument">File Type:</label>
+					<select class="form-select form-select-md" id="searchFileTypeDocument">
+					  <option value="AccomplishmentReport" selected>Accomplishment Report</option>
+					  <option value="BiddingDocuments">Bidding Documents</option>
+					  <option value="BusinessPlan">Business Plan</option>
+					  <option value="COADocument">COA Document</option>
+					  <option value="CommercialPartnershipAgreement">Commercial Partnership Agreement</option>
+					  <option value="Contract">Contract</option>
+					  <option value="DetailedInvestmentPlan">Detailed Investment Plan</option>
+					  <option value="Documentation">Documentation</option>
+					  <option value="FarmPlan">Farm Plan</option>
+					  <option value="Guide">Guide</option>
+					  <option value="IFADDocument">IFAD Document</option>
+					  <option value="Financials">Financials</option>
+					  <option value="Kit">Kit</option>
+					  <option value="Letter">Letter</option>
+					  <option value="MarketingCollateral">Marketing Collateral</option>
+					  <option value="MemorandumofAgreement">Memorandum of Agreement</option>
+					  <option value="MemorandumofUnderstanding">Memorandum of Understanding</option>
+					  <option value="NEDADocument">NEDA Document</option>
+					  <option value="Post-ActivityReport">Post-Activity Report</option>
+					  <option value="Presentation">Presentation</option>
+					  <option value="Record">Record</option>
+					  <option value="RSIP">RSIP</option>
+					  <option value="Template">Template</option>
+					  <option value="TermsofReference">Terms of Reference</option>
+					  <option value="Tool">Tool</option>
+					  <option value="Tutorial">Tutorial</option>
+					  <option value="Others">Others</option>
 					</select>
 				  </div>
 
-				  <div class="col-12 ">
-					<label class="fs-5 searchFont mb-2" for="searchFiletype">File Type:</label>
-					<input class="form-control form-control-md" id="searchFiletype" type="text" placeholder="(e.g., Accomplishment Report)" aria-label=".form-control-lg example">
+				  <div class="col-12 " id="searchMul" style="display: none;">
+					<label class="fs-5 searchFont mb-2" for="searchFileTypeMultimedia">Form:</label>
+					<select class="form-select form-select-md" id="searchFileTypeMultimedia">
+					  <option value="audio" selected>AUDIO</option>
+					  <option value="interview">INTERVIEW</option>
+					  <option value="photo">PHOTO</option>
+					  <option value="video">VIDEO</option>				
+					</select>
+				  </div>
+
+				  <div class="col-12 " id="searchPub" style="display: none;">
+					<label class="fs-5 searchFont mb-2" for="searchFileTypePublication">Platform:</label>
+					<select class="form-select form-select-md" id="searchFileTypePublication">
+					  <option value="AccomplishmentReport" selected>Stories from the field  </option>
+					  <option value="Storiesfromthefield">Lessons learned</option>
+					  <option value="Projectbriefs">Project briefs</option>
+					  <option value="Policybriefs">Policy briefs</option>
+					  <option value="Reportsandstudies">Reports and studies</option>
+					  <option value="Technicalguidelines">Technical guidelines</option>
+					  <option value="Workingpapers">Working papers</option>
+					  <option value="How-to-do-notes">How-to-do-notes</option>
+					  <option value="Researchpublications">Research publications</option>
+					  <option value="IGPS">Inputs to government policies and strategies (Value Chain Governance)</option>
+					  <option value="Articles">Articles (newspaper/magazine)</option>
+					  <option value="SocialMediaPosts">Social Media Posts</option>
+					  <option value="Blogposts">Blog posts</option>
+					  <option value="Newsletters">Newsletters</option>
+					  <option value="Pressreleases">Press releases</option>
+					  <option value="Interviews">Interviews</option>
+					  <option value="Infographics">Infographics</option>
+					  <option value="Others">Others</option>
+					</select>
 				  </div>
 
 				  <div class="col-12  ">
 					<label class="fs-5 searchFont mb-2" for="seachRegion">Region:</label>
 					<select class="form-select form-select-md" id="seachRegion">
-					  <option selected>National</option>
-					  <option value="1">Region XIII</option>
-					  <option value="2">Region IX</option>
-					  <option value="3">Region X</option>
-					  <option value="4">Region XI</option>
-					  <option value="5">Region XII (SOCCSKSARGEN)</option>
-					  <option value="6">Region XIII (CARAGA)</option>
-					  <option value="7">BARMM</option>                
+					  <option value="National" selected>National</option>
+					  <option value="RegionXIII">Region XIII</option>
+					  <option value="RegionIX">Region IX</option>
+					  <option value="RegionX">Region X</option>
+					  <option value="RegionXI">Region XI</option>
+					  <option value="RegionXII">Region XII (SOCCSKSARGEN)</option>
+					  <option value="RegionXIII">Region XIII (CARAGA)</option>
+					  <option value="BARMM">BARMM</option>                
 					</select>
 				  </div>
 
 				  <div class="col-12 ">
 					<label class="fs-5 searchFont mb-2" for="seachYear">Year:</label>
 					<select class="form-select form-select-md" id="seachYear">
-					  <option selected>Choose...</option>
-					  <option value="1">2015</option>
-					  <option value="2">2016</option>
-					  <option value="3">2017</option>
-					  <option value="4">2018</option>
-					  <option value="5">2019</option>
-					  <option value="6">2020</option>
-					  <option value="7">2021</option>
-					  <option value="8">2022</option>
-					  <option value="9">2023</option>
+					  
+					  <option value="2015" selected>2015</option>
+					  <option value="2016">2016</option>
+					  <option value="2017">2017</option>
+					  <option value="2018">2018</option>
+					  <option value="2019">2019</option>
+					  <option value="2020">2020</option>
+					  <option value="2021">2021</option>
+					  <option value="2022">2022</option>
+					  <option value="2023">2023</option>
 					</select>
 				  </div>
 
 				  <div class="col-12 ">
-
-
 					<label class="fs-5 searchFont mb-2" for="searchTags">Tags:</label>
 					<input class="form-control form-control-md" id="searchTafs" type="text" placeholder="(e.g., Cacao)" aria-label=".form-control-lg example">
 				  </div>
-				  
 
-				  <div class="col-12 ">
-					<label class="fs-5 searchFont mb-2" ></label>
-					
-					<a type="submit" class="fs-4 searchFont mt-4 ms-3" role="button" data-bs-toggle="modal" data-bs-target="#searchResult"> <span><i class="fa-solid fa-magnifying-glass"></i></span></a>
-
-				  </div>
+					<div class="container mt-5">					
+						<label class="fs-5 " ></label>
+						<button type="submit" class="btn btn-outline-dark me-2" role="button" data-bs-toggle="modal" data-bs-target="#searchResult"> <span><i class="fa-solid fa-magnifying-glass "></i>&nbspSearch</span></button>
+					</div>	
 				</form>
+				
+				
 			</div>
 	</div>
 
 <!-- Search Result Modal -->
 	<div class="modal fade" id="searchResult" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-xl-down modal-xl">
-	<div class="modal-content">
-	  <div class="modal-header">
-		<h5 class="modal-title display-5 searchFont" id="staticBackdropLabel">Searched Results</h5>
-		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	  </div>
-	  <div class="modal-body">
-		<div class="col-12 border-bottom border-light pb-3" id="searchTags">
-			<div class="btn-group ms-3" role="group" aria-label="Aria Tag button">
-				<button type="button" class="btn btn-outline-primary rounded-pill btn-sm">The Coffee
-					<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary text-white mt-1">x</span>
-				</button>
-				</div>
-				<div class="btn-group ms-3" role="group" aria-label="Aria Tag button">
-					<button type="button" class="btn btn-outline-primary rounded-pill btn-sm">2021
-						<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary text-white mt-1">x</span>
-					</button>
-				</div>              
-		</div>
-
-		<div class="container col-12">
-			<div class="row mt-5" >                                     
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-xl-down modal-xl">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title display-5 searchFont" id="staticBackdropLabel">Searched Results</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			  </div>
+			  <div class="modal-body">
+				<div class="col-12 border-bottom border-light pb-3" id="searchTags">
+					<div class="btn-group ms-3" role="group" aria-label="Aria Tag button">
+						<button type="button" class="btn btn-outline-primary rounded-pill btn-sm">The Coffee
+							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary text-white mt-1">x</span>
+						</button>
 						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                
-						</div>
-					</div>
+						<div class="btn-group ms-3" role="group" aria-label="Aria Tag button">
+							<button type="button" class="btn btn-outline-primary rounded-pill btn-sm">2021
+								<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary text-white mt-1">x</span>
+							</button>
+						</div>              
 				</div>
 
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                                    
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
-						</div>
-				</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-							<div class="card-body">
-								<h5 class="card-title"> Example file</h5>
-								<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-								<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+				<div class="container col-12">
+					<div class="row mt-5" >                                     
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
+								</div>
 							</div>
-					</div>
-				</div>
+						</div>
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                
+								</div>
+							</div>
+						</div>
 
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
 
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                                    
+								</div>
+							</div>
 						</div>
+
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+								</div>
+						</div>
+						</div>
+
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+									<div class="card-body">
+										<h5 class="card-title"> Example file</h5>
+										<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+										<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+									</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                            
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-lg-4 mb-3">
+							<div class="card card_size">
+								<div class="card-body">
+									<h5 class="card-title"> Example file</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+									<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                        
+								</div>
+							</div>
+						</div>                          
 					</div>
+					
 				</div>
-				<div class="col-sm-6 col-lg-4 mb-3">
-					<div class="card card_size">
-						<div class="card-body">
-							<h5 class="card-title"> Example file</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>                        
-						</div>
-					</div>
-				</div>                          
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			  </div>
 			</div>
-			
 		</div>
-	  </div>
-	  <div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	  </div>
-	</div>
-	</div>
 	</div>

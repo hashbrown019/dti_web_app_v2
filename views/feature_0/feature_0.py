@@ -9,6 +9,10 @@ from werkzeug.utils import secure_filename
 
 from controllers.engine_excel_to_sql import form_excel_a_handler
 
+from multiprocessing import Process
+import threading
+import time
+
 app = Blueprint("feature_0",__name__,template_folder='pages')
 _excel = form_excel_a_handler(__name__)
 rapid_mysql = mysql(*c.DB_CRED)
@@ -109,8 +113,13 @@ class _main:
 			f = excel_[excel]
 			UPLOAD_NAME = uploader+"#"+today+"#"+secure_filename(f.filename)
 			f.save(os.path.join(c.RECORDS+"/objects/spreadsheets/queued/",UPLOAD_NAME ))
-		uploadstate = _excel.excel_popu_individual(UPLOAD_NAME)
-		return uploadstate
+
+		t1 = Process(target=_excel.excel_popu_individual,args=(UPLOAD_NAME,) )
+		t1.start()
+		t1.join()
+		return {"status":"success","msg":"Processing in Progress. Please Wait. Refresh page to view changes","success_files":UPLOAD_NAME}
+		# uploadstate = _excel.excel_popu_individual(UPLOAD_NAME)
+		# return uploadstate
 
 	@app.route("/download_excel/<excel_file>",methods=["POST","GET"])
 	def download_excel(excel_file):
@@ -157,41 +166,11 @@ class _main:
 	@app.route("/feature_0/get_farmer_data_a1",methods=["POST","GET"])
 	def feature_0_get_farmer_data_a1():
 		sql_mobile = '''
-			SELECT 
-				`id` as 'db_id',
-				`f_name`,
-				`m_name`,
-				`l_name`,
-				`ext_name`,
-				`farmer_sex`,
-				`farmer_primary_crop`,
-				`farmer_fo_name_rapid`,
-				`addr_region`,
-				`addr_prov`,
-				`addr_city`,
-				`farmer_dip_ref`,
-				`farmer_code` as 'reference'
-				-- `farmer_head_of_house`,
-				-- `farmer_civil_status`,
+			SELECT `id` as 'db_id',`f_name`,`m_name`,`l_name`,`ext_name`,`farmer_sex`,`farmer_primary_crop`,`farmer_fo_name_rapid`,`addr_region`,`addr_prov`,`addr_city`,`farmer_dip_ref`,`farmer_code` as 'reference'-- `farmer_head_of_house`,-- `farmer_civil_status`,
 			FROM `form_a_farmer_profiles` {} ;'''.format(Filter.position_data_filter())
 
 		sql_excel = '''
-			SELECT 
-				`id` as 'db_id',
-				`frmer_prof_@_basic_Info_@_First_name` as `f_name`,
-				`frmer_prof_@_basic_Info_@_Middle_name` as `m_name`,
-				`frmer_prof_@_basic_Info_@_Last_name` as `l_name`,
-				`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,
-				`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,
-				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,
-				`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,
-				`frmer_prof_@_frmer_addr_@_region` as `addr_region`,
-				`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
-				`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
-				`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
-				`file_name` as 'reference'
-				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
-				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
+			SELECT `id` as 'db_id',`frmer_prof_@_basic_Info_@_First_name` as `f_name`,`frmer_prof_@_basic_Info_@_Middle_name` as `m_name`,`frmer_prof_@_basic_Info_@_Last_name` as `l_name`,`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,`frmer_prof_@_frmer_addr_@_region` as `addr_region`,`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,`file_name` as 'reference'-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a` {} ;'''.format(Filter.position_data_filter())
 		all_farmer_small_data = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False)
 		random.shuffle(all_farmer_small_data)
@@ -200,25 +179,7 @@ class _main:
 
 	@app.route("/feature_0/dashboard_home_",methods=["POST","GET"])
 	def dashboard_home_sql_driven_():
-		return {
-			"query_suffix" : "",
-			"area_reg" : "",
-			"all_farmer_count" : "",
-			"all_sex_untag" : "",
-			"all_sex_female" : "",
-			"all_sex_male" : "",
-			"is_ip_num" : "",
-			"is_hh_head_num" : "",
-			"with_dip": "",
-			"with_fo": "",
-			"enumerator": {"mobile":[],"excel":[]} ,
-			"mobile_geotag": [] ,
-			"ls_arr" : {
-				"primary_crop" :{"main": [],"breakdown":{"excel": [] , "mobile" : []}},
-				"ip_gr" :{"excel": [] , "mobile" : []},
-				"fo" :{"excel": [] , "mobile" : []},
-				"dip" :{"excel": [] , "mobile" : []},
-			}
+		return {"query_suffix" : "","area_reg" : "","all_farmer_count" : "","all_sex_untag" : "","all_sex_female" : "","all_sex_male" : "","is_ip_num" : "","is_hh_head_num" : "","with_dip": "","with_fo": "","enumerator": {"mobile":[],"excel":[]} ,"mobile_geotag": [] ,"ls_arr" : {	"primary_crop" :{"main": [],"breakdown":{"excel": [] , "mobile" : []}},	"ip_gr" :{"excel": [] , "mobile" : []},	"fo" :{"excel": [] , "mobile" : []},	"dip" :{"excel": [] , "mobile" : []},}
 		}
 	@app.route("/feature_0/dashboard_home",methods=["POST","GET"])
 	def dashboard_home_sql_driven():
@@ -248,34 +209,8 @@ class _main:
 		excl_fo = dic_(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_Name_coop`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_Name_coop`;".format(FILTER_SUFFIX) ))
 		excl_dip = dic_(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_DIP_name`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_DIP_name`;".format(FILTER_SUFFIX) ))
 		excl_primary_c = dic(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_primary_crop`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_primary_crop`;".format(FILTER_SUFFIX) ))
-		
-
-		enumerator_mobile = (query(('''
-				SELECT 
-					users.id as `id`,
-					users.name as `key`,
-					count(form_a_farmer_profiles.USER_ID) as `total`
-				FROM
-					form_a_farmer_profiles
-				INNER JOIN users ON form_a_farmer_profiles.USER_ID = users.id
-				{}
-				GROUP by users.name
-				ORDER BY count(form_a_farmer_profiles.USER_ID) DESC;
-		''').format(FILTER_SUFFIX) ))
-
-		enumerator_excel = (query(('''
-				SELECT 
-					users.id as `id`,
-					users.name as `key`,
-					count(excel_import_form_a.user_id) as `total`
-				FROM
-					excel_import_form_a
-				JOIN users ON excel_import_form_a.user_id = users.id
-				{}
-				GROUP by users.name
-				ORDER BY count(excel_import_form_a.user_id) DESC;
-		''').format(FILTER_SUFFIX) ))
-
+		enumerator_mobile = (query(('''SELECT 	users.id as `id`,	users.name as `key`,	count(form_a_farmer_profiles.USER_ID) as `total`FROM	form_a_farmer_profilesINNER JOIN users ON form_a_farmer_profiles.USER_ID = users.id{}GROUP by users.nameORDER BY count(form_a_farmer_profiles.USER_ID) DESC;''').format(FILTER_SUFFIX) ))
+		enumerator_excel = (query(('''SELECT 	users.id as `id`,	users.name as `key`,	count(excel_import_form_a.user_id) as `total`FROM	excel_import_form_aJOIN users ON excel_import_form_a.user_id = users.id{}GROUP by users.nameORDER BY count(excel_import_form_a.user_id) DESC;''').format(FILTER_SUFFIX) ))
 
 		if('untagged' not in mobile_dip):mobile_dip['untagged'] = 0
 		if('untagged' not in mobile_fo):mobile_fo['untagged'] = 0
