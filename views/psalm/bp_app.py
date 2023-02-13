@@ -38,7 +38,7 @@ def excel_upload_open(path):
     sheet = book.sheet_by_index(0)
     data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
     header = data[4]
-    
+
     
     for row in data[6:]:
         name = row[1]                                                                      
