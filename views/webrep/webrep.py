@@ -53,6 +53,15 @@ class _main:
 					user_data=session["USER_DATA"][0],
 					page_data=_main.get_post()
 				)
+		elif(page.lower()=="home.html".lower()):
+			if(_main.is_on_session()):
+				return render_template(
+					"{}/{}".format(segment,page),
+					users=_main.get_all_user(),
+					is_session =_main.is_on_session(),
+					user_data=session["USER_DATA"][0],
+					page_data=_main.get_post()
+				)
 			else:
 				return redirect("/login?force_url=1")
 

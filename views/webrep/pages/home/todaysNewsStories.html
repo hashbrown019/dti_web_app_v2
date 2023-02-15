@@ -16,86 +16,34 @@
 		<div class="container mt-5 pb-5" style="height: 500px;">
 			<div class="container row g-2 g-lg-4 overflow-auto " style="height:500px;">
 
-				<div class="container mt-5 card2 position-relative ">
-		      <div class="container">
-		        <div class="container row shadow-sm p-3 bg-body rounded">
-		          <div class="col-lg-2">
-		            <span><p class="small text-muted">Story</p></span>
-		            <p class="small text-muted"><span>2023</span>&nbsp<span>Feb. 12</span></p>
-		          </div>
-		          <div class="col-lg-9">
-		            <div class="row">
-		              <div class="col-9 col-lg-9">
-		                <p class="small text-muted">Northern Mindanao</p>
-		                <h3 class="newsfont texttheme fw-bolder">This is a sample heading</h3>
-		                <p class="small">Lorem ipsum dolor sit amet. Ut illum magnam est animi error qui voluptas voluptatem nam nostrum enim. Ut enim soluta cum doloremque nisi et nostrum dolores.</p>
-		                <figcaption class="blockquote-footer mt-3 fst-italic">Christian Castle Bron</figcaption>
-		                <a class="small stretched-link text-white " type="button"> click to read more</a>
-		              </div>
-		              <div class="col-3 col-lg-3">
-		                <div class="cimg-item mt-4">
-		                  <img  src="https://images.unsplash.com/photo-1447946442870-3be230521a91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" class="cimg-img" alt="...">
-		                </div>
-		              </div>            
-		            </div>          
-		          </div>     
-		        </div>
-		      </div>   
-		    </div>
-
-		    <div class="container mt-5 card2 position-relative ">
-		      <div class="container">
-		        <div class="container row shadow-sm p-3 bg-body rounded">
-		          <div class="col-lg-2">
-		            <span><p class="small text-muted">News</p></span>
-		            <p class="small text-muted"><span>2023</span>&nbsp<span>Aug. 3</span></p>
-		          </div>
-		          <div class="col-lg-9">
-		            <div class="row">
-		              <div class="col-9 col-lg-9">
-		                <p class="small text-muted">Northern Mindanao</p>
-		                <h3 class="newsfont texttheme fw-bolder">This is a sample heading</h3>
-		                <p class="small">Lorem ipsum dolor sit amet. Ut illum magnam est animi error qui voluptas voluptatem nam nostrum enim. Ut enim soluta cum doloremque nisi et nostrum dolores.</p>
-		                <figcaption class="blockquote-footer mt-3 fst-italic">Christian Castle Bron</figcaption>
-		                <a class="small stretched-link text-white " type="button"> click to read more</a>
-		              </div>
-		              <div class="col-3 col-lg-3">
-		                <div class="cimg-item mt-4">
-		                  <img  src="https://images.unsplash.com/photo-1447946442870-3be230521a91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" class="cimg-img" alt="...">
-		                </div>
-		              </div>            
-		            </div>          
-		          </div>     
-		        </div>
-		      </div>   
-		    </div>	
-
-		    <div class="container mt-5 card2 position-relative pb-5">
-		      <div class="container">
-		        <div class="container row shadow-sm p-3 bg-body rounded">
-		          <div class="col-lg-2">
-		            <span><p class="small text-muted">Event</p></span>
-		            <p class="small text-muted"><span>2023</span>&nbsp<span>Jan. 3</span></p>
-		          </div>
-		          <div class="col-lg-9">
-		            <div class="row">
-		              <div class="col-9 col-lg-9">
-		                <p class="small text-muted">Northern Mindanao</p>
-		                <h3 class="newsfont texttheme fw-bolder">This is a sample heading</h3>
-		                <p class="small">Lorem ipsum dolor sit amet. Ut illum magnam est animi error qui voluptas voluptatem nam nostrum enim. Ut enim soluta cum doloremque nisi et nostrum dolores.</p>
-		                <figcaption class="blockquote-footer mt-3 fst-italic">Christian Castle Bron</figcaption>
-		                <a class="small stretched-link text-white " type="button"> click to read more</a>
-		              </div>
-		              <div class="col-3 col-lg-3">
-		                <div class="cimg-item mt-4">
-		                  <img  src="https://images.unsplash.com/photo-1447946442870-3be230521a91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" class="cimg-img" alt="...">
-		                </div>
-		              </div>            
-		            </div>          
-		          </div>     
-		        </div>
-		      </div>   
-		    </div>		
+			{% for post in page_data %}
+				<div class="container mt-5 card2 position-relative">
+					<div class="container">
+						<div class="container row shadow-sm p-3 bg-body rounded">
+							<div class="col-lg-2">
+								<span><p class="small text-muted">News</p></span>
+								<p class="small text-muted">{{post['date']}}</span></p>
+							</div>
+							<div class="col-lg-9">
+								<div class="row">
+									<div class="col-9 col-lg-9">
+										<p class="small text-muted">{{post['postRcu']}}</p>
+										<h3 class="newsfont texttheme fw-bolder">{{post['postdescription']}}</h3>
+										<p class="small">{{post['postContent']}}</p>
+										<figcaption class="blockquote-footer mt-3 fst-italic">{{post['postAuthor']}}</figcaption>
+										<a class="small stretched-link text-white " type="button"> click to read more</a>
+									</div>
+									<div class="col-3 col-lg-3">
+										<div class="cimg-item mt-2 ms-5">
+											<img  src="/webrep/article/get_img/{{post['file_name'] | replace('C:fakepath', '')}}" loading="lazy" class="cimg-img" alt="...">
+										</div>
+									</div>            
+								</div>          
+							</div>     
+						</div>
+					</div>   
+				</div>
+			{% endfor %}	
 
 			</div>
 		</div>
