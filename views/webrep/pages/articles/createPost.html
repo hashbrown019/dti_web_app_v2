@@ -153,7 +153,7 @@
 					</div>
 
 				
-					<input type="file" class="article_form" name="file_name" id="file_name" multiple>
+					<input type="file" class="article_form" name="file_name" id="file_name" accept="image/png, image/gif, image/jpeg" multiple>
 
 				</form>
 				<div class="mt-5">
@@ -176,7 +176,7 @@
 			$send({
 				action : "/webrep/article/post",
 				method : POST,
-				data : $DATA(data),
+				data : $DATA(data).appendFile($ID("file_name")),
 				func : function(res){
 					println(res)
 				}

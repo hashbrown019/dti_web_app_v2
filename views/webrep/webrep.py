@@ -3,6 +3,8 @@ from flask_session import Session
 from modules.Connections import mysql
 import Configurations as c
 from werkzeug.utils import secure_filename
+import os
+
 db = mysql(*c.DB_CRED)
 db.err_page = 0
 
@@ -64,9 +66,8 @@ class _main:
 		print(files)
 		for file in files:
 			f = files[file]
-			UPLOAD_NAME = str(uploader)+"#"+str(today)+"#"+secure_filename(f.filename)
+			UPLOAD_NAME = secure_filename(f.filename)
 			f.save(os.path.join(c.RECORDS+"/objects/webrep/",UPLOAD_NAME ))
-			println(UPLOAD_NAME)
 		# last_row_id = db.do(sql)
 		return "last_row_id"
 
