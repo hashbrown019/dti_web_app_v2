@@ -85,9 +85,6 @@ class _main:
 			key.append("`{}`".format(datum))
 			val.append("'{}'".format(data[datum]))
 		sql = ('''INSERT INTO `webrep_articles` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
-
-		today = str(datetime.today()).replace("-","").replace(" ","").replace(":","").replace(".","")
-		uploader = session["USER_DATA"][0]["id"]
 		
 		files = request.files
 		print(files)
@@ -101,6 +98,9 @@ class _main:
 
 	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
 	def get_img(img):
+		print(img)
+		img = img.replace('C:fakepath', '').replace(" ","_").replace(")","").replace("(","")
+		print(img)
 		return send_file(c.RECORDS+"/objects/webrep/"+img)
 
 	# ======================================================================================================
