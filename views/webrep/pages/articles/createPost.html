@@ -178,7 +178,10 @@
 				method : POST,
 				data : $DATA(data).appendFile($ID("file_name")),
 				func : function(res){
-					println(res)
+					resp = JSON.parse(res)
+					if(resp["response"]=="done"){
+						goto("/rapid/NewsAndStories/NewsAndStories.html")
+					}
 				}
 			})
 		}

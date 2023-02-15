@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, redirect, jsonify
+from flask import Blueprint, render_template, request, session, redirect, jsonify, send_file
 from flask_session import Session
 from modules.Connections import mysql
 import Configurations as c
@@ -44,9 +44,27 @@ class _main:
 				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
 			else:
 				return redirect("/login?force_url=1")
+		elif(page.lower()=="NewsAndStories.html".lower()):
+			if(_main.is_on_session()):
+				return render_template(
+					"{}/{}".format(segment,page),
+					users=_main.get_all_user(),
+					is_session =_main.is_on_session(),
+					user_data=session["USER_DATA"][0],
+					page_data=_main.get_post()
+				)
+			else:
+				return redirect("/login?force_url=1")
+
 		_main.moderator(segment,page)
 		return render_template("{}/{}".format(segment,page),is_session =_main.is_on_session())
 	# ==================================================================
+
+
+
+	@app.route("/webrep/article/get_post",methods=["POST","GET"])
+	def get_post():
+		return db.select("SELECT * from `webrep_articles`;")
 
 	@app.route("/webrep/article/post",methods=["POST","GET"])
 	def article_post():
@@ -68,10 +86,13 @@ class _main:
 			f = files[file]
 			UPLOAD_NAME = secure_filename(f.filename)
 			f.save(os.path.join(c.RECORDS+"/objects/webrep/",UPLOAD_NAME ))
-		# last_row_id = db.do(sql)
-		return "last_row_id"
+		last_row_id = db.do(sql)
+		return last_row_id
 
 
+	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
+	def get_img(img):
+		return send_file(c.RECORDS+"/objects/webrep/"+img)
 
 	# ======================================================================================================
 
