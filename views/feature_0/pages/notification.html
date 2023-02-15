@@ -28,17 +28,24 @@ function get_notif_unseen() {
 		func : function(re){
 			res = JSON.parse(re)[0]
 			if(res != undefined){
-				if('num_notif' in res)
-				var num_notif = parseInt(res["num_notif"])
-				if(num_notif != 0){
-					if(num_notif != undefined){
-						$ID('badge_holder').innerHTML = '<span class="badge x-animate-fading_">'+num_notif+'</span>'
+				if('num_notif' in res){
+					var num_notif = parseInt(res["num_notif"])
+					if(num_notif != 0){
+						if(num_notif != undefined){
+							$ID('badge_holder').innerHTML = '<span class="badge x-animate-fading_">'+num_notif+'</span>'
+							$ID('badge_holder').style.display = "block"
+						}
+						else{$ID('badge_holder').style.display = "none"}
 					}
+					else{$ID('badge_holder').style.display = "none"}
 				}
+				else{$ID('badge_holder').style.display = "none"}
 			}
+			else{$ID('badge_holder').style.display = "none"}
 		}
 	})
 }
+
 function get_notif(){
 	var notif_string = ""
 	$send({
