@@ -6,20 +6,27 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+            
+{% include "includes/dashboard/filterbtn.html" %}
 
-    
-{% include "dashboard/totalcount.html" %}
+{% include "includes/dashboard/totalcount.html" %}
 
 
     <!-- Page content -->
-   
-    {% include "dashboard/chart.html" %}
-    {% include "dashboard/datatable.html" %}
+</div>
+</div>
+</div>
+      
+    {% include "includes/dashboard/chart.html" %}
+
+    {% include "includes/dashboard/datatable.html" %}
     
-          {% include "dashboard/update.html" %}
-        </div>
-      </div>
-            
+    {% include "includes/dashboard/update.html" %}
+
+
     
 {% endblock content %}
 

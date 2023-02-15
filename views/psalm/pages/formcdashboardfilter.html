@@ -12,110 +12,37 @@
     <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
-          <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
-        
-                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                    <ol class="breadcrumb breadcrumb-links">
-                      <li class="breadcrumb-item"><a href="/menu"><i class="fas fa-home text-default"></i></a></li>
-                      <li class="breadcrumb-item"><a href="/formcdashboard" class="text-default">Dashboard</a></li>
-           
-                      
-                    </ol>
-                  </nav>
-            </div>
-            <div class="col-lg-6 col-5 text-right">
-              <a class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#modal-filter"><i class="fa fa-filter" aria-hidden="true"></i> Filters</a>
-            </div>
-
             
-          <div class="modal fade" id="modal-filter" tabindex="-1" role="dialog" aria-labelledby="modal-filter" aria-hidden="true">
-        <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
-            <div class="modal-content">
-                
-                <div class="modal-header">
-                    <h6 class="modal-title text-uppercase" id="modal-title-default"><strong>Filter</strong> </h6>
-                    <p class="modal-title text-muted" style="font-size: smaller;">&nbsp;&nbsp;&nbsp;Combine two filter to display data.</p>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                
-                
-                <div class="modal-body">
-<form action="/formcdashboardfilter" method="POST">
-    <div class="form-group">
-        <div class="form-row">
+        {% include "includes/dashboard/filterbtn.html" %}
+          
+        <!-- Card stats -->
 
-            <div class="col-md-6">
-                <strong> <label for="exampleFormControlSelect1">Filter #1</label></strong>
-                <select class="form-control form_data_c" id="filter1" name="filter1" >
-                    <option value="" selected disabled>Please select</option>
-                    <option value="fe">Form Enterprise</option>
-                    <option value="ic">Industry Cluster</option>
-                    <option value="ba">Business Address</option>
-                    <option value="g">Gender</option>
-                </select> 
-            </div>
-
-            <div class="col-md-6">
-                <strong> <label for="exampleFormControlSelect1">Filter #2</label></strong>
-                <select class="form-control form_data_c" id="filter2" name="filter2">
-                 
-                    <option value="" selected disabled>Please select</option>
-                    <option class="filter2_opt" id="fe" value="fe">Form Enterprise</option>
-                    <option class="filter2_opt" id="ic" value="ic">Industry Cluster</option>
-                    <option class="filter2_opt" id="ba" value="ba">Business Address</option>
-                    <option class="filter2_opt" id="g" value="g">Gender</option>
-                </select> 
-            </div>
-        </div>
-    </div>
-                    
-                </div>
-                
-                <div class="modal-footer">
-                    <button  type="submit" class="btn btn-primary">Done</button>
-                    <button type="button" class="btn btn-warning   ml-auto" data-dismiss="modal">Close</button>
-                </div>
-            </form>
-            </div>
-        </div>
-    </div>
-
-          </div>
-          <!-- Card stats -->
-            <!--cards form enterprise/gender-->
-{% include "dashboardfilter/fe_gender.html" %}
- <!--end card-->
+        <!--cards form enterprise/gender-->
+        {% include "includes/dashboardfilter/fe_gender.html" %}
+        <!--end card-->
 
 
        <!--cards business addr/gender-->
-       {% include "dashboardfilter/ba_gender.html" %}
-<!--end card-->
+       {% include "includes/dashboardfilter/ba_gender.html" %}
+        <!--end card-->
 
 
-          <!--cards form enterprise/industry cluster-->
-          {% include "dashboardfilter/fe_ic.html" %}
-          <!--end card-->
+        <!--cards form enterprise/industry cluster-->
+        {% include "includes/dashboardfilter/fe_ic.html" %}
+        <!--end card-->
 
 
-           <!--cards form enterprise/business addr-->
-           
-           {% include "dashboardfilter/fe_ba.html" %}
- 
-          <!--end card-->
+        <!--cards form enterprise/business addr-->           
+        {% include "includes/dashboardfilter/fe_ba.html" %}
+        <!--end card-->
 
-           <!--cards industry cluster/business addr-->
-          
-           {% include "dashboardfilter/ic_ba.html" %}
- 
-          <!--end card-->
+        <!--cards industry cluster/business addr-->          
+        {% include "includes/dashboardfilter/ic_ba.html" %}
+        <!--end card-->
 
-<!--cards industry cluster/gender-->
-
-{% include "dashboardfilter/ic_gender.html" %}
-
+        <!--cards industry cluster/gender-->
+        {% include "includes/dashboardfilter/ic_gender.html" %}
+        <!--end card-->
 
 
         </div>
@@ -124,9 +51,10 @@
 
     <!-- Page content -->
     
-    {% include "dashboard/datatable.html" %}
+        {% include "includes/dashboard/datatable.html" %}
     
-          {% include "dashboard/update.html" %}
+        {% include "includes/dashboard/update.html" %}
+
         </div>
       </div>
             
