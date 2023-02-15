@@ -1,0 +1,104 @@
+
+        <!-- Card stats -->
+        <div class="row">
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Total Entry</h5>
+                    <span class="h1 font-weight-bold mb-0">{{ count_entry }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape">
+                      <img src="/static/psalm_static/assets/img/icons/totalentry.png" style="width: 250%; height: 250%;">
+                    </div>
+                  </div>
+                </div>
+                <p class="mt mb-0 text-sm">
+                 <br>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">New Entry</h5>
+                    <span class="h1 font-weight-bold mb-0">{{ data_currmonth }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape">
+                      <img src="/static/psalm_static/assets/img/icons/newuser.png" style="width: 250%; height: 250%;">
+                    </div>
+                  </div>
+                </div>
+                {% if percentage >=0 %}
+                <p class="mt mb-0 text-sm">
+                  <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>{{ percentage }}%</span>
+                  <span class="text-nowrap">This month</span>
+                </p>
+                {%else%}
+                <p class="mt mb-0 text-sm">
+                  <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i>{{ percentage }}%</span>
+                  <span class="text-nowrap">This month</span>
+                </p>
+                {%endif%}
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Registered Business</h5>
+                    <span class="h1 font-weight-bold mb-0">{{ count_reg_business }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape">
+                      <img src="/static/psalm_static/assets/img/icons/regbusiness.png" style="width: 250%; height: 250%;">
+                    </div>
+                  </div>
+                </div>
+                <p class="mt mb-0 text-sm">
+                  <br>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Business Owner</h5>
+                    <span class="h1 font-weight-bold mb-0">{{ count_position_firm }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape">
+                      <img src="/static/psalm_static/assets/img/icons/firmcompany.png" style="width: 250%; height: 250%;">
+                    </div>
+                  </div>
+                </div>
+                <p class="mt mb-0 text-sm">
+                  <br>
+                </p>
+              </div>
+
+              
+            </div>
+          </div>
+          
+
+        </div>
+        
+
+        
