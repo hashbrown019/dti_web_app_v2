@@ -9,8 +9,8 @@
 	<!-- fontawesomeCDN -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-	<script src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="../../static/webrepstatic/js/index.js"></script>
+	<script src="../../static/webrepstatic/js/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="../../static/webrepstatic/js/index.js"></script> -->
 
 	<!-- CSS only -->
 	<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
@@ -48,38 +48,22 @@
 
 <!-- Article Confirmation modal -->
 	<div class="modal " id="createPostConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">You're going there!</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body mb-3">
-	      	<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
-	        Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-	        <button type="button" data-bs-toggle="modal" data-bs-target="#savePost" class="btn btn-primary">Continue</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<div class="modal fade" id="savePost" aria-hidden="true" aria-labelledby="savePostLabel" tabindex="-1">
-	  <div class="modal-dialog ">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Post saved</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        Thank you for creating content 
-	      </div>
-	      <div class="modal-footer">
-	        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" type="submit">Done</button>
-	      </div>
-	    </div>
-	  </div>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">You're going there!</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body mb-3">
+					<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
+					Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+					<button type="button" class="btn btn-primary" onclick="submit_article()">Continue</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 <!-- Arcticle News -->
@@ -89,14 +73,14 @@
 				<form class=" row g-3 needs-validation" id="form_for_createPost1" novalidate>
 					<div class="col-md-12">
 						<label for="postAuthor" class="form-label small fw-bolder">Author name</label>
-						<input class="form-control" id="postAuthor" rows="3" placeholder=""></input>
+						<input class="article_form form-control" id="postAuthor" rows="3" placeholder=""></input>
 						<div class="invalid-feedback">
 							Please provide an Authur name.
 						</div>
 					</div>
 					<div class="col-12">
-						<label for="postContent" class="form-label small fw-bolder">Content</label>
-						<select class="form-select" id="postContent" required>
+						<label for="posttype" class="form-label small fw-bolder">Content</label>
+						<select class="article_form form-select" id="posttype" required>
 							<option>News</option>
 							<option>Story</option>
 							<option>Event</option>
@@ -107,7 +91,7 @@
 					</div>			
 					<div class="col-12">
 						<label for="Unit" class="form-label small fw-bolder">Category</label>
-						<select class="form-select" id="postCategory" required>
+						<select class="article_form form-select" id="postCategory" required>
 							<option>All</option>
 							<option>Coffee</option>
 							<option>Cacao</option>
@@ -120,7 +104,7 @@
 					</div>
 					<div class="col-12">
 						<label for="Unit" class="form-label small fw-bolder">RCU's</label>
-						<select class="form-select" id="postCategory" required>
+						<select class="article_form form-select" id="postRcu" required>
 							<option>RCU VIII</option>
 							<option>RCU IX</option>
 							<option>RCU X</option>
@@ -135,7 +119,7 @@
 					</div>
 					<div class="col-12">
 						<label for="postGA" class="form-label small fw-bolder">General Access</label>
-						<select class="form-select" id="postGA" required>
+						<select class="article_form form-select" id="postGA" required>
 							<option>Only me</option>
 							<option>Public</option>
 							<option>Administrators</option>
@@ -145,8 +129,8 @@
 						</div>
 					</div>
 					<div>
-						  <input class="form-check-input" type="checkbox" id="sameName" value="" aria-label="sameName" checked>
-						  <span class="small fw-lighter ">check if author & publisher has the same name?</span>
+							<input class="article_form form-check-input" type="checkbox" id="sameName" value="" aria-label="sameName" checked>
+							<span class="small fw-lighter ">check if author & publisher has the same name?</span>
 					</div>
 				</form>
 			</div>
@@ -154,7 +138,15 @@
 				<form class="row g-3 needs-validation" id="form_for_createPost2">
 					<div class="col-md-12">
 						<label for="postheader" class="form-label small fw-bolder">Create heading title</label>
-						<input class="form-control" id="postheader" rows="3"></input>
+						<input class="article_form form-control" id="postheader" rows="3"></input>
+						<div class="invalid-feedback">
+							Please provide heading title.
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<label for="postdescription" class="form-label small fw-bolder">Content Description</label>
+						<input class="article_form form-control" id="postdescription" rows="3"></input>
 						<div class="invalid-feedback">
 							Please provide heading title.
 						</div>
@@ -162,30 +154,15 @@
 
 					<div class="col-12">
 						<label for="postContent" class="form-label small fw-bolder">Add text content</label>
-						<textarea class="form-control" id="postContent" rows="3" style="height: 200px;"></textarea>
+						<textarea class="article_form form-control" id="postContent" rows="3" style="height: 200px;"></textarea>
 						<div class="invalid-feedback">
 							Please provide a text content.
 						</div>
 					</div>
 
-					
-				
-					<div id="drag-drop-area-createCon" style="height: 200px;">
-						<label for="drag-drop-area-createCon" class="form-label small fw-bolder">Upload image content <span class="text-muted fst-italic small fw-lighter"> &nbsp(The uploaded image name serve as a caption of the photo)</span></label>
-					</div>                
-						<script>
-							var uppy = Uppy.Core()
-							.use(Uppy.Dashboard, {
-								inline: true,
-								target: '#drag-drop-area-createCon'
-							})
-							.use(Uppy.Tus, {endpoint:''}) //you can put upload URL here, where you want to upload images
-					 
-							uppy.on('complete', (result) => {
-							console.log('Upload complete! We’ve uploaded these files:', result.successful)
-							})
-						</script>
-
+					<div class="col-12">
+						<input type="file" class="article_form" name="file_name" id="file_name" accept="image/png, image/gif, image/jpeg" multiple>
+					</div>
 				</form>
 				<div class="mt-5">
 					
@@ -193,7 +170,31 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function submit_article(){
+			var data = {}
+			var from_field = $CLASS('article_form')
+			for (var i = 0; i < from_field.length; i++) {
+				if(from_field[i].type =="checkbox"){
+					data[from_field[i].id] = from_field[i].checked
+				}else{
+					data[from_field[i].id] = from_field[i].value
+				}
+			}
+			$send({
+				action : "/webrep/article/post",
+				method : POST,
+				data : $DATA(data).appendFile($ID("file_name")),
+				func : function(res){
+					resp = JSON.parse(res)
+					if(resp["response"]=="done"){
+						goto("/rapid/NewsAndStories/NewsAndStories.html")
+					}
+				}
+			})
+		}
 
+	</script>
 
 	{% include 'main/footer.html' %}
 
