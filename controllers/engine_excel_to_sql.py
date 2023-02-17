@@ -171,8 +171,8 @@ class form_excel_a_handler:
 		return {"err":err,"msg":RESP,"data":ret_data}
 
 	def readRows(self, file, s_index):
-		wb = xlrd.open_workbook(file,encoding_override='utf-8')
-		# wb = xlrd.open_workbook(file)
+		# wb = xlrd.open_workbook(file,encoding_override='utf-8')
+		wb = xlrd.open_workbook(file)
 		sheet = wb.sheet_by_name(s_index)
 		data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 		counter = 0

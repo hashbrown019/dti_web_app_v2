@@ -76,7 +76,7 @@ function import_farmer_excel(argument) {
 		content :(`
 			<div class="x-container">
 				<div class="x-row">
-					<input id="excel_file" type="file" class="x-col l8 x-input x-file x-border"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple>
+					<input id="excel_file" type="file" class="x-col l8 x-input x-file x-border"  accept=".xls"  multiple>
 					<button class="x-input x-btn x-green x-col l4" onclick="upload_excel()">
 						Upload
 					</button>
@@ -98,6 +98,11 @@ function import_farmer_excel(argument) {
 	excel_upload_dialog.show()
 	get_uploaded_excel()
 }
+
+function is_good_file(elem){
+	println(elem.value)
+}
+
 function upload_excel(){
 	SPINNER_LOADER.show()
 	excel_upload_dialog.hide()
