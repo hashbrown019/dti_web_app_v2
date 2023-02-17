@@ -38,8 +38,13 @@
 <!-- Menu Navbar -->
 	<nav class="container navbar bg-light shadow-sm p-3 bg-body rounded sticky-top" >
 		<div class="container-fluid">
-			<div class="dropdown d-flex ">
-				<a class="me-4 " style="color: #1F4F5A !important;" role="button"><u>Latest</u></a>
+			<div class=" d-flex ">
+				<a class="me-4 dropdown-toggle" style="color: #1F4F5A !important;" role="button" data-bs-toggle="dropdown">Today</a>
+					<ul class="dropdown-menu" >
+						<li><a class="dropdown-item" type="button" href="">This week</a></li>
+						<li><a class="dropdown-item" type="button" href="">This Month</a></li>
+					</ul>
+
 				<a class="me-4 " style="color: #1F4F5A !important;" role="button">News</a>
 				<a class=" rounded-pill dropdown-toggle me-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="color: #1F4F5A !important;">Stories</a>
 					<ul class="dropdown-menu">
@@ -131,10 +136,13 @@
 			</div>
 	</div>
 
-<!-- Latest News & Stories -->
+<!-- Today's Latest -->
 	<div class="mb-5">
+		<div class="container mt-5">
+			<h2 class="texttheme">Today</h2>			
+		</div>
 		{% for post in page_data %}
-		<div class="container mt-5 card2 position-relative">
+		<div class="container card2 position-relative mb-4">
 			<div class="container">
 				<div class="container row shadow-sm p-3 bg-body rounded">
 					<div class="col-lg-2">
@@ -145,10 +153,10 @@
 						<div class="row">
 							<div class="col-9 col-lg-9">
 								<p class="small text-muted">{{post['postRcu']}}</p>
-								<h3 class="newsfont texttheme fw-bolder">{{post['postdescription']}}</h3>
+								<h3 class="texttheme fw-bolder">{{post['postdescription']}}</h3>
 								<p class="small">{{post['postContent']}}</p>
 								<figcaption class="blockquote-footer mt-3 fst-italic">{{post['postAuthor']}}</figcaption>
-								<a class="small stretched-link text-white " type="button"> click to read more</a>
+								<a class="small stretched-link text-white" href="/rapid/articles/articles.html" type="button"> click to read more</a>
 							</div>
 							<div class="col-3 col-lg-3">
 								<div class="cimg-item mt-2 ms-5">
