@@ -121,6 +121,7 @@ function upload_excel(){
 			println(r)
 			excel_upload_dialog.destroy()
 			var res = JSON.parse(r)
+			println(res)
 			var diadata = {} 
 			if(res['status']=="failed"){
 				diadata = {
@@ -134,7 +135,7 @@ function upload_excel(){
 				var dialog = $dialog(diadata)
 				dialog.show()
 			}
-			if(res['status']=="success"){
+			else if(res['status']=="success"){
 				diadata = {
 					title : "Excel Upload Success",
 					type :"success",
