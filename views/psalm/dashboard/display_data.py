@@ -26,12 +26,10 @@ def display():
     data_count_cacao = db.select("SELECT * FROM form_c where industry_cluster = 'cacao'")
     data_count_coffee = db.select("SELECT * FROM form_c where industry_cluster = 'coffee'")
     data_count_coconut = db.select("SELECT * FROM form_c where industry_cluster = 'coconut'")
-    data_count_pfn = db.select("SELECT `pfn_specify` FROM form_c WHERE `pfn_specify` != '' OR `pfn_specify` != ' ' ;")
-    pfnmix = db.select("SELECT industry_cluster, pfn_specify FROM form_c WHERE industry_cluster NOT LIKE '%cacao%' and industry_cluster NOT LIKE '%coffee%' and industry_cluster NOT LIKE '%coconut%' AND industry_cluster != '' AND industry_cluster!= ' '")
+    data_count_pfn = db.select("SELECT industry_cluster FROM `form_c` WHERE industry_cluster !='cacao' AND industry_cluster !='coconut' AND industry_cluster !='coffee'  AND industry_cluster != '' AND industry_cluster!= ' ' AND industry_cluster NOT LIKE '%cacao%' AND industry_cluster NOT LIKE '%coconut%' AND industry_cluster NOT LIKE '%coffee%' ")
     intpfn= len(data_count_pfn)
-    intpfnmix = len(pfnmix)
-    totalpfn = intpfn + intpfnmix
-    print(totalpfn)
+    totalpfn = intpfn
+    print(data_count_entry)
     thismonth=len(data_currmonth)
     lastmonth=len(data_lastmonth)
     subperc= thismonth - lastmonth
@@ -63,9 +61,7 @@ def display():
         'data_count_coffee':  data_count_coffee,
         'data_count_coconut':  data_count_coconut,
         'data_count_pfn':  data_count_pfn,
-        'pfnmix':  pfnmix,
         'intpfn':  intpfn,
-        'intpfnmix':  intpfnmix,
         'totalpfn':  totalpfn,
         'thismonth':  thismonth,
         'lastmonth':  lastmonth,

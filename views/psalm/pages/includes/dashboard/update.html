@@ -137,14 +137,14 @@
                               <strong>
                                   <label for="industry_cluster">Industry Cluster:</label>
                               </strong>
-                              <select class="form-control form_data_c"  value="{{ row['industry_cluster'] }}" name="industry_cluster" id="industry_cluster">
-                                  <option selected>{{ row['industry_cluster'] }}{{ row['pfn_specify'] }}</option>
-                                  <option value="cacao">Cacao</option>
-                                  <option value="coconut">Coconut</option>
-                                  <option value="coffee">Coffee</option>
-                              </select>
-                              <input type="text" class="form-control form_data_c" name="pfn_specify" id="pfn_specify"
-                                  placeholder="PFN-specify" >
+
+
+                                  <input type="text" class="form-control form_data_c" value="{{ row['industry_cluster'] }}" name="industry_cluster" list="industry_cluster">
+                                  <datalist id="industry_cluster">
+                                      <option value="Cacao">  
+                                      <option value="Coconut">
+                                      <option value="Coffee">
+                                    </datalist>
                           </div>
       
                       </div>
@@ -1551,7 +1551,7 @@
                       <div class="form-row">
                           <div class="col-md-3">
                               <strong>
-                                  <label>a. Form of Interprise</label>
+                                  <label>Supply Availability</label>
                               </strong>
                               <select  class="form-control form_data_c" value="{{ row['form_interprise2'] }}"  id="form_interprise2" name="form_interprise2">
                                   <option selected>{{ row['form_interprise2'] }}</option>
