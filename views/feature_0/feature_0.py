@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from flask import Blueprint, render_template, request, session, redirect, jsonify, Response,send_file
 from flask_session import Session
 from modules.Connections import mysql,sqlite
@@ -104,7 +105,6 @@ class _main:
 
 	@app.route("/excel_upload",methods=["POST","GET"])
 	def excel_upload():
-		from datetime import date, datetime
 		today = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
 		uploader = request.form['uploader']
 		excel_ = request.files
@@ -114,12 +114,12 @@ class _main:
 			UPLOAD_NAME = uploader+"#"+today+"#"+secure_filename(f.filename)
 			f.save(os.path.join(c.RECORDS+"/objects/spreadsheets/queued/",UPLOAD_NAME ))
 
-		t1 = Process(target=_excel.excel_popu_individual,args=(UPLOAD_NAME,) )
-		t1.start()
-		t1.join()
-		return {"status":"success","msg":"Processing in Progress. Please Wait. Refresh page to view changes","success_files":UPLOAD_NAME}
-		# uploadstate = _excel.excel_popu_individual(UPLOAD_NAME)
-		# return uploadstate
+		# t1 = Process(target=_excel.excel_popu_individual,args=(UPLOAD_NAME,) )
+		# t1.start()
+		# t1.join()
+		# return {"status":"success","msg":"Processing in Progress. Please Wait. Refresh page to view changes","success_files":UPLOAD_NAME}
+		uploadstate = _excel.excel_popu_individual(UPLOAD_NAME)
+		return uploadstate
 
 	@app.route("/download_excel/<excel_file>",methods=["POST","GET"])
 	def download_excel(excel_file):

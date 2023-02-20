@@ -76,13 +76,13 @@ function import_farmer_excel(argument) {
 		content :(`
 			<div class="x-container">
 				<div class="x-row">
-					<input id="excel_file" type="file" class="x-col l8 x-input x-file x-border"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple>
-					<button class="x-input x-btn x-green x-col l4" onclick="upload_excel()">
+					<p class="x-padding x-pale-yellow x-leftbar x-border-yellow"><b class="x-text-orange">The only Accepted File for the uploads is [<i>*.xls</i>]</b> .Due to the memory resource available in handling all spreadsheet files is limited to 2.8Gib, we suggest that all uploads are in XLS file format. You can convert this files (.xlxs, .csv, etc) using Microsoft Office Excel or other application that manage spreadsheets</p>
+					<input id="excel_file" type="file" class="x-col l8 x-input x-file x-border"  accept=".xls" multiple style="height:50px">
+					<button class="x-input x-btn x-green x-col l4" onclick="upload_excel()" style="height:50px">
 						Upload
 					</button>
 				</div>
 				<div class="x-padding x-container" style="overflow-y:scroll;height: 60vh;">
-					<hr>
 					<b class="x-text-teal">Uploaded Spreadsheets</b><br>
 					<div id="ls_uploaded_excel" class="x-container" >
 						<div class="x-padding x-center">
@@ -98,6 +98,11 @@ function import_farmer_excel(argument) {
 	excel_upload_dialog.show()
 	get_uploaded_excel()
 }
+
+function is_good_file(elem){
+	println(elem.value)
+}
+
 function upload_excel(){
 	SPINNER_LOADER.show()
 	excel_upload_dialog.hide()
@@ -116,6 +121,7 @@ function upload_excel(){
 			println(r)
 			excel_upload_dialog.destroy()
 			var res = JSON.parse(r)
+			println(res)
 			var diadata = {} 
 			if(res['status']=="failed"){
 				diadata = {
@@ -129,7 +135,7 @@ function upload_excel(){
 				var dialog = $dialog(diadata)
 				dialog.show()
 			}
-			if(res['status']=="success"){
+			else if(res['status']=="success"){
 				diadata = {
 					title : "Excel Upload Success",
 					type :"success",
