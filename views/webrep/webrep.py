@@ -39,31 +39,25 @@ class _main:
 
 	@app.route("/rapid/<segment>/<page>",methods=["POST","GET"])
 	def page_loader(segment,page):
+		print(" * Page Loaded : {}".format(page.lower()))
 		if(page.lower()=="adminKnowledgecenter.html".lower()):
 			if(_main.is_on_session()):
 				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
 			else:
 				return redirect("/login?force_url=1")
-		elif(page.lower()=="NewsAndStories.html".lower()):
-			if(_main.is_on_session()):
-				return render_template(
-					"{}/{}".format(segment,page),
-					users=_main.get_all_user(),
-					is_session =_main.is_on_session(),
-					user_data=session["USER_DATA"][0],
-					page_data=_main.get_post()
-				)
-		elif(page.lower()=="home.html".lower()):
-			if(_main.is_on_session()):
-				return render_template(
-					"{}/{}".format(segment,page),
-					users=_main.get_all_user(),
-					is_session =_main.is_on_session(),
-					user_data=session["USER_DATA"][0],
-					page_data=_main.get_post()
-				)
+		elif(page.lower()=="newsandstories.html".lower() or page.lower()=="home.html".lower()):
+			
+			if("USER_DATA" in session):
+				UDATA = session["USER_DATA"][0]
 			else:
-				return redirect("/login?force_url=1")
+				UDATA = {"USER_DATA":[{}]}
+			return render_template(
+				"{}/{}".format(segment,page),
+				users=_main.get_all_user(),
+				is_session =_main.is_on_session(),
+				user_data=UDATA,
+				page_data=_main.get_post()
+			)
 
 		_main.moderator(segment,page)
 		return render_template("{}/{}".format(segment,page),is_session =_main.is_on_session())
@@ -75,8 +69,8 @@ class _main:
 	def get_post():
 		return db.select("SELECT * from `webrep_articles`;")
 
-	@app.route("/webrep/article/post",methods=["POST","GET"])
-	def article_post():
+	@app.route("/webrep/upload_file_webrep",methods=["POST","GET"])
+	def upload_file_webrep():
 		from datetime import date, datetime
 		data = dict(request.form)
 		key = [];val = []
@@ -94,7 +88,13 @@ class _main:
 			f.save(os.path.join(c.RECORDS+"/objects/webrep/",UPLOAD_NAME ))
 		last_row_id = db.do(sql)
 		return last_row_id
+ 
+ 
 
+
+	@app.route("/webrep/article/get_post",methods=["POST","GET"])
+	def get_post():
+		return db.select("SELECT * from `webrep_articles`;")
 
 	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
 	def get_img(img):
