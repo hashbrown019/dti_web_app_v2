@@ -89,13 +89,6 @@ class _main:
 		last_row_id = db.do(sql)
 		return last_row_id
  
- 
-
-
-	@app.route("/webrep/article/get_post",methods=["POST","GET"])
-	def get_post():
-		return db.select("SELECT * from `webrep_articles`;")
-
 	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
 	def get_img(img):
 		print(img)
