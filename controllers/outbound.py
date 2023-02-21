@@ -28,7 +28,6 @@ class outbound:
 				SELECT
 					form_a_farmer_profiles.*,
 					{}.*
-				   
 				FROM `form_a_farmer_profiles` 
 				INNER JOIN {} ON form_a_farmer_profiles.farmer_code = {}.farmer_code
 

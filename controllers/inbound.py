@@ -57,7 +57,8 @@ class data_cleaning:
 		self.db = db
 		self.session = session
 		
-	def get_table_columns(self,table): return self.db.select("DESCRIBE `{}`;".format(table))
+	def get_table_columns(self,table):
+		return self.db.select("DESCRIBE `{}`;".format(table))
 
 	def get_table_columns_value(self,col,table):
 		FILTER_SUFFIX = Filter.position_data_filter(self)
