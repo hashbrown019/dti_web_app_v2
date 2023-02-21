@@ -16,7 +16,7 @@ from apis import api
 import json
 from controllers import Logs
 # from getmac import get_mac_address
-Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{},"SERVER_TERM", "TERMINAL")
+Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL")
 
 app = Flask(__name__)
 # Minify(app=app, html=True, js=True, cssless=True)
@@ -42,14 +42,13 @@ def index():return redirect("/webrep")
 def before_request():
 	# ip_addr = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
 	ip_addr = request.access_route[0]
-	platform = request.headers.get('Sec-Ch-Ua-Platform')
 	agent = request.headers.get('User-Agent')
 	# ss = open("l_header.txt","a")
 	# ss.write("{}\n".format(json.dumps((request))))
 	# ss.close()
 	if( request.endpoint != "static" and "get_notif_unseen" not in str(request.endpoint).split(".")):
 		if(request.endpoint != "index"):
-			Logs.ACCESS_LOGS(ip_addr, request.endpoint, session, platform, agent)
+			Logs.ACCESS_LOGS(ip_addr, request.endpoint, session, agent)
 			# updated_mac = get_mac_address(ip=ip_addr)
 			# print(" MAC ADDRESS")
 			# print(updated_mac)
