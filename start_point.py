@@ -53,6 +53,6 @@ def before_request():
 			# updated_mac = get_mac_address(ip=ip_addr)
 			# print(" MAC ADDRESS")
 			# print(updated_mac)
-			# print(request.headers.get('X-Forwarded-For'))
+			print(request.headers)
 	pass
 
