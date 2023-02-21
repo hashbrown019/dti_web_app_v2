@@ -59,6 +59,8 @@ class data_cleaning:
 		
 	def get_table_columns(self,table):
 		ress = self.db.select("DESCRIBE `{}`;".format(table))
+		for count in range(len(ress)-1):
+			ress[count]["Type"] = "HIDDEN"
 		print(ress)
 		return list(ress)
 
