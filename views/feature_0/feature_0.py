@@ -102,7 +102,7 @@ class _main:
 		cols = data_clean.get_table_columns(table)
 		print("===== Retruning Data")
 		print(table)
-		return jsonify(cols)
+		return cols
 
 	@app.route("/data_cleaning/get_table_col_val",methods=["POST","GET"])
 	def get_table_col_val():

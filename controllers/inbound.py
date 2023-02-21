@@ -60,7 +60,7 @@ class data_cleaning:
 	def get_table_columns(self,table):
 		print("===== Querying")
 
-		ress = self.db.select("DESCRIBE `{}`;".format(table))
+		ress = self.db.select("DESCRIBE `{}`;".format(table)).decode("utf-8")
 		print("===== LOOPING")
 
 		for count in range(len(ress)-1):
