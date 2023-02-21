@@ -39,7 +39,8 @@ def index():return redirect("/webrep")
 
 @app.before_request
 def before_request():
+	addr = ip_addr = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
 	if( request.endpoint != "static" and "get_notif_unseen" not in str(request.endpoint).split(".")):
-		Logs.ACCESS_LOGS(request.remote_addr,request.endpoint,session)
+		Logs.ACCESS_LOGS(addr, request.endpoint, session)
 	pass
 
