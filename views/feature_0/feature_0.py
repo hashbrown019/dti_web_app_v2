@@ -98,8 +98,10 @@ class _main:
 	@app.route("/data_cleaning/get_table_col",methods=["POST","GET"])
 	def get_table_col():
 		table = request.form['table']
-		print(table)
+		print("===== GEtting SQL")
 		cols = data_clean.get_table_columns(table)
+		print("===== Retruning Data")
+		print(table)
 		return cols
 
 	@app.route("/data_cleaning/get_table_col_val",methods=["POST","GET"])

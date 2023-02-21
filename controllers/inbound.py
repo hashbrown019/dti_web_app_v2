@@ -58,11 +58,17 @@ class data_cleaning:
 		self.session = session
 		
 	def get_table_columns(self,table):
+		print("===== Querying")
+
 		ress = self.db.select("DESCRIBE `{}`;".format(table))
+		print("===== LOOPING")
+
 		for count in range(len(ress)-1):
 			ress[count]["Type"] = "HIDDEN"
 			ress[count]["Key"] = "HIDDEN"
 		print(ress)
+		print("===== Passing Data")
+
 		return list(ress)
 
 	def get_table_columns_value(self,col,table):
