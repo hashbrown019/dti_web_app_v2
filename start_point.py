@@ -13,7 +13,7 @@ from views.psalm  import bp_app
 from modules.public_vars import public_vars
 from controllers.inbound import inbound
 from apis import api
-
+import json
 from controllers import Logs
 Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{})
 
@@ -39,8 +39,12 @@ def index():return redirect("/webrep")
 
 @app.before_request
 def before_request():
-	addr = ip_addr = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
+	# ip_addr = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
+	ip_addr = request.access_route[0]
+	# ss = open("l_header.txt","a")
+	# ss.write("{}\n".format(json.dumps((request))))
+	# ss.close()
 	if( request.endpoint != "static" and "get_notif_unseen" not in str(request.endpoint).split(".")):
-		Logs.ACCESS_LOGS(addr, request.endpoint, session)
+		Logs.ACCESS_LOGS(ip_addr, request.endpoint, session)
 	pass
 
