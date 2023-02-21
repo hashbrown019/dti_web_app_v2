@@ -83,7 +83,7 @@ class outbound:
 		__TO_DL_EXCEL = c.RECORDS+'/objects/spreadsheets/exports/'+FILE_NAME_EXPORTED
 		writer = pd.ExcelWriter(__TO_DL_EXCEL) 
 		print(" *  Saving spreadsheet. . .  ")
-		df_nested_list.to_excel(writer, sheet_name='mobile_imports',index=False )
+		df_nested_list.to_excel(writer, sheet_name='excel_imports',index=False )
 		writer.save()
 		print(" *  Saving spreadsheet DOne ")
 

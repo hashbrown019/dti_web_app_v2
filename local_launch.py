@@ -21,4 +21,6 @@ app = sp.app
 # app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG,ssl_context='adhoc') 
 app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG)
 # app.run(debug=c.IS_DEBUG)
+from controllers import Logs
+Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_EXIT",{})
 

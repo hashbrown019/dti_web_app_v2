@@ -14,6 +14,9 @@ from modules.public_vars import public_vars
 from controllers.inbound import inbound
 from apis import api
 
+from controllers import Logs
+Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{})
+
 app = Flask(__name__)
 # Minify(app=app, html=True, js=True, cssless=True)
 app.config['JSON_SORT_KEYS'] = False
@@ -29,19 +32,14 @@ app.register_blueprint(feature_0.app)
 app.register_blueprint(webrep.app)
 app.register_blueprint(bp_app.app)
 
+
 @app.route("/")
 def index():return redirect("/webrep")
 
 
 @app.before_request
 def before_request():
-	if( request.endpoint != "static" and "Handshake" not in str(request.endpoint).split(".")):
-		if "USER_DATA" not in session:
-			if(request.endpoint != "login.login"):
-				# return redirect('/login')
-				pass
-		else:
-			if(request.endpoint == "login.login"):
-				# return redirect('/home')
-				pass
+	if( request.endpoint != "static" and "get_notif_unseen" not in str(request.endpoint).split(".")):
+		Logs.ACCESS_LOGS(request.remote_addr,request.endpoint,session)
 	pass
+
