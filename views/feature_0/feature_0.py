@@ -6,6 +6,7 @@ import Configurations as c
 import os, random, json, shutil
 from controllers.outbound import outbound as outb
 from controllers.inbound import inbound as inb
+from controllers.inbound import data_cleaning as  d_c
 from werkzeug.utils import secure_filename
 
 from controllers.engine_excel_to_sql import form_excel_a_handler
@@ -20,6 +21,7 @@ rapid_mysql = mysql(*c.DB_CRED)
 
 outbound = outb(app,rapid_mysql,session)
 inbound = inb(app,rapid_mysql,session)
+data_clean = d_c(app,rapid_mysql,session)
 
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 
@@ -91,6 +93,20 @@ class _main:
 		return inbound.set_notif_seen(notif_id)
 
 
+	# ========================================================================
+
+	@app.route("/data_cleaning/get_table_col",methods=["POST","GET"])
+	def get_table_col():
+		table = request.form['table']
+		cols = data_clean.get_table_columns(table)
+		return cols
+
+	@app.route("/data_cleaning/get_table_col_val",methods=["POST","GET"])
+	def get_table_col_val():
+		table = request.form['table']
+		col = request.form['col']
+		vals = data_clean.get_table_columns_value(col,table)
+		return vals
 	# ========================================================================
 	@app.route("/migrations/export_excel_mobile",methods=["POST","GET"])
 	def export_excel_mobile():
