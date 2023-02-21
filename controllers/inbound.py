@@ -65,11 +65,7 @@ class data_cleaning:
 
 		for count in range(len(ress)-1):
 			for ky in ress[count]:
-				
-				print("{} = {}".format(ky,type(ress[count][ky])))
-				if(type(ress[count][ky]) in ["bytes","bytearray"]):
-					print("true = "+ress[count][ky] )
-					ress[count][ky] = ress[count][ky].decode("utf-8")
+				ress[count][ky] = "{}".format(str(ress[count][ky]))
 		print(ress)
 		print("===== Passing Data")
 
