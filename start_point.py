@@ -45,6 +45,7 @@ def before_request():
 	# ss.write("{}\n".format(json.dumps((request))))
 	# ss.close()
 	if( request.endpoint != "static" and "get_notif_unseen" not in str(request.endpoint).split(".")):
-		Logs.ACCESS_LOGS(ip_addr, request.endpoint, session)
+		if(request.endpoint != "index"):
+			Logs.ACCESS_LOGS(ip_addr, request.endpoint, session)
 	pass
 
