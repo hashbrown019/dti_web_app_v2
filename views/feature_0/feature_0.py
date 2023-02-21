@@ -98,7 +98,7 @@ class _main:
 	@app.route("/data_cleaning/get_table_col",methods=["POST","GET"])
 	def get_table_col():
 		table = request.form['table']
-		println(table)
+		print(table)
 		cols = data_clean.get_table_columns(table)
 		return cols
 
@@ -106,8 +106,8 @@ class _main:
 	def get_table_col_val():
 		table = request.form['table']
 		col = request.form['col']
-		println(table)
-		println(col)
+		print(table)
+		print(col)
 		vals = data_clean.get_table_columns_value(col,table)
 		return vals
 	# ========================================================================
