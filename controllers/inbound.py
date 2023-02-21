@@ -61,6 +61,7 @@ class data_cleaning:
 		ress = self.db.select("DESCRIBE `{}`;".format(table))
 		for count in range(len(ress)-1):
 			ress[count]["Type"] = "HIDDEN"
+			ress[count]["Key"] = "HIDDEN"
 		print(ress)
 		return list(ress)
 
