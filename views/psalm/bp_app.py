@@ -74,7 +74,9 @@ def update():
 
 @app.route("/formcdashboard")
 def formcdashboard():
-    disp = displayData.display()
+    disp = displayData.display__()
+    # disp = displayData.display()
+    # return disp
     return render_template("formcdashboard.html",**disp)
 
 @app.route("/formcdashboardfilter",methods=['POST','GET'])
