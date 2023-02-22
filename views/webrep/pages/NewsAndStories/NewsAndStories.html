@@ -35,45 +35,10 @@
 		<h5 class="display-2 texttheme mt-5 mb-5" >News and Stories</h5>
 	</div>
 
-<!-- Menu Navbar -->
-	<nav class="container navbar bg-light shadow-sm p-3 bg-body rounded sticky-top" >
-		<div class="container-fluid">
-			<div class=" d-flex ">
-				<a class="me-4 dropdown-toggle" style="color: #1F4F5A !important;" role="button" data-bs-toggle="dropdown">Today</a>
-					<ul class="dropdown-menu" >
-						<li><a class="dropdown-item" type="button" href="">This week</a></li>
-						<li><a class="dropdown-item" type="button" href="">This Month</a></li>
-					</ul>
-
-				<a class="me-4 " style="color: #1F4F5A !important;" role="button">News</a>
-				<a class=" rounded-pill dropdown-toggle me-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="color: #1F4F5A !important;">Stories</a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#uploadDocument" href="">Coffee Stories</a></li>
-						<li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#uploadMultimedia" href="" href="#">Cacao Stories</a></li>
-						<li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#uploadPublication" href="" href="#">Coconut Stories</a></li>
-						<li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#uploadPublication" href="" href="#">Processed Fruits and Nuts Stories</a></li>
-					</ul>
-				<a class="me-4 " style="color: #1F4F5A !important;" role="button">Events</a>
-				<a class="me-4" id="search" onclick="searchclicked()" style="color: #1F4F5A !important;" role="button">Search</a>          
-					<script>
-						function searchclicked() {
-							var x = document.getElementById("searchdiv");
-							if (x.style.display === "none") {
-								x.style.display = "block";
-							} else {
-								x.style.display = "none";
-							}
-						}
-					</script>
-			</div>
-			<div class="d-flex">
-				<a class="me-4 active" style="color: #1F4F5A !important;" href="/rapid/knowledgecenter/KnowledgeAdmin" role="button">My Files</a>
-			</div>
-		</div>
-	</nav >
+{% include 'newsAndstories/stickynavNAS.html' %}
 
 <!-- Search Area -->
-	<div class="container shadow-lg p-3  bg-body rounded mt-2" id="searchdiv" style="display: none;">
+	<div class="container shadow-lg p-3  bg-body rounded mt-2 mb-3" id="searchdiv" style="display: none;">
 			<div class="d-flex justify-content-center">     
 				<form class="row row-cols-xxl-auto g-3 align-items-center mt-1 ">
 					<div class="col-12 ">
@@ -107,16 +72,12 @@
 					<div class="col-12 ">
 						<label class=" searchFont mb-2" for="seachYear">Year</label>
 						<select class="form-select form-select-md" id="seachYear">
-							<option selected>Choose...</option>
-							<option value="1">2015</option>
-							<option value="2">2016</option>
-							<option value="3">2017</option>
-							<option value="4">2018</option>
-							<option value="5">2019</option>
-							<option value="6">2020</option>
-							<option value="7">2021</option>
-							<option value="8">2022</option>
-							<option value="9">2023</option>
+							<option value="1">2018</option>
+							<option value="2">2019</option>
+							<option value="3">2020</option>
+							<option value="4">2021</option>
+							<option value="5">2022</option>
+							<option value="6">2023</option>
 						</select>
 					</div>
 
@@ -134,40 +95,19 @@
 			</div>
 	</div>
 
-<!-- Today's Latest -->
-	<div class=" mb-5">
+	<div class=" " style="display:block;" id="">
 		<div class="container mt-5">
-			<h5 class="texttheme">Today</h2>			
+			<a class="fs-2 dropdown-toggle texttheme" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="today">Today</a>
+				<ul class="dropdown-menu">
+						<li><a class="dropdown-item" type="button" href="" id="thisweek">This Week</a></li>
+						<li><a class="dropdown-item" type="button" href="" id="thismonth">This Month</a></li>
+					</ul>				
 		</div>
-		{% for post in page_data %}
-		<div class="container card2 position-relative mb-4">
-			<div class="container">
-				<div class="container row shadow-sm p-3 bg-body rounded">
-					<div class="col-lg-2">
-						<span><p class="small text-muted">News</p></span>
-						<p class="small text-muted">{{post['date']}}</span></p>
-					</div>
-					<div class="col-lg-9">
-						<div class="row">
-							<div class="col-9 col-lg-9">
-								<p class="small text-muted">{{post['postRcu']}}</p>
-								<h3 class="texttheme fw-bolder">{{post['postdescription']}}</h3>
-								<p class="small text-truncate">{{post['postContent']}}</p>
-								<figcaption class="blockquote-footer mt-3 fst-italic">{{post['postAuthor']}}</figcaption>
-								<a class="small stretched-link text-white" href="/rapid/articles/articles.html" type="button"> click to read more</a>
-							</div>
-							<div class="col-3 col-lg-3">
-								<div class="cimg-item mt-2 ms-5">
-									<img  src="/webrep/article/get_img/{{post['file_name'] | replace('C:fakepath', '')}}" loading="lazy" class="cimg-img" alt="...">
-								</div>
-							</div>            
-						</div>          
-					</div>     
-				</div>
-			</div>   
-		</div>
-		{% endfor %}
+
+		{% include 'newsAndstories/todayTab.html' %}
+		
 	</div>
+
 
 	<div class="container mb-5 shadow-sm p-3 bg-body rounded">
 		{% include 'newsAndstories/cardRelatedLinks.html' %}
