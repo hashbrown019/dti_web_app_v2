@@ -7,7 +7,7 @@ db.err_page = 0
 
 def insert(request):
     if request.method == "POST":
-        upload_by = session["USER_DATA"][0]['upload_by']
+        upload_by = session["USER_DATA"][0]['id']
         name = request.form['name']
         position_firm = request.form['position_firm']
         member_indegenous = request.form['member_indegenous']

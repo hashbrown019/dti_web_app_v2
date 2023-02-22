@@ -33,7 +33,7 @@ def excel_upload_open(path):
 
     
     for row in data[6:]:
-        upload_by = session["USER_DATA"][0]['upload_by']
+        upload_by = session["USER_DATA"][0]['id']
         name = row[1]                                                                      
         position_firm = row[2]                                                                                                     
         sex = row[3]                                                               
