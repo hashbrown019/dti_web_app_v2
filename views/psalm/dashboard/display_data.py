@@ -87,7 +87,7 @@ def display__():
         
     USER_INFO = session["USER_DATA"]
     data_count_entry=db.select("SELECT * FROM form_c {} ".format(position_data_filter()))
-    datatable=db.select("SELECT * FROM form_c".format(position_data_filter()))
+    datatable=db.select("SELECT * FROM form_c {};".format(position_data_filter()))
     data_lastmonth = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
     data_currmonth= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
     data_count_reg_business = db.select("SELECT reg_businessname FROM form_c {} ".format(position_data_filter()))
