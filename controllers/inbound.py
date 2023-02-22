@@ -83,14 +83,12 @@ class Filter:
 	def position_data_filter(clss_):
 		_filter = "WHERE 1 "
 		JOB = clss_.session["USER_DATA"][0]["job"].lower()
-
 		if(JOB in "admin" or JOB in "super admin"):
 			clss_.session["USER_DATA"][0]["office"] = "NPCO"
 			_filter = "WHERE 1 "
 		else:
 			clss_.session["USER_DATA"][0]["office"] = "Regional ({})".format(clss_.session["USER_DATA"][0]["rcu"])
 			_filter = "WHERE  USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(clss_.session["USER_DATA"][0]["rcu"])
-
 		return _filter
 
 	def strct_dic(dict_):

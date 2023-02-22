@@ -77,7 +77,7 @@ def formcdashboard():
     disp = displayData.display__()
     # disp = displayData.display()
     # return disp
-    return render_template("formcdashboard.html",**disp)
+    return render_template("formcdashboard.html",user_data=session["USER_DATA"][0],**disp)
 
 @app.route("/formcdashboardfilter",methods=['POST','GET'])
 def formcdashboardfilter():
@@ -94,12 +94,12 @@ def menu():
 
 @app.route("/cform")
 def cform():
-    return render_template("formc.html")
+    return render_template("formc.html",user_data=session["USER_DATA"][0])
 
 
 @app.route("/spreadsheet")
 def spreadsheet():
-    return render_template("spreadsheet.html")
+    return render_template("spreadsheet.html",user_data=session["USER_DATA"][0])
 
 
 if __name__ == "__main__":
