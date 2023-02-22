@@ -28,13 +28,19 @@
   <!-- <div class="card-header">{{user_data['name']}}</div> -->
   <div class="card-body">
     <!-- <h5 class="card-title">Primary card title</h5> -->
-    <div class=""><span class="fa fa-user"> </span>&nbsp; {{user_data['name']}}</div><br>
-    <div id="button-container">
-      <button onclick="location.href='/logout';" class="danger-button">
-        Logout
-        <span class="round"></span>
-      </button>
-    </div>
+    <a href="#_Hi_There_{{user_data['name']|replace(' ','_')}}" class="btn btn-md ">
+      <span class="ms-start text-white">
+        <i><img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;"></i> 
+        {{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
+      </span>
+      <div id="button-container">
+        <button onclick="location.href='/logout';" class="danger-button">
+          Logout
+          <span class="round"></span>
+        </button>
+    </a>
+    
+    </div> 
 </div>
 </div>
 </div>
