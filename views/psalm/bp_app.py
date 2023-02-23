@@ -37,7 +37,7 @@ def exportcsv():
 
     #df = pd.read_json (r'http://10.0.254.2:5000/api/v2/sample/'+num_entries) # LOCAL HOST
     df_nested_list = pd.json_normalize(query)
-    df = pd.DataFrame (df_nested_list) # SERVER
+    df = pd.DataFrame (df_nested_list)
     writer = pd.ExcelWriter('exported_file.xlsx') 
     df.to_excel(writer, sheet_name='exported_file',index=False )
     df.columns =['Name Of Respondent','Designation in the Firm','Sex','Age','Contact Details','Email Address','Stakeholder Category','Industry Cluster','Registered Business Name',' Business Address','Form of Enterprise','Administration: Business Registration','Administration: Product Registration','Administration: Certificate of Registration','Administration: License to Operate','Product Quality: ISO Certification','Product Quality: GAP/ GMP Certification ','Product Quality: Organic','Product Quality: Halal','Product Quality: Other Certification','Type of Enterprise/Business Size','Store Capacity Organic (Current Volume, ave./month)','Organic Potential/Target Capacity','Other Info Organic','Store Capacity Synthetic (Current Volume, ave./month)','Synthetic Potential/Target Capacity','Other Info Synthetic','Store Capacity Pesticides (Current Volume, ave./month)','Pesticides Potential/Target Capacity','Pesticides Other Info','Store Capacity Herbicides (Current Volume, ave./month)','Herbicides Potential/Target Capacity','Herbicides Other Info','Store Capacity Vermicast Compost (Current Volume, ave./month)','Vermicast Compost Potential/Target Capacity','Vermicast Compost Other Info','Store Capacity Seedlings (Current Volume, ave./month)','Seedlings Potential/Target Capacity','Seedlings Other Info','Store Capacity Others (Current Volume, ave./month)','Others Potential/Target Capacity','Others Other Info','Drying Area/Capacity Utilization (%)','Drying Potential for Expansion-demand based? (Y/N)','Drying Other Information','Storage Area/Capacity Utilization (%)','Storage Potential for Expansion-demand based? (Y/N)','Storage Other Information','Hauling Area/Capacity Utilization (%)','Hauling Potential for Expansion-demand based? (Y/N)','Hauling Other Information','Semi-Processing Current Capacity/ Production ','Semi-Processing Potential for Expansion? (Y/N)','Semi-Processing Other Information','Final Product Current Capacity/ Production ','Final Product Potential for Expansion? (Y/N)','Final Product Other Information','Trading Volume/ Capacity','Trading Potential for Expansion? (Y/N)','Trading Other Information','Markteting Production Cap./Month','Martketing Potential for Expansion? (Y/N)','Marketing Other Information','Micro-financing Loan Portfolio (specific to RAPID priority crops)','Micro-financing Potential for Expansion? (Y/N)','Micro-financing Other Information','Insurance Loan Portfolio (specific to RAPID priority crops)','Insurance Potential for Expansion? (Y/N)','Insurance Other Information','Production & Sales Product/Services( under VC only)','Production & Sales Sales Volume/month','Production & Sales Unit Selling Price','Production & Sales Unit Measurement(kgs/sack/pc, interest)','Production & Sales Payment Terms','Raw Materials','Volume/Supply Requirement','Quality Requirement(organic, color, packaging, etc.)','Payment Terms/ Arrangement','Clients','Sales Volume (ave. month)','Payment Terms (COD, consignment, others)','Number of Workers (Qty) MALE in-house','Number of Workers (Qty) FEMALE in-house','Number of IP Group in-house','Ave. # of workdays/mo. in-house','Ave. Salary/ Wage/month in-house','Number of Workers (Qty) MALE sub-contractor','Number of Workers (Qty) FEMALE sub-contractor','Number of IP Group sub-contractor','Ave. # of workdays/mo. sub-contractor','Ave. Salary/ Wage/month sub-contractor','Number of Workers (Qty) MALE pakyaw','Number of Workers (Qty) FEMALE pakyaw','Number of IP Group pakyaw','Ave. # of workdays/mo. pakyaw','Ave. Salary/ Wage/month pakyaw','Supply Availability','Pricing','Quality of Raw Materials','Quality of Final Product','Other, please specify','Do you have existing commercial partnership with suppliers?','Do you provide support/assistance to your current partners?','Are you satisfied with your current business/production performance? IF No, what do you think you need to do to improve it? Please specify your answer in the space provided:','Does your membership in the organization helps you in your livelihood?','What do you think the LGU, NGAs and other agencies should do to improve the local commodity cluster industry? (Cacao, Coffee, Coco, Process Fruits & nuts)']
@@ -58,7 +58,7 @@ def exportcsv():
 
 
 @app.route('/insert', methods = ['POST'])
-def insert():
+def insert():   
     insertData.insert(request)
     return redirect("/cform")
     
@@ -69,6 +69,18 @@ def update():
     updateData.update(request)
     return redirect("/formcdashboard")
 
+@app.route('/dcfweb')
+def dcfweb():
+    return render_template("dcfweb.html")
+
+
+@app.route('/fmiweb')
+def fmiweb():
+    return render_template("fmiweb.html")
+
+@app.route('/fundtrackerweb')
+def fundtrackerweb():
+    return render_template("fundtrackerweb.html")
 
 
 
