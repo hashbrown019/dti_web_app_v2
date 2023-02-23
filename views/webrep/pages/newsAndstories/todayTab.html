@@ -1,0 +1,32 @@
+<!-- Today's Latest -->
+	<div class=" mb-5">		
+		</div>
+		{% for post in page_data %}
+		<div class="news_card container card2 position-relative mb-4" vdate="{{post['date']}}">
+			<div class="container">
+				<div class="container row shadow-sm p-3 bg-body rounded">
+					<div class="col-lg-2">
+						<span><p class="small text-muted">News</p></span>
+						<p class="small text-muted">{{post['date']}}</span></p>
+					</div>
+					<div class="col-lg-9">
+						<div class="row">
+							<div class="col-9 col-lg-9">
+								<p class="small text-muted">{{post['postRcu']}}</p>
+								<h3 class="texttheme fw-bolder">{{post['postdescription']}}</h3>
+								<p class="small text-truncate">{{post['postContent']}}</p>
+								<figcaption class="blockquote-footer mt-3 fst-italic">{{post['postAuthor']}}</figcaption>
+								<a class="small stretched-link text-white" href="/rapid/articles/articles.html" type="button"> click to read more</a>
+							</div>
+							<div class="col-3 col-lg-3">
+								<div class="cimg-item mt-2 ms-5">
+									<img  src="/webrep/article/get_img/{{post['file_name'] | replace('C:fakepath', '')}}" loading="lazy" class="cimg-img" alt="...">
+								</div>
+							</div>            
+						</div>          
+					</div>     
+				</div>
+			</div>   
+		</div>
+		{% endfor %}
+	</div>
