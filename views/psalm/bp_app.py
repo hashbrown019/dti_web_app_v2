@@ -55,13 +55,11 @@ def exportcsv():
     return send_file('exported_file.xlsx')
 
 
-
 @app.route('/insert', methods = ['POST'])
 def insert():   
     insertData.insert(request)
     return redirect("/cform")
     
-
 
 @app.route('/update',methods=['POST','GET'])
 def update():

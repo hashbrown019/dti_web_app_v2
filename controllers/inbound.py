@@ -62,17 +62,13 @@ class data_cleaning:
 
 		ress = self.db.select("DESCRIBE `{}`;".format(table))
 		print("===== LOOPING")
-
+		datums = []
 		for count in range(len(ress)-1):
-			for ky in ress[count]:
-				print("{} = {}".format(ky,type(ress[count][ky])))
-				if(type(ress[count][ky]) in ["bytes","bytearray"]):
-					print("true = "+ress[count][ky] )
-					ress[count][ky] = ress[count][ky].decode("utf-8")
+			datums.append({'Field':str(ress[count]['Field'])})
 		print(ress)
 		print("===== Passing Data")
 
-		return list(ress)
+		return datums
 
 	def get_table_columns_value(self,col,table):
 		FILTER_SUFFIX = Filter.position_data_filter(self)
