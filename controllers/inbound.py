@@ -74,7 +74,6 @@ class data_cleaning:
 		FILTER_SUFFIX = Filter.position_data_filter(self)
 		return self.db.select("SELECT `{}` as `key`, count({}) as `total` FROM {}  {} GROUP by {};".format(col,col,table,FILTER_SUFFIX,col))
 
-
 class Filter:
 	def position_data_filter(clss_):
 		_filter = "WHERE 1 "

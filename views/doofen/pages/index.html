@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>RAPID Growth || Form B</title>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+	<link rel="stylesheet" href="../static/doofen_static/css/style.css">
+	<link rel="stylesheet" href="../static/doofen_static/css/styles.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+	<script src="../static/doofen_static/js/Brorn.min.js"></script>
+	<script src="../static/doofen_static/js/scripts.js"></script>
+	<script type="text/javascript"></script>
+	<link rel="icon" href="../static/img/mis_2023_v2.svg">
+
+
+
+</head>
+<body onload="loaded()" style="height:80vh">
+	<div class="grid-container">
+
+		<!-- Header -->
+		<header class="header">
+			<div class="menu-icon" onclick="openSidebar()">
+				<span class="material-icons-outlined">menu</span>
+			</div>
+			<div class="header-left">
+				<span class="material-icons-outlined"></span>
+			</div>
+			<div class="header-right">
+
+			</div>
+		</header>
+		<!-- End Header -->
+
+		<!-- Sidebar -->
+		<aside id="sidebar">
+			<div class="sidebar-title">
+				<div class="sidebar-brand">
+					<span class="material-icons-outlined">home</span> Form B
+				</div>
+				<span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+			</div>
+
+
+			<ul class="sidebar-list">
+				<li class="sidebar-list-item" onclick="show_view('main','main-container')">
+					<a href="#">
+						<span class="material-icons-outlined">dashboard</span> Dashboard
+					</a>
+				</li>
+				<li class="sidebar-list-item" onclick="show_view('forms','main-container')" >
+					<a href="#">
+						<span class="material-icons-outlined">folder_open</span> Form B
+					</a>
+				</li>
+				<li class="sidebar-list-item">
+					<a href="#">
+						<span class="material-icons-outlined">fact_check</span> Excel
+					</a>
+				</li>
+			</ul>
+
+		</aside>
+		<!-- End Sidebar -->
+
+
+
+		<!-- Main -->
+		<main class="main-container" id="main">
+			<div id="form_header" class="main-title">
+				<p class="font-weight-bold">DASHBOARD</p>
+
+			</div>
+
+			<div class="main-cards">
+
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold ">2490</h2>
+						<span class="material-icons-outlined text-green">groups</span>
+					</div>
+					<div class="card-progress">
+						<small>NO. OF REGISTERD FARMERS</small>
+						<div class="card-indicator">
+							<div class="indicator one" style="width: 24.9%"></div>
+						</div>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary">10</h2>
+						<span class="material-icons-outlined text-blue">diversity_3</span>
+					</div>
+
+					<div class="card-progress">
+						<small>REGISTERING AGENCIES</small>
+						<div class="card-indicator">
+							<div class="indicator two" style="width: 1%"></div>
+						</div>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold">79</h2>
+						<span class="material-icons-outlined text-orange">diversity_1</span>
+					</div>
+					<div class="card-progress">
+						<small>MANAGEMENT COMMITTE</small>
+						<div class="card-indicator">
+							<div class="indicator three" style="width: 7%"></div>
+						</div>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold">10</h2>
+						<span class="material-icons-outlined text-red">handshake</span>
+					</div>
+
+					<div class="card-progress">
+						<small>PARTNERSHIP</small>
+						<div class="card-indicator">
+							<div class="indicator four" style="width: 1%"></div>
+						</div>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+			</div>
+
+			<div class="charts">
+				<div class="charts-card">
+					<p class="chart-title">AREA/SCOPE OF OPERATION</p>
+					<div id="bar-chart"></div>
+				</div>
+
+				<div class="charts-card">
+					<p class="chart-title">COMMUNICATION AND PLANNING</p>
+					<div id="area-chart"></div>
+				</div>
+			</div>
+		</main>
+		<!-- End Main -->
+
+
+		<main class="main-container" id="forms" style="display: none;height: 85vh;">
+			{% include 'forms.html' %}
+		</main>
+
+		<hr>
+	</div>
+</body>
+
+<script type="text/javascript">
+	function loaded(argument) {
+		// body...
+		get_forms('respondents')
+		init_charts()
+	}
+
+
+
+	function get_forms(form_ui){
+		form_ui = form_ui.replaceAll("/formb/","")
+		println(" * Showing Form UI "+ form_ui)
+		var form_container = $CLASS("form_container")
+		for (var i = 0; i < form_container.length; i++) {form_container[i].style.display =" none"}
+		$ID(form_ui).style.display = "block"
+		topFunction()
+	}
+	// When the user clicks on the button, scroll to the top of the document
+	function topFunction() {
+		$ID('forms').scrollTop = 0;
+		$ID('forms').scrollTop = 0;
+		document.body.scrollTop = 0;
+		document.documentElement.scrollTop = 0;
+		$ID('form_header').scrollIntoView();
+	}
+
+	function save_form(){
+		var FORM_DATA = {}
+		var form_data_b = $CLASS("form_data_b")
+		for (var i = 0; i < form_data_b.length; i++) {
+			var input_type = form_data_b[i].type
+			if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
+				FORM_DATA[form_data_b[i].id] = form_data_b[i].value
+			}
+			if( (["checkbox","radio"]).includes(input_type) ){
+				FORM_DATA[form_data_b[i].id] = form_data_b[i].checked
+			}
+		}
+		println(FORM_DATA)
+	}
+</script>
+</html>=
