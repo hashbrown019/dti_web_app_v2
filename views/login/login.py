@@ -32,6 +32,11 @@ class _main:
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		return render_template("login_v2.html")
 
+	@app.route("/newlogin",methods=["POST","GET"])
+	def newlogin():
+		# return render_template("SITE_OFF.html") # MAINTENANCE
+		return render_template("login.html")
+
 
 	@app.route("/login_auth",methods=["POST"])
 	def login_auth():
