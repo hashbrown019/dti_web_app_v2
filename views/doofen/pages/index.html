@@ -185,12 +185,14 @@
 
 
 	function get_forms(form_ui){
-		form_ui = form_ui.replaceAll("/formb/","")
-		println(" * Showing Form UI "+ form_ui)
-		var form_container = $CLASS("form_container")
-		for (var i = 0; i < form_container.length; i++) {form_container[i].style.display =" none"}
-		$ID(form_ui).style.display = "block"
-		topFunction()
+		// form_ui = form_ui.replaceAll("/formb/","").toLowerCase()
+		// println(" * Showing Form UI "+ form_ui)
+		// var form_container = $CLASS("form_container")
+		// for (var i = 0; i < form_container.length; i++) {
+		// 	form_container[i].style.display =" none"
+		// }
+		// $ID(form_ui).style.display = "block"
+		// topFunction()
 	}
 	// When the user clicks on the button, scroll to the top of the document
 	function topFunction() {
@@ -222,9 +224,6 @@
 			data : $DATA(FORM_DATA),
 			func : function(rrr){
 				var resp = JSON.parse(rrr)
-				println(" -- Respond")
-				println(resp)
-				println(" -- Respond")
 				show_view('forms','main-container')
 			}
 		})

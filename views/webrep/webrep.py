@@ -89,6 +89,26 @@ class _main:
 		last_row_id = db.do(sql)
 		return last_row_id
  
+	@app.route("/webrep/upload_file_webrep___",methods=["POST","GET"])
+	def upload_file_webrep___():
+		from datetime import date, datetime
+		data = dict(request.form)
+		key = [];val = []
+		data["USER_ID"] = session["USER_DATA"][0]['id']
+		for datum in data:
+			key.append("`{}`".format(datum))
+			val.append("'{}'".format(data[datum]))
+		sql = ('''INSERT INTO `webrep_articles` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+		
+		files = request.files
+		print(files)
+		for file in files:
+			f = files[file]
+			UPLOAD_NAME = secure_filename(f.filename)
+			f.save(os.path.join(c.RECORDS+"/objects/webrep/",UPLOAD_NAME ))
+		last_row_id = db.do(sql)
+		return last_row_id
+ 
 	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
 	def get_img(img):
 		print(img)
