@@ -78,7 +78,7 @@
 			var currentFocus;
 			inp.addEventListener("input", function(e) {
 				var a, b, i, val = this.value;
-				println(a)
+				// println(a)
 				closeAllLists();
 				if (!val) { return false;}
 				currentFocus = -1;
@@ -93,7 +93,7 @@
 						b.innerHTML = "<strong>" + ARRSTRS.substr(0, val.length) + "</strong>";
 						b.innerHTML += ARRSTRS.substr(val.length);
 						b.innerHTML += "<input type='hidden' value='" + ARRSTRS + "'>";
-						println(ARRSTRS)
+						// println(ARRSTRS)
 						b.addEventListener("click", function(e) {
 							inp.value = this.getElementsByTagName("input")[0].value;
 							// closeAllLists();
@@ -158,11 +158,12 @@
 			,"{{user['name']}} || {{user['id']}} || {{user['email']}}"
 			{% endfor %}
 			];
-		let ALL_IMP_UNIT = [
+		let ALL_IMP_UNIT_ = [
 			{% for user in users: %}
 			,"{{user['rcu']}}"
 			{% endfor %}
 			];
+		let ALL_IMP_UNIT = [...new Set(ALL_IMP_UNIT_)];
 
 	// autocomplete(document.getElementById("myInput"), ALL_USERS); // ROOT of ALL EVIL
 

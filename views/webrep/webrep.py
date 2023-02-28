@@ -96,10 +96,11 @@ class _main:
 		key = [];val = []
 		data["USER_ID"] = session["USER_DATA"][0]['id']
 		for datum in data:
+			print(format(data[datum]))
 			key.append("`{}`".format(datum))
 			val.append("'{}'".format(data[datum]))
-		sql = ('''INSERT INTO `webrep_articles` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
-		
+		sql = ('''INSERT INTO `webrep_uploads` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+		print(sql)
 		files = request.files
 		print(files)
 		for file in files:
@@ -107,7 +108,7 @@ class _main:
 			UPLOAD_NAME = secure_filename(f.filename)
 			f.save(os.path.join(c.RECORDS+"/objects/webrep/",UPLOAD_NAME ))
 		last_row_id = db.do(sql)
-		return last_row_id
+		return jsonify({"last_row_id":last_row_id})
  
 	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
 	def get_img(img):

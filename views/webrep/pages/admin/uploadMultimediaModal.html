@@ -1,174 +1,202 @@
 <div class="modal fade " id="uploadMultimedia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="staticBackdropLabel">Upload Multimedia</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-
-						<form class="row g-3 needs-validation" id="form_for_upload_multimedia">
-								<div class="col-md-6">
-									<label for="Unit" class="FORMDATA_MUL form-label small fw-bolder">Unit</label>
-									<select class="form-select" id="Unit" required>
-										<option>NPCO</option>
-										<option>RCU</option>
-										<option>PCU</option>
-									</select>
-									<div class="invalid-feedback">
-										Please select a Unit.
-									</div>
-								</div>
-								
-								<div class="col-md-6">
-									<label for="Designation" class="form-label small fw-bolder">Designation</label>
-									<input type="text" class="FORMDATA_MUL form-control" id="Designation" required>
-									<div class="invalid-feedback">
-										Please provide a Designation.
-									</div>
-								</div>
-								
-								<div class="col-md-12">
-									<label for="Title" class="form-label form-label-lg small fw-bolder">Title of Multimedia (Extracted from the activity/event?)</label>
-									<input type="text" class="FORMDATA_MUL form-control fw-bolder" id="Title" required>
-									<div class="invalid-feedback">
-										Please provide a Title of Document.
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									<label for="forms" class="form-label small fw-bolder">Form</label>
-									<select class="FORMDATA_MUL form-select" id="forms" required>
-										<option>AUDIO</option>
-										<option>PHOTO</option>
-										<option>PODCAST/SHOW RECORDING</option>
-										<option>VIDEO</option>
-										<option>WEBINAR RECORDING</option>
-										<option value="Others">Others</option>
-									</select>
-									<div class="invalid-feedback">
-										Please select a Unit.
-									</div>
-								</div>
-									<script type="text/javascript">
-									$(document).on('change', '#forms', function(e){  
-										e.preventDefault();
-										othersForm = $("#OthersForm_mul");
-										forms = this.value;
-										if (forms == "Others") {
-											console.log("TRUE")
-											$("#OthersForm_mul").attr("hidden",false)
-										}
-										else {
-											console.log("FALSE")
-											$("#OthersForm_mul").attr("hidden",true)
-										}
-									});
-								</script>
-								<div class="col-md-4" id="OthersForm_mul" hidden>
-									<label for="forms" class="form-label small fw-bolder">Others:</label>
-									<input type="text" name="Others" id="Others" class="FORMDATA_MUL form-control" placeholder="please specify">
-								</div>
-
-								<div class="col-md-4">
-									<label for="Date" class="form-label small fw-bolder">Date Recorded/Taken/Produced</label>
-									<input type="date" class="FORMDATA_MUL form-control" id="Date" placeholder="Select Date" required>
-									<div class="invalid-feedback">
-										Please provide a date approve.
-									</div>
-								</div>
-
-								 <div class="col-md-12">
-									<label for="Description" class="form-label small fw-bolder">Short Description of Title/Topic/Name of Document</label>
-									<textarea class="FORMDATA_MUL form-control" id="Description" rows="3"></textarea>
-									<div class="invalid-feedback">
-										Please provide a Title of Document.
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="tags" class="form-label small fw-bolder">Tags/Search Keywords</label>
-									<input class="FORMDATA_MUL form-control" id="tags" rows="3"></input>
-									<div class="invalid-feedback">
-										Please provide a Title of Document.
-									</div>
-								</div>
-
-								<div id="">
-								  <label for="uploadMul" class="form-label small fw-bolder">Please upload your files</label>
-								  <input class="FORMDATA_MUL form-control" type="file" id="uploadMul" multiple>
-								</div> 
-
-
-								<div class="col-md-12">
-									<label for="Access" class="form-label fw-bolder small">General Access</label>
-										<div class="container border border-light rounded-3 ">
-											<div class="row d-flex align-items-start mb-2">
-												<div class="col-5 mt-3">
-													<select class="FORMDATA_MUL form-select border-0 fw-bolder bg-light" id="formAccessMul">
-														<option class="text-secondary" value=false >Restricted</option>
-														<option class="text-success" value=true >Public</option>
-													</select>   
-												</div>
-												<div class="col-7" id="restrictedDescMul" hidden>
-													<p class="small text-muted mt-4" id="">Only people who have access can open this file</p>                                                                                           
-												</div>
-												<div class="col-7" id="PublicDescMul" hidden>
-													<p class="small text-muted mt-4" id="">Anyone can access this file</p>                                                                                          
-												</div>
-											</div>
-									<!-- Restricted -->
-
-										<div class="mb-3" id="forRestrictedMul" hidden>
-											<div class="container mt-2 mb-2">
-											<!-- <input type="text" id="accessPeople" class="form-control" placeholder="Add people can access"> -->
-												<div class="col-7  autocomplete ">
-													<input class="FORMDATA_MUL form-control rounded-3" onkeyup="ALL_USERS_SET(this,'users_added_ls_mul')" id="myInput_doc_users" type="text"  placeholder="Add people can access" value="">
-												</div>
-												<span class="small text-muted">&nbsp or &nbsp</span>
-												<div class="col-4  autocomplete">
-													<input class="FORMDATA_MUL form-control rounded-3" onkeyup="ALL_IMP_SET(this,'users_added_ls_mul')" id="myInput_doc_unit" type="text"  placeholder="Add Unit" value="">
-												</div>
-												<div class="container">
-													<p class="mt-3">People with access</p>
-												<!-- Users -->
-													<div id="users_added_ls_mul">
-													</div>
-												</div>
-											</div>
-										</div>
-										</div>
-										<script type="text/javascript">
-											$(document).on('change', '#formAccessMul', function(e){  
-												// e.preventDefault();
-												formAccessMul = JSON.parse(this.value);
-
-												set_show_mul(formAccessMul)
-											});
-
-
-											function set_show_mul(true_ba){
-												$("#forRestrictedMul").attr("hidden",true_ba)
-												$("#restrictedDescMul").attr("hidden",true_ba)
-												$("#PublicDescMul").attr("hidden",!true_ba)
-											}
-
-											set_show_mul(false)
-										</script>
-								</div>
-
-								<div class="col-md-12 d-flex align-items-center" id="email_notification">
-									<input class="FORMDATA_MUL form-check-input small me-2" type="checkbox" value="" id="formNotification" >
-								  <label class="form-check-label small text-muted" for="formNotification">
-									Receive notifications in your email?
-								  </label>
-								</div>
-					</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-									<button type="submit" class="btn btn-primary">Upload</button>
-								</div>
-							</form>
-				</div>
+	<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="staticBackdropLabel">Upload Multimedia</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
+			<div class="modal-body">
+
+				<form class="row g-3 needs-validation" id="form_for_upload_multimedia">
+					<div class="col-md-6">
+						<label for="Unit" class=" form-label small fw-bolder">Unit</label>
+						<select class="FORMDATA_MUL form-select" id="Unit" required>
+							<option>NPCO</option>
+							<option>RCU</option>
+							<option>PCU</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Unit.
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<label for="Designation" class="form-label small fw-bolder">Designation</label>
+						<input type="text" class="FORMDATA_MUL form-control" id="Designation" required>
+						<div class="invalid-feedback">
+							Please provide a Designation.
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<label for="Title" class="form-label form-label-lg small fw-bolder">Title of Multimedia (Extracted from the activity/event?)</label>
+						<input type="text" class="FORMDATA_MUL form-control fw-bolder" id="Title" required>
+						<div class="invalid-feedback">
+							Please provide a Title of Document.
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<label for="forms" class="form-label small fw-bolder">Form</label>
+						<select class="FORMDATA_MUL form-select" id="formCategory" required>
+							<option>AUDIO</option>
+							<option>PHOTO</option>
+							<option>PODCAST/SHOW RECORDING</option>
+							<option>VIDEO</option>
+							<option>WEBINAR RECORDING</option>
+							<option value="Others">Others</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Unit.
+						</div>
+					</div>
+					<script type="text/javascript">
+						$(document).on('change', '#forms', function(e){  
+							e.preventDefault();
+							othersForm = $("#OthersForm_mul");
+							forms = this.value;
+							if (forms == "Others") {
+								console.log("TRUE")
+								$("#OthersForm_mul").attr("hidden",false)
+							}
+							else {
+								console.log("FALSE")
+								$("#OthersForm_mul").attr("hidden",true)
+							}
+						});
+					</script>
+					<div class="col-md-4" id="OthersForm_mul" hidden>
+						<label for="forms" class="form-label small fw-bolder">Others:</label>
+						<input type="text" name="Others" id="Others" class="FORMDATA_MUL form-control" placeholder="please specify">
+					</div>
+
+					<div class="col-md-4">
+						<label for="Date" class="form-label small fw-bolder">Date Recorded/Taken/Produced</label>
+						<input type="date" class="FORMDATA_MUL form-control" id="Date" placeholder="Select Date" required>
+						<div class="invalid-feedback">
+							Please provide a date approve.
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<label for="Description" class="form-label small fw-bolder">Short Description of Title/Topic/Name of Document</label>
+						<textarea class="FORMDATA_MUL form-control" id="Description" rows="3"></textarea>
+						<div class="invalid-feedback">
+							Please provide a Title of Document.
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<label for="tags" class="form-label small fw-bolder">Tags/Search Keywords</label>
+						<input class="FORMDATA_MUL form-control" id="tags" rows="3"></input>
+						<div class="invalid-feedback">
+							Please provide a Title of Document.
+						</div>
+					</div>
+
+					<div id="">
+						<label for="uploadMul" class="form-label small fw-bolder">Please upload your files</label>
+						<input class="FORMDATA_MUL form-control" type="file" id="upload[]" multiple>
+					</div> 
+
+
+					<div class="col-md-12">
+						<label for="Access" class="form-label fw-bolder small">General Access</label>
+						<div class="container border border-light rounded-3 ">
+							<div class="row d-flex align-items-start mb-2">
+								<div class="col-5 mt-3">
+									<select class="FORMDATA_MUL form-select border-0 fw-bolder bg-light" id="formAccess">
+										<option class="text-secondary" value=false >Restricted</option>
+										<option class="text-success" value=true >Public</option>
+									</select>   
+								</div>
+								<div class="col-7" id="restrictedDescMul" hidden>
+									<p class="small text-muted mt-4" id="">Only people who have access can open this file</p>                                                                                           
+								</div>
+								<div class="col-7" id="PublicDescMul" hidden>
+									<p class="small text-muted mt-4" id="">Anyone can access this file</p>                                                                                          
+								</div>
+							</div>
+							<!-- Restricted -->
+
+							<div class="mb-3" id="forRestrictedMul" hidden>
+								<div class="container mt-2 mb-2">
+									<!-- <input type="text" id="accessPeople" class="form-control" placeholder="Add people can access"> -->
+									<div class="col-7  autocomplete ">
+										<input class="FORMDATA_MUL form-control rounded-3" onkeyup="ALL_USERS_SET(this,'users_added_ls_mul')" id="myInput_doc_users" type="text"  placeholder="Add people can access" value="">
+									</div>
+									<span class="small text-muted">&nbsp or &nbsp</span>
+									<div class="col-4  autocomplete">
+										<input class="FORMDATA_MUL form-control rounded-3" onkeyup="ALL_IMP_SET(this,'users_added_ls_mul')" id="myInput_doc_unit" type="text"  placeholder="Add Unit" value="">
+									</div>
+									<div class="container">
+										<p class="mt-3">People with access</p>
+										<!-- Users -->
+										<div id="users_added_ls_mul">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<script type="text/javascript">
+							$(document).on('change', '#formAccessMul', function(e){  
+												// e.preventDefault();
+								formAccessMul = JSON.parse(this.value);
+
+								set_show_mul(formAccessMul)
+							});
+
+
+							function set_show_mul(true_ba){
+								$("#forRestrictedMul").attr("hidden",true_ba)
+								$("#restrictedDescMul").attr("hidden",true_ba)
+								$("#PublicDescMul").attr("hidden",!true_ba)
+							}
+
+							set_show_mul(false)
+						</script>
+					</div>
+
+					<div class="col-md-12 d-flex align-items-center" id="email_notification">
+						<input class="FORMDATA_MUL form-check-input small me-2" type="checkbox" value="" id="formNotification" >
+						<label class="form-check-label small text-muted" for="formNotification">
+							Receive notifications in your email?
+						</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" onmouseup="submit_file_mul('mul')">Upload
+				</div>
+			</form>
 		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	function submit_file_mul(upload_type){
+		var FORMDATA_MUL = $CLASS('FORMDATA_MUL')
+		var dataform = {}
+		for (var i = 0; i < FORMDATA_MUL.length; i++) {
+			dataform[FORMDATA_MUL[i].id] = FORMDATA_MUL[i].value
+		}
+		dataform["upload_type"] = upload_type
+		dataform["uploaded_by"] = {{user_data['id']}}
+		println(dataform)
+		var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload[]'))
+		println(FORM_TO_SUBMIT)
+
+		$send({
+			action : "/webrep/upload_file_webrep___ ",
+			method : POST,
+			data : FORM_TO_SUBMIT,
+			func : function (rrr){
+				var res = JSON.parse(rrr)
+				println(res)
+			}
+		})
+
+	}
+// appendFileArr()
+</script>

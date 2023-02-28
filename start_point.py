@@ -57,3 +57,9 @@ def before_request():
 			# print(request.headers)
 	pass
 
+# SECRET RECIPEE COCKTAIL
+# - Dutchmil strawberry:
+# - Zafiro Premium GIN
+# - COLD- 
+
+# BE YOURSELF, TRUST UR GUTS 
