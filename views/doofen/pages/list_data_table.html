@@ -1,0 +1,137 @@
+<table class="display" id="table_id_fo" style="width:100%">
+	<thead class="x-rapid-teal-heavy" style="width:100%">
+		<tr class="">
+			<th>
+				ID<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="0" />
+			</th>
+			<th>
+				Farmer's Org Name<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
+			</th>
+			<th>
+				Address<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="2" />
+			</th>
+			<th>
+				Type of Organization<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index=3 />
+			</th>
+			<th>
+				Registering Agencies<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="4" />
+			</th>
+			
+		</tr>
+	</thead>
+	<tbody id="list_farmers" style="">
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	var init_counter = 0
+	let TABLE
+
+	function onloads(){
+		showing_table_ls_farmer()
+	}
+
+	function showing_table_ls_farmer(){
+		println(" -- Getting List Farmers")
+		SPINNER_LOADER.show()
+		$send({
+			action : "/formb/get_list_fo",
+			method : POST,
+			// a_sync : false,
+			func : function (rest){
+				println(" -- Getting List Farmers Done")
+				res = JSON.parse(rest)
+				$ID('num_input_fo').innerHTML = res.length
+				println(res)
+				create_table(res)
+				SPINNER_LOADER.hide()
+			},
+			err : function(res){println(res)},
+			progress : function(e){
+				// var response_length = parseFloat(headerMap(e)['total'])
+				var response_length = parseFloat(e.total)
+				var response_loaded = parseFloat(e.loaded)
+				var percent_  = (response_loaded / response_length) * 100;
+				var percent_rounded = Math.round(percent_ * 100) / 100
+				SPINNER_LOADER.loading(Math.round(percent_))
+				SPINNER_LOADER.message(`
+					<span>
+						Gathering 
+						<b>`+Math.round(percent_)+`%</b><br>
+						<span class="x-small">
+							[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+							<i>`+(response_length-response_loaded)+` bytes remaining</i>
+						</span>
+					</span>
+				`);
+			}
+		})
+		// TABLE.ajax.url('/feature_0/filter_list_farmers')
+
+		// TABLE.ajax.reload()
+	}
+
+
+	function create_table (data_){
+		println(" -- Creating Data Table")
+		TABLE = new DataTable('#table_id_fo', {
+			"scrollY":'60vh',
+			"scrollX":true,
+			"data" : data_
+		});
+		// TABLE.load(data_)
+		// TABLE.ajax.reload()
+		set_search_field()
+	}
+
+	function set_search_field(){
+		// $('#table_id_fo thead th').each( function (i) {
+		// 	var title = $('#table_id_fo thead th').eq( $(this).index() ).text();
+		// 	println(i)
+		// 	$(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
+		// } );
+		$(TABLE.table().container() ).on('keyup', 'thead input', function () {
+			TABLE
+				.column( $(this).data('index') )
+				.search( this.value )
+				.draw();
+		} );
+		$('#table_id_fo tbody').on('mousedown', 'tr', function () {
+			var data = TABLE.row(this).data();
+			show_t(data[0]);
+		})
+	}
+
+	function show_t(ids){
+		$send({
+			action : "/formb/get_ind_fo",
+			method : POST,
+			data : $DATA({"id":ids}),
+			func : function(rrr){
+				var resp = JSON.parse(rrr)
+				println(resp)
+
+				var FORM_DATA = {}
+				var form_data_b = $CLASS("form_data_b")
+				for (var i = 0; i < form_data_b.length; i++) {
+					var input_type = form_data_b[i].type
+					if(form_data_b[i].id==""){continue}
+					if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
+						form_data_b[i].value = resp[0][form_data_b[i].id]
+					}
+					if( (["checkbox","radio"]).includes(input_type) ){
+						form_data_b[i].checked = resp[0][form_data_b[i].id]
+					}
+				}
+				show_view('forms','main-container')
+			}
+		})
+		// showing_table_ls_farmer()
+	}
+
+</script>

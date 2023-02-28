@@ -1,0 +1,235 @@
+
+<!-- <div class="x-button x-text-orange x-hover-orange" onclick="export_farmer_excel()">
+	<b>Export Data</b> | <span class="fa fa-download"></span>
+</div> -->
+<div class="x-button x-text-blue x-hover-blue" onclick="import_farmer_excel()">
+	<b>Import Spreadsheet</b> | <span class="fa fa-upload"></span>
+</div>
+
+<script type="text/javascript">
+REQ_ERR_DIALOG = true
+function export_farmer_excel(argument) {
+	println(" Getting Data ")
+
+	var export_dialog = $dialog({
+		title : "Data Export Wizard",
+		subtitle : "Data export from mobile uploads or excle upload or both :)",
+		content :(`{% include 'export_modal.html'%}`),
+		on_destroy : function(){
+			println("HELLO")
+		}
+	})
+	export_dialog.show()
+}
+function _export(args){
+	show_notif_instrc()
+	if(args==0){
+		var mobile_export_selection = $ID('mobile_export_selection').value
+		$send({
+			action : "/migrations/export_excel_mobile",
+			method : POST,
+			data : $DATA({"form":mobile_export_selection}),
+			func : function (res){
+				println(" Generating Table")
+				var RES = JSON.parse(res) 
+				printtable(res)
+				println(" Generating Table ended")
+				get_notif()
+			}
+
+		})
+	}
+	if(args==1){
+		$send({
+			action : "/migrations/export_excel_excel",
+			method : POST,
+			func : function (res){
+				println(" Generating Table")
+				var RES = JSON.parse(res) 
+				printtable(res)
+				println(" Generating Table ended")
+				get_notif()
+			}
+
+		})
+	}
+}
+
+function show_notif_instrc(){
+	$ID('export_panel').style.display = 'none'
+	$ID('export_panel_ins').style.display = 'block'
+}
+
+function download_excel(fff){
+	let a= document.createElement('a');
+	a.target= '_blank';
+	a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");
+	a.click();
+	get_notif()
+}
+
+
+function import_farmer_excel(argument) {
+	excel_upload_dialog = $dialog({
+		title : "import",
+		subtitle : "Spreadsheet Uploader for Farmer's Profiles",
+		content :(`
+			<div class="x-container">
+				<div class="x-row">
+					<p class="x-padding x-pale-yellow x-leftbar x-border-yellow"><b class="x-text-orange">The only Accepted File for the uploads is [<i>*.xls</i>]</b> .Due to the memory resource available in handling all spreadsheet files is limited to 2.8Gib, we suggest that all uploads are in XLS file format. You can convert this files (.xlxs, .csv, etc) using Microsoft Office Excel or other application that manage spreadsheets</p>
+					<input id="excel_file" type="file" class="x-col l8 x-input x-file x-border"  accept=".xls" multiple style="height:50px">
+					<button class="x-input x-btn x-green x-col l4" onclick="upload_excel()" style="height:50px">
+						Upload
+					</button>
+				</div>
+				<hr>
+			</div>
+		`)
+	})
+	excel_upload_dialog.show()
+	// get_uploaded_excel()
+}
+
+function is_good_file(elem){
+	println(elem.value)
+}
+
+function upload_excel(){
+	SPINNER_LOADER.show()
+	excel_upload_dialog.hide()
+	var uploader_id  = ("{{USER_DATA['id']}}")
+	$send({
+		action : "/formb/excel_upload",
+		data : $DATA({"uploader" : uploader_id}).appendFile($ID("excel_file")),
+		method : POST,
+		err : function(r){
+			SPINNER_LOADER.hide()
+			println("ERROR")
+			println(r)
+		},
+		func : function(r){
+			SPINNER_LOADER.hide()
+			println(r)
+			excel_upload_dialog.destroy()
+			var res = JSON.parse(r)
+			println(res)
+			var diadata = {} 
+			if(res['status']=="failed"){
+				diadata = {
+					type :"error",
+					title : "Excel Upload Failed",
+					content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+					buttons : ['Finished Transaction'],
+					buttons_actions : [done_transac_excel]
+				}
+				SPINNER_LOADER.hide()
+				var dialog = $dialog(diadata)
+				dialog.show()
+			}
+			else if(res['status']=="success"){
+				diadata = {
+					title : "Excel Upload Success",
+					type :"success",
+					content : "Your upload had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+					buttons : ['Finished Transaction'],
+					buttons_actions : [done_transac_excel]
+				}
+				SPINNER_LOADER.hide()
+				var dialog = $dialog(diadata)
+				dialog.show()
+			}
+			SPINNER_LOADER.hide()
+		}
+	})
+}
+
+function done_transac_excel(){
+	location.reload()
+}
+
+// function get_uploaded_excel(){
+// 	$ID("ls_uploaded_excel").innerHTML = ""
+// 	var uploader_id  = ("{{USER_DATA['id']}}")
+// 	$send({
+// 		action : "/feature_0/get_uploaded_excel",
+// 		method : POST,
+// 		func : function(res){
+// 			excel_upload_dialog.show()
+// 			var ls_excel = JSON.parse(res)
+// 			var ls_excel_card = ""
+
+// 			for (var i = 0; i < ls_excel.length; i++) {
+// 				var colr  = "green"
+// 				var note  = "Synced"
+// 				var del_ = ""
+// 				del_ = (`
+// 					<b class="x-text-red" onclick="confirm_delete_excel('`+ls_excel[i]["key"]+`')">
+// 						Delete 
+// 						<span class="fa fa-trash"></span> 
+// 					</b>
+// 					&nbsp; | &nbsp;
+// 					<b class="x-text-blue" onclick="download_excel('`+ls_excel[i].file_name+`')">
+// 						Download 
+// 						<span class="fa fa-download"></span> 
+// 					</b>
+// 				`)
+// 				ls_excel_card += (`
+// 					<div class="x-row x-padding x-border-dashed x-border-light-grey">
+// 						<div class="x-container x-col l2">
+// 							<b class="x-pale-`+colr+` x-text-`+colr+` x-leftbar x-border-`+colr+`">[`+note+`]</b>
+// 						</div>
+// 						<div class="x-container x-col l5">
+// 							<span class="x-small">`+ls_excel[i]["key"]+`</span>
+// 						</div>
+// 						<div class="x-container x-col l2">
+// 							<span>`+ls_excel[i]["total"]+`</span>
+// 						</div>
+// 						<div class="x-container x-col l3">
+// 							`+del_+`
+// 						</div>
+// 					</div>
+// 				`)
+// 			}
+// 			$ID("ls_uploaded_excel").innerHTML = ls_excel_card
+// 			SPINNER_LOADER.hide()
+// 		}
+// 	})
+// }
+
+let del_dialog01
+function confirm_delete_excel(fff){
+	del_dialog01 = $dialog({
+		title : "Confirm Deletion",
+		type : "error",
+		content : (`
+			Are you sure you want to delete <b>[`+fff+`]</b> <br>
+			If you do, a copy of this file will automatically downloaded as for fail-safe
+		`),
+		buttons : ["Download","Delete","Cancel"],
+		buttons_actions : [function (){download_excel(fff)},function (){delete_excel(fff)}]
+
+	})
+	del_dialog01.show()
+}
+
+
+
+function delete_excel(fff){
+	SPINNER_LOADER.show()
+	// download_excel(fff)
+	$send({
+		action : "/delete_excel",
+		method : POST,
+		data : $DATA({"file":fff.replace("#","@@").replace("#","@@")}),
+		func : function(res){
+			SPINNER_LOADER.hide()
+			get_uploaded_excel()
+			// excel_upload_dialog.destroy()
+			location.reload()
+		}
+	})
+	del_dialog01.destroy()
+}
+
+
+</script>

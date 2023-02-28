@@ -2,6 +2,19 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<script type="text/javascript" src="../static/js/jquery.min.js"></script>
+	<script src="../static/js/Brorn.min.js"></script>
+	<script src="../static/doofen_static/js/scripts.js"></script>
+	<link class="x-links" rel="stylesheet" href="../static/css/x.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/other.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/other2.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/loader.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/scroll_bar.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/css">
+	<link class="x-links" rel="stylesheet" href="../static/css/chip.css">
+	<link class="x-links" rel="stylesheet" href="../static/css/font-awesome.min.css">
+	<!-- <link rel="icon" href="../static/img/icon.png"> -->
+
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>RAPID Growth || Form B</title>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -10,15 +23,16 @@
 	<link rel="stylesheet" href="../static/doofen_static/css/styles.css">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
-	<script src="../static/doofen_static/js/Brorn.min.js"></script>
-	<script src="../static/doofen_static/js/scripts.js"></script>
-	<script type="text/javascript"></script>
 	<link rel="icon" href="../static/img/mis_2023_v2.svg">
 
 
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
+
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
 
 </head>
 <body onload="loaded()" style="height:80vh">
+	{% include 'spinner_loader.html' %}
 	<div class="grid-container">
 
 		<!-- Header -->
@@ -30,7 +44,7 @@
 				<span class="material-icons-outlined"></span>
 			</div>
 			<div class="header-right">
-
+				{% include 'excel_management.html' %}
 			</div>
 		</header>
 		<!-- End Header -->
@@ -79,19 +93,16 @@
 
 				<div class="card">
 					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold ">2490</h2>
+						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
 						<span class="material-icons-outlined text-green">groups</span>
 					</div>
 					<div class="card-progress">
-						<small>NO. OF REGISTERD FARMERS</small>
-						<div class="card-indicator">
-							<div class="indicator one" style="width: 24.9%"></div>
-						</div>
+						<small>NO. OF INPUTED FARMERS ORGANIZATION</small>
 					</div>
 					<span class="text-primary font-weight-bold"></span>
 				</div>
 
-				<div class="card">
+			<!-- 	<div class="card">
 					<div class="card-inner">
 						<h2 class="text-primary">10</h2>
 						<span class="material-icons-outlined text-blue">diversity_3</span>
@@ -133,10 +144,10 @@
 						</div>
 					</div>
 					<span class="text-primary font-weight-bold"></span>
-				</div>
+				</div> -->
 			</div>
 
-			<div class="charts">
+<!-- 			<div class="charts">
 				<div class="charts-card">
 					<p class="chart-title">AREA/SCOPE OF OPERATION</p>
 					<div id="bar-chart"></div>
@@ -146,6 +157,10 @@
 					<p class="chart-title">COMMUNICATION AND PLANNING</p>
 					<div id="area-chart"></div>
 				</div>
+			</div> -->
+			<br>
+			<div class="x-row">
+				{% include 'list_data_table.html' %}
 			</div>
 		</main>
 		<!-- End Main -->
@@ -164,6 +179,7 @@
 		// body...
 		get_forms('respondents')
 		init_charts()
+		onloads()
 	}
 
 
@@ -190,6 +206,7 @@
 		var form_data_b = $CLASS("form_data_b")
 		for (var i = 0; i < form_data_b.length; i++) {
 			var input_type = form_data_b[i].type
+			if(form_data_b[i].id==""){continue}
 			if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
 				FORM_DATA[form_data_b[i].id] = form_data_b[i].value
 			}
@@ -197,7 +214,20 @@
 				FORM_DATA[form_data_b[i].id] = form_data_b[i].checked
 			}
 		}
-		println(FORM_DATA)
+
+
+		$send({
+			action : "/formb/save_form",
+			method : POST,
+			data : $DATA(FORM_DATA),
+			func : function(rrr){
+				var resp = JSON.parse(rrr)
+				println(" -- Respond")
+				println(resp)
+				println(" -- Respond")
+				show_view('forms','main-container')
+			}
+		})
 	}
 </script>
 </html>=
