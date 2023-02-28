@@ -43,8 +43,17 @@ def save_form():
 
 	sql = "INSERT INTO `form_b` (`uploaded_by`,{}) VALUES ('{}',{})".format(col[1:], session["USER_DATA"][0]["id"], val[1:])
 	# print(sql)
-	last_row_id = rapid_mysql.do(sql)
-	return jsonify({"sql":sql})
+
+	status = "Unfinished"
+	msg = "Unfinished"
+	try:
+		last_row_id = rapid_mysql.do(sql)
+		status = "success"
+		msg = "Data was added to the database"
+	except Exception as e:
+		status = "failed"
+		msg = "[{}]".format(e)
+	return jsonify({"status":status,"msg":msg,"id":last_row_id})
 	# return jsonify([last_row_id])
 
 
@@ -112,10 +121,12 @@ def excel_popu_individual(_NAME_):
 			f = open("assets/temp.txt","w")
 			f.write(json.dumps(resp__))
 			f.close()
-			msg = resp
+			# msg = resp
+			msg = "Transaction finished. Please be patient as the data uploaded will take time to display in the list or in the dashboard."
+			status = "success"
 			counter = counter + 1
 		except Exception as e:
-			msg = "Failed File"
+			msg = "[{}]".format(e)
 			status = "failed"
 			print(e)
 		# if(counter >= 3):
@@ -123,7 +134,6 @@ def excel_popu_individual(_NAME_):
 	print(" * Done excel process")
 	return {"status":status,"msg":msg,"success_files":FROM_EXCEL_RPOFILES}
 
-# /////////////////// 94#2023-01-16#Profile_AGUSAN_DEL_SUR1.xlsx
 def readRows(file, s_):
 	# wb = xlrd.open_workbook(file,encoding_override='utf-8')
 	wb = xlrd.open_workbook(file)

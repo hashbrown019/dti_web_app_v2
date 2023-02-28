@@ -102,11 +102,18 @@
 		} );
 		$('#table_id_fo tbody').on('mousedown', 'tr', function () {
 			var data = TABLE.row(this).data();
-			show_t(data[0]);
+			show_fo_ind_(data[0]);
 		})
+
+		var tr_ = $('#table_id_fo tbody tr')
+		for (var i = 0; i < tr_.length; i++) {
+			var sas = tr_[i].getElementsByTagName("td")
+			sas[3].innerHTML = TYPES_ORG[parseInt(sas[3].innerHTML)]
+			sas[4].innerHTML = REG_AGENCIES[parseInt(sas[4].innerHTML)]
+		}
 	}
 
-	function show_t(ids){
+	function show_fo_ind_(ids){
 		$send({
 			action : "/formb/get_ind_fo",
 			method : POST,
@@ -123,8 +130,13 @@
 					if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
 						form_data_b[i].value = resp[0][form_data_b[i].id]
 					}
-					if( (["checkbox","radio"]).includes(input_type) ){
+					else if( (["radio"]).includes(input_type) ){
 						form_data_b[i].checked = resp[0][form_data_b[i].id]
+					}
+					else if( (["checkbox"]).includes(input_type) ){
+						if(resp[0][form_data_b[i].id]==true || resp[0][form_data_b[i].id]=='true'){
+							form_data_b[i].click()
+						}
 					}
 				}
 				show_view('forms','main-container')

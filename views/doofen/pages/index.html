@@ -222,11 +222,59 @@
 			action : "/formb/save_form",
 			method : POST,
 			data : $DATA(FORM_DATA),
-			func : function(rrr){
-				var resp = JSON.parse(rrr)
-				show_view('forms','main-container')
+			func : function(r){
+				SPINNER_LOADER.hide()
+				println(r)
+				var res = JSON.parse(r)
+				println(res)
+				var diadata = {} 
+				if(res['status']=="failed"){
+					diadata = {
+						type :"error",
+						title : "Data insertion Failed",
+						content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+						buttons : ['Finished Transaction'],
+						buttons_actions : [done_transac_excel]
+					}
+					SPINNER_LOADER.hide()
+					var dialog = $dialog(diadata)
+					dialog.show()
+				}
+				else if(res['status']=="success"){
+					diadata = {
+						title : "Data insertion Success",
+						type :"success",
+						content : "Your Data insertion had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+						buttons : ['Finished Transaction'],
+						buttons_actions : [done_transac_excel]
+					}
+					SPINNER_LOADER.hide()
+					var dialog = $dialog(diadata)
+					dialog.show()
+				}
+				SPINNER_LOADER.hide()
 			}
 		})
 	}
+	function done_transac_excel(){
+		location.reload()
+	}
+
+
+var TYPES_ORG = [
+	"None",
+	"Farmers’/ Growers’ Association",
+	"Farmers’ Cooperative Type of Cooperative",
+	"Others"
+]
+var REG_AGENCIES = [
+	"None",
+	"Cooperative Development Authority ",
+	"Department of Labor and Employment",
+	"Securities and Exchange Commission",
+	"Department of Agriculture",
+	"Others"
+]
+
 </script>
-</html>=
+</html>

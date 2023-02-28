@@ -65,33 +65,33 @@ function upload_excel(){
 			SPINNER_LOADER.hide()
 			println(r)
 			excel_upload_dialog.destroy()
-			// var res = JSON.parse(r)
+			var res = JSON.parse(r)
 			println(res)
 			var diadata = {} 
-			// if(res['status']=="failed"){
-			// 	diadata = {
-			// 		type :"error",
-			// 		title : "Excel Upload Failed",
-			// 		content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
-			// 		buttons : ['Finished Transaction'],
-			// 		buttons_actions : [done_transac_excel]
-			// 	}
-			// 	SPINNER_LOADER.hide()
-			// 	var dialog = $dialog(diadata)
-			// 	dialog.show()
-			// }
-			// else if(res['status']=="success"){
-			// 	diadata = {
-			// 		title : "Excel Upload Success",
-			// 		type :"success",
-			// 		content : "Your upload had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
-			// 		buttons : ['Finished Transaction'],
-			// 		buttons_actions : [done_transac_excel]
-			// 	}
-			// 	SPINNER_LOADER.hide()
-			// 	var dialog = $dialog(diadata)
-			// 	dialog.show()
-			// }
+			if(res['status']=="failed"){
+				diadata = {
+					type :"error",
+					title : "Excel Upload Failed",
+					content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+					buttons : ['Finished Transaction'],
+					buttons_actions : [done_transac_excel]
+				}
+				SPINNER_LOADER.hide()
+				var dialog = $dialog(diadata)
+				dialog.show()
+			}
+			else if(res['status']=="success"){
+				diadata = {
+					title : "Excel Upload Success",
+					type :"success",
+					content : "Your upload had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+					buttons : ['Finished Transaction'],
+					buttons_actions : [done_transac_excel]
+				}
+				SPINNER_LOADER.hide()
+				var dialog = $dialog(diadata)
+				dialog.show()
+			}
 			SPINNER_LOADER.hide()
 		}
 	})
@@ -100,41 +100,5 @@ function upload_excel(){
 function done_transac_excel(){
 	location.reload()
 }
-
-let del_dialog01
-function confirm_delete_excel(fff){
-	del_dialog01 = $dialog({
-		title : "Confirm Deletion",
-		type : "error",
-		content : (`
-			Are you sure you want to delete <b>[`+fff+`]</b> <br>
-			If you do, a copy of this file will automatically downloaded as for fail-safe
-		`),
-		buttons : ["Download","Delete","Cancel"],
-		buttons_actions : [function (){download_excel(fff)},function (){delete_excel(fff)}]
-
-	})
-	del_dialog01.show()
-}
-
-
-
-function delete_excel(fff){
-	SPINNER_LOADER.show()
-	// download_excel(fff)
-	$send({
-		action : "/delete_excel",
-		method : POST,
-		data : $DATA({"file":fff.replace("#","@@").replace("#","@@")}),
-		func : function(res){
-			SPINNER_LOADER.hide()
-			get_uploaded_excel()
-			// excel_upload_dialog.destroy()
-			location.reload()
-		}
-	})
-	del_dialog01.destroy()
-}
-
 
 </script>
