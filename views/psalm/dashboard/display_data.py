@@ -19,8 +19,9 @@ def display():
     USER_INFO = session["USER_DATA"]
     data_count_entry=db.select("SELECT * FROM form_c")
     datatable=db.select("SELECT * FROM form_c")
-    data_lastmonth = db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
-    data_currmonth= db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+    data_jan = db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    data_feb= db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    data_march = db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
     data_count_reg_business = db.select("SELECT reg_businessname FROM form_c")
     data_count_position_firm = db.select("SELECT position_firm FROM form_c where position_firm LIKE '%owner%'")
     data_count_cacao = db.select("SELECT * FROM form_c where industry_cluster = 'cacao'")
@@ -30,8 +31,8 @@ def display():
     intpfn= len(data_count_pfn)
     totalpfn = intpfn
     print(data_count_entry)
-    thismonth=len(data_currmonth)
-    lastmonth=len(data_lastmonth)
+    thismonth=len(data_march)
+    lastmonth=len(data_feb)
     subperc= thismonth - lastmonth
     percentage= (subperc / lastmonth)
     all = data_count_cacao + data_count_coffee + data_count_coconut + data_count_pfn
@@ -44,8 +45,9 @@ def display():
     count_pfn=len(data_count_pfn)
     count_coconut=len(data_count_coconut)
     datatable=datatable
-    data_lastmonth=len(data_lastmonth)
-    data_currmonth=len(data_currmonth)
+    data_jan=len(data_jan)
+    data_march=len(data_march)
+    data_feb=len(data_feb)
     percentages = round(percentage,2)
     totalpfn =totalpfn
     return{
@@ -53,8 +55,9 @@ def display():
         'tabledata':  tabledata,
         'data_count_entry':  data_count_entry,
         'datatable':  datatable,
-        'data_lastmonth':  data_lastmonth,
-        'data_currmonth':  data_currmonth,
+        'data_jan':  data_jan,
+        'data_march':  data_march,
+        'data_feb':  data_feb,
         'data_count_reg_business':  data_count_reg_business,
         'data_count_position_firm':  data_count_position_firm,
         'data_count_cacao':  data_count_cacao,
@@ -88,8 +91,9 @@ def display__():
     USER_INFO = session["USER_DATA"]
     data_count_entry=db.select("SELECT * FROM form_c {} ".format(position_data_filter()))
     datatable=db.select("SELECT * FROM form_c {};".format(position_data_filter()))
-    data_lastmonth = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    data_currmonth= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+    data_jan = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    data_feb= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    data_march = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
     data_count_reg_business = db.select("SELECT reg_businessname FROM form_c {} ".format(position_data_filter()))
     data_count_position_firm = db.select("SELECT position_firm FROM form_c {} AND position_firm LIKE '%owner%'".format(position_data_filter()))
     data_count_cacao = db.select("SELECT * FROM form_c {} AND industry_cluster = 'cacao'".format(position_data_filter()))
@@ -99,8 +103,8 @@ def display__():
     intpfn= len(data_count_pfn)
     totalpfn = intpfn
     print(data_count_entry)
-    thismonth=len(data_currmonth)
-    lastmonth=len(data_lastmonth)
+    thismonth=len(data_march)
+    lastmonth=len(data_feb)
     subperc= thismonth - lastmonth
     try: percentage= (subperc / lastmonth)
     except Exception as e: percentage = 0
@@ -115,8 +119,9 @@ def display__():
     count_pfn=len(data_count_pfn)
     count_coconut=len(data_count_coconut)
     datatable=datatable
-    data_lastmonth=len(data_lastmonth)
-    data_currmonth=len(data_currmonth)
+    data_jan=len(data_jan)
+    data_feb=len(data_feb)
+    data_march=len(data_march)
     percentages = round(percentage,2)
     totalpfn =totalpfn
     return{
@@ -124,8 +129,9 @@ def display__():
         'tabledata':  tabledata,
         'data_count_entry':  data_count_entry,
         'datatable':  datatable,
-        'data_lastmonth':  data_lastmonth,
-        'data_currmonth':  data_currmonth,
+        'data_jan':  data_jan,
+        'data_feb':  data_feb,
+        'data_march':  data_march,
         'data_count_reg_business':  data_count_reg_business,
         'data_count_position_firm':  data_count_position_firm,
         'data_count_cacao':  data_count_cacao,
