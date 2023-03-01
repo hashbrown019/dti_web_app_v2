@@ -4,6 +4,8 @@ from modules.Connections import mysql
 import Configurations as c
 from werkzeug.utils import secure_filename
 import os
+from modules.Req_Brorn_util import file_from_request
+
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -11,7 +13,7 @@ db.err_page = 0
 app = Blueprint("webrep",__name__,template_folder='pages')
 # app = Blueprint("webrep",__name__,url_prefix='/webrep',template_folder='pages')
 
-
+FILE_REQ = file_from_request(app,request)
 
 class _main:
 	def is_on_session(): return ('USER_DATA' in session)
@@ -95,18 +97,15 @@ class _main:
 		data = dict(request.form)
 		key = [];val = []
 		data["USER_ID"] = session["USER_DATA"][0]['id']
+		
+		__f = FILE_REQ.save_file_from_request("upload",c.RECORDS+"/objects/webrep/")
+		data["upload"] = __f["file_arr_str"]
+
 		for datum in data:
-			print(format(data[datum]))
 			key.append("`{}`".format(datum))
 			val.append("'{}'".format(data[datum]))
 		sql = ('''INSERT INTO `webrep_uploads` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
-		print(sql)
-		files = request.files
-		print(files)
-		for file in files:
-			f = files[file]
-			UPLOAD_NAME = secure_filename(f.filename)
-			f.save(os.path.join(c.RECORDS+"/objects/webrep/",UPLOAD_NAME ))
+		
 		last_row_id = db.do(sql)
 		return jsonify({"last_row_id":last_row_id})
  

@@ -121,7 +121,7 @@
 
 					<div id="">
 						<label for="uploadDoc" class="form-label small fw-bolder">Please upload your files</label>
-						<input class="FORMDATA_DOC form-control" type="file" id="upload[]" multiple>
+						<input class="FORMDATA_DOC form-control" type="file" id="upload" multiple>
 					</div>                 
 
 
@@ -147,14 +147,16 @@
 								<div class="container mt-2 mb-2">
 									<!-- <input type="text" id="accessPeople" class="form-control" placeholder="Add people can access"> -->
 									<div class="col-7  autocomplete ">
-										<input class="FORMDATA_DOC form-control rounded-3" onkeyup="ALL_USERS_SET(this,'users_added_ls_doc')" id="myInput_doc_users" type="text"  placeholder="Add people can access" value="">
+										<input class=" form-control rounded-3" onkeyup="ALL_USERS_SET(this,'users_added_ls_doc')" id="" type="text"  placeholder="Add people can access" value="">
 									</div>
 									<span class="small text-muted">&nbsp or &nbsp</span>
 									<div class="col-4  autocomplete">
-										<input class="FORMDATA_DOC form-control rounded-3" onkeyup="ALL_IMP_SET(this,'users_added_ls_doc')" id="myInput_doc_unit" type="text"  placeholder="Add Unit" value="">
+										<input class="form-control rounded-3" onkeyup="ALL_IMP_SET(this,'users_added_ls_doc')" id=" " type="text"  placeholder="Add Unit" value="">
 									</div>
 									<div class="container">
 										<p class="mt-3">People with access</p>
+										<input type="text" id="myInput_doc_users" class="FORMDATA_DOC">
+
 										<!-- Users -->
 										<div id="users_added_ls_doc">
 										</div>
@@ -205,9 +207,12 @@ function submit_file_doc(upload_type){
 	}
 	dataform["upload_type"] = upload_type
 	dataform["uploaded_by"] = {{user_data['id']}}
-	println(dataform)
-	var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload[]'))
-	println(FORM_TO_SUBMIT)
+	// println(dataform)
+	var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload'))
+	// var FORM_TO_SUBMIT = $DATA(dataform).appendFile($ID('upload[]'))
+	// println(FORM_TO_SUBMIT)
+
+
 
 	$send({
 		action : "/webrep/upload_file_webrep___ ",

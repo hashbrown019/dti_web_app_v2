@@ -97,7 +97,7 @@
 						b.addEventListener("click", function(e) {
 							inp.value = this.getElementsByTagName("input")[0].value;
 							// closeAllLists();
-							push_user(this.getElementsByTagName("input")[0].value,post_container)
+							push_user(this.getElementsByTagName("input")[0].value,post_container,inp)
 						});
 						a.appendChild(b);
 					// if(i >=5){
@@ -168,42 +168,56 @@
 	// autocomplete(document.getElementById("myInput"), ALL_USERS); // ROOT of ALL EVIL
 
 
-		function push_user(args,post_container){
+		function push_user(args,post_container,inp){
+			inp.value = ""
 			var user_info = args.split("||")
 			email = user_info[2]
 			id = user_info[1]
 			name = user_info[0]
 			document.getElementById(post_container).innerHTML +=(`
-				<div class="user_ls_all row d-flex align-items-center>
-				<input class="FORMDATA" id="user_ls[]" value="`+id+`">
+			<div class="user_ls_all row d-flex align-items-center" id="user_ls_`+id+`">
 				<div class="col-1">
-				<span><i class="fa-regular fa-user"></i></span>
+					<span id="ID__">`+id+`</span>
+					<span><i class="fa-regular fa-user"></i></span>
 				</div>
 				<div class="col-8">
-				<span class="" id="">`+name+`</span>
-				<small class="d-block text-muted fst-italic" id="">`+email+`</small>
+					<span class="" id="NAME__">`+name+`</span>
+					<small class="d-block text-muted fst-italic" id="">`+email+`</small>
 				</div>
 				<div class="col-3" id="">
-				<a class="text-muted fst-italic " type="button" onclick="document.getElementById('user_ls_`+id+`').remove()"><small>Remove</small></a>
+					<a class="text-muted fst-italic " type="button" onclick="document.getElementById('user_ls_`+id+`').remove();rem__user(`+id+`)"><small>Remove</small>
+					</a>
 				</div>                                
-				</div>  
-				`)
+			</div>`)
+			// $ID("myInput_doc_users").value = id
+			// var lsuser_ = $ID("myInput_doc_users").value
+
+			// $ID("myInput_doc_users").value = JSON.parse($ID("myInput_doc_users").value).push(id)
+			// var arr_user = Array.from($ID("myInput_doc_users").value)
+			// arr_user.push(id.replaceAll(" ",""))
+			// // arr_user = arr_user.filter(function(e) { return e !== 'seven' })
+			// $ID("myInput_doc_users").value = arr_user
+			// println(arr_user)
+
 		}
 
+		function rem__user(id){
+			println(id)
+		}
 
 		function ALL_USERS_SET(el,post_container){
-	// var arrs = []
-	// for (const [key, value] of Object.entries(ALL_USERS)) {
-	// 	arrs.push(key)
-	// }
+			// var arrs = []
+			// for (const [key, value] of Object.entries(ALL_USERS)) {
+			// 	arrs.push(key)
+			// }
 			_autocomplete(el,ALL_USERS,post_container)
 		}
 
 		function ALL_IMP_SET(el,post_container){
-	// var arrs = []
-	// for (const [key, value] of Object.entries(ALL_IMP_UNIT)) {
-	// 	arrs.push(ALL_IMP_UNIT)
-	// }
+			// var arrs = []
+			// for (const [key, value] of Object.entries(ALL_IMP_UNIT)) {
+			// 	arrs.push(ALL_IMP_UNIT)
+			// }
 			_autocomplete(el,ALL_IMP_UNIT,post_container)
 		}
 	</script>
