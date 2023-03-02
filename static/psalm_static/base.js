@@ -446,7 +446,23 @@ function myFunction3() {
       });
       
     
+      function confirmation(e) {
+        e.preventDefault();
     
+        var url = e.currentTarget.getAttribute('href')
 
-
+        Swal.fire({
+          icon: 'warning',
+          title: 'Are you sure you want to Delete this file?',
+          text: 'Deleting this file will also delete the data inside this file from the Database.',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete!'
+      }).then((result) => {
+          if (result.value) {
+              window.location.href=url;
+          }
+      })
+    }
 

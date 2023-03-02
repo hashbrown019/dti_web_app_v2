@@ -150,5 +150,5 @@ def excel_upload_open(path):
         flash(f"An error occured !", "error")
         print(str(insert))
     else:
-        flash(f"Record Saved!", "success")  
+        flash(f"The file was imported successfully!", "success")  
     return "done"

@@ -121,14 +121,15 @@ def delete(filename_):
             flash(f"An error occured !", "error")
             print(str(delete))
     else:
-            flash(f"File Deleted!", "success")
+            flash(f"The file was deleted successfully!", "success")
             print(str(delete))
     return render_template("spreadsheet.html",user_data=session["USER_DATA"][0])
 
-
+@app.route('/download/<string:filename_>', methods=['GET'], endpoint='download_file')
+def download_file(filename_):
+    path = "assets/objects/spreadsheets_c/queued/" + filename_
+    return send_file(path, as_attachment=True)
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-    # sample edit  
