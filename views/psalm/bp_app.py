@@ -108,7 +108,11 @@ def cform():
 
 @app.route("/spreadsheet")
 def spreadsheet():
-    return render_template("spreadsheet.html",user_data=session["USER_DATA"][0])
+    SQL = "SELECT filename, COUNT(filename) AS _COUNT FROM `form_c` WHERE upload_by={} GROUP BY filename;".format(session["USER_DATA"][0][id])
+    uploaded_file_by_user = db.select(SQL)
+    return render_template("spreadsheet.html",user_data=session["USER_DATA"][0],filename=uploaded_file_by_user)
+
+
 
 
 if __name__ == "__main__":
