@@ -11,6 +11,7 @@ from views.psalm.spreadsheet import import_excel as import_csv
 from views.psalm.spreadsheet import export_excel as export_csv
 import Configurations as c
 import xlrd
+import json
 from werkzeug.utils import secure_filename
 import os
 
@@ -108,9 +109,21 @@ def cform():
 
 @app.route("/spreadsheet")
 def spreadsheet():
-    SQL = "SELECT filename, COUNT(filename) AS _COUNT FROM `form_c` WHERE upload_by={} GROUP BY filename;".format(session["USER_DATA"][0][id])
+    SQL = "SELECT filename, COUNT(filename) AS _COUNT FROM `form_c` WHERE upload_by={} GROUP BY filename;".format(session["USER_DATA"][0]['id'])
     uploaded_file_by_user = db.select(SQL)
-    return render_template("spreadsheet.html",user_data=session["USER_DATA"][0],filename=uploaded_file_by_user)
+    return render_template("spreadsheet.html",user_data=session["USER_DATA"][0],uploaded_file_by_user=uploaded_file_by_user)
+
+@app.route('/delete/<string:filename_>', methods = ['POST','GET'])
+def delete(filename_):
+    sql='DELETE FROM form_c WHERE filename = {0}'.format(filename_)
+    delete=db.do(sql)
+    if(delete["response"]=="error"):
+            flash(f"An error occured !", "error")
+            print(str(delete))
+    else:
+            flash(f"File Deleted!", "success")
+            print(str(delete))
+    return render_template("spreadsheet.html",user_data=session["USER_DATA"][0])
 
 
 

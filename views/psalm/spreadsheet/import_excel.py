@@ -24,7 +24,7 @@ def importcsv(request):
             excel_upload_open(os.path.join(c.RECORDS+"/objects/spreadsheets_c/queued/",UPLOAD_NAME ))
             
             
-    return redirect("/spreadsheet",filename=UPLOAD_NAME)
+    return redirect("/spreadsheet")
 
 def excel_upload_open(path):  
     book = xlrd.open_workbook(path)

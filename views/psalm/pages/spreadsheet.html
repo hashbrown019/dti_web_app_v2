@@ -11,7 +11,7 @@
 
 
 
-    <div class="card" style="width:50%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="card" style="width:60%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
         <div class="card-header" style="background-color: #334257;">
             <h3 style="color: white;">Spreadsheet Management</h3>
@@ -61,10 +61,10 @@
     
         </div>
     </div>
-    <div class="card" style="width:50%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="card" style="width:60%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
         <div class="card-header" style="background-color: #334257;">
-            <h3 style="color: white;">Activities</h3>
+            <h3 style="color: white;">Imported Files</h3>
         </div>
     
         <div class="card-body" style="background-color: #b4cde4;;">
@@ -73,14 +73,39 @@
   
                 <div class="form-group">
                     <div class="form-row" >
-             
-                        <div class="col">
-                            <strong>
-                                <label for="position">Imported files</label>
-                            </strong><br>
-                            {{ filename }}
+    
+                            <div class="table-responsive table py-4">
+                                <div id="datatable-buttons_wrapper" class="dataTables_wrapper dt-bootstrap4" style="margin: 5%; margin-top: 3%;" >
+                                  <table class="table table-flush dataTable"role="grid" aria-describedby="datatable-buttons_info" >
+                                <thead class="thead">
+                                  <tr role="row">
+                                    <th>File name</th>
+                                    <th>Action</th>
+                                    </tr>
+                                </thead>
+                            
+                                <tbody>
+                                  <tr>
+                                 <div>
+                                    {% for row in uploaded_file_by_user %}
+                                    {% if (row['filename'])!="" and (row['filename'])!=" " %}
+                                    <td>{{ row['filename'] }}</td>
+                                    <td><a class="text-danger" onclick="return confirm('Are You Sure to Delete this file?')" href="/delete/{{row['filename']}}">  <span><i class="fa-solid fa-trash"></i></span> Delete</a>
+
+                                        {%else%}
+                             
+                                    
+                                    
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                                {% endfor  %}
+                                  </tbody>
+                        </table>
+                        
+</div>        
+</div>
                               <br>
-                        </div>
                         </div>
                     </form>
                     <br> <br>
