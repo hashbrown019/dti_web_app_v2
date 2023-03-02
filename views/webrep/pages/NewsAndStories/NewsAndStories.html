@@ -25,164 +25,171 @@
 </head>
 
 <body>
-	<div style="background-color: #e3ebd5">
-		{% include 'main/navbarpages.html' %}
 
-		{% include 'banners/newsandstorybanner.html' %}
+	{% include 'main/navbarpages.html' %}
+
+	{% include 'banners/newsandstorybanner.html' %}
+
+	{% include 'newsAndstories/stickynavNAS.html' %}
+
+	<!-- Search Area -->
+	<div class="container shadow-lg p-3  bg-body rounded mt-2 mb-3" id="nassearch" style="display: none;">
+		<a class="me-4 btn-close float-end" disabled aria-label="Close" id="close" onclick="closesearch()" style="color: #1F4F5A !important;" role="button"></a>				
+		<script>
+			function closesearch() {
+				var x = document.getElementById("nassearch");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+				} else {
+					x.style.display = "none";
+				}
+			}
+		</script>
+		<div class="d-flex justify-content-start">     
+			<form class="row row-cols-xxl-auto g-3 align-items-center mt-1 ">
+				<div class="col-12 ">
+					<label class=" searchFont mb-2 " for="searchTitle">Title</label>
+					<input class="form-control form-control-md" id="searchTitle" type="text" placeholder="(e.g., Coffee Story)" aria-label=".form-control-lg example">
+				</div>
+
+				<div class="col-12  ">
+					<label class=" searchFont mb-2" for="seachRegion">Category</label>
+					<select class="form-select form-select-md" id="seachRegion">
+						<option selected>News</option>
+						<option value="1">Stories</option>
+						<option value="2">Events</option>            
+					</select>
+				</div>
+
+				<div class="col-12  ">
+					<label class=" searchFont mb-2" for="seachRegion">Region</label>
+					<select class="form-select form-select-md" id="seachRegion">
+						<option selected>National</option>
+						<option value="1">Region XIII</option>
+						<option value="2">Region IX</option>
+						<option value="3">Region X</option>
+						<option value="4">Region XI</option>
+						<option value="5">Region XII (SOCCSKSARGEN)</option>
+						<option value="6">Region XIII (CARAGA)</option>
+						<option value="7">BARMM</option>            
+					</select>
+				</div>
+
+				<div class="col-12 ">
+					<label class=" searchFont mb-2" for="seachYear">Year</label>
+					<select class="form-select form-select-md" id="seachYear">
+						<option value="1">2018</option>
+						<option value="2">2019</option>
+						<option value="3">2020</option>
+						<option value="4">2021</option>
+						<option value="5">2022</option>
+						<option value="6">2023</option>
+					</select>
+				</div>
+
+				<div class="col-12 ">
+					<label class=" searchFont mb-2" for="searchTags">Tags</label>
+					<input class="form-control form-control-md" id="searchTafs" type="text" placeholder="(e.g., Cacao)" aria-label=".form-control-lg example">
+				</div>
 
 
-		{% include 'newsAndstories/stickynavNAS.html' %}
+				<div class=" mt-5">					
+					<label class="fs-5 "></label>
+					<button type="submit" class="btn btn-outline-success me-2 mt-1" id="search"><i class="fa-solid fa-magnifying-glass "></i>&nbspSearch</button>
+				</div>	
+			</form>
+		</div>
 
-		<!-- Search Area -->
-			<div class="container shadow-lg p-3  bg-body rounded mt-2 mb-3" id="nassearch" style="display: none;">
-				<a class="me-4 btn-close float-end" disabled aria-label="Close" id="close" onclick="closesearch()" style="color: #1F4F5A !important;" role="button"></a>				
-				<script>
-					function closesearch() {
-						var x = document.getElementById("nassearch");
-						if (x.style.display === "none") {
-							x.style.display = "block";
-						} else {
-							x.style.display = "none";
-						}
+		<!-- Search Result  -->
+		<div class=" container text-secondary mt-5" style="display: none;">				
+			<h1>No Result</h1>
+		</div>
+		<div class="container mt-5" id="searchRes" style="display: block;">
+			<div class="">
+				<h5 class="display-5 searchFont" id="staticBackdropLabel">Searched Results</h5>
+			</div>
+			<div class="container col-12">
+				<div class="row mt-3" >                                     
+					<div class="col-sm-6 col-lg-4 mb-3">
+						<div class="card card_size">
+							<div class="card-body">
+								<h5 class="card-title"> Example file</h5>
+								<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+								<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
+							</div>
+						</div>
+					</div>				                      
+				</div>
+			</div>				
+		</div>
+	</div>
+
+
+
+	<div class=" " style="display:block;" id="">
+		<div class="container mt-5">
+			<a class="fs-2 dropdown-toggle texttheme" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="today">All</a>
+			<ul class="dropdown-menu">
+				<li><a class="dropdown-item" type="button" id="All" onclick="clicked(this)">All</a></li>
+				<li><a class="dropdown-item" type="button" id="today" onclick="clicked(this)">Today</a></li>
+				<li><a class="dropdown-item" type="button" id="thisweek" onclick="clicked(this)">Less than a week</a></li>
+				<li><a class="dropdown-item" type="button" id="thismonth" onclick="clicked(this)">This month</a></li>
+			</ul>				
+		</div>
+
+
+		<div>{% include 'newsAndstories/todayTab.html' %}</div>
+
+	</div>
+
+	<script>
+
+		function clicked(elmnt) {
+			document.getElementById("today").innerText=elmnt.innerText
+			var news_cards = document.getElementsByClassName("news_card")
+			var now_month =$datetime().split("/")[0]
+			var now_day =$datetime().split("/")[1]
+			var now_year =$datetime().split("/")[2].split(",")[0]
+
+			for (var i = 0; i < news_cards.length; i++) {news_cards[i].style.display="none"}
+
+			for (var i = 0; i < news_cards.length; i++) {
+				var news_date = news_cards[i].getAttribute('vdate')
+				var news_month =news_date.split("-")[1]
+				var news_day =news_date.split("-")[2].split(" ")[0]
+				var news_year =news_date.split("-")[0]
+				println(""+(parseInt(now_day)-7)+" - "+((news_day))+" - "+(parseInt(now_day)))
+
+				if(elmnt.innerText=="Today"){
+					if(parseInt(news_day)!=parseInt(now_day)){
+						news_cards[i].style.display ="none"
 					}
-				</script>
-				<div class="d-flex justify-content-start">     
-					<form class="row row-cols-xxl-auto g-3 align-items-center mt-1 ">
-						<div class="col-12 ">
-							<label class=" searchFont mb-2 " for="searchTitle">Title</label>
-							<input class="form-control form-control-md" id="searchTitle" type="text" placeholder="(e.g., Coffee Story)" aria-label=".form-control-lg example">
-						</div>
+				}
+				if(elmnt.innerText=="Less than a week"){
+					if(parseInt(news_day) < parseInt(now_day) && parseInt(news_day)>parseInt(now_day)-7 && parseInt(news_month) == parseInt(now_month)){
+						news_cards[i].style.display ="block"
+					}
+				}
+				if(elmnt.innerText=="This month"){
+					if(parseInt(news_month) == parseInt(now_month)){
+						news_cards[i].style.display ="block"
+					}
+				}
+				if(elmnt.innerText=="All"){
+					news_cards[i].style.display ="block"
+				}
 
-						<div class="col-12  ">
-							<label class=" searchFont mb-2" for="seachRegion">Category</label>
-							<select class="form-select form-select-md" id="seachRegion">
-								<option selected>News</option>
-								<option value="1">Stories</option>
-								<option value="2">Events</option>            
-							</select>
-						</div>
+			}
+		}
 
-						<div class="col-12  ">
-							<label class=" searchFont mb-2" for="seachRegion">Region</label>
-							<select class="form-select form-select-md" id="seachRegion">
-								<option selected>National</option>
-								<option value="1">Region XIII</option>
-								<option value="2">Region IX</option>
-								<option value="3">Region X</option>
-								<option value="4">Region XI</option>
-								<option value="5">Region XII (SOCCSKSARGEN)</option>
-								<option value="6">Region XIII (CARAGA)</option>
-								<option value="7">BARMM</option>            
-							</select>
-						</div>
+	</script>
 
-						<div class="col-12 ">
-							<label class=" searchFont mb-2" for="seachYear">Year</label>
-							<select class="form-select form-select-md" id="seachYear">
-								<option value="1">2018</option>
-								<option value="2">2019</option>
-								<option value="3">2020</option>
-								<option value="4">2021</option>
-								<option value="5">2022</option>
-								<option value="6">2023</option>
-							</select>
-						</div>
+	<div class="container mb-5 shadow-sm p-3 bg-body rounded">
+		
+	</div>
 
-						<div class="col-12 ">
-							<label class=" searchFont mb-2" for="searchTags">Tags</label>
-							<input class="form-control form-control-md" id="searchTafs" type="text" placeholder="(e.g., Cacao)" aria-label=".form-control-lg example">
-						</div>
+	{% include 'main/footer.html' %}
 
 
-						<div class=" mt-5">					
-							<label class="fs-5 "></label>
-							<button type="submit" class="btn btn-outline-success me-2 mt-1" id="search"><i class="fa-solid fa-magnifying-glass "></i>&nbspSearch</button>
-						</div>	
-					</form>
-				</div>
-
-				<!-- Search Result  -->
-				<div class=" container text-secondary mt-5" style="display: none;">				
-					<h1>No Result</h1>
-				</div>
-				<div class="container mt-5" id="searchRes" style="display: block;">
-					<div class="">
-						<h5 class="display-5 searchFont" id="staticBackdropLabel">Searched Results</h5>
-					</div>
-					<div class="container col-12">
-						<div class="row mt-3" >                                     
-							<div class="col-sm-6 col-lg-4 mb-3">
-								<div class="card card_size">
-									<div class="card-body">
-										<h5 class="card-title"> Example file</h5>
-										<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-										<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-									</div>
-								</div>
-							</div>				                      
-						</div>
-					</div>				
-				</div>
-			</div>
-
-		<!-- latest tab -->
-			<div class=" " style="display:block;" id="">
-				<div class="container mt-5">
-					<a class="fs-2 dropdown-toggle texttheme" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="today">All</a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" type="button" id="All" onclick="clicked(this)">All</a></li>
-						<li><a class="dropdown-item" type="button" id="today" onclick="clicked(this)">Today</a></li>
-						<li><a class="dropdown-item" type="button" id="thisweek" onclick="clicked(this)">Less than a week</a></li>
-						<li><a class="dropdown-item" type="button" id="thismonth" onclick="clicked(this)">This month</a></li>
-					</ul>				
-				</div>
-
-
-				<div>{% include 'newsAndstories/todayTab.html' %}</div>
-
-			</div>
-
-				<script>
-					function clicked(elmnt) {
-						document.getElementById("today").innerText=elmnt.innerText
-						var news_cards = document.getElementsByClassName("news_card")
-						var now_month =$datetime().split("/")[0]
-						var now_day =$datetime().split("/")[1]
-						var now_year =$datetime().split("/")[2].split(",")[0]
-
-						for (var i = 0; i < news_cards.length; i++) {news_cards[i].style.display="none"}
-
-							for (var i = 0; i < news_cards.length; i++) {
-								var news_date = news_cards[i].getAttribute('vdate')
-								var news_month =news_date.split("-")[1]
-								var news_day =news_date.split("-")[2].split(" ")[0]
-								var news_year =news_date.split("-")[0]
-								println(""+(parseInt(now_day)-7)+" - "+((news_day))+" - "+(parseInt(now_day)))
-
-								if(elmnt.innerText=="Today"){
-									if(parseInt(news_day)!=parseInt(now_day)){
-										news_cards[i].style.display ="none"
-									}
-								}
-								if(elmnt.innerText=="Less than a week"){
-									if(parseInt(news_day) < parseInt(now_day) && parseInt(news_day)>parseInt(now_day)-7 && parseInt(news_month) == parseInt(now_month)){
-										news_cards[i].style.display ="block"
-									}
-								}
-								if(elmnt.innerText=="This month"){
-									if(parseInt(news_month) == parseInt(now_month)){
-										news_cards[i].style.display ="block"
-									}
-								}
-								if(elmnt.innerText=="All"){
-									news_cards[i].style.display ="block"
-								}
-							}
-						}
-					</script>
-
-{% include 'main/footer.html' %}
-
-</div>
 </body>
 </html>
