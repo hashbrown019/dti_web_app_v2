@@ -102,7 +102,6 @@ def display__():
     data_count_pfn = db.select("SELECT industry_cluster FROM `form_c` {} AND industry_cluster !='cacao' AND industry_cluster !='coconut' AND industry_cluster !='coffee'  AND industry_cluster != '' AND industry_cluster!= ' ' AND industry_cluster NOT LIKE '%cacao%' AND industry_cluster NOT LIKE '%coconut%' AND industry_cluster NOT LIKE '%coffee%' ".format(position_data_filter()))
     intpfn= len(data_count_pfn)
     totalpfn = intpfn
-    print(data_count_entry)
     thismonth=len(data_march)
     lastmonth=len(data_feb)
     subperc= thismonth - lastmonth

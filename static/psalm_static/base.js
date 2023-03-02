@@ -466,3 +466,21 @@ function myFunction3() {
       })
     }
 
+    document.onreadystatechange = function () {
+      var state = document.readyState
+      if (state == 'interactive') {
+        document.getElementById('loading-screen').style.visibility = "visible";
+      } else if (state == 'complete') {
+        setTimeout(function () {
+          document.getElementById('loading-screen').style.visibility = "hidden";
+        }, 1000);
+      }
+    }
+  
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+  
+    socket.on('progress', function (data) {
+      document.getElementById('progress-text').innerHTML = data;
+    });
+
+ 

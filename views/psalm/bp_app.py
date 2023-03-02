@@ -2,6 +2,8 @@ from flask import Flask, Blueprint,request, flash, render_template, url_for,redi
 from modules.Connections import mysql
 from decimal import Decimal
 import pandas as pd
+from tqdm import tqdm
+from time import sleep
 from flask_session import Session
 from views.psalm.dashboard import display_data as displayData
 from views.psalm.dashboard import filter_data as filterData
