@@ -109,7 +109,13 @@ def cform():
 
 @app.route("/spreadsheet")
 def spreadsheet():
-    SQL = "SELECT filename, COUNT(filename) AS _COUNT FROM `form_c` WHERE upload_by={} GROUP BY filename;".format(session["USER_DATA"][0]['id'])
+    SQL ="""
+SELECT form_c.filename, COUNT(form_c.filename) AS _COUNT, users.name
+FROM `form_c`
+JOIN `users` ON form_c.upload_by = users.id
+WHERE form_c.upload_by = {}
+GROUP BY form_c.filename;
+""".format(session["USER_DATA"][0]['id'])
     uploaded_file_by_user = db.select(SQL)
     return render_template("spreadsheet.html",user_data=session["USER_DATA"][0],uploaded_file_by_user=uploaded_file_by_user)
 

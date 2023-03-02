@@ -79,6 +79,7 @@
                                   <table class="table table-flush dataTable"role="grid" aria-describedby="datatable-buttons_info" >
                                 <thead class="thead bg-theme text-white">
                                   <tr role="row">
+                                    <th>Upload by</th>
                                     <th>File name</th>
                                     <th>Action</th>
                                     </tr>
@@ -89,6 +90,7 @@
                                  <div>
                                     {% for row in uploaded_file_by_user %}
                                     {% if (row['filename'])!="" and (row['filename'])!=" " %}
+                                    <td class="text-info">{{ row['name'] }}</td>
                                     <td><a class="text-success" href="{{ url_for('form_c.download_file', filename_=row['filename']) }}">{{ row['filename'] }}</a></td>
                                     <td><a class="text-danger" onclick="confirmation(event)"  href="/delete/{{row['filename']}}">  <span><i class="fa-solid fa-trash"></i></span> Delete</a>
 
