@@ -97,12 +97,8 @@ class _main:
 		data = dict(request.form)
 		key = [];val = []
 		data["USER_ID"] = session["USER_DATA"][0]['id']
-<<<<<<< Updated upstream
-		__f = FILE_REQ.save_file_from_request("upload",c.RECORDS+"/objects/webrep/")
-=======
-		
+		# __f = FILE_REQ.save_file_from_request("upload",c.RECORDS+"/objects/webrep/")
 		__f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/")
->>>>>>> Stashed changes
 		data["upload"] = __f["file_arr_str"]
 		for datum in data:
 			print(datum)
