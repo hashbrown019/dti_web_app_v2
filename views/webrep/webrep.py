@@ -97,7 +97,6 @@ class _main:
 		data = dict(request.form)
 		key = [];val = []
 		data["USER_ID"] = session["USER_DATA"][0]['id']
-		
 		__f = FILE_REQ.save_file_from_request("upload",c.RECORDS+"/objects/webrep/")
 		data["upload"] = __f["file_arr_str"]
 
