@@ -96,7 +96,7 @@
 
 					<div id="">
 						<label for="uploadMul" class="form-label small fw-bolder">Please upload your files</label>
-						<input class="FORMDATA_MUL form-control" type="file" id="upload[]" multiple>
+						<input class="FORMDATA_MUL form-control" type="file" id="upload" multiple>
 					</div> 
 
 
@@ -184,11 +184,12 @@
 		}
 		dataform["upload_type"] = upload_type
 		dataform["uploaded_by"] = {{user_data['id']}}
-
 		// println(dataform)
-		var FORM_TO_SUBMIT = $DATA(dataform).appendFile($ID('upload[]'))
-		// println(FORM_TO_SUBMIT)
+		println($ID('upload').value)
+		println("$ID('upload').file")
 
+		var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID("upload"))
+		// println(FORM_TO_SUBMIT)
 
 		$send({
 			action : "/webrep/upload_file_webrep___ ",

@@ -198,33 +198,32 @@
 	</div>
 </div>
 <script type="text/javascript">
-
-function submit_file_doc(upload_type){
-	var FORMDATA_DOC = $CLASS('FORMDATA_DOC')
-	var dataform = {}
-	for (var i = 0; i < FORMDATA_DOC.length; i++) {
-		dataform[FORMDATA_DOC[i].id] = FORMDATA_DOC[i].value
-	}
-	dataform["upload_type"] = upload_type
-	dataform["uploaded_by"] = {{user_data['id']}}
-	// println(dataform)
-	var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload'))
-	// var FORM_TO_SUBMIT = $DATA(dataform).appendFile($ID('upload[]'))
-	// println(FORM_TO_SUBMIT)
-
-
-
-	$send({
-		action : "/webrep/upload_file_webrep___ ",
-		method : POST,
-		data : FORM_TO_SUBMIT,
-		func : function (rrr){
-			var res = JSON.parse(rrr)
-			println(res)
+	function submit_file_doc(upload_type){
+		var FORMDATA_DOC = $CLASS('FORMDATA_DOC')
+		var dataform = {}
+		for (var i = 0; i < FORMDATA_DOC.length; i++) {
+			dataform[FORMDATA_DOC[i].id] = FORMDATA_DOC[i].value
 		}
-	})
+		dataform["upload_type"] = upload_type
+		dataform["uploaded_by"] = {{user_data['id']}}
+		// println(dataform)
+		println($ID('upload').value)
+		println("$ID('upload').file")
 
-}
+		var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload'))
+		// println(FORM_TO_SUBMIT)
+
+		$send({
+			action : "/webrep/upload_file_webrep___ ",
+			method : POST,
+			data : FORM_TO_SUBMIT,
+			func : function (rrr){
+				var res = JSON.parse(rrr)
+				println(res)
+			}
+		})
+
+	}
 // appendFileArr()
 </script>
 

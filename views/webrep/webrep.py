@@ -4,7 +4,7 @@ from modules.Connections import mysql
 import Configurations as c
 from werkzeug.utils import secure_filename
 import os
-from modules.Req_Brorn_util import file_from_request
+
 
 
 db = mysql(*c.DB_CRED)
@@ -12,8 +12,6 @@ db.err_page = 0
 
 app = Blueprint("webrep",__name__,template_folder='pages')
 # app = Blueprint("webrep",__name__,url_prefix='/webrep',template_folder='pages')
-
-FILE_REQ = file_from_request(app,request)
 
 class _main:
 	def is_on_session(): return ('USER_DATA' in session)
@@ -94,19 +92,26 @@ class _main:
 	@app.route("/webrep/upload_file_webrep___",methods=["POST","GET"])
 	def upload_file_webrep___():
 		from datetime import date, datetime
+		from modules.Req_Brorn_util import file_from_request
+		FILE_REQ = file_from_request(app)
 		data = dict(request.form)
 		key = [];val = []
 		data["USER_ID"] = session["USER_DATA"][0]['id']
+<<<<<<< Updated upstream
 		__f = FILE_REQ.save_file_from_request("upload",c.RECORDS+"/objects/webrep/")
+=======
+		
+		__f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/")
+>>>>>>> Stashed changes
 		data["upload"] = __f["file_arr_str"]
-
 		for datum in data:
+			print(datum)
 			key.append("`{}`".format(datum))
 			val.append("'{}'".format(data[datum]))
 		sql = ('''INSERT INTO `webrep_uploads` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
 		
 		last_row_id = db.do(sql)
-		return jsonify({"last_row_id":last_row_id})
+		return jsonify({"last_row_id":last_row_id,"FILES":__f})
  
 	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
 	def get_img(img):

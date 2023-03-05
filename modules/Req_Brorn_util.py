@@ -3,21 +3,21 @@ import os
 
 class file_from_request:
 	"""docstring for file_from_request"""
-	def __init__(self,flaskapp, request):
+	def __init__(self,flaskapp):
 		super(file_from_request, self).__init__()
 		self.flaskapp = flaskapp
-		self.request = request
 
-	def save_file_from_request(self, idfield,pathtosave,raise_error=False):
+	def save_file_from_request(self,request , idfield,pathtosave,raise_error=False):
 		file_arr_str = ""
 		file_arr = []
 		files_count = 0
 		status ="unfinished"
 		msg ="unfinished"
 		try:
-			files = self.request.files.getlist(idfield)
+			files = request.files.getlist(idfield)
 			for f in files:
 				UPLOAD_NAME = secure_filename(f.filename)
+				print(UPLOAD_NAME)
 				f.save(os.path.join(pathtosave,UPLOAD_NAME ))
 				file_arr_str+= "||"+(UPLOAD_NAME)
 				file_arr.append(UPLOAD_NAME)
