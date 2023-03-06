@@ -21,7 +21,7 @@
 	<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
 	<script src="../../static/webrepstatic/js/bootstrap-autocomplete.min.js"></script>
 
-	<script defer src="../../static/js/Brorn.min.js"></script>
+	<!-- <script defer src="../../static/js/Brorn.min.js"></script> -->
 
 	<title >Upload Document</title>
 </head>
@@ -45,7 +45,7 @@
 
 
 		<div class="">
-			<button class="btn btn-outline-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="submit_doc">Upload &nbsp&nbsp<i class="fa-solid fa-upload"></i></a></button>
+			<button onclick="submit_file_doc('docs')" class="btn btn-outline-success rounded-5" type="submit" id="submit_doc">Upload &nbsp&nbsp<i class="fa-solid fa-upload"></i></a></button>
 		</div>
 	</div>
 
@@ -63,7 +63,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-					<button type="button" class="btn btn-primary" onclick="submit_file_doc()">Submit</button>
+					<button type="button" class="btn btn-primary" onclick="close_transaction()">Continue</button>
 				</div>
 			</div>
 		</div>
@@ -130,26 +130,26 @@
 								<option>Tutorial</option>
 								<option>Others</option>
 							</select>
-							<label for="filetype" class="texttheme fw-bolder small">Category/Topic</label>
+							<label for="formCategory" class="texttheme fw-bolder small">Category/Topic</label>
 						</div>
 					</div>
 
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1 " id="form_other" style="display:none;">
-								<input type="email" class="form-control FORMDATA_DOCUMENT" id="others" placeholder="name@example.com">
+								<input type="text" class="form-control FORMDATA_DOCUMENT" id="others" placeholder="name@example.com">
 								<label for="Others" class="texttheme fw-bolder small">Other Specify</label>
 							</div>
 						</div>
 					</div>
 
 					<script type="text/javascript">
-						$(document).on('change', '#filetype', function(e){  
+						$(document).on('change', '#formCategory', function(e){  
 							e.preventDefault();
 							el = $("#form_other");
-							filetype = this.value;
+							formCategory = this.value;
 							console.log(el)
-							if (filetype == "Others") {
+							if (formCategory == "Others") {
 								el.show();
 
 							}
@@ -197,7 +197,7 @@
 							</div>
 							<div class="container">
 								<p class="mt-3">People with access</p>
-								<input type="text" id="myInput_doc_users" class="FORMDATA_DOCUMENT">
+								<!-- <input type="text" id="myInput_doc_users" class="FORMDATA_DOCUMENT"> -->
 
 								<!-- Users -->
 								<div id="users_added_ls_doc">
@@ -254,9 +254,10 @@
 						<div class="form-floating mb-1">
 							<input type="" class="form-control FORMDATA_DOCUMENT" id="tags" placeholder="name@example.com">
 							<label for="tags" class="texttheme fw-bolder small">Tags/Search Keywords</label>
-
 						</div>
 					</div>
+					<input value="pending" class="FORMDATA_DOCUMENT" id="status" hidden>
+
 				</form>
 				<div class="mt-5">
 
@@ -281,12 +282,20 @@
 		}
 		dataform["upload_type"] = upload_type
 		dataform["uploaded_by"] = {{user_data['id']}}
-		println("dataform")
-		println(dataform)
-		println("dataform")
+		dataform["myInput_doc_users"] = []
 
-		var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload'))
 		// println(FORM_TO_SUBMIT)
+
+		var id_viewrs = $ID('users_added_ls_doc').getElementsByClassName("ID__")
+		for (var i = 0; i < id_viewrs.length; i++) {
+			// println(id_viewrs[i].innerText)
+			dataform["myInput_doc_users"].push(id_viewrs[i].innerText)
+		}
+
+		println(dataform)
+		var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload'))
+
+		println("====================")
 
 		$send({
 			action : "/webrep/upload_file_webrep___ ",
@@ -295,9 +304,15 @@
 			func : function (rrr){
 				var res = JSON.parse(rrr)
 				println(res)
+				$ID("createPostConfirmation").style.display = "block"
 			}
 		})
 
+	}
+
+	function close_transaction(){
+		$ID("createPostConfirmation").style.display = "none"
+		// goto('/rapid/admin/adminKnowledgeCenter.html')
 	}
 // appendFileArr()
 </script>

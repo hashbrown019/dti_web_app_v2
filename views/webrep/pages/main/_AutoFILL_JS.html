@@ -101,10 +101,14 @@
 		email = user_info[2]
 		id = user_info[1]
 		name = user_info[0]
+
+		if(id==undefined){id=name;email=name}
+		// println(id)
+		id = id.replaceAll(" ","")
 		document.getElementById(post_container).innerHTML +=(`
 		<div class="user_ls_all row d-flex align-items-center" id="user_ls_`+id+`">
 			<div class="col-1">
-				<span id="ID__">`+id+`</span>
+				<span class="ID__" style="display:none;">`+id+`</span>
 				<span><i class="fa-regular fa-user"></i></span>
 			</div>
 			<div class="col-8">
@@ -112,9 +116,9 @@
 				<small class="d-block text-muted fst-italic" id="">`+email+`</small>
 			</div>
 			<div class="col-3" id="">
-				<a class="text-muted fst-italic " type="button" onclick="document.getElementById('user_ls_`+id+`').remove();rem__user(`+id+`)"><small>Remove</small>
+				<a class="text-muted fst-italic " type="button" onclick="document.getElementById('user_ls_`+id+`').remove();rem__user('`+id+`')"><small>Remove</small>
 				</a>
-			</div>                                
+			</div>
 		</div>`)
 		// $ID("myInput_doc_users").value = id
 		// var lsuser_ = $ID("myInput_doc_users").value
