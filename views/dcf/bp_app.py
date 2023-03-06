@@ -7,7 +7,7 @@ import xlrd
 import json
 from werkzeug.utils import secure_filename
 import os
-from form_insert import insert_form4 as insertData4
+from views.psalm.form_insert import insert_form4 as insertData4
 import Configurations as c
 from modules.Connections import mysql
 
