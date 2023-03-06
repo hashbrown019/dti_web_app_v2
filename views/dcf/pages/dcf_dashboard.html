@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html' %}
+{% set active_page = "dcf_dashboard" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="header bg-primary pb-6">
+
+
+{% include "includes/dashboard/totalcount.html" %}
+
+
+    <!-- Page content -->
+</div>
+</div>
+</div>
+      
+    {% include "includes/dashboard/chart.html" %}
+
+
+
+
+    
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+  <script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  
+
+{% endblock javascripts %}

@@ -463,6 +463,7 @@ function myFunction3() {
           if (result.value) {
               window.location.href=url;
           }
+          
       })
     }
 
