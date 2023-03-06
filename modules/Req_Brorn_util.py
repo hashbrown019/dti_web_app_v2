@@ -8,21 +8,15 @@ class file_from_request:
 		super(file_from_request, self).__init__()
 		self.flaskapp = flaskapp
 
-	def save_file_from_request(self,request,idfield,pathtosave,raise_error=False,timestamp=False):
-		file_arr_str = ""
-		file_arr = []
-		files_count = 0
-		status ="unfinished"
-		msg ="unfinished"
+	def save_file_from_request(self,request,idfield,pathtosave="",raise_error=False,timestamp=False):
+		file_arr_str = "";file_arr = [];files_count = 0;status ="unfinished";msg ="unfinished"
 		try:
 			files = request.files.getlist(idfield)
 			for f in files:
 				today = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
-				tms = ""
-				UPLOAD_NAME = secure_filename(f.filename)
+				tms = "";UPLOAD_NAME = secure_filename(f.filename)
 				if(timestamp):tms=today
 				_SAVE_NAME_FILE = "{}_{}".format(tms,UPLOAD_NAME)
-				print(_SAVE_NAME_FILE)
 				f.save(os.path.join(pathtosave,_SAVE_NAME_FILE ))
 				file_arr_str+= "||"+(_SAVE_NAME_FILE)
 				file_arr.append(_SAVE_NAME_FILE)
