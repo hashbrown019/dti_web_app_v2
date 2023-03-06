@@ -94,7 +94,7 @@ def formcdashboard():
 @app.route("/formcdashboardfilter",methods=['POST','GET'])
 def formcdashboardfilter():
     filt = filterData.data_filter(request)
-    return render_template("formcdashboardfilter.html",**filt)
+    return render_template("formcdashboardfilter.html",user_data=session["USER_DATA"][0],**filt)
 
 @app.route("/menu")
 def menu():
@@ -126,7 +126,7 @@ def delete(filename_):
     sql='DELETE FROM form_c WHERE filename = {0}'.format(filename_)
     delete=db.do(sql)
     if(delete["response"]=="error"):
-            flash(f"An error occured !", "error")
+            flash(f"An error occured !", "error") 
             print(str(delete))
     else:
             flash(f"The file was deleted successfully!", "success")
