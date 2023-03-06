@@ -45,6 +45,11 @@ class _main:
 				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
 			else:
 				return redirect("/login?force_url=1")
+		if(page.lower()=="document.html".lower()):
+			if(_main.is_on_session()):
+				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
+			else:
+				return redirect("/login?force_url=1")
 		elif(page.lower()=="newsandstories.html".lower() or page.lower()=="home.html".lower()):
 			
 			if("USER_DATA" in session):
@@ -58,7 +63,6 @@ class _main:
 				user_data=UDATA,
 				page_data=_main.get_post()
 			)
-
 		_main.moderator(segment,page)
 		return render_template("{}/{}".format(segment,page),is_session =_main.is_on_session())
 	# ==================================================================

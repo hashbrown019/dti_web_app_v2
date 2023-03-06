@@ -27,8 +27,7 @@ class file_from_request:
 		except Exception as e:
 			status ="error"
 			msg ="{}".format(e)
-			if(raise_error):
-				raise e
+			if(raise_error):raise e
 		return {
 			"status" : status,
 			"msg" : msg,

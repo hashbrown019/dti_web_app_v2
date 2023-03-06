@@ -29,6 +29,7 @@
 <body>
 
 	{% include 'main/navbarpages.html' %}
+	{% include 'main/_AutoFILL_JS.html' %}
 	<!-- Back Arrow -->
 	<div class="container text-start mt-5">
 		<a class=" texttheme" href="/rapid/admin/adminKnowledgeCenter.html">
@@ -62,7 +63,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-					<button type="button" class="btn btn-primary" onclick="submit_file_document()">Submit</button>
+					<button type="button" class="btn btn-primary" onclick="submit_file_doc()">Submit</button>
 				</div>
 			</div>
 		</div>
@@ -75,14 +76,14 @@
 				<form class=" row g-3 needs-validation" id="form_upload_document" novalidate>
 					<div class="col-md-12">
 						<div class="form-floating mb-1 ">
-							<input type="email" class="form-control-plaintext border rounded-3 FORMDATA_DOCUMENT" id="email" placeholder="name@example.com" readonly/>
+							<input value="{{user_data['email']}}" type="email" class="form-control-plaintext border rounded-3" id="email" placeholder="name@example.com" readonly/>
 							<label for="email" class="texttheme fw-bolder small">Email address</label>
 						</div>
 					</div>
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input type="email" class="form-control-plaintext border rounded-3 FORMDATA_DOCUMENT" id="unit" placeholder="name@example.com" readonly>
+								<input value="{{user_data['rcu']}},{{user_data['pcu']}}" type="email" class="form-control-plaintext border rounded-3" id="Unit" placeholder="name@example.com" readonly>
 								<label for="unit" class="texttheme fw-bolder small">Unit</label>
 							</div>
 						</div>
@@ -90,14 +91,14 @@
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input type="email" class="form-control-plaintext border rounded-3 FORMDATA_DOCUMENT" id="designation" placeholder="name@example.com" readonly >
+								<input value="{{user_data['job']}}" type="email" class="form-control-plaintext border rounded-3" id="Designation" placeholder="name@example.com" readonly >
 								<label for="designation" class="texttheme fw-bolder small">Designation</label>
 							</div>
 						</div>
 					</div>
 					<div class="col-12">
 						<div class="form-floating">
-							<select class="form-select FORMDATA_DOCUMENT" id="filetype" aria-label="Floating label select example">
+							<select class="form-select FORMDATA_DOCUMENT" id="formCategory" aria-label="Floating label select example">
 								<option title="">Accomplishment Report</option>
 								<option>Bidding Documents</option>
 								<option>Business Plan</option>
@@ -136,8 +137,8 @@
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1 " id="form_other" style="display:none;">
-								<input type="email" class="form-control FORMDATA_DOCUMENT" id="other" placeholder="name@example.com">
-								<label for="other" class="texttheme fw-bolder small">Other Specify</label>
+								<input type="email" class="form-control FORMDATA_DOCUMENT" id="others" placeholder="name@example.com">
+								<label for="Others" class="texttheme fw-bolder small">Other Specify</label>
 							</div>
 						</div>
 					</div>
@@ -161,7 +162,7 @@
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input type="date" class="form-control FORMDATA_DOCUMENT" id="date" placeholder="name@example.com">
+								<input type="date" class="form-control FORMDATA_DOCUMENT" id="Date" placeholder="name@example.com">
 								<label for="date" class="texttheme fw-bolder small">Date</label>
 							</div>
 						</div>
@@ -244,7 +245,7 @@
 					<div class="col-12">
 						<div class=" mb-1">
 							<label for="uploadFile" class="texttheme fw-bolder small">Upload your file</label>
-							<input type="file" class="form-control FORMDATA_DOCUMENT" id="uploadFile" placeholder="name@example.com">
+							<input type="file" class="form-control FORMDATA_DOCUMENT" id="upload" placeholder="name@example.com">
 
 						</div>
 					</div>
@@ -266,9 +267,39 @@
 
 
 
-<!--  -->
+	<!--  -->
 
-{% include 'main/footer.html' %}
+	{% include 'main/footer.html' %}
 
 </body>
+<script type="text/javascript">
+	function submit_file_doc(upload_type){
+		var FORMDATA_DOC = $CLASS('FORMDATA_DOCUMENT')
+		var dataform = {}
+		for (var i = 0; i < FORMDATA_DOC.length; i++) {
+			dataform[FORMDATA_DOC[i].id] = FORMDATA_DOC[i].value
+		}
+		dataform["upload_type"] = upload_type
+		dataform["uploaded_by"] = {{user_data['id']}}
+		println("dataform")
+		println(dataform)
+		println("dataform")
+
+		var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload'))
+		// println(FORM_TO_SUBMIT)
+
+		$send({
+			action : "/webrep/upload_file_webrep___ ",
+			method : POST,
+			data : FORM_TO_SUBMIT,
+			func : function (rrr){
+				var res = JSON.parse(rrr)
+				println(res)
+			}
+		})
+
+	}
+// appendFileArr()
+</script>
+
 </html>
