@@ -1,228 +1,91 @@
 <html>
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-890" lang="en-us">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="../../static/webrepstatic/css/autofill.css">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-890" lang="en-us">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="../../static/webrepstatic/css/autofill.css">
 
-	<link rel="stylesheet" href="../../static/webrepstatic/css/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+		<link rel="stylesheet" href="../../static/webrepstatic/css/style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-	<!-- fontawesomeCDN -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />     
-	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-	<!-- CSS only -->
-	<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
+		<!-- fontawesomeCDN -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />     
+		<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<!-- CSS only -->
+		<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
 
-	<!-- JavaScript Bundle with Popper -->
-	<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
-	<script src="../../static/webrepstatic/js/bootstrap-autocomplete.min.js"></script>
+		<!-- JavaScript Bundle with Popper -->
+		<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
+		<script src="../../static/webrepstatic/js/bootstrap-autocomplete.min.js"></script>
 
-	<script defer src="../../static/js/Brorn.min.js"></script>
+		<script defer src="../../static/js/Brorn.min.js"></script>
 
-	<title>Knowledge Admin</title>
-</head>
-
-<body data-spy="scroll" data-target="#navbar-example2" data-offset="10">
-
-	{% include 'main/navbarpages.html' %}
-
-	{% include 'banners/adminkcbanner.html' %}
-
-	<div class="" style="background-color: #e3ebd5 !important;">
-
-		{% include 'admin/stickyNavbar.html' %}
-
-		{% include 'admin/optionsNavbar.html' %}
-
-		{% include 'admin/searchArea.html' %}
-
-		<!-- MODALS -->
-
-		<!-- Upload MODAL (DOCUMENT)-->
-		{% include 'admin/uploadDocumentModal.html' %}
-		<!-- Upload MODAL (MULTIMEDIA)-->
-		{% include 'admin/uploadMultimediaModal.html' %}
-		<!-- Upload MODAL (PUBLICATION)-->
-		{% include 'admin/uploadPublicationModal.html' %}
-
-		<!-- File Details Modals -->
-		{% include 'admin/fileDetailsModal.html' %}
-
-		<!-- OVERVIEW -->
-		{% include 'admin/contentOverview.html' %}
-
-		<!-- Knowledge Products -->
-		{% include 'admin/contentKnowledgeProduct.html' %}
-
-		<!-- Templates -->
-		{% include 'admin/contentTemplates.html' %}
-
-		<!-- Tools & Guidelines -->
-		{% include 'admin/contentTools&Guidelines.html' %}
-
-		<!-- Documents -->
-		{% include 'admin/contentDocument.html' %}
-<div class="" style="height:10px">
-	
-	
-</div>
-	</div>
-	<script type="text/javascript">
-
-
-// ====================== AUTO FILL ===========================//
-		function _autocomplete(inp, arr,post_container) {
-			var currentFocus;
-			inp.addEventListener("input", function(e) {
-				var a, b, i, val = this.value;
-				// println(a)
-				closeAllLists();
-				if (!val) { return false;}
-				currentFocus = -1;
-				a = document.createElement("DIV");
-				a.setAttribute("id", this.id + "autocomplete-list");
-				a.setAttribute("class", "autocomplete-items");
-				this.parentNode.appendChild(a);
-				for (i = 0; i < arr.length; i++) {
-					var ARRSTRS = arr[i] + ""
-					if (ARRSTRS.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-						b = document.createElement("DIV");
-						b.innerHTML = "<strong>" + ARRSTRS.substr(0, val.length) + "</strong>";
-						b.innerHTML += ARRSTRS.substr(val.length);
-						b.innerHTML += "<input type='hidden' value='" + ARRSTRS + "'>";
-						// println(ARRSTRS)
-						b.addEventListener("click", function(e) {
-							inp.value = this.getElementsByTagName("input")[0].value;
-							// closeAllLists();
-							push_user(this.getElementsByTagName("input")[0].value,post_container,inp)
-						});
-						a.appendChild(b);
-					// if(i >=5){
-					// 	break
-					// }
-					}
-
-				}
-			});
-
-			inp.addEventListener("keydown", function(e) {
-				var x = document.getElementById(this.id + "autocomplete-list");
-				if (x) x = x.getElementsByTagName("div");
-				if (e.keyCode == 40) {
-					currentFocus++;
-					addActive(x);
-			} else if (e.keyCode == 38) { //up
-				currentFocus--;
-				addActive(x);
-			} else if (e.keyCode == 13) {
-				e.preventDefault();
-				if (currentFocus > -1) {
-					if (x) x[currentFocus].click();
+		<title>Knowledge Admin</title>
+		<script type="text/javascript">
+			let onload_funcs = []
+			function BODYLOADDONE(){
+				for (var i = 0; i < onload_funcs.length; i++) {
+					var f = onload_funcs[i]
+					f()
 				}
 			}
-		});
+		</script>
+	</head>
 
-			function addActive(x) {
-				if (!x) return false;
-				removeActive(x);
-				if (currentFocus >= x.length) currentFocus = 0;
-				if (currentFocus < 0) currentFocus = (x.length - 1);
-				x[currentFocus].classList.add("autocomplete-active");
-			}
+	<body data-spy="scroll" data-target="#navbar-example2" data-offset="10" onload="BODYLOADDONE()">
 
-			function removeActive(x) {
-				for (var i = 0; i < x.length; i++) {
-					x[i].classList.remove("autocomplete-active");
-				}
-			}
+		{% include 'main/navbarpages.html' %}
 
-			function closeAllLists(elmnt) {
-				var x = document.getElementsByClassName("autocomplete-items");
-				for (var i = 0; i < x.length; i++) {
-					if (elmnt != x[i] && elmnt != inp) {
-						x[i].parentNode.removeChild(x[i]);
-					}
-				}
-			}
+		{% include 'banners/adminkcbanner.html' %}
 
-			document.addEventListener("click", function (e) {
-				closeAllLists(e.target);
-			});
-		}
+		<div class="" style="background-color: #e3ebd5 !important;">
 
-		let ALL_USERS = [
-			{% for user in users: %}
-			,"{{user['name']}} || {{user['id']}} || {{user['email']}}"
-			{% endfor %}
-			];
-		let ALL_IMP_UNIT_ = [
-			{% for user in users: %}
-			,"{{user['rcu']}}"
-			{% endfor %}
-			];
-		let ALL_IMP_UNIT = [...new Set(ALL_IMP_UNIT_)];
+			{% include 'admin/stickyNavbar.html' %}
 
-	// autocomplete(document.getElementById("myInput"), ALL_USERS); // ROOT of ALL EVIL
+			{% include 'admin/optionsNavbar.html' %}
+
+			{% include 'admin/searchArea.html' %}
+
+			<!-- MODALS -->
+
+			<!-- Upload MODAL (DOCUMENT)-->
+			{% include 'admin/uploadDocumentModal.html' %}
+			<!-- Upload MODAL (MULTIMEDIA)-->
+			{% include 'admin/uploadMultimediaModal.html' %}
+			<!-- Upload MODAL (PUBLICATION)-->
+			{% include 'admin/uploadPublicationModal.html' %}
+
+			<!-- File Details Modals -->
+			{% include 'admin/fileDetailsModal.html' %}
+
+			<!-- OVERVIEW -->
+			{% include 'admin/contentOverview.html' %}
+
+			<!-- Knowledge Products -->
+			{% include 'admin/contentKnowledgeProduct.html' %}
+
+			<!-- Templates -->
+			{% include 'admin/contentTemplates.html' %}
+
+			<!-- Tools & Guidelines -->
+			{% include 'admin/contentTools&Guidelines.html' %}
+
+			<!-- Documents -->
+			{% include 'admin/contentDocument.html' %}
+			<div class="" style="height:10px">
 
 
-		function push_user(args,post_container,inp){
-			inp.value = ""
-			var user_info = args.split("||")
-			email = user_info[2]
-			id = user_info[1]
-			name = user_info[0]
-			document.getElementById(post_container).innerHTML +=(`
-			<div class="user_ls_all row d-flex align-items-center" id="user_ls_`+id+`">
-				<div class="col-1">
-					<span id="ID__">`+id+`</span>
-					<span><i class="fa-regular fa-user"></i></span>
-				</div>
-				<div class="col-8">
-					<span class="" id="NAME__">`+name+`</span>
-					<small class="d-block text-muted fst-italic" id="">`+email+`</small>
-				</div>
-				<div class="col-3" id="">
-					<a class="text-muted fst-italic " type="button" onclick="document.getElementById('user_ls_`+id+`').remove();rem__user(`+id+`)"><small>Remove</small>
-					</a>
-				</div>                                
-			</div>`)
-			// $ID("myInput_doc_users").value = id
-			// var lsuser_ = $ID("myInput_doc_users").value
+			</div>
+		</div>
+		<script type="text/javascript">
 
-			// $ID("myInput_doc_users").value = JSON.parse($ID("myInput_doc_users").value).push(id)
-			// var arr_user = Array.from($ID("myInput_doc_users").value)
-			// arr_user.push(id.replaceAll(" ",""))
-			// // arr_user = arr_user.filter(function(e) { return e !== 'seven' })
-			// $ID("myInput_doc_users").value = arr_user
-			// println(arr_user)
+		</script>
 
-		}
+		{% include 'main/footer.html' %}
 
-		function rem__user(id){
-			println(id)
-		}
+	</body>
 
-		function ALL_USERS_SET(el,post_container){
-			// var arrs = []
-			// for (const [key, value] of Object.entries(ALL_USERS)) {
-			// 	arrs.push(key)
-			// }
-			_autocomplete(el,ALL_USERS,post_container)
-		}
 
-		function ALL_IMP_SET(el,post_container){
-			// var arrs = []
-			// for (const [key, value] of Object.entries(ALL_IMP_UNIT)) {
-			// 	arrs.push(ALL_IMP_UNIT)
-			// }
-			_autocomplete(el,ALL_IMP_UNIT,post_container)
-		}
-	</script>
-
-{% include 'main/footer.html' %}
-
-</body>
 </html>

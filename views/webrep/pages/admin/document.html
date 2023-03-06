@@ -21,14 +21,14 @@
 	<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
 	<script src="../../static/webrepstatic/js/bootstrap-autocomplete.min.js"></script>
 
-	<script defer src="../../static/js/Brorn.min.js"></script>
+	<!-- <script defer src="../../static/js/Brorn.min.js"></script> -->
 
 	<title >Upload Document</title>
 </head>
 
 <body>
-
 	{% include 'main/navbarpages.html' %}
+	{% include 'main/_AutoFILL_JS.html' %}
 	<!-- Back Arrow -->
 	<div class="container text-start mt-5">
 		<a class=" texttheme" href="/rapid/admin/adminKnowledgeCenter.html">
@@ -44,7 +44,7 @@
 
 
 		<div class="">
-			<button class="btn btn-outline-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="submit_doc">Upload &nbsp&nbsp<i class="fa-solid fa-upload"></i></a></button>
+			<button onclick="submit_file_doc('docs')" class="btn btn-outline-success rounded-5" type="submit" id="submit_doc">Upload &nbsp&nbsp<i class="fa-solid fa-upload"></i></a></button>
 		</div>
 	</div>
 
@@ -62,27 +62,27 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-					<button type="button" class="btn btn-primary" onclick="submit_file_document()">Submit</button>
+					<button type="button" class="btn btn-primary" onclick="close_transaction()">Continue</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- Arcticle News -->
+	<!-- Document News -->
 	<div class="container shadow-sm p-3 bg-body rounded">
 		<div class="container row">
 			<div class="col-4 border-end border-light">
 				<form class=" row g-3 needs-validation" id="form_upload_document" novalidate>
 					<div class="col-md-12">
 						<div class="form-floating mb-1 ">
-							<input type="email" class="form-control-plaintext border rounded-3 FORMDATA_DOCUMENT" id="email" placeholder="name@example.com" readonly/>
+							<input value="{{user_data['email']}}" type="email" class="form-control-plaintext border rounded-3" id="email" placeholder="name@example.com" readonly/>
 							<label for="email" class="texttheme fw-bolder small">Email address</label>
 						</div>
 					</div>
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input type="email" class="form-control-plaintext border rounded-3 FORMDATA_DOCUMENT" id="unit" placeholder="name@example.com" readonly>
+								<input value="{{user_data['rcu']}},{{user_data['pcu']}}" type="email" class="form-control-plaintext border rounded-3" id="Unit" placeholder="name@example.com" readonly>
 								<label for="unit" class="texttheme fw-bolder small">Unit</label>
 							</div>
 						</div>
@@ -90,15 +90,15 @@
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input type="email" class="form-control-plaintext border rounded-3 FORMDATA_DOCUMENT" id="designation" placeholder="name@example.com" readonly >
+								<input value="{{user_data['job']}}" type="email" class="form-control-plaintext border rounded-3" id="Designation" placeholder="name@example.com" readonly >
 								<label for="designation" class="texttheme fw-bolder small">Designation</label>
 							</div>
 						</div>
 					</div>
 					<div class="col-12">
 						<div class="form-floating">
-							<select class="form-select FORMDATA_DOCUMENT" id="filetype" aria-label="Floating label select example">
-								<option title="">Accomplishment Report</option>
+							<select class="form-select FORMDATA_DOCUMENT" id="formCategory" aria-label="Floating label select example">
+								<option>Accomplishment Report</option>
 								<option>Bidding Documents</option>
 								<option>Business Plan</option>
 								<option>COA Document</option>
@@ -129,26 +129,26 @@
 								<option>Tutorial</option>
 								<option>Others</option>
 							</select>
-							<label for="filetype" class="texttheme fw-bolder small">Category/Topic</label>
+							<label for="formCategory" class="texttheme fw-bolder small">Category/Topic</label>
 						</div>
 					</div>
 
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1 " id="form_other" style="display:none;">
-								<input type="email" class="form-control FORMDATA_DOCUMENT" id="other" placeholder="name@example.com">
-								<label for="other" class="texttheme fw-bolder small">Other Specify</label>
+								<input type="text" class="form-control FORMDATA_DOCUMENT" id="others" placeholder="name@example.com">
+								<label for="Others" class="texttheme fw-bolder small">Other Specify</label>
 							</div>
 						</div>
 					</div>
 
 					<script type="text/javascript">
-						$(document).on('change', '#filetype', function(e){  
+						$(document).on('change', '#formCategory', function(e){  
 							e.preventDefault();
 							el = $("#form_other");
-							filetype = this.value;
+							formCategory = this.value;
 							console.log(el)
-							if (filetype == "Others") {
+							if (formCategory == "Others") {
 								el.show();
 
 							}
@@ -161,8 +161,8 @@
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input type="date" class="form-control FORMDATA_DOCUMENT" id="date" placeholder="name@example.com">
-								<label for="date" class="texttheme fw-bolder small">Date</label>
+								<input type="date" class="form-control FORMDATA_DOCUMENT" id="Date" placeholder="name@example.com">
+								<label for="date" class="texttheme fw-bolder small">Date approve</label>
 							</div>
 						</div>
 					</div>
@@ -196,7 +196,7 @@
 							</div>
 							<div class="container">
 								<p class="mt-3">People with access</p>
-								<input type="text" id="myInput_doc_users" class="FORMDATA_DOCUMENT">
+								<!-- <input type="text" id="myInput_doc_users" class="FORMDATA_DOCUMENT"> -->
 
 								<!-- Users -->
 								<div id="users_added_ls_doc">
@@ -244,7 +244,7 @@
 					<div class="col-12">
 						<div class=" mb-1">
 							<label for="uploadFile" class="texttheme fw-bolder small">Upload your file</label>
-							<input type="file" class="form-control FORMDATA_DOCUMENT" id="uploadFile" placeholder="name@example.com">
+							<input type="file" class="form-control FORMDATA_DOCUMENT" id="upload" placeholder="name@example.com">
 
 						</div>
 					</div>
@@ -253,9 +253,10 @@
 						<div class="form-floating mb-1">
 							<input type="" class="form-control FORMDATA_DOCUMENT" id="tags" placeholder="name@example.com">
 							<label for="tags" class="texttheme fw-bolder small">Tags/Search Keywords</label>
-
 						</div>
 					</div>
+					<input value="pending" class="FORMDATA_DOCUMENT" id="status" hidden>
+
 				</form>
 				<div class="mt-5">
 
@@ -266,9 +267,53 @@
 
 
 
-<!--  -->
+	<!--  -->
 
-{% include 'main/footer.html' %}
+	{% include 'main/footer.html' %}
 
 </body>
+<script type="text/javascript">
+	function submit_file_doc(upload_type){
+		var FORMDATA_DOC = $CLASS('FORMDATA_DOCUMENT')
+		var dataform = {}
+		for (var i = 0; i < FORMDATA_DOC.length; i++) {
+			dataform[FORMDATA_DOC[i].id] = FORMDATA_DOC[i].value
+		}
+		dataform["upload_type"] = upload_type
+		dataform["uploaded_by"] = {{user_data['id']}}
+		dataform["myInput_doc_users"] = []
+
+		// println(FORM_TO_SUBMIT)
+
+		var id_viewrs = $ID('users_added_ls_doc').getElementsByClassName("ID__")
+		for (var i = 0; i < id_viewrs.length; i++) {
+			// println(id_viewrs[i].innerText)
+			dataform["myInput_doc_users"].push(id_viewrs[i].innerText)
+		}
+
+		println(dataform)
+		var FORM_TO_SUBMIT = $DATA(dataform).appendFileArr($ID('upload'))
+
+		println("====================")
+
+		$send({
+			action : "/webrep/upload_file_webrep___ ",
+			method : POST,
+			data : FORM_TO_SUBMIT,
+			func : function (rrr){
+				var res = JSON.parse(rrr)
+				println(res)
+				$ID("createPostConfirmation").style.display = "block"
+			}
+		})
+
+	}
+
+	function close_transaction(){
+		$ID("createPostConfirmation").style.display = "none"
+		goto('/rapid/admin/adminKnowledgeCenter.html')
+	}
+// appendFileArr()
+</script>
+
 </html>

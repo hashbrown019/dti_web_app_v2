@@ -42,6 +42,20 @@ class _main:
 		print(" * Page Loaded : {}".format(page.lower()))
 		if(page.lower()=="adminKnowledgecenter.html".lower()):
 			if(_main.is_on_session()):
+				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0],upload_file_webrep=_main.get_uploads_docs())
+			else:
+				return redirect("/login?force_url=1")
+		elif(
+			page.lower()=="document.html".lower() or 
+			page.lower()=="multimedia.html".lower() or 
+			page.lower()=="publication.html".lower() or 
+			page.lower()=="about.html".lower() or 
+			page.lower()=="NewsAndStories.html".lower()or 
+			page.lower()=="adminKnowledgeCenter.html".lower()or 
+			page.lower()=="knowledgecenter.html".lower()or 
+			page.lower()=="scope.html".lower()
+			):
+			if(_main.is_on_session()):
 				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
 			else:
 				return redirect("/login?force_url=1")
@@ -58,16 +72,17 @@ class _main:
 				user_data=UDATA,
 				page_data=_main.get_post()
 			)
-
 		_main.moderator(segment,page)
 		return render_template("{}/{}".format(segment,page),is_session =_main.is_on_session())
 	# ==================================================================
 
-
-
 	@app.route("/webrep/article/get_post",methods=["POST","GET"])
 	def get_post():
 		return db.select("SELECT * from `webrep_articles`;")
+
+	@app.route("/webrep/uploads/docs",methods=["POST","GET"])
+	def get_uploads_docs():
+		return db.select("SELECT * from `webrep_uploads` WHERE `upload_type`='docs';")
 
 	@app.route("/webrep/upload_file_webrep",methods=["POST","GET"])
 	def upload_file_webrep():
@@ -98,7 +113,7 @@ class _main:
 		key = [];val = []
 		data["USER_ID"] = session["USER_DATA"][0]['id']
 		# __f = FILE_REQ.save_file_from_request("upload",c.RECORDS+"/objects/webrep/")
-		__f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/")
+		__f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/",False,True)
 		data["upload"] = __f["file_arr_str"]
 		for datum in data:
 			print(datum)
