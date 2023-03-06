@@ -161,7 +161,7 @@ class Filter:
 			_filter = "WHERE 1 "
 		else:
 			session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-			_filter = "WHERE  USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
+			_filter = "WHERE  `uploaded_by` in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
 		return _filter
 
 	def strct_dic(dict_):
