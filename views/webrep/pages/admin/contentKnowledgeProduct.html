@@ -10,13 +10,7 @@
 				<!-- Multimedia -->
 					<div class="container tab-pane fade show active  " id="v-pills-mul" role="tabpanel" aria-labelledby="v-pills-mul-tab" tabindex="0">						 
 						<div class="d-flex align-items-start ">								
-							<div class="nav flex-column nav-pills  me-3 pe-5 mt-5" id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
-								{% for upload_categ in upload_file_webrep %}
-									{% if upload_categ['upload_type']=="mul": %}
-										{% set categ = upload_categ['formCategory'] %}
-										<a class="categ_all_mul text-start nav-link show mb-1" id="v-pills-tab" data-bs-toggle="pill" data-bs-target="#v-pills" type="button" role="tab" aria-controls="v-pills" aria-selected="true" style="" onclick="get_file_cont_mul('{{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}')">{{categ}}</a>
-									{% endif %}
-								{% endfor %}
+							<div id="categ_mul" class="nav flex-column nav-pills  me-3 pe-5 mt-5" id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
 
 							</div>
 							<div class="container tab-content w-100 overflow-auto tab_size" id="v-pills-tabContent">
@@ -44,13 +38,8 @@
 				<!-- Publication -->    
 					<div class="container tab-pane fade overflow-auto" id="v-pills-pub" role="tabpanel" aria-labelledby="v-pills-pub-tab" tabindex="0" style=" height:400px;">
 						<div class="d-flex align-items-start " >								
-							<div class="nav flex-column nav-pills  me-3 pe-5 mt-5" id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
-								{% for upload_categ in upload_file_webrep %}
-									{% if upload_categ['upload_type']=="pub": %}
-										{% set categ = upload_categ['formCategory'] %}
-										<a class="categ_all_pub text-start nav-link show mb-1" id="v-pills-tab" data-bs-toggle="pill" data-bs-target="#v-pills" type="button" role="tab" aria-controls="v-pills" aria-selected="true" style="" onclick="get_file_cont_pub('{{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}')">{{categ}}</a>
-									{% endif %}
-								{% endfor %}
+							<div id="categ_pub" class="nav flex-column nav-pills  me-3 pe-5 mt-5" id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
+								
 							</div>
 
 							<div class="tab-content w-100" id="v-pills-tabContent">
@@ -78,42 +67,74 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		onload_funcs.push(function(){
-			try{
-				$CLASS("categ_all_mul")[0].click()
-			}catch(e){
-				warnprintln(e)
+		onload_funcs.push(
+			function(){
+				var c_doc = [] ; var str_doc = ""
+						{% for upload_categ in upload_file_webrep %}
+							{% if upload_categ['upload_type']=="mul": %}
+								{% set categ = upload_categ['formCategory'] %}
+								c_doc.push("{{categ}}")
+							{% endif %}
+						{% endfor %}
+				c_doc = [...new Set(c_doc)];
+				for (var i = 0; i < c_doc.length; i++) {
+					var c_ = c_doc[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
+					str_doc += (`
+						<a class="categ_all text-start nav-link show mb-1" id="v-pills-tab" data-bs-toggle="pill" data-bs-target="#v-pills" type="button" role="tab" aria-controls="v-pills" aria-selected="true" style="" onclick="get_file_cont('`+c_+`')">`+c_doc[i]+`</a>
+					`)
+				}
+				$ID('categ_mul').innerHTML = str_doc
 			}
+		)
+
+		onload_funcs.push(
+			function(){
+				var c_doc = [] ; var str_doc = ""
+						{% for upload_categ in upload_file_webrep %}
+							{% if upload_categ['upload_type']=="pub": %}
+								{% set categ = upload_categ['formCategory'] %}
+								c_doc.push("{{categ}}")
+							{% endif %}
+						{% endfor %}
+				c_doc = [...new Set(c_doc)];
+				for (var i = 0; i < c_doc.length; i++) {
+					var c_ = c_doc[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
+					str_doc += (`
+						<a class="categ_all text-start nav-link show mb-1" id="v-pills-tab" data-bs-toggle="pill" data-bs-target="#v-pills" type="button" role="tab" aria-controls="v-pills" aria-selected="true" style="" onclick="get_file_cont('`+c_+`')">`+c_doc[i]+`</a>
+					`)
+				}
+				$ID('categ_pub').innerHTML = str_doc
+			}
+		)
+
+		onload_funcs.push(function(){
+			try{$CLASS("categ_all_mul")[0].click()}catch(e){warnprintln(e)}
 		})
 		onload_funcs.push(function(){
-			try{
-				$CLASS("categ_all_pub")[0].click()
-			}catch(e){
-				warnprintln(e)
-			}
+			try{$CLASS("categ_all_pub")[0].click()}catch(e){warnprintln(e)}
 		})
 
 
 		function get_file_cont_mul(clss){
 			var all_files = $CLASS("__FILESMUL__")
 			var selected_categ = $CLASS(clss)
-			// for (var i = all_files.length - 1; i >= 0; i--) {
-			// 	all_files[i].style.display = "none"
-			// }
+			for (var i = all_files.length - 1; i >= 0; i--) {
+				all_files[i].style.display = "none"
+			}
 
-			// for (var i = selected_categ.length - 1; i >= 0; i--) {
-			// 	selected_categ[i].style.display = "block"
-			// }
+			for (var i = selected_categ.length - 1; i >= 0; i--) {
+				selected_categ[i].style.display = "block"
+			}
 		}		
 		function get_file_cont_pub(clss){
 			var all_files = $CLASS("__FILESPUB__")
 			var selected_categ = $CLASS(clss)
-			// for (var i = all_files.length - 1; i >= 0; i--) {
-			// 	all_files[i].style.display = "none"
-			// }
+			for (var i = all_files.length - 1; i >= 0; i--) {
+				all_files[i].style.display = "none"
+			}
 
-			// for (var i = selected_categ.length - 1; i >= 0; i--) {
-			// 	selected_categ[i].style.display = "block"
-			// }
+			for (var i = selected_categ.length - 1; i >= 0; i--) {
+				selected_categ[i].style.display = "block"
+			}
 		}
 	</script>

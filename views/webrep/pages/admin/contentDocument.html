@@ -8,13 +8,8 @@
 
 			<div class="container d-flex align-items-start ">
 				<!-- {{upload_file_webrep}} -->
-				<div class="nav flex-column nav-pills me-3 pe-5 " id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
-					{% for upload_categ in upload_file_webrep %}
-						{% if upload_categ['upload_type']=="docs": %}
-							{% set categ = upload_categ['formCategory'] %}
-							<a class="categ_all text-start nav-link show mb-1" id="v-pills-tab" data-bs-toggle="pill" data-bs-target="#v-pills" type="button" role="tab" aria-controls="v-pills" aria-selected="true" style="" onclick="get_file_cont('{{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}')">{{categ}}</a>
-						{% endif %}
-					{% endfor %}
+				<div id="categ_doc" class="nav flex-column nav-pills me-3 pe-5 " id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
+
 				</div>
 
 				<div class="tab-content w-100" id="v-pills-tabContent">
@@ -44,6 +39,28 @@
 		</div>                              
 	</div>
 	<script type="text/javascript">
+		onload_funcs.push(
+			function(){
+				var c_doc = [] ; var str_doc = ""
+						{% for upload_categ in upload_file_webrep %}
+							{% if upload_categ['upload_type']=="docs": %}
+								{% set categ = upload_categ['formCategory'] %}
+								c_doc.push("{{categ}}")
+							{% endif %}
+						{% endfor %}
+				c_doc = [...new Set(c_doc)];
+				println(c_doc)
+				for (var i = 0; i < c_doc.length; i++) {
+					var c_ = c_doc[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
+					str_doc += (`
+						<a class="categ_all text-start nav-link show mb-1" id="v-pills-tab" data-bs-toggle="pill" data-bs-target="#v-pills" type="button" role="tab" aria-controls="v-pills" aria-selected="true" style="" onclick="get_file_cont('`+c_+`')">`+c_doc[i]+`</a>
+					`)
+				}
+				$ID('categ_doc').innerHTML = str_doc
+			}
+		)
+
+
 		function get_file_cont(clss){
 			var all_files = $CLASS("__FILES__")
 			for (var i = 0; i < all_files.length; i++) {
