@@ -1,69 +1,82 @@
 <!-- File Details Modals -->
-	<div class="modal" id="viewDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-centered">
+<div class="modal" id="viewDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-			<h5 class="modal-title" id="fileTitle">Document</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<h5 class="modal-title" id="fileTitle">Document</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-			
+				<dl class="row">
 
+					<dt class="col-3">File Title:</dt>
+					<dd class="col-8 ">
+						<h5 class="  text-muted" id="title">Loading File Title</h5>
+						<p id="desc" class="fst-italic small text-muted"> Loading description of the file.</p>
+					</dd>
 
-			<dl class="row">
+					<dt class="col-3 mt-2">Upload by:</dt>
+					<dd class="col-8 border-top border-light">
+						<p id="uploadbyname" class="fst-italic small text-muted mt-2">Loading Name</p>
+						<p id="uploadbyemail" class="fst-italic small text-muted">Loading Email</p>
+						<!-- <span class="fst-italic small text-muted">|</span> -->
+						<span id="uploadbyjob" class="fst-italic small text-muted">--</span>
+						<span id="" class="fst-italic small text-muted">|</span>
+						<span id="uploadbyrcu" class="fst-italic small text-muted">--</span>
+					</dd>
 
-				<dt class="col-3">File Title:</dt>
-						<dd class="col-8 ">
-						<h5 class="  text-muted" id="fileName">Example File Title</h5>
-							<p class="fst-italic small text-muted" id="fileuploaderEmail">This is an example description of the file.</p>
-						</dd>
-
-						<dt class="col-3 mt-2">Upload by:</dt>
-						<dd class="col-8 border-top border-light">
-						<p class="fst-italic small text-muted mt-2" id="fileuploaderName">Christian Born</p>
-							<p class="fst-italic small text-muted" id="fileuploaderEmail">christianborn@gmail.com</p>
-							<!-- <span class="fst-italic small text-muted">|</span> -->
-							<span class="fst-italic small text-muted" id="fileuploaderUnit">NPCO</span>
-							<span class="fst-italic small text-muted">|</span>
-							<span class="fst-italic small text-muted" id="fileuploaderDesignation">ISA</span>
-						</dd>
-
-						<dt class="col-3 mt-2">File Details:</dt>
-						<dd class="col-8 border-top border-light">
+					<dt class="col-3 mt-2">File Details:</dt>
+					<dd class="col-8 border-top border-light">
 						
-						<p class="fst-italic small text-muted mt-2" id="fileTopic">Accomplishment Report</p>                             
-							<p class="fst-italic small text-muted mt-2" id="fileFormat">.Pdf</p>
-							<p class="fst-italic small text-muted" id="fileSize">325 mb</p>
-							<p class="fst-italic small text-muted" id="fileuploadDate">22 October 2020</p>
-						</dd>
+						<p class="fst-italic small text-muted mt-2" id="fileTopic">Loading Details</p>                             
+						<p class="fst-italic small text-muted mt-2" id="fileName">Loading Filename</p>
+						<p class="fst-italic small text-muted" id="fileuploadDate">22 October 2020</p>
+					</dd>
 
-						<dt class="col-3 mt-2">People with access:</dt>
-						<dd class="col-8 border-top border-light">
+					<!-- <dt class="col-3 mt-2">People with access:</dt>
+					<dd class="col-8 border-top border-light">
 						
 						<span class="fst-italic small text-muted mt-2" id="PWA">cjmontanez@gmail.com</span>
 						<span class="fst-italic small text-muted">|</span>
-							<span class="fst-italic small text-muted" id="fileuploaderUnit">NPCO</span>
-							<br>
-						<span class="fst-italic small text-muted mt-2" id="PWA">jaybalino@gmail.com</span>
-						<span class="fst-italic small text-muted">|</span>
-							<span class="fst-italic small text-muted" id="fileuploaderUnit">NPCO</span>
+						<span class="fst-italic small text-muted" id="fileuploaderUnit">NPCO</span>
+						<br>
 
-						</dd>
+					</dd> -->
 
-					</dl>
+				</dl>
 			</div>
 			<div class="modal-footer">
 
 
-			<button type="button" class="btn btn-success"  data-bs-dismiss="modal" data-bs-target="#uploadPublication">Edit</button>
-			<button type="button" class="btn btn-danger">Delete</button>
-			<button type="button" class="btn btn-primary">Download</button>
+				<button type="button" class="btn btn-success"  data-bs-dismiss="modal" data-bs-target="#uploadPublication">Edit</button>
+				<button type="button" class="btn btn-danger">Delete</button>
+				<button type="button" class="btn btn-primary">Download</button>
 			</div>
 		</div>
-		</div>
 	</div>
-	<script type="text/javascript">
-		function get_file__det(file_ids){
-			println(file_ids)
-		}
-	</script>
+</div>
+<script type="text/javascript">
+	function get_file__det(file_ids){
+		println(file_ids)
+		$send({
+			action : "/webrep/uploads/docs_item",
+			method : POST,
+			data : $DATA({'ids':file_ids}),
+			func : function(r){
+				res = JSON.parse(r)[0]
+				println(res)
+				$ID("title").innerHTML = res["Title"]
+				$ID("desc").innerHTML = res["Description"]
+				$ID("fileuploadDate").innerHTML = res["date_posted"]
+				$ID("fileName").innerHTML = res["upload"]
+				$ID("fileTopic").innerHTML = res["formCategory"]
+
+				$ID("uploadbyname").innerHTML = res["uploaded_by"]['name']
+				$ID("uploadbyemail").innerHTML = res["uploaded_by"]['email']
+				$ID("uploadbyjob").innerHTML = res["uploaded_by"]['job']
+				$ID("uploadbyrcu").innerHTML = res["uploaded_by"]['rcu'] +" | "+ res["uploaded_by"]['pcu']
+
+			}
+		})
+	}
+</script>

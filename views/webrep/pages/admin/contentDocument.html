@@ -19,7 +19,7 @@
 								{% if upload_['upload_type']=="docs": %}
 									{% set categ = upload_['formCategory'] %}
 									{% set id_ = upload_['id'] %}
-									<div class="__FILES__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}">
+									<div class="__FILESDOCS__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}">
 										<div class="card card_size">
 											<div class="card-body">
 												<h5 class="card-title">{{upload_['Title']}}</h5>
@@ -49,7 +49,6 @@
 							{% endif %}
 						{% endfor %}
 				c_doc = [...new Set(c_doc)];
-				println(c_doc)
 				for (var i = 0; i < c_doc.length; i++) {
 					var c_ = c_doc[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
 					str_doc += (`
@@ -60,24 +59,12 @@
 			}
 		)
 
-
 		function get_file_cont(clss){
-			var all_files = $CLASS("__FILES__")
-			for (var i = 0; i < all_files.length; i++) {
-				all_files[i].style.display = "none"
-			}
-			var selected_categ = $CLASS(clss)
-			for (var i = 0; i < selected_categ.length; i++) {
-				selected_categ[i].style.display = "block"
-			}
+			var all_files = $CLASS("__FILESDOCS__");var selected_categ = $CLASS(clss)
+			for (var i = 0; i < all_files.length; i++) {all_files[i].style.display = "none"}
+			for (var i = 0; i < selected_categ.length; i++) {selected_categ[i].style.display = "block"}
 		}
-		onload_funcs.push(function(){
-			try{
-				$CLASS("categ_all")[0].click()
-			}catch(e){
-				warnprintln(e)
-			}
-		})
+		onload_funcs.push(function(){try{$CLASS("categ_all")[0].click()}catch(e){warnprintln(e)}})
 		// $CLASS("categ_all")[0].click()
 
 

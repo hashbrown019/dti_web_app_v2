@@ -85,6 +85,14 @@ class _main:
 	def get_uploads_docs():
 		return db.select("SELECT * from `webrep_uploads`;")
 
+	@app.route("/webrep/uploads/docs_item",methods=["POST","GET"])
+	def get_uploads_docs_item():
+		ids = request.form['ids']
+		file = db.select("SELECT * from `webrep_uploads`WHERE `id`='{}';".format(ids))
+		uploaded_by = db.select("SELECT * from `users`WHERE `id`='{}';".format(file[0]['uploaded_by']))
+		file[0]['uploaded_by'] = uploaded_by[0]
+		return file
+
 	@app.route("/webrep/upload_file_webrep",methods=["POST","GET"])
 	def upload_file_webrep():
 		from datetime import date, datetime
