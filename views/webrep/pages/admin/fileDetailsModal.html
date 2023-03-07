@@ -8,7 +8,7 @@
 			</div>
 			<div class="modal-body">
 				<dl class="row">
-
+					<input id="file_id" name="" hidden>
 					<dt class="col-3">File Title:</dt>
 					<dd class="col-8 ">
 						<h5 class="  text-muted" id="title">Loading File Title</h5>
@@ -76,7 +76,7 @@
       </div>
       <div class="px-2 pb-3 d-flex justify-content-end ">
         <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">cancel</button>
-        <button type="button" class="btn btn-primary me-2">Continue</button>
+        <button type="button" class="btn btn-primary me-2" onclick="download_file()">Continue</button>
       </div>
     </div>
   </div>
@@ -97,7 +97,6 @@
 				$ID("fileuploadDate").innerHTML = res["date_posted"]
 				$ID("fileName").innerHTML = res["upload"]
 				$ID("fileTopic").innerHTML = res["formCategory"]
-
 				$ID("uploadbyname").innerHTML = res["uploaded_by"]['name']
 				$ID("uploadbyemail").innerHTML = res["uploaded_by"]['email']
 				$ID("uploadbyjob").innerHTML = res["uploaded_by"]['job']
@@ -105,5 +104,31 @@
 
 			}
 		})
+	}
+
+	function download_file(){
+		var fileName = $ID("fileName").innerHTML 
+		var pass = $ID("inputPassword2").value 
+
+		$send({
+			action : "/webrep/check_pass",
+			method : POST,
+			data : $DATA({
+				"fileName":fileName,
+				"pass":pass,
+			}),
+			func : function (r){
+				var res = JSON.parse(r)
+				println(res)
+			}
+		})
+	}
+
+	function download_excel(fff){
+		let a= document.createElement('a');
+		a.target= '_blank';
+		a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");
+		a.click();
+		get_notif()
 	}
 </script>

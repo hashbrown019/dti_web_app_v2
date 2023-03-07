@@ -44,6 +44,7 @@ class _main:
 		password = request.form['password']
 		log_res = rapid_mysql.select("SELECT * from `users` WHERE `username` = '{}' AND `password`='{}';".format(username,password))
 		if(len(log_res)!=0):
+			session["USER_DATA_ADMIN_"] = log_res
 			log_res[0]['password'] = "********";
 			session["USER_DATA"] = log_res
 			return jsonify({"success":True,"user":session["USER_DATA"]});

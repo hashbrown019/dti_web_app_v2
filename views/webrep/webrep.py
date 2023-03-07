@@ -77,9 +77,22 @@ class _main:
 		return render_template("{}/{}".format(segment,page),is_session =_main.is_on_session())
 	# ==================================================================
 
+	@app.route("/webrep/check_pass",methods=["POST","GET"])
+	def check_pass():
+		print(request.form["pass"]+" == "+session["USER_DATA"][0]["password"])
+		if(request.form["pass"]==session["USER_DATA_ADMIN_"][0]["password"]):
+			return {"status":"success","dl_path":"/webrep/upload/get_file_download/{}".format(request.form["fileName"])}
+		else:
+			return {"status":"failed","dl_path":""}
+
+	@app.route("/webrep/upload/get_file_download",methods=["POST","GET"])
+	def get_file_download():
+		return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
+
 	@app.route("/webrep/article/get_post",methods=["POST","GET"])
 	def get_post():
 		return db.select("SELECT * from `webrep_articles`;")
+		# return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
 
 	@app.route("/webrep/uploads/docs",methods=["POST","GET"])
 	def get_uploads_docs():
