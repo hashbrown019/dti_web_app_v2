@@ -67,7 +67,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		onload_funcs.push(
+		$onload(
 			function(){
 				var c_doc = [] ; var str_doc = ""
 						{% for upload_categ in upload_file_webrep %}
@@ -86,7 +86,7 @@
 			}
 		)
 
-		onload_funcs.push(
+		$onload(
 			function(){
 				var c_doc = [] ; var str_doc = ""
 						{% for upload_categ in upload_file_webrep %}
@@ -105,8 +105,8 @@
 			}
 		)
 
-		onload_funcs.push(function(){try{$CLASS("categ_all_mul")[0].click()}catch(e){warnprintln(e)}})
-		onload_funcs.push(function(){try{$CLASS("categ_all_pub")[0].click()}catch(e){warnprintln(e)}})
+		$onload(function(){try{$CLASS("categ_all_mul")[0].click()}catch(e){warnprintln(e)}})
+		$onload(function(){try{$CLASS("categ_all_pub")[0].click()}catch(e){warnprintln(e)}})
 
 		function get_file_cont_mul(clss){
 			var all_files = $CLASS("__FILESMUL__");var selected_categ = $CLASS(clss)
