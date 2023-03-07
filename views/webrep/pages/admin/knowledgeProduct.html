@@ -3,7 +3,7 @@
 		<p class=" container display-3 " style="color: #1F4F5A !important;">Knowledge Products</p>
 		<div class=" container d-flex ">
 			<div class="nav container flex-row nav-pills pe-5 " id="v-pills-tab" role="tablist ">					
-				<a class=" nav-link rounded-pill show active me-2 " id="v-pills-mul-tab" data-bs-toggle="pill" data-bs-target="#v-pills-mul" type="button" role="tab" aria-controls="v-pills-mul" aria-selected="true" style="">Multimedia</a>
+				<a class=" nav-link rounded-pill show active me-2 " id="v-pills-mul-tab" data-bs-toggle="pill" data-bs-target="#v-pills-mul" type="button" role="tab" aria-controls="v-pills-mul" aria-selected="true" style="">ssssMultimedia</a>
 				<a class=" nav-link rounded-pill me-2 " id="v-pills-pub-tab" data-bs-toggle="pill" data-bs-target="#v-pills-pub" type="button" role="tab" aria-controls="v-pills-pub" aria-selected="false">Publications</a>
 					
 				<div class="tab-content w-100" id="v-pills-tabContent">
@@ -11,14 +11,19 @@
 					<div class="container tab-pane fade show active  " id="v-pills-mul" role="tabpanel" aria-labelledby="v-pills-mul-tab" tabindex="0">						 
 						<div class="d-flex align-items-start ">								
 							<div class="nav flex-column nav-pills  me-3 pe-5 mt-5" id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
-								<a class="text-start nav-link rounded-pill active mb-2" id="v-pills-aud-tab" data-bs-toggle="pill" data-bs-target="#v-pills-aud" type="button" role="tab" aria-controls="v-pills-aud" aria-selected="true" style="">Audio</a>
-								<a class="text-start nav-link rounded-pill  mb-2" id="v-pills-photos-tab" data-bs-toggle="pill" data-bs-target="#v-pills-photos" type="button" role="tab" aria-controls="v-pills-photos" aria-selected="false" style="">Photos</a>
-								<a class="text-start nav-link rounded-pill  mb-2" id="v-pills-videos-tab" data-bs-toggle="pill" data-bs-target="#v-pills-videos" type="button" role="tab" aria-controls="v-pills-videos" aria-selected="false" style="">Videos</a>
-								<a class="text-start nav-link rounded-pill  mb-2" id="v-pills-info-tab" data-bs-toggle="pill" data-bs-target="#v-pills-info" type="button" role="tab" aria-controls="v-pills-info" aria-selected="false" style="">Infographics</a>
-								<a class="text-start nav-link rounded-pill  mb-2" id="v-pills-int-tab" data-bs-toggle="pill" data-bs-target="#v-pills-int" type="button" role="tab" aria-controls="v-pills-int" aria-selected="false" style="">Interviews</a>
+
+
+								{% for upload_categ in upload_file_webrep %}
+									{% if upload_categ['upload_type']=="mul": %}
+										{% set categ = upload_categ['formCategory'] %}
+										<a class="categ_all text-start nav-link show mb-1" id="v-pills-tab" data-bs-toggle="pill" data-bs-target="#v-pills" type="button" role="tab" aria-controls="v-pills" aria-selected="true" style="" onclick="get_file_cont('{{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}')">{{categ}}</a>
+									{% endif %}
+								{% endfor %}
+
 							</div>
 							<div class="container tab-content w-100 overflow-auto tab_size" id="v-pills-tabContent">
-								<div class="tab-pane fade show active mt-5" id="v-pills-aud" role="tabpanel" aria-labelledby="v-pills-aud-tab" tabindex="0">
+
+								<div class="tab-pane fade show active mt-5" id="v-pills" role="tabpanel" aria-labelledby="v-pills-aud-tab" tabindex="0">
 									<div class="row mt-5" >
 										<div class="col-sm-6 col-lg-4 mb-3">
 											<div class="card card_size">
@@ -33,66 +38,6 @@
 									</div>
 								</div>
 
-								<div class="tab-pane fade  mt-5" id="v-pills-photos" role="tabpanel" aria-labelledby="v-pills-photos-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title"> Photos Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>	
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-videos" role="tabpanel" aria-labelledby="v-pills-videos-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title"> Videos Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-info" role="tabpanel" aria-labelledby="v-pills-info-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title"> Infographics Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-int" role="tabpanel" aria-labelledby="v-pills-int-tab" tabindex="0">
-									<div class="row mt-5" >
-							
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title"> Interviews Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-								 </div>
 							</div>
 						</div>
 					</div>
@@ -102,20 +47,10 @@
 						<div class="d-flex align-items-start " >								
 							<div class="nav flex-column nav-pills  me-3 pe-5 mt-5" id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
 									<a class="text-start nav-link  active mb-2" id="v-pills-SFF-tab" data-bs-toggle="pill" data-bs-target="#v-pills-SFF" type="button" role="tab" aria-controls="v-pills-SFF" aria-selected="true" style="">Stories From The Field</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-LL-tab" data-bs-toggle="pill" data-bs-target="#v-pills-LL" type="button" role="tab" aria-controls="v-pills-LL" aria-selected="false" style="">Lesson Learned</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-PB-tab" data-bs-toggle="pill" data-bs-target="#v-pills-PB" type="button" role="tab" aria-controls="v-pills-PB" aria-selected="false" style="">Project Briefs</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-RAS-tab" data-bs-toggle="pill" data-bs-target="#v-pills-RAS" type="button" role="tab" aria-controls="v-pills-RAS" aria-selected="false" style="">Report And Studies</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-TG-tab" data-bs-toggle="pill" data-bs-target="#v-pills-TG" type="button" role="tab" aria-controls="v-pills-TG" aria-selected="false" style="">Technical Guidelines</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-WP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-WP" type="button" role="tab" aria-controls="v-pills-WP" aria-selected="false" style="">Working Papers</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-HTDN-tab" data-bs-toggle="pill" data-bs-target="#v-pills-HTDN" type="button" role="tab" aria-controls="v-pills-HTDN" aria-selected="false" style="">How-To-DO-Notes</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-research-tab" data-bs-toggle="pill" data-bs-target="#v-pills-research" type="button" role="tab" aria-controls="v-pills-research" aria-selected="false" style="">Research</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-VCG-tab" data-bs-toggle="pill" data-bs-target="#v-pills-VCG" type="button" role="tab" aria-controls="v-pills-VCG" aria-selected="false" style="">Value Chain Governance</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-ART-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ART" type="button" role="tab" aria-controls="v-pills-ART" aria-selected="false" style="">Articles (news/magazine)</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-NEWSLET-tab" data-bs-toggle="pill" data-bs-target="#v-pills-NEWSLET" type="button" role="tab" aria-controls="v-pills-NEWSLET" aria-selected="false" style="">Newsletters</a>
-									<a class="text-start nav-link   mb-2" id="v-pills-ES-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ES" type="button" role="tab" aria-controls="v-pills-ES" aria-selected="false" style="">External Sources</a>
 							</div>
 
 							<div class="tab-content w-100" id="v-pills-tabContent">
+
 								<div class="tab-pane fade show active mt-5" id="v-pills-SFF" role="tabpanel" aria-labelledby="v-pills-SFF-tab" tabindex="0">
 									<div class="row mt-5" >								
 										<div class="col-sm-6 col-lg-4 mb-3">
@@ -131,170 +66,6 @@
 									</div>
 								</div>
 
-								<div class="tab-pane fade  mt-5" id="v-pills-LL" role="tabpanel" aria-labelledby="v-pills-LL-tab" tabindex="0">
-									<div class="row mt-5" >							
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>	
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-PB" role="tabpanel" aria-labelledby="v-pills-PB-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>	
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-RAS" role="tabpanel" aria-labelledby="v-pills-RAS-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>	
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-TG" role="tabpanel" aria-labelledby="v-pills-TG-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>		
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-WP" role="tabpanel" aria-labelledby="v-pills-WP-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>	
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-HTDN" role="tabpanel" aria-labelledby="v-pills-HTDN-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>															
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-research" role="tabpanel" aria-labelledby="v-pills-research-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>	
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-VCG" role="tabpanel" aria-labelledby="v-pills-VCG-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>	
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-ART" role="tabpanel" aria-labelledby="v-pills-ART-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>	
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-NEWSLET" role="tabpanel" aria-labelledby="v-pills-NEWSLET-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane fade  mt-5" id="v-pills-ES" role="tabpanel" aria-labelledby="v-pills-ES-tab" tabindex="0">
-									<div class="row mt-5" >								
-										<div class="col-sm-6 col-lg-4 mb-3">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">  Example file</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>					

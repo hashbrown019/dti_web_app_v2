@@ -29,10 +29,10 @@ class _main:
 	@app.route("/hi_there",methods=["POST","GET"])
 	def hi_there():
 		return render_template("home/home.html")
-
+ 
 	@app.route("/rapid/<_>",methods=["POST","GET"])
 	def home_(_):
-		if(_!="home/home.html"):
+		if(_!="home/home.html"): 
 			return _main._404(404)
 		return render_template("home/home.html")
 	# ===========================================================/
@@ -62,7 +62,6 @@ class _main:
 			else:
 				return redirect("/login?force_url=1")
 		elif(page.lower()=="newsandstories.html".lower() or page.lower()=="home.html".lower()):
-			
 			if("USER_DATA" in session):
 				UDATA = session["USER_DATA"][0]
 			else:
@@ -84,7 +83,7 @@ class _main:
 
 	@app.route("/webrep/uploads/docs",methods=["POST","GET"])
 	def get_uploads_docs():
-		return db.select("SELECT * from `webrep_uploads` WHERE `upload_type`='docs';")
+		return db.select("SELECT * from `webrep_uploads`;")
 
 	@app.route("/webrep/upload_file_webrep",methods=["POST","GET"])
 	def upload_file_webrep():
