@@ -39,15 +39,15 @@
 		</div>                              
 	</div>
 	<script type="text/javascript">
-		onload_funcs.push(
+		$onload(
 			function(){
 				var c_doc = [] ; var str_doc = ""
-						{% for upload_categ in upload_file_webrep %}
-							{% if upload_categ['upload_type']=="docs": %}
-								{% set categ = upload_categ['formCategory'] %}
-								c_doc.push("{{categ}}")
-							{% endif %}
-						{% endfor %}
+				{% for upload_categ in upload_file_webrep %}
+					{% if upload_categ['upload_type']=="docs": %}
+						{% set categ = upload_categ['formCategory'] %}
+						c_doc.push("{{categ}}")
+					{% endif %}
+				{% endfor %}
 				c_doc = [...new Set(c_doc)];
 				for (var i = 0; i < c_doc.length; i++) {
 					var c_ = c_doc[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
@@ -56,7 +56,8 @@
 					`)
 				}
 				$ID('categ_doc').innerHTML = str_doc
-			}
+			},
+			function(){try{$CLASS("categ_all")[0].click()}catch(e){warnprintln(e)}}
 		)
 
 		function get_file_cont(clss){
@@ -64,7 +65,6 @@
 			for (var i = 0; i < all_files.length; i++) {all_files[i].style.display = "none"}
 			for (var i = 0; i < selected_categ.length; i++) {selected_categ[i].style.display = "block"}
 		}
-		onload_funcs.push(function(){try{$CLASS("categ_all")[0].click()}catch(e){warnprintln(e)}})
 		// $CLASS("categ_all")[0].click()
 
 

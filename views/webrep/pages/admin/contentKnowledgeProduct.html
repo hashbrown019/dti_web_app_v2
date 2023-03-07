@@ -83,10 +83,7 @@
 					`)
 				}
 				$ID('categ_mul').innerHTML = str_doc
-			}
-		)
-
-		$onload(
+			},
 			function(){
 				var c_doc = [] ; var str_doc = ""
 						{% for upload_categ in upload_file_webrep %}
@@ -102,11 +99,10 @@
 					`)
 				}
 				$ID('categ_pub').innerHTML = str_doc
-			}
+			},
+			function(){try{$CLASS("categ_all_mul")[0].click()}catch(e){warnprintln(e)}},
+			function(){try{$CLASS("categ_all_pub")[0].click()}catch(e){warnprintln(e)}},
 		)
-
-		$onload(function(){try{$CLASS("categ_all_mul")[0].click()}catch(e){warnprintln(e)}})
-		$onload(function(){try{$CLASS("categ_all_pub")[0].click()}catch(e){warnprintln(e)}})
 
 		function get_file_cont_mul(clss){
 			var all_files = $CLASS("__FILESMUL__");var selected_categ = $CLASS(clss)
