@@ -10,6 +10,7 @@ from views.webrep  import webrep
 from views.feature_0  import feature_0
 from views.psalm  import bp_app as psalm
 from views.doofen  import bp_app as doofen
+from views.fund_tracker  import bp_app as fund_tracker
 
 from modules.public_vars import public_vars
 from controllers.inbound import inbound
@@ -34,6 +35,7 @@ app.register_blueprint(feature_0.app)
 app.register_blueprint(webrep.app)
 app.register_blueprint(psalm.app)
 app.register_blueprint(doofen.app)
+app.register_blueprint(fund_tracker.app)
 
 
 @app.route("/")

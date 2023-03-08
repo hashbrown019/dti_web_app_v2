@@ -1,0 +1,134 @@
+<table class="display" id="table_id" style="width:100%">
+	<thead class="x-rapid-teal-heavy" style="width:100%">
+		<tr class="">
+			<th>
+				Item ID<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
+			</th>
+			<th>
+				Particulars<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
+			</th>
+			<th>
+				Name of the Payee/ Contractor, Supplier, Service Provider<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="2" />
+			</th>
+			<th>
+				Output Description<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index=3 />
+			</th>
+			<th>
+				IFAD Fund Source<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="4" />
+			</th>
+		</tr>
+	</thead>
+	<tbody id="list_farmers" style="">
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	var init_counter = 0
+	let TABLE
+
+	$onload(
+		showing_table_ls_ft_main
+	)
+
+	function showing_table_ls_ft_main(){
+		SPINNER_LOADER.show()
+		$send({
+			action : "/fundtracker/get_entries_main",
+			method : POST,
+			// a_sync : false,
+			func : function (rest){
+				// println(" -- Getting List Farmers Done")
+				res = JSON.parse(rest)
+				create_table(res)
+				SPINNER_LOADER.hide()
+			},
+			err : function(res){println(res)},
+			progress : function(e){
+				// var response_length = parseFloat(headerMap(e)['total'])
+				var response_length = parseFloat(e.total)
+				var response_loaded = parseFloat(e.loaded)
+				var percent_  = (response_loaded / response_length) * 100;
+				var percent_rounded = Math.round(percent_ * 100) / 100
+				SPINNER_LOADER.loading(Math.round(percent_))
+				SPINNER_LOADER.message(`
+					<span>
+						Gathering 
+						<b>`+Math.round(percent_)+`%</b><br>
+						<span class="x-small">
+							[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+							<i>`+(response_length-response_loaded)+` bytes remaining</i>
+						</span>
+					</span>
+				`);
+			}
+		})
+		// TABLE.ajax.url('/feature_0/filter_list_farmers')
+		// TABLE.ajax.reload()
+	}
+
+
+	function create_table (data_){
+		println(" -- Creating Data Table")
+		TABLE = new DataTable('#table_id', {
+			"scrollY":'60vh',
+			"scrollX":true,
+			"data" : data_
+		});
+		// TABLE.load(data_)
+		// TABLE.ajax.reload()
+		set_search_field()
+	}
+
+	function set_search_field(){
+		// $('#table_id thead th').each( function (i) {
+		// 	var title = $('#table_id thead th').eq( $(this).index() ).text();
+		// 	println(i)
+		// 	$(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
+		// } );
+
+		$(TABLE.table().container() ).on('keyup', 'thead input', function () {
+			TABLE
+				.column( $(this).data('index') )
+				.search( this.value )
+				.draw();
+		} );
+		$('#table_id tbody').on('mousedown', 'tr', function () {
+			var data = TABLE.row(this).data();
+			show_ind_edit( data[0] );
+			
+		})
+
+	}
+	function show_ind_edit(ids){
+		show_modal_entry()
+		$send({
+			action : "/fundtracker/get_entries_main_ind",
+			method : POST,
+			data : $DATA({"id":ids}),
+			func : function(r){
+				var resp = JSON.parse(r)[0]
+				var form_data_ft_edit = $CLASS("form_data_ft")
+				println(resp)
+				for (var i = 0; i < form_data_ft_edit.length; i++) {
+					var kk = form_data_ft_edit[i].id
+					form_data_ft_edit[i].value = resp[kk]
+				}
+
+				// for(key in resp){
+				// 	try{
+				// 		$CLASS("form_data_ft").getElementById(key).value = resp[key]
+				// 	}
+				// 	catch(e){
+				// 		warnprintln(e)
+				// 	}
+				// }
+			}
+		})
+		// showing_table_ls_ft_main()
+	}
+</script>
