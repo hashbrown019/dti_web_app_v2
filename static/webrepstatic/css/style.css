@@ -27,9 +27,23 @@ bgbody == e3ebd5
 	background: #1F4F5A; 
 }
 
+/*Text*/
+
+.mytext-truncate {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  line-clamp: 3; /* Add this line */
+}
+
 /*News Font*/
-
-
 
 .texttheme{
 	color: #1F4F5A;
@@ -205,6 +219,11 @@ height: 100%;
 
 .c-img{
 	height: 800px;
+	object-fit: cover;
+	filter: brightness(0.5);
+}
+.c-img-footer{
+	height: 500px;
 	object-fit: cover;
 	filter: brightness(0.5);
 }
@@ -467,9 +486,14 @@ height: 100%;
 
 /*Tooltip*/
 
-.custom-tooltip {
-  --bs-tooltip-bg: var(--bs-primary);
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
+
+/* Tooltip text */
 
 
 
