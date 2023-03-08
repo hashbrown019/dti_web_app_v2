@@ -1,4 +1,4 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/dcf_base.html' %}
 {% set active_page = "form4" %}
 {% set forms = "forms" %}
 {% block title %} Dashboard {% endblock title %}
@@ -7,7 +7,8 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-<form action="/insert" method="POST">
+<form action="/insert_form4" method="POST">
+	{% include "includes/sweetalert.html" %}
 	<div class="x-col l1 " >
 		&nbsp;
 	</div>
@@ -258,8 +259,13 @@
 					</div>
 				</div>       
 							      
-
+		
+				<p class="x-right">
+					<input class="x-blue " id="organic_button_submit"  type="submit">
+					</p>
+			
 		</div>
+
 </form>
     
 		{% endblock content %}
