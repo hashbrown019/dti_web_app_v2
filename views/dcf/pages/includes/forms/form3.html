@@ -1,9 +1,11 @@
 {% extends 'layouts/dcf_base.html' %}
-{% set active_page = "form3" %}
+{% set active_page = "form1" %}
 {% set forms = "forms" %}
 {% block title %} Dashboard {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
@@ -282,6 +284,7 @@
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
+<script src="https://unpkg.com/libphonenumber-js/bundle/libphonenumber-js.min.js"></script>
 <script>
 		window.intlTelInputGlobals.defaultCountry = "PH";
 	  // Initialize the input field
@@ -297,6 +300,9 @@
 		}); 
 	});
 </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 {% block javascripts %}
 
 {% endblock javascripts %}

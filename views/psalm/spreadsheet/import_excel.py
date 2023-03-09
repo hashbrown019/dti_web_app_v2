@@ -15,13 +15,16 @@ def importcsv(request):
     today = str(datetime.today()).replace("-","").replace(" ","").replace(":","").replace(".","")
     uploader = session["USER_DATA"][0]["id"]
     if request.method == "POST":
-        files = request.files
-        for file in files:
-            f = files[file]
-            global UPLOAD_NAME
-            UPLOAD_NAME = str(uploader)+"#"+str(today)+"#"+secure_filename(f.filename)
-            f.save(os.path.join(c.RECORDS+"/objects/spreadsheets_c/queued/",UPLOAD_NAME ))
-            excel_upload_open(os.path.join(c.RECORDS+"/objects/spreadsheets_c/queued/",UPLOAD_NAME ))
+        try:
+            files = request.files
+            for file in files:
+                f = files[file]
+                global UPLOAD_NAME
+                UPLOAD_NAME = str(uploader)+"#"+str(today)+"#"+secure_filename(f.filename)
+                f.save(os.path.join(c.RECORDS+"/objects/spreadsheets_c/queued/",UPLOAD_NAME ))
+                excel_upload_open(os.path.join(c.RECORDS+"/objects/spreadsheets_c/queued/",UPLOAD_NAME ))
+        except IndexError:
+            flash(f"Invalid file template!", "error")
             
             
     return redirect("/spreadsheet")
