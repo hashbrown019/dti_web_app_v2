@@ -29,53 +29,13 @@ def dcf_dashboard():
 def dcf_forms():
     return redirect("/dcf_forms")
 
-@app.route('/form1')
-def form1():
-    return render_template('includes/forms/form1.html',user_data=session["USER_DATA"][0])
+@app.route('/dcf/<form>')
+def form1(form):
+    return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0])
 
-@app.route('/form2')
-def form2():
-    return render_template('includes/forms/form2.html',user_data=session["USER_DATA"][0])
-
-@app.route('/form3')
-def form3():
-    return render_template('includes/forms/form3.html',user_data=session["USER_DATA"][0])
-
-@app.route('/form4')
-def form4():
-    return render_template('includes/forms/form4.html',user_data=session["USER_DATA"][0])
-
-@app.route('/form5')
-def form5():
-    return render_template('includes/forms/form5.html',user_data=session["USER_DATA"][0])
-
-@app.route('/form6')
-def form6():
-    return redirect('form6.html')
-
-@app.route('/form7')
-def form7():
-    return redirect('form7.html')
-
-@app.route('/form8')
-def form8():
-    return redirect('form8.html')
-
-@app.route('/form9')
-def form9():
-    return redirect('form9.html')
-
-@app.route('/form10')
-def form10():
-    return redirect('form10.html')
-
-@app.route('/form11')
-def form11():
-    return redirect('form11.html')
-
-@app.route('/form12')
-def form12():
-    return redirect('form12.html')
+@app.route('/dcf_spreadsheet')
+def dcf_spreadsheet():
+    return render_template("dcf_spreadsheet.html",user_data=session["USER_DATA"][0])
 
 @app.route('/insert_form4', methods = ['POST'])
 def insert_form4():
