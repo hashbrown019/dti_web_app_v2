@@ -11,6 +11,7 @@ from views.dcf.form_insert import insert_form4 as insertData4
 from views.dcf.form_insert import insert_form5 as insertData5
 from views.dcf.form_insert import insert_form1 as insertData1
 from views.dcf.form_insert import insert_form3 as insertData3
+from views.dcf.form_insert import insert_form2 as insertData2
 import Configurations as c 
 from modules.Connections import mysql
 
@@ -34,7 +35,7 @@ def form1():
 
 @app.route('/form2')
 def form2():
-    return render_template('form2.html')
+    return render_template('includes/forms/form2.html',user_data=session["USER_DATA"][0])
 
 @app.route('/form3')
 def form3():
@@ -96,6 +97,11 @@ def insert_form3():
     insertData3.insert_form3(request)
     return redirect("/form3")
 
+
+@app.route('/insert_form2', methods = ['POST'])
+def insert_form2():
+    insertData2.insert_form2(request)
+    return redirect("/form2")
 
 # if __name__ == "__main__":
 #     app.run(debug=True)
