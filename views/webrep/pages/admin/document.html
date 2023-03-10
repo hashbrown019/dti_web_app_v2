@@ -45,7 +45,9 @@
 
 		<div class="">
 			<button onclick="submit_file_doc('docs')" class="btn btn-outline-success rounded-5" type="submit" id="submit_doc">Upload &nbsp&nbsp<i class="fa-solid fa-upload"></i></a></button>
+
 		</div>
+
 	</div>
 
 	<!-- Document Confirmation modal -->
@@ -62,7 +64,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-					<button type="button" class="btn btn-primary" onclick="close_transaction()">Continue</button>
+					<button type="submit" class="btn btn-primary" onclick="close_transaction()">Continue</button>
 				</div>
 			</div>
 		</div>
@@ -72,17 +74,17 @@
 	<div class="container shadow-sm p-3 bg-body rounded">
 		<div class="container row">
 			<div class="col-4 border-end border-light">
-				<form class=" row g-3 needs-validation" id="form_upload_document" novalidate>
+				<form class=" row g-3 needs-validation" novalidate id="form_upload_document">
 					<div class="col-md-12">
 						<div class="form-floating mb-1 ">
-							<input value="{{user_data['email']}}" type="email" class="form-control-plaintext border rounded-3" id="email" placeholder="name@example.com" readonly/>
+							<input value="{{user_data['email']}}"  class="form-control-plaintext border border-success rounded-3" id="email" placeholder="name@example.com" readonly/>
 							<label for="email" class="texttheme fw-bolder small">Email address</label>
 						</div>
 					</div>
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input value="{{user_data['rcu']}},{{user_data['pcu']}}" type="email" class="form-control-plaintext border rounded-3" id="Unit" placeholder="name@example.com" readonly>
+								<input value="{{user_data['rcu']}},{{user_data['pcu']}}"  class="form-control-plaintext border border-success rounded-3" id="Unit" placeholder="name@example.com" readonly>
 								<label for="unit" class="texttheme fw-bolder small">Unit</label>
 							</div>
 						</div>
@@ -90,7 +92,7 @@
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input value="{{user_data['job']}}" type="email" class="form-control-plaintext border rounded-3" id="Designation" placeholder="name@example.com" readonly >
+								<input value="{{user_data['job']}}"  class="form-control-plaintext border border-success rounded-3" id="Designation" placeholder="name@example.com" readonly >
 								<label for="designation" class="texttheme fw-bolder small">Designation</label>
 							</div>
 						</div>
@@ -104,6 +106,7 @@
 								<option>COA Document</option>
 								<option>Commercial Partnership Agreement</option>
 								<option>Contract</option>
+								<option>Case Story</option>
 								<option>Detailed Investment Plan</option>
 								<option>Documentation</option>
 								<option>Farm Plan</option>
@@ -111,6 +114,7 @@
 								<option>IFAD Document</option>
 								<option>Financials</option>
 								<option>Kit</option>
+								<option>Lessons learned</option>
 								<option>Letter</option>
 								<option>Marketing Collateral</option>
 								<option>Memo</option>
@@ -161,7 +165,7 @@
 					<div class="col-12">
 						<div class="col-md-12">
 							<div class="form-floating mb-1">
-								<input type="date" class="form-control FORMDATA_DOCUMENT" id="Date" placeholder="name@example.com">
+								<input type="date" class="form-control FORMDATA_DOCUMENT" id="Date" placeholder="name@example.com" required>
 								<label for="date" class="texttheme fw-bolder small">Date approve</label>
 							</div>
 						</div>
@@ -226,17 +230,20 @@
 			</div>
 
 			<div class="col-8">
-				<form class="row g-3 needs-validation" id="form_upload_document2">
+				<form class="row g-3 needs-validation" novalidate id="form_upload_document2">
 					<div class="col-md-12">
 						<div class="form-floating mb-1">
-							<input type="" class="form-control FORMDATA_DOCUMENT" id="title" placeholder="name@example.com">
+							<input type="" class="form-control FORMDATA_DOCUMENT" id="title" placeholder="name@example.com" required>
 							<label for="title" class="texttheme fw-bolder small">Title of Document</label>
+							 <div class="invalid-feedback">
+						      Please provide a title
+						    </div>
 						</div>
 					</div>
 
 					<div class="col-md-12">
 						<div class="form-floating mb-1">
-							<textarea class="form-control FORMDATA_DOCUMENT" placeholder="Leave a comment here" id="description" style="height: 150px"></textarea>
+							<textarea class="form-control FORMDATA_DOCUMENT" placeholder="Leave a comment here" id="description" style="height: 150px" required></textarea>
 							<label for="description" class=" texttheme fw-bolder small">Short Description of Title/Topic/Name of Document</label>
 						</div>
 					</div>
@@ -244,14 +251,14 @@
 					<div class="col-12">
 						<div class=" mb-1">
 							<label for="uploadFile" class="texttheme fw-bolder small">Upload your file</label>
-							<input type="file" class="form-control FORMDATA_DOCUMENT" id="upload" placeholder="name@example.com">
+							<input type="file" class="form-control FORMDATA_DOCUMENT" id="upload" placeholder="name@example.com" required>
 
 						</div>
 					</div>
 
 					<div class="col-12">
 						<div class="form-floating mb-1">
-							<input type="" class="form-control FORMDATA_DOCUMENT" id="tags" placeholder="name@example.com">
+							<input type="" class="form-control FORMDATA_DOCUMENT" id="tags" placeholder="name@example.com" required>
 							<label for="tags" class="texttheme fw-bolder small">Tags/Search Keywords</label>
 						</div>
 					</div>
@@ -265,7 +272,46 @@
 		</div>
 	</div>
 
+<!-- 
+<script type="text/javascript">
+	
+	var forms = document.querySelector()
 
+
+
+</script> -->
+
+<script>
+  // Get the form element
+  const form = document.querySelectorAll('.needs-validation');
+  
+  // Handle form submission and validation
+  form.addEventListener('submit', function(event) {
+    // Check if the form is valid
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  });
+</script>
+
+<script type="text/javascript">
+	// Get the form element
+const form = document.getElementById('my-form');
+
+// Add a submit event listener to the form
+form.addEventListener('submit', function(event) {
+  // Check if the form is valid
+  if (!form.checkValidity()) {
+    event.preventDefault(); // prevent form submission if it's not valid
+    event.stopPropagation();
+  }
+  
+  form.classList.add('was-validated'); // add 'was-validated' class to show validation feedback
+});
+
+</script>
 
 	<!--  -->
 

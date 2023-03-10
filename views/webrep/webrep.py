@@ -48,6 +48,7 @@ class _main:
 		elif(
 			page.lower()=="document.html".lower() or 
 			page.lower()=="multimedia.html".lower() or 
+			page.lower()=="publication.html".lower() or
 			page.lower()=="publication.html".lower()
 			# page.lower()=="about.html".lower() or 
 			# page.lower()=="NewsAndStories.html".lower()or 
@@ -61,7 +62,11 @@ class _main:
 				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
 			else:
 				return redirect("/login?force_url=1")
-		elif(page.lower()=="newsandstories.html".lower() or page.lower()=="home.html".lower()):
+		elif(
+			page.lower()=="newsandstories.html".lower() or 
+			page.lower()=="home.html".lower() or 
+			page.lower()=="news.html".lower()
+			):
 			if("USER_DATA" in session):
 				UDATA = session["USER_DATA"][0]
 			else:
@@ -101,7 +106,7 @@ class _main:
 
 	@app.route("/webrep/uploads/docs",methods=["POST","GET"])
 	def get_uploads_docs():
-		return db.select("SELECT * from `webrep_uploads`;")
+		return db.select("SELECT * from `webrep_uploads` ORDER BY `id` DESC;")
 
 	@app.route("/webrep/uploads/docs_item",methods=["POST","GET"])
 	def get_uploads_docs_item():

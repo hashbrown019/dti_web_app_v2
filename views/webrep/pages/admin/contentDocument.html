@@ -1,4 +1,5 @@
 <!-- Documents -->
+
 	<div id="DOC" class="container shadow-sm p-3 mb-3 bg-body rounded mb-5">
 
 		<p class=" container display-3 mt-5" style="color: #1F4F5A !important;">Documents</p>
@@ -20,18 +21,19 @@
 									{% set categ = upload_['formCategory'] %}
 									{% set id_ = upload_['id'] %}
 									
-									<div class=" __FILESDOCS__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}" title="{{upload_['Description']}}">
-										<div class="card card_size">
-											<div class="card-body" >
-												<h5 class="card-title">{{upload_['Title']}}</h5>
+									<div class=" __FILESDOCS__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}" title="{{upload_['Title']}}">
+										<div class="card w3-tooltip">
+											<div class="card-body" style="height: 200px;">
+												<h5 class="card-title mytext-truncate " style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{upload_['Title']}}</h5>
 
 												<div class="" style="max-width: 250px;">
-													<p class="card-text text-truncate">{{upload_['Description']}}</p>
+													<p class="card-text mytext-truncate" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{upload_['Description']}}</p>
 												</div>
 												
 												<a href="#" class="btn btn-dark stretched-link  btn-sm text-white  mt-3" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails" onmouseup="get_file__det('{{id_}}')"><em>View Details </em></a>
 												<span class="small  text-muted ms-5 fst-italic"></span>
 											</div>
+											<span class="w3-text w3-tag w3-round">Tooltip text</span>
 										</div>
 									</div>
 								{% endif %}

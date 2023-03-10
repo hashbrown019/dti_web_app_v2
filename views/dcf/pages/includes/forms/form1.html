@@ -1,0 +1,307 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "form1" %}
+{% set forms = "forms" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<form action="/insert_form1" method="POST">
+    {% include "includes/sweetalert.html" %}
+    <div class="x-col l1 ">
+		&nbsp;
+	</div>
+
+	<div class=" x-col l9 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+		<center><h2 class=" text-white x-container x-padding" style="background-color: #007399;">PREPARATION, REVIEW AND APPROVAL STATUS</h2></center>
+
+		<div class="x-container x-padding">
+			<style> 
+				table, th, td{border: 1px solid black;border-collapse: collapse;}
+			</style>
+
+			<!---text--->
+			<div class="x-row x-section x-padding ">
+				<div class="x-row">
+					
+						<div class="x-col l4 x-container x-padding">
+							<label>RCUs</label>
+							<input class=" x-input x-border" id="form_1_rcus" type="text" placeholder="" name="form_1_rcus">
+						</div>
+						<div class="x-col l4 x-container x-padding">
+							<label>Number Of DIPs</label>
+							<input class=" x-input x-border" id="form_1_number_of_dips" type="Number" name="form_1_number_of_dips" placeholder="">
+						</div>
+						<div class="x-col l4 x-container x-padding">
+							<label>Anchor Firm</label>
+							<input class=" x-input x-border" id="form_1_anchor_firm" type="text" name="form_1_anchor_firm" placeholder="">
+						</div>
+				
+				</div>
+
+				<!---dropdown--->
+				<div class="x-row x-padding x-container">
+					<div class="x-col l4 x-container x-padding">
+						<span class="">Size Of Anchor</span>
+						<select class=" x-border x-select x-border" id="form_1_size_of_anchor" name="form_1_size_of_anchor"><br>
+							<option value="" >Choose your option</option>
+							<option >Large</option>
+							<option >Medium</option>
+							<option >Small</option>
+							<option >Micro</option>
+						</select>
+					</div>
+					<div class="x-col l4 x-container x-padding">
+						<span class="">Commodity</span>
+						<select class=" x-border x-select x-border" id="form_1_commodity" name="form_1_commodity"><br>
+							<option value="" >Choose your option</option>
+							<option >Conducted before DIP approval</option>
+							<option >Conducted after DIP approval</option>
+							<option >N/A</option>
+						</select>
+					</div>
+					<div class="x-col l4 x-container x-padding">
+						<span class="">Scope/Provinces</span>
+						<select class=" x-border x-select x-border" id="form_1_scope_provinces" name="form_1_scope_provinces"><br>
+							<option value="" >Choose your option</option>
+							<option >Conducted before DIP approval</option>
+							<option >Conducted after DIP approval</option>
+							<option >N/A</option>
+						</select>
+					</div>
+				</div>
+
+				<!---date--->
+				<div class="x-row x-padding x-container">
+					<div class="x-col l5 x-container x-padding" style="width: 38%;">	
+						<label>For development (indicate date):</label>
+						<input class=" x-input x-border" id="form_1_for_development" name="form_1_for_development" type="date" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 30%;">	
+						<label>Date: CN Approved</label>
+						<input class=" x-input x-border" id="form_1_cn_approved" type="date" name="form_1_cn_approved" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 100%;">	
+						<label>Date: Full BPs and DIPs Finalized/Approved by RCUs and endorsed to NPCO for Review</label>
+						<input class=" x-input x-border" id="form_1_finalized_approved" name="form_1_finalized_approved" type="date" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 40%;">	
+						<label>Date of the Parallel Review with NPCO/RGMS-IFAD-RTWG</label>
+						<input class=" x-input x-border" id="form_1_date_of_parallel_review" name="form_1_date_of_parallel_review" type="date" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 100%;">	
+						<label>Date of submission of the  revised DIPs based on the comments from the parallel review</label>
+						<input class=" x-input x-border" id="form_1_date_of_submission" name="form_1_date_of_submission" type="date" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 40%;">	
+						<label>Date of RTWG Approval</label>
+						<input class=" x-input x-border" id="form_1_date_of_rtwg" name="form_1_date_of_rtwg" type="date" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 100%;">	
+						<label>Date: NPCO cursory review of RCU's compliance to parallel review comments; and DIP  endorsement to NOTUS Uploading</label>
+						<input class=" x-input x-border" id="form_1_date_of_npco_cursory" name="form_1_date_of_npco_cursory" type="date" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 50%;">	
+						<label>Date: Uploading to IFAD NOTUS c/o NPCO</label>
+						<input class=" x-input x-border" id="form_1_date_of_uploading_to_ifad" name="form_1_date_of_uploading_to_ifad" type="date" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 50%;">	
+						<label>Date: IFAD NO Issuance </label>
+						<input class=" x-input x-border" id="form_1_date_of_ifad_no_inssuance" name="form_1_date_of_ifad_no_inssuance" type="date" placeholder="">
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class=" x-container" style="margin-top: 10px; margin-bottom: 20px;"  >
+			<center><h2 class=" text-white x-container" style="background-color: #007399;">DIP Details per FO </h2></center>
+
+			<div class="x-row x-padding x-container">
+				<div class="x-col l4 x-container x-padding">
+					<span class="">Total # of MSMEs</span>
+					<select class=" x-border x-select x-border" id="form_1_totalmsme" name="form_1_totalmsme"><br>
+						<option value="" >Choose your option</option>
+						<option >Large</option>
+						<option >Medium</option>
+						<option >Small</option>
+						<option >Micro</option>
+					</select>
+				</div>
+				<div class="x-col l4 x-container x-padding">
+					<span class="">Total # of farmer beneficiaries</span>
+					<select class=" x-border x-select x-border" id="form_1_total_farmerbene" name="form_1_total_farmerbene"><br>
+						<option value="">Choose your option</option>
+						<option >Conducted before DIP approval</option>
+						<option >Conducted after DIP approval</option>
+						<option >N/A</option>
+					</select>
+				</div>
+				<div class="x-col l4 x-container x-padding">
+					<span class="">Total # of FOs </span>
+					<select class=" x-border x-select x-border" id="form_1_totalfo" name="form_1_totalfo"><br>
+						<option value="" >Choose your option</option>
+						<option >Conducted before DIP approval</option>
+						<option >Conducted after DIP approval</option>
+						<option >N/A</option>
+					</select>
+				</div>
+			</div>
+			<div class="x-row">
+				<form class="x-container x-padding ">
+					<div class="x-col l8 x-container x-padding">
+						<label>Input Name of FO</label>
+						<input class=" x-input x-border" id="form_1_namefo" type="text" name="form_1_namefo" placeholder="">
+					</div>
+					<div class="x-col l4 x-container x-padding" >
+						<label>Total Hectarage Covered</label>
+						<input class=" x-input x-border" id="form_1_totalhectarage_cov" name="form_1_totalhectarage_cov" type="Number" placeholder="">
+					</div>
+					<div class="x-col l4 x-container x-padding">
+						<label>Hectares for Rehab</label>
+						<input class=" x-input x-border" id="form_1_hect_rehab" name="form_1_hect_rehab" type="Number" placeholder="">
+					</div>
+					<div class="x-col l4 x-container x-padding">
+						<label>Total Cost of Rehab </label>
+						<input class=" x-input x-border" id="form_1_total_cost_rehab" name="form_1_total_cost_rehab" type="Number" placeholder="">
+					</div>
+					<div class="x-col l4 x-container x-padding">
+						<label>Hectares for Expansion</label>
+						<input class=" x-input x-border" id="form_1_hect_exp" name="form_1_hect_exp" type="Number" placeholder="">
+					</div>
+					<div class="x-col l4 x-container x-padding">
+						<label>Total Cost of Expansion</label>
+						<input class=" x-input x-border" id="form_1_cost_exp" name="form_1_cost_exp" type="Number" placeholder="">
+					</div>
+				</form>
+			</div>
+
+
+			<div class="x-row x-container x-padding">
+				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+				<table class="x-table x-container x-table-border">
+					<tr>
+						<th colspan="3">
+							<center>Total Cost of Productive Investments</center>
+						</th>
+
+					</tr>
+
+					<tr>
+						<td><center>Equipment</center></td>
+						<td><center>Facilities</center></td>
+						<td><center>Warehouse</center></td>
+					</tr>
+
+					<tr>
+						<td><input class=" x-input x-border" id="form_1_euqipment" name="form_1_euqipment" type="number" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_facilities" name="form_1_facilities" type="number" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_warehouse" name="form_1_warehouse" type="number" placeholder=""></td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="x-row">
+				<form class="x-container x-padding ">
+					<div class="x-col l4 x-container x-padding">
+						<label>Total Matching Grant (AA+AB)</label>
+						<input class=" x-input x-border" id="form_1_total_matching_grant" name="form_1_total_matching_grant" type="Number" placeholder="">
+					</div>
+				</form>
+			</div>
+			<div class="x-row x-container x-padding">
+				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+				<table class="x-table x-container x-table-border">
+					<tr>
+						<th colspan="4">
+							<center>Capacity Building</center>
+						</th>
+
+					</tr>
+
+					<tr>
+						<td><center>Organizational</center></td>
+						<td><center>Technical Trainings</center></td>
+						<td><center>Post-Production</center></td>
+						<td><center>Others</center></td>
+					</tr>
+
+					<tr>
+						<td><input class=" x-input x-border" id="form_1_organizational" name="form_1_organizational" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_technical_trainings" name="form_1_technical_trainings" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_post_production" name="form_1_post_production" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_others" type="text" name="form_1_others" placeholder=""></td>
+					</tr>
+				</table>
+			</div>
+			<div class="x-row">
+				<form class="x-container x-padding ">
+					<div class="x-col l6 x-container x-padding">
+						<label>Supply Chain Manager</label>
+						<input class=" x-input x-border" id="form_1_supply_chain_manager" name="form_1_supply_chain_manager" type="text" placeholder="">
+					</div>
+				</form>
+			</div>
+			<div class="x-row x-container x-padding">
+				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+				<table class="x-table x-container x-table-border">
+					<tr>
+						<th colspan="4">
+							<center>Total Project Cost</center>
+						</th>
+
+					</tr>
+
+					<tr>
+						<td><center>Y</center></td>
+						<td><center>AC</center></td>
+						<td><center>AD</center></td>
+						<td><center>AE</center></td>
+					</tr>
+
+					<tr>
+						<td><input class=" x-input x-border" id="form_1_y" name="form_1_y" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_ac" name="form_1_ac" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_ad" name="form_1_ad" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_ae" name="form_1_ae" type="text" placeholder=""></td>
+					</tr>
+				</table>
+			</div>
+			<div class="x-row">
+				<form class="x-container x-padding ">
+					<div class="x-col l6 x-container x-padding">
+						<label>FMI</label>
+						<input class=" x-input x-border" id="form_1_fmi" name="form_1_fmi" type="text" placeholder="">
+					</div>
+					<div class="x-col l6 x-container x-padding">
+						<label>FMI Kms</label>
+						<input class=" x-input x-border" id="form_1_fmi_kms" name="form_1_fmi_kms" type="text" placeholder="">
+					</div>
+				</form>
+			</div>
+			<div class="x-row x-container x-padding">
+			
+					<div class="x-col l8 x-container x-padding" id="form_1_choose_files">
+						<label for="image_uploads">Choose file</label>
+						<input
+						type="file"
+						id="image_uploads"
+						name="image_uploads"
+						accept=".jpg, .jpeg, .png, .mp4, .mov"
+						multiple />
+					</div>
+                    <p class="x-right">
+                        <input class="x-blue " id="form1sub"  type="submit">
+                        </p>
+				
+			</div>
+		</div>
+</form>
+    
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+{% endblock javascripts %}
+

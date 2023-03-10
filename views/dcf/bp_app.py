@@ -7,8 +7,10 @@ import xlrd
 import json
 from werkzeug.utils import secure_filename
 import os
-from views.psalm.form_insert import insert_form4 as insertData4
-import Configurations as c
+from views.dcf.form_insert import insert_form4 as insertData4
+from views.dcf.form_insert import insert_form5 as insertData5
+from views.dcf.form_insert import insert_form1 as insertData1
+import Configurations as c 
 from modules.Connections import mysql
 
 db = mysql(*c.DB_CRED)
@@ -27,7 +29,7 @@ def dcf_forms():
 
 @app.route('/form1')
 def form1():
-    return render_template('form1.html')
+    return render_template('includes/forms/form1.html',user_data=session["USER_DATA"][0])
 
 @app.route('/form2')
 def form2():
@@ -35,7 +37,7 @@ def form2():
 
 @app.route('/form3')
 def form3():
-    return render_template('form3.html')
+    return render_template('includes/forms/form3.html',user_data=session["USER_DATA"][0])
 
 @app.route('/form4')
 def form4():
@@ -43,7 +45,7 @@ def form4():
 
 @app.route('/form5')
 def form5():
-    return redirect('form5.html')
+    return render_template('includes/forms/form5.html',user_data=session["USER_DATA"][0])
 
 @app.route('/form6')
 def form6():
@@ -76,10 +78,19 @@ def form12():
 @app.route('/insert_form4', methods = ['POST'])
 def insert_form4():
     insertData4.insert_form4(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form4")
+
+@app.route('/insert_form5', methods = ['POST'])
+def insert_form5():
+    insertData5.insert_form5(request)
+    return redirect("/form5")
+
+@app.route('/insert_form1', methods = ['POST'])
+def insert_form1():
+    insertData1.insert_form1(request)
+    return redirect("/form1")
 
 
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)
