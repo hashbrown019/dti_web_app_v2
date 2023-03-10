@@ -41,7 +41,7 @@
 							<a class="fst-italic texttheme small" href="" type="button">See more</a>
 						</div>
 					</div>
-					<!-- =====Events===== -->
+				<!-- =====Events===== -->
 					<div class="row d-block mb-3">
 						<div class="col-12">
 							<a class="texttheme fw-bolder mb-1" type="button">Event</a>
@@ -84,6 +84,51 @@
 							<a class="fst-italic texttheme small" href="" type="button">See more</a>
 						</div>
 					</div>
+				<!-- =====News===== -->
+					<div class="row d-block mb-3">
+						<div class="col-12">
+							<a class="texttheme fw-bolder mb-1" type="button">News</a>
+						</div>
+						<!-- ============= -->
+						<div class="col  mb-2">
+							{% for post in page_data %}
+								{% if (post['posttype'] =='News')%}
+									<div class="News_CARD card rounded-2" style="display: none;">
+										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
+										<div class="card-img-overlay">
+											<div class="d-flex justify-content-between">
+												<p class="text-white textshadow text-start small">{{post['posttype']}}</p>
+												<p class="text-white textshadow text-start small"> {{post['date']}}</p>
+											</div>
+											<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 " type="button">{{post['postheader']}}.</a>
+										</div>
+									</div>
+
+								{% endif %}
+							{% endfor %}
+						</div>
+						<script type="text/javascript">
+							$onload(()=>{
+								var News_CARD = $CLASS('News_CARD')
+								for (var i = 0; i < 3; i++) {
+									News_CARD[i].style.display = "block"
+								}
+
+								var img_class=$CLASS("img_class")
+								for (var i = 0; i < img_class.length; i++) {
+									var src_1 = img_class[i].src
+									var img_path = web_safe_decode(src_1).replaceAll("C:\\fakepath\\","") 
+									img_class[i].src = img_path.replaceAll("C:/fakepath/","").replaceAll("C:fakepath","")
+									println(img_class[i].src )
+								}
+							})
+						</script>						<!-- ========= -->
+						<div class="text-end">
+							<a class="fst-italic texttheme small" href="" type="button">See more</a>
+						</div>
+					</div>
+
+
 
 
 				</div>
