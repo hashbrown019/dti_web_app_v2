@@ -3,6 +3,7 @@
 	<head>
 		<!-- Required meta tags -->
 		<meta charset="utf-890" lang="en-us">
+		<script src="../../static/js/Brorn.min.js"></script>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="../../static/webrepstatic/css/style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -142,16 +143,16 @@
 					<div class="container mt-4 ">
 						<div class="d-flex justify-content-between">
 							<p class=" display-5 ">Events</p>
-							<div class="form-floating-sm align-self-center">
-							  <select class="form-select border-0 fw-bolder" id="floatingSelect" aria-label="Floating label select example">
-							    <option value="0">Eastern Visayas (Region VIII)</option>
-							    <option value="1">Zamboanga (Region IX)</option>
-							    <option value="2">Northern Mindanao (Region X)</option>
-							    <option value="3">Davao Region (Region XI)</option>
-							    <option value="1">SOCCSKSARGEN (Region XII)</option>
-							    <option value="2">CARAGA (Region XIII)</option>
-							    <option value="3">BARMM</option>
-							  </select>
+							<div class="d-flex ">
+								<div class="align-self-center me-2">
+									<select id="vc_filter" class="form-select border-0 fw-bolder" aria-label="" onchange="news_filter_by_vc(this.value)">
+									</select>
+								</div>
+								<div class="align-self-center">
+								  <select class="form-select border-0 fw-bolder" id="rcu_filter" aria-label="" onchange="news_filter_by_rcu(this.value)">
+								    
+								  </select>
+								</div>
 							</div>
 						</div>
 
@@ -170,21 +171,45 @@
 							</div>
 						</div>
 
-						<div class="row row-cols-2 ">
-							<div class="col  mb-4">
-								<div class="card rounded-2">
-									<img src="../../static/webrepstatic/img/rapidimage/banana.jpg" class=" rounded-1 side-article-img" alt="...">
-									<div class="card-img-overlay">
+						<div class="row row-cols-lg-2 ">
+					<!-- Events Content -->
+						{% for post in page_data %}
+							{% if (post['posttype'] =='Event' or post['posttype'] =='All')%}
+								<div class="card_{{post['postCategory']}} col-12 mb-4">
+									<div class="card border-success">
+										<div class="d-flex">
+											<div class="">
+												<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+											</div>
+											<div class="d-block">
+												<div class="container d-flex justify-content-between mt-1" >
+													<div class="" style="height: 20px;">
+														<p class="xs-text texttheme">{{post['postRcu']}}</p>												
+													</div>
+													<div class="ms-5 me-5" style="height: 20px;">
+														
+													</div>
+													<div class=" " style="height: 20px;">
+														<p class="xs-text texttheme ">{{post['date']}}</p>												
+													</div>
+												</div>
+												<div class="ms-2 mt-1" style="width: 250px;">
+													<a class="text-truncate stretched-link texttheme fs-5" href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}</a>
+												</div>
+												<div class="ms-2  fst-italic" style="height:25px; width: 200px;">
+													<p class="small text-truncate">{{post['postdescription']}}</p>
+												</div>
+												<div class="mt-3" style="height:20px;">
+													<figcaption class="blockquote-footer  fst-italic ms-2">{{post['postAuthor']}}</figcaption>
+												</div>
+											</div>
 
-										<div class="d-flex justify-content-between">
-											<p class="text-white textshadow text-start fs-5">Events</p>
-											<p class="text-white text-end small"> Jan. 26, 2023</p>
 										</div>
-										
-										<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-2 " type="button">Example Tittle for a Events. Example Tittle for a Events. Example Tittle for a Events. Example Tittle for a Events.</a>
 									</div>
 								</div>
-							</div>
+								{% endif %}
+							{% endfor %}
+						
 						</div>
 
 						<div class="container mt-3">
@@ -201,62 +226,64 @@
 									</li>
 								</ul>
 							</nav>
-						</div>
-
-						
-					
-
+						</div>						
 					</div>
 				</div>
 
 
 				<!-- Side Articles -->
-				<div class="col-3 shadow-sm p-3 bg-body rounded">
-					<div class="row d-block mb-3">
-						<div class="col-12">
-							<a class="texttheme fw-bolder mb-1" type="button" href="">Stories</a>
-						</div>
-						<div class="col  mb-2">
-							<div class="card rounded-2">
-								<img src="../../static/webrepstatic/img/rapidimage/chips.jpg" class=" rounded-1 side-article-img" alt="...">
-								<div class="card-img-overlay">
-									<div class="d-flex justify-content-between">
-										<p class="text-white textshadow text-start small">Stories</p>
-										<p class="text-white textshadow text-start small"> Jan. 26, 2023</p>
-									</div>
-									<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 " type="button">Example Tittle for a Events. Example Tittle for a Events. Example Tittle for a Events. Example Tittle for a Events.</a>
-								</div>
-							</div>
-						</div>
-						<div class="text-end">
-							<a class="fst-italic texttheme small" href="" type="button">See more</a>
-						</div>
-					</div>
-
-					<div class="row d-block mb-3">
-						<div class="col-12">
-							<a class="texttheme fw-bolder mb-1" type="button" href="news.html">News</a>
-						</div>
-						<div class="col  mb-2">
-							<div class="card rounded-2">
-								<img src="../../static/webrepstatic/img/rapidimage/coffee.jpg" class=" rounded-1 side-article-img" alt="...">
-								<div class="card-img-overlay">
-									<div class="d-flex justify-content-between">
-										<p class="text-white textshadow text-start small">News</p>
-										<p class="text-white textshadow text-start small"> Jan. 26, 2023</p>
-									</div>
-									<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 " type="button">Example Tittle for a Events. Example Tittle for a Events. Example Tittle for a Events. Example Tittle for a Events.</a>
-								</div>
-							</div>
-						</div>
-						<div class="text-end">
-							<a class="fst-italic texttheme small" type="button" href="news.html">See more</a>
-						</div>
-					</div>								
-				</div>
+				{% include 'newsAndstories/sidearticles.html' %}
 
 			</div>
 		</div>
+		<script type="text/javascript">
+			
+		$onload(
+			function(){
+				var vc_filter = [] ; var vctr_filter = ""
+				{% for upload_categ in page_data %}
+					{% if (upload_categ['posttype'] =='Event' or upload_categ['posttype'] =='All') %}
+						{% set categ = upload_categ['postCategory'] %}
+						vc_filter.push("{{categ}}")
+					{% endif %}
+				{% endfor %}
+				vc_filter = [...new Set(vc_filter)];
+				for (var i = 0; i < vc_filter.length; i++) {
+					var c_ = vc_filter[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
+					vctr_filter += (`
+						<option value="`+c_ +`">`+c_ +` Event</option>
+					`)
+				}
+				$ID('vc_filter').innerHTML = vctr_filter
+			},
+			function(){
+				var vc_filter = [] ; var vctr_filter = ""
+				{% for upload_categ in page_data %}
+						{% set categ = upload_categ['postRcu'] %}
+						vc_filter.push("{{categ}}")
+				{% endfor %}
+				vc_filter = [...new Set(vc_filter)];
+				for (var i = 0; i < vc_filter.length; i++) {
+					var c_ = vc_filter[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
+					vctr_filter += (`
+						<option value="`+c_ +`">`+c_ +` Event</option>
+					`)
+				}
+				$ID('rcu_filter').innerHTML = vctr_filter
+			},
+		)
+
+
+		$onload(function(){
+			var img_class=$CLASS("img_class")
+			for (var i = 0; i < img_class.length; i++) {
+				var src_1 = img_class[i].src
+				var img_path = web_safe_decode(src_1).replaceAll("C:\\fakepath\\","") 
+				img_class[i].src = img_path.replaceAll("C:/fakepath/","").replaceAll("C:fakepath","")
+				println(img_class[i].src )
+			}
+		})
+		</script>
 
 		{% include 'main/footer.html' %}
 

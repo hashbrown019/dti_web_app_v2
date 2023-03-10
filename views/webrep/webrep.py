@@ -65,7 +65,8 @@ class _main:
 		elif(
 			page.lower()=="newsandstories.html".lower() or 
 			page.lower()=="home.html".lower() or 
-			page.lower()=="news.html".lower()
+			page.lower()=="news.html".lower()or 
+			page.lower()=="events.html".lower()
 			):
 			if("USER_DATA" in session):
 				UDATA = session["USER_DATA"][0]
