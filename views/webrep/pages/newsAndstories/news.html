@@ -15,15 +15,9 @@
 
 		<!-- CSS only -->
 		<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
-
-
-
 		<!-- JavaScript Bundle with Popper -->
 		<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
 		
-
-		
-
 		<title >News</title>
 	</head>
 
@@ -173,40 +167,42 @@
 
 
 						<div class="row row-cols-lg-2 ">
-						<!-- News Content -->
+					<!-- News Content -->
 						{% for post in page_data %}
-							<div class="card_{{post['postCategory']}} col-12 mb-4">
-								<div class="card border-success">
-									<div class="d-flex">
-										<div class="">
-											<img src="/webrep/article/get_img/{{post['file_name'] | replace('C:fakepath', '')}}" class=" rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
-										</div>
-										<div class="d-block">
-											<div class="container d-flex justify-content-between mt-1" >
-												<div class="" style="height: 20px;">
-													<p class="xs-text texttheme">{{post['postRcu']}}</p>												
+							{% if (post['posttype'] =='News' or post['posttype'] =='All')%}
+								<div class="card_{{post['postCategory']}} col-12 mb-4">
+									<div class="card border-success">
+										<div class="d-flex">
+											<div class="">
+												<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+											</div>
+											<div class="d-block">
+												<div class="container d-flex justify-content-between mt-1" >
+													<div class="" style="height: 20px;">
+														<p class="xs-text texttheme">{{post['postRcu']}}</p>												
+													</div>
+													<div class="ms-5 me-5" style="height: 20px;">
+														
+													</div>
+													<div class=" " style="height: 20px;">
+														<p class="xs-text texttheme ">{{post['date']}}</p>												
+													</div>
 												</div>
-												<div class="ms-5 me-5" style="height: 20px;">
-													
+												<div class="ms-2 mt-1" style="width: 250px;">
+													<a class="text-truncate stretched-link texttheme fs-5" href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}</a>
 												</div>
-												<div class=" " style="height: 20px;">
-													<p class="xs-text texttheme ">{{post['date']}}</p>												
+												<div class="ms-2  fst-italic" style="height:25px; width: 200px;">
+													<p class="small text-truncate">{{post['postdescription']}}</p>
+												</div>
+												<div class="mt-3" style="height:20px;">
+													<figcaption class="blockquote-footer  fst-italic ms-2">{{post['postAuthor']}}</figcaption>
 												</div>
 											</div>
-											<div class="ms-2 mt-1" style="width: 250px;">
-												<a class="text-truncate stretched-link texttheme fs-5" href="" type="button">{{post['postheader']}}</a>
-											</div>
-											<div class="ms-2  fst-italic" style="height:25px; width: 200px;">
-												<p class="small text-truncate">{{post['postdescription']}}</p>
-											</div>
-											<div class="mt-3" style="height:20px;">
-												<figcaption class="blockquote-footer  fst-italic ms-2">{{post['postAuthor']}}</figcaption>
-											</div>
-										</div>
 
+										</div>
 									</div>
 								</div>
-							</div>
+								{% endif %}
 							{% endfor %}
 						
 						</div>
@@ -231,49 +227,7 @@
 
 
 				<!-- Side Articles -->
-				<div class="col-3 shadow-sm p-3 bg-body rounded">
-					<div class="row d-block mb-3">
-						<div class="col-12">
-							<a class="texttheme fw-bolder mb-1" type="button">Stories</a>
-						</div>
-						<div class="col  mb-2">
-							<div class="card rounded-2">
-								<img src="../../static/webrepstatic/img/rapidimage/chips.jpg" class=" rounded-1 side-article-img" alt="...">
-								<div class="card-img-overlay">
-									<div class="d-flex justify-content-between">
-										<p class="text-white textshadow text-start small">Stories</p>
-										<p class="text-white textshadow text-start small"> Jan. 26, 2023</p>
-									</div>
-									<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 " type="button">Example Tittle for a news. Example Tittle for a news. Example Tittle for a news. Example Tittle for a news.</a>
-								</div>
-							</div>
-						</div>
-						<div class="text-end">
-							<a class="fst-italic texttheme small" href="" type="button">See more</a>
-						</div>
-					</div>
-
-					<div class="row d-block mb-3">
-						<div class="col-12">
-							<a class="texttheme fw-bolder mb-1" type="button" href="events.html">Events</a>
-						</div>
-						<div class="col  mb-2">
-							<div class="card rounded-2">
-								<img src="../../static/webrepstatic/img/rapidimage/coffee.jpg" class=" rounded-1 side-article-img" alt="...">
-								<div class="card-img-overlay">
-									<div class="d-flex justify-content-between">
-										<p class="text-white textshadow text-start small">News</p>
-										<p class="text-white textshadow text-start small"> Jan. 26, 2023</p>
-									</div>
-									<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 " type="button">Example Tittle for a news. Example Tittle for a news. Example Tittle for a news. Example Tittle for a news.</a>
-								</div>
-							</div>
-						</div>
-						<div class="text-end">
-							<a class="fst-italic texttheme small" type="button" href="events.html">See more</a>
-						</div>
-					</div>								
-				</div>
+				{% include 'newsAndstories/sidearticles.html' %}
 
 			</div>
 		</div>
@@ -283,8 +237,10 @@
 			function(){
 				var vc_filter = [] ; var vctr_filter = ""
 				{% for upload_categ in page_data %}
+					{% if (upload_categ['posttype'] =='News' or upload_categ['posttype'] =='All') %}
 						{% set categ = upload_categ['postCategory'] %}
 						vc_filter.push("{{categ}}")
+					{% endif %}
 				{% endfor %}
 				vc_filter = [...new Set(vc_filter)];
 				for (var i = 0; i < vc_filter.length; i++) {
@@ -311,6 +267,17 @@
 				$ID('rcu_filter').innerHTML = vctr_filter
 			},
 		)
+
+
+		$onload(function(){
+			var img_class=$CLASS("img_class")
+			for (var i = 0; i < img_class.length; i++) {
+				var src_1 = img_class[i].src
+				var img_path = web_safe_decode(src_1).replaceAll("C:\\fakepath\\","") 
+				img_class[i].src = img_path.replaceAll("C:/fakepath/","").replaceAll("C:fakepath","")
+				println(img_class[i].src )
+			}
+		})
 		</script>
 
 		{% include 'main/footer.html' %}

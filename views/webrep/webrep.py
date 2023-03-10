@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, request, session, redirect, jsonify, send_file
 from flask_session import Session
 from modules.Connections import mysql
+from modules.Req_Brorn_util import string_websafe as STRS
 import Configurations as c
 from werkzeug.utils import secure_filename
 import os
-
 
 
 db = mysql(*c.DB_CRED)
@@ -65,7 +65,8 @@ class _main:
 		elif(
 			page.lower()=="newsandstories.html".lower() or 
 			page.lower()=="home.html".lower() or 
-			page.lower()=="news.html".lower()
+			page.lower()=="news.html".lower()or 
+			page.lower()=="events.html".lower()
 			):
 			if("USER_DATA" in session):
 				UDATA = session["USER_DATA"][0]
@@ -96,7 +97,12 @@ class _main:
 
 	@app.route("/webrep/article/get_post",methods=["POST","GET"])
 	def get_post():
-		return db.select("SELECT * from `webrep_articles` ORDER BY `id` DESC;")
+		return db.select("SELECT * from `webrep_articles`;")
+
+	@app.route("/webrep/article/get_post_ind",methods=["POST","GET"])
+	def get_post_ind():
+		ids = request.form['id']
+		return db.select("SELECT * from `webrep_articles` WHERE `id`='{}';".format(ids))
 		# return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
 
 	@app.route("/webrep/uploads/docs",methods=["POST","GET"])
@@ -119,7 +125,7 @@ class _main:
 		data["USER_ID"] = session["USER_DATA"][0]['id']
 		for datum in data:
 			key.append("`{}`".format(datum))
-			val.append("'{}'".format(data[datum]))
+			val.append("'{}'".format(STRS.encode_websafe(data[datum])))
 		sql = ('''INSERT INTO `webrep_articles` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
 		
 		files = request.files
