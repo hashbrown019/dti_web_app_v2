@@ -7,7 +7,8 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-<form action="/insert_form4" method="POST">
+<form action="/insert_form5" method="POST">
+    {% include "includes/sweetalert.html" %}
 <div class="x-col l1 ">
     &nbsp;
 </div>
@@ -52,13 +53,13 @@
 
                 <tr>
                 <!---gender--->	
-                    <td><input class=" x-light-grey x-input" id="mgit_implementing_unit_rcu" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_implementing_unit_pcu" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_name_of_dip" type="text" name=""></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_implementing_unit_rcu" type="text" name="mgit_implementing_unit_rcu"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_implementing_unit_pcu" type="text" name="mgit_implementing_unit_pcu"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_name_of_dip" type="text" name="mgit_name_of_dip"></td>
 
                 <!--sector--->
-                    <td><input class=" x-light-grey x-input" id="mgit_msme_recipient" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_member_recipient" type="text" name=""></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_msme_recipient" type="text" name="mgit_msme_recipient"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_member_recipient" type="text" name="mgit_total_member_recipient"></td>
                     
                 
                 </tr>
@@ -68,11 +69,11 @@
         <div class="x-row x-padding x-container">
             <div class="x-col l4 x-container x-padding">
                 <span class="">Commodity</span>
-                <select class=" x-border x-select x-border" id="mgit_commodity" name="option"><br>
+                <select class=" x-border x-select x-border" id="mgit_commodity" name="mgit_commodity"><br>
                     <option value="">Choose your option</option>
-                    <option value="1">Conducted before DIP approval</option>
-                    <option value="2">Conducted after DIP approval</option>
-                    <option value="3">N/A</option>
+                    <option>Conducted before DIP approval</option>
+                    <option>Conducted after DIP approval</option>
+                    <option>N/A</option>
                 </select>
             </div>
         </div>
@@ -103,14 +104,14 @@
 
                 <tr>
                 <!---gender--->	
-                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_gender_male" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_gender_female" type="text" name=""></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_gender_male" type="text" name="mgit_total_number_fo_gender_male"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_gender_female" type="text" name="mgit_total_number_fo_gender_female"></td>
 
                 <!--sectorG--->
-                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_sectoral_pwd" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_sectoral_youth" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_sectoral_IP" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_sectoral_SC" type="text" name=""></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_sectoral_pwd" type="text" name="mgit_total_number_fo_sectoral_pwd"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_sectoral_youth" type="text" name="mgit_total_number_fo_sectoral_youth"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_sectoral_IP" type="text" name="mgit_total_number_fo_sectoral_IP"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_number_fo_sectoral_SC" type="text" name="mgit_total_number_fo_sectoral_SC"></td>
                 </tr>
             </table>
         </div>
@@ -118,8 +119,8 @@
         <div class="x-row x-padding x-container">
             <div class="x-col l4 x-container x-padding">
                 <span class="">Type of Investment</span>
-                <select class=" x-border x-select x-border" id="mgit_type_of_investment" name="option"><br>
-                    <option >Choose your option</option>
+                <select class=" x-border x-select x-border" id="mgit_type_of_investment" name="mgit_type_of_investment"><br>
+                    <option value="" >Choose your option</option>
                     <option >Productive investments</option>
                     <option >Expansion</option>
                     <option >Rehabilitation</option>
@@ -148,10 +149,10 @@
 
                 <tr>
                 <!--sectorG--->
-                    <td><input class=" x-light-grey x-input" id="mgit_total_mgas_based_approved_DIP" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_mgas_signed" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_mgas_not_yet_signed" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_matching_grant_based_on_approved_business" type="text" name=""></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_mgas_based_approved_DIP" type="text" name="mgit_total_mgas_based_approved_DIP"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_mgas_signed" type="text" name="mgit_total_mgas_signed"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_mgas_not_yet_signed" type="text" name="mgit_total_mgas_not_yet_signed"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_matching_grant_based_on_approved_business" type="text" name="mgit_total_matching_grant_based_on_approved_business"></td>
                 </tr>
             </table>
         </div>
@@ -174,9 +175,9 @@
 
                 <tr>
                 <!--sectorG--->
-                    <td><input class=" x-light-grey x-input" id="mgit_pmga_first_availment" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_mgar_period_date" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_remaining_matching_grant_balance" type="text" name=""></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_pmga_first_availment" type="text" name="mgit_pmga_first_availment"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_mgar_period_date" type="text" name="mgit_mgar_period_date"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_remaining_matching_grant_balance" type="text" name="mgit_remaining_matching_grant_balance"></td>
                 </tr>
             </table>
         </div>
@@ -198,8 +199,8 @@
                 </tr>
 
                 <tr>
-                    <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_start" type="date" placeholder=""></td>
-                    <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_end" type="date" placeholder=""></td>
+                    <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_start" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_start"></td>
+                    <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_end" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_end"></td>
                 </tr>
             </table>
         </div>
@@ -225,10 +226,10 @@
 
                 <tr>
                 <!--sectorG--->
-                    <td><input class=" x-light-grey x-input" id="mgit_time_elapse" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_total_budget_approved_in_the_DIP" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_actual_cost_of_procurement" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_summary_of_actual_tools_procured" type="text" name=""></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_time_elapse" type="text" name="mgit_time_elapse"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_total_budget_approved_in_the_DIP" type="text" name="mgit_total_budget_approved_in_the_DIP"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_actual_cost_of_procurement" type="text" name="mgit_actual_cost_of_procurement"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_summary_of_actual_tools_procured" type="text" name="mgit_summary_of_actual_tools_procured"></td>
                 </tr>
             </table>
         </div>
@@ -259,18 +260,18 @@
                 </tr>
 
                 <tr>
-                    <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_start1" type="date" placeholder=""></td>
-                    <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_end1" type="date" placeholder=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_time_elapse1" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_date_of_distribution" type="text" name=""></td>
-                    <td><input class=" x-light-grey x-input" id="mgit_remarks_on_the_deliverd_tools" type="text" name=""></td>
+                    <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_start1" name="mgit_inclusive_timeline_implementation_start1" type="date" placeholder=""></td>
+                    <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_end1" name="mgit_inclusive_timeline_implementation_end1" type="date" placeholder=""></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_time_elapse1" type="text" name="mgit_time_elapse1"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_date_of_distribution" type="text" name="mgit_date_of_distribution"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_remarks_on_the_deliverd_tools" type="text" name="mgit_remarks_on_the_deliverd_tools"></td>
                     
                 </tr>
             </table>
         </div>
 
         <p class="x-right">
-        <input class="x-blue " id="organic_button_submit"  type="submit">
+        <input class="x-blue " id="form5sub"  type="submit">
         </p>
     </div>
 </form>

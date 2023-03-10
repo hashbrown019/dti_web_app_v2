@@ -487,4 +487,13 @@ function myFunction3() {
 
 })();
 
+$(document).ready(function(){
+  var multipleCancelButton = new Choices('#form_3_choices_multiple_remove_button', {
+    removeItemButton: true,
+    maxItemCount:4,
+    searchResultLimit:4,
+    renderChoiceLimit:4
+  }); 
+});
+
  
