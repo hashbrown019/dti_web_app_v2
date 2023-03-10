@@ -51,7 +51,7 @@
 							<p id="description" class="WEBSAFE container fst-italic">Loading Description.</p>
 						</div>
 						<div class="article-item container w-100">
-							<img id="img_" src="../../static/webrepstatic/img/rapidimage/6_CIDOFSFA_BrgyCervantes_Catarman_RCU8.jpg" class="WEBSAFE rounded-2 w-100 article-img" alt="...">					
+							<img id="img_" src="../../static/img/no_data.png" class="WEBSAFE rounded-2 w-100 article-img" alt="...">					
 						</div>
 						<div class="container mt-1">
 							<p id="photo_cap" class="WEBSAFE text-start text-muted fst-italic small">
@@ -68,7 +68,6 @@
 							$onload(loadArticle)
 
 							function loadArticle(){
-								println(URL_ARGS['id'])
 								$send({
 									action : "/webrep/article/get_post_ind",
 									method : POST,
@@ -76,14 +75,13 @@
 									func : function(r){
 										var res = JSON.parse(r)[0]
 										var img_path = web_safe_decode(res["file_name"]).replaceAll("C:\\fakepath\\","") 
-										println(img_path)
+										$ID("img_").src = "/webrep/article/get_img/"+ img_path
 										$ID("date").innerHTML = res["date"]
 										$ID("author").innerHTML = res["postAuthor"]
 										$ID("title").innerHTML = res["postheader"]
 										$ID("description").innerHTML = res["postdescription"]
 										$ID("photo_cap").innerHTML = res["postcaption"]
 										$ID("content").innerHTML = res["postContent"]
-										$ID("img_").src = "/webrep/article/get_img/"+ img_path
 										__websafe_decode()
 
 									}

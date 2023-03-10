@@ -29,15 +29,11 @@
 		</div>
 		<script type="text/javascript">
 			$onload(function(){
-
 				var img_class=$CLASS("img_class")
-
 				for (var i = 0; i < img_class.length; i++) {
-					img_class[i]
 					var src_1 = img_class[i].src
 					var img_path = web_safe_decode(src_1).replaceAll("C:\\fakepath\\","") 
 					img_class[i].src = img_path.replaceAll("C:/fakepath/","").replaceAll("C:fakepath","")
-					// img_class[i].src = img_path.replaceAll("C:fakepath","")
 					println(img_class[i].src )
 				}
 			})
