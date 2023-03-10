@@ -10,6 +10,7 @@ import os
 from views.dcf.form_insert import insert_form4 as insertData4
 from views.dcf.form_insert import insert_form5 as insertData5
 from views.dcf.form_insert import insert_form1 as insertData1
+from views.dcf.form_insert import insert_form3 as insertData3
 import Configurations as c 
 from modules.Connections import mysql
 
@@ -90,6 +91,10 @@ def insert_form1():
     insertData1.insert_form1(request)
     return redirect("/form1")
 
+@app.route('/insert_form3', methods = ['POST'])
+def insert_form3():
+    insertData3.insert_form3(request)
+    return redirect("/form3")
 
 
 # if __name__ == "__main__":
