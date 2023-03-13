@@ -22,7 +22,11 @@
 									{% set id_ = upload_['id'] %}
 									
 									<div class=" __FILESDOCS__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}" title="{{upload_['Title']}}">
-										<div class="card">
+										{% if upload_["status"]=='pending' %}
+										<div class="card border-warning">
+										{% else %}
+										<div class="card border-success">
+										{% endif %}
 											<div class="card-body" style="height: 200px;">
 												<h5 class="card-title mytext-truncate " style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{upload_['Title']}}</h5>
 
