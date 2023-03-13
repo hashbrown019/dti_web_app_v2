@@ -73,3 +73,13 @@ class _main:
 		else:
 			return jsonify(res);
 		
+
+	@app.route("/login/check_pass",methods=["POST","GET"])
+	def check_pass_all():
+		sql = "SELECT * FROM `users` WHERE `username`='{}' AND `password`='{}' ;".format(session["USER_DATA_ADMIN_"][0]["username"],request.form["pass"])
+		resp = len(rapid_mysql.select(sql))
+		status = "success" if(resp != 0) else "failed"
+		if("action" in request.form):action = request.form['action']
+		else: action = "none"
+
+		return {"status":status,"action":action}

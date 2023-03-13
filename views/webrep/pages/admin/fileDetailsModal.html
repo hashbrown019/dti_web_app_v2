@@ -9,6 +9,7 @@
 			<div class="modal-body">
 				<dl class="row">
 					<input id="file_id" name="" hidden>
+					<input id="file_id_modal" name="" hidden>
 					<dt class="col-3">File Title:</dt>
 					<dd class="col-8 ">
 						<h5 class="  text-muted" id="title">Loading File Title</h5>
@@ -32,57 +33,56 @@
 						<p class="fst-italic small text-muted mt-2" id="fileName">Loading Filename</p>
 						<p class="fst-italic small text-muted" id="fileuploadDate">22 October 2020</p>
 					</dd>
-
-					<!-- <dt class="col-3 mt-2">People with access:</dt>
-					<dd class="col-8 border-top border-light">
-						
-						<span class="fst-italic small text-muted mt-2" id="PWA">cjmontanez@gmail.com</span>
-						<span class="fst-italic small text-muted">|</span>
-						<span class="fst-italic small text-muted" id="fileuploaderUnit">NPCO</span>
-						<br>
-
-					</dd> -->
-
 				</dl>
 			</div>
 			<div class="modal-footer">
+				<div>
+					<button type="button" class="btn btn-outline-danger"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('reject',$ID('file_id_modal').value)">Reject</button>
+					<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('post',$ID('file_id_modal').value)">Post</button>
+					<b>&nbsp;&nbsp;|&nbsp;&nbsp;</b>
+				</div>
 
-
-				<button type="button" class="btn btn-success"  data-bs-dismiss="modal" data-bs-target="#confirmation">Edit</button>
-				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmation">Delete</button>
-				<button type="button" class="btn btn-primary"data-bs-target="#confirmation" data-bs-toggle="modal" >Download</button>
+				<button type="button" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('edit',$ID('file_id_modal').value)">Edit</button>
+				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('delete',$ID('file_id_modal').value)">Delete</button>
+				<button type="button" class="btn btn-primary" data-bs-target="#confirmation" data-bs-toggle="modal" onclick="execute_action('download',$ID('file_id_modal').value)" >Download</button>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- Password Modal -->
 <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="AccountConfirmation" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="AccountConfirmation">Account Confirmation</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        
-        <div class="container text-center">
-        	<img src="https://img.freepik.com/free-vector/man-holding-security-shield-developer-using-laptop-data-applications-protection-network-information-security-safe-cloud-storage-concept-vector-isolated-illustration_335657-2192.jpg?w=1380&t=st=1678165994~exp=1678166594~hmac=d55241bafebcb8cc81718ddabe238adc274af5d6d7281573f7c04f38b8617567" style="height: 300px;" class="mx-auto">
-        </div>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="AccountConfirmation">Account Confirmation</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				
+				<div class="container text-center">
+					<img src="https://img.freepik.com/free-vector/man-holding-security-shield-developer-using-laptop-data-applications-protection-network-information-security-safe-cloud-storage-concept-vector-isolated-illustration_335657-2192.jpg?w=1380&t=st=1678165994~exp=1678166594~hmac=d55241bafebcb8cc81718ddabe238adc274af5d6d7281573f7c04f38b8617567" style="height: 300px;" class="mx-auto">
+				</div>
+				<div class="container text-center">
+					<input id="file_id_req" name="" hidden>
+					<div>
+						Please input password to execute action (<b id="action_note"></b>)
+					</div>
+				</div>
+				<div class="container mt-3 mb-4"	>
+					<input type="password" class="form-control form-control-lg" id="inputPassword2" placeholder="Password">
+				</div>
 
-        <div class="container mt-3 mb-4"	>
-       		<input type="password" class="form-control form-control-lg" id="inputPassword2" placeholder="Password">
-        </div>
-
-      </div>
-      <div class="px-2 pb-3 d-flex justify-content-end ">
-        <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">cancel</button>
-        <button type="button" class="btn btn-primary me-2" onclick="download_file()">Continue</button>
-      </div>
-    </div>
-  </div>
+			</div>
+			<div class="px-2 pb-3 d-flex justify-content-end ">
+				<button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">cancel</button>
+				<button type="button" class="btn btn-primary me-2" onclick="request_action($ID('action_note').innerText)">Continue</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">
+
 	function get_file__det(file_ids){
 		println(file_ids)
 		$send({
@@ -92,6 +92,7 @@
 			func : function(r){
 				res = JSON.parse(r)[0]
 				println(res)
+				$ID("file_id_modal").value = res["id"]
 				$ID("title").innerHTML = res["Title"]
 				$ID("desc").innerHTML = res["Description"]
 				$ID("fileuploadDate").innerHTML = res["date_posted"]
@@ -106,25 +107,58 @@
 		})
 	}
 
-	function download_file(){
-		var fileName = $ID("fileName").innerHTML 
+	function execute_action(action,ids){
+		$ID("action_note").innerText = action
+		$ID("file_id_req").value = ids 
+		// alert(ids)
+	}
+
+
+	
+	function request_action(action){
+		var fileName = $ID("fileName").innerHTML
 		var pass = $ID("inputPassword2").value 
 
 		$send({
-			action : "/webrep/check_pass",
+			action : "/login/check_pass",
 			method : POST,
 			data : $DATA({
 				"fileName":fileName,
 				"pass":pass,
+				"action":action,
 			}),
 			func : function (r){
 				var res = JSON.parse(r)
 				println(res)
+				var file_id = $ID("file_id_req").value 
+				if(res['action']=="edit"){
+					goto("/rapid/admin/document.html?is_edit=1&file_id="+file_id)
+				}
+
 			}
 		})
 	}
+	
+	// function download_file(){
+	// 	var fileName = $ID("fileName").innerHTML 
+	// 	var pass = $ID("inputPassword2").value 
 
-	function download_excel(fff){
+	// 	$send({
+	// 		action : "/login/check_pass_all",
+	// 		method : POST,
+	// 		data : $DATA({
+	// 			"fileName":fileName,
+	// 			"pass":pass,
+	// 		}),
+	// 		func : function (r){
+	// 			var res = JSON.parse(r)
+	// 			println(res)
+
+	// 		}
+	// 	})
+	// }
+
+	function dowmloadfile(fff){
 		let a= document.createElement('a');
 		a.target= '_blank';
 		a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");

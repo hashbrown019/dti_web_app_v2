@@ -85,7 +85,7 @@ class _main:
 
 	@app.route("/webrep/check_pass",methods=["POST","GET"])
 	def check_pass():
-		print(request.form["pass"]+" == "+session["USER_DATA"][0]["password"])
+		print(request.form["pass"]+" == "+session["USER_DATA_ADMIN_"][0]["password"])
 		if(request.form["pass"]==session["USER_DATA_ADMIN_"][0]["password"]):
 			return {"status":"success","dl_path":"/webrep/upload/get_file_download/{}".format(request.form["fileName"])}
 		else:
