@@ -55,7 +55,7 @@
 		<div class="x-row x-container x-padding">
 			<div class="x-col l6 x-container x-padding">
 				<label>Office/Main Address:</label>
-				<input class=" x-input x-border" id="form_3_office_email" name="form_3_office_email" type="text" placeholder="">
+				<input class=" x-input x-border" id="form_3_office_addr" name="form_3_office_addr" type="text" placeholder="">
 			</div>
 			<div class="x-col l6 x-container x-padding">
 				<label for="email">Email Address:</label><br>
@@ -283,7 +283,35 @@
 </form>
 
 <script>
+const regionSelect = document.getElementById('form_3_preferred_region');
+const provinceSelect = document.getElementById('form_3_preferred_province');
 
+
+const regionToProvinceOptions = {
+  'Region Vlll - Central Visayas': ['Northern Samar', 'Leyte', 'Southern Leyte'],
+  'Region lX - Eastern Visayas': ['Northern Samar', 'Leyte', 'Southern Leyte'],
+  'Region X - Zamboanga Peninsula': ['Zamboanga del Norte', 'Zamboanga Sibugay', 'Zamboanga del Sur'],
+  'Region Xl - Northern Mindanao': ['Misamis Oriental', 'Bukidnon', 'Lanao del Norte'],
+  'Region Xll - Davao Region': ['Davao de Oro', 'Davao Oriental', 'Davao del Norte', 'Davao del Sur', 'Davao Occidental'],
+  'Region Xlll - Caraga': ['Agusan del Norte', 'Agusan del Sur', 'Surigao del Sur'],
+  'BARMM - Bangsamoro Autonomous Region in Muslim Mindanao': ['Maguindanao']
+};
+
+
+function updateProvinceOptions() {
+
+  const regionValue = regionSelect.value;
+
+  const provinceOptions = regionToProvinceOptions[regionValue];
+
+  provinceSelect.innerHTML = '<option value="" selected>Choose Province</option>' + provinceOptions.map(p => `<option>${p}</option>`).join('');
+}
+
+
+regionSelect.addEventListener('change', updateProvinceOptions);
+
+
+updateProvinceOptions();
 </script>
     
 {% endblock content %}

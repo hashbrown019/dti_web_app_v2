@@ -13,115 +13,45 @@
 
     <div class="card" style="width:60%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
-        <div class="card-header" style="background-color: #007399;">>
+        <div class="card-header" style="background-color: #007399;">
             <h3 style="color: white;">Spreadsheet Management</h3>
         </div>
-    
         <div class="card-body" style="background-color: #b4cde4;;">
-    
-            <form style="margin-left: 2%; margin-right: 2%;" action="/importcsv" method="POST"  enctype="multipart/form-data">
-                {% include "includes/sweetalert.html" %}
+            <form action="/" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <div class="form-row" >
-             
-                        <div class="col">
-                            <strong>
-                                <label for="position">Import Data</label>
-                            </strong><br>
-                            <div class="file-upload">
-                                <div class="file-select">
-                                  <div class="file-select-button" id="fileName">Choose File</div>
-                                  <div class="file-select-name" id="noFile">No file chosen...</div> 
-                                  <input multiple type="file"accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="chooseFile" id="chooseFile">
-                                 
-                                </div>
-                              </div>
-                              <br>
-                              <button type="submit"  class="btn btn-md btn-default"><span><i class="fa-solid fa-file-arrow-down"></i></span> Import</button>
-                        </div>
-                        </div>
-                    </form>
-                    <br> <br>
-                    <form action="/exportcsv" method="POST"  enctype="multipart/form-data" >
-                    <div class="form-row" >
-                        <div class="col">
-    
-                            <strong>
-                                <label for="name">Export Data</label>
-                            </strong><br>
-                            <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span> Export</button>
-                            
-                        </div>
-                    </div>
+                <div class="form-row">
+                  <div class="col">
+                    <strong>
+                      <label for="export_type">Choose Form:</label>
+                    </strong><br>
+                    <select id="export_type" name="export_type" class="form-control">
+                      <option value="form1export">Form 1 PREPARATION, REVIEW AND APPROVAL STATUS</option>
+                      <option value="form2export">Form 2 Implementing Unit</option>
+                      <option value="form3export">Form 3 BDSP Registry</option>
+                      <option value="form4export">Form 4 Capacity Building for Beneficiaries</option>
+                      <option value="form5export">Form 5 Matching Grant Implementation Tracker</option>
+                    </select>
+                  </div>
                 </div>
-            </form>
+                <div class="form-row">
+                  <div class="col">
+                    <strong>
+                      <label for="name">Export Data:</label>
+                    </strong><br>
+                    <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span> Export</button>
+                  </div>
+                </div>
+                </div>
+              </form>
 
-    
-    
-    
-        </div>
-    </div>
-    <div class="card" style="width:60%;  margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-
-        <div class="card-header" style="background-color: #007399;">
-            <h3 style="color: white;">Imported Files</h3>
-        </div>
-    
-        <div class="card-body" style="background-color: #b4cde4;;">
-    
-            <form style="margin-left: 2%; margin-right: 2%;">
-  
-                <div class="form-group">
-                    <div class="form-row" >
-    
-                            <div class="table-responsive table py-4">
-                                <div id="datatable-buttons_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                  <table class="table table-flush dataTable"role="grid" aria-describedby="datatable-buttons_info" >
-                                <thead class="thead bg-theme text-white">
-                                  <tr role="row">
-                                    <th>Upload by</th>
-                                    <th>File name</th>
-                                    <th>Action</th>
-                                    </tr>
-                                </thead>
-                            
-                                <tbody class=" bg-dark">
-                                  <tr>
-                                 <div>
-                                    {% for row in uploaded_file_by_user %}
-                                    {% if (row['filename'])!="" and (row['filename'])!=" " %}
-                                    <td class="text-info">{{ row['name'] }}</td>
-                                    <td><a title="Download file" class="text-success" href="{{ url_for('form_c.download_file', filename_=row['filename']) }}">{{ row['filename'] }}</a></td>
-                                    <td><a class="text-danger" onclick="confirmation(event)"  href="/delete/{{row['filename']}}">  <span><i class="fa-solid fa-trash"></i></span> Delete</a>
-
-                                        {%else%}
-                             
-                                    
-                                    
-                                        {%endif%}
-                                    </td>
-                                </tr>
-                                {% endfor  %}
-                                  </tbody>
-                        </table>
-                        
-</div>        
-</div>
-                              <br>
-                        </div>
-                    </form>
-                    <br> <br>
-
-                <br>
-               
             
+
     
     
     
         </div>
-        
     </div>
-    
+
 
 
 
