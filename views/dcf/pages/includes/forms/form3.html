@@ -86,12 +86,12 @@
 			<div class="x-col l6 x-container x-padding">
 				<span class="">Preferred Region  to work in for RAPID</span>
 				<select class=" x-border x-select x-border" id="form_3_preferred_region"  name="form_3_preferred_region"><br>
-					<option value="" selected>Choose Region</option>
-					<option>Region Vlll - Central Visayas</option>
-					<option>Region lX - Eastern Visayas</option>
-					<option>Region X - Zamboanga Peninsula</option>
-					<option>Region Xl - Northern Mindanao</option>
-					<option>Region Xll - Davao Region</option>
+					<option selected disabled>Choose Region</option>
+					<option>Region Vlll - Eastern Visayas</option>
+					<option>Region lX -  Zamboanga Peninsula</option>
+					<option>Region X - Northern Mindanao</option>
+					<option>Region Xl - Davao Region</option>
+					<option>Region Xll - SOCCSKSARGEN</option>
 					<option>Region Xlll - Caraga</option>
 					<option>BARMM - Bangsamoro Autonomous Region in Muslim Mindanao</option>
 				</select>
@@ -101,7 +101,7 @@
 			<div class="x-col l6 x-container x-padding">
 				<span class="">Preferred Province  to work in for RAPID</span>
 				<select class=" x-border x-select x-border" id="form_3_preferred_province"  name="form_3_preferred_province"><br>
-					<option value="" selected>Choose Province</option>
+					<option selected disabled>Choose Province</option>
 					<option>Northern Samar</option>
 					<option>Leyte</option>
 					<option>Southern Leyte</option>
@@ -287,31 +287,41 @@ const regionSelect = document.getElementById('form_3_preferred_region');
 const provinceSelect = document.getElementById('form_3_preferred_province');
 
 
-const regionToProvinceOptions = {
-  'Region Vlll - Central Visayas': ['Northern Samar', 'Leyte', 'Southern Leyte'],
-  'Region lX - Eastern Visayas': ['Northern Samar', 'Leyte', 'Southern Leyte'],
-  'Region X - Zamboanga Peninsula': ['Zamboanga del Norte', 'Zamboanga Sibugay', 'Zamboanga del Sur'],
-  'Region Xl - Northern Mindanao': ['Misamis Oriental', 'Bukidnon', 'Lanao del Norte'],
-  'Region Xll - Davao Region': ['Davao de Oro', 'Davao Oriental', 'Davao del Norte', 'Davao del Sur', 'Davao Occidental'],
+const regionToProvinceMap = {
+  'Region Vlll - Eastern Visayas': ['Northern Samar', 'Leyte', 'Southern Leyte'],
+  'Region lX - Zamboanga Peninsula': ['Zamboanga del Norte', 'Zamboanga Sibugay', 'Zamboanga del Sur'],
+  'Region X - Northern Mindanao': ['Misamis Oriental', 'Bukidnon', 'Lanao del Norte'],
+  'Region Xl - Davao Region': ['Davao de Oro', 'Davao Oriental', 'Davao del Norte', 'Davao del Sur', 'Davao Occidental'],
+  'Region Xll - SOCCSKSARGEN': ['North Cotabato', 'Sultan Kudarat', 'Sarangani'],
   'Region Xlll - Caraga': ['Agusan del Norte', 'Agusan del Sur', 'Surigao del Sur'],
   'BARMM - Bangsamoro Autonomous Region in Muslim Mindanao': ['Maguindanao']
 };
 
 
-function updateProvinceOptions() {
+function updateProvinceSelect() {
 
-  const regionValue = regionSelect.value;
+  const selectedRegion = regionSelect.value;
 
-  const provinceOptions = regionToProvinceOptions[regionValue];
+  const provinces = regionToProvinceMap[selectedRegion];
 
-  provinceSelect.innerHTML = '<option value="" selected>Choose Province</option>' + provinceOptions.map(p => `<option>${p}</option>`).join('');
+  provinceSelect.innerHTML = '';
+
+  const defaultOption = document.createElement('option');
+  defaultOption.text = 'Choose Province';
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  provinceSelect.add(defaultOption);
+
+  provinces.forEach((province) => {
+    const option = document.createElement('option');
+    option.text = province;
+    option.value = province;
+    provinceSelect.add(option);
+  });
 }
 
 
-regionSelect.addEventListener('change', updateProvinceOptions);
-
-
-updateProvinceOptions();
+regionSelect.addEventListener('change', updateProvinceSelect);
 </script>
     
 {% endblock content %}
