@@ -1,4 +1,4 @@
-				<div class="col-3 shadow-sm p-3 bg-body rounded">
+				<div class="col shadow-sm p-3 bg-body rounded">
 					<div class="row d-block mb-3">
 						<div class="col-12">
 							<a class="texttheme fw-bolder mb-1" type="button">Stories</a>
@@ -7,7 +7,7 @@
 						<div class="col  mb-2">
 							{% for post in page_data %}
 								{% if (post['posttype'] =='Story')%}
-									<div class="STORY_CARD card rounded-2" style="display: none;">
+									<div class="STORY_CARD card rounded-2 mb-2" style="display: none;">
 										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
 										<div class="card-img-overlay">
 											<div class="d-flex justify-content-between">
@@ -50,7 +50,7 @@
 						<div class="col  mb-2">
 							{% for post in page_data %}
 								{% if (post['posttype'] =='Event')%}
-									<div class="EVENT_CARD card rounded-2" style="display: none;">
+									<div class="EVENT_CARD card rounded-2 mb-2" style="display: none;">
 										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
 										<div class="card-img-overlay">
 											<div class="d-flex justify-content-between">
@@ -93,7 +93,7 @@
 						<div class="col  mb-2">
 							{% for post in page_data %}
 								{% if (post['posttype'] =='News')%}
-									<div class="News_CARD card rounded-2" style="display: none;">
+									<div class="EVENT_CARD card rounded-2 mb-2" style="display: none;">
 										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
 										<div class="card-img-overlay">
 											<div class="d-flex justify-content-between">
@@ -109,9 +109,9 @@
 						</div>
 						<script type="text/javascript">
 							$onload(()=>{
-								var News_CARD = $CLASS('News_CARD')
+								var EVENT_CARD = $CLASS('EVENT_CARD')
 								for (var i = 0; i < 3; i++) {
-									News_CARD[i].style.display = "block"
+									EVENT_CARD[i].style.display = "block"
 								}
 
 								var img_class=$CLASS("img_class")
