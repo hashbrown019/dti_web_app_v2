@@ -65,7 +65,8 @@ class _main:
 		elif(
 			page.lower()=="newsandstories.html".lower() or 
 			page.lower()=="home.html".lower() or 
-			page.lower()=="news.html".lower()or 
+			page.lower()=="news.html".lower()or
+			page.lower()=="articles.html".lower() or
 			page.lower()=="events.html".lower()
 			):
 			if("USER_DATA" in session):
@@ -97,12 +98,12 @@ class _main:
 
 	@app.route("/webrep/article/get_post",methods=["POST","GET"])
 	def get_post():
-		return db.select("SELECT * from `webrep_articles`;")
+		return db.select("SELECT * from `webrep_articles` ORDER BY `id` DESC;")
 
 	@app.route("/webrep/article/get_post_ind",methods=["POST","GET"])
 	def get_post_ind():
 		ids = request.form['id']
-		return db.select("SELECT * from `webrep_articles` WHERE `id`='{}';".format(ids))
+		return db.select("SELECT * from `webrep_articles` WHERE `id`='{}' ORDER BY `id` DESC;".format(ids))
 		# return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
 
 	@app.route("/webrep/uploads/docs",methods=["POST","GET"])
