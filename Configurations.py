@@ -65,7 +65,7 @@ __STORE = {}
 # _PASSWORD
 # _DATABASE
 
-# SAMPLE
+# SAMPLE 
 # {
 # 	"font_size": 8,
 # 	"ignored_packages":

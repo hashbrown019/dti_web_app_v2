@@ -3,6 +3,11 @@
 <html>
 	{% include 'head.html' %}
 	
+	<script async type="text/javascript" src="../../static/js/amcharts/index.js"></script>
+	<script async type="text/javascript" src="../../static/js/amcharts/xy.js"></script>
+	<script async type="text/javascript" src="../../static/js/amcharts/Animated.js"></script>
+	<script async type="text/javascript" src="../../static/js/amcharts/percent.js"></script>
+	<script async type="text/javascript" src="../../static/js/amcharts/hierarchy.js"></script>
 	<body class="x-light-grey">
 		<header class="x-header x-bar x-top x-rapid-teal-heavy x-large" style="z-index:9;">
 			<div class="x-container x-padding x-left x-rapid-macha-dark"  onclick="x_open()" style="width:200px;">
@@ -19,8 +24,7 @@
 				<b class="x-large">{{USER_DATA['rcu']}}</b>
 			</div>
 			<div class="x-zoom x-bar-item x-right x-small">
-				{% include 'excel_man.html
-				' %}
+				{% include 'excel_man.html' %}
 			</div>
 		</header>
 		<br><br><br>
@@ -61,46 +65,7 @@
 			</header>
 
 			<div class="x-row-padding x-margin-bottom">
-				<div class="x-quarter">
-					<div class="x-container x-red x-padding-16">
-						<div class="x-left"><i class="fa fa-comment x-xxxlarge"></i></div>
-						<div class="x-right">
-							<h3 id="total_deposits">--</h3>
-						</div>
-						<div class="x-clear"></div>
-						<h4>Deposits</h4>
-					</div>
-				</div>
-				<div class="x-quarter">
-					<div class="x-container x-blue x-padding-16">
-						<div class="x-left"><i class="fa fa-eye x-xxxlarge"></i></div>
-						<div class="x-right">
-							<h3>--</h3>
-						</div>
-						<div class="x-clear"></div>
-						<h4>Withdrawals</h4>
-					</div>
-				</div>
-				<div class="x-quarter">
-					<div class="x-container x-teal x-padding-16">
-						<div class="x-left"><i class="fa fa-share-alt x-xxxlarge"></i></div>
-						<div class="x-right">
-							<h3>--</h3>
-						</div>
-						<div class="x-clear"></div>
-						<h4>Bank Balance</h4>
-					</div>
-				</div>
-				<div class="x-quarter">
-					<div class="x-container x-orange x-text-white x-padding-16">
-						<div class="x-left"><i class="fa fa-users x-xxxlarge"></i></div>
-						<div class="x-right">
-							<h3>--</h3>
-						</div>
-						<div class="x-clear"></div>
-						<h4>Users</h4>
-					</div>
-				</div>
+				{% include 'parts/dashboard_charts.html'%}
 			</div>
 			<div class="x-row-padding x-margin-bottom">
 				{% include 'parts/table_main_entries.html'%}
@@ -109,7 +74,7 @@
 				<div class="x-row-padding" style="margin:0 -16px">
 					<div class="x-third">
 						<h5>Regions</h5>
-						<img src="./W3.CSS Template_files/region.jpg" style="width:100%" alt="Google Regional Map">
+						<img src="../../static/img/region.jpg" style="width:100%" alt="Google Regional Map">
 					</div>
 					<div class="x-twothird">
 						<h5>Feeds</h5>
@@ -208,15 +173,15 @@
 				<h5>Recent Users</h5>
 				<ul class="x-ul x-card-4 x-white">
 					<li class="x-padding-16">
-						<img src="./W3.CSS Template_files/avatar2.png" class="x-left x-circle x-margin-right" style="width:35px">
+						<img src="../../static/img/avatar2.png" class="x-left x-circle x-margin-right" style="width:35px">
 						<span class="x-xlarge">Mike</span><br>
 					</li>
 					<li class="x-padding-16">
-						<img src="./W3.CSS Template_files/avatar5.png" class="x-left x-circle x-margin-right" style="width:35px">
+						<img src="../../static/img/avatar5.png" class="x-left x-circle x-margin-right" style="width:35px">
 						<span class="x-xlarge">Jill</span><br>
 					</li>
 					<li class="x-padding-16">
-						<img src="./W3.CSS Template_files/avatar6.png" class="x-left x-circle x-margin-right" style="width:35px">
+						<img src="../../static/img/avatar6.png" class="x-left x-circle x-margin-right" style="width:35px">
 						<span class="x-xlarge">Jane</span><br>
 					</li>
 				</ul>
@@ -227,7 +192,7 @@
 				<h5>Recent Comments</h5>
 				<div class="x-row">
 					<div class="x-col m2 text-center">
-						<img class="x-circle" src="./W3.CSS Template_files/avatar3.png" style="width:96px;height:96px">
+						<img class="x-circle" src="../../static/img/avatar3.png" style="width:96px;height:96px">
 					</div>
 					<div class="x-col m10 x-container">
 						<h4>John <span class="x-opacity x-medium">Sep 29, 2014, 9:12 PM</span></h4>
@@ -237,7 +202,7 @@
 
 				<div class="x-row">
 					<div class="x-col m2 text-center">
-						<img class="x-circle" src="./W3.CSS Template_files/avatar1.png" style="width:96px;height:96px">
+						<img class="x-circle" src="../../static/img/avatar1.png" style="width:96px;height:96px">
 					</div>
 					<div class="x-col m10 x-container">
 						<h4>Bo <span class="x-opacity x-medium">Sep 28, 2014, 10:15 PM</span></h4>

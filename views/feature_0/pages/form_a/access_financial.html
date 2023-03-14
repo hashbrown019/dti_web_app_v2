@@ -1,0 +1,179 @@
+
+<div class="">
+	<header class="-header gr_body x-blue x-padding">
+		
+		<b id="is_form_filled">Profiling</b>
+	</header>
+	<input type="hidden" id="farmer_code" name="farmer_code" class="form_data_a">
+	<input type="hidden" id="is_synced" name="farmer-is_synced" class="form_data_a" value="0">
+	<input type="hidden" id="datetime" name="farmer-is_synced" class="form_data_a">
+
+	<div class="x-container  x-padding">
+
+		<b class="x-text-green">Access to Financial Services and Products</b><br>
+		<span class="x-text-grey">Primary Crop Distribution Point/Location</span><br>
+		<hr>
+
+		<div class="">
+			<div class="x-leftbar">
+				<input id="financial-is_loan" class="form_data_a x-check" type="checkbox">
+				<label>Crop Insurance</label><br>
+			</div>
+			<hr>
+
+			<!-- -------------------------------------- -->
+
+			<div class="x-leftbar" id="c_is_loan">
+				<input id="financial-is_primary_crop_distribution" class="form_data_a x-check" type="checkbox" onclick="trigger_check(this,'c_is_primary_crop_distribution')">
+				<label>Loan</label><br>
+				<div class="x-container" id="c_is_primary_crop_distribution" style="display:none;">
+
+					<input id="financial-if_loan_bank" class="form_data_a x-check" type="checkbox" onchange="trigger_check(this,'c_if_loan_bank')">
+					<label>Bank</label><br>
+
+					<div class="x-container" id="c_if_loan_bank" style="display:none;">
+						<!-- <select id="financial-type_loan" class="form_data_a x-select x-border">
+							<option value="Government">Government</option>
+							<option value="Private">Private</option>
+						</select>
+-->
+						<div class="x-container">
+							<label>Name of Government Bank</label><br>
+							<div>
+								<select id="financial-loan_govbank_name" class="form_data_a x-col s6 x-select x-border">
+									<option value="LBP">LandBank of the Philippines</option>
+									<option value="DBP">Development Bank of the Philippines</option>
+								</select>
+								<input type="text" id="financial-loan_govbank_type" class="form_data_a x-col s6 x-input x-border" placeholder="Type of loan">
+								
+							</div>
+							<br>
+
+							<label>Name of Private</label><br>
+							<div>
+								<input id="financial-loan_private_name" type="text" class="form_data_a x-col s6 x-input x-border" placeholder="Name of Private">
+								<input id="financial-loan_private_type" type="text" class="form_data_a x-col s6 x-input x-border" placeholder="Type of loan">
+							</div>
+
+						</div>
+					</div>
+
+					<hr>
+					<input id="financial-if_loan_non_bank" class="form_data_a x-check" type="checkbox" onchange="trigger_check(this,'c_if_loan_non_bank')" >
+					<label>Non-Bank</label><br>
+					<div class="x-container" id="c_if_loan_non_bank" style="display:none;">
+						<span class="x-text-grey">Name of Farmers' Organization/Cooperative<span class="x-text-grey"></span>
+						<div>
+							<!-- <input placeholder="" type="text" id="financial-loan_name_fo" class="form_data_a x-input x-border x-round  x-col s6"> -->
+							<div class="autocomplete x-block   x-col s6">
+								<input id="financial-loan_name_fo" class="form_data_a dis_in x-input x-border x-round" placeholder="Name of FO" onkeyup="get_fo_ls(this)">
+							</div>
+							<input type="text" class="form_data_a x-input x-border x-col s6" id="financial-loan_type_fo" placeholder="Type of Loan">
+						</div>
+						<span class="x-text-grey">Name of NGO<span class="x-text-grey"></span>
+						<div>
+							<input placeholder="" type="text" id="financial-loan_name_ngo" class="form_data_a x-input x-border x-round  x-col s6">
+							<input type="text" class="form_data_a x-input x-border x-col s6" id="financial-loan_type_ngo" placeholder="Type of Loan">
+						</div>
+						<span class="x-text-grey">Name of Lending Investor<span class="x-text-grey"></span>
+						<div>
+							<input placeholder="" type="text" id="financial-loan_name_lending" class="form_data_a x-input x-border x-round  x-col s6">
+							<input type="text" class="form_data_a x-input x-border x-col s6" id="financial-loan_type_lending" placeholder="Type of Loan">
+						</div>
+						
+					</div>
+
+					<hr>
+					<input id="financial-loan_if_nonbank_others" class="form_data_a x-check" type="checkbox" onclick="trigger_check(this,'c_loan_if_nonbank_others')">
+					<label>Others</label><br>
+					<div class="x-container" id="c_loan_if_nonbank_others" style="display:none;">
+						<label>Loan Initiative</label><br>
+						<div>
+							<select class="form_data_a x-select x-border  x-col s6" id="financial-loan_name_others">
+								<option value="Government">Relatives</option>
+								<option value="Private">Informal Lenders</option>
+							</select>
+							<input type="text" class="form_data_a x-input x-border x-col s6" id="financial-loan_type_others" placeholder="Type of Loan">
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<!-- --------------------------------------------------------------------------- -->
+
+			<div class="x-leftbar">
+				<input id="financial-is_crop_deposit" class="form_data_a x-check" type="checkbox" onclick="trigger_check(this,'c_is_crop_deposit')">
+				<label>Deposits</label><br>
+				<div class="x-container" id="c_is_crop_deposit" style="display:none;">
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_deposit" placeholder="Type of Deposit">
+
+					<label>Input the name of the bank If the FSP is BANK</label><br>
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_deposit_bank" placeholder="Name of Bank">
+
+					<label>Input the Name of Non-Bank FSP If the FSP is NON-BANK</label><br>
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_deposit_non_bank" placeholder="Name of Non-Bank">
+				</div>
+			</div>
+			<hr>
+
+
+			<div class="x-leftbar">
+				<input id="financial-is_crop_insurance" class="form_data_a x-check" type="checkbox" onclick="trigger_check(this,'c_is_crop_insurance')">
+				<label>Insurance</label><br>
+				<div class="x-container" id="c_is_crop_insurance" style="display:none;">
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_insurance" placeholder="Type of insurance">
+
+					<label>Input the name of the bank If the FSP is BANK</label><br>
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_insurance_bank" placeholder="Name of Bank">
+
+					<label>Input the Name of Non-Bank FSP If the FSP is NON-BANK</label><br>
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_insurance_non_bank" placeholder="Name of Non-Bank">
+				</div>
+			</div>
+			<hr>
+
+			<div class="x-leftbar">
+				<input id="financial-is_crop_payments" class="form_data_a x-check" type="checkbox" onclick="trigger_check(this,'c_is_crop_payments')">
+				<label>Payments (utilities)</label><br>
+				<div class="x-container" id="c_is_crop_payments" style="display:none;">
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_payments" placeholder="Type of payments">
+
+					<label>Input the name of the bank If the FSP is BANK</label><br>
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_payments_bank" placeholder="Name of Bank">
+
+					<label>Input the Name of Non-Bank FSP If the FSP is NON-BANK</label><br>
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_payments_non_bank" placeholder="Name of Non-Bank">
+				</div>
+			</div>
+			<hr>
+
+			<div class="x-leftbar">
+				<input id="financial-is_remmitances" class="form_data_a x-check" type="checkbox" onclick="trigger_check(this,'c_is_remmitances')">
+				<label>Remittances (OFW)</label><br>
+				<div class="x-container" id="c_is_remmitances" style="display:none;">
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_remmittance_name" placeholder="Name of Non-Bank FSP">
+				</div>
+			</div>
+			<hr>
+
+			<div class="x-leftbar">
+				<input id="financial-is_crop_others" class="form_data_a x-check" type="checkbox" onclick="trigger_check(this,'c_is_crop_others')">
+				<label>Others</label><br>
+				<div class="x-container" id="c_is_crop_others" style="display:none;">
+					<label>Input the name of the bank If the FSP is BANK</label><br>
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_others_bank" placeholder="Name of Bank">
+
+					<label>Input the Name of Non-Bank FSP If the FSP is NON-BANK</label><br>
+					<input type="text" class="form_data_a x-input x-border" id="financial-type_others_non_bank" placeholder="Name of Non-Bank">
+				</div>
+			</div>
+			<hr>
+		</div>
+
+		<hr>
+		<b class="x-text-grey">Remarks (For Enumerator)</b><br>
+		<input placeholder="" type="text" id="form-remarks" name="feedback-rsbsa_no" class="form_data_a x-input x-border x-round ">
+		<hr>
+		
+	</div>
+</div>

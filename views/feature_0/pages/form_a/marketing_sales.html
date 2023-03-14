@@ -1,0 +1,111 @@
+
+			<input type="hidden" placeholder="record_num" id="record_num" name="record_num" class="form_data_a" value="0">
+		<!-- <form action="" method="POST" id="form0" class="" style="display:block;padding: 0px;margin: 0px;"> -->
+			<div class="">
+				<header class="-header gr_body x-blue x-padding">
+					
+					<b id="is_form_filled">Profiling</b>
+				</header>
+
+				<input type="hidden" id="farmer_code" name="farmer_code" class="form_data_a">
+				<input type="hidden" id="is_synced" name="farmer-is_synced" class="form_data_a" value="0">
+				<input type="hidden" id="datetime" name="farmer-is_synced" class="form_data_a">
+
+				<div id="board" class="x-container  x-padding">
+					<h4 class="x-text-blue">Marketing Sales</h4>
+					<div class="x-container">
+						<div id="post_harvest0">
+							<div class="x-container x-card x-round-large x-padding-top" style="">
+								<hr>
+								<span><b class="post_num">1</b> - Marketing Sales</span><br>
+								<span class="x-text-grey">Primary Crop Product Type</span>
+								<input type="text" id="market-primary_crop_type" name="market-primary_crop_type" class="form_data_a x-input x-border x-round ">
+								<span class="x-text-grey">Primary Crop Volume (Delivery)</span>
+								<input type="text" id="market-primary_vol_del" name="market-primary_vol_del" class="form_data_a x-input x-border x-round ">
+
+								<span class="x-text-grey">Primary Crop Distribution Point/Location</span><br>
+								
+								<input id="market-is_coop" class="form_data_a dis_check x-check" type="checkbox" onchange="interc('coop','dis_in')" >
+								<label>FO/Coop</label><br>
+								<input id="market-is_sme" class="form_data_a dis_check x-check" type="checkbox" onchange="interc('sme','dis_in')" >
+								<label>SME</label><br>
+								<input id="market-is_anchor_firm" class="form_data_a dis_check x-check" type="checkbox" onchange="interc('afirm','dis_in')" >
+								<label>Anchor Firm</label><br>
+								<input id="market-is_negosyo_center" class="form_data_a x-check" type="checkbox">
+								<label>Negosyo Center</label><br>
+								<input id="market-is_others" class="form_data_a dis_check x-check" type="checkbox" onchange="interc('others','dis_in')" >
+								<label>Others</label><br>
+								<script type="text/javascript">
+									function interc(tag,class__){
+										var dis_check = $CLASS("dis_check")
+										for (var i = 0; i < dis_check.length; i++) {
+											if(dis_check[i].checked){
+												$CLASS(class__)[i].style.display = "block"
+											}else{
+												$CLASS(class__)[i].style.display = "none"
+											}
+										}
+									}
+								</script>
+								<hr>
+								<!-- <input style="display: none;" placeholder="Name of Coop" type="text" id="market-name_coop" name="" class="form_data_a dis_in x-input x-border x-round "> -->
+								<div class="autocomplete x-block">
+									<input id="market-name_coop" class="form_data_a dis_in x-input x-border x-round require_f" placeholder="Name of Coop" onkeyup="get_fo_ls(this)"  style="display: none;">
+								</div>
+								<input style="display: none;" placeholder="Name of SME" type="text" id="market-name_sme" name="" class="form_data_a dis_in x-input x-border x-round ">
+								<input style="display: none;" placeholder="Name of Anchor Firm" type="text" id="market-name_anchor_firm" name="" class="form_data_a dis_in x-input x-border x-round ">
+								<input style="display: none;" placeholder="If Others, please specify" type="text" id="market-name_others" name="" class="form_data_a dis_in x-input x-border x-round ">
+								<hr>
+								<span class="x-text-grey">Primary Crop Distribution Payment Terms</span>
+								<select name="market-primary_crop_dist_point" id="market-primary_crop_dist_point" class="form_data_a x-select x-border">
+									<option selected value='consignment'>Consignment</option>
+									<option selected value='cash'>Cash</option>
+									<option selected value='credit'>Credit</option>
+									<option selected value='others'>Others</option>
+								</select>
+								<span class="x-text-grey">If Others, please specify</span>
+								<input type="text" id="market-primary_crop_dist_others" class="form_data_a x-input x-border x-round dist"><br>
+
+								<span class="x-text-grey">Primary Crop Type of Buyer</span>
+								<select name="market-primary_crop_type_buyer" id="market-primary_crop_type_buyer" class="form_data_a x-select x-border">
+									<option selected value='Trader'>Trader</option>
+									<option selected value='Consolidator'>Consolidator</option>
+									<option selected value='Processor'>Processor</option>
+									<option selected value='Others'>Others</option>
+								</select>
+								<span class="x-text-grey">If Others, please specify</span>
+								<input type="text" id="market-primary_crop_buyer_others" class="form_data_a x-input x-border x-round dist">
+								<hr>
+
+								<div class="x-row">
+									<div class="x-col s6">
+										<span class="x-text-grey">Farm-Gate-Price in Php (fgp)</span>
+										<input placeholder="FGP in Php" type="text" id="market-primary_crop_product_fgp" class="form_data_a x-input x-border x-round dist">
+									</div>
+									<div class="x-col s6">
+										<span class="x-text-grey">Unit</span>
+										<select class="x-select x-border form_data_a" id="market-primary_crop_product_fgp_unit">
+											<option value="kg">Kg</option>
+											<option value="metric tons">Metric Tons</option>
+										</select>
+									</div>
+								</div>
+								<hr>
+							</div>
+							<hr>
+						</div>
+						
+					</div>
+
+					<div class="">
+						<hr>
+						<b class="x-text-grey">Remarks (For Enumerator)</b><br>
+						<input placeholder="" type="text" id="form-remarks" name="feedback-rsbsa_no" class="form_data_a x-input x-border x-round ">
+						<hr>
+						<button class="x-blue x-block x-btn x-round-large" onclick="duplicate()">Add More Product <span class="fa fa-plus"></span></button>
+						<hr>
+					
+					</div>
+				</div>
+			</div>
+		<!-- </form> -->

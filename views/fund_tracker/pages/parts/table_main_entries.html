@@ -18,6 +18,10 @@
 				<input style="border:0px" type="text" placeholder="Search" data-index=3 />
 			</th>
 			<th>
+				Expense Account (Object)<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index=3 />
+			</th>
+			<th>
 				IFAD Fund Source<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="4" />
 			</th>
@@ -79,18 +83,11 @@
 			"scrollX":true,
 			"data" : data_
 		});
-		// TABLE.load(data_)
-		// TABLE.ajax.reload()
 		set_search_field()
+		generate_dashboard()
 	}
 
 	function set_search_field(){
-		// $('#table_id thead th').each( function (i) {
-		// 	var title = $('#table_id thead th').eq( $(this).index() ).text();
-		// 	println(i)
-		// 	$(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
-		// } );
-
 		$(TABLE.table().container() ).on('keyup', 'thead input', function () {
 			TABLE
 				.column( $(this).data('index') )
@@ -100,10 +97,12 @@
 		$('#table_id tbody').on('mousedown', 'tr', function () {
 			var data = TABLE.row(this).data();
 			show_ind_edit( data[0] );
-			
 		})
 
 	}
+
+
+
 	function show_ind_edit(ids){
 		show_modal_entry()
 		$send({
@@ -118,17 +117,7 @@
 					var kk = form_data_ft_edit[i].id
 					form_data_ft_edit[i].value = resp[kk]
 				}
-
-				// for(key in resp){
-				// 	try{
-				// 		$CLASS("form_data_ft").getElementById(key).value = resp[key]
-				// 	}
-				// 	catch(e){
-				// 		warnprintln(e)
-				// 	}
-				// }
 			}
 		})
-		// showing_table_ls_ft_main()
 	}
 </script>

@@ -1,0 +1,179 @@
+
+			<input type="hidden" disabled id="record_num" name="record_num" class="form_data_a" >
+			<input type="hidden" disabled id="record_duplicate_id" name="record_duplicate_id" class="form_data_a" value="post_harvest">
+
+
+			<div class="">
+				<header class="-header gr_body x-blue x-padding">
+					
+					<b id="is_form_filled">Profiling</b>
+				</header>
+				<input type="hidden" id="farmer_code" name="farmer_code" class="form_data_a">
+				<input type="hidden" id="is_synced" name="farmer-is_synced" class="form_data_a" value="0">
+				<input type="hidden" id="datetime" name="farmer-is_synced" class="form_data_a">
+				<div id="board" class="x-container  x-padding">
+					<!--  -->
+					<div id="post_harvest0" class="x-padding x-leftbar x-border-green" style="margin-bottom: 20px;">
+						<b class="x-text-green x-large">[<b class="post_num">1</b>] POST Harvest/Semi-Processing Capacity</b>
+						
+						<span class="x-text-">Facility/Equipment Information</span><br>
+						<span class="x-text-grey"> Type of PH Facility/Equipment</span>
+						<div class="x-row">
+							<select name="post_harv-type_faci_equip" id="post_harv-type_faci_equip" class="form_data_a x-input x-border" >
+								<option disabled selected value="none">Please select</option>
+								<option  value='Mechanized'>Mechanized</option>
+								<option  value='Manual'>Manual</option>
+								<option  value='Both Mechanized and Manual'>Both Mechanized and Manual</option>
+							</select>
+							<span class="x-text-grey">Name of Equipment/Facilities</span>
+							<input type="text" placeholder="Input Name of Equipment/Facilities" id="post_harv-type_faci_equip_name" class="x-select x-border form_data_a">
+						</div>
+						<hr>
+						<b class="x-text-green">Addresses</b><br>
+						<span class="x-text-grey x-small">
+							<b>
+								If you are in the exact location of the farm, Please 
+								<i class="x-blue x-round" style="padding:2px" onmouseup="__get_location(this)">
+									click here
+								</i>
+							</b><br>
+							<span>Or you can manually input the coordinates</span><br>
+
+							<span style="display:none;" id="geolocation"></span>
+							<input class="form_data_a coords_long x-input" placeholder="Longitude" type="text" id="farmer-coords_long">
+							<input class="form_data_a coords_lat x-input" placeholder="Latitude" type="text" id="farmer-coords_lat">
+						</span><br><br>
+
+						<span class="x-text-grey">Full Address</span>
+						<div id="addrs_area">
+							<div class="x-container">
+								<div class="x-col s3 autocomplete">
+									<input name="reg" id="addr_region" type="text" class=" reg form_data_a x-input x-border x-round " placeholder="Region" onkeyup="__region_sel(this)">
+								</div>
+								<div class="x-col s9 autocomplete">
+									<input name="prov" id="addr_prov" type="text" class="prov form_data_a x-input x-border x-round " placeholder="Province" onkeyup="__ls_prov(this)">
+								</div>
+							<!-- </div>
+							<div class="x-container"> -->
+								<div class="x-col s6 autocomplete">
+									<input name="city" id="addr_city" type="text" class="city form_data_a x-input x-border x-round " placeholder="Municipality/City" onkeyup="__ls_city(this)">
+								</div>
+								<div class="x-col s6 autocomplete">
+									<input id="addr_brgy" type="text" class="brgy form_data_a x-input x-border x-round " placeholder="Barangay" onkeyup="__ls_brgy(this)">
+								</div>
+							</div>
+							<div class="x-container">
+								<input id="addr_street_purok_sitio" type="text" class="form_data_a x-input x-border x-round x-block" placeholder="Street/Purok/Sitio">
+							</div>
+						</div>
+
+						<hr>
+						<span class="x-text-grey"> PH Product Form</span>
+						<select name="post_harv-ph_product_form" id="post_harv-ph_product_form" class="form_data_a x-select x-border" onchange="phcrop(this.value)">
+							<option style="display:none" value="primary" selected>Primary Crop (selected primary crop)</option>
+							<optgroup class="optg" id="Coffee_form" __style="display:none" label="Coffee">
+								<option value="fresh cherries">fresh cherries</option>
+								<option value="dried beans/green coffee beans">dried beans/green coffee beans</option>
+								<option value="roasted beans">roasted beans</option>
+								<option value="roasted ground coffee">roasted ground coffee</option>
+							</optgroup>
+							<optgroup class="optg" id="Cacao_form" __style="display:none" label="Cacao">
+								<option value="wet beans">wet beans</option> 
+								<option value="sun dried beans">sun dried beans</option> 
+								<option value="dried fermented beans">ried fermented beans</option> 
+								<option value="tablea (cocoa mass)">tablea (cocoa mass)</option> 
+								<option value="cacao nibs">cacao nibs</option> 
+								<option value="chocolates">chocolates</option> 
+							</optgroup>
+							<optgroup class="optg" id="Coconut_form" __style="display:none" label="Coconut">
+								<option value="whole nuts (dehusked)">whole nuts (dehusked)</option>
+								<option value="whole nut with husk">whole nut with husk</option>
+								<option value="copra">copra</option>
+								<option value="desiccated coconut">desiccated coconut</option>
+								<option value="virgin coconut oil">virgin coconut oil</option>
+								<option value="coco vinegar">coco vinegar</option>
+								<option value="lump charcoal">lump charcoal</option>
+								<option value="coconut fiber">coconut fiber</option>
+								<option value="pressed coconut hut">pressed coconut hut</option>
+							</optgroup>
+
+							<optgroup class="optg" id="Calamansi_form" __style="display:none" label="Calamansi">
+								<option value="fresh calamansi">fresh calamansi</option>
+								<option value="calamansi concentrate">calamansi concentrate</option>
+								<option value="calamansi puree">calamansi puree</option>
+								<option value="raw calamansi juice">raw calamansi juice</option>
+								<option value="calamansi powder">calamansi powder</option> 
+							</optgroup>
+
+							<optgroup class="optg" id="Banana_form" __style="display:none" label="Banana">
+								<option value="defingered banana">defingered banana</option>
+								<option value="first fry banana">first fry banana</option>
+								<option value="first fry banana chips">first fry banana chips</option>
+								<option value="fresh cardaba banana">fresh cardaba banana</option>
+								<option value="banana flour">banana flour</option>
+							</optgroup>
+							<optgroup class="optg" id="Mango_form" __style="display:none" label="Mango">
+								<option value="none" disabled>No Data Yet for this Commodity</option>
+							</optgroup>
+							<optgroup class="optg" id="Pili_Nut_form" __style="display:none" label="Pili Nut">
+								<option value="none" disabled>No Data Yet for this Commodity</option>
+							</optgroup>
+							<optgroup class="optg" id="Jackfruit_from" __style="display:none" label="Jackfruit">
+								<option value="none" disabled>No Data Yet for this Commodity</option>
+							</optgroup>
+							<option value="others">Others</option>
+						</select>
+						<script type="text/javascript">
+							function phcrop(val){
+								if(val=="others"){$ID('[]post_harv-phcropothers').style.display="block"}
+								else{$ID('[]post_harv-phcropothers').style.display="none"}
+							}
+						</script>
+						<input placeholder="If Others, please specify product form" type="text" id="post_harv-phcropothers" name="post_harv-others" class="form_data_a x-input x-border x-round" style="display: none;"><hr>
+
+						<div class="x-row">
+							<div class="x-col s6">
+								<span class="x-text-grey"> PH Capacity (qty)</span>
+								<input type="text" id="post_harv-capacity" name="post_harv-capacityfull_address" class="form_data_a x-input x-border x-round ">
+							</div>
+							<div class="x-col s3">
+								<span class="x-text-grey">unit</span>
+								<select class="form_data_a x-select" id="post_harv-capacity_unit">
+									<option value="kg">kg</option>
+									<option value="metric_tons">Metric Tons</option>
+									<option value="sack">Sack/Crate/Box</option>
+								</select>
+							</div>
+							<div class="x-col s3">
+								<span class="x-text-grey">Freq.</span>
+								<select class="form_data_a x-select" id="post_harv-capacity_unit_time">
+									<option value="hr">hr</option>
+									<option value="day">day</option>
+									<option value="month">month</option>
+									<option value="year">year</option>
+									<option value="harvest">harvest</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="img_cc_asd">
+							<span class="x-text-grey">Post-Harvest Facility/Equipment Photo</span>
+							<input type="file" id="post_harv-photo_selector" name="post_harv-photo_selector" class="form-data x-input x-border x-round" multiple onchange="farm_photo(this)">
+
+							<div id="farm_photo-viewer" class="img_viewer x-container">
+								<span> NO Photos Available</span>
+							</div>
+							<input type="hidden" id="post_harv-photo" class="img_content form_data_a x-tiny" value="No Base64 image">
+						</div>
+					</div>
+				</div>
+				<div class="x-container">
+					<button type="button" class="x-btn x-round-large x-block x-blue" onclick="duplicate()">Add Post Harvest Form <span class="fa fa-plus"></span></button>
+					<br>
+					<b class="x-text-grey">Remarks (For Enumerator)</b><br>
+					<input placeholder="" type="text" id="form-remarks" name="feedback-rsbsa_no" class="form_data_a x-input x-border x-round ">
+				</div>
+				<hr>
+
+			</div>
+	

@@ -118,7 +118,7 @@ def excel_popu_individual(_NAME_):
 		try:
 			resp = readRows(file_name, sheet)
 			resp__ = readRowsHeads(file_name, sheet)
-			f = open("assets/temp.txt","w")
+			f = open(c.RECORDS+"/temp.txt","w")
 			f.write(json.dumps(resp__))
 			f.close()
 			# msg = resp

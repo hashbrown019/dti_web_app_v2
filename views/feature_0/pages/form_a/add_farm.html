@@ -1,0 +1,213 @@
+
+			<div class="">
+				<header class="-header gr_body x-blue x-padding">
+					
+					<b id="is_form_filled">Profiling</b>
+				</header>
+
+				<input type="hidden" id="farmer_code" name="farmer_code" class="form_data_a">
+				<input type="hidden" id="is_synced" name="farmer-is_synced" class="form_data_a" value="0">
+				<input type="hidden" id="datetime" name="farmer-is_synced" class="form_data_a">
+
+				<div class="x-container  x-padding">
+					<b class="x-text-green">Farm Information</b><br>
+
+					<span class="x-text-grey">Farm Photo</span>
+					<input type="file" id="farm-photo_selector" name="farm-photo_selector" class="x-input x-border x-round" multiple onchange="farm_photo(this)">
+
+					<div id="farm_photo-viewer" class="x-container">
+						<span> NO Photos Available</span>
+					</div>
+					<!-- <input type="text" id="farm-photo" class="form_data_a x-tiny" value="NO Base64 image"> -->
+					<input type="hidden" id="farm-photo" class="form_data_a x-tiny" value="No Base64 image">
+
+					<b class="x-text-green">Addresses</b><br>
+					<span class="x-text-grey x-small">
+						<b>If you are in the exact location of the farm, Please <i class="x-blue x-round" style="padding:2px" onmouseup="get_location()">click here</i></b><br>
+						<span>Or you can manually input the coordinates</span><br>
+					</span>
+					<span class="x-text-grey">
+						<span style="display:none;" id="geolocation"></span>
+						<input class="form_data_a x-input" placeholder="Longitude" type="text" id="farmer-coords_long">
+						<input class="form_data_a x-input" placeholder="Latitude" type="text" id="farmer-coords_lat">
+					</span>
+					<br><br>
+
+					<span class="x-text-grey">Full Address</span>
+					<div class="x-container">
+						<div class="x-col s3 autocomplete">
+							<input id="addr_region" type="text" class="form_data_a require_f x-input x-border x-round " placeholder="Region" onkeyup="region_sel(this)">
+						</div>
+						<div class="x-col s9 autocomplete">
+							<input id="addr_prov" type="text" class="form_data_a require_f x-input x-border x-round " placeholder="Province" onkeyup="ls_prov(this)">
+						</div>
+					</div>
+					<div class="x-container">
+						<div class="x-col s6 autocomplete">
+							<input id="addr_city" type="text" class="form_data_a require_f x-input x-border x-round " placeholder="Municipality/City" onkeyup="ls_city(this)">
+						</div>
+						<div class="x-col s6 autocomplete">
+							<input id="addr_brgy" type="text" class="form_data_a require_f x-input x-border x-round " placeholder="Barangay" onkeyup="ls_brgy(this)">
+						</div>
+					</div>
+					<div class="x-container">
+						<input id="addr_street_purok_sitio" type="text" class="form_data_a x-input x-border x-round x-block" placeholder="Street/Purok/Sitio">
+					</div>
+
+
+					
+					<span class="x-text-grey">Declared Area (in Ha)</span>
+					<input type="number" id="farm-declare_area" name="farm-declare_area" class="form_data_a x-input x-border x-round ">
+					<hr>
+					<b class="x-text-green">Cropping</b><br>
+					<!-- <input id="farm-is_single_crop" class="form_data_a x-check" type="checkbox">
+					<label>Single Crop</label><br> -->
+					<input id="farm-is_multi_crop" class="form_data_a x-check" type="checkbox" onchange="interc(this)" >
+					<label>Inter cropping</label><hr>
+					<script type="text/javascript">
+						function interc(inter){
+							println(inter.checked)
+							// $ID("farm-isfarm").disabled = inter.checked
+							// $ID("farm-isfarm").checked = !inter.checked
+							if(inter.checked){
+								$ID("sec_crop").style.display = "block"
+							}else{
+								$ID("sec_crop").style.display = "none"
+							}
+						}
+					</script>
+
+					<span class="x-text-grey">Primary Crop.</span>
+					<select name="farm-primary_crop" id="farm-primary_crop" class="form_data_a x-select x-border">
+						<option disabled selected value="none">Please select</option>
+						<option value="Cacao">Cacao</option>
+						<option value="Coffee">Coffee</option>
+						<option value="Coconut">Coconut</option>
+						<option value="Banana">Banana</option>
+						<option value="Calamansi">Calamansi</option>
+						<option value="Jackfruit">Jackfruit</option>
+						<option value="Mango">Mango</option>
+						<option value="Pili Nut">Pili Nut</option>
+						<option value="Other fruits and nuts">Other fruits and nuts</option>
+						<option value="Vegetables">Vegetables</option>
+					</select>
+					
+					<div id="veg_nuts_others" style="display:none">
+						<span class="x-text-grey">Please specify Secondary Crop if not in the list of choices</span>
+						<input value="None" type="text" id="farm-others_crops" name="farm-others_crops" class="form_data_a x-input x-border x-round ">
+					</div>
+
+					<span class="x-text-grey">Sloping area in hectares (greater than 18 degrees)</span>
+					<input placeholder="unit: hectare" value="None" type="number" id="farm-slope_hectars" name="farm-slope_hectars" class="form_data_a x-input x-border x-round ">
+
+					<span class="x-text-grey">Flat/Plain area in hectares</span>
+					<input placeholder="unit: hectare" value="None" type="number" id="farm-palin_hectares" name="farm-palin_hectares" class="form_data_a x-input x-border x-round ">
+
+					<span class="x-text-grey">No. of BEARING trees planted</span>
+					<input placeholder="" value="None" type="number" id="farm-bearing_plants" name="farm-bearing_plants" class="form_data_a x-input x-border x-round ">
+
+					<span class="x-text-grey">No. of NON-BEARING trees planted</span>
+					<input placeholder="" value="None" type="number" id="farm-non_bearing_plants" name="farm-non_bearing_plants" class="form_data_a x-input x-border x-round ">
+
+<!-- 					<span class="x-text-grey">Number of Lots</span>
+					<select name="farm-number_of_lots" id="farm-number_of_lots" class="form_data_a x-select x-border" _onchange="rsbsa_change(this.value)">
+						<option selected value='No'>1</option>
+						<option value='yes'>2</option>
+						<option value='No Idea'>3</option>
+						<option value='No Idea'>4</option>
+					</select> -->
+					<hr>
+					<b class="x-text-grey">Land Tenurial Status in Ha.</b><br>
+					<div>
+						
+					</div>
+						<input id="farm-tenurial_so" class="form_data_a x-border tenur_stat" onkeyup="tenur_stat()" style="width: 50%;" type="number" >
+						<label>Sole Ownership <i>(in Ha.)</i></label><br>
+
+						<input id="farm-tenurial_co" class="form_data_a x-border tenur_stat" onkeyup="tenur_stat()" style="width: 50%;" type="number">
+						<label>Co-Ownership <i>(in Ha.)</i></label><br>
+
+						<input id="farm-tenurial_cloa" class="form_data_a x-border tenur_stat" onkeyup="tenur_stat()" style="width: 50%;" type="number">
+						<label>CLOA/Individual EP <i>(in Ha.)</i></label><br>
+
+						<input id="farm-tenurial_stew" class="form_data_a x-border tenur_stat" onkeyup="tenur_stat()" style="width: 50%;" type="number">
+						<label>Stewardship <i>(in Ha.)</i></label><br>
+
+						<input id="farm-tenurial_Usfruc" class="form_data_a x-border tenur_stat" onkeyup="tenur_stat()" style="width: 50%;" type="number">
+						<label>Usufruct <i>(in Ha.)</i></label><br>
+
+						<input id="farm-tenurial_ten" class="form_data_a x-border tenur_stat" onkeyup="tenur_stat()" style="width: 50%;" type="number">
+						<label>Tenancy <i>(in Ha.)</i></label><br>
+
+						<input id="farm-tenurial_others" class="form_data_a x-border tenur_stat" onkeyup="tenur_stat()" style="width: 50%;" type="number">
+						<label>Others <i>(in Ha.)</i>...</label><br>
+
+
+
+					<span class="x-text-grey">Total Ha of Lots with Selected Tenurial status</span>
+					<input disabled type="text" id="farm-total_no_tenurial_lots" name="farm-total_no_tenurial_lots" class="form_data_a x-input x-border x-round "><br>
+					<span id="land_note"></span>
+
+					<hr>
+					<b class="x-text-green">Production Profile</b><br>
+
+
+					<span class="x-text-grey">Primary Crop Average Production Volume (2018-2019) (in Kg/cycle)<span class="x-text-grey"></span>
+					<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-primary_crop_av_prof_vol" name="farm-primary_crop_av_prof_vol" class="form_data_a x-input x-border x-round ">
+					<span class="x-text-grey">Primary Crop Total Land Area Covered (in Hectares)<span class="x-text-grey"></span>
+					<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-primary_crop_total_land_area" name="farm-primary_crop_total_land_area" class="form_data_a x-input x-border x-round ">
+					<span class="x-text-grey">Primary Crop Cycle per Year<span class="x-text-grey"></span>
+					<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-primary_crop_cycle_year" name="farm-primary_crop_cycle_year" class="form_data_a x-input x-border x-round ">
+					<hr>
+					<div id="sec_crop" style="display: none;">
+						<span class="x-text-grey">Secondary Crop.</span>
+						<select name="farm-secondary_crop" id="farm-secondary_crop" class="form_data_a x-select x-border" onchange="sec_others(this)">
+							<option disabled selected value="none">Please select</option>
+							<option value="Cacao">Cacao</option>
+							<option value="Coffee">Coffee</option>
+							<option value="Coconut">Coconut</option>
+							<option value="Banana">Banana</option>
+							<option value="Calamansi">Calamansi</option>
+							<option value="Jackfruit">Jackfruit</option>
+							<option value="Mango">Mango</option>
+							<option value="Pili Nut">Pili Nut</option>
+							<option value="Other fruits and nuts">Other fruits and nuts</option>
+							<option value="Vegetables">Vegetables</option>
+						</select>
+						<span class="x-text-grey">Secondary Crop Average Production Volume (2018-2019) (in Kg/cycle)<span class="x-text-grey"></span>
+						<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-secondary_crop_av_prod_vol" name="farm-secondary_crop_av_prod_vol" class="form_data_a x-input x-border x-round ">
+						<span class="x-text-grey">Secondary Crop Total Land Area Covered (in Hectares)<span class="x-text-grey"></span>
+						<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-secondary_crop_total_land_area" name="farm-secondary_crop_total_land_area" class="form_data_a x-input x-border x-round ">
+						<span class="x-text-grey">Secondary Crop Cycle per Year<span class="x-text-grey"></span>
+						<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-secondary_crop_cycle_year" name="farm-secondary_crop_cycle_year" class="form_data_a x-input x-border x-round ">
+						<hr>
+						<script type="text/javascript">
+							function sec_others(tag){
+								println(tag.value)
+								if(tag.value == "Vegetables" || tag.value == "Other fruits and nuts"){
+									$ID('veg_nuts_others').style.display = "block"
+								}else{
+									$ID('veg_nuts_others').style.display = "none"
+								}
+							}
+						</script>
+						
+					</div>
+					<span class="x-text-grey">Area of Land for expansion for SLOPING (in Ha)<span class="x-text-grey"></span>
+					<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-area_land_expansion_slope" name="farm-area_land_expansion_slope" class="form_data_a x-input x-border x-round ">
+					<span class="x-text-grey">Area of Land for expansion for FLAT/PLAIN (in Ha)<span class="x-text-grey"></span>
+					<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-area_land_expasnion_flat" name="farm-area_land_expasnion_flat" class="form_data_a x-input x-border x-round ">
+					<span class="x-text-grey">Area of Land for rehabilitation for SLOPING (in Ha)<span class="x-text-grey"></span>
+					<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-area_land_rehab_slope" name="farm-area_land_rehab_slope" class="form_data_a x-input x-border x-round ">
+
+					<span class="x-text-grey">Area of Land for rehabilitation for FLAT/PLAIN (in Ha)<span class="x-text-grey"></span>
+					<input _placeholder="appears if 'Others' is selected under  'Land Tenurial Status'" type="number" id="farm-area_land_rehab_flat" name="farm-area_land_rehab_flat" class="form_data_a x-input x-border x-round ">
+
+					
+					<hr>
+					<b class="x-text-grey">Remarks (For Enumerator)</b><br>
+					<input placeholder="" type="text" id="form-remarks" name="feedback-rsbsa_no" class="form_data_a x-input x-border x-round ">
+					<hr>
+
+				</div>
+			</div>

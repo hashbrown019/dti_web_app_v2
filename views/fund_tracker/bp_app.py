@@ -31,7 +31,6 @@ def dashboard():
 
 @app.route("/fundtracker/submit_entry_ft_main",methods = ["POST"])
 def submit_entry_ft_main():
-
 	form_data = request.form
 	_key = ""; _val=""
 	for key in form_data:
@@ -48,12 +47,13 @@ def submit_entry_ft_main():
 def get_table_data():
 	output_ = rapid_mysql.select("SELECT * FROM `ft_per_output`;")
 	object_ = rapid_mysql.select("SELECT * FROM `ft_object`;")
-	return {"output":output_,"object":object_}
+	main_ = rapid_mysql.select("SELECT * FROM `ft_main`;")
+	return {"output":output_,"object":object_,"main":main_}
 
 
 @app.route("/fundtracker/get_entries_main",methods = ["POST","GET"])
 def get_entries_main():
-	resps = rapid_mysql.select("SELECT `id`,`particulars`,`payee_supplier`,`output_desc`,`ifad_app_ref` FROM `ft_main`;",False)
+	resps = rapid_mysql.select("SELECT `id`,`particulars`,`payee_supplier`,`exp_acc`,`output_desc`,`ifad_app_ref` FROM `ft_main`;",False)
 	return resps
 
 
