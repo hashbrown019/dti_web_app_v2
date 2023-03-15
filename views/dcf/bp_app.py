@@ -10,6 +10,8 @@ import os
 from views.dcf.form_insert import insert_form4 as insertData4
 from views.dcf.form_insert import insert_form5 as insertData5
 from views.dcf.form_insert import insert_form6 as insertData6
+from views.dcf.form_insert import insert_form7 as insertData7
+from views.dcf.form_insert import insert_form9 as insertData9
 from views.dcf.form_insert import insert_form1 as insertData1
 from views.dcf.form_insert import insert_form3 as insertData3
 from views.dcf.form_insert import insert_form2 as insertData2
@@ -72,7 +74,15 @@ def insert_form6():
     insertData6.insert_form6(request)
     return redirect("/dcf/form6")
 
+@app.route('/insert_form7', methods = ['POST'])
+def insert_form7():
+    insertData7.insert_form7(request)
+    return redirect("/dcf/form7")
 
+@app.route('/insert_form9', methods = ['POST'])
+def insert_form9():
+    insertData9.insert_form9(request)
+    return redirect("/dcf/form9")
 
 @app.route('/dcf', methods=['GET', 'POST'])
 def dcfexport_data():
@@ -227,6 +237,60 @@ def dcfexport_data():
                     return send_file(c.RECORDS+'/objects/_temp_/dcf_form6_exported_file.xlsx')
 
             return form6export()
+        
+        elif export_type == 'form7export':
+            def form7export():
+                if request.method == "POST":
+                    query = db.select("SELECT form_7_implementing_unit,form_7_title_trade_promotion,form_7_type_of_trade_promotion,form_7_dip_indicate,form_7_start_date,form_7_end_date,form_7_name_of_po,form_7_amount,form_7_venue,form_7_rapid_actual_budget,form_7_name_of_beneficiary,form_7_commodity,form_7_msme,form_7_fo,form_7_farmer,form_7_male,form_7_female,form_7_pwd,form_7_youth,form_7_ip,form_7_sc,form_7_type_of_products,form_7_name_of_buyer,form_7_cash_sales,form_7_booked_sales,form_7_under_negotiations,form_7_total_autosum FROM dcf_trade_promotion")
+                    df_nested_list = pd.json_normalize(query)
+                    df = pd.DataFrame(df_nested_list)
+                    df = df.astype(str)
+                    writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form7_exported_file.xlsx') 
+                    df.to_excel(writer, sheet_name='dcf_form7_exported_file', index=False)
+                    new_column_names = 'Implementing Unit,Title of Trade Promotion Services Provided,Type of Trade Promotion Services organized/participated,DIP (indicate NO if none),Start Date,End Date,Name of Partner/Organization,Amount,Venue,RAPID Actual Budget,Name of Beneficiary (Name of farmer Registered business/FO name),Commodity,MSME,FO,Farmer,Male,Female,PWD,Youth,IP,SC,Type of Product(s),Name of Buyer/Company Matched with Assisted MSMEs/FOs,Cash Sales,Booked Sales,Under Negotiations,Total'
+                    new_column_names_list = new_column_names.split(',')
+                    df.columns = new_column_names_list
+
+                    workbook = writer.book
+                    worksheet = writer.sheets['dcf_form7_exported_file']
+                    header_format = workbook.add_format({'bold': True, 'text_wrap': True, 'valign': 'top', 'fg_color': '#00ace6', 'border': 1})
+                    
+                    for col_num, value in enumerate(df.columns.values):
+                        worksheet.write(0, col_num, value, header_format)
+                        column_width = max(df[value].astype(str).apply(len).max(), len(value)) + 1
+                        worksheet.set_column(col_num, col_num, column_width)
+                    
+                    writer.save()
+                    return send_file(c.RECORDS+'/objects/_temp_/dcf_form7_exported_file.xlsx')
+
+            return form7export()
+        
+        elif export_type == 'form9export':
+            def form9export():
+                if request.method == "POST":
+                    query = db.select("SELECT form_9_implementing_unit,form_9_title_trade_promotion,form_9_type_of_training,form_9_start_date,form_9_end_date,form_9_venue,form_9_rapid_actual_budget,form_9_name_of_resource_person,form_9_name_of_participant_org,form_9_counterpart_amount,form_9_name_of_participant,form_9_organization,form_9_designation,form_9_male,form_9_female,form_9_pwd,form_9_youth,form_9_ip,form_9_sc,form_9_pre_test1,form_9_post_test1,form_9_activity_output,form_9_pre_test2,form_9_post_test2,form_9_rating,form_9_comments FROM dcf_enablers_activity")
+                    df_nested_list = pd.json_normalize(query)
+                    df = pd.DataFrame(df_nested_list)
+                    df = df.astype(str)
+                    writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form9_exported_file.xlsx') 
+                    df.to_excel(writer, sheet_name='dcf_form9_exported_file', index=False)
+                    new_column_names = 'Implementing Unit,Activity Title,Type of Training/Activity,Start Date,End Date,Venue,RAPID actual budget,Name of Resource Person/Facilitator/BDSP,Name of Partner/Organization,Counterpart Amount,Name of Participant,Organization,Designation,Male,Female,PWD,Youth,IP,SC,Pre-test,Post-test,Activity Output,Pre-test,Post-test,Rating,Comments/Areas of Improvement'
+                    new_column_names_list = new_column_names.split(',')
+                    df.columns = new_column_names_list
+
+                    workbook = writer.book
+                    worksheet = writer.sheets['dcf_form9_exported_file']
+                    header_format = workbook.add_format({'bold': True, 'text_wrap': True, 'valign': 'top', 'fg_color': '#00ace6', 'border': 1})
+                    
+                    for col_num, value in enumerate(df.columns.values):
+                        worksheet.write(0, col_num, value, header_format)
+                        column_width = max(df[value].astype(str).apply(len).max(), len(value)) + 1
+                        worksheet.set_column(col_num, col_num, column_width)
+                    
+                    writer.save()
+                    return send_file(c.RECORDS+'/objects/_temp_/dcf_form9_exported_file.xlsx')
+
+            return form9export()
         
     else:
         return redirect('dcfspreadsheet.html')

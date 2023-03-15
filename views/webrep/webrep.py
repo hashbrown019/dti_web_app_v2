@@ -40,7 +40,9 @@ class _main:
 	@app.route("/rapid/<segment>/<page>",methods=["POST","GET"])
 	def page_loader(segment,page):
 		print(" * Page Loaded : {}".format(page.lower()))
-		if(page.lower()=="adminKnowledgecenter.html".lower()):
+		if(page.lower()=="adminKnowledgecenter.html".lower() or
+			page.lower()=="superadmin.html".lower()
+			):
 			if(_main.is_on_session()):
 				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0],upload_file_webrep=_main.get_uploads_docs())
 			else:
