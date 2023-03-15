@@ -26,7 +26,7 @@
 		<div class="d-flex">
 
 			<a class="me-4 active"  data-bs-toggle="offcanvas" href="#notifications" role="button" aria-controls="notifications" style="color: #1F4F5A !important;" href=" " role="button">Notifications</a>				
-			<a id="user_man" class="me-4 active"  data-bs-toggle="modal" data-bs-target="#usermang" style="color: #1F4F5A !important;" href=" " role="button">Users Management</a>
+			<a id="user_man" class="me-4 active"  data-bs-toggle="modal" data-bs-target="#usermang" style="color: #1F4F5A !important;" href=" " role="button" onclick="get_user_data()">Users Management</a>
 
 
 			<div class="offcanvas offcanvas-end" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
@@ -45,7 +45,7 @@
 				<div class="modal-dialog modal-xl modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">User Management</h1>
+							<h1 class="modal-title fs-5" id="exampleModalLabel" >User Management</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body ">
@@ -56,79 +56,104 @@
 									<div class="col-4 border-end btn-secondary">
 										<div class="container">
 											<h5 class="fw-bolder texttheme fs-2 mb-5">User List</h5>
-											<table class="table ">
-												<thead>
-													<tr>
-														<th scope="col" class="texttheme" id="id">ID</th>
-														<th scope="col" class="texttheme" id="name">Name</th>
-													</tr>
-												</thead>
-												<tbody class="table-group-divider">
-													<tr>
-														<th scope="row" class="texttheme">1</th>
-														<td class="texttheme">Mark</td>
-													</tr>											    											   
-												</tbody>
-											</table>
+											<div class="container overflow-auto" style="height: 60vh;" >											
+												<table class="table">
+													<thead>
+														<tr>
+															<th scope="col" class="texttheme" id="id">ID</th>
+															<th scope="col" class="texttheme" id="name">Name</th>
+														</tr>
+													</thead>
+													<tbody id="user_list" class="table-group-divider">
+														<tr>
+															<th scope="row" class="texttheme">...</th>
+															<td class="texttheme">Loading...</td>
+														</tr>											    											   
+													</tbody>
+												</table>
+											</div>
 										</div>
 									</div>
 
 									<div class="col-4 border-end btn-secondary">
 										<div class="">
-											<h5 class="fw-bolder texttheme fs-2 mb-5">Details:</h5>
-											<div class=" mt-5">
+											<div class="d-flex justify-content-between">
+												<div>
+													<h5 class="fw-bolder texttheme fs-2 ">Details</h5>													
+												</div>
+											</div>
+											
+											<div class="container mt-4 overflow-auto" style="height: 60vh;">
+												<div class="mb-3">													
+													<h5 class="small fw-bolder ms-1 texttheme">ID</h5>
+													<input disabled class="USER_DATA form-control form-control-lg " type="text" placeholder="" id="id">													
+												</div>
+												<div class="mb-3">													
+													<h5 class="small fw-bolder ms-1 texttheme">Name</h5>
+													<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="name">													
+												</div>
 												<div class="mb-3">													
 													<h5 class="small fw-bolder ms-1 texttheme">Address</h5>
-													<input class="form-control form-control-lg" type="text" placeholder="" id="address">													
+													<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="address">													
 												</div>
 												
 												<div class="mb-3">													
 													<h5 class="small fw-bolder ms-1 texttheme">Email Address:</h5>
-													<input class="form-control form-control-lg" type="email" placeholder="" id="email">													
+													<input class="USER_DATA form-control form-control-lg" type="email" placeholder="" id="email">													
 												</div>
 
 												<div class="mb-3">													
 													<h5 class="small fw-bolder ms-1 texttheme">Job:</h5>
-													<input class="form-control form-control-lg" type="text" placeholder="" id="job">													
+													<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="job">													
 												</div>
 												<div class="mb-3">													
 													<h5 class="small fw-bolder ms-1 texttheme">Mobile:</h5>
-													<input class="form-control form-control-lg" type="text" placeholder="" id="mobile">													
+													<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="mobile">													
 												</div>
 												<div class="row mb-3">						
 													<div class="col-6">
 														<h5 class="small fw-bolder ms-1 texttheme">RCU:</h5>
-														<input class="form-control form-control-lg" type="text" placeholder="" id="pcu">	
+														<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="pcu">	
 														
 													</div>	
 													<div class="col-6">
 														<h5 class="small fw-bolder ms-1 texttheme">PCU:</h5>												
-														<input class="form-control form-control-lg" type="text" placeholder="" id="rcu">														
+														<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="rcu">														
 													</div>						
 												</div>
 												<div class="mb-3">													
 													<h5 class="small fw-bolder ms-1 texttheme">Username:</h5>
-													<input class="form-control form-control-lg" type="text" placeholder="" id="username">													
+													<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="username">													
 												</div>
 												<div class="mb-3">													
 													<h5 class="small fw-bolder ms-1 texttheme">Password:</h5>
-													<input class="form-control form-control-lg" type="text" placeholder="" id="password">													
+													<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="password">													
 												</div>
 												<div class="mb-3">													
 													<h5 class="small fw-bolder ms-1 texttheme">Date:</h5>
-													<input class="form-control form-control-lg" type="text" placeholder="" id="until">													
+													<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="until">													
 												</div>
 												<div class="mb-3">													
 													<h5 class="small fw-bolder ms-1 texttheme">Status:</h5>
-													<input class="form-control form-control-lg" type="text" placeholder="" id="status" disabled>													
+													<input class="USER_DATA form-control form-control-lg" type="text" placeholder="" id="status" disabled>													
 												</div>												
+											</div>
+
+											<div class="d-flex  mt-3">
+												<div>
+													<button type="button" class="btn btn-outline-dark me-3">Save</button>	
+												</div>
 											</div>
 										</div>
 									</div>
 
 									<div class="col-4">
 										<div class="container">
-											<h5 class="fw-bolder texttheme fs-2">Settings</h5>
+											<div class="d-flex justify-content-between">
+												<div>
+													<h5 class="fw-bolder texttheme fs-2 ">Setting</h5>													
+												</div>												
+											</div>
 											<div class="mt-5">
 												<p>Type:</p>
 												<select class="form-select" aria-label="">
@@ -141,7 +166,7 @@
 											</div>
 
 											
-											<div class="container mt-5">
+											<div class="container mt-5 " style="height: 47vh;">
 												<h5 class="fw-bolder texttheme">Modules</h5>
 												<table class="container table">
 													<thead>
@@ -153,32 +178,39 @@
 														</tr>
 													</thead>
 													<tbody class="table-group-divider">
-														<tr>
-															<th scope="row" class="texttheme">Knowledge Center</th>
-															<td class="texttheme">
-																<div class="form-check ms-2">
-																	<input class="form-check-input" type="checkbox" value="" id="check_read">
-																	<label class="form-check-label" for="check_write">
-																	</label>
-																</div>
-															</td>
-															<td class="texttheme">
-																<div class="form-check d-flex justify-content-center ">
-																	<input class="form-check-input" type="checkbox" value="" id="check_read">
-																	<label class="form-check-label" for="check_write">
-																	</label>
-																</div>
-															</td>
-															<td class="texttheme">
-																<div class="form-check d-flex justify-content-center ">
-																	<input class="form-check-input" type="checkbox" value="" id="check_read">
-																	<label class="form-check-label" for="check_write">
-																	</label>
-																</div>
-															</td>
-														</tr>											    											   
+														{% for module in module_data: %}
+															<tr>
+																<td scope="row" class="texttheme">{{module['name']}}</td>
+																<td class="texttheme">
+																	<div class="form-check ms-2">
+																		<input class="form-check-input" type="checkbox" value="" id="">
+																		<label class="form-check-label" for="check_write">
+																		</label>
+																	</div>
+																</td>
+																<td class="texttheme">
+																	<div class="form-check d-flex justify-content-center ">
+																		<input class="form-check-input" type="checkbox" value="" id="">
+																		<label class="form-check-label" for="check_write">
+																		</label>
+																	</div>
+																</td>
+																<td class="texttheme">
+																	<div class="form-check d-flex justify-content-center ">
+																		<input class="form-check-input" type="checkbox" value="" id="">
+																		<label class="form-check-label" for="check_write">
+																		</label>
+																	</div>
+																</td>
+															</tr>
+														{% endfor %}										    											   
 													</tbody>
 												</table>
+											</div>
+											<div class="d-flex ">
+												<div>
+													<button type="button" class="btn btn-outline-dark me-3">Save</i></button>	
+												</div>
 											</div>
 										</div>
 									</div>
@@ -188,8 +220,7 @@
 
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
+							
 						</div>
 					</div>
 				</div>
@@ -199,3 +230,46 @@
 
 	</div>
 </nav >
+<script type="text/javascript">
+	// $onload(function(){
+	// 	$ID("user_man").click()
+	// 	get_user_data()
+	// })
+
+
+	function get_user_data(){
+		$send({
+			action : "/api/get_user_data/all",
+			func : function(r){
+				var resp = JSON.parse(r)
+				var ls_str = ""
+				for (var i = 0; i < resp.length; i++) {
+					
+					ls_str += (`
+						<tr onclick="set_user_datafield(`+resp[i]['id']+`)">
+							<th scope="row" class="texttheme">`+resp[i]['id']+`</th>
+							<td class="texttheme">`+resp[i]['name']+`</td>
+						</tr>		
+					`)
+				}
+				$ID('user_list').innerHTML = ls_str
+			}
+		})
+	}
+
+	function set_user_datafield(arr){
+
+		$send({
+			action : "/api/get_user_data/"+arr,
+			func : function(r){
+				var resp = JSON.parse(r)[0]
+				println(resp)
+				var USER_DATA = $CLASS('USER_DATA')
+				for (var i = 0; i < USER_DATA.length; i++) {
+					
+					USER_DATA[i].value = resp[USER_DATA[i].id]
+				}
+			}
+		})
+	}
+</script>

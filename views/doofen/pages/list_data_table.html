@@ -1,7 +1,7 @@
 <table class="display" id="table_id_fo" style="width:100%">
 	<thead class="x-rapid-teal-heavy" style="width:100%">
 		<tr class="">
-			<th>
+			<th hidden>
 				ID<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="0" />
 			</th>
@@ -46,11 +46,18 @@
 				println(" -- Getting List Farmers Done")
 				res = JSON.parse(rest)
 				$ID('num_input_fo').innerHTML = res.length
+				println("res")
 				println(res)
-				create_table(res)
+				try{
+					create_table(res)
+				}catch(e){
+					alert("An Error/Warning occurred during Data Loading\n\nErro/Warningr message\n[ "+e+" ]\n\n You may continue your transaction by clicking the button below")
+				}
 				SPINNER_LOADER.hide()
+				println("res---")
+
 			},
-			err : function(res){println(res)},
+			err : function(res){println(res);SPINNER_LOADER.hide()},
 			progress : function(e){
 				// var response_length = parseFloat(headerMap(e)['total'])
 				var response_length = parseFloat(e.total)
@@ -81,7 +88,14 @@
 		TABLE = new DataTable('#table_id_fo', {
 			"scrollY":'60vh',
 			"scrollX":true,
-			"data" : data_
+			"data" : data_,
+			"columnDefs": [
+				{
+					target: 0,
+					visible: false,
+					searchable: false,
+				}
+			]
 		});
 		// TABLE.load(data_)
 		// TABLE.ajax.reload()
@@ -102,7 +116,8 @@
 		} );
 		$('#table_id_fo tbody').on('mousedown', 'tr', function () {
 			var data = TABLE.row(this).data();
-			show_fo_ind_(data[0]);
+			// show_fo_ind_(data[0]); //got to form details
+			show_dialog_item(data[0],data[1])
 		})
 
 		var tr_ = $('#table_id_fo tbody tr')
@@ -111,6 +126,15 @@
 			sas[3].innerHTML = TYPES_ORG[parseInt(sas[3].innerHTML)]
 			sas[4].innerHTML = REG_AGENCIES[parseInt(sas[4].innerHTML)]
 		}
+	}
+
+	function show_dialog_item(ids,nameorg){
+		var item_dialog = $dialog({
+			title : nameorg,
+			subtitle : "Control the data for the entry ["+nameorg+"]",
+		})
+
+		item_dialog.show()
 	}
 
 	function show_fo_ind_(ids){

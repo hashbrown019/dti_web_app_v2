@@ -44,7 +44,14 @@ class _main:
 			page.lower()=="superadmin.html".lower()
 			):
 			if(_main.is_on_session()):
-				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0],upload_file_webrep=_main.get_uploads_docs())
+				return render_template(
+					"{}/{}".format(segment,page),
+					users=_main.get_all_user(),
+					is_session =_main.is_on_session(),
+					user_data=session["USER_DATA"][0],
+					upload_file_webrep=_main.get_uploads_docs(),
+					module_data = _main.get_module_data()
+					)
 			else:
 				return redirect("/login?force_url=1")
 		elif(
@@ -167,6 +174,10 @@ class _main:
 		print(img)
 		return send_file(c.RECORDS+"/objects/webrep/"+img)
 
+
+	def get_module_data():
+		_modules = db.select("SELECT * FROM `__modules`;")
+		return _modules
 	# ======================================================================================================
 
 	@app.app_errorhandler(404)
