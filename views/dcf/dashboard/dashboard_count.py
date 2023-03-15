@@ -22,18 +22,27 @@ def display():
     select_countform3=db.select("SELECT * FROM dcf_bdsp_reg")
     select_countform4=db.select("SELECT * FROM dcf_capacity_building")
     select_countform5=db.select("SELECT * FROM dcf_matching_grant")
+    select_countform6=db.select("SELECT * FROM dcf_product_development")
+    select_countform7=db.select("SELECT * FROM dcf_trade_promotion")
+    select_countform9=db.select("SELECT * FROM dcf_enablers_activity")
     dcf_form5=len(select_countform5)
     dcf_form4=len(select_countform4)
     dcf_form3=len(select_countform3)
     dcf_form2=len(select_countform2)
     dcf_form1=len(select_countform1)
+    dcf_form6=len(select_countform6)
+    dcf_form7=len(select_countform7)
+    dcf_form9=len(select_countform9)
     return{
         'USER_INFO':  USER_INFO,
         'dcf_form1': dcf_form1,
         'dcf_form2': dcf_form2,
         'dcf_form3': dcf_form3,
         'dcf_form4': dcf_form4,
-        'dcf_form5': dcf_form5
+        'dcf_form5': dcf_form5,
+        'dcf_form6': dcf_form6,
+        'dcf_form7': dcf_form7,
+        'dcf_form9': dcf_form9
 
     }
 
@@ -50,18 +59,27 @@ def display__():
     select_countform3=db.select("SELECT * FROM dcf_bdsp_reg {} ".format(position_data_filter()))
     select_countform4=db.select("SELECT * FROM dcf_capacity_building {} ".format(position_data_filter()))
     select_countform5=db.select("SELECT * FROM dcf_matching_grant {} ".format(position_data_filter()))
+    select_countform6=db.select("SELECT * FROM dcf_product_development {} ".format(position_data_filter()))
+    select_countform7=db.select("SELECT * FROM dcf_trade_promotion {} ".format(position_data_filter()))
+    select_countform9=db.select("SELECT * FROM dcf_enablers_activity {} ".format(position_data_filter()))
     dcf_form5=len(select_countform5)
     dcf_form4=len(select_countform4)
     dcf_form3=len(select_countform3)
     dcf_form2=len(select_countform2)
     dcf_form1=len(select_countform1)
+    dcf_form6=len(select_countform6)
+    dcf_form7=len(select_countform7)
+    dcf_form9=len(select_countform9)
     return{
         'USER_INFO':  USER_INFO,
         'dcf_form1': dcf_form1,
         'dcf_form2': dcf_form2,
         'dcf_form3': dcf_form3,
         'dcf_form4': dcf_form4,
-        'dcf_form5': dcf_form5
+        'dcf_form5': dcf_form5,
+        'dcf_form6': dcf_form6,
+        'dcf_form7': dcf_form7,
+        'dcf_form9': dcf_form9
     }
 
 def position_data_filter():

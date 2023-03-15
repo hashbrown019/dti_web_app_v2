@@ -1,0 +1,244 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "form7" %}
+{% set forms = "forms" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+	<form action="/insert_form7" method="POST">
+        {% include "includes/sweetalert.html" %}
+<div class="x-col l1 ">
+    &nbsp;
+</div>
+    <div class=" x-col l9 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
+        <center><h2 class=" text-white x-container x-padding" style="background-color: #007399;">Trade Promotion Services Tracker</h2></center>
+
+        <div class="x-container x-padding">
+            <style> 
+                table, th, td{border: 1px solid black;border-collapse: collapse;}
+            </style>
+        </div>
+
+        <div class="x-row x-container x-padding">
+            <div class="x-col l3 x-container x-padding">
+                <span class="">Implementing Unit:</span>
+                <select class=" x-border x-select x-border" id="form_7_implementing_unit" name="form_7_implementing_unit"><br>
+                    <option disabled selected>Choose your option</option>
+                    <option >RCU</option>
+                    <option >PCU</option>
+                </select>
+            </div>
+            <div class="x-col l6 x-container x-padding">
+                <label>Title of Trade Promotion Services Provided:</label>
+                <input class=" x-input x-border" id="form_7_title_trade_promotion" name="form_7_title_trade_promotion" type="text" autocomplete="on" placeholder="">
+            </div>
+        </div>
+        <div class="x-row x-container x-padding">
+            <div class="x-col l7 x-container x-padding">
+                <span class="">Type of Trade Promotion Services organized/participated :</span>
+                <select class=" x-border x-select x-border" id="form_7_type_of_trade_promotion" name="form_7_type_of_trade_promotion"><br>
+                    <option disabled selected>Choose your option</option>
+                    <option >Trade Fair - Provincial</option>
+                    <option > Trade Fair - Regional</option>
+                    <option>Trade Fair - National</option>
+                    <option>Trade Fair - International</option>
+                    <option>Trade/Selling Missions Province and Region</option>
+                    <option>Trade/Selling Missions National</option>
+                    <option>Trade/Selling Missions International</option>
+                    <option>Business Matching Province and Region</option>
+                    <option>Business Matching National</option>
+                    <option>Business Matching International</option>
+                </select>
+            </div>
+            <div class="x-col l5 x-container x-padding">
+                <label>DIP (indicate NO if none):</label>
+                <input class=" x-input x-border" id="form_7_dip_indicate" name="form_7_dip_indicate" type="text" autocomplete="on" placeholder="">
+            </div>
+        </div>
+
+        <div class="x-row x-container x-padding">
+            <div class="x-col l5 x-container x-padding">
+                <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                <table for="x-table x-container x-table-border " style="border-color: transparent; overflow-x:auto;">
+                    <tr>
+                        <th colspan="2">
+                            <center>Activity Duration</center>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td><center>Start Date</center></td>
+                        <td><center>End Date</center></td>
+                    </tr>
+
+                    <tr>
+                        <td><input for=" x-light-grey x-input" id="form_7_start_date" type="date" name="form_7_start_date"></td>
+                        <td><input for=" x-light-grey x-input" id="form_7_end_date" type="date" name="form_7_end_date"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="x-col l7 x-container x-padding">
+                <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                <table for="x-table x-container x-table-border " style="border-color: transparent; overflow-x:auto">
+                    <tr>
+                        <th colspan="2">
+                            <center>Activities fully & partially funded by partners outside RAPID </center>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td><center>Name of Partner/Organization</center></td>
+                        <td><center>Amount</center></td>
+                    </tr>
+
+                    <tr>
+                        <td><input class=" x-light-grey x-input" id="form_7_name_of_po" type="text" name="form_7_name_of_po"></td>
+                        <td><input class=" x-light-grey x-input" id="form_7_amount" type="number" name="form_7_amount"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="x-col l6 x-container x-padding">
+                <label>Venue: </label>
+                <input class=" x-input x-border" id="form_7_venue" name="form_7_venue" type="text" autocomplete="on" placeholder="">
+            </div>
+            <div class="x-col l6 x-container x-padding">
+                <label>RAPID Actual Budget: </label>
+                <input class=" x-input x-border" id="form_7_rapid_actual_budget" name="form_7_rapid_actual_budget" type="text" autocomplete="on" placeholder="">
+            </div>
+        </div>
+
+        <div class=" x-row x-padding">
+            <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">Outputs</h2></center>
+
+            <div class="x-container x-padding">
+                <style> 
+                    table, th, td{border: 1px solid black;border-collapse: collapse;}
+                </style>
+            </div>
+            <div class="x-row x-container x-padding">
+                <label>Name of Beneficiary (Name of farmer, Registered business/FO name) : </label>
+                <input class=" x-input x-border" id="form_7_name_of_beneficiary" name="form_7_name_of_beneficiary" type="text" autocomplete="on" placeholder="">
+            </div>
+            <div class="x-col l6 x-container x-padding">
+                <label>Commodity :</label>
+                <input class=" x-input x-border" id="form_7_commodity" name="form_7_commodity" type="text" autocomplete="on" placeholder="">
+            </div>
+        </div>
+
+        <div class="x-row x-container x-padding">
+            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+            <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                <tr>
+                    <th colspan="3">
+                        <center>Type of Beneficiary</center>
+                    </th>
+                    <th colspan="2">
+                        <center>Sex of Owner/Proprietor/Chair</center>
+                    </th>
+                    <th colspan="4">
+                        <center>Sector</center>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td><center>MSME</center></td>
+                    <td><center>FO</center></td>
+                    <td><center>Farmer</center></td>
+
+                    <td><center>Male</center></td>
+                    <td><center>Female</center></td>
+
+                    <td><center>PWD</center></td>
+                    <td><center>Youth</center></td>
+                    <td><center>IP</center></td>
+                    <td><center>SC</center></td>
+                    
+
+                </tr>
+
+                <tr>
+                    <td><input class=" x-light-grey x-input" id="form_7_msme" type="text" name="form_7_msme"></td>
+                    <td><input class=" x-light-grey x-input" id="form_7_fo" type="text" name="form_7_fo"></td>
+                    <td><input class=" x-light-grey x-input" id="form_7_farmer" type="text" name="form_7_farmer"></td>
+
+                    <td><input class=" x-light-grey x-input" id="form_7_male" type="text" name="form_7_male"></td>
+                    <td><input class=" x-light-grey x-input" id="form_7_female" type="text" name="form_7_female"></td>
+                    
+                    <td><input class=" x-light-grey x-input" id="form_7_pwd" type="text" name="form_7_pwd"></td>
+                    <td><input class=" x-light-grey x-input" id="form_7_youth" type="text" name="form_7_youth"></td>
+                    <td><input class=" x-light-grey x-input" id="form_7_ip" type="text" name="form_7_ip"></td>
+                    <td><input class=" x-light-grey x-input" id="form_7_sc" type="text" name="form_7_sc"></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="x-col l4 x-container x-padding">
+            <label>Type of Product(s):</label>
+            <input class=" x-input x-border" id="form_7_type_of_products" name="form_7_type_of_products" type="text" autocomplete="on" placeholder="">
+        </div>
+        <div class="x-col l8 x-container x-padding">
+            <label>Name of Buyer/Company Matched with Assisted MSMEs/FOs:</label>
+            <input class=" x-input x-border" id="form_7_name_of_buyer" name="form_7_name_of_buyer" type="text" autocomplete="on" placeholder="">
+        </div>
+        <div class="x-row x-container x-padding">
+            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+            <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                <tr>
+
+                    <th colspan="4">
+                        <center>Sales Generated per MSME</center>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td><center>Cash Sales</center></td>
+                    <td><center>Booked Sales</center></td>
+                    <td><center>Under Negotiations</center></td>
+                    <td><center>Total</center></td>
+                </tr>
+
+                <tr>
+                    <td><input class="t1 x-light-grey x-input" id="form_7_cash_sales" name="form_7_cash_sales" type="number" oninput="calculateTotal()"></td>
+                    <td><input class="t1 x-light-grey x-input" id="form_7_booked_sales" name="form_7_booked_sales" type="number" oninput="calculateTotal()"></td>
+                    <td><input class="t1 x-light-grey x-input" id="form_7_under_negotiations" name="form_7_under_negotiations" type="number" oninput="calculateTotal()"></td>
+                    <td><input class="t1 x-light-grey x-input" id="form_7_total_autosum" name="form_7_total_autosum" type="number" readonly></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="x-row x-container x-padding">
+            
+            <div class="x-col l5">
+                <div method="post" enctype="multipart/form-data">
+                    <div class="x-col l3 x-container x-padding">
+                        <input class="x-padding" type="file" id="form_7_image_uploads" name="form_7_image_uploads" accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx" multiple />
+                    </div>
+                </div> 
+            </div>
+            <div class="x-right" style="margin-top: 5%;">
+                <input class="x-blue btn " id="form_7_submit"  type="submit">
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+<script>
+function calculateTotal() {
+      var cash_sales = parseInt(document.getElementById('form_7_cash_sales').value) || 0;
+      var booked_sales = parseInt(document.getElementById('form_7_booked_sales').value) || 0;
+      var under_negotiations = parseInt(document.getElementById('form_7_under_negotiations').value) || 0;
+      var total = cash_sales + booked_sales + under_negotiations;
+      document.getElementById('form_7_total_autosum').value = total;
+    }
+</script>
+{% endblock content %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}
+
