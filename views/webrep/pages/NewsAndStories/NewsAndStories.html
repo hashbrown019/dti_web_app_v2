@@ -28,11 +28,14 @@
 
 	{% include 'main/navbarpages.html' %}
 
-	{% include 'banners/newsandstorybanner.html' %}
+	<div class="" style="background-color: #e3ebd5 !important;">
 
-	{% include 'newsAndstories/stickynavNAS.html' %}
+		{% include 'banners/newsandstorybanner.html' %}
 
-	<!-- Search Area -->
+
+		{% include 'newsAndstories/stickynavNAS.html' %}
+
+		<!-- Search Area -->
 		<div class="container shadow-lg p-3  bg-body rounded mt-2 mb-3" id="nassearch" style="display: none;">
 			<a class="me-4 btn-close float-end" disabled aria-label="Close" id="close" onclick="closesearch()" style="color: #1F4F5A !important;" role="button"></a>				
 			<script>
@@ -126,67 +129,52 @@
 
 
 
-	<div class=" " style="display:block;" id="">
-		<div class="container mt-5">
-			<a class="fs-2 dropdown-toggle texttheme" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="today">All</a>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" type="button" id="All" onclick="clicked(this)">All</a></li>
-				<li><a class="dropdown-item" type="button" id="today" onclick="clicked(this)">Today</a></li>
-				<li><a class="dropdown-item" type="button" id="thisweek" onclick="clicked(this)">Less than a week</a></li>
-				<li><a class="dropdown-item" type="button" id="thismonth" onclick="clicked(this)">This month</a></li>
-			</ul>				
-		</div>
+		
 		<div>{% include 'newsAndstories/todayTab.html' %}</div>
-	</div>
 
-	<script>
+		<script>
 
-		function clicked(elmnt) {
-			document.getElementById("today").innerText=elmnt.innerText
-			var news_cards = document.getElementsByClassName("news_card")
-			var now_month =$datetime().split("/")[0]
-			var now_day =$datetime().split("/")[1]
-			var now_year =$datetime().split("/")[2].split(",")[0]
+			function clicked(elmnt) {
+				document.getElementById("today").innerText=elmnt.innerText
+				var news_cards = document.getElementsByClassName("news_card")
+				var now_month =$datetime().split("/")[0]
+				var now_day =$datetime().split("/")[1]
+				var now_year =$datetime().split("/")[2].split(",")[0]
 
-			for (var i = 0; i < news_cards.length; i++) {news_cards[i].style.display="none"}
+				for (var i = 0; i < news_cards.length; i++) {news_cards[i].style.display="none"}
 
-			for (var i = 0; i < news_cards.length; i++) {
-				var news_date = news_cards[i].getAttribute('vdate')
-				var news_month =news_date.split("-")[1]
-				var news_day =news_date.split("-")[2].split(" ")[0]
-				var news_year =news_date.split("-")[0]
+					for (var i = 0; i < news_cards.length; i++) {
+						var news_date = news_cards[i].getAttribute('vdate')
+						var news_month =news_date.split("-")[1]
+						var news_day =news_date.split("-")[2].split(" ")[0]
+						var news_year =news_date.split("-")[0]
 				// println(""+(parseInt(now_day)-7)+" - "+((news_day))+" - "+(parseInt(now_day)))
 
-				if(elmnt.innerText=="Today"){
-					if(parseInt(news_day)!=parseInt(now_day)){
-						news_cards[i].style.display ="none"
+						if(elmnt.innerText=="Today"){
+							if(parseInt(news_day)!=parseInt(now_day)){
+								news_cards[i].style.display ="none"
+							}
+						}
+						if(elmnt.innerText=="Less than a week"){
+							if(parseInt(news_day) < parseInt(now_day) && parseInt(news_day)>parseInt(now_day)-7 && parseInt(news_month) == parseInt(now_month)){
+								news_cards[i].style.display ="block"
+							}
+						}
+						if(elmnt.innerText=="This month"){
+							if(parseInt(news_month) == parseInt(now_month)){
+								news_cards[i].style.display ="block"
+							}
+						}
+						if(elmnt.innerText=="All"){
+							news_cards[i].style.display ="block"
+						}
+
 					}
 				}
-				if(elmnt.innerText=="Less than a week"){
-					if(parseInt(news_day) < parseInt(now_day) && parseInt(news_day)>parseInt(now_day)-7 && parseInt(news_month) == parseInt(now_month)){
-						news_cards[i].style.display ="block"
-					}
-				}
-				if(elmnt.innerText=="This month"){
-					if(parseInt(news_month) == parseInt(now_month)){
-						news_cards[i].style.display ="block"
-					}
-				}
-				if(elmnt.innerText=="All"){
-					news_cards[i].style.display ="block"
-				}
 
-			}
-		}
+			</script>
+			{% include 'main/footer.html' %}
+		</div>
 
-	</script>
-
-	<div class="container mb-5 shadow-sm p-3 bg-body rounded">
-		
-	</div>
-
-	{% include 'main/footer.html' %}
-
-
-</body>
-</html>
+	</body>
+	</html>

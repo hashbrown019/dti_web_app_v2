@@ -27,21 +27,28 @@
 										{% else %}
 										<div class="card border-success">
 										{% endif %}
-											<div class="card-body" style="height: 200px;">
-												<h5 class="card-title mytext-truncate " style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{upload_['Title']}}</h5>
+											<div class="row row-cols-1 card-body d-flex" style="height: 200px;">
+												<div class=" ">
+													<div class="">
+													<h5 class="card-title mytext-truncate fw-bolder texttheme" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{upload_['Title']}}</h5>			
+													</div>
 
-												<div class="" style="max-width: 250px;">
-													<p class="card-text mytext-truncate" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{upload_['Description']}}</p>
+													<div class="" style="max-width: 250px;">
+														<p class="card-text mytext-truncate text-secondary" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{upload_['Description']}}</p>
+													</div>
 												</div>
-												
-												<a href="#" class="btn btn-dark stretched-link  btn-sm text-white  mt-3" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails" onmouseup="get_file__det('{{id_}}')"><em>View Details </em></a>
+												<div class=" align-self-end">
+													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white  mt-3" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails" onmouseup="get_file__det('{{id_}}')"><em>View Details </em></a>
+												</div>
 												<span class="small  text-muted ms-5 fst-italic"></span>
 											</div>
 										</div>
 									</div>
+
 									
 								{% endif %}
 							{% endfor %}
+
 						</div>
 					</div>
 
