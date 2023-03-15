@@ -12,39 +12,43 @@
 					<input id="file_id_modal" name="" hidden>
 					<dt class="col-3">File Title:</dt>
 					<dd class="col-8 ">
-						<h5 class="  text-muted" id="title">Loading File Title</h5>
-						<p id="desc" class="fst-italic small text-muted"> Loading description of the file.</p>
+						<h5 class="texttheme fs-3" id="title">Loading File Title</h5>
+						<p id="desc" class="text-muted "> Loading description of the file.</p>
 					</dd>
 
 					<dt class="col-3 mt-2">Upload by:</dt>
 					<dd class="col-8 border-top border-light">
-						<p id="uploadbyname" class="fst-italic small text-muted mt-2">Loading Name</p>
-						<p id="uploadbyemail" class="fst-italic small text-muted">Loading Email</p>
-						<!-- <span class="fst-italic small text-muted">|</span> -->
-						<span id="uploadbyjob" class="fst-italic small text-muted">--</span>
-						<span id="" class="fst-italic small text-muted">|</span>
-						<span id="uploadbyrcu" class="fst-italic small text-muted">--</span>
+						<p id="uploadbyname" class=" text-muted mt-2">Loading Name</p>
+						<p id="uploadbyemail" class=" text-muted">Loading Email</p>
+						<!-- <span class=" text-muted">|</span> -->
+						<span id="uploadbyjob" class=" text-muted">--</span>
+						<span id="" class=" text-muted">|</span>
+						<span id="uploadbyrcu" class=" text-muted">--</span>
 					</dd>
 
 					<dt class="col-3 mt-2">File Details:</dt>
-					<dd class="col-8 border-top border-light">
-						
-						<p class="fst-italic small text-muted mt-2" id="fileTopic">Loading Details</p>                             
-						<p class="fst-italic small text-muted mt-2" id="fileName">Loading Filename</p>
-						<p class="fst-italic small text-muted" id="fileuploadDate">22 October 2020</p>
+					<dd class="col-8 border-top border-light">						
+						<p class="fs-5 mt-2 text-muted" id="fileTopic">Loading Details</p>                             
+						<p class=" mt-2 texttheme" id="fileName">Loading Filename</p>
+						<p class=" text-muted" id="fileuploadDate">22 October 2020</p>
+					</dd>
+					<dt class="col-3 mt-2">Accessed by:</dt>
+					<dd class="col-8 border-top border-light">						
+						<p class=" mt-2 text-muted" id="fileTopic">Public</p>
 					</dd>
 				</dl>
 			</div>
 			<div class="modal-footer">
-				<div>
-					<button type="button" class="btn btn-outline-danger"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('reject',$ID('file_id_modal').value)">Reject</button>
-					<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('post',$ID('file_id_modal').value)">Post</button>
-					<b>&nbsp;&nbsp;|&nbsp;&nbsp;</b>
+
+				<div class="hstack gap-3">
+				<button type="button" class="btn btn-outline-danger"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('reject',$ID('file_id_modal').value)">Revise</button>
+					<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('post',$ID('file_id_modal').value)">Confirm</button>
+				<div class="vr"></div>
+				<button type="button" class="btn btn-primary" data-bs-target="#confirmation" data-bs-toggle="modal" onclick="execute_action('download',$ID('file_id_modal').value)" ><i class="fa-solid fa-download"></i>&nbspDownload</button>
+				<button type="button" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('edit',$ID('file_id_modal').value)"><i class="fa-solid fa-pen-to-square"></i>&nbspEdit</button>
+				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('delete',$ID('file_id_modal').value)"><i class="fa-solid fa-trash"></i>&nbspDelete</button>
 				</div>
 
-				<button type="button" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('edit',$ID('file_id_modal').value)">Edit</button>
-				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('delete',$ID('file_id_modal').value)">Delete</button>
-				<button type="button" class="btn btn-primary" data-bs-target="#confirmation" data-bs-toggle="modal" onclick="execute_action('download',$ID('file_id_modal').value)" >Download</button>
 			</div>
 		</div>
 	</div>
