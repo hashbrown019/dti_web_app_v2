@@ -269,10 +269,7 @@ $(document).ready(function(){
     });  
     });
 
-    window.onload = function(){
-      document.getElementById('viewgraph').click();
-      document.getElementById('viewchart').click();
-    }
+
 
    
 
@@ -508,10 +505,10 @@ document.onreadystatechange = function () {
   }
 }
 
-var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-socket.on('progress', function (data) {
-  document.getElementById('progress-text').innerHTML = data;
-});
 
+function toastr(type, message, title, options) {
+  toastr.options = options;
+  toastr[type](message, title);
+}
  
