@@ -36,13 +36,22 @@ def dashboard():
 @app.route("/formb/save_form",methods=["POST","GET"])
 def save_form():
 	form_data = request.form
-	col = ""
-	val = ""
-	for data_ in form_data:
-		col += ",`{}`".format(data_)
-		val += ",'{}'".format(form_data[data_])
+	col = "";val = "";args = ""
 
-	sql = "INSERT INTO `form_b` (`uploaded_by`,{}) VALUES ('{}',{})".format(col[1:], session["USER_DATA"][0]["id"], val[1:])
+	is_exist = len(rapid_mysql.select("SELECT * FROM `form_b` WHERE `id` ='{}' ;".format(request.form['id'])))
+	if(is_exist==0):
+		print("Adding")
+		for data_ in form_data:
+			col += ",`{}`".format(data_)
+			val += ",'{}'".format(form_data[data_])
+		sql = "INSERT INTO `form_b` (`uploaded_by`,{}) VALUES ('{}',{})".format(col[1:], session["USER_DATA"][0]["id"], val[1:])
+	else:
+		print("Editing")
+		for data_ in form_data:
+			args += ",`{}`='{}'".format(data_,form_data[data_])
+		sql = "UPDATE `form_b` SET {} WHERE `id`='{}';".format(args[1:],request.form['id'])
+		pass
+
 	# print(sql)
 	last_row_id ="None"
 	status = "Unfinished"
@@ -78,6 +87,13 @@ def get_ind_fo():
 	ids = request.form['id']
 	sql_form = "SELECT * FROM `form_b` WHERE `id`={};".format(ids)
 	ind = rapid_mysql.select(sql_form)
+	return jsonify(ind)
+
+@app.route("/formb/delete_item",methods=["POST","G ET"])
+def delete_item():
+	ids = request.form['id']
+	sql_form = "DELETE FROM `form_b` WHERE `id`={};".format(ids)
+	ind = rapid_mysql.do(sql_form)
 	return jsonify(ind)
 
 

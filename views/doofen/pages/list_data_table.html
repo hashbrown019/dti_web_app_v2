@@ -44,13 +44,17 @@
 			// a_sync : false,
 			func : function (rest){
 				println(" -- Getting List Farmers Done")
-				res = JSON.parse(rest)
-				$ID('num_input_fo').innerHTML = res.length
-				println("res")
-				println(res)
+				var raw_data = JSON.parse(rest)
+				$ID('num_input_fo').innerHTML = raw_data.length
+				println("raw_data")
+				println(raw_data)
+
+				var res = popu__int_toData(raw_data)
+
 				try{
 					create_table(res)
 				}catch(e){
+					println(e)
 					alert("An Error/Warning occurred during Data Loading\n\nErro/Warningr message\n[ "+e+" ]\n\n You may continue your transaction by clicking the button below")
 				}
 				SPINNER_LOADER.hide()
@@ -89,6 +93,7 @@
 			"scrollY":'60vh',
 			"scrollX":true,
 			"data" : data_,
+			"pageLength": 50,
 			"columnDefs": [
 				{
 					target: 0,
@@ -97,17 +102,14 @@
 				}
 			]
 		});
+		// TABLE.ext.errMode = 'none'
+		// println(TABLE.$)
 		// TABLE.load(data_)
 		// TABLE.ajax.reload()
 		set_search_field()
 	}
 
 	function set_search_field(){
-		// $('#table_id_fo thead th').each( function (i) {
-		// 	var title = $('#table_id_fo thead th').eq( $(this).index() ).text();
-		// 	println(i)
-		// 	$(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
-		// } );
 		$(TABLE.table().container() ).on('keyup', 'thead input', function () {
 			TABLE
 				.column( $(this).data('index') )
@@ -119,13 +121,6 @@
 			// show_fo_ind_(data[0]); //got to form details
 			show_dialog_item(data[0],data[1])
 		})
-
-		var tr_ = $('#table_id_fo tbody tr')
-		for (var i = 0; i < tr_.length; i++) {
-			var sas = tr_[i].getElementsByTagName("td")
-			sas[3].innerHTML = TYPES_ORG[parseInt(sas[3].innerHTML)]
-			sas[4].innerHTML = REG_AGENCIES[parseInt(sas[4].innerHTML)]
-		}
 	}
 
 	function show_dialog_item(ids,nameorg){
@@ -136,16 +131,45 @@
 			buttons_actions : [edit_form,delete_form]
 		})
 		item_dialog.show()
-		function edit_form(){
-			show_fo_ind_(ids)
-			item_dialog.destroy()
-		}
+		function edit_form(){show_fo_ind_(ids);item_dialog.destroy()}
 		function delete_form(){
-			alert(ids)
 			item_dialog.destroy()
+			var del_dialog = $dialog({
+				type : "error",
+				title : "Confirm Delete Record",
+				subtitle : "You are about to delete a entry. choose carefully",
+				buttons : ["Go Back","Delete"],
+			})
+			del_dialog.actions([del_dialog.destroy,del_item])
+			del_dialog.show()
+			function del_item(){
+				$send({
+					action : "/formb/delete_item",
+					method : POST,
+					data : $DATA({"id":ids}),
+					func : function(r){
+						var res = JSON.parse(r)
+						println(res)
+						goto("/formb/dashboard")
+					}
+				})
+			}
 		}
 	}
 
+
+	function popu__int_toData(res){
+
+		for (var i = 0; i < res.length; i++) {
+			if(parseInt(res[i][3]) != NaN ){
+				res[i][3] = TYPES_ORG[parseInt(res[i][3])]
+			}
+			if(parseInt(res[i][4]) != NaN ){
+				res[i][4] = REG_AGENCIES[parseInt(res[i][4])]
+			}
+		}
+		return res
+	}
 
 	function show_fo_ind_(ids){
 		$send({

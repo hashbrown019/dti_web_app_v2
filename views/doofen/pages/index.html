@@ -22,14 +22,16 @@
 	<link rel="stylesheet" href="../static/doofen_static/css/style.css">
 	<link rel="stylesheet" href="../static/doofen_static/css/styles.css">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script> -->
 	<link rel="icon" href="../static/img/mis_2023_v2.svg">
 
 
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/datatable/jquery.dataTables.css">
 
-	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
-
+	<script type="text/javascript" charset="utf8" src="../static/js/datatable/jquery.dataTables.js"></script>
+	<script type="text/javascript">
+		// $.fn.dataTableExt.errMode = 'function'
+	</script>
 </head>
 <body onload="loaded()" style="height:80vh">
 	{% include 'spinner_loader.html' %}
@@ -187,7 +189,7 @@
 	function loaded(argument) {
 		// body...
 		get_forms('respondents')
-		init_charts()
+		// init_charts()
 		onloads()
 	}
 
