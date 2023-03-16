@@ -132,10 +132,20 @@
 		var item_dialog = $dialog({
 			title : nameorg,
 			subtitle : "Control the data for the entry ["+nameorg+"]",
+			buttons : ["Edit","Delete","Cancel"],
+			buttons_actions : [edit_form,delete_form]
 		})
-
 		item_dialog.show()
+		function edit_form(){
+			show_fo_ind_(ids)
+			item_dialog.destroy()
+		}
+		function delete_form(){
+			alert(ids)
+			item_dialog.destroy()
+		}
 	}
+
 
 	function show_fo_ind_(ids){
 		$send({
