@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	{% include 'head.html' %}
+	<body>
+		<style type="text/css">
+			#container_b{
+/*				background-image: url('../static/img/login_bg_dark.jpg');*/
+				/*background-image: url('../static/img/bg.webp');*/
+				background: 
+					linear-gradient(rgba(0, 0, 0, 0.5),
+					rgba(0, 0, 0, 0.5)),
+					url('../static/img/bg.jpg');
+				background-position: center;
+				background-size: cover;
+			}
+			.container__layer{
+/*				background-image: url('../static/img/login_bg_dark.jpg');*/
+				/*background-image: url('../static/img/bg.webp');*/
+				background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5));
+				background-position: center;
+				background-size: cover;
+			}
+		</style>
+		<!-- <div id="" class="" style="height: 100vh;"> -->
+
+
+	<!-- <body class="gr_body_teal"> -->
+	<body id="container_b" class="x-text-white">
+		<div class="x-display-container" style="height:100vh;padding: 0px;">
+			<!-- <div class="x-display-bottomright x-padding">
+				<div class="x-container x-padding">
+					<img src="../static/img/ifad.jpg" class="x-img x-round" style="width:3%">
+					<img src="../static/img/dti.png" class="x-img x-round" style="width:3%">
+					<img src="../static/img/icon.png" class="x-img x-round" style="width:3%">
+				</div>
+			</div> -->
+			<div class="x-col l9 x-padding">
+				{% include 'tabs.html' %}
+			</div>
+			<div class="x-col l3 x-padding container__layer">
+				<br><br><br><br>
+				<div class="x-container x-padding-large x-round-large " style="height: 90vh;" >
+					<div class="x-container">
+						<div class="x-round x-text-teal x-white x-center x-fade" id="username_welcome" style="height:20vh">
+							<div class="x-center">
+								<img class="x-img" src="../static/img/mis_2023_v2.svg" style="width: 50%;">
+							</div>
+						</div>
+						<!-- <div class="x-container x-col l6">
+						</div> -->
+					</div>
+					<br>
+					<div class="x-container x-padding">
+						<div class=" x-animate-opacity" id="username_cont">
+							<b class="x-small x-text-white x-large">Username</b>
+							<div class="x-row">
+								<div class="x-row">
+									<input class="login_field x-input x-border" type="username" name="" placeholder="@username"
+									style="border-radius: 20px 20px 0px 0px;border:0px" required>
+								</div>
+								<div class="x-row">
+									<button class="x-button x-input x-teal x-block"
+										style="border-radius: 0px 0px 20px 20px;border:0px"
+										onclick="check_user_name()">
+										<span class="x-zoom">Next &#10148; </span>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="x-animate-opacity" id="password_cont" style="display:none">
+							<b class="x-small x-text-white x-large">Password</b>
+							<div class="x-row">
+								<div class="x-row">
+									<input class="login_field x-input x-border" type="password" name="" placeholder="password: ********..."
+									style="border-radius: 20px 20px 0px 0px;border:0px" required>
+								</div>
+								<div class="x-row">
+									<button class="x-zoom x-button x-input x-green x-block"
+										style="border-radius: 0px 0px 20px 20px;border:0px"
+										onclick="login()">
+										<span class="x-zoom">Login &#10148; </span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div><br>
+					<div id="err_log" class=" x-animate-opacity x-container x-card x-round-large x-padding x-leftbar x-border-red x-pale-red" style="display:none;background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5));">
+					</div>
+					<!-- <hr> -->
+					<div class="x-row x-padding x-tiny">
+						<div class="x-row">
+							<span class="fa fa-eye x-xxlarge x-text-white" onclick="see_eula()"></span>/<br>
+							While using the RAPID Growth Project MIS . you agree to have read and accepted our
+							<span class="x-hover-white" onclick="see_eula()">
+								<strong>Terms of Use</strong>
+							</span>
+						</div>
+						<br>
+						<span class="x-text-light-green">
+							<span class="fa fa-users x-xxlarge"></span>/<br>
+							Don't have an account? You may request one by reaching or contact the administrator
+						</span>
+					</div>
+
+					<div class="x-display-bottomleft">
+						<div class="x-container x-padding">
+							<img src="../static/img/ifad.jpg" class="x-img x-round" style="width:3%">
+							<img src="../static/img/dti.png" class="x-img x-round" style="width:3%">
+							<img src="../static/img/icon.png" class="x-img x-round" style="width:3%">
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+	<script type="text/javascript">
+		function check_user_name(){
+			var fields = $CLASS('login_field')
+			var cred = {
+				"user_name" :fields[0].value,
+			}
+			$send({
+				action : '/check_username',
+				method : POST,
+				data : $DATA(cred),
+				func : function (__) {
+					var res = JSON.parse(__)
+					println(res)
+					if(res.success){
+						$ID('username_welcome').innerHTML = "<br><br><span class='x-large'>Welcome <3<br><b class='x-xxlarge'>"+res.data+"</b><br>Please input your password to continue</span>"
+						$ID('username_cont').style.display= "none"
+						$ID('password_cont').style.display= "block"
+					}
+					else{
+						$ID('err_log').style.display = 'block'
+						$ID('err_log').innerHTML = (`
+							<span class="x-large x-text-white">Username Not Found</span>
+						`)
+						timeout(function(){$ID('err_log').style.display = 'none'},2000);
+					}
+				}
+			})
+
+		}
+
+		function login(){
+			var fields = $CLASS('login_field')
+			var cred = {
+				"user_name" :fields[0].value,
+				"password" :fields[1].value
+			}
+			$send({
+				action : '/login_auth',
+				method : POST,
+				data : $DATA(cred),
+				func : function (__) {
+					var login = JSON.parse(__).success
+					if(login){
+						// $ID('good_log').style.display = 'block'
+						// $ID('fname').innerHTML = JSON.parse(__).user[0].name
+						// return
+						redirectto("/menu") // NEW VERSION
+						timeout(function(){
+							// redirectto("/home") // OLD VERSION
+							// alert("GOOD")
+							// $ID('good_log').style.display = 'none'
+						},3000);
+						
+					}
+					else{
+						$ID('err_log').style.display = 'block'
+						$ID('err_log').innerHTML = (`
+							<span class="x-large x-text-white">Credentials incorrect</span>
+						`)
+						timeout(function(){$ID('err_log').style.display = 'none'},2000);
+					}
+				}
+			})
+		}
+
+
+		function see_eula(){
+			var _eula = $dialog({
+				title : "Terms and Condition",
+				subtitle : "Please read carefully before proceeding",
+				content : "<span class='x-text-black'>"+EULA+"</span>"
+			})
+			_eula.show()
+		}
+		{%include 'eula.js'%}
+	</script>
+</html>

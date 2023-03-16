@@ -1,0 +1,73 @@
+<style>
+.tabs {display:none;}
+.asd{
+	background: 
+	linear-gradient(rgba(0, 0, 0, 0.5),
+	rgba(0, 0, 0, 0.5)),
+	url('../static/img/login_bg_dark.jpg');
+	background-position: center;
+	background-size: cover;
+}
+</style>
+<br><br><br><br>
+<div class="container__layer" style="min-height: 65vh;">
+	<div class="x-navbar x-rapid-teal ">
+		<div class="x-container x-padding x-round-large">
+			<img class="x-img x-white x-round-large" src="../static/img/mis_2023_v2.svg" style="width: 10%;">
+
+			<h2>
+				<b>
+					Rapid Growth Project:
+					Management Information System
+					<span class="x-tiny"> v 2.0.13</span>
+				</b>
+			</h2>
+		</div>
+		<div class="x-container x-padding">
+			<button id="_new" class="tablink x-round-large x-button x-red " onclick="tabs(event, 'new');">
+				<span class="x-xlarge">
+					What's New!
+				</span>
+			</button>
+			<button class="tablink x-round-large x-button " onclick="tabs(event, 'dl');">Downloadables</button>
+			<button class="tablink x-round-large x-button " onclick="tabs(event, 'updates');">Updates</button>
+			<button class="tablink x-round-large x-button " onclick="tabs(event, 'announcement');">Announcements</button>
+			<!-- <span class="x-tiny">Patch note v 2.0.13</span> -->
+		</div>
+	</div>
+
+	<div class="x-container x-row x-padding-xxlarge">
+		<div id="new" class="x-container x-animate-left x-border x-round-large x-border-green tabs">
+			{% include 'tabs/new.html' %}
+		</div>
+
+		<div id="dl" class="x-container x-animate-left x-border x-round-large x-border-green tabs">
+			{% include 'tabs/dl.html' %}
+		</div>
+		<div id="updates" class="x-container x-animate-left x-border x-round-large x-border-green tabs">
+			{% include 'tabs/updates.html' %}
+		</div>
+
+		<div id="announcement" class="x-container x-animate-left x-border x-round-large x-border-green tabs">
+			{% include 'tabs/announcement.html' %}
+		</div>
+	</div>
+	
+</div>
+
+<script>
+	function tabs(evt, cityName) {
+		var i, x, tablinks;
+		x = $CLASS("tabs");
+		for (i = 0; i < x.length; i++) {
+				x[i].style.display = "none";
+		}
+		tablinks = $CLASS("tablink");
+		for (i = 0; i < x.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" x-red", "");
+		}
+		$ID(cityName).style.display = "block";
+		evt.currentTarget.className += " x-red";
+	}
+	$onload(function(){$ID('_new').click()})
+</script>

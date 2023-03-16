@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, session, redirect, jsonify
+from datetime import date, datetime
+from flask import Blueprint, render_template, request, session, redirect, jsonify, send_file
 from flask_session import Session
 from modules.Connections import mysql,sqlite
 import Configurations as c
@@ -30,12 +31,18 @@ class _main:
 	@app.route("/login_v2023",methods=["POST","GET"])
 	def login_v2023():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
-		return render_template("login_v2.html")
+		# return render_template("login_v2.html")
+		return _main.nlog()
 
 	@app.route("/newlogin",methods=["POST","GET"])
 	def newlogin():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		return render_template("login.html")
+
+	@app.route("/nlog",methods=["POST","GET"])
+	def nlog():
+		# return render_template("SITE_OFF.html") # MAINTENANCE
+		return render_template("loginv2.html")
 
 
 	@app.route("/login_auth",methods=["POST"])
@@ -83,3 +90,17 @@ class _main:
 		else: action = "none"
 
 		return {"status":status,"action":action}
+
+
+
+
+	@app.route("/login/download_file/<file_>",methods=["POST","GET"])
+	def download_file(file_):
+		# today = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
+		# def_name = "{}_{}".format(today,file_)
+		def_name = file_
+		return send_file(c.RECORDS+"/downloadables/"+file_, as_attachment=True,download_name=def_name)
+
+
+
+	
