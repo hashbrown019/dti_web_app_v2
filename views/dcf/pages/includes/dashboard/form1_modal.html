@@ -1,0 +1,66 @@
+<div class="modal fade" id="form1_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 70%;">
+      <div class="modal-content prof-content">
+        <div class="modalprof modal-header prof-header " style="background-color: #007399;" >
+          <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Form 1 PREPARATION, REVIEW AND APPROVAL STATUS</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  
+          </button>
+        </div>
+        <div class="modal-body" style="background-color: #c1d0f0" >
+            
+                <!-- Card header -->
+                <div class="d-flex justify-content-center">
+                <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
+                  <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4" >
+                    <table class="table table-dark table-flush dataTable " id="datatable-buttons" role="grid" aria-describedby="datatable-buttons_info" style="width:100% !important">
+                    <thead class="thead" >
+                      <tr role="row">
+                        <th>ID</th>
+                        <th>RCUs</th>
+                        <th>Number Of DIPs</th>
+                        <th>Anchor Firm</th>
+                        <th>Size Of Anchor</th>
+                        <th>Commodity</th>
+                        <th>Scope/Provinces</th>
+                        <th>Action</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                      <tr>
+                     <div>
+                        {% for row in form1_datatable %}
+                        <td>{{ row['id'] }}</td>
+                        <td>{{ row['form_1_rcus'] }}</td>
+                        <td>{{ row['form_1_number_of_dips'] }}</td>  
+                        <td>{{ row['form_1_anchor_firm'] }}</td>
+                        <td>{{ row['form_1_size_of_anchor'] }}</td>
+                        <td>{{ row['form_1_commodity'] }}</td>
+                        <td>{{ row['form_1_scope_provinces'] }}</td>
+                        <td><a style="color: #00cc66;" data-toggle="modal" data-target="#form1edit{{row['id']}}" href="/updateform1/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>
+                        </td>
+            
+                 
+                    </tr>
+                  
+                    {% endfor  %}
+                      </tbody>
+            </table>
+            
+            </div>
+                      
+                      
+                      
+        </div>
+                    
+                </div>
+                    
+
+        </div>
+        <div class="modal-footer prof-footer" style="background-color: #c1d0f0">
+          <button type="button" class="btn text-white" style="background-color: #3366cc;" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1516,6 +1516,12 @@ var DatatableButtons = (function() {
 
 	var $dtButtons = $('#datatable-buttons');
 	var $dtButtons2 = $('#datatable-buttons2');
+	var $dtButtons3 = $('#datatable-buttons3');
+	var $dtButtons4 = $('#datatable-buttons4');
+	var $dtButtons5 = $('#datatable-buttons5');
+	var $dtButtons6 = $('#datatable-buttons6');
+	var $dtButtons7 = $('#datatable-buttons7');
+	
 	
 
 	// Methods
@@ -1561,6 +1567,21 @@ var DatatableButtons = (function() {
 	}
 	if ($dtButtons2.length) {
 		init($dtButtons2);
+	}
+	if ($dtButtons3.length) {
+		init($dtButtons3);
+	}
+	if ($dtButtons4.length) {
+		init($dtButtons4);
+	}
+	if ($dtButtons5.length) {
+		init($dtButtons5);
+	}
+	if ($dtButtons6.length) {
+		init($dtButtons6);
+	}
+	if ($dtButtons7.length) {
+		init($dtButtons7);
 	}
 
 })();

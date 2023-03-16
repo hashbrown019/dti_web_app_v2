@@ -15,7 +15,10 @@ from views.dcf.form_insert import insert_form9 as insertData9
 from views.dcf.form_insert import insert_form1 as insertData1
 from views.dcf.form_insert import insert_form3 as insertData3
 from views.dcf.form_insert import insert_form2 as insertData2
-from views.dcf.dashboard import dashboard_count as displayData
+from views.dcf.dashboard import dashboard_count as displayCount
+from views.dcf.dashboard import display_dataform as display_dataform
+from views.dcf.dashboard import update_form1 as update_dataform1
+from views.dcf.dashboard import update_form2 as update_dataform2
 import Configurations as c 
 from modules.Connections import mysql
 
@@ -27,8 +30,19 @@ def is_on_session(): return ('USER_DATA' in session)
 
 @app.route('/dcf_dashboard')
 def dcf_dashboard():
-    disp = displayData.display__()
-    return render_template("dcf_dashboard.html",user_data=session["USER_DATA"][0],**disp)
+    count = displayCount.display__()
+    form_disp = display_dataform.displayform()
+    return render_template("dcf_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
+
+@app.route('/updateform1',methods=['POST','GET'])
+def updateform1():
+    update_dataform1.updateform1(request)
+    return redirect("/dcf_dashboard")
+
+@app.route('/updateform2',methods=['POST','GET'])
+def updateform2():
+    update_dataform2.updateform2(request)
+    return redirect("/dcf_dashboard")
 
 @app.route('/dcf_forms')
 def dcf_forms():
