@@ -44,7 +44,7 @@ def save_form():
 
 	sql = "INSERT INTO `form_b` (`uploaded_by`,{}) VALUES ('{}',{})".format(col[1:], session["USER_DATA"][0]["id"], val[1:])
 	# print(sql)
-
+	last_row_id ="None"
 	status = "Unfinished"
 	msg = "Unfinished"
 	try:
@@ -54,6 +54,7 @@ def save_form():
 	except Exception as e:
 		status = "failed"
 		msg = "[{}]".format(e)
+		last_row_id ="None"
 	return jsonify({"status":status,"msg":msg,"id":last_row_id})
 	# return jsonify([last_row_id])
 
