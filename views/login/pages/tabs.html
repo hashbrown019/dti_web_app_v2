@@ -19,7 +19,7 @@
 				<b>
 					Rapid Growth Project:
 					Management Information System
-					<span class="x-tiny"> v 2.0.13</span>
+					<span ondblclick="tabs(event, 'devs');" class="tablink x-tiny"> v 2.0.13</span>
 				</b>
 			</h2>
 		</div>
@@ -32,24 +32,27 @@
 			<button class="tablink x-round-large x-button " onclick="tabs(event, 'dl');">Downloadables</button>
 			<button class="tablink x-round-large x-button " onclick="tabs(event, 'updates');">Updates</button>
 			<button class="tablink x-round-large x-button " onclick="tabs(event, 'announcement');">Announcements</button>
-			<!-- <span class="x-tiny">Patch note v 2.0.13</span> -->
+			<!-- <span class="tablink x-tiny">Patch note v 2.0.13</span> -->
 		</div>
 	</div>
 
-	<div class="x-container x-row x-padding-xxlarge">
-		<div id="new" class="x-container x-animate-left x-border x-round-large x-border-green tabs">
+	<div class="x-container x-row x-padding-xxlarge ">
+		<div id="new" class="x-container x-animate-left x-border x-round-large x-border-green container__layer tabs">
 			{% include 'tabs/new.html' %}
 		</div>
 
-		<div id="dl" class="x-container x-animate-left x-border x-round-large x-border-green tabs">
+		<div id="dl" class="x-container x-animate-left x-border x-round-large x-border-green container__layer tabs">
 			{% include 'tabs/dl.html' %}
 		</div>
-		<div id="updates" class="x-container x-animate-left x-border x-round-large x-border-green tabs">
+		<div id="updates" class="x-container x-animate-left x-border x-round-large x-border-green container__layer tabs">
 			{% include 'tabs/updates.html' %}
 		</div>
 
-		<div id="announcement" class="x-container x-animate-left x-border x-round-large x-border-green tabs">
+		<div id="announcement" class="x-container x-animate-left x-border x-round-large x-border-green container__layer tabs">
 			{% include 'tabs/announcement.html' %}
+		</div>
+		<div id="devs" class="x-container x-animate-left x-border x-round-large x-border-green container__layer tabs">
+			{% include 'tabs/devs.html' %}
 		</div>
 	</div>
 	
@@ -58,11 +61,9 @@
 <script>
 	function tabs(evt, cityName) {
 		var i, x, tablinks;
-		x = $CLASS("tabs");
-		for (i = 0; i < x.length; i++) {
-				x[i].style.display = "none";
-		}
-		tablinks = $CLASS("tablink");
+		var x = $CLASS("tabs");
+		var tablinks = $CLASS("tablink");
+		for (i = 0; i < x.length; i++) {x[i].style.display = "none";}
 		for (i = 0; i < x.length; i++) {
 				tablinks[i].className = tablinks[i].className.replace(" x-red", "");
 		}
