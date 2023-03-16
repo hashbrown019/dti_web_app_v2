@@ -1,8 +1,8 @@
-<div class="modal fade" id="form2_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="form3_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 70%;">
       <div class="modal-content prof-content">
         <div class="modalprof modal-header prof-header " style="background-color: #007399;" >
-          <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Form 2 Implementing Unit</h4>
+          <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Form 3 BDSP REGISTRY</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
   
           </button>
@@ -13,16 +13,16 @@
                 <div class="d-flex justify-content-center">
                 <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
                   <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4" >
-                    <table class="table table-dark table-flush dataTable " id="datatable-buttons2" role="grid" aria-describedby="datatable-buttons_info" style="width:100% !important">
+                    <table class="table table-dark table-flush dataTable " id="datatable-buttons3" role="grid" aria-describedby="datatable-buttons_info" style="width:100% !important">
                     <thead class="thead" >
                       <tr role="row">
                         <th>ID</th>
-                        <th>Name of Owner</th>
-                        <th>Sex of the Owner</th>
-                        <th>Sector of Owner</th>
-                        <th>Business Address of Owner</th>
-                        <th>Name of Partner FOs engaged</th>
-                        <th>Commodity</th>
+                        <th>Types of BDSP</th>
+                        <th>Contact Person</th>
+                        <th>Training Number</th>
+                        <th>Sex</th>
+                        <th>Office/Main Address</th>
+                        <th>Email Address</th>
                         <th>Action</th>
                         </tr>
                     </thead>
@@ -30,15 +30,15 @@
                     <tbody>
                       <tr>
                      <div>
-                        {% for row in form2_datatable %}
+                        {% for row in form3_datatable %}
                         <td>{{ row['id'] }}</td>
-                        <td>{{ row['form_2_name_owner_manager'] }}</td>
-                        <td>{{ row['form_2_sex_owner_manager'] }}</td>  
-                        <td>{{ row['form_2_sector_owner_manager'] }}</td>
-                        <td>{{ row['form_2_business_owner_manager'] }}</td>
-                        <td>{{ row['form_2_partner_fo_engaged'] }}</td>
-                        <td>{{ row['form_2_commodity'] }}</td>
-                        <td><a style="color: #00cc66;" data-toggle="modal" data-target="#form2edit{{row['id']}}" href="/updateform2/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>
+                        <td>{{ row['form_3_types_of_bdsp'] }}</td>
+                        <td>{{ row['form_3_contact_person'] }}</td>  
+                        <td>{{ row['form_3_training_number'] }}</td>
+                        <td>{{ row['form_3_sex'] }}</td>
+                        <td>{{ row['form_3_office_addr'] }}</td>
+                        <td>{{ row['form_3_email'] }}</td>
+                        <td><a style="color: #00cc66;" data-toggle="modal" data-target="#form3edit{{row['id']}}" href="/updateform3/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>
                         </td>
             
                  

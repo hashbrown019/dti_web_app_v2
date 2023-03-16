@@ -19,6 +19,8 @@ from views.dcf.dashboard import dashboard_count as displayCount
 from views.dcf.dashboard import display_dataform as display_dataform
 from views.dcf.dashboard import update_form1 as update_dataform1
 from views.dcf.dashboard import update_form2 as update_dataform2
+from views.dcf.dashboard import update_form3 as update_dataform3
+from views.dcf.dashboard import update_form4 as update_dataform4
 import Configurations as c 
 from modules.Connections import mysql
 
@@ -42,6 +44,18 @@ def updateform1():
 @app.route('/updateform2',methods=['POST','GET'])
 def updateform2():
     update_dataform2.updateform2(request)
+    return redirect("/dcf_dashboard")
+
+
+@app.route('/updateform3',methods=['POST','GET'])
+def updateform3():
+    update_dataform3.updateform3(request)
+    return redirect("/dcf_dashboard")
+
+
+@app.route('/updateform4',methods=['POST','GET'])
+def updateform4():
+    update_dataform4.updateform4(request)
     return redirect("/dcf_dashboard")
 
 @app.route('/dcf_forms')

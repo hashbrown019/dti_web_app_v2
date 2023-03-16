@@ -19,11 +19,15 @@ def display():
     USER_INFO = session["USER_DATA"]
     form1_datatable=db.select("SELECT * FROM dcf_prep_review_aprv_status")
     form2_datatable=db.select("SELECT * FROM dcf_implementing_unit")
+    form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg")
+    form4_datatable=db.select("SELECT * FROM dcf_capacity_building")
 
 
     return{
         'form1_datatable':  form1_datatable,
-        'form2_datatable':  form2_datatable
+        'form2_datatable':  form2_datatable,
+        'form3_datatable':  form3_datatable,
+        'form4_datatable':  form4_datatable
     }
 
 
@@ -36,9 +40,13 @@ def displayform():
     USER_INFO = session["USER_DATA"]
     form1_datatable=db.select("SELECT * FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
     form2_datatable=db.select("SELECT * FROM dcf_implementing_unit {};".format(position_data_filter()))
+    form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg {};".format(position_data_filter()))
+    form4_datatable=db.select("SELECT * FROM dcf_capacity_building {};".format(position_data_filter()))
     return{
         'form1_datatable':  form1_datatable,
-        'form2_datatable':  form2_datatable
+        'form2_datatable':  form2_datatable,
+        'form3_datatable':  form3_datatable,
+        'form4_datatable':  form4_datatable
 
     }
 
