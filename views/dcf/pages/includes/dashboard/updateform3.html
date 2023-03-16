@@ -1,0 +1,344 @@
+
+{% for row in form3_datatable %}
+<div class="modal fade" id="form3edit{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #007399;">
+        <h5 class="modal-title text-white" id="exampleModalLabel">EDIT FORM</h5>       
+        <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalbodyedit">
+
+              <form style="margin-left: 2%; margin-right: 2%;" id="form3" action="/updateform3" method="POST">
+                {% include "includes/sweetalert.html" %}
+
+                <div class="x-col l1 ">
+                    &nbsp;
+                </div>
+            
+                <div class=" x-col l13 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+                    <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">BDSP REGISTRY</h2></center>
+            
+                    <div class="x-container x-padding">
+                        <style> 
+                            table, th, td{border: 1px solid black;border-collapse: collapse;}
+                        </style>
+            
+                        <!---row1--->
+                        <div class="x-col l3 x-container x-padding">
+                            <input type="hidden"  name="id" value="{{ row['id'] }}">
+                            <span class="">Types of BDSP</span>
+                            <select class=" x-border x-select x-border" id="form_3_types_of_bdsp" value="{{ row['form_3_types_of_bdsp'] }}" name="form_3_types_of_bdsp"><br>
+                                <option>{{ row['form_3_types_of_bdsp'] }}</option>
+                                <option >Organization/Firm</option>
+                                <option >Individual</option>
+                            </select>
+                        </div>
+                        <div class="x-col l3 x-container x-padding">
+                            <span class="">Contact Person</span>
+                            <select class=" x-border x-select x-border" value="{{ row['form_3_contact_person'] }}"  id="form_3_contact_person" name="form_3_contact_person"><br>
+                                <option >{{ row['form_3_contact_person'] }}</option>
+                                <option >Organization/Firm</option>
+                                <option >Individual</option>
+                            </select>
+                        </div>
+                        <div class="x-col l3 x-container x-padding">
+                            <label>Training Number</label>
+                            <input class=" x-input x-border" id="form_3_training_number"  value="{{ row['form_3_training_number'] }}"  name="form_3_training_number" type="text" placeholder="">
+                        </div>
+                        <div class="x-col l3 x-container x-padding">
+                            <span class="">Sex</span>
+                            <select class=" x-border x-select x-border" id="form_3_sex"  value="{{ row['form_3_sex'] }}" name="form_3_sex"><br>
+                                <option>{{ row['form_3_sex'] }}</option>
+                                <option >Male</option>
+                                <option >Female</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                    <!---row2--->
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l6 x-container x-padding">
+                            <label>Office/Main Address:</label>
+                            <input class=" x-input x-border" id="form_3_office_addr" value="{{ row['form_3_office_addr'] }}" name="form_3_office_addr" type="text" placeholder="">
+                        </div>
+                        <div class="x-col l6 x-container x-padding">
+                            <label for="email">Email Address:</label><br>
+                            <input class="x-email x-border x-padding" size="33" id="form_3_email" value="{{ row['form_3_email'] }}" name="form_3_email" autocomplete="on">
+                        </div>
+                        <div class="x-col l9 x-container x-padding">
+                            <label class="">Brief Description of Company, Institution and/or Consultant Background</label>
+                            <textarea class="comment x-border" id="form_3_breif_description" value="{{ row['form_3_breif_description'] }}" name="form_3_breif_description" placeholder="Write here" type="text" style="resize: both; height: 100px; width: 550px;"></textarea>
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <label for="phone">Phone number:</label>
+                            <input type="tel" id="phone" name="phone" maxlength="13" value="{{ row['phone'] }}" value="+63">
+                        </div>
+                        <div class="x-col l9 x-container x-padding">
+                            <span class="">Field of Expertise</span>
+                            <select id="form_3_choices_multiple_remove_button" value="{{ row['form_3_choices'] }}" name="form_3_choices[]" placeholder="Select upto 4 tags" multiple>
+                                <option selected>{{ row['form_3_choices'] }}</option>
+                                <option value="Entrepreneurial">Entrepreneurial</option>
+                                <option value="Agri-technical">Agri-technical</option>
+                                <option value="Organizational">Organizational</option>   
+                                <option value="Extension Service">Extension Service</option>
+                            </select>
+                        </div>
+                    </div>
+            
+            
+                    <!---region--->
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l6 x-container x-padding">
+                            <span class="">Preferred Region  to work in for RAPID</span>
+                            <select class=" x-border x-select x-border" id="form_3_preferred_region" value="{{ row['form_3_preferred_region'] }}"  name="form_3_preferred_region"><br>
+                                <option >{{ row['form_3_preferred_region'] }}</option>
+                                <option>Region Vlll - Eastern Visayas</option>
+                                <option>Region lX -  Zamboanga Peninsula</option>
+                                <option>Region X - Northern Mindanao</option>
+                                <option>Region Xl - Davao Region</option>
+                                <option>Region Xll - SOCCSKSARGEN</option>
+                                <option>Region Xlll - Caraga</option>
+                                <option>BARMM - Bangsamoro Autonomous Region in Muslim Mindanao</option>
+                            </select>
+                        </div>
+            
+                        <!---province--->
+                        <div class="x-col l6 x-container x-padding">
+                            <span class="">Preferred Province  to work in for RAPID</span>
+                            <select class=" x-border x-select x-border" id="form_3_preferred_province" value="{{ row['form_3_preferred_province'] }}"  name="form_3_preferred_province"><br>
+                                <option>{{ row['form_3_preferred_province'] }}</option>
+                                <option>Northern Samar</option>
+                                <option>Leyte</option>
+                                <option>Southern Leyte</option>
+                                <option>Zamboanga del Norte</option>
+                                <option>Zamboanga Sibugay</option>
+                                <option>Zamboanga del Sur</option>
+                                <option>Misamis Oriental</option>
+                                <option>Bukidnon</option>
+                                <option>Lanao del Norte</option>
+                                <option>Davao de Oro</option>
+                                <option>Davao Oriental</option>
+                                <option>Davao del Norte</option>
+                                <option>Davao del Sur</option>
+                                <option>Davao Occidental</option>
+                                <option>North Cotabato</option>
+                                <option>Sultan Kudarat</option>
+                                <option>Sarangani</option>
+                                <option>Agusan del Norte</option>
+                                <option>Agusan del Sur</option>
+                                <option>Surigao del Sur</option>
+                                <option>Maguindanao</option>
+                            </select>
+                        </div>
+            
+                        <div class="x-row x-container x-padding">
+                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <table class="x-table x-container x-table-border">
+                                <tr>
+                                    <th colspan="3">
+                                        <center>BDSP Team Composition</center>
+                                    </th>
+                                </tr>
+            
+                                <tr>
+                                    <td><center>Name</center></td>
+                                    <td><center>Education</center></td>
+                                    <td><center>Expertise</center></td>
+                                </tr>	
+            
+                                <tr>	
+                                    <td><input class=" x-light-grey x-input" id="form_3_name" value="{{ row['form_3_name'] }}" type="text" name="form_3_name"></td>
+                                    <td><input class=" x-light-grey x-input" id="form_3_education" value="{{ row['form_3_education'] }}" type="text" name="form_3_education"></td>
+                                    <td><input class=" x-light-grey x-input" id="form_3_expertise" value="{{ row['form_3_expertise'] }}" type="text" name="form_3_expertise"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+            
+                    <!---Prior Engagment/ experience--->
+                    <center><h2 class="text-white x-container x-padding"  style="background-color: #007399;">Prior Engagment / Experience</h2></center>
+                    <div class="x-container x-padding">
+                        <style> 
+                            table, th, td{border: 1px solid black;border-collapse: collapse;}
+                        </style>
+                    </div>
+            
+                    
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l4 x-container x-padding">
+                            <span class="">Prior RAPID Engagements? </span>
+                            <select class=" x-border x-select x-border" id="form_3_prior_rapid_engagements" value="{{ row['form_3_prior_rapid_engagements'] }}"  name="form_3_prior_rapid_engagements"><br>
+                                <option>{{ row['form_3_prior_rapid_engagements'] }}</option>
+                                <option>YES</option>
+                                <option>NO</option>
+                            </select>
+                        </div>
+                        <div class="x-col l3 x-container x-padding">	
+                            <label>Date Registered:</label>
+                            <input class=" x-input x-border" id="form_3_date_registered" value="{{ row['form_3_date_registered'] }}" name="form_3_date_registered" type="date" placeholder="">
+                        </div>
+                        <div class="x-col l4 x-container x-padding">
+                            <label>RAPID Implementing Unit</label>
+                            <input class=" x-input x-border" id="form_3_rapid_implementing_unit" value="{{ row['form_3_rapid_implementing_unit'] }}" name="form_3_rapid_implementing_unit" type="text" placeholder="">
+                        </div>
+                        <div class="x-col l7 x-container x-padding">
+                            <span class="">Type/Nature of Engagements</span>
+                            <select class=" x-border x-select x-border" id="form_3_nature_engagements" value="{{ row['form_3_nature_engagements'] }}"  name="form_3_nature_engagements"><br>
+                                <option >{{ row['form_3_nature_engagements'] }}</option>
+                                <option>RP</option>
+                                <option>Facilitator</option>
+                                <option>Manual Development</option>
+                                <option>Business Plan Preparation</option>
+                                <option>KM Product Development</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l7 x-container x-padding">
+                            <label class="">Suppliers' Evaluation (Refer to ISO/Procurement ratings)</label>
+                            <textarea class=" x-border x-input" id="form_3_suppliers_evaluation" value="{{ row['form_3_suppliers_evaluation'] }}" placeholder="Write here" type="text" name="form_3_suppliers_evaluation"></textarea>
+                        </div>
+                        <div class="x-col l7 x-container x-padding">
+                            <label class="">other engagement outside RAPID</label>
+                            <textarea class=" x-border x-input" id="form_3_other_engagement_outside_rapid" value="{{ row['form_3_other_engagement_outside_rapid'] }}" name="form_3_other_engagement_outside_rapid" placeholder="Write here" type="text"></textarea>
+                        </div>
+                    </div>
+            
+            
+                    <center><h2 class="text-white x-container x-padding"  style="background-color: #007399;">Other Information</h2></center>
+                    <div class="x-container x-padding">
+                        <style> 
+                            table, th, td{border: 1px solid black;border-collapse: collapse;}
+                        </style>
+                    </div>
+            
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l8 x-container x-padding">
+                            <span class="">Willing to conduct on-line lecture/training/seminar?</span>
+                            <select class=" x-border x-select x-border" id="form_3_lecture_training_seminar" value="{{ row['form_3_lecture_training_seminar'] }}"  name="form_3_lecture_training_seminar"><br>
+                                <option>{{ row['form_3_lecture_training_seminar'] }}</option>
+                                <option>YES</option>
+                                <option>NO</option>
+                            </select>
+                        </div>
+                        <div class="x-col l8 x-container x-padding">
+                            <span class="">Willing to develop modular video training materials?</span>
+                            <select class=" x-border x-select x-border" id="form_3_training_materials" value="{{ row['form_3_training_materials'] }}"  name="form_3_training_materials"><br>
+                                <option >{{ row['form_3_training_materials'] }}</option>
+                                <option>YES</option>
+                                <option>NO</option>
+                            </select>
+                        </div>
+                        <div class="x-col l8 x-container x-padding">
+                            <span class="">Willing to join other providers as organize pool of service providers?</span>
+                            <select class=" x-border x-select x-border" value="{{ row['form_3_organize_pool'] }}" id="form_3_organize_pool"  name="form_3_organize_pool"><br>
+                                <option >{{ row['form_3_organize_pool'] }}</option>
+                                <option>YES</option>
+                                <option>NO</option>
+                            </select>
+                        </div>
+                        <div class="x-col l8 x-container x-padding">
+                            <span class="">Willing to be a mentor/coach on demand basis?</span>
+                            <select class=" x-border x-select x-border" id="form_3_demand_basis"  value="{{ row['form_3_demand_basis'] }}"   name="form_3_demand_basis"><br>
+                                <option>{{ row['form_3_demand_basis'] }}</option>
+                                <option>YES</option>
+                                <option>NO</option>
+                            </select>
+                        </div>
+                        <div class="x-col l8 x-container x-padding">
+                            <span class="">Willing to be part of long-term engagement for extension service facilitation?</span>
+                            <select class=" x-border x-select x-border" id="form_3_extension_service_facilitation" value="{{ row['form_3_extension_service_facilitation'] }}"  name="form_3_extension_service_facilitation"><br>
+                                <option>{{ row['form_3_extension_service_facilitation'] }}</option>
+                                <option>YES</option>
+                                <option>NO</option>
+                            </select>
+                        </div>
+            
+            
+                        <div class="x-col l8 x-container x-padding">
+                            <span class="">Philgeps Registered</span>
+                            <select class=" x-border x-select x-border" id="form_3_philgeps_registered" value="{{ row['form_3_philgeps_registered'] }}"   name="form_3_philgeps_registered"><br>
+                                <option >{{ row['form_3_philgeps_registered'] }}</option>
+                                <option>RED</option>
+                                <option>PLATINUM</option>
+                                <option>UNREGISTERED</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                <div class="x-row x-container x-padding">
+                        <div class="x-col l8 x-container x-padding" id="form_3_choose_files">
+                            <label for="image_uploads">Choose file</label>
+                            <input
+                            type="file"
+                            id="image_uploads"
+                            name="image_uploads"
+                            accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx"
+                            multiple />
+                        </div>
+       
+                </div>
+            
+            </div>
+            
+                
+          
+              
+          </div>
+          <div class="modal-footer bg-light">
+             <button type="submit" class="btn btn-primary sweetalerts3" style="justify-content: right;">Save changes</button>
+            <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </form>
+    <script>
+        const regionSelect = document.getElementById('form_3_preferred_region');
+        const provinceSelect = document.getElementById('form_3_preferred_province');
+        
+        
+        const regionToProvinceMap = {
+          'Region Vlll - Eastern Visayas': ['Northern Samar', 'Leyte', 'Southern Leyte'],
+          'Region lX - Zamboanga Peninsula': ['Zamboanga del Norte', 'Zamboanga Sibugay', 'Zamboanga del Sur'],
+          'Region X - Northern Mindanao': ['Misamis Oriental', 'Bukidnon', 'Lanao del Norte'],
+          'Region Xl - Davao Region': ['Davao de Oro', 'Davao Oriental', 'Davao del Norte', 'Davao del Sur', 'Davao Occidental'],
+          'Region Xll - SOCCSKSARGEN': ['North Cotabato', 'Sultan Kudarat', 'Sarangani'],
+          'Region Xlll - Caraga': ['Agusan del Norte', 'Agusan del Sur', 'Surigao del Sur'],
+          'BARMM - Bangsamoro Autonomous Region in Muslim Mindanao': ['Maguindanao']
+        };
+        
+        
+        function updateProvinceSelect() {
+        
+          const selectedRegion = regionSelect.value;
+        
+          const provinces = regionToProvinceMap[selectedRegion];
+        
+          provinceSelect.innerHTML = '';
+        
+          const defaultOption = document.createElement('option');
+          defaultOption.text = 'Choose Province';
+          defaultOption.disabled = true;
+          defaultOption.selected = true;
+          provinceSelect.add(defaultOption);
+        
+          provinces.forEach((province) => {
+            const option = document.createElement('option');
+            option.text = province;
+            option.value = province;
+            provinceSelect.add(option);
+          });
+        }
+        
+        
+        regionSelect.addEventListener('change', updateProvinceSelect);
+        </script>
+      
+      </div>
+   
+    </div>
+  </div>
+  
+  {% endfor  %}
+
