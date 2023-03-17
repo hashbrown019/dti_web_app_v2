@@ -46,16 +46,25 @@
 				<span class="material-icons-outlined"></span>
 			</div>
 			<div class="header-right">
-				{% include 'excel_management.html' %}
+				<!-- {% include 'excel_management.html' %} -->
 			</div>
 		</header>
 		<!-- End Header -->
 
 		<!-- Sidebar -->
 		<aside id="sidebar">
-			<div class="sidebar-title">
-				<div class="sidebar-brand">
-					<span class="material-icons-outlined">home</span> Form B
+			<div class="sidebar-title x-center">
+				<div class="x-padding x-container x-center">
+
+					<div class="x-roww"  onclick="x_open()">
+						<span class="x-text-shrink "><strong>{{USER_DATA['name']}}</strong></span>
+						<span class="x-text-shrink x-tiny">{{USER_DATA['job']}}</span>
+					</div>
+					<div class="x-small x-row x-text-rapid-macha-light" style="width:200px;">
+						<span>
+							Showing figures for <b class="">{{USER_DATA['rcu']}}</b>
+						</span>
+					</div>
 				</div>
 				<span class="material-icons-outlined" onclick="closeSidebar()">close</span>
 			</div>
@@ -272,20 +281,42 @@
 	}
 
 
-var TYPES_ORG = [
-	"None",
-	"Farmers’/ Growers’ Association",
-	"Farmers’ Cooperative Type of Cooperative",
-	"Others"
-]
-var REG_AGENCIES = [
-	"None",
-	"Cooperative Development Authority ",
-	"Department of Labor and Employment",
-	"Securities and Exchange Commission",
-	"Department of Agriculture",
-	"Others"
-]
+	var TYPES_ORG = [
+		"None",
+		"Farmers’/ Growers’ Association",
+		"Farmers’ Cooperative Type of Cooperative",
+		"Others"
+	]
+	var REG_AGENCIES = [
+		"None",
+		"Cooperative Development Authority ",
+		"Department of Labor and Employment",
+		"Securities and Exchange Commission",
+		"Department of Agriculture",
+		"Others"
+	]
 
+	var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+	s1.async=true;
+	s1.src='https://embed.tawk.to/62f9c9c554f06e12d88ea549/1gafrob5j';
+	s1.charset='UTF-8';
+	s1.setAttribute('crossorigin','*');
+	s0.parentNode.insertBefore(s1,s0);
+	// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+	window.Tawk_API.visitor = {
+		'name' : "{{USER_DATA['name']}}",
+		'email': "{{USER_DATA['email']}}",
+	};
+	
+	// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+	Tawk_API.onLoad = function(){
+		Tawk_API.setAttributes({
+			'name' : "{{USER_DATA['name']}}",
+			'email': "{{USER_DATA['email']}}",
+			'hash' : "{{USER_DATA['rcu']}}"+"_"+"{{USER_DATA['job']}}"
+		}, function (error) {
+		});
+	};
 </script>
 </html>

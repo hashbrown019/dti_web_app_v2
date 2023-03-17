@@ -10,6 +10,7 @@
 				<dl class="row">
 					<input id="file_id" name="" hidden>
 					<input id="file_id_modal" name="" hidden>
+					<input id="__table" name="" hidden>
 					<dt class="col-3">File Title:</dt>
 					<dd class="col-8 ">
 						<h5 class="texttheme fs-3" id="title">Loading File Title</h5>
@@ -41,14 +42,23 @@
 			<div class="modal-footer">
 
 				<div class="hstack gap-3">
-				<button type="button" class="btn btn-outline-danger"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('reject',$ID('file_id_modal').value)">Revise</button>
-					<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('post',$ID('file_id_modal').value)">Confirm</button>
-				<div class="vr"></div>
-				<button type="button" class="btn btn-primary" data-bs-target="#confirmation" data-bs-toggle="modal" onclick="execute_action('download',$ID('file_id_modal').value)" ><i class="fa-solid fa-download"></i>&nbspDownload</button>
-				<button type="button" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('edit',$ID('file_id_modal').value)"><i class="fa-solid fa-pen-to-square"></i>&nbspEdit</button>
-				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('delete',$ID('file_id_modal').value)"><i class="fa-solid fa-trash"></i>&nbspDelete</button>
-				</div>
+				{% if(user_data['job']=='Admin' or user_data['job']=="Super Admin") %}
 
+					<button type="button" class="btn btn-outline-danger"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('revise',$ID('file_id_modal').value,$ID('__table').value)">Revise</button>
+					<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('post',$ID('file_id_modal').value,$ID('__table').value)">Confirm</button>
+				{% endif %}
+
+				<div class="vr"></div>
+
+				<button type="button" class="btn btn-primary" data-bs-target="#confirmation" data-bs-toggle="modal" onclick="execute_action('download',$ID('file_id_modal').value,$ID('__table').value)" ><i class="fa-solid fa-download"></i>&nbspDownload</button>
+				
+				{% if(user_data['id']) %}
+					<div id="modify_div">
+						<button type="button" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('edit',$ID('file_id_modal').value,$ID('__table').value)"><i class="fa-solid fa-pen-to-square"></i>&nbspEdit</button>
+						<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="execute_action('delete',$ID('file_id_modal').value,$ID('__table').value)"><i class="fa-solid fa-trash"></i>&nbspDelete</button>
+						</div>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
@@ -68,6 +78,7 @@
 				</div>
 				<div class="container text-center">
 					<input id="file_id_req" name="" hidden>
+					<input id="file_id_req_table" name="" hidden >
 					<div>
 						Please input password to execute action (<b id="action_note"></b>)
 					</div>
@@ -86,8 +97,14 @@
 </div>
 
 <script type="text/javascript">
+	var modify_div_elem = undefined
+	$onload(function(){
+		modify_div_elem=$ID('modify_div').innerHTML
+		$ID('modify_div').innerHTML=""
+	})
 
-	function get_file__det(file_ids){
+
+	function get_file__det(file_ids,table){ 
 		println(file_ids)
 		$send({
 			action : "/webrep/uploads/docs_item",
@@ -96,7 +113,11 @@
 			func : function(r){
 				res = JSON.parse(r)[0]
 				println(res)
+				set_idto_id(res["uploaded_by"]['id'])
+				$ID("__table").value = table
+				// alert(table)
 				$ID("file_id_modal").value = res["id"]
+				// $ID("uploaded_by").value = res["uploaded_by"]['id']
 				$ID("title").innerHTML = res["Title"]
 				$ID("desc").innerHTML = res["Description"]
 				$ID("fileuploadDate").innerHTML = res["date_posted"]
@@ -111,9 +132,20 @@
 		})
 	}
 
-	function execute_action(action,ids){
+	function set_idto_id(uploader){
+		var curr_user_id = "{{user_data['id']}}"
+		if(uploader != curr_user_id){
+			$ID("modify_div").innerHTML= " "
+		}
+		else{
+			$ID("modify_div").innerHTML= modify_div_elem
+		}
+	}
+
+	function execute_action(action,ids,table){
 		$ID("action_note").innerText = action
 		$ID("file_id_req").value = ids 
+		$ID("file_id_req_table").value = table 
 		// alert(ids)
 	}
 
@@ -122,7 +154,6 @@
 	function request_action(action){
 		var fileName = $ID("fileName").innerHTML
 		var pass = $ID("inputPassword2").value 
-
 		$send({
 			action : "/login/check_pass",
 			method : POST,
@@ -135,37 +166,88 @@
 				var res = JSON.parse(r)
 				println(res)
 				var file_id = $ID("file_id_req").value 
+				var file_table = $ID("file_id_req_table").value 
 				if(res['action']=="edit"){
-					goto("/rapid/admin/document.html?is_edit=1&file_id="+file_id)
+					if(file_table=="docs"){
+						goto("/rapid/admin/document.html?is_edit=1&file_id="+file_id)
+					}
+					if(file_table=="mul"){
+						goto("/rapid/admin/multimedia.html?is_edit=1&file_id="+file_id)
+					}
+					if(file_table=="pub"){
+						goto("/rapid/admin/publication.html?is_edit=1&file_id="+file_id)
+					}
+				}
+				if(res['action']=="delete"){
+					// goto("/rapid/admin/document.html?is_edit=1&file_id="+file_id)
+					delete_records(file_table,file_id)
+				}
+				if(res['action']=="revise"){
+					// goto("/rapid/admin/document.html?is_edit=1&file_id="+file_id)
+					revise_records(file_table,file_id)
+				}
+				if(res['action']=="post"){
+					// goto("/rapid/admin/document.html?is_edit=1&file_id="+file_id)
+					confirm_records(file_table,file_id)
+				}
+				if(res['action']=="download"){
+					// goto("/rapid/admin/document.html?is_edit=1&file_id="+file_id)
+					download_file(file_table,file_id)
 				}
 
 			}
 		})
 	}
+
+	function delete_records(table,ids){
+		$send({
+			action : "/webrep/delete_record/"+table+"/"+ids,
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)
+				println(res)
+				goto("/rapid/admin/adminKnowledgeCenter.html")
+			}
+		})
+	}
+	function revise_records(table,ids){
+		$send({
+			action : "/webrep/status_records/"+table+"/"+ids,
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)
+				println(res)
+				goto("/rapid/admin/adminKnowledgeCenter.html")
+			}
+		})
+	}
+	function confirm_records(table,ids){
+		$send({
+			action : "/webrep/confirm_records/"+table+"/"+ids,
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)
+				println(res)
+				goto("/rapid/admin/adminKnowledgeCenter.html")
+			}
+		})
+	}
 	
-	// function download_file(){
-	// 	var fileName = $ID("fileName").innerHTML 
-	// 	var pass = $ID("inputPassword2").value 
+	function download_file(table,ids){
+		$send({
+			action : "/webrep/download_file/"+table+"/"+ids,
+			method : POST,
+			func : function (r){
+				var res = JSON.parse(r)
+				dowmloadfile(res['file_to_dl'])
+			}
+		})
+	}
 
-	// 	$send({
-	// 		action : "/login/check_pass_all",
-	// 		method : POST,
-	// 		data : $DATA({
-	// 			"fileName":fileName,
-	// 			"pass":pass,
-	// 		}),
-	// 		func : function (r){
-	// 			var res = JSON.parse(r)
-	// 			println(res)
-
-	// 		}
-	// 	})
-	// }
-
-	function dowmloadfile(fff){
+	function dowmloadfile(file_name){
 		let a= document.createElement('a');
 		a.target= '_blank';
-		a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");
+		a.href= '/webrep/go_dl_file/'+file_name;
 		a.click();
 		get_notif()
 	}
