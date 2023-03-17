@@ -1,5 +1,5 @@
 <div class="modal fade" id="form1_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 70%;">
+    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 80%;">
       <div class="modal-content prof-content">
         <div class="modalprof modal-header prof-header " style="background-color: #007399;" >
           <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Form 1 PREPARATION, REVIEW AND APPROVAL STATUS</h4>
@@ -38,7 +38,11 @@
                         <td>{{ row['form_1_size_of_anchor'] }}</td>
                         <td>{{ row['form_1_commodity'] }}</td>
                         <td>{{ row['form_1_scope_provinces'] }}</td>
-                        <td><a style="color: #00cc66;" data-toggle="modal" data-target="#form1edit{{row['id']}}" href="/updateform1/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>
+                        <td>
+                          <!-- {{row['upload_by']}} === {{user_data['id']}} -->
+                          {% if(row['upload_by']==user_data['id'] or user_data['job']=="Super Admin"): %}
+                          <a style="color: #00cc66;" data-toggle="modal" data-target="#form1edit{{row['id']}}" href="/updateform1/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>
+                          {% endif %}
                         </td>
             
                  

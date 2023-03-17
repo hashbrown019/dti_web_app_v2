@@ -402,119 +402,14 @@ function myFunction3() {
     }
     
     }
-    $(function() {
-      $('.sweetalerts1').click(function(e) {
-        e.preventDefault();
-    
-        Swal.fire({
-          title: 'Do you want to save the changes?',
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Save',
-          denyButtonText: `Don't save`,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const form = document.getElementById('form1');
-            form.submit();
-    
-          } else if (result.isDenied) {
-            Swal.close();
-            Swal.fire('Changes are not saved', '', 'info')
-          }
-        })
-      });  
-    });
 
-    $(function() {
-      $('.sweetalerts2').click(function(e) {
-        e.preventDefault();
-    
-        Swal.fire({
-          title: 'Do you want to save the changes?',
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Save',
-          denyButtonText: `Don't save`,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const form = document.getElementById('form2');
-            form.submit();
-    
-          } else if (result.isDenied) {
-            Swal.fire('Changes are not saved', '', 'info')
-          }
-        })
-      });  
-    });
-
-
-    $(function() {
-      $('.sweetalerts3').click(function(e) {
-        e.preventDefault();
-    
-        Swal.fire({
-          title: 'Do you want to save the changes?',
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Save',
-          denyButtonText: `Don't save`,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const form = document.getElementById('form3');
-            form.submit();
-    
-          } else if (result.isDenied) {
-            Swal.fire('Changes are not saved', '', 'info')
-          }
-        })
-      });  
-    });
-
-    
-    $(function() {
-      $('.sweetalerts4').click(function(e) {
-        e.preventDefault();
-    
-        Swal.fire({
-          title: 'Do you want to save the changes?',
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Save',
-          denyButtonText: `Don't save`,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const form = document.getElementById('form4');
-            form.submit();
-    
-          } else if (result.isDenied) {
-            Swal.fire('Changes are not saved', '', 'info')
-          }
-        })
-      });  
-    });
-
-    
-    $(function() {
-      $('.sweetalerts5').click(function(e) {
-        e.preventDefault();
-    
-        Swal.fire({
-          title: 'Do you want to save the changes?',
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Save',
-          denyButtonText: `Don't save`,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const form = document.getElementById('form5');
-            form.submit();
-    
-          } else if (result.isDenied) {
-            Swal.fire('Changes are not saved', '', 'info')
-          }
-        })
-      });  
-    });
+    function calculateTotal() {
+      var cash_sales = parseInt(document.getElementById('form_7_cash_sales').value) || 0;
+      var booked_sales = parseInt(document.getElementById('form_7_booked_sales').value) || 0;
+      var under_negotiations = parseInt(document.getElementById('form_7_under_negotiations').value) || 0;
+      var total = cash_sales + booked_sales + under_negotiations;
+      document.getElementById('form_7_total_autosum').value = total;
+    }
 
     $(document).on("change","#filter1",(elem)=>{
         for (let count = 0; count < $(".filter2_opt").length; count++) { $(".filter2_opt")[count].style.display = "block"}

@@ -1,0 +1,220 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "form11" %}
+{% set forms = "forms" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+	
+
+	<form action="/insert_form11" method="POST">
+        {% include "includes/sweetalert.html" %}
+        <style>
+            .myDiv{
+                display:none;
+                padding:10px;
+                margin-top:20px;
+            } 
+            .myInd{
+                display:none;
+                padding:10px;
+                margin-top:20px;
+            }  
+            
+        </style> 
+        <div class="x-col l1 ">
+            &nbsp;
+        </div>
+		<div class=" x-col l10 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
+			<center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">Access to Financing Tracker</h2></center>
+
+			<div class="x-container x-padding">
+				<style> 
+					table, th, td{border: 1px solid black;border-collapse: collapse;}
+				</style>
+			</div>
+
+
+			<div class="x-row x-container x-padding">
+				<div class="x-col l4 x-container x-padding">
+					<span class="">DIP Alignment :</span>
+					<select id="form_11_dip_alignment" name="form_11_dip_alignment" class="x-container x-padding">
+						<option disabled selected>Choose your option</option>
+						<option value="yes">Yes</option>
+						<option value ="">No</option>
+					</select>	
+				</div>
+				<div class="x-col l2" style="margin-left: -6%;">
+					<div id="showyes" class="myDiv" >
+						<input class="x-padding x-container" id="form_11_dip_alignment_yes" size="28" type="text" name="form_11_dip_alignment_yes" placeholder="Write here">
+					</div> 
+				</div>
+				<div class="x-col l4 x-container x-padding" style="margin-left: 21%;" >
+					<label>Activity Title:</label>
+					<input class=" x-input x-border" id="form_11_activity_title" name="form_11_activity_title" type="text" autocomplete="on" placeholder="">
+				</div>
+			</div>
+			<div class="x-row x-container">
+				<div class="x-col l8 x-container x-padding">
+					<label>Name of Beneficiary (Registered Business/FO Name):</label>
+					<input class=" x-input x-border" id="form_11_name_of_beneficiary" name="form_11_name_of_beneficiary" size="10" type="text" autocomplete="on" placeholder="">
+				</div>
+			</div>
+			<div class="x-row x-container">
+				<div class="x-col l3 x-container x-padding">
+					<span class="">Industry Cluster:</span>
+					<select id="form_11_industry_cluster" class=" x-border x-select x-border" name="form_11_industry_cluster"><br>
+						<option disabled selected>Choose your option</option>
+						<option>Coffee</option>
+						<option>Cacao</option>
+						<option>Coconut</option>
+						<option value="pfn">PFN</option>
+					</select>
+				</div>
+				<div class="x-col l2" style="margin-left: -1%;">
+					<div id="showpfn" class="myInd" >
+						<input class="x-padding x-container" id="form_11_industry_pfn" name="form_11_industry_pfn" size="30" type="text" name="others" placeholder="Specify PFN commodity">
+					</div> 
+				</div>
+			</div>
+			<div class="x-row x-container x-padding">
+				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+				<table class="x-table x-container x-table-border" style="border-color: transparent;">
+					<tr>
+						
+						<th colspan="2">
+							<center>MSME/FO Location</center>
+						</th>
+						<th colspan="2">
+							<center>Sex</center>
+						</th>
+					</tr>
+
+					<tr>
+						<td><center>Region</center></td>
+						<td><center>Province</center></td>
+
+						<td><center>Male</center></td>
+						<td><center>Female</center></td>
+									
+					</tr>
+
+					<tr>
+						
+						<td><input class=" x-light-grey x-input" id="form_11_msme_regional" type="text" name="form_11_msme_regional"></td>
+						<td><input class=" x-light-grey x-input" id="form_11_msme_province" type="text" name="form_11_msme_province"></td>
+						
+
+						<td><input class=" x-light-grey x-input" id="form_11_male" type="number" name="form_11_male"></td>
+						<td><input class=" x-light-grey x-input" id="form_11_female" type="number" name="form_11_female"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="x-col 9 x-container x-padding">
+				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+				<table class="x-table x-container x-table-border" style="border-color: transparent;">
+					<tr>
+						
+						<th colspan="4">
+							<center>Sector</center>
+						</th>
+						<th colspan="2">
+							<center>Proposal Submission</center>
+						</th>
+
+					</tr>
+
+					<tr>
+
+						<td><center>PWD</center></td>
+						<td><center>Youth</center></td>
+						<td><center>IP</center></td>
+						<td><center>SC</center></td>
+
+						<td><center>Date Submitted to FSP</center></td>
+						<td><center>Date Approved</center></td>
+						
+					</tr>
+
+					<tr>
+						
+						<td><input class=" x-light-grey x-input" id="form_11_pwd" type="text" name="form_11_pwd"></td>
+						<td><input class=" x-light-grey x-input" id="form_11_youth" type="text" name="form_11_youth"></td>
+						<td><input class=" x-light-grey x-input" id="form_11_ip" type="text" name="form_11_ip"></td>
+						<td><input class=" x-light-grey x-input" id="form_11_sc" type="text" name="form_11_sc"></td>
+
+						<td><input class=" x-light-grey x-input" id="form_11_date_submitted" type="date" name="form_11_date_submitted"></td>
+						<td><input class=" x-light-grey x-input" id="form_11_date_approved" type="date" name="form_11_date_approved"></td>
+
+					</tr>
+				</table>
+			</div>
+			<div class="x-row x-container x-padding">
+				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+				<table class="x-table x-container x-table-border" style="border-color: transparent;">
+					<tr>
+						<th colspan="2">
+							<center>Partner FSP</center>
+						</th>
+					</tr>
+
+					<tr>
+
+						<td><center>Name of FSP</center></td>
+						<td><center>Location/Address</center></td>
+						
+					</tr>
+					<tr>
+						<td><input class=" x-light-grey x-input" id="form_11_name_of_fsp" type="text" name="form_11_name_of_fsp"></td>
+						<td><input class=" x-light-grey x-input" id="form_11_location_address" type="text" name="form_11_location_address"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="x-row x-container x-padding">
+				<div class="x-col l6 x-container x-padding">
+					<label>Amount of Equity Financing Approved/Accessed:</label>
+					<input class=" x-input x-border" id="form_11_amount_of_equity" name="form_11_amount_of_equity" type="text" autocomplete="on" placeholder="">
+				</div>
+				<div class="x-col l4 x-container x-padding">
+					<label>Date Released:</label>
+					<input class=" x-input x-border" id="form_11_date_released" name="form_11_date_released" type="date" autocomplete="on" placeholder="">
+				</div>
+                <div class="x-right" style="margin-top: 5%;">
+                    <input class="x-blue btn " id="form_11_submit"  type="submit">
+                </div>
+			</div>
+            
+		</div>
+
+
+
+
+
+
+
+
+
+		<script>
+			$(document).ready(function(){
+				$('#form_11_dip_alignment').on('change', function(){
+					var demovalue = $(this).val(); 
+					$("div.myDiv").hide();
+					$("#show"+demovalue).show();
+				});
+			});
+			$(document).ready(function(){
+				$('#form_11_industry_cluster').on('change', function(){
+					var demovalue = $(this).val(); 
+					$("div.myInd").hide();
+					$("#show"+demovalue).show();
+				});
+			});
+		</script>
+	</form>			
+    {% endblock content %}
+
+    {% block javascripts %}
+    
+    {% endblock javascripts %}

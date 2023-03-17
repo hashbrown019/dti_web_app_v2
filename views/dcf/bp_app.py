@@ -12,6 +12,8 @@ from views.dcf.form_insert import insert_form5 as insertData5
 from views.dcf.form_insert import insert_form6 as insertData6
 from views.dcf.form_insert import insert_form7 as insertData7
 from views.dcf.form_insert import insert_form9 as insertData9
+from views.dcf.form_insert import insert_form10 as insertData10
+from views.dcf.form_insert import insert_form11 as insertData11
 from views.dcf.form_insert import insert_form1 as insertData1
 from views.dcf.form_insert import insert_form3 as insertData3
 from views.dcf.form_insert import insert_form2 as insertData2
@@ -21,6 +23,12 @@ from views.dcf.dashboard import update_form1 as update_dataform1
 from views.dcf.dashboard import update_form2 as update_dataform2
 from views.dcf.dashboard import update_form3 as update_dataform3
 from views.dcf.dashboard import update_form4 as update_dataform4
+from views.dcf.dashboard import update_form5 as update_dataform5
+from views.dcf.dashboard import update_form6 as update_dataform6
+from views.dcf.dashboard import update_form7 as update_dataform7
+from views.dcf.dashboard import update_form9 as update_dataform9
+from views.dcf.dashboard import update_form10 as update_dataform10
+from views.dcf.dashboard import update_form11 as update_dataform11
 import Configurations as c 
 from modules.Connections import mysql
 
@@ -56,6 +64,39 @@ def updateform3():
 @app.route('/updateform4',methods=['POST','GET'])
 def updateform4():
     update_dataform4.updateform4(request)
+    return redirect("/dcf_dashboard")
+
+@app.route('/updateform5',methods=['POST','GET'])
+def updateform5():
+    update_dataform5.updateform5(request)
+    return redirect("/dcf_dashboard")
+
+@app.route('/updateform6',methods=['POST','GET'])
+def updateform6():
+    update_dataform6.updateform6(request)
+    return redirect("/dcf_dashboard")
+
+
+@app.route('/updateform7',methods=['POST','GET'])
+def updateform7():
+    update_dataform7.updateform7(request)
+    return redirect("/dcf_dashboard")
+
+
+@app.route('/updateform9',methods=['POST','GET'])
+def updateform9():
+    update_dataform9.updateform9(request)
+    return redirect("/dcf_dashboard")
+
+
+@app.route('/updateform10',methods=['POST','GET'])
+def updateform10():
+    update_dataform10.updateform10(request)
+    return redirect("/dcf_dashboard")
+
+@app.route('/updateform11',methods=['POST','GET'])
+def updateform11():
+    update_dataform11.updateform11(request)
     return redirect("/dcf_dashboard")
 
 @app.route('/dcf_forms')
@@ -111,6 +152,18 @@ def insert_form7():
 def insert_form9():
     insertData9.insert_form9(request)
     return redirect("/dcf/form9")
+
+@app.route('/insert_form10', methods = ['POST'])
+def insert_form10():
+    insertData10.insert_form10(request)
+    return redirect("/dcf/form10")
+
+
+@app.route('/insert_form11', methods = ['POST'])
+def insert_form11():
+    insertData11.insert_form11(request)
+    return redirect("/dcf/form11")
+
 
 @app.route('/dcf', methods=['GET', 'POST'])
 def dcfexport_data():
@@ -319,6 +372,60 @@ def dcfexport_data():
                     return send_file(c.RECORDS+'/objects/_temp_/dcf_form9_exported_file.xlsx')
 
             return form9export()
+        
+        elif export_type == 'form10export':
+            def form10export():
+                if request.method == "POST":
+                    query = db.select("SELECT form_10_nc_location,form_10_name_of_nc,form_10_title_of_rapid_activity,form_10_type_of_assistance,form_10_date,form_10_type_of_beneficiary,form_10_sex_male,form_10_sex_female,form_10_commodity FROM dcf_negosyo_center")
+                    df_nested_list = pd.json_normalize(query)
+                    df = pd.DataFrame(df_nested_list)
+                    df = df.astype(str)
+                    writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form10_exported_file.xlsx') 
+                    df.to_excel(writer, sheet_name='dcf_form10_exported_file', index=False)
+                    new_column_names = 'NC Location,Name of NC,Title of RAPID Activity,Type of Assistance Provided,Date,Type of beneficiary,Male,Female,Commodity'
+                    new_column_names_list = new_column_names.split(',')
+                    df.columns = new_column_names_list
+
+                    workbook = writer.book
+                    worksheet = writer.sheets['dcf_form10_exported_file']
+                    header_format = workbook.add_format({'bold': True, 'text_wrap': True, 'valign': 'top', 'fg_color': '#00ace6', 'border': 1})
+                    
+                    for col_num, value in enumerate(df.columns.values):
+                        worksheet.write(0, col_num, value, header_format)
+                        column_width = max(df[value].astype(str).apply(len).max(), len(value)) + 1
+                        worksheet.set_column(col_num, col_num, column_width)
+                    
+                    writer.save()
+                    return send_file(c.RECORDS+'/objects/_temp_/dcf_form10_exported_file.xlsx')
+
+            return form10export()
+        
+        elif export_type == 'form11export':
+            def form11export():
+                if request.method == "POST":
+                    query = db.select("SELECT form_11_dip_alignment,form_11_activity_title,form_11_name_of_beneficiary,form_11_industry_cluster,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released FROM dcf_access_financing")
+                    df_nested_list = pd.json_normalize(query)
+                    df = pd.DataFrame(df_nested_list)
+                    df = df.astype(str)
+                    writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form11_exported_file.xlsx') 
+                    df.to_excel(writer, sheet_name='dcf_form11_exported_file', index=False)
+                    new_column_names = 'DIP Alignment,Activity Title,Name of Beneficiary (Registered Business/FO Name),Industry Cluster,Region,Province,Male,Female,PWD,Youth,IP,SC,Date Submitted to FSP,Date Approved,Name of FSP,Location/Address,Amount of Equity Financing Approved/Accessed,Date Released'
+                    new_column_names_list = new_column_names.split(',')
+                    df.columns = new_column_names_list
+
+                    workbook = writer.book
+                    worksheet = writer.sheets['dcf_form11_exported_file']
+                    header_format = workbook.add_format({'bold': True, 'text_wrap': True, 'valign': 'top', 'fg_color': '#00ace6', 'border': 1})
+                    
+                    for col_num, value in enumerate(df.columns.values):
+                        worksheet.write(0, col_num, value, header_format)
+                        column_width = max(df[value].astype(str).apply(len).max(), len(value)) + 1
+                        worksheet.set_column(col_num, col_num, column_width)
+                    
+                    writer.save()
+                    return send_file(c.RECORDS+'/objects/_temp_/dcf_form11_exported_file.xlsx')
+
+            return form11export()
         
     else:
         return redirect('dcfspreadsheet.html')
