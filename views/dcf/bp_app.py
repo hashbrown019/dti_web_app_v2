@@ -373,6 +373,60 @@ def dcfexport_data():
 
             return form9export()
         
+        elif export_type == 'form10export':
+            def form10export():
+                if request.method == "POST":
+                    query = db.select("SELECT form_10_nc_location,form_10_name_of_nc,form_10_title_of_rapid_activity,form_10_type_of_assistance,form_10_date,form_10_type_of_beneficiary,form_10_sex_male,form_10_sex_female,form_10_commodity FROM dcf_negosyo_center")
+                    df_nested_list = pd.json_normalize(query)
+                    df = pd.DataFrame(df_nested_list)
+                    df = df.astype(str)
+                    writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form10_exported_file.xlsx') 
+                    df.to_excel(writer, sheet_name='dcf_form10_exported_file', index=False)
+                    new_column_names = 'NC Location,Name of NC,Title of RAPID Activity,Type of Assistance Provided,Date,Type of beneficiary,Male,Female,Commodity'
+                    new_column_names_list = new_column_names.split(',')
+                    df.columns = new_column_names_list
+
+                    workbook = writer.book
+                    worksheet = writer.sheets['dcf_form10_exported_file']
+                    header_format = workbook.add_format({'bold': True, 'text_wrap': True, 'valign': 'top', 'fg_color': '#00ace6', 'border': 1})
+                    
+                    for col_num, value in enumerate(df.columns.values):
+                        worksheet.write(0, col_num, value, header_format)
+                        column_width = max(df[value].astype(str).apply(len).max(), len(value)) + 1
+                        worksheet.set_column(col_num, col_num, column_width)
+                    
+                    writer.save()
+                    return send_file(c.RECORDS+'/objects/_temp_/dcf_form10_exported_file.xlsx')
+
+            return form10export()
+        
+        elif export_type == 'form11export':
+            def form11export():
+                if request.method == "POST":
+                    query = db.select("SELECT form_11_dip_alignment,form_11_activity_title,form_11_name_of_beneficiary,form_11_industry_cluster,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released FROM dcf_access_financing")
+                    df_nested_list = pd.json_normalize(query)
+                    df = pd.DataFrame(df_nested_list)
+                    df = df.astype(str)
+                    writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form11_exported_file.xlsx') 
+                    df.to_excel(writer, sheet_name='dcf_form11_exported_file', index=False)
+                    new_column_names = 'DIP Alignment,Activity Title,Name of Beneficiary (Registered Business/FO Name),Industry Cluster,Region,Province,Male,Female,PWD,Youth,IP,SC,Date Submitted to FSP,Date Approved,Name of FSP,Location/Address,Amount of Equity Financing Approved/Accessed,Date Released'
+                    new_column_names_list = new_column_names.split(',')
+                    df.columns = new_column_names_list
+
+                    workbook = writer.book
+                    worksheet = writer.sheets['dcf_form11_exported_file']
+                    header_format = workbook.add_format({'bold': True, 'text_wrap': True, 'valign': 'top', 'fg_color': '#00ace6', 'border': 1})
+                    
+                    for col_num, value in enumerate(df.columns.values):
+                        worksheet.write(0, col_num, value, header_format)
+                        column_width = max(df[value].astype(str).apply(len).max(), len(value)) + 1
+                        worksheet.set_column(col_num, col_num, column_width)
+                    
+                    writer.save()
+                    return send_file(c.RECORDS+'/objects/_temp_/dcf_form11_exported_file.xlsx')
+
+            return form11export()
+        
     else:
         return redirect('dcfspreadsheet.html')
 
