@@ -1,0 +1,103 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "form10" %}
+{% set forms = "forms" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+	<div class="x-col l1 ">
+		&nbsp;
+	</div>
+
+    <form action="/insert_form10" method="POST">
+        {% include "includes/sweetalert.html" %}
+		<div class=" x-col l10 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
+			<center><h2 class="text-white x-container x-padding" style="background-color: #007399;">Negosyo Center Tracker</h2></center>
+
+			<div class="x-container x-padding">
+				<style> 
+					table, th, td{border: 1px solid black;border-collapse: collapse;}
+				</style>
+			</div>
+
+
+			<div class="x-row x-container x-padding">
+				<div class="x-col l3 x-container x-padding">
+					<span class="">NC Location:</span>
+					<select class=" x-border x-select x-border" id="form_10_nc_location" name="form_10_nc_location"><br>
+						<option disabled selected>Choose your option</option>
+						<option >Region</option>
+						<option >Province</option>
+					</select>
+				</div>
+				<div class="x-col l5 x-container x-padding">
+					<label>Name of NC : </label>
+					<input class=" x-input x-border" id="form_10_name_of_nc" name="form_10_name_of_nc" type="text" autocomplete="on" placeholder="">
+				</div>
+				<div class="x-col l4 x-container x-padding">
+					<label>Title of RAPID Activity: </label>
+					<input class=" x-input x-border" id="form_10_title_of_rapid_activity" name="form_10_title_of_rapid_activity" type="text" autocomplete="on" placeholder="">
+				</div>
+			</div>
+
+			<div class="x-row x-container x-padding">
+				<div class="x-col l4 x-container x-padding">
+					<label>Type of Assistance Provided: </label>
+					<input class=" x-input x-border" id="form_10_type_of_assistance" name="form_10_type_of_assistance" type="text" autocomplete="on" placeholder="">
+				</div>
+				<div class="x-col l3 x-container x-padding">
+					<label>Date: </label>
+					<input class=" x-input x-border" id="form_10_date" name="form_10_date" type="date" autocomplete="on" placeholder="">
+				</div>
+			</div>
+
+			<div class="x-row x-container x-padding">
+				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+				<table class="x-table x-container x-table-border" style="border-color: transparent;">
+					<tr>
+
+						<th colspan="4">
+							<center>Assisted Beneficiary</center>
+						</th>
+					</tr>
+					<tr>
+						<th rowspan="2"><center>Type of beneficiary</center></th>
+						<th colspan="2"><center>Sex</center></th>
+						<th rowspan="2"><center>Commodity</center></th>
+
+					</tr>
+
+					<tr>
+						<td><center>Male</center></td>
+						<td><center>Female</center></td>
+					
+
+					</tr>
+
+					<tr>
+						<!---bene--->
+						<td><input class="t1 x-light-grey x-input" id="form_10_type_of_beneficiary" name="form_10_type_of_beneficiary" type="text"></td>
+
+						<!---sex--->
+						<td><input class="t1 x-light-grey x-input" id="form_10_sex_male" name="form_10_sex_male" type="text"></td>
+						<td><input class="t1 x-light-grey x-input" id="form_10_sex_female" name="form_10_sex_female" type="text"></td>
+
+						<!---com--->
+						<td><input class="t1 x-light-grey x-input" id="form_10_commodity" name="form_10_commodity" type="text"></td>
+					</tr>
+				</table>
+                <div class="x-right" style="margin-top: 5%;">
+                    <input class="x-blue btn " id="form_10_submit"  type="submit">
+                </div>
+			</div>
+
+            
+		</div>
+	</form>
+    {% endblock content %}
+
+    {% block javascripts %}
+    
+    {% endblock javascripts %}

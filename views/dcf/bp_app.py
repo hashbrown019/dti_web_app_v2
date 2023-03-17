@@ -12,6 +12,8 @@ from views.dcf.form_insert import insert_form5 as insertData5
 from views.dcf.form_insert import insert_form6 as insertData6
 from views.dcf.form_insert import insert_form7 as insertData7
 from views.dcf.form_insert import insert_form9 as insertData9
+from views.dcf.form_insert import insert_form10 as insertData10
+from views.dcf.form_insert import insert_form11 as insertData11
 from views.dcf.form_insert import insert_form1 as insertData1
 from views.dcf.form_insert import insert_form3 as insertData3
 from views.dcf.form_insert import insert_form2 as insertData2
@@ -25,6 +27,8 @@ from views.dcf.dashboard import update_form5 as update_dataform5
 from views.dcf.dashboard import update_form6 as update_dataform6
 from views.dcf.dashboard import update_form7 as update_dataform7
 from views.dcf.dashboard import update_form9 as update_dataform9
+from views.dcf.dashboard import update_form10 as update_dataform10
+from views.dcf.dashboard import update_form11 as update_dataform11
 import Configurations as c 
 from modules.Connections import mysql
 
@@ -84,6 +88,17 @@ def updateform9():
     update_dataform9.updateform9(request)
     return redirect("/dcf_dashboard")
 
+
+@app.route('/updateform10',methods=['POST','GET'])
+def updateform10():
+    update_dataform10.updateform10(request)
+    return redirect("/dcf_dashboard")
+
+@app.route('/updateform11',methods=['POST','GET'])
+def updateform11():
+    update_dataform11.updateform11(request)
+    return redirect("/dcf_dashboard")
+
 @app.route('/dcf_forms')
 def dcf_forms():
     return redirect("/dcf_forms")
@@ -137,6 +152,18 @@ def insert_form7():
 def insert_form9():
     insertData9.insert_form9(request)
     return redirect("/dcf/form9")
+
+@app.route('/insert_form10', methods = ['POST'])
+def insert_form10():
+    insertData10.insert_form10(request)
+    return redirect("/dcf/form10")
+
+
+@app.route('/insert_form11', methods = ['POST'])
+def insert_form11():
+    insertData11.insert_form11(request)
+    return redirect("/dcf/form11")
+
 
 @app.route('/dcf', methods=['GET', 'POST'])
 def dcfexport_data():

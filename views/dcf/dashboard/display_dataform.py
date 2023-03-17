@@ -25,6 +25,8 @@ def display():
     form6_datatable=db.select("SELECT * FROM dcf_product_development")
     form7_datatable=db.select("SELECT * FROM dcf_trade_promotion")
     form9_datatable=db.select("SELECT * FROM dcf_enablers_activity")
+    form10_datatable=db.select("SELECT * FROM dcf_negosyo_center")
+    form11_datatable=db.select("SELECT * FROM dcf_access_financing")
 
 
     return{
@@ -35,7 +37,9 @@ def display():
         'form5_datatable':  form5_datatable,
         'form6_datatable':  form6_datatable,
         'form7_datatable':  form7_datatable,
-        'form9_datatable':  form9_datatable
+        'form9_datatable':  form9_datatable,
+        'form10_datatable':  form10_datatable,
+        'form11_datatable':  form11_datatable
     }
 
 
@@ -54,6 +58,8 @@ def displayform():
     form6_datatable=db.select("SELECT * FROM dcf_product_development {};".format(position_data_filter()))
     form7_datatable=db.select("SELECT * FROM dcf_trade_promotion {};".format(position_data_filter()))
     form9_datatable=db.select("SELECT * FROM dcf_enablers_activity {};".format(position_data_filter()))
+    form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {};".format(position_data_filter()))
+    form11_datatable=db.select("SELECT * FROM dcf_access_financing {};".format(position_data_filter()))
     return{
         'form1_datatable':  form1_datatable,
         'form2_datatable':  form2_datatable,
@@ -62,7 +68,9 @@ def displayform():
         'form5_datatable':  form5_datatable,
         'form6_datatable':  form6_datatable,
         'form7_datatable':  form7_datatable,
-        'form9_datatable':  form9_datatable
+        'form9_datatable':  form9_datatable,
+        'form10_datatable':  form10_datatable,
+        'form11_datatable':  form11_datatable
 
     }
 

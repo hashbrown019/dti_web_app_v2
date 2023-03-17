@@ -25,6 +25,8 @@ def display():
     select_countform6=db.select("SELECT * FROM dcf_product_development")
     select_countform7=db.select("SELECT * FROM dcf_trade_promotion")
     select_countform9=db.select("SELECT * FROM dcf_enablers_activity")
+    select_countform10=db.select("SELECT * FROM dcf_negosyo_center")
+    select_countform11=db.select("SELECT * FROM dcf_access_financing")
     dcf_form5=len(select_countform5)
     dcf_form4=len(select_countform4)
     dcf_form3=len(select_countform3)
@@ -33,6 +35,8 @@ def display():
     dcf_form6=len(select_countform6)
     dcf_form7=len(select_countform7)
     dcf_form9=len(select_countform9)
+    dcf_form10=len(select_countform10)
+    dcf_form11=len(select_countform11)
     return{
         'USER_INFO':  USER_INFO,
         'dcf_form1': dcf_form1,
@@ -42,7 +46,9 @@ def display():
         'dcf_form5': dcf_form5,
         'dcf_form6': dcf_form6,
         'dcf_form7': dcf_form7,
-        'dcf_form9': dcf_form9
+        'dcf_form9': dcf_form9,
+        'dcf_form10': dcf_form10,
+        'dcf_form11': dcf_form11
 
     }
 
@@ -62,6 +68,8 @@ def display__():
     select_countform6=db.select("SELECT * FROM dcf_product_development {} ".format(position_data_filter()))
     select_countform7=db.select("SELECT * FROM dcf_trade_promotion {} ".format(position_data_filter()))
     select_countform9=db.select("SELECT * FROM dcf_enablers_activity {} ".format(position_data_filter()))
+    select_countform10=db.select("SELECT * FROM dcf_negosyo_center {} ".format(position_data_filter()))
+    select_countform11=db.select("SELECT * FROM dcf_access_financing {} ".format(position_data_filter()))
     dcf_form5=len(select_countform5)
     dcf_form4=len(select_countform4)
     dcf_form3=len(select_countform3)
@@ -70,6 +78,8 @@ def display__():
     dcf_form6=len(select_countform6)
     dcf_form7=len(select_countform7)
     dcf_form9=len(select_countform9)
+    dcf_form10=len(select_countform10)
+    dcf_form11=len(select_countform11)
     return{
         'USER_INFO':  USER_INFO,
         'dcf_form1': dcf_form1,
@@ -79,7 +89,9 @@ def display__():
         'dcf_form5': dcf_form5,
         'dcf_form6': dcf_form6,
         'dcf_form7': dcf_form7,
-        'dcf_form9': dcf_form9
+        'dcf_form9': dcf_form9,
+        'dcf_form10': dcf_form10,
+        'dcf_form11': dcf_form11
     }
 
 def position_data_filter():

@@ -1,5 +1,5 @@
 <div class="modal fade" id="form5_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 70%;">
+    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 80%;">
       <div class="modal-content prof-content">
         <div class="modalprof modal-header prof-header " style="background-color: #007399;" >
           <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Form 5 Matching Grant Implementation Tracker</h4>
@@ -13,7 +13,7 @@
                 <div class="d-flex justify-content-center">
                 <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
                   <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4" >
-                    <table class="table table-dark table-flush dataTable " id="datatable-buttons4" role="grid" aria-describedby="datatable-buttons_info" style="width:100% !important">
+                    <table class="table table-dark table-flush dataTable " id="datatable-buttons5" role="grid" aria-describedby="datatable-buttons_info" style="width:100% !important">
                     <thead class="thead" >
                       <tr role="row">
                         <th>ID</th>
@@ -37,7 +37,10 @@
                         <td>{{ row['mgit_msme_recipient'] }}</td>
                         <td>{{ row['mgit_total_member_recipient'] }}</td>
                         <td>{{ row['mgit_commodity'] }}</td>
-                        <td><a style="color: #00cc66;" data-toggle="modal" data-target="#form5edit{{row['id']}}" href="/updateform5/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>
+                        <td>
+                            {% if(row['upload_by']==user_data['id'] or user_data['job']=="Super Admin"): %}
+                            <a style="color: #00cc66;" data-toggle="modal" data-target="#form5edit{{row['id']}}" href="/updateform5/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>
+                        {%endif%}
                         </td>
             
                  
