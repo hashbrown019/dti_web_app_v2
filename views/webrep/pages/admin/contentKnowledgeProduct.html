@@ -19,16 +19,31 @@
 									{% if upload_['upload_type']=="mul": %}
 										{% set categ = upload_['formCategory'] %}
 										{% set id_ = upload_['id'] %}
-										<div class="__FILESMUL__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">{{upload_['Title']}}</h5>
-													<p class="card-text">{{upload_['Description']}}</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails" onmouseup="get_file__det('{{id_}}')"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
+										{% set table_ = upload_['upload_type'] %}
+
+										{% if(upload_['status']=='posted' or user_data['job']=="Admin" or user_data['job']=="Super Admin" or user_data['id']|int == upload_['uploaded_by']|int) %}
+											<div class="__FILESMUL__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}  border-{{stat_color}}">
+											{% if upload_["status"]=='pending' %}
+											<div class="card border-warning">
+											{% elif upload_["status"]=='revise' %}
+											<div class="card border-danger">
+											{% elif upload_["status"]=='posted' %}
+											<div class="card border-success">
+											{% endif %}
+													<div class="card-body">
+														<h5 class="card-title">{{upload_['Title']}}</h5>
+														<p class="card-text">{{upload_['Description']}}</p>
+														<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails" onmouseup="get_file__det('{{id_}}','{{table_}}')"><em>View Details </em></a>
+														<span class="small  text-muted ms-5 fst-italic"></span>
+														<div class="d-flex">
+															<div class="align-self-end " style="height: 20px;">
+																<p class="mt-auto fw-bolder text-muted">{{upload_["status"]}}</p>	
+															</div>														
+														</div>
+													</div>
 												</div>
 											</div>
-										</div>
+										{% endif %}
 									{% endif %}
 								{% endfor %}
 							</div>
@@ -39,7 +54,6 @@
 					<div class="container tab-pane fade overflow-auto" id="v-pills-pub" role="tabpanel" aria-labelledby="v-pills-pub-tab" tabindex="0" style=" height:400px;">
 						<div class="d-flex align-items-start " >								
 							<div id="categ_pub" class="nav flex-column nav-pills  me-3 pe-5 mt-5" id="v-pills-tab" role="tablist " aria-orientation="vertical" style="border-right: 1px solid #1F4F5A;">
-								
 							</div>
 
 							<div class="tab-content w-100" id="v-pills-tabContent">
@@ -47,16 +61,32 @@
 									{% if upload_['upload_type']=="pub": %}
 										{% set categ = upload_['formCategory'] %}
 										{% set id_ = upload_['id'] %}
-										<div class="__FILESPUB__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}}">
-											<div class="card card_size">
-												<div class="card-body">
-													<h5 class="card-title">{{upload_['Title']}}</h5>
-													<p class="card-text">{{upload_['Description']}}</p>
-													<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails" onmouseup="get_file__det('{{id_}}')"><em>View Details </em></a>
-													<span class="small  text-muted ms-5 fst-italic"></span>
+										{% set table_ = upload_['upload_type'] %}
+
+										{% if(upload_['status']=='posted' or user_data['job']=="Admin" or user_data['job']=="Super Admin"  or user_data['id']|int== upload_['uploaded_by']|int) %}
+											<div class="__FILESPUB__ col-sm-6 col-lg-4 mb-3 {{categ|replace(' ','_')|replace('/','_')|replace('-','_')}} border-{{stat_color}}">
+											{% if upload_["status"]=='pending' %}
+											<div class="card border-warning">
+											{% elif upload_["status"]=='revise' %}
+											<div class="card border-danger">
+											{% elif upload_["status"]=='posted' %}
+											<div class="card border-success">
+											{% endif %}
+													<div class="card-body">
+														<h5 class="card-title">{{upload_['Title']}}</h5>
+														<p class="card-text">{{upload_['Description']}}</p>
+														<a href="#" class="btn btn-dark stretched-link  btn-sm text-white" type="button" data-bs-toggle="modal" data-bs-target="#viewDetails" onmouseup="get_file__det('{{id_}}','{{table_}}')"><em>View Details </em></a>
+														<span class="small  text-muted ms-5 fst-italic"></span>
+														<div class="d-flex">
+															<div class="align-self-end " style="height: 20px;">
+																<p class="mt-auto fw-bolder text-muted">{{upload_["status"]}}</p>	
+															</div>														
+														</div>
+													</div>
+
 												</div>
 											</div>
-										</div>
+										{% endif %}
 									{% endif %}
 								{% endfor %}
 							</div>
@@ -72,7 +102,10 @@
 				var c_doc = [] ; var str_doc = ""
 						{% for upload_categ in upload_file_webrep %}
 							{% if upload_categ['upload_type']=="mul": %}
-								{% set categ = upload_categ['formCategory'] %}c_doc.push("{{categ}}")
+								{% set table_ = upload_categ['upload_type'] %}
+								{% if(upload_categ['status']=='posted' or user_data['job']=="Admin" or user_data['job']=="Super Admin" or user_data['id']|int == upload_categ['uploaded_by']|int) %}
+									{% set categ = upload_categ['formCategory'] %}c_doc.push("{{categ}}")
+								{% endif %}
 							{% endif %}
 						{% endfor %}
 				c_doc = [...new Set(c_doc)];
@@ -88,7 +121,10 @@
 				var c_doc = [] ; var str_doc = ""
 						{% for upload_categ in upload_file_webrep %}
 							{% if upload_categ['upload_type']=="pub": %}
-								{% set categ = upload_categ['formCategory'] %}c_doc.push("{{categ}}")
+								{% set table_ = upload_categ['upload_type'] %}
+								{% if(upload_categ['status']=='posted' or user_data['job']=="Admin" or user_data['job']=="Super Admin" or user_data['id']|int == upload_categ['uploaded_by']|int) %}
+									{% set categ = upload_categ['formCategory'] %}c_doc.push("{{categ}}")
+								{% endif %}
 							{% endif %}
 						{% endfor %}
 				c_doc = [...new Set(c_doc)];

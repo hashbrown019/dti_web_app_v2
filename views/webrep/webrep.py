@@ -107,7 +107,7 @@ class _main:
 
 	@app.route("/webrep/article/get_post",methods=["POST","GET"])
 	def get_post():
-		return db.select("SELECT * from `webrep_articles` ORDER BY `id` DESC;")
+		return db.select("SELECT * from `webrep_articles` WHERE `removed`='0' ORDER BY `id` DESC;")
 
 	@app.route("/webrep/article/get_post_ind",methods=["POST","GET"])
 	def get_post_ind():
@@ -117,7 +117,7 @@ class _main:
 
 	@app.route("/webrep/uploads/docs",methods=["POST","GET"])
 	def get_uploads_docs():
-		return db.select("SELECT * from `webrep_uploads` ORDER BY `id` DESC;")
+		return db.select("SELECT * from `webrep_uploads`  WHERE `removed`='0' ORDER BY `id` DESC;")
 
 	@app.route("/webrep/uploads/docs_item",methods=["POST","GET"])
 	def get_uploads_docs_item():
@@ -153,16 +153,27 @@ class _main:
 		from modules.Req_Brorn_util import file_from_request
 		FILE_REQ = file_from_request(app)
 		data = dict(request.form)
-		key = [];val = []
+		key = [];val = [];args=""
 		data["USER_ID"] = session["USER_DATA"][0]['id']
-		# __f = FILE_REQ.save_file_from_request("upload",c.RECORDS+"/objects/webrep/")
+
+
 		__f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/",False,True)
 		data["upload"] = __f["file_arr_str"]
-		for datum in data:
-			print(datum)
-			key.append("`{}`".format(datum))
-			val.append("'{}'".format(data[datum]))
-		sql = ('''INSERT INTO `webrep_uploads` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+
+		is_exist = len(db.select("SELECT * FROM `webrep_uploads` WHERE `id` ='{}' ;".format(request.form['id'])))
+		if(is_exist==0):
+			for datum in data:
+				print(datum)
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(data[datum]))
+			sql = ('''INSERT INTO `webrep_uploads` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+		
+		else:
+			print("Editing")
+			for datum in data:
+				args += ",`{}`='{}'".format(datum,data[datum])
+			sql = "UPDATE `webrep_uploads` SET  {}, `status`='pending' WHERE `id`='{}';".format(args[1:],request.form['id'])
+			pass
 		
 		last_row_id = db.do(sql)
 		return jsonify({"last_row_id":last_row_id,"FILES":__f})
@@ -173,6 +184,40 @@ class _main:
 		img = img.replace('C:fakepath', '').replace(" ","_").replace(")","").replace("(","")
 		print(img)
 		return send_file(c.RECORDS+"/objects/webrep/"+img)
+
+
+	@app.route("/webrep/delete_record/<table>/<ids>",methods=["POST","GET"])
+	def delete_record(table,ids):
+		__table = {"docs":"webrep_uploads","mul":"webrep_uploads","pub":"webrep_uploads"}
+		print(table)
+		print(ids)
+		update_del = db.do("UPDATE `{}` SET `removed`='1' WHERE `id`='{}';".format(__table[table],ids))
+		return {"db_info":update_del}
+
+	@app.route("/webrep/status_records/<table>/<ids>",methods=["POST","GET"])
+	def status_records(table,ids):
+		__table = {"docs":"webrep_uploads","mul":"webrep_uploads","pub":"webrep_uploads"}
+		update_del = db.do("UPDATE `{}` SET `status`='revise' WHERE `id`='{}';".format(__table[table],ids))
+		return {"db_info":update_del}
+
+	@app.route("/webrep/confirm_records/<table>/<ids>",methods=["POST","GET"])
+	def confirm_records(table,ids):
+		__table = {"docs":"webrep_uploads","mul":"webrep_uploads","pub":"webrep_uploads"}
+		update_del = db.do("UPDATE `{}` SET `status`='posted' WHERE `id`='{}';".format(__table[table],ids))
+		return {"db_info":update_del}
+
+
+	@app.route("/webrep/download_file/<table>/<ids>",methods=["POST","GET"])
+	def download_excel(table,ids):
+		__table = {"docs":"webrep_uploads","mul":"webrep_uploads","pub":"webrep_uploads"}
+		res = db.select("SELECT `upload` FROM `{}` WHERE `id`='{}';".format(__table[table],ids))
+		print(res)
+		return {"file_to_dl":res[0]['upload']}
+		# return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+file, as_attachment=True,download_name=file)
+
+	@app.route("/webrep/go_dl_file/<filename>",methods=["POST","GET"])
+	def go_dl_file(filename):
+		return send_file(c.RECORDS+"/objects/webrep/"+filename, as_attachment=True,download_name=filename)
 
 
 	def get_module_data():
@@ -187,7 +232,6 @@ class _main:
 	def get_all_user():
 		users = db.select("SELECT * FROM `users`;")
 		return users
-
 
 	def moderator(segment,page):
 		pass;

@@ -21,7 +21,7 @@
 	<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
 	<script src="../../static/webrepstatic/js/bootstrap-autocomplete.min.js"></script>
 
-	<!-- <script defer src="../../static/js/Brorn.min.js"></script> -->
+	<script src="../../static/js/Brorn.min.js"></script>
 
 	<title >Upload Publication</title>
 </head>
@@ -96,6 +96,7 @@
 							</div>
 						</div>
 					</div>
+					<input disabled type="" class="FORMDATA_DOCUMENT" id="id">
 					<div class="col-12">
 						<div class="form-floating">
 							<select class="form-select FORMDATA_DOCUMENT" id="formCategory" aria-label="Floating label select example">
@@ -297,6 +298,32 @@
 	function close_transaction(){
 		$ID("createPostConfirmation").style.display = "none"
 		goto('/rapid/admin/adminKnowledgeCenter.html')
+	}
+
+	
+
+
+
+	$onload(check_if_edit)
+	function check_if_edit(){
+		println(URL_ARGS)
+		if(parseInt(URL_ARGS['is_edit'])==1){
+			$send({
+				action : "/webrep/uploads/docs_item",
+				method : POST,
+				data : $DATA({'ids':URL_ARGS['file_id']}),
+				func : function(r){
+					res = JSON.parse(r)[0]
+					println(res)
+					var FORMDATA_DOCUMENT = $CLASS('FORMDATA_DOCUMENT')
+					for (var i = 0; i < FORMDATA_DOCUMENT.length; i++) {
+						println(FORMDATA_DOCUMENT[i].id)
+						FORMDATA_DOCUMENT[i].value = res[FORMDATA_DOCUMENT[i].id]
+					}
+
+				}
+			})
+		}
 	}
 // appendFileArr()
 </script>
