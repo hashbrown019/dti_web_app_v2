@@ -484,4 +484,6 @@ function myFunction3() {
       document.getElementById('progress-text').innerHTML = data;
     });
 
+    
+
  
