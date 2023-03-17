@@ -21,13 +21,19 @@ def display():
     form2_datatable=db.select("SELECT * FROM dcf_implementing_unit")
     form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg")
     form4_datatable=db.select("SELECT * FROM dcf_capacity_building")
+    form5_datatable=db.select("SELECT * FROM dcf_matching_grant")
+    form6_datatable=db.select("SELECT * FROM dcf_product_development")
+    form7_datatable=db.select("SELECT * FROM dcf_trade_promotion")
 
 
     return{
         'form1_datatable':  form1_datatable,
         'form2_datatable':  form2_datatable,
         'form3_datatable':  form3_datatable,
-        'form4_datatable':  form4_datatable
+        'form4_datatable':  form4_datatable,
+        'form5_datatable':  form5_datatable,
+        'form6_datatable':  form6_datatable,
+        'form7_datatable':  form7_datatable
     }
 
 
@@ -42,11 +48,17 @@ def displayform():
     form2_datatable=db.select("SELECT * FROM dcf_implementing_unit {};".format(position_data_filter()))
     form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg {};".format(position_data_filter()))
     form4_datatable=db.select("SELECT * FROM dcf_capacity_building {};".format(position_data_filter()))
+    form5_datatable=db.select("SELECT * FROM dcf_matching_grant {};".format(position_data_filter()))
+    form6_datatable=db.select("SELECT * FROM dcf_product_development {};".format(position_data_filter()))
+    form7_datatable=db.select("SELECT * FROM dcf_trade_promotion {};".format(position_data_filter()))
     return{
         'form1_datatable':  form1_datatable,
         'form2_datatable':  form2_datatable,
         'form3_datatable':  form3_datatable,
-        'form4_datatable':  form4_datatable
+        'form4_datatable':  form4_datatable,
+        'form5_datatable':  form5_datatable,
+        'form6_datatable':  form6_datatable,
+        'form7_datatable':  form7_datatable
 
     }
 

@@ -1,0 +1,321 @@
+
+{% for row in form6_datatable %}
+<div class="modal fade" id="form6edit{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #007399;">
+        <h5 class="modal-title text-white" id="exampleModalLabel">EDIT FORM</h5>       
+        <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalbodyedit">
+
+              <form style="margin-left: 2%; margin-right: 2%;" id="form6" action="/updateform6" method="POST">
+                {% include "includes/sweetalert.html" %}
+
+                <div class="x-col l1 ">
+                    &nbsp;
+                </div>
+            
+                <div class="x-col l13 x-row x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+                    <center><h2 class=" text-white x-container x-padding" style="background-color: #007399;">Product Development/ Enhancement Assistance Provided/ Consultancy Services</h2></center>
+            
+            
+                        <style> 
+                            table, th, td{border: 1px solid black;border-collapse: collapse;}
+                        </style>
+            
+            
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l3 x-container x-padding">
+                            <input type="hidden"  name="id" value="{{ row['id'] }}">
+                            <span class="">Implementing Unit:</span>
+                            <select class=" x-border x-select x-border" value="{{ row['form_6_implementing_unit'] }}" id="form_6_implementing_unit" name="form_6_implementing_unit"><br>
+                                <option>{{ row['form_6_implementing_unit'] }}</option>
+                                <option >RCU</option>
+                                <option >PCU</option>
+                            </select>
+                        </div>
+                        <div class="x-col l3 x-container x-padding">
+                            <label>Type of Assistance:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_type_of_assisstance'] }}"  id="form_6_type_of_assisstance" name="form_6_type_of_assisstance" type="text" autocomplete="on" placeholder="Write Here">
+                        </div>
+                        <div class="x-col l3 x-container x-padding">
+                            <label>Type of Activity:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_type_of_activity'] }}" id="form_6_type_of_activity" name="form_6_type_of_activity" type="text" autocomplete="on" placeholder="Write Here">
+                        </div>
+            
+                        <div class="x-col l3 x-container x-padding">
+                            <label>DIP Alignment:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_dip_alignment'] }}" id="form_6_dip_alignment" name="form_6_dip_alignment" type="text" autocomplete="on" placeholder="Write Here">
+                        </div>
+                    </div>
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l4 x-container x-padding">
+                            <label>Activity Duration Start Date:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_activity_duration_start'] }}" id="form_6_activity_duration_start" name="form_6_activity_duration_start" type="date" autocomplete="on" placeholder="Write Here">
+                        </div>
+                        <div class="x-col l4 x-container x-padding">
+                            <label>Activity Duration End Date:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_activity_duration_end'] }}" id="form_6_activity_duration_end" name="form_6_activity_duration_end" type="date" autocomplete="on" placeholder="Write Here">
+                        </div>
+                    </div>
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l4 x-container x-padding">
+                            <label>Venue:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_venue'] }}" id="form_6_venue" name="form_6_venue" type="text" autocomplete="on" placeholder="Write Here">
+                        </div>
+                        <div class="x-col l4 x-container x-padding" style="width: 45%;">
+                            <label>Name of Resource Person/Facilitator/BDSP:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_resource_person'] }}" id="form_6_resource_person" name="form_6_resource_person" type="text" autocomplete="on" placeholder="Write Here">
+                        </div>
+                        <div class="x-col l4 x-container x-padding">
+                            <label>RAPID Actual Budget:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_rapid_actual_budget'] }}" id="form_6_rapid_actual_budget" name="form_6_rapid_actual_budget" type="text" autocomplete="on" placeholder="Write Here">
+                        </div>
+                    </div>
+                    <div class="x-row x-container x-padding">
+                        <style>table, th, td{border: 1px ; border-collapse: collapse;}</style>
+                        <table class="x-table x-container x-table-border" style="border-color: transparent;" >
+                            <tr>
+                                <th colspan="2">
+                                    <center>Fully & partially funded by partners outside RAPID </center>
+                                </th>
+                            </tr>
+            
+                            <tr>
+                                <td><center>Name of Partner/Organization</center></td>
+                                <td><center>Name of Partner/Organization</center></td>
+                            </tr>
+            
+                            <tr>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_name_of_partner_organization_1'] }}" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_name_of_partner_organization_2'] }}" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="x-row x-container x-padding">
+                        <div class="x-col l4 x-container x-padding">
+                            <label>Name of Beneficiary/Participant:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_beneficiary_participant'] }}" id="form_6_beneficiary_participant" name="form_6_beneficiary_participant" type="text" autocomplete="on" placeholder="Write Here">
+                        </div>
+                        <div class="x-col l4 x-container x-padding">
+                            <label>Commodity:</label>
+                            <input class=" x-input x-border" value="{{ row['form_6_commodity'] }}" id="form_6_commodity" name="form_6_commodity" type="text" autocomplete="on" placeholder="Write Here">
+                        </div>
+                        <div class="x-col l3 x-container x-padding">
+                            <span class="">Type of Beneficiary:</span>
+                            <select class=" x-border x-select x-border" value="{{ row['form_6_type_of_beneficiary'] }}" id="form_6_type_of_beneficiary" name="form_6_type_of_beneficiary"><br>
+                                <option >{{ row['form_6_type_of_beneficiary'] }}</option>
+                                <option >MSE</option>
+                                <option >FO</option>
+                                <option>Farmer</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                    <div class="x-row x-container x-padding">
+                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                        <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                            <tr>
+                                <th colspan="3">
+                                    <center>sex</center>
+                                </th>
+                                <th colspan="5">
+                                    <center>Sector</center>
+                                </th>
+                            </tr>
+            
+                            <tr>
+                                <td><center>Male</center></td>
+                                <td><center>Female</center></td>
+                                <td><center>Total</center></td>
+            
+                                <td><center>PWD</center></td>
+                                <td><center>Youth</center></td>
+                                <td><center>IP</center></td>
+                                <td><center>SC</center></td>
+                                <td><center>Total</center></td>
+            
+                            </tr>
+            
+                            <tr>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_male'] }}" id="form_6_male" type="text" name="form_6_male"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_female'] }}" id="form_6_female" type="text" name="form_6_female"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_total_1'] }}" id="form_6_total_1" type="text" name="form_6_total_1"></td>
+            
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_pwd'] }}" id="form_6_pwd" type="text" name="form_6_pwd"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_youth'] }}"  id="form_6_youth" type="text" name="form_6_youth"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_ip'] }}" id="form_6_ip" type="text" name="form_6_ip"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_sc'] }}" id="form_6_sc" type="text" name="form_6_sc"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_total_2'] }}" id="form_6_total_2" type="text" name="form_6_total_2"></td>
+                            </tr>
+                        </table>
+                    </div>
+            
+            
+                    <div class="x-row x-container x-padding">
+                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                        <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                            <tr>
+                                <th colspan="4">
+                                    <center>Outputs for Product Development</center>
+                                </th>
+                                
+                            </tr>
+            
+                            <tr>
+                                <td colspan="2"><center>Products Developed</center></td>
+                                <td colspan="2"><center>Products Improved</center></td>
+                            </tr>
+            
+                            <tr>
+                                <td><center>Name of Product Developed</center></td>
+                                <td><center>Date Launched to Market</center></td>
+            
+                                <td><center>Name of Improved Product</center></td>
+                                <td><center>Type of Product Improvement </center></td>
+                            </tr>
+            
+                            <tr>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_product_developed'] }}" id="form_6_product_developed" type="text" name="form_6_product_developed"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_date_launched_to_market'] }}" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market"></td>
+            
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_improved_product'] }}" id="form_6_improved_product" type="text" name="form_6_improved_product"></td>
+                                <td><div class="x-row x-container x-padding">
+                                    <select class=" x-border x-select x-border" value="{{ row['form_6_type_of_product_improvement'] }}" id="form_6_type_of_product_improvement" name="form_6_type_of_product_improvement"><br>
+                                        <option>{{ row['form_6_type_of_product_improvement'] }}</option>
+                                        <option >Product Quality</option>
+                                        <option >Packaging</option>
+                                        <option>Labels</option>
+                                    </select>
+                                </div></td>
+                            </tr>
+                        </table>
+                    </div>
+            
+                    <!----outputs---->
+                    <div class="x-row x-container x-padding">
+                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                        <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                            <tr>
+                                <th colspan="7">
+                                    <center>Outputs for Consultancy Services</center>
+                                </th>
+                                
+                            </tr>
+            
+                            <tr>
+                                <td colspan="2"><center>Productivity Improvement</center></td>
+                                <td colspan="1"><center>Quality and Trade Certifications</center></td>
+                                <td colspan="4"><center>Post Consultancy Outputs</center></td>
+                            </tr>
+            
+                            <tr>
+                                <td><center>Name the System/Process Established/Improved</center></td>
+                                <td><center>Date of Establishment/ Adoption</center></td>
+            
+                                <td><center>Name/Title of Certifications Facilitated</center></td>
+            
+                                <td><center>Name/Title of Certifications Acquired</center></td>
+                                <td><center>Date of Issuance</center></td>
+                                <td><center>Expiration Date</center></td>
+                                <td><center>Product Certified</center></td>
+                            </tr>
+            
+                            <tr>
+            
+                                <!---1--->
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_name_of_product_developed'] }}" id="form_6_name_of_product_developed" type="text" name="form_6_name_of_product_developed"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_'] }}" id="form_6_" type="date" name="form_6_"></td>
+            
+                                <!---2--->
+                                <td><div class="x-row x-container x-padding">
+                                    <select class=" x-border x-select x-border" value="{{ row['form_6_commodity1'] }}" id="form_6_commodity1" name="form_6_commodity1"><br>
+                                        <option>{{ row['form_6_commodity1'] }}</option>
+                                        <option >GMP</option>
+                                        <option >HACCP</option>
+                                        <option>Halal</option>
+                                        <option>Organic Certification</option>
+                                        <option>FDA-LTO Certification</option>
+                                        <option>FDA-CPR</option>
+                                        <option>Others, Specify</option>
+                                    </select>
+                                </div></td>
+            
+                                <!---3--->
+                                <td><div class="x-row x-container x-padding">
+                                    <select class=" x-border x-select x-border" value="{{ row['form_6_commodity2'] }}" id="form_6_commodity2" name="form_6_commodity2"><br>
+                                        <option>{{ row['form_6_commodity2'] }}</option>
+                                        <option >GMP</option>
+                                        <option >HACCP</option>
+                                        <option>Halal</option>
+                                        <option>Organic Certification</option>
+                                        <option>FDA-LTO Certification</option>
+                                        <option>FDA-CPR</option>
+                                        <option>Others, Specify</option>
+                                    </select>
+                                </div></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_date_issuance'] }}" id="form_6_date_issuance" type="date" name="form_6_date_issuance"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_expiration_date'] }}" id="form_6_expiration_date" type="date" name="form_6_expiration_date"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_product_certified'] }}" id="form_6_product_certified" type="text" name="form_6_product_certified"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="x-row x-container x-padding">
+                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                        <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                            <tr>
+                                <th colspan="2">
+                                    <center>Client Feedback survey  (average per activity)</center>
+                                </th>
+                            </tr>
+            
+                            <tr>
+                                <td><center>Rating</center></td>
+                                <td><center>Comments/Areas of Improvement</center></td>
+                            </tr>
+            
+                            <tr>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_rating'] }}" id="form_6_rating" type="text" name="form_6_rating"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_comment_ares_of_improvement'] }}" id="form_6_comment_ares_of_improvement" type="text" name="form_6_comment_ares_of_improvement"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="x-col l5">
+                        <div method="post" enctype="multipart/form-data">
+                            <div class="x-col l3 x-container x-padding">
+                                <input class="x-padding" type="file" name="form_2_image_uploads" id="form_2_image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx" multiple />
+                            </div>
+                        </div> 
+                    </div>
+
+            
+            
+            
+                </div>
+            
+              
+          </div>
+          <div class="modal-footer bg-light">
+             <button type="submit" class="btn btn-primary" style="justify-content: right;">Save changes</button>
+            <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </form>
+    <script>
+        const elementsWithName = document.querySelectorAll('[name]');
+    
+    
+    elementsWithName.forEach(element => {
+      console.log(element.getAttribute('name'));
+    });
+      </script>
+      
+      </div>
+   
+    </div>
+  </div>
+  
+  {% endfor  %}
+
