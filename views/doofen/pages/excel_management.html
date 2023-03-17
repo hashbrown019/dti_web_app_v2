@@ -1,7 +1,7 @@
 
-<!-- <div class="x-button x-text-orange x-hover-orange" onclick="export_farmer_excel()">
+<div class="x-button x-text-orange x-hover-orange" onclick="export_farmer_excel()">
 	<b>Export Data</b> | <span class="fa fa-download"></span>
-</div> -->
+</div>
 <div class="x-button x-text-blue x-hover-blue" onclick="import_farmer_excel()">
 	<b>Import Spreadsheet</b> | <span class="fa fa-upload"></span>
 </div>
@@ -59,11 +59,9 @@ function upload_excel(){
 		err : function(r){
 			SPINNER_LOADER.hide()
 			println("ERROR")
-			println(r)
 		},
 		func : function(r){
 			SPINNER_LOADER.hide()
-			println(r)
 			excel_upload_dialog.destroy()
 			var res = JSON.parse(r)
 			println(res)

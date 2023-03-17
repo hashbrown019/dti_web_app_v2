@@ -46,16 +46,25 @@
 				<span class="material-icons-outlined"></span>
 			</div>
 			<div class="header-right">
-				{% include 'excel_management.html' %}
+				<!-- {% include 'excel_management.html' %} -->
 			</div>
 		</header>
 		<!-- End Header -->
 
 		<!-- Sidebar -->
 		<aside id="sidebar">
-			<div class="sidebar-title">
-				<div class="sidebar-brand">
-					<span class="material-icons-outlined">home</span> Form B
+			<div class="sidebar-title x-center">
+				<div class="x-padding x-container x-center">
+
+					<div class="x-roww"  onclick="x_open()">
+						<span class="x-text-shrink "><strong>{{USER_DATA['name']}}</strong></span>
+						<span class="x-text-shrink x-tiny">{{USER_DATA['job']}}</span>
+					</div>
+					<div class="x-small x-row x-text-rapid-macha-light" style="width:200px;">
+						<span>
+							Showing figures for <b class="">{{USER_DATA['rcu']}}</b>
+						</span>
+					</div>
 				</div>
 				<span class="material-icons-outlined" onclick="closeSidebar()">close</span>
 			</div>
