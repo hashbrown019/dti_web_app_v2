@@ -403,6 +403,13 @@ function myFunction3() {
     
     }
 
+    function calculateTotal() {
+      var cash_sales = parseInt(document.getElementById('form_7_cash_sales').value) || 0;
+      var booked_sales = parseInt(document.getElementById('form_7_booked_sales').value) || 0;
+      var under_negotiations = parseInt(document.getElementById('form_7_under_negotiations').value) || 0;
+      var total = cash_sales + booked_sales + under_negotiations;
+      document.getElementById('form_7_total_autosum').value = total;
+    }
 
     $(document).on("change","#filter1",(elem)=>{
         for (let count = 0; count < $(".filter2_opt").length; count++) { $(".filter2_opt")[count].style.display = "block"}

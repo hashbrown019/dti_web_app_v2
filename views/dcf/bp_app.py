@@ -24,6 +24,7 @@ from views.dcf.dashboard import update_form4 as update_dataform4
 from views.dcf.dashboard import update_form5 as update_dataform5
 from views.dcf.dashboard import update_form6 as update_dataform6
 from views.dcf.dashboard import update_form7 as update_dataform7
+from views.dcf.dashboard import update_form9 as update_dataform9
 import Configurations as c 
 from modules.Connections import mysql
 
@@ -75,6 +76,12 @@ def updateform6():
 @app.route('/updateform7',methods=['POST','GET'])
 def updateform7():
     update_dataform7.updateform7(request)
+    return redirect("/dcf_dashboard")
+
+
+@app.route('/updateform9',methods=['POST','GET'])
+def updateform9():
+    update_dataform9.updateform9(request)
     return redirect("/dcf_dashboard")
 
 @app.route('/dcf_forms')
