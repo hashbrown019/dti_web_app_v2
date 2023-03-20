@@ -19,16 +19,16 @@ from views.dcf.form_insert import insert_form3 as insertData3
 from views.dcf.form_insert import insert_form2 as insertData2
 from views.dcf.dashboard import dashboard_count as displayCount
 from views.dcf.dashboard import display_dataform as display_dataform
-from views.dcf.dashboard import update_form1 as update_dataform1
-from views.dcf.dashboard import update_form2 as update_dataform2
-from views.dcf.dashboard import update_form3 as update_dataform3
-from views.dcf.dashboard import update_form4 as update_dataform4
-from views.dcf.dashboard import update_form5 as update_dataform5
-from views.dcf.dashboard import update_form6 as update_dataform6
-from views.dcf.dashboard import update_form7 as update_dataform7
-from views.dcf.dashboard import update_form9 as update_dataform9
-from views.dcf.dashboard import update_form10 as update_dataform10
-from views.dcf.dashboard import update_form11 as update_dataform11
+from views.dcf.form_update import update_form1 as update_dataform1
+from views.dcf.form_update import update_form2 as update_dataform2
+from views.dcf.form_update import update_form3 as update_dataform3
+from views.dcf.form_update import update_form4 as update_dataform4
+from views.dcf.form_update import update_form5 as update_dataform5
+from views.dcf.form_update import update_form6 as update_dataform6
+from views.dcf.form_update import update_form7 as update_dataform7
+from views.dcf.form_update import update_form9 as update_dataform9
+from views.dcf.form_update import update_form10 as update_dataform10
+from views.dcf.form_update import update_form11 as update_dataform11
 import Configurations as c 
 from modules.Connections import mysql
 
@@ -107,22 +107,9 @@ def dcf_forms():
 def form1(form):
     return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0])
 
-@app.route('/dcf/viewform1')
-def viewform1():
-    return render_template(user_data=session["USER_DATA"][0])
-
-@app.route('/dcf/viewform2')
-def viewform2():
-    return render_template(user_data=session["USER_DATA"][0])
-
-@app.route('/dcf/viewform3')
-def viewform3():
-    return render_template(user_data=session["USER_DATA"][0])
-
-@app.route('/dcf/viewform4')
-def viewform4():
-    return render_template(user_data=session["USER_DATA"][0])
-
+@app.route('/dcf/<viewform>')
+def viewform1(viewform):
+    return render_template('includes/viewform_modal/{}.html'.format(viewform),user_data=session["USER_DATA"][0])
 
 @app.route('/dcf_spreadsheet')
 def dcf_spreadsheet():
