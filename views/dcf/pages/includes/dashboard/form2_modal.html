@@ -38,7 +38,11 @@
                         <td>{{ row['form_2_business_owner_manager'] }}</td>
                         <td>{{ row['form_2_partner_fo_engaged'] }}</td>
                         <td>{{ row['form_2_commodity'] }}</td>
-                        <td><a style="color: #00cc66;" data-toggle="modal" data-target="#form2edit{{row['id']}}" href="/updateform2/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>
+                        <td>
+                          {% if(row['upload_by']==user_data['id'] or user_data['job']=="Super Admin"): %}
+                          <a style="color: #00cc66;" data-toggle="modal" data-target="#form2edit{{row['id']}}" href="/updateform2/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form2view{{row['id']}}" href="/updateform1/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
                         </td>
             
                  

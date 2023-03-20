@@ -107,6 +107,22 @@ def dcf_forms():
 def form1(form):
     return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0])
 
+@app.route('/dcf/viewform1')
+def viewform1():
+    return render_template(user_data=session["USER_DATA"][0])
+
+@app.route('/dcf/viewform2')
+def viewform2():
+    return render_template(user_data=session["USER_DATA"][0])
+
+@app.route('/dcf/viewform3')
+def viewform3():
+    return render_template(user_data=session["USER_DATA"][0])
+
+@app.route('/dcf/viewform4')
+def viewform4():
+    return render_template(user_data=session["USER_DATA"][0])
+
 
 @app.route('/dcf_spreadsheet')
 def dcf_spreadsheet():
