@@ -126,10 +126,10 @@
 		<!-- News div -->
 
 		<div class="container mb-5 mt-5">
-			<div class=" row g-2 ">
+			<div class=" row row-cols-md g-2 ">
 				<div class="col-9 shadow-sm p-3 bg-body rounded me-3">
 					<!-- Back Arrow -->
-				
+
 					<div class="container text-start mt-4 fs-4">
 						<a class=" texttheme" href="/rapid/NewsAndStories/NewsAndStories.html">
 							<span><i class="fa-solid fa-arrow-left-long"></i></span>
@@ -144,9 +144,9 @@
 									</select>
 								</div>
 								<div class="align-self-center">
-								  <select class="form-select border-0 fw-bolder" id="rcu_filter" aria-label="" onchange="news_filter_by_rcu(this.value)">
-								    
-								  </select>
+									<select class="form-select border-0 fw-bolder" id="rcu_filter" aria-label="" onchange="news_filter_by_rcu(this.value)">
+
+									</select>
 								</div>
 							</div>
 						</div>
@@ -207,14 +207,14 @@
 											</div>
 										</div>
 									</div>
-							</div>
-						</div>		
+								</div>
+							</div>		
 
 
-						<div class="row row-cols-lg-2 ">
-					<!-- News Content -->
-						{% for post in page_data %}
-							{% if (post['posttype'] =='News' or post['posttype'] =='All')%}
+							<div class="row row-cols-lg-2 ">
+								<!-- News Content -->
+								{% for post in page_data %}
+								{% if (post['posttype'] =='News' or post['posttype'] =='All')%}
 								<div class="card_{{post['postCategory']}} col-12 mb-4">
 									<div class="card border-success">
 										<div class=" d-flex">
@@ -248,87 +248,88 @@
 									</div>
 								</div>
 								{% endif %}
-							{% endfor %}
-						
+								{% endfor %}
+
+							</div>
+
+							<div class="container mt-3 align-items-end">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination justify-content-center">
+										<li class="page-item disabled">
+											<a class="page-link">Previous</a>
+										</li>
+										<li class="page-item"><a class="page-link" href="#">1</a></li>
+										<li class="page-item"><a class="page-link" href="#">2</a></li>
+										<li class="page-item"><a class="page-link" href="#">3</a></li>
+										<li class="page-item">
+											<a class="page-link" href="#">Next</a>
+										</li>
+									</ul>
+								</nav>
+							</div>						
 						</div>
-
-						<div class="container mt-3 align-items-end">
-							<nav aria-label="Page navigation example">
-								<ul class="pagination justify-content-center">
-									<li class="page-item disabled">
-										<a class="page-link">Previous</a>
-									</li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item">
-										<a class="page-link" href="#">Next</a>
-									</li>
-								</ul>
-							</nav>
-						</div>						
 					</div>
+
+
+					<!-- Side Articles -->
+					{% include 'newsAndstories/sidearticles.html' %}
+
 				</div>
-
-
-				<!-- Side Articles -->
-				{% include 'newsAndstories/sidearticles.html' %}
-
 			</div>
-		</div>
-		<script type="text/javascript">
-			
-		$onload(
-			function(){
-				var vc_filter = [] ; var vctr_filter = ""
-				{% for upload_categ in page_data %}
-					{% if (upload_categ['posttype'] =='News' or upload_categ['posttype'] =='All') %}
+
+			<script type="text/javascript">
+
+				$onload(
+					function(){
+						var vc_filter = [] ; var vctr_filter = ""
+						{% for upload_categ in page_data %}
+						{% if (upload_categ['posttype'] =='News' or upload_categ['posttype'] =='All') %}
 						{% set categ = upload_categ['postCategory'] %}
 						vc_filter.push("{{categ}}")
-					{% endif %}
-				{% endfor %}
-				vc_filter = [...new Set(vc_filter)];
-				for (var i = 0; i < vc_filter.length; i++) {
-					var c_ = vc_filter[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
-					vctr_filter += (`
-						<option value="`+c_ +`">`+c_ +` News</option>
-					`)
-				}
-				$ID('vc_filter').innerHTML = vctr_filter
-			},
-			function(){
-				var vc_filter = [] ; var vctr_filter = ""
-				{% for upload_categ in page_data %}
+						{% endif %}
+						{% endfor %}
+						vc_filter = [...new Set(vc_filter)];
+						for (var i = 0; i < vc_filter.length; i++) {
+							var c_ = vc_filter[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
+							vctr_filter += (`
+								<option value="`+c_ +`">`+c_ +` News</option>
+								`)
+						}
+						$ID('vc_filter').innerHTML = vctr_filter
+					},
+					function(){
+						var vc_filter = [] ; var vctr_filter = ""
+						{% for upload_categ in page_data %}
 						{% set categ = upload_categ['postRcu'] %}
 						vc_filter.push("{{categ}}")
-				{% endfor %}
-				vc_filter = [...new Set(vc_filter)];
-				for (var i = 0; i < vc_filter.length; i++) {
-					var c_ = vc_filter[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
-					vctr_filter += (`
-						<option value="`+c_ +`">`+c_ +` News</option>
-					`)
-				}
-				$ID('rcu_filter').innerHTML = vctr_filter
-			},
-		)
+						{% endfor %}
+						vc_filter = [...new Set(vc_filter)];
+						for (var i = 0; i < vc_filter.length; i++) {
+							var c_ = vc_filter[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
+							vctr_filter += (`
+								<option value="`+c_ +`">`+c_ +` News</option>
+								`)
+						}
+						$ID('rcu_filter').innerHTML = vctr_filter
+					},
+					)
 
 
-		$onload(function(){
-			var img_class=$CLASS("img_class")
-			for (var i = 0; i < img_class.length; i++) {
-				var src_1 = img_class[i].src
-				var img_path = web_safe_decode(src_1).replaceAll("C:\\fakepath\\","") 
-				img_class[i].src = img_path.replaceAll("C:/fakepath/","").replaceAll("C:fakepath","")
-				println(img_class[i].src )
-			}
-		})
-		</script>
+				$onload(function(){
+					var img_class=$CLASS("img_class")
+					for (var i = 0; i < img_class.length; i++) {
+						var src_1 = img_class[i].src
+						var img_path = web_safe_decode(src_1).replaceAll("C:\\fakepath\\","") 
+						img_class[i].src = img_path.replaceAll("C:/fakepath/","").replaceAll("C:fakepath","")
+						println(img_class[i].src )
+					}
+				})
+			</script>
 
-		{% include 'main/footer.html' %}
+			{% include 'main/footer.html' %}
 
-	</div>
-</body>
+		</div>
+	</body>
 
 
-</html>
+	</html>
