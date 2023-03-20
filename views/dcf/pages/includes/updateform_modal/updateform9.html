@@ -1,0 +1,267 @@
+
+{% for row in form9_datatable %}
+<div class="modal fade" id="form9edit{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #007399;">
+        <h5 class="modal-title text-white" id="exampleModalLabel">UPDATE DATA</h5>       
+        <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalbodyedit">
+
+              <form style="margin-left: 2%; margin-right: 2%;" id="form9" action="/updateform9" method="POST">
+                {% include "includes/sweetalert.html" %}
+                <style>
+                    .myDiv {
+           display: none;
+         }
+         
+         #form_9_type_of_training + .myDiv {
+           display: block;
+         }
+                     
+                 </style> 
+                 <div class="x-col l1 ">
+                     &nbsp;
+                 </div>
+                 <div class=" x-col l13 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
+                     <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">Enablers' Activity Tracker</h2></center>
+         
+                     <div class="x-container x-padding">
+                         <style> 
+                             table, th, td{border: 1px solid black;border-collapse: collapse;}
+                         </style>
+                     </div>
+         
+         
+                     <div class="x-row x-container x-padding">
+                         <div class="x-col l3 x-container x-padding">
+                            <input type="hidden"  name="id" value="{{ row['id'] }}">
+                             <span class="">Implementing Unit:</span>
+                             <select class=" x-border x-select x-border" value="{{ row['form_9_implementing_unit'] }}" id="form_9_implementing_unit" name="form_9_implementing_unit"><br>
+                                 <option >{{ row['form_9_implementing_unit'] }}</option>
+                                 <option >RCU</option>
+                                 <option >PCU</option>
+                             </select>
+                         </div>
+                         <div class="x-col l5 x-container x-padding" >
+                             <label>Activity Title:</label>
+                             <input class=" x-input x-border" value="{{ row['form_9_title_trade_promotion'] }}" id="form_9_title_trade_promotion" name="form_9_title_trade_promotion" type="text" autocomplete="on" placeholder="">
+                         </div><br>
+                         <div class="x-row">
+                             <div class="x-col l3 x-container x-padding">
+                               <span class="">Type of Training/Activity :</span>
+                               <select id="form_9_type_of_training" value="{{ row['form_9_type_of_training'] }}" name="form_9_type_of_training" class="x-container x-padding">
+                                 <option>{{ row['form_9_type_of_training'] }}</option>
+                                 <option>Capbuild</option>
+                                 <option>Meetings</option>
+                                 <option>Policy issuances</option>
+                                 <option>Others to be specified</option>
+                               </select>
+                             </div>
+                             <div class="x-col l3 x-container x-padding">
+                               <div id="showot" class="myDiv">
+                                 <input class="x-padding x-container" size="30" type="text"  id="form_9_others" name="form_9_others" placeholder="Write here">
+                               </div>
+                             </div>
+                           </div>
+                     </div>
+                     <div class="x-row x-container x-padding">
+                         <div class="x-row x-container x-padding">
+                             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                             <table for="x-table x-container x-table-border ">
+                                 <tr>
+                                     <th colspan="2">
+                                         <center>Activity Duration</center>
+                                     </th>
+                                 </tr>
+         
+                                 <tr>
+                                     <td><center>Start Date</center></td>
+                                     <td><center>End Date</center></td>
+                                 </tr>
+         
+                                 <tr>
+                                     <td><input for=" x-light-grey x-input"  value="{{ row['form_9_start_date'] }}" id="form_9_start_date" type="date" name="form_9_start_date"></td>
+                                     <td><input for=" x-light-grey x-input" value="{{ row['form_9_end_date'] }}" id="form_9_end_date" type="date" name="form_9_end_date"></td>
+                                 </tr>
+                             </table>
+                         </div>
+                     </div>
+                     <div class="x-row x-container x-padding">
+                         <div class="x-col l3 x-container x-padding">
+                             <label>Venue: </label>
+                             <input class=" x-input x-border" value="{{ row['form_9_venue'] }}" id="form_9_venue" name="form_9_venue" type="text" autocomplete="on" placeholder="">
+                         </div>
+                         <div class="x-col l3 x-container x-padding">
+                             <label>RAPID actual budget: </label>
+                             <input class=" x-input x-border" value="{{ row['form_9_rapid_actual_budget'] }}" id="form_9_rapid_actual_budget" name="form_9_rapid_actual_budget" type="text" autocomplete="on" placeholder="">
+                         </div>
+                         <div class="x-col l6 x-container x-padding">
+                             <label>Name of Resource Person/Facilitator/BDSP: </label>
+                             <input class=" x-input x-border"  value="{{ row['form_9_name_of_resource_person'] }}" id="form_9_name_of_resource_person" name="form_9_name_of_resource_person" type="text" autocomplete="on" placeholder="">
+                         </div>
+                     </div>
+                     <div class="x-row x-container x-padding">
+                         <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                         <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                             <tr>
+         
+                                 <th colspan="4">
+                                     <center>fully & partially funded by partners outside RAPID </center>
+                                 </th>
+                             </tr>
+         
+                             <tr>
+                                 <td><center>Name of Partner/Organization</center></td>
+                                 <td><center>Counterpart Amount</center></td>
+                                 
+                             </tr>
+         
+                             <tr>
+                                 <td><input class="t1 x-light-grey x-input"  value="{{ row['form_9_name_of_participant_org'] }}" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org" type="text"></td>
+                                 <td><input class="t1 x-light-grey x-input" value="{{ row['form_9_counterpart_amount'] }}" id="form_9_counterpart_amount" name="form_9_counterpart_amount" type="text"></td>
+                             </table>
+                         </div>
+                         <div class="x-row x-container x-padding">
+                             <div class="x-col l3 x-container x-padding">
+                                 <label>Name of Participant: </label>
+                                 <input class=" x-input x-border" value="{{ row['form_9_name_of_participant'] }}" id="form_9_name_of_participant" name="form_9_name_of_participant" type="text" autocomplete="on" placeholder="">
+                             </div>
+                             <div class="x-col l3 x-container x-padding">
+                                 <label>Organization: </label>
+                                 <input class=" x-input x-border" value="{{ row['form_9_organization'] }}"  id="form_9_organization" name="form_9_organization" type="text" autocomplete="on" placeholder="">
+                             </div>
+                             <div class="x-col l4 x-container x-padding">
+                                 <label>Designation: </label>
+                                 <input class=" x-input x-border" value="{{ row['form_9_designation'] }}" id="form_9_designation" name="form_9_designation" type="text" autocomplete="on" placeholder="">
+                             </div>
+                         </div>
+                     <div class="x-row x-container x-padding">
+                         <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                         <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                             <tr>
+                                 
+                                 <th colspan="2">
+                                     <center>Sex</center>
+                                 </th>
+                                 <th colspan="4">
+                                     <center>Sector</center>
+                                 </th>
+                                 <th colspan="2">
+                                     <center>Results of activity</center>
+                                 </th>
+                             </tr>
+         
+                             <tr>
+                                 <td><center>Male</center></td>
+                                 <td><center>Female</center></td>
+         
+                                 <td><center>PWD</center></td>
+                                 <td><center>Youth</center></td>
+                                 <td><center>IP</center></td>
+                                 <td><center>SC</center></td>
+         
+                                 <td><center>Pre-test</center></td>
+                                 <td><center>Post-test</center></td>
+                                 
+                             </tr>
+         
+                             <tr>
+                                 
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_male'] }}"  id="form_9_male" type="text" name="form_9_male"></td>
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_female'] }}"  id="form_9_female" type="text" name="form_9_female"></td>
+                                 
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_pwd'] }}" id="form_9_pwd" type="text" name="form_9_pwd"></td>
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_youth'] }}" id="form_9_youth" type="text" name="form_9_youth"></td>
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_ip'] }}" id="form_9_ip" type="text" name="form_9_ip"></td>
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_sc'] }}" id="form_9_sc" type="text" name="form_9_sc"></td>
+         
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_pre_test1'] }}" id="form_9_pre_test1" type="text" name="form_9_pre_test1"></td>
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_post_test1'] }}" id="form_9_post_test1" type="text" name="form_9_post_test1"></td>
+                             </tr>
+                         </table>
+                     </div>
+                     <div class="x-col l3 x-container x-padding">
+                         <span class="">Activity Output:</span>
+                         <select id="form_9_activity_output" value="{{ row['form_9_activity_output'] }}" name="form_9_activity_output" class="x-container x-padding">
+                             <option>{{ row['form_9_activity_output'] }}</option>
+                             <option >Policy Issuances/recommendations</option>
+                             <option >Resolutions</option>
+                             <option >Studies</option>
+                         </select>	
+                     </div>
+                     <div class="x-row x-container x-padding">
+                         <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                         <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                             <tr>
+                                 
+                                 <th colspan="2">
+                                     <center>Results of activity (Average, if applicable, indicate NA option)</center>
+                                 </th>
+                                 <th colspan="2">
+                                     <center>Client Feedback survey</center>
+                                 </th>
+                             </tr>
+         
+                             <tr>
+                                 <td><center>Pre-test</center></td>
+                                 <td><center>Post-test</center></td>
+         
+                                 <td><center>Rating</center></td>
+                                 <td><center>Comments/Areas of Improvement</center></td>
+                                             
+                             </tr>
+         
+                             <tr>
+                                 
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_pre_test2'] }}" id="form_9_pre_test2" type="text" name="form_9_pre_test2"></td>
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_post_test2'] }}" id="form_9_post_test2" type="text" name="form_9_post_test2"></td>
+                                 
+         
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_rating'] }}" id="form_9_rating" type="text" name="form_9_rating"></td>
+                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_comments'] }}" id="form_9_comments" type="text" name="form_9_comments"></td>
+                             </tr>
+                         </table>
+                     </div>
+         
+                     <div class="x-row x-container x-padding">
+                         
+                         <div class="x-col l5">
+                             <div method="post" enctype="multipart/form-data">
+                                 <div class="x-col l3 x-container x-padding">
+                                     <input class="x-padding" type="file" id="form_9_image_uploads" name="form_9_image_uploads" accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx" multiple />
+                                 </div>
+                             </div> 
+                         </div>
+                     </div>
+         
+                 </div>
+                 <script>
+           var select = document.getElementById("form_9_type_of_training");
+           var otherDiv = document.getElementById("showot");
+           select.addEventListener("change", function() {
+             if (select.value === "Others to be specified") {
+               otherDiv.style.display = "block";
+             } else {
+               otherDiv.style.display = "none";
+             }
+           });
+                 </script> 
+          </div>
+          <div class="modal-footer bg-light">
+             <button type="submit" class="btn btn-primary" style="justify-content: right;">Save changes</button>
+            <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </form>
+
+      
+      </div>
+   
+    </div>
+  </div>
+  
+  {% endfor  %}
+

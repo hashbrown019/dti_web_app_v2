@@ -1,17 +1,17 @@
 
 {% for row in form5_datatable %}
-<div class="modal fade" id="form5edit{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="form5view{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #007399;">
-        <h5 class="modal-title text-white" id="exampleModalLabel">EDIT FORM</h5>       
+        <h5 class="modal-title text-white" id="exampleModalLabel">VIEW DATA</h5>       
         <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
           <span class="text-white" aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" id="modalbodyedit">
 
-              <form style="margin-left: 2%; margin-right: 2%;" id="form5" action="/updateform5" method="POST">
+              <form style="margin-left: 2%; margin-right: 2%;" id="form5" method="POST">
                 {% include "includes/sweetalert.html" %}
 
                 
@@ -59,13 +59,13 @@
                 
                                 <tr>
                                 <!---gender--->	
-                                    <td><input class=" x-light-grey x-input" id="mgit_implementing_unit_rcu"  value="{{ row['mgit_implementing_unit_rcu'] }}" type="text" name="mgit_implementing_unit_rcu"></td>
-                                    <td><input class=" x-light-grey x-input" id="mgit_implementing_unit_pcu" value="{{ row['mgit_implementing_unit_pcu'] }}" type="text" name="mgit_implementing_unit_pcu"></td>
-                                    <td><input class=" x-light-grey x-input" id="mgit_name_of_dip" value="{{ row['mgit_name_of_dip'] }}" type="text" name="mgit_name_of_dip"></td>
+                                    <td><input disabled class=" x-input" id="mgit_implementing_unit_rcu"  value="{{ row['mgit_implementing_unit_rcu'] }}" type="text" name="mgit_implementing_unit_rcu"></td>
+                                    <td><input disabled class=" x-input" id="mgit_implementing_unit_pcu" value="{{ row['mgit_implementing_unit_pcu'] }}" type="text" name="mgit_implementing_unit_pcu"></td>
+                                    <td><input disabled class=" x-input" id="mgit_name_of_dip" value="{{ row['mgit_name_of_dip'] }}" type="text" name="mgit_name_of_dip"></td>
                 
                                 <!--sector--->
-                                    <td><input class=" x-light-grey x-input" id="mgit_msme_recipient" value="{{ row['mgit_msme_recipient'] }}" type="text" name="mgit_msme_recipient"></td>
-                                    <td><input class=" x-light-grey x-input" id="mgit_total_member_recipient" value="{{ row['mgit_total_member_recipient'] }}" type="text" name="mgit_total_member_recipient"></td>
+                                    <td><input disabled class=" x-input" id="mgit_msme_recipient" value="{{ row['mgit_msme_recipient'] }}" type="text" name="mgit_msme_recipient"></td>
+                                    <td><input disabled class=" x-input" id="mgit_total_member_recipient" value="{{ row['mgit_total_member_recipient'] }}" type="text" name="mgit_total_member_recipient"></td>
                                     
                                 
                                 </tr>
@@ -75,7 +75,7 @@
                         <div class="x-row x-padding x-container">
                             <div class="x-col l4 x-container x-padding">
                                 <span class="">Commodity</span>
-                                <select class=" x-border x-select x-border" value="{{ row['mgit_commodity'] }}" id="mgit_commodity" name="mgit_commodity"><br>
+                                <select class=" x-border x-select x-border" disabled value="{{ row['mgit_commodity'] }}" id="mgit_commodity" name="mgit_commodity"><br>
                                     <option>{{ row['mgit_commodity'] }}</option>
                                     <option>Conducted before DIP approval</option>
                                     <option>Conducted after DIP approval</option>
@@ -110,14 +110,14 @@
                 
                                 <tr>
                                 <!---gender--->	
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_number_fo_gender_male'] }}" id="mgit_total_number_fo_gender_male" type="text" name="mgit_total_number_fo_gender_male"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_number_fo_gender_female'] }}" id="mgit_total_number_fo_gender_female" type="text" name="mgit_total_number_fo_gender_female"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_gender_male'] }}" id="mgit_total_number_fo_gender_male" type="text" name="mgit_total_number_fo_gender_male"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_gender_female'] }}" id="mgit_total_number_fo_gender_female" type="text" name="mgit_total_number_fo_gender_female"></td>
                 
                                 <!--sectorG--->
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_number_fo_sectoral_pwd'] }}" id="mgit_total_number_fo_sectoral_pwd" type="text" name="mgit_total_number_fo_sectoral_pwd"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_number_fo_sectoral_youth'] }}" id="mgit_total_number_fo_sectoral_youth" type="text" name="mgit_total_number_fo_sectoral_youth"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_number_fo_sectoral_IP'] }}" id="mgit_total_number_fo_sectoral_IP" type="text" name="mgit_total_number_fo_sectoral_IP"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_number_fo_sectoral_SC'] }}" id="mgit_total_number_fo_sectoral_SC" type="text" name="mgit_total_number_fo_sectoral_SC"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_pwd'] }}" id="mgit_total_number_fo_sectoral_pwd" type="text" name="mgit_total_number_fo_sectoral_pwd"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_youth'] }}" id="mgit_total_number_fo_sectoral_youth" type="text" name="mgit_total_number_fo_sectoral_youth"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_IP'] }}" id="mgit_total_number_fo_sectoral_IP" type="text" name="mgit_total_number_fo_sectoral_IP"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_SC'] }}" id="mgit_total_number_fo_sectoral_SC" type="text" name="mgit_total_number_fo_sectoral_SC"></td>
                                 </tr>
                             </table>
                         </div>
@@ -125,7 +125,7 @@
                         <div class="x-row x-padding x-container">
                             <div class="x-col l4 x-container x-padding">
                                 <span class="">Type of Investment</span>
-                                <select class=" x-border x-select x-border" value="{{ row['mgit_type_of_investment'] }}"  id="mgit_type_of_investment" name="mgit_type_of_investment"><br>
+                                <select disabled class=" x-border x-select x-border" value="{{ row['mgit_type_of_investment'] }}"  id="mgit_type_of_investment" name="mgit_type_of_investment"><br>
                                     <option >{{ row['mgit_type_of_investment'] }}</option>
                                     <option >Productive investments</option>
                                     <option >Expansion</option>
@@ -155,10 +155,10 @@
                 
                                 <tr>
                                 <!--sectorG--->
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_mgas_based_approved_DIP'] }}" id="mgit_total_mgas_based_approved_DIP" type="text" name="mgit_total_mgas_based_approved_DIP"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_mgas_signed'] }}"  id="mgit_total_mgas_signed" type="text" name="mgit_total_mgas_signed"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_mgas_not_yet_signed'] }}" id="mgit_total_mgas_not_yet_signed" type="text" name="mgit_total_mgas_not_yet_signed"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_matching_grant_based_on_approved_business'] }}" id="mgit_total_matching_grant_based_on_approved_business" type="text" name="mgit_total_matching_grant_based_on_approved_business"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_total_mgas_based_approved_DIP'] }}" id="mgit_total_mgas_based_approved_DIP" type="text" name="mgit_total_mgas_based_approved_DIP"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_total_mgas_signed'] }}"  id="mgit_total_mgas_signed" type="text" name="mgit_total_mgas_signed"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_total_mgas_not_yet_signed'] }}" id="mgit_total_mgas_not_yet_signed" type="text" name="mgit_total_mgas_not_yet_signed"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_total_matching_grant_based_on_approved_business'] }}" id="mgit_total_matching_grant_based_on_approved_business" type="text" name="mgit_total_matching_grant_based_on_approved_business"></td>
                                 </tr>
                             </table>
                         </div>
@@ -181,9 +181,9 @@
                 
                                 <tr>
                                 <!--sectorG--->
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_pmga_first_availment'] }}" id="mgit_pmga_first_availment" type="text" name="mgit_pmga_first_availment"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_mgar_period_date'] }}" id="mgit_mgar_period_date" type="text" name="mgit_mgar_period_date"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_remaining_matching_grant_balance'] }}" id="mgit_remaining_matching_grant_balance" type="text" name="mgit_remaining_matching_grant_balance"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_pmga_first_availment'] }}" id="mgit_pmga_first_availment" type="text" name="mgit_pmga_first_availment"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_mgar_period_date'] }}" id="mgit_mgar_period_date" type="text" name="mgit_mgar_period_date"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_remaining_matching_grant_balance'] }}" id="mgit_remaining_matching_grant_balance" type="text" name="mgit_remaining_matching_grant_balance"></td>
                                 </tr>
                             </table>
                         </div>
@@ -205,8 +205,8 @@
                                 </tr>
                 
                                 <tr>
-                                    <td><input class=" x-input x-border" value="{{ row['mgit_inclusive_timeline_implementation_start'] }}" id="mgit_inclusive_timeline_implementation_start" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_start"></td>
-                                    <td><input class=" x-input x-border" value="{{ row['mgit_inclusive_timeline_implementation_end'] }}" id="mgit_inclusive_timeline_implementation_end" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_end"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_inclusive_timeline_implementation_start'] }}" id="mgit_inclusive_timeline_implementation_start" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_start"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_inclusive_timeline_implementation_end'] }}" id="mgit_inclusive_timeline_implementation_end" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_end"></td>
                                 </tr>
                             </table>
                         </div>
@@ -232,10 +232,10 @@
                 
                                 <tr>
                                 <!--sectorG--->
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_time_elapse'] }}" id="mgit_time_elapse" type="text" name="mgit_time_elapse"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_total_budget_approved_in_the_DIP'] }}" id="mgit_total_budget_approved_in_the_DIP" type="text" name="mgit_total_budget_approved_in_the_DIP"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_actual_cost_of_procurement'] }}" id="mgit_actual_cost_of_procurement" type="text" name="mgit_actual_cost_of_procurement"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_summary_of_actual_tools_procured'] }}" id="mgit_summary_of_actual_tools_procured" type="text" name="mgit_summary_of_actual_tools_procured"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_time_elapse'] }}" id="mgit_time_elapse" type="text" name="mgit_time_elapse"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_total_budget_approved_in_the_DIP'] }}" id="mgit_total_budget_approved_in_the_DIP" type="text" name="mgit_total_budget_approved_in_the_DIP"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_actual_cost_of_procurement'] }}" id="mgit_actual_cost_of_procurement" type="text" name="mgit_actual_cost_of_procurement"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_summary_of_actual_tools_procured'] }}" id="mgit_summary_of_actual_tools_procured" type="text" name="mgit_summary_of_actual_tools_procured"></td>
                                 </tr>
                             </table>
                         </div>
@@ -266,11 +266,11 @@
                                 </tr>
                 
                                 <tr>
-                                    <td><input class=" x-input x-border" value="{{ row['mgit_inclusive_timeline_implementation_start1'] }}" id="mgit_inclusive_timeline_implementation_start1" name="mgit_inclusive_timeline_implementation_start1" type="date" placeholder=""></td>
-                                    <td><input class=" x-input x-border" value="{{ row['mgit_inclusive_timeline_implementation_end1'] }}" id="mgit_inclusive_timeline_implementation_end1" name="mgit_inclusive_timeline_implementation_end1" type="date" placeholder=""></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_time_elapse1'] }}" id="mgit_time_elapse1" type="text" name="mgit_time_elapse1"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_date_of_distribution'] }}" id="mgit_date_of_distribution" type="text" name="mgit_date_of_distribution"></td>
-                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_remarks_on_the_deliverd_tools'] }}" id="mgit_remarks_on_the_deliverd_tools" type="text" name="mgit_remarks_on_the_deliverd_tools"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_inclusive_timeline_implementation_start1'] }}" id="mgit_inclusive_timeline_implementation_start1" name="mgit_inclusive_timeline_implementation_start1" type="date" placeholder=""></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_inclusive_timeline_implementation_end1'] }}" id="mgit_inclusive_timeline_implementation_end1" name="mgit_inclusive_timeline_implementation_end1" type="date" placeholder=""></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_time_elapse1'] }}" id="mgit_time_elapse1" type="text" name="mgit_time_elapse1"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_date_of_distribution'] }}" id="mgit_date_of_distribution" type="text" name="mgit_date_of_distribution"></td>
+                                    <td><input disabled class=" x-input" value="{{ row['mgit_remarks_on_the_deliverd_tools'] }}" id="mgit_remarks_on_the_deliverd_tools" type="text" name="mgit_remarks_on_the_deliverd_tools"></td>
                                     
                                 </tr>
                             </table>
@@ -279,7 +279,6 @@
               
           </div>
           <div class="modal-footer bg-light">
-             <button type="submit" class="btn btn-primary" style="justify-content: right;">Save changes</button>
             <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
       </div>
     </form>
