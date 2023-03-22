@@ -7,6 +7,7 @@
 						<div class="col  mb-2">
 							{% for post in page_data %}
 								{% if (post['posttype'] =='Story')%}
+									{% if post["status"]=='posted' %}
 									<div class="STORY_CARD card rounded-2 mb-2" style="display: none;">
 										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
 										<div class="card-img-overlay">
@@ -18,13 +19,16 @@
 										</div>
 									</div>
 								{% endif %}
+								{% endif %}
 							{% endfor %}
 						</div>
 						<script type="text/javascript">
 							$onload(()=>{
 								var STORY_CARD = $CLASS('STORY_CARD')
 								for (var i = 0; i < 3; i++) {
-									STORY_CARD[i].style.display = "block"
+									try{
+										STORY_CARD[i].style.display = "block"
+									}catch(e){}
 								}
 
 								var img_class=$CLASS("img_class")
@@ -35,7 +39,8 @@
 									println(img_class[i].src )
 								}
 							})
-						</script>						<!-- ========= -->
+						</script>						
+						<!-- ========= -->
 						<div class="text-end">
 							<a class="fst-italic texttheme small" href="" type="button">See more</a>
 						</div>
@@ -49,6 +54,7 @@
 						<div class="col  mb-2">
 							{% for post in page_data %}
 								{% if (post['posttype'] =='Event')%}
+									{% if post["status"]=='posted' %}
 									<div class="EVENT_CARD card rounded-2 mb-2" style="display: none;">
 										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
 										<div class="card-img-overlay">
@@ -59,7 +65,7 @@
 											<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 " href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}.</a>
 										</div>
 									</div>
-
+									{% endif %}
 								{% endif %}
 							{% endfor %}
 						</div>
@@ -67,7 +73,9 @@
 							$onload(()=>{
 								var EVENT_CARD = $CLASS('EVENT_CARD')
 								for (var i = 0; i < 3; i++) {
-									EVENT_CARD[i].style.display = "block"
+									try{
+										EVENT_CARD[i].style.display = "block"
+									}catch(e){}
 								}
 
 								var img_class=$CLASS("img_class")
@@ -92,7 +100,8 @@
 						<div class="col  mb-2">
 							{% for post in page_data %}
 								{% if (post['posttype'] =='News')%}
-									<div class="EVENT_CARD card rounded-2 mb-2" style="display: none;">
+									{% if post["status"]=='posted' %}
+									<div class="NEWS_CARD card rounded-2 mb-2" style="display: none;">
 										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
 										<div class="card-img-overlay">
 											<div class="d-flex justify-content-between">
@@ -102,16 +111,18 @@
 											<a class="card-title fw-bolder text-white stretched-link fs-3 text-truncate textshadow mt-4 " href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}.</a>
 										</div>
 									</div>
-
+									{% endif %}
 								{% endif %}
 							{% endfor %}
 						</div>
 						<script type="text/javascript">
 							$onload(()=>{
-								var EVENT_CARD = $CLASS('EVENT_CARD')
+								var NEWS_CARD = $CLASS('NEWS_CARD')
 								for (var i = 0; i < 3; i++) {
-									// println(EVENT_CARD[i])
-									EVENT_CARD[i].style.display = "block"
+									println(NEWS_CARD[i])
+									try{
+										NEWS_CARD[i].style.display = "block"
+									}catch(e){}
 								}
 
 								var img_class=$CLASS("img_class")

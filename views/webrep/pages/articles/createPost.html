@@ -178,6 +178,7 @@
 							Please provide an Authur name.
 						</div>
 					</div>
+					<input type="" id="id" class="article_form">
 				</form>
 				<div class="mt-5">
 					
@@ -198,16 +199,34 @@
 			$send({
 				action : "/webrep/upload_file_webrep",
 				method : POST,
-				data : $DATA(data).appendFile($ID("file_name")),
+				data : $DATA(data).appendFileArr($ID("file_name")),
 				func : function(res){
 					resp = JSON.parse(res)
 					println(resp)
-					if(resp["response"]=="done"){
-						goto("/rapid/NewsAndStories/NewsAndStories.html")
-					}
+					goto("/rapid/NewsAndStories/NewsAndStories.html")
 				}
 			})
 		}
+
+		$onload(function(){
+
+			$send({
+				action : "/webrep/article/get_post_ind",
+				method : POST,
+				data : $DATA({"id":URL_ARGS['ids']}).appendFileArr($ID('file_name')),
+				func : function(res){
+					var resp = JSON.parse(res)[0]
+					println(resp)
+					var data = {}; var from_field = $CLASS('article_form')
+					for (var i = 0; i < from_field.length; i++) {
+						var _ID = from_field[i].id
+						try{
+							from_field[_ID].value = resp[_ID]
+						}catch(e){}
+					}
+				}
+			})
+		})
 
 	</script>
 	{% include 'main/footer.html' %}

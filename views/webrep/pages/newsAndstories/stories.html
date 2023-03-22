@@ -123,9 +123,9 @@
 			</div>
 		</div>
 
-		<!-- News div -->
+		<!-- story div -->
 
-		<div class="container mb-5 mt-5">
+		<div class="container mb-5 mt-3">
 			<div class=" row row-cols-md g-2 ">
 				<div class="col-9 shadow-sm p-3 bg-body rounded me-3">
 					<!-- Back Arrow -->
@@ -166,7 +166,7 @@
 											<div class="card-img-overlay ">
 												<div class="container">
 													<div class="container d-flex justify-content-between mt-4">
-														<p class="text-white textshadow text-start fs-3">News</p>
+														<p class="text-white textshadow text-start fs-3">Story</p>
 														<p class="text-white textshadow text-start fs-5"> Jan. 26, 2023</p>
 													</div>
 													<div class="container">
@@ -181,7 +181,7 @@
 											<div class="card-img-overlay ">
 												<div class="container">
 													<div class="container d-flex justify-content-between mt-4">
-														<p class="text-white textshadow text-start fs-3">News</p>
+														<p class="text-white textshadow text-start fs-3">Story</p>
 														<p class="text-white textshadow text-start fs-5"> Jan. 27, 2023</p>
 													</div>
 													<div class="container">
@@ -196,7 +196,7 @@
 											<div class="card-img-overlay ">
 												<div class="container">
 													<div class="container d-flex justify-content-between mt-4">
-														<p class="text-white textshadow text-start fs-3">News</p>
+														<p class="text-white textshadow text-start fs-3">Story</p>
 														<p class="text-white textshadow text-start fs-5"> Jan. 28, 2023</p>
 													</div>
 													<div class="container">
@@ -214,7 +214,7 @@
 							<div class="row row-cols-lg-2 ">
 								<!-- News Content -->
 								{% for post in page_data %}
-								{% if (post['posttype'] =='News' or post['posttype'] =='All')%}
+								{% if (post['posttype'] =='Story' or post['posttype'] =='All')%}
 								<div class="card_{{post['postCategory']}} col-12 mb-4">
 									<div class="card border-success">
 										<div class=" d-flex">
@@ -227,7 +227,6 @@
 														<p class="xs-text texttheme">{{post['postRcu']}}</p>												
 													</div>
 													<div class="ms-5 me-5" style="height: 20px;">
-														
 													</div>
 													<div class=" " style="height: 20px;">
 														<p class="xs-text texttheme ">{{post['date']}}</p>												
@@ -283,7 +282,7 @@
 					function(){
 						var vc_filter = [] ; var vctr_filter = ""
 						{% for upload_categ in page_data %}
-						{% if (upload_categ['posttype'] =='News' or upload_categ['posttype'] =='All') %}
+						{% if (upload_categ['posttype'] =='Story' or upload_categ['posttype'] =='All') %}
 						{% set categ = upload_categ['postCategory'] %}
 						vc_filter.push("{{categ}}")
 						{% endif %}
@@ -292,7 +291,7 @@
 						for (var i = 0; i < vc_filter.length; i++) {
 							var c_ = vc_filter[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
 							vctr_filter += (`
-								<option value="`+c_ +`">`+c_ +` News</option>
+								<option value="`+c_ +`">`+c_ +` Stories</option>
 								`)
 						}
 						$ID('vc_filter').innerHTML = vctr_filter
@@ -307,7 +306,7 @@
 						for (var i = 0; i < vc_filter.length; i++) {
 							var c_ = vc_filter[i].replaceAll(' ','_').replaceAll('/','_').replaceAll('-','_')
 							vctr_filter += (`
-								<option value="`+c_ +`">`+c_ +` News</option>
+								<option value="`+c_ +`">`+c_ +` Stories</option>
 								`)
 						}
 						$ID('rcu_filter').innerHTML = vctr_filter

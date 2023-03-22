@@ -50,7 +50,8 @@ class _main:
 					is_session =_main.is_on_session(),
 					user_data=session["USER_DATA"][0],
 					upload_file_webrep=_main.get_uploads_docs(),
-					module_data = _main.get_module_data()
+					module_data = _main.get_module_data(),
+					articles = _main.get_uploads_article()
 					)
 			else:
 				return redirect("/login?force_url=1")
@@ -76,7 +77,8 @@ class _main:
 			page.lower()=="home.html".lower() or 
 			page.lower()=="news.html".lower()or
 			page.lower()=="articles.html".lower() or
-			page.lower()=="events.html".lower()
+			page.lower()=="events.html".lower() or
+			page.lower()=="stories.html".lower()
 			):
 			if("USER_DATA" in session):
 				UDATA = session["USER_DATA"][0]
@@ -119,6 +121,10 @@ class _main:
 	def get_uploads_docs():
 		return db.select("SELECT * from `webrep_uploads`  WHERE `removed`='0' ORDER BY `id` DESC;")
 
+	@app.route("/webrep/uploads/article",methods=["POST","GET"])
+	def get_uploads_article():
+		return db.select("SELECT * from `webrep_articles`  WHERE `removed`='0' ORDER BY `id` DESC;")
+
 	@app.route("/webrep/uploads/docs_item",methods=["POST","GET"])
 	def get_uploads_docs_item():
 		ids = request.form['ids']
@@ -127,25 +133,59 @@ class _main:
 		file[0]['uploaded_by'] = uploaded_by[0]
 		return file
 
+	# @app.route("/webrep/upload_file_webrep",methods=["POST","GET"])
+	# def upload_file_webrep():
+	# 	print("MAONINIININIn")
+	# 	from datetime import date, datetime
+	# 	data = dict(request.form)
+	# 	key = [];val = []
+	# 	data["USER_ID"] = session["USER_DATA"][0]['id']
+
+		
+	# 	for datum in data:
+	# 		key.append("`{}`".format(datum))
+	# 		val.append("'{}'".format(STRS.encode_websafe(data[datum])))
+	# 	sql = ('''INSERT INTO `webrep_articles` (`status`,{}) VALUES ('pending',{})'''.format(", ".join(key),", ".join(val)))
+		
+	# 	files = request.files
+	# 	print(files)
+	# 	for file in files:
+	# 		f = files[file]
+	# 		UPLOAD_NAME = secure_filename(f.filename)
+	# 		f.save(os.path.join(c.RECORDS+"/objects/webrep/",UPLOAD_NAME ))
+	# 	last_row_id = db.do(sql)
+	# 	return last_row_id
+
 	@app.route("/webrep/upload_file_webrep",methods=["POST","GET"])
 	def upload_file_webrep():
 		from datetime import date, datetime
+		from modules.Req_Brorn_util import file_from_request
+		FILE_REQ = file_from_request(app)
 		data = dict(request.form)
-		key = [];val = []
+		key = [];val = [];args=""
 		data["USER_ID"] = session["USER_DATA"][0]['id']
-		for datum in data:
-			key.append("`{}`".format(datum))
-			val.append("'{}'".format(STRS.encode_websafe(data[datum])))
-		sql = ('''INSERT INTO `webrep_articles` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+
+
+		__f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
+		data["file_name"] = __f["file_arr_str"]
+
+		is_exist = len(db.select("SELECT * FROM `webrep_uploads` WHERE `id` ='{}' ;".format(request.form['id'])))
+		if(is_exist==0):
+			for datum in data:
+				print(datum)
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(data[datum]))
+			sql = ('''INSERT INTO `webrep_articles` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
 		
-		files = request.files
-		print(files)
-		for file in files:
-			f = files[file]
-			UPLOAD_NAME = secure_filename(f.filename)
-			f.save(os.path.join(c.RECORDS+"/objects/webrep/",UPLOAD_NAME ))
+		else:
+			print("Editing")
+			for datum in data:
+				args += ",`{}`='{}'".format(datum,data[datum])
+			sql = "UPDATE `webrep_articles` SET  {}, `status`='pending' WHERE `id`='{}';".format(args[1:],request.form['id'])
+			pass
+		
 		last_row_id = db.do(sql)
-		return last_row_id
+		return jsonify({"last_row_id":last_row_id,"FILES":__f})
  
 	@app.route("/webrep/upload_file_webrep___",methods=["POST","GET"])
 	def upload_file_webrep___():
@@ -180,17 +220,13 @@ class _main:
  
 	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
 	def get_img(img):
-		print(img)
 		img = img.replace('C:fakepath', '').replace(" ","_").replace(")","").replace("(","")
-		print(img)
 		return send_file(c.RECORDS+"/objects/webrep/"+img)
 
 
 	@app.route("/webrep/delete_record/<table>/<ids>",methods=["POST","GET"])
 	def delete_record(table,ids):
 		__table = {"docs":"webrep_uploads","mul":"webrep_uploads","pub":"webrep_uploads"}
-		print(table)
-		print(ids)
 		update_del = db.do("UPDATE `{}` SET `removed`='1' WHERE `id`='{}';".format(__table[table],ids))
 		return {"db_info":update_del}
 
@@ -207,17 +243,40 @@ class _main:
 		return {"db_info":update_del}
 
 
+
 	@app.route("/webrep/download_file/<table>/<ids>",methods=["POST","GET"])
 	def download_excel(table,ids):
 		__table = {"docs":"webrep_uploads","mul":"webrep_uploads","pub":"webrep_uploads"}
 		res = db.select("SELECT `upload` FROM `{}` WHERE `id`='{}';".format(__table[table],ids))
-		print(res)
 		return {"file_to_dl":res[0]['upload']}
 		# return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+file, as_attachment=True,download_name=file)
 
+
+
+
+	@app.route("/webrep/articles/delete/<ids>",methods=["POST","GET"])
+	def delete_article(ids):
+		update_del = db.do("UPDATE `webrep_articles` SET `removed`='1' WHERE `id`='{}';".format(ids))
+		return {"db_info":update_del}
+
+	@app.route("/webrep/articles/confirm/<ids>",methods=["POST","GET"])
+	def confirm_article(ids):
+		update_del = db.do("UPDATE `webrep_articles` SET `status`='posted' WHERE `id`='{}';".format(ids))
+		return {"db_info":update_del}
+
+
+	@app.route("/webrep/articles/revise/<ids>",methods=["POST","GET"])
+	def revise_article(ids):
+		update_del = db.do("UPDATE `webrep_articles` SET `status`='revise' WHERE `id`='{}';".format(ids))
+		return {"db_info":update_del}
+
+
+
+
+
 	@app.route("/webrep/go_dl_file/<filename>",methods=["POST","GET"])
 	def go_dl_file(filename):
-		return send_file(c.RECORDS+"/objects/webrep/"+filename, as_attachment=True,download_name=filename)
+		return send_file(c.RECORDS+"/objects/webrep/"+filename , as_attachment=True,download_name=filename )
 
 
 	def get_module_data():
