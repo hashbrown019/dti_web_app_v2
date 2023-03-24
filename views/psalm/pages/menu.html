@@ -9,6 +9,8 @@
 <html lang="en">
   <title>Menu</title>
 <style type="text/css">
+
+  
   
       #container_b{
 /*        background-image: url('../static/img/login_bg_dark.jpg');*/
@@ -20,52 +22,194 @@
         background-position: center;
         background-size: cover;
       }
+      @media screen and (max-width: 768px) {
+  #search-bar {
+    z-index: 9999;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+  }
+  
+  .container2 {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 20px auto 20px;
+  }
+  
+  .container2 .search {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .container2 input {
+    width: 100%;
+  }
+}
+
+
+      #search-bar {
+  position: absolute;
+  top: 30px;
+  left: 40%;
+  
+  transform: translateX(-50%);
+}
+
+
+.container2 {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  height: 100px;
+}
+.container2 .search {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  background: crimson;
+  border-radius: 50%;
+  transition: all 1s;
+  z-index: 4;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+}
+.container2 .search:hover {
+  cursor: pointer;
+}
+.container2 .search::before {
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: 22px;
+  right: 0;
+  bottom: 0;
+  left: 22px;
+  width: 12px;
+  height: 2px;
+  background: white;
+  transform: rotate(45deg);
+  transition: all 0.5s;
+}
+.container2 .search::after {
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: -5px;
+  right: 0;
+  bottom: 0;
+  left: -5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: all 0.5s;
+}
+.container2 input {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  outline: none;
+  border: none;
+  background: crimson;
+  color: white;
+  text-shadow: 0 0 10px crimson;
+  padding: 0 80px 0 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+  transition: all 1s;
+  opacity: 0;
+  z-index: 5;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+}
+.container2 input:hover {
+  cursor: pointer;
+}
+.container2 input:focus {
+  width: 300px;
+  opacity: 1;
+  cursor: text;
+}
+.container2 input:focus ~ .search {
+  right: -250px;
+  background: #151515;
+  z-index: 6;
+}
+.container2 input:focus ~ .search::before {
+  top: 0;
+  left: 0;
+  width: 25px;
+}
+.container2 input:focus ~ .search::after {
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 2px;
+  border: none;
+  background: white;
+  border-radius: 0%;
+  transform: rotate(-45deg);
+}
+.container2 input::placeholder {
+  color: white;
+  opacity: 0.5;
+  font-weight: bolder;
+}
 </style>
 
 <body id="container_b">
-
-  
-<div class=" text-white sl-primary" style=" position: absolute; right: 0; max-width: 18rem; padding: 1px;height: auto;border-radius: 0px 0px 0px 0px;  ">
-  <!-- <div class="card-header">{{user_data['name']}}</div> -->
-  <div class="card-body">
-    <!-- <h5 class="card-title">Primary card title</h5> -->
-    <a href="#_Hi_There_{{user_data['name']|replace(' ','_')}}" class="btn btn-md ">
-      <span class="ms-start text-white">
-        <i><img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;"></i> 
-        {{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
-      </span>
-      <div id="button-container">
-        <button onclick="location.href='/logout';" class="danger-button">
-          Logout
-          <span class="round"></span>
-        </button>
-    </a>
-    
-    </div> 
-</div>
-</div>
-</div>
-
-
-
-<div class="container">
-
-  <div class="row">
-
-{% include "includes/menucards/adminknowledge.html" %}
- 
-{% include "includes/menucards/profiling.html" %}
-  
-{% include "includes/menucards/dcf.html" %}
-     
-{% include "includes/menucards/fmi.html" %}
-
-{% include "includes/menucards/fundtracker.html" %}
-    
+  <div id="search-bar" style="margin-top: 50px;">
+    <div class="container2">
+      <input type="text" placeholder="Search...">
+      <div class="search"></div>
+    </div>
   </div>
+  <div class=" text-white sl-primary" style=" position: absolute; right: 0; max-width: 18rem; padding: 1px;height: auto;border-radius: 0px 0px 0px 0px;  ">
+    <!-- <div class="card-header">{{user_data['name']}}</div> -->
+    <div class="card-body">
+      <!-- <h5 class="card-title">Primary card title</h5> -->
+      <a href="#_Hi_There_{{user_data['name']|replace(' ','_')}}" class="btn btn-md ">
+        <span class="ms-start text-white">
+          <i><img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;"></i> 
+          {{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
+        </span>
+        <div id="button-container">
+          <button onclick="location.href='/logout';" class="danger-button">
+            Logout
+            <span class="round"></span>
+          </button>
+        </div>
+      </a>
+    </div>
   </div>
 
-</body>
+  
+  <div class="container">
+    <div class="row">
+      {% include "includes/menucards/adminknowledge.html" %}
+      {% include "includes/menucards/profiling.html" %}
+      {% include "includes/menucards/dcf.html" %}
+      {% include "includes/menucards/fmi.html" %}
+      {% include "includes/menucards/fundtracker.html" %}
+    </div>
+  </div>
+  
+  </body>
   
 {% endblock %}
-  
