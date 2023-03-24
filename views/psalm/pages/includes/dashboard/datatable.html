@@ -1,9 +1,10 @@
-<div class="card" style=" margin: 25px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+<div class="card" style=" margin: 25px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #c1d0f0;">
     <!-- Card header -->
 
-    <div class="table-responsive table py-4">
-      <div id="datatable-buttons_wrapper" class="dataTables_wrapper dt-bootstrap4" style="margin: 5%; margin-top: 3%;" >
-        <table class="table table-flush dataTable" id="datatable-buttons" role="grid" aria-describedby="datatable-buttons_info" >
+    <div class="d-flex justify-content-center">
+    <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
+      <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4" style="margin: 5%; margin-top: 3%;" >
+        <table class="table table-dark table-bordered table-flush dataTable" id="datatable-buttons" role="grid" aria-describedby="datatable-buttons_info" style=" width:100% !important" >
         <thead class="thead">
           <tr role="row">
             <th>ID</th>
@@ -11,16 +12,14 @@
             <th>Business Address</th>
             <th>Name</th>
             <th>Sex</th>
-            <th>Phone number</th>
             <th>VC Stakeholder</th>
             <th>Industry Cluster</th>
-            <th>Form of Enterprise</th>
             <th>Action</th>
             </tr>
         </thead>
     
         <tbody>
-          <tr>
+          <tr >
          <div>
             {% for row in datatable %}
             <td>{{ row['id'] }}</td>
@@ -28,11 +27,15 @@
             <td>{{ row['business_addr'] }}</td>  
             <td>{{ row['name'] }}</td>
             <td>{{ row['sex'] }}</td>
-            <td>{{ row['contact_details'] }}</td>
             <td>{{ row['vc_stakeholders'] }}</td>
             <td>{{ row['industry_cluster'] }}</td>
-            <td>{{ row['form_interprise'] }}</td>
-            <td><a style="color: #5e72e4;" data-toggle="modal" data-target="#modaledit{{row['id']}}" href="/update/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
+ 
+            <td>
+        
+              {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
+              <a style="color:  #ff4d4d;" data-toggle="modal" data-target="#modaledit{{row['id']}}" href="/update/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> EDIT &nbsp; &nbsp; &nbsp; &nbsp;</a>
+              {%endif%}
+              <a style="color: #1ac6ff; " data-toggle="modal" data-target="#formview{{row['id']}}" href="/update/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
             </td>
 
      
@@ -45,7 +48,7 @@
 </div>
           
           
-          
+</div>
           
         </div>
         </div>
