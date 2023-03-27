@@ -184,7 +184,7 @@ class _main:
 				print(datum)
 				key.append("`{}`".format(datum))
 				val.append("'{}'".format(data[datum]))
-			sql = ('''INSERT INTO `webrep_articles` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+			sql = ('''INSERT INTO `webrep_articles` ({},`status`) VALUES ({},'pending')'''.format(", ".join(key),", ".join(val)))
 		
 		else:
 			print("Editing")
@@ -215,7 +215,7 @@ class _main:
 				print(datum)
 				key.append("`{}`".format(datum))
 				val.append("'{}'".format(data[datum]))
-			sql = ('''INSERT INTO `webrep_uploads` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+			sql = ('''INSERT INTO `webrep_uploads` ({},`status`) VALUES ({},'pending')'''.format(", ".join(key),", ".join(val)))
 		
 		else:
 			print("Editing")
