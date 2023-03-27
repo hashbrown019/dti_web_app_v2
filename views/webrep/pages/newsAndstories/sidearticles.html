@@ -9,7 +9,14 @@
 								{% if (post['posttype'] =='Story')%}
 									{% if post["status"]=='posted' %}
 									<div class="STORY_CARD card rounded-2 mb-2" style="display: none;">
-										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
+
+										{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
+										{% if f_format in ['jpeg','jpg','gif','png'] %}
+											<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+										{% else %}
+											<video muted class="img_class vid_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" src="/webrep/article/get_img/{{post['file_name']}}">
+											</video>
+										{% endif %}
 										<div class="card-img-overlay">
 											<div class="d-flex justify-content-between">
 												<p class="text-white textshadow text-start small">{{post['postRcu']}}</p>
@@ -56,7 +63,14 @@
 								{% if (post['posttype'] =='Event')%}
 									{% if post["status"]=='posted' %}
 									<div class="EVENT_CARD card rounded-2 mb-2" style="display: none;">
-										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
+
+										{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
+										{% if f_format in ['jpeg','jpg','gif','png'] %}
+											<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+										{% else %}
+											<video muted class="img_class vid_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" src="/webrep/article/get_img/{{post['file_name']}}">
+											</video>
+										{% endif %}
 										<div class="card-img-overlay">
 											<div class="d-flex justify-content-between">
 												<p class="text-white textshadow text-start small">{{post['postRcu']}}</p>
@@ -102,7 +116,14 @@
 								{% if (post['posttype'] =='News')%}
 									{% if post["status"]=='posted' %}
 									<div class="NEWS_CARD card rounded-2 mb-2" style="display: none;">
-										<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class  rounded-1 side-article-img" alt="...">
+
+										{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
+										{% if f_format in ['jpeg','jpg','gif','png'] %}
+											<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+										{% else %}
+											<video muted class="img_class vid_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" src="/webrep/article/get_img/{{post['file_name']}}">
+											</video>
+										{% endif %}
 										<div class="card-img-overlay">
 											<div class="d-flex justify-content-between">
 												<p class="text-white textshadow text-start small">{{post['postRcu']}}</p>

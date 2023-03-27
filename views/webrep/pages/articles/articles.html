@@ -46,7 +46,7 @@
 								<button  type="button" class="btn btn-sm  btn-outline-success rounded-1" onclick="article_actions('confirm')">Confirm</button>
 								<div class="vr"></div>
 							{%endif%}
-							<div id="article_btn_control" class="d-flex">
+							<div id="article_btn_control" class="d-flex gap-2">
 								<button type="button" class="btn btn-sm  btn-outline-dark rounded-1" onclick="article_actions('edit')">Edit</button>
 								<button type="button" class="btn btn-sm  btn-danger rounded-1" onclick="article_actions('delete')">Delete</button>
 							</div>
@@ -90,7 +90,7 @@
 								  <span class="placeholder col-2 rounded-2"></span>
  							</figcaption>
 						</div>
-						<div class="article-item container">
+						<div id="media_container" class="article-item container">
 							<img id="img_" src="https://cdn.dribbble.com/userupload/5285830/file/original-080a1c594c9d4697e74ae1dc41d56f81.gif" class="WEBSAFE rounded-2 w-100 article-img" alt="...">					
 						</div>
 						<div class="container mt-1">
@@ -136,8 +136,20 @@
 									data : $DATA({"id":URL_ARGS['id']}),
 									func : function(r){
 										var res = JSON.parse(r)[0]
+										
 										var img_path = web_safe_decode(res["file_name"]).replaceAll("C:\\fakepath\\","") 
-										$ID("img_").src = "/webrep/article/get_img/"+ img_path
+										var f_format = img_path.split(".")[img_path.split(".").length-1]
+										if(f_format in ['jpeg','jpg','gif','png']){
+											$ID("img_").src = "/webrep/article/get_img/"+ img_path
+										}else{
+											$ID("media_container").innerHTML = (`
+												<video muted onloadstart ="this.play()" controls class="img_class vid_class rounded-2 w-100 article-img" src="/webrep/article/get_img/`+img_path+`">
+												</video>
+											`)
+											vid_play_()
+										}
+
+
 										set_idto_id_article(res['USER_ID'])
 										$ID("date").innerHTML = res["date"]
 										$ID("rcu").innerHTML = res["postRcu"]
@@ -152,6 +164,27 @@
 									}
 								})
 
+							}
+
+							function vid_play_(){
+								// var vid_class = $CLASS('vid_class')
+								// for (var i = 0; i < vid_class.length; i++) {
+								// 	try{
+								// 		vid_class[i].addEventListener('mouseover',function(el){
+								// 			println("mouse hover")
+								// 			el.srcElement.volume = 0
+								// 			el.srcElement.play()
+								// 		})
+								// 		vid_class[i].addEventListener('mouseout',function(el){
+								// 			println("mouse out")
+								// 			el.srcElement.volume = 0
+								// 			el.srcElement.pause()
+								// 			el.srcElement.currentTime  = 0
+								// 		})
+								// 	}catch(e){
+								// 		warnprintln(e)
+								// 	}
+								// }
 							}
 
 							function article_actions(args){
