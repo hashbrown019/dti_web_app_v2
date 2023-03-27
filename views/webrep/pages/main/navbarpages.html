@@ -1,8 +1,8 @@
 <!--NAVBAR-->
-  <nav class="navbar navbar-expand-sm navbar-light bg-white" style="height: 150px;">
+<nav class="navbar navbar-expand-sm navbar-light bg-white" style="height: 150px;">
 	<div class="container">
-	  <a class="navbar-brand d-lg-none d-md-none d-sm-none d-xl-block" href="/rapid/home/home.html">
-		   <img src="../../static/webrepstatic/img/RAPID.svg" width="150" height="110" class="" alt="home">
+		<a class="navbar-brand d-lg-none d-md-none d-sm-none d-xl-block" href="/rapid/home/home.html">
+			<img src="../../static/webrepstatic/img/RAPID.svg" width="150" height="110" class="" alt="home">
 		</a>
 		<ul class="navbar-nav mx-auto fs-5">
 			<li class="nav-item dropdown">
@@ -156,68 +156,71 @@
 				</ul> -->
 			</li>
 			<li class="nav-item">
-				<a class="nav-link ps-4 ms-3 " role="button" href="/rapid/knowledgecenter/knowledgeCenter.html">Knowledge</a>
+				<a class="nav-link ps-4 ms-3 " role="button">Knowledge</a>
 				<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<li><a class="dropdown-item" role="button" href="/rapid/knowledgecenter/knowledgeCenter.html">Public</a></li>
-					<li><a class="dropdown-item" role="button" href="/rapid/admin/adminKnowledgeCenter.html">Admin</a></li>
+					<li><a class="dropdown-item" role="button" href="/rapid/knowledgecenter/knowledgeCenter.html">Public Knowledge</a></li>
+					<li><a class="dropdown-item" role="button" href="/rapid/admin/adminKnowledgeCenter.html">Admin Knowledge</a></li>
 				</ul>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link ps-4 ms-3 " role="button" href="/forum">Community</a>
 			</li>	            
 		</ul>
 
-        {% if is_session :%}
-          <div class="">
-              <a type="button" class="text-secondary fs-5"  href="/menu">Menu</a>
-          </div>
-        {% else : %}
-          <div class="">
-              <a type="button" class="btn btn-outline-dark rounded-2 "  href="/login">Login</a>
-          </div>
-        {% endif %}
-	 </div>
-  </nav>
-  	<!-- <script defer src="../../static/js/Brorn.min.js" onload="pages_scope_selector()"></script> -->
-	<script type="text/javascript">
-		$onload(pages_scope_selector)
+		{% if is_session :%}
+		<div class="">
+			<a type="button" class="text-secondary fs-5"  href="/menu">Menu</a>
+		</div>
+		{% else : %}
+		<div class="">
+			<a type="button" class="btn btn-outline-dark rounded-2 "  href="/login">Login</a>
+		</div>
+		{% endif %}
+	</div>
+</nav>
+<!-- <script defer src="../../static/js/Brorn.min.js" onload="pages_scope_selector()"></script> -->
+<script type="text/javascript">
+	$onload(pages_scope_selector)
 
-		function pages_scope_selector(){
+	function pages_scope_selector(){
 
-			URL_ARGS.length
-			if('region' in URL_ARGS && 'prov' in URL_ARGS){
-				$ID(URL_ARGS['region']).click()
-				$ID(URL_ARGS['prov']).click()
-				var ele = document.getElementById(URL_ARGS['prov']);   
-				window.scrollTo(ele.offsetLeft,ele.offsetTop);
-			}
-			else if('region' in URL_ARGS){
-				$ID(URL_ARGS['region']).click()
-				var ele = document.getElementById('seprator_region');
-				window.scrollTo(ele.offsetLeft,ele.offsetTop);
-			}
-
-			println("navbar powers activated")
-			var scope = $ID("scope_work").getElementsByClassName('scope_prov')
-			for (var i = 0; i < scope.length; i++) {
-				scope[i].addEventListener("click",function(e){
-					var navbar_active = e.srcElement.parentNode.parentNode.parentNode.getElementsByClassName("scope_region")[0].getAttribute("identifier")
-					var navbar_OFBAR__active = (e.srcElement.getAttribute("identifier"))
-					$ID(navbar_active).click()
-					$ID(navbar_OFBAR__active).click()
-					
-					var ele = document.getElementById(navbar_OFBAR__active);   
-					window.scrollTo(ele.offsetLeft,ele.offsetTop);
-				})
-			}
-			var scope = $ID("scope_work").getElementsByClassName('scope_region')
-			for (var i = 0; i < scope.length; i++) {
-				scope[i].addEventListener("click",function(e){
-					var navbar_active = e.srcElement.getAttribute("identifier")
-					$ID(navbar_active).click()
-					// alert(navbar_active)
-					var ele = document.getElementById('seprator_region');   
-					println(ele)
-					window.scrollTo(ele.offsetLeft,ele.offsetTop);
-				})
-			}
-
+		URL_ARGS.length
+		if('region' in URL_ARGS && 'prov' in URL_ARGS){
+			$ID(URL_ARGS['region']).click()
+			$ID(URL_ARGS['prov']).click()
+			var ele = document.getElementById(URL_ARGS['prov']);   
+			window.scrollTo(ele.offsetLeft,ele.offsetTop);
 		}
-	</script>
+		else if('region' in URL_ARGS){
+			$ID(URL_ARGS['region']).click()
+			var ele = document.getElementById('seprator_region');
+			window.scrollTo(ele.offsetLeft,ele.offsetTop);
+		}
+
+		println("navbar powers activated")
+		var scope = $ID("scope_work").getElementsByClassName('scope_prov')
+		for (var i = 0; i < scope.length; i++) {
+			scope[i].addEventListener("click",function(e){
+				var navbar_active = e.srcElement.parentNode.parentNode.parentNode.getElementsByClassName("scope_region")[0].getAttribute("identifier")
+				var navbar_OFBAR__active = (e.srcElement.getAttribute("identifier"))
+				$ID(navbar_active).click()
+				$ID(navbar_OFBAR__active).click()
+
+				var ele = document.getElementById(navbar_OFBAR__active);   
+				window.scrollTo(ele.offsetLeft,ele.offsetTop);
+			})
+		}
+		var scope = $ID("scope_work").getElementsByClassName('scope_region')
+		for (var i = 0; i < scope.length; i++) {
+			scope[i].addEventListener("click",function(e){
+				var navbar_active = e.srcElement.getAttribute("identifier")
+				$ID(navbar_active).click()
+					// alert(navbar_active)
+				var ele = document.getElementById('seprator_region');   
+				println(ele)
+				window.scrollTo(ele.offsetLeft,ele.offsetTop);
+			})
+		}
+
+	}
+</script>

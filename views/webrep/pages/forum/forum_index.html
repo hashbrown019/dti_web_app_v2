@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063) -->
+<html>
+	<title>MIS Forums</title>
+	{% include 'head.html' %}
+	{% include 'spinner_loader.html' %}
+	<style>
+		body, html {
+			height: 100%;
+/*			color: #777;*/
+			line-height: 1.8;
+		}
+
+		/* Create a Parallax Effect */
+		.bgimg-1, .bgimg-2, .bgimg-3 {
+			background-attachment: fixed;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		/* First image (Logo. Full height) */
+		.bgimg-1 {
+			background-image: url('../../static/img/bg.jpg');
+			min-height: 50%;
+		}
+
+		/* Second image (Portfolio) */
+		.bgimg-2 {
+			background-image: url("../../static/img/parallax2.jpg");
+			min-height: 400px;
+		}
+
+		/* Third image (Contact) */
+		.bgimg-3 {
+			background-image: url("../../static/img/parallax3.jpg");
+			min-height: 400px;
+		}
+
+		.x-wide {letter-spacing: 10px;}
+		.x-hover-opacity {cursor: pointer;}
+
+		/* Turn off parallax scrolling for tablets and phones */
+		@media only screen and (max-device-width: 1600px) {
+			.bgimg-1, .bgimg-2, .bgimg-3 {
+				background-attachment: scroll;
+				min-height: 400px;
+			}
+		}
+	</style>
+	<body>
+
+		<!-- Navbar (sit on top) -->
+		<div class="x-top">
+			<div class="x-bar x-card x-animate-top x-white" id="myNavbar">
+				<a class="x-bar-item x-button x-hover-black x-hide-medium x-hide-large x-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+					<i class="fa fa-bars"></i>
+				</a>
+				<a href="/menu" class="x-text-green x-bar-item x-button">Menu</a>
+				<a href="#" class="x-bar-item x-button x-hide-small"><i class="fa fa-user"></i> Participants</a>
+				<a href="#portfolio" class="x-bar-item x-button x-hide-small"><i class="fa fa-th"></i> Topics</a>
+				<a href="#" class="x-bar-item x-btn x-round-large x-hide-small x-right">
+					<b class="x-text-red">Logout</b>
+				</a>
+			</div>
+
+			<!-- Navbar on small screens -->
+			<div id="navDemo" class="x-bar-block x-white x-hide x-hide-large x-hide-medium">
+				<a href="#about" class="x-bar-item x-button" onclick="toggleFunction()">Menu</a>
+				<a href="#portfolio" class="x-bar-item x-button" onclick="toggleFunction()">Participants</a>
+				<a href="#contact" class="x-bar-item x-button" onclick="toggleFunction()">Topics</a>
+				<a href="#" class="x-bar-item x-button"><b class="x-text-red">Logout</b></a>
+			</div>
+		</div>
+
+		<!-- First Parallax Image with Logo Text -->
+		<div class="bgimg-1 x-display-container x-black-transparent" id="home">
+			<div class="x-display-middle x-center" style="white-space:nowrap;">
+				<img src="../../static/img/mis_2023_v2.svg" class="x-image x-img" style="width:90%;"><br>
+				<b class="x-xxlarge x-text-white">RAPID MIS Forum</b>
+			</div>
+		</div>
+
+		<!-- Container (About Section) -->
+		<div class="x-content x-container x-padding-64" id="about">
+			<div class="x-bar x-container">
+				<span class="x-bar-item x-xlarge x-left"><b>Topics</b></span>
+				<span class="x-bar-item x-right x-text-green" onclick="modal_create_topic()">Create Topic</span>
+			</div>
+			<div class="x-container">
+				<div class="x-container x-padding x-col l3">
+					<div class="x-card x-zoom x-white x-container x-padding">
+						<div class="x-row">
+							<img src="../../static/img/icons3.png" class="x-image">
+						</div>
+						<b>sample topic</b><br>
+						<span class="x-text-grey x-small">12 threads</span><br>
+						<span class="x-text-grey x-small">200 Participants</span><br>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="form_topic" hidden>
+			<span>Title of the Topic</span><br>
+			<input type="text" class="x-input x-border x-round" name="">
+			<span>Description</span><br>
+			<input type="text" class="x-input x-border x-round" name="">
+			<span>Cover Image</span><br>
+			<input type="file" class="x-btn x-round-large" id="upload" required>
+
+		</div>
+		<script>
+		// Modal Image Gallery
+		$onload(modal_create_topic)
+
+		function modal_create_topic(){
+			var modal_topic = $dialog({
+				title : "Create Topic",
+				subtitle : "Fill all the fields to create a topic for a forum",
+				content : $ID('form_topic').innerHTML,
+				buttons : ['Cancel','Create']
+			})
+			modal_topic.show()
+		}
+
+
+
+
+		// ----------------------------------------------------------------------------------
+		function onClick(element) {
+			document.getElementById("img01").src = element.src;
+			document.getElementById("modal01").style.display = "block";
+			var captionText = document.getElementById("caption");
+			captionText.innerHTML = element.alt;
+		}
+
+		// Change style of navbar on scroll
+		window.onscroll = function() {myFunction()};
+		function myFunction() {
+				var navbar = document.getElementById("myNavbar");
+				if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+						navbar.className = "x-bar" + " x-card" + " x-animate-top" + " x-white";
+				} else {
+						navbar.className = navbar.className.replace(" x-card x-animate-top x-white", "");
+				}
+		}
+
+		// Used to toggle the menu on small screens when clicking on the menu button
+		function toggleFunction() {
+				var x = document.getElementById("navDemo");
+				if (x.className.indexOf("x-show") == -1) {
+						x.className += " x-show";
+				} else {
+						x.className = x.className.replace(" x-show", "");
+				}
+		}
+		</script>
+
+
+	</body>
+</html>

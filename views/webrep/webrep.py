@@ -284,6 +284,11 @@ class _main:
 		return _modules
 	# ======================================================================================================
 
+
+	@app.route("/forum",methods=["POST","GET"])
+	def forum_index():
+		return render_template('forum/forum_index.html')
+
 	@app.app_errorhandler(404)
 	def _404(err):
 		return render_template("error/404.html"), 404
