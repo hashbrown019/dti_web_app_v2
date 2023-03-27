@@ -90,65 +90,65 @@
 			</div>
 		</footer>
 		<script>
-		var mySidebar = document.getElementById("mySidebar");
-		var overlayBg = document.getElementById("myOverlay");
-		function x_open() {
-			if (mySidebar.style.display === 'block') {mySidebar.style.display = 'none';overlayBg.style.display = "none";} 
-			else {mySidebar.style.display = 'block';overlayBg.style.display = "block";}
-		}
+			var mySidebar = document.getElementById("mySidebar");
+			var overlayBg = document.getElementById("myOverlay");
+			function x_open() {
+				if (mySidebar.style.display === 'block') {mySidebar.style.display = 'none';overlayBg.style.display = "none";} 
+				else {mySidebar.style.display = 'block';overlayBg.style.display = "block";}
+			}
 
-		// Close the sidebar with the close button
-		function x_close() {mySidebar.style.display = "none";overlayBg.style.display = "none";}
-		function logout() {
-			redirectto("/logout");
-		}
+			// Close the sidebar with the close button
+			function x_close() {mySidebar.style.display = "none";overlayBg.style.display = "none";}
+			function logout() {
+				redirectto("/logout");
+			}
 
-		function not_ready(...args){
-			var under_dev = $dialog({
-				title : "Feature Not Ready",
-				subtitle : "Feature is currently not Available",
-				content : (`
-					<div class="x-padding x-container">
-						<div class="x-row x-padding x-center">
-							<img class="x-round-large" src="../static/img/underdev2.gif" style="width: 70%;">
+			function not_ready(...args){=
+				var under_dev = $dialog({  
+					title : "Feature Not Ready",
+					subtitle : "Feature is currently not Available",
+					content : (`
+						<div class="x-padding x-container">
+							<div class="x-row x-padding x-center">
+								<img class="x-round-large" src="../static/img/underdev2.gif" style="width: 70%;">
+							</div>
+							<div class="x-row x-padding">
+								<b class='x-text-grey x-small'>
+									<span class="x-large">We are also excited to have this feature</span><br>
+										Don't worry, the Developers are working on this. 
+										If you have concern in getting the data using this feature, please contact us 
+									<br>
+								</b>
+							</div>
 						</div>
-						<div class="x-row x-padding">
-							<b class='x-text-grey x-small'>
-								<span class="x-large">We are also excited to have this feature</span><br>
-									Don't worry, the Developers are working on this. 
-									If you have concern in getting the data using this feature, please contact us 
-								<br>
-							</b>
-						</div>
-					</div>
-				`)
-			})
-			under_dev.show()
-		}
+					`)
+				})
+				under_dev.show()
+			}
 
-		var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-		s1.async=true;
-		s1.src='https://embed.tawk.to/62f9c9c554f06e12d88ea549/1gafrob5j';
-		s1.charset='UTF-8';
-		s1.setAttribute('crossorigin','*');
-		s0.parentNode.insertBefore(s1,s0);
-		// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-		window.Tawk_API.visitor = {
-			'name' : "{{USER_DATA['name']}}",
-			'email': "{{USER_DATA['email']}}",
-		};
-		
-		// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-		Tawk_API.onLoad = function(){
-			Tawk_API.setAttributes({
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/62f9c9c554f06e12d88ea549/1gafrob5j';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+			// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+			var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+			window.Tawk_API.visitor = {
 				'name' : "{{USER_DATA['name']}}",
 				'email': "{{USER_DATA['email']}}",
-				'hash' : "{{USER_DATA['rcu']}}"+"_"+"{{USER_DATA['job']}}"
-			}, function (error) {
-			});
-		};
-		// ====================================================
+			};
+			
+			// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+			Tawk_API.onLoad = function(){
+				Tawk_API.setAttributes({
+					'name' : "{{USER_DATA['name']}}",
+					'email': "{{USER_DATA['email']}}",
+					'hash' : "{{USER_DATA['rcu']}}"+"_"+"{{USER_DATA['job']}}"
+				}, function (error) {
+				});
+			};
+			// ====================================================
 		</script>
 	</body>
 </html>
