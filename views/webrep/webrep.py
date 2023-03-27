@@ -28,13 +28,18 @@ class _main:
 
 	@app.route("/hi_there",methods=["POST","GET"])
 	def hi_there():
-		return render_template("home/home.html")
+		return render_template(
+			"home/home.html",
+			page_data=_main.get_post()
+		)
  
 	@app.route("/rapid/<_>",methods=["POST","GET"])
 	def home_(_):
 		if(_!="home/home.html"): 
 			return _main._404(404)
-		return render_template("home/home.html")
+		return render_template(
+			"home/home.html"
+		)
 	# ===========================================================/
 
 	@app.route("/rapid/<segment>/<page>",methods=["POST","GET"])
@@ -69,7 +74,11 @@ class _main:
 			# page.lower()=="articles.html".lower()
 			):
 			if(_main.is_on_session()):
-				return render_template("{}/{}".format(segment,page),users=_main.get_all_user(),is_session =_main.is_on_session(),user_data=session["USER_DATA"][0])
+				return render_template(
+					"{}/{}".format(segment,page),
+					users=_main.get_all_user(),
+					is_session =_main.is_on_session(),
+					user_data=session["USER_DATA"][0])
 			else:
 				return redirect("/login?force_url=1")
 		elif(

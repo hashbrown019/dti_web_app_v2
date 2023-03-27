@@ -15,8 +15,8 @@
 	</div>
 	<div class="container mt-5 pb-5" style="height: 800px;">
 		<div class="container row g-2 g-lg-4 overflow-auto " style="height:800px;">
-
-			{% for post in page_data %}
+		{% for post in page_data %}
+			{% if post["status"]=='posted'%}
 			<div class="container mt-5 card2 position-relative">
 				<div class="container border border-success row shadow-sm p-3 bg-body rounded">
 					<div class="col-lg-2">
@@ -41,6 +41,7 @@
 					</div>
 				</div>   
 			</div>
+			{% endif %}
 			{% endfor %}	
 
 		</div>
