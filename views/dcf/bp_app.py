@@ -102,7 +102,7 @@ def updateform11():
 @app.route('/dcf_forms')
 def dcf_forms():
     return redirect("/dcf_forms")
-
+ 
 @app.route('/dcf/<form>')
 def form1(form):
     return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0])
@@ -167,6 +167,129 @@ def insert_form11():
     insertData11.insert_form11(request)
     return redirect("/dcf/form11")
 
+#DELETE ROW DATA -------------------------------------------------------
+
+@app.route('/delete_form1/<string:id>', methods = ['POST','GET'])
+def delete_form1(id):
+	sql='DELETE FROM dcf_prep_review_aprv_status WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form2/<string:id>', methods = ['POST','GET'])
+def delete_form2(id):
+	sql='DELETE FROM dcf_implementing_unit WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form3/<string:id>', methods = ['POST','GET'])
+def delete_form3(id):
+	sql='DELETE FROM dcf_bdsp_reg WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form4/<string:id>', methods = ['POST','GET'])
+def delete_form4(id):
+	sql='DELETE FROM dcf_capacity_building WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form5/<string:id>', methods = ['POST','GET'])
+def delete_form5(id):
+	sql='DELETE FROM dcf_matching_grant WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form6/<string:id>', methods = ['POST','GET'])
+def delete_form6(id):
+	sql='DELETE FROM dcf_product_development WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form7/<string:id>', methods = ['POST','GET'])
+def delete_form7(id):
+	sql='DELETE FROM dcf_trade_promotion WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form9/<string:id>', methods = ['POST','GET'])
+def delete_form9(id):
+	sql='DELETE FROM dcf_enablers_activity WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form10/<string:id>', methods = ['POST','GET'])
+def delete_form10(id):
+	sql='DELETE FROM dcf_negosyo_center WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+@app.route('/delete_form11/<string:id>', methods = ['POST','GET'])
+def delete_form11(id):
+	sql='DELETE FROM dcf_access_financing WHERE id = {0}'.format(id)
+	delete=db.do(sql)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The data was deleted successfully!", "success")
+			print(str(delete))
+	return redirect("/dcf_dashboard")
+
+#-------------------------------------------------------------------------------
 
 @app.route('/dcf', methods=['GET', 'POST'])
 def dcfexport_data():

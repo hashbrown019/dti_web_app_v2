@@ -437,8 +437,8 @@ function myFunction3() {
 
         Swal.fire({
           icon: 'warning',
-          title: 'Are you sure you want to Delete this file?',
-          text: 'Deleting this file will also delete the data inside this file from the Database.',
+          title: 'Are you sure you want to Delete this Data?',
+          text: 'Deleting this data will permanently remove it from the database.',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',

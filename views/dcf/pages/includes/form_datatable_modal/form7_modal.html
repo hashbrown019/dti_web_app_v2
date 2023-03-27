@@ -1,5 +1,5 @@
 <div class="modal fade" id="form7_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 85%;">
+    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 90%;">
       <div class="modal-content prof-content">
         <div class="modalprof modal-header prof-header " style="background-color: #007399;" >
           <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Form 7 Trade Promotion Services Tracker</h4>
@@ -41,6 +41,9 @@
                             {% if(row['upload_by']==user_data['id'] or user_data['job']=="Super Admin"): %}
                             <a style="color: #00cc66;" data-toggle="modal" data-target="#form7edit{{row['id']}}" href="/updateform7/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square" aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {%endif%}
+                        {% if(user_data['job']=="Super Admin"): %}
+                          <a style="color: #ff4d4d;"  href="/delete_form7/{{row['id']}}" onclick="confirmation(event)"> <span><i class="fa-solid fa-trash"></i></span> Delete</a>&nbsp;&nbsp;&nbsp; &nbsp;
+                          {% endif %}
                         <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form7view{{row['id']}}" href="/updateform7/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
                         </td>
             
