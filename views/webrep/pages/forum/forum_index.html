@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063) -->
+<html>
+	<title>MIS Forums</title>
+	{% include 'head.html' %}
+	{% include 'spinner_loader.html' %}
+	<style>
+		body, html {
+			height: 100%;
+/*			color: #777;*/
+			line-height: 1.8;
+		}
+
+		/* Create a Parallax Effect */
+		.bgimg-1, .bgimg-2, .bgimg-3 {
+			background-attachment: fixed;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		/* First image (Logo. Full height) */
+		.bgimg-1 {
+			background-image: url('../../static/img/bg.jpg');
+			min-height: 100%;
+		}
+
+		/* Second image (Portfolio) */
+		.bgimg-2 {
+			background-image: url("../../static/img/parallax2.jpg");
+			min-height: 400px;
+		}
+
+		/* Third image (Contact) */
+		.bgimg-3 {
+			background-image: url("../../static/img/parallax3.jpg");
+			min-height: 400px;
+		}
+
+		.x-wide {letter-spacing: 10px;}
+		.x-hover-opacity {cursor: pointer;}
+
+		/* Turn off parallax scrolling for tablets and phones */
+		@media only screen and (max-device-width: 1600px) {
+			.bgimg-1, .bgimg-2, .bgimg-3 {
+				background-attachment: scroll;
+				min-height: 400px;
+			}
+		}
+	</style>
+	<body>
+
+		<!-- Navbar (sit on top) -->
+		<div class="x-top">
+			<div class="x-bar x-card x-animate-top x-white" id="myNavbar">
+				<a class="x-bar-item x-button x-hover-black x-hide-medium x-hide-large x-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+					<i class="fa fa-bars"></i>
+				</a>
+				<a href="/menu" class="x-text-green x-bar-item x-button">Menu</a>
+				<a href="#" class="x-bar-item x-button x-hide-small"><i class="fa fa-user"></i> Participants</a>
+				<a href="#portfolio" class="x-bar-item x-button x-hide-small"><i class="fa fa-th"></i> Topics</a>
+				<a href="#" class="x-bar-item x-btn x-round-large x-hide-small x-right">
+					<b class="x-text-red">Logout</b>
+				</a>
+			</div>
+
+			<!-- Navbar on small screens -->
+			<div id="navDemo" class="x-bar-block x-white x-hide x-hide-large x-hide-medium">
+				<a href="#about" class="x-bar-item x-button" onclick="toggleFunction()">Menu</a>
+				<a href="#portfolio" class="x-bar-item x-button" onclick="toggleFunction()">Participants</a>
+				<a href="#contact" class="x-bar-item x-button" onclick="toggleFunction()">Topics</a>
+				<a href="#" class="x-bar-item x-button"><b class="x-text-red">Logout</b></a>
+			</div>
+		</div>
+
+		<!-- First Parallax Image with Logo Text -->
+		<div class="bgimg-1 x-display-container x-opacity-min" id="home">
+			<div class="x-display-middle x-center" style="white-space:nowrap;">
+				<img src="../../static/img/mis_2023_v2.svg" class="x-image x-img" style="width:90%;"><br>
+				<b class="x-jumbo">RAPID MIS Forum</b>
+			</div>
+		</div>
+
+		<!-- Container (About Section) -->
+		<div class="x-content x-container x-padding-64" id="about">
+			<h3 class="x-center">ABOUT ME</h3>
+			<p class="x-center"><em>I love photography</em></p>
+			<p>We have created a fictional "personal" website/blog, and our fictional character is a hobby photographer. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+				qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			<div class="x-row">
+				<div class="x-col m6 x-center x-padding-large">
+					<p><b><i class="fa fa-user x-margin-right"></i>My Name</b></p><br>
+					<img src="./forum_index_files/avatar_hat.jpg" class="x-round x-image x-opacity x-hover-opacity-off" alt="Photo of Me" width="500" height="333">
+				</div>
+
+				<!-- Hide this text on small devices -->
+				<div class="x-col m6 x-hide-small x-padding-large">
+					<p>Welcome to my website. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+						dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor
+						incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				</div>
+			</div>
+			<p class="x-large x-center x-padding-16">Im really good at:</p>
+			<p class="x-wide"><i class="fa fa-camera"></i>Photography</p>
+			<div class="x-light-grey">
+				<div class="x-container x-padding-small x-dark-grey x-center" style="width:90%">90%</div>
+			</div>
+			<p class="x-wide"><i class="fa fa-laptop"></i>Web Design</p>
+			<div class="x-light-grey">
+				<div class="x-container x-padding-small x-dark-grey x-center" style="width:85%">85%</div>
+			</div>
+			<p class="x-wide"><i class="fa fa-photo"></i>Photoshop</p>
+			<div class="x-light-grey">
+				<div class="x-container x-padding-small x-dark-grey x-center" style="width:75%">75%</div>
+			</div>
+		</div>
+
+		<div class="x-row x-center x-dark-grey x-padding-16">
+			<div class="x-quarter x-section">
+				<span class="x-xlarge">14+</span><br>
+				Partners
+			</div>
+			<div class="x-quarter x-section">
+				<span class="x-xlarge">55+</span><br>
+				Projects Done
+			</div>
+			<div class="x-quarter x-section">
+				<span class="x-xlarge">89+</span><br>
+				Happy Clients
+			</div>
+			<div class="x-quarter x-section">
+				<span class="x-xlarge">150+</span><br>
+				Meetings
+			</div>
+		</div>
+
+		<!-- Second Parallax Image with Portfolio Text -->
+		<div class="bgimg-2 x-display-container x-opacity-min">
+			<div class="x-display-middle">
+				<span class="x-xxlarge x-text-white x-wide">PORTFOLIO</span>
+			</div>
+		</div>
+
+		<!-- Container (Portfolio Section) -->
+		<div class="x-content x-container x-padding-64" id="portfolio">
+			<h3 class="x-center">MY WORK</h3>
+			<p class="x-center"><em>Here are some of my latest lorem work ipsum tipsum.<br> Click on the images to make them bigger</em></p><br>
+
+			<!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
+			<div class="x-row-padding x-center">
+				<div class="x-col m3">
+					<img src="./forum_index_files/p1.jpg" style="width:100%" onclick="onClick(this)" class="x-hover-opacity" alt="The mist over the mountains">
+				</div>
+
+				<div class="x-col m3">
+					<img src="./forum_index_files/p2.jpg" style="width:100%" onclick="onClick(this)" class="x-hover-opacity" alt="Coffee beans">
+				</div>
+
+				<div class="x-col m3">
+					<img src="./forum_index_files/p3.jpg" style="width:100%" onclick="onClick(this)" class="x-hover-opacity" alt="Bear closeup">
+				</div>
+
+				<div class="x-col m3">
+					<img src="./forum_index_files/p4.jpg" style="width:100%" onclick="onClick(this)" class="x-hover-opacity" alt="Quiet ocean">
+				</div>
+			</div>
+
+			<div class="x-row-padding x-center x-section">
+				<div class="x-col m3">
+					<img src="./forum_index_files/p5.jpg" style="width:100%" onclick="onClick(this)" class="x-hover-opacity" alt="The mist">
+				</div>
+
+				<div class="x-col m3">
+					<img src="./forum_index_files/p6.jpg" style="width:100%" onclick="onClick(this)" class="x-hover-opacity" alt="My beloved typewriter">
+				</div>
+
+				<div class="x-col m3">
+					<img src="./forum_index_files/p7.jpg" style="width:100%" onclick="onClick(this)" class="x-hover-opacity" alt="Empty ghost train">
+				</div>
+
+				<div class="x-col m3">
+					<img src="./forum_index_files/p8.jpg" style="width:100%" onclick="onClick(this)" class="x-hover-opacity" alt="Sailing">
+				</div>
+				<button class="x-button x-padding-large x-light-grey" style="margin-top:64px">LOAD MORE</button>
+			</div>
+		</div>
+
+		<!-- Modal for full size images on click-->
+		<div id="modal01" class="x-modal x-black" onclick="this.style.display=&#39;none&#39;">
+			<span class="x-button x-large x-black x-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
+			<div class="x-modal-content x-animate-zoom x-center x-transparent x-padding-64">
+				<img id="img01" class="x-image">
+				<p id="caption" class="x-opacity x-large"></p>
+			</div>
+		</div>
+
+		<!-- Third Parallax Image with Portfolio Text -->
+		<div class="bgimg-3 x-display-container x-opacity-min">
+			<div class="x-display-middle">
+				 <span class="x-xxlarge x-text-white x-wide">CONTACT</span>
+			</div>
+		</div>
+
+		<!-- Container (Contact Section) -->
+		<div class="x-content x-container x-padding-64" id="contact">
+			<h3 class="x-center">WHERE I WORK</h3>
+			<p class="x-center"><em>I'd love your feedback!</em></p>
+
+			<div class="x-row x-padding-32 x-section">
+				<div class="x-col m4 x-container">
+					<img src="./forum_index_files/map.jpg" class="x-image x-round" style="width:100%">
+				</div>
+				<div class="x-col m8 x-panel">
+					<div class="x-large x-margin-bottom">
+						<i class="fa fa-map-marker fa-fw x-hover-text-black x-xlarge x-margin-right"></i> Chicago, US<br>
+						<i class="fa fa-phone fa-fw x-hover-text-black x-xlarge x-margin-right"></i> Phone: +00 151515<br>
+						<i class="fa fa-envelope fa-fw x-hover-text-black x-xlarge x-margin-right"></i> Email: mail@mail.com<br>
+					</div>
+					<p>Swing by for a cup of <i class="fa fa-coffee"></i>, or leave me a note:</p>
+					<form action="https://www.w3schools.com/action_page.php" target="_blank">
+						<div class="x-row-padding" style="margin:0 -16px 8px -16px">
+							<div class="x-half">
+								<input class="x-input x-border" type="text" placeholder="Name" required="" name="Name">
+							</div>
+							<div class="x-half">
+								<input class="x-input x-border" type="text" placeholder="Email" required="" name="Email">
+							</div>
+						</div>
+						<input class="x-input x-border" type="text" placeholder="Message" required="" name="Message">
+						<button class="x-button x-black x-right x-section" type="submit">
+							<i class="fa fa-paper-plane"></i> SEND MESSAGE
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer class="x-center x-black x-padding-64 x-opacity x-hover-opacity-off">
+			<a href="#home" class="x-button x-light-grey"><i class="fa fa-arrow-up x-margin-right"></i>To the top</a>
+			<div class="x-xlarge x-section">
+				<i class="fa fa-facebook-official x-hover-opacity"></i>
+				<i class="fa fa-instagram x-hover-opacity"></i>
+				<i class="fa fa-snapchat x-hover-opacity"></i>
+				<i class="fa fa-pinterest-p x-hover-opacity"></i>
+				<i class="fa fa-twitter x-hover-opacity"></i>
+				<i class="fa fa-linkedin x-hover-opacity"></i>
+			</div>
+			<p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="x-hover-text-green">w3.css</a></p>
+		</footer>
+		 
+		<script>
+		// Modal Image Gallery
+		function onClick(element) {
+			document.getElementById("img01").src = element.src;
+			document.getElementById("modal01").style.display = "block";
+			var captionText = document.getElementById("caption");
+			captionText.innerHTML = element.alt;
+		}
+
+		// Change style of navbar on scroll
+		window.onscroll = function() {myFunction()};
+		function myFunction() {
+				var navbar = document.getElementById("myNavbar");
+				if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+						navbar.className = "x-bar" + " x-card" + " x-animate-top" + " x-white";
+				} else {
+						navbar.className = navbar.className.replace(" x-card x-animate-top x-white", "");
+				}
+		}
+
+		// Used to toggle the menu on small screens when clicking on the menu button
+		function toggleFunction() {
+				var x = document.getElementById("navDemo");
+				if (x.className.indexOf("x-show") == -1) {
+						x.className += " x-show";
+				} else {
+						x.className = x.className.replace(" x-show", "");
+				}
+		}
+		</script>
+
+
+	</body>
+</html>
