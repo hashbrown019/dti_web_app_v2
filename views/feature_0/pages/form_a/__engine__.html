@@ -23,7 +23,7 @@
 		$ID("form_a_forms_modal_container").innerHTML = "";
 	})
 
-	$onload(form_a_forms)
+	// $onload(form_a_forms)
 
 	function form_a_forms(){
 		var form_a_dialog_container = $dialog({
@@ -56,8 +56,8 @@
 		})
 	}
 
-	function save_form(){
-	}
+	// function save_form(){
+	// }
 
 	function next_form(){
 		if(form_a_page!=FORM_A_LS.length-1){form_a_page+=1}
@@ -69,16 +69,224 @@
 		load_form(form_a_page)
 	}
 
-	// let FORM_A_LS = [
-	// 	{"file":"profile" , "label":"Farmer Basic Info" },
-	// 	{"file":"add_farm" , "label":"Farm Information" },
-	// 	{"file":"hh_profile" , "label":"Household Profiles" },
-	// 	{"file":"prod_cost" , "label":"Production Cost" },
-	// 	{"file":"workers_laborers" , "label":"Farm Workers and Labors" },
-	// 	{"file":"post_harvest" , "label":"Post Harvest" },
-	// 	{"file":"marketing_sales" , "label":"Marketing/Sales Distribution Channels" },
-	// 	{"file":"access_financial" , "label":"Access to Financial Services and Products" },
-	// 	{"file":"feedback" , "label":"Industry Feedback" },
-	// ]
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
 
+
+	function save_form_a1(){
+		if(url_args['farmer_id'] ==undefined || url_args['farmer_id'] ==""){
+			var Farmer_ID = gen_code(76)
+			alert("You Have Added a New Profile")
+			url_args['farmer_id'] = Farmer_ID
+		}else{
+			var ans = confirm("You are about to modify an existing profile.\nDoing so may change the status of the profile depending on the modification\nClick [ok] to continue, [cancel] otherwise")
+			if(!ans){
+				goto("../home_screen.html?tab_index=1&selected_farmer_="+undefined)
+			}
+		}
+
+		$ID('farmer_code').value = url_args['farmer_id']
+		$ID('datetime').value = $datetime()
+
+		var FILE_NAME = url_args['farmer_id']+"@"+page+".txt"
+		create_formdata(FILE_NAME,function(){
+			redirectto("add_farm.html?user_id="+url_args['user_id']+"&farmer_id="+url_args['farmer_id'])
+		})
+	}
+	
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+	// ================================================================================
+
+	function marital_status(vals) {
+		if(vals=="Married"){ $ID("name_marital_field").style.display="block" }
+		else{ $ID("name_marital_field").style.display="none" }
+	}
+
+	function cal_age(bday){
+		var parts2 = bday.split('-');
+		// var todate = new Date(parts[0], parts[1] - 1, parts[2]);
+		var todate = $date()
+		var sbday = new Date(parts2[0], parts2[1] - 1, parts2[2]); 
+		const diffTime = Math.abs(todate - sbday);
+		var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+		var age = diffDays/365
+		$ID("farmer-age").value = (""+age).split(".")[0];
+		if(age<=18.0){
+			alert("oops you are profiling a minor with the age of ["+(""+age).split(".")[0]+"]\nPlease select a legal age by selecting the correct birthday")
+		}
+		if(age <=30 && age >=18){$ID("farmer-is_youth").checked = true}
+		else{$ID("farmer-is_youth").checked = false}
+
+	}
+	function foposition_change(val){
+		if(val=="Officer"){
+			$ID("farmer-fo_designation").disabled = false
+		}else{
+			$ID("farmer-fo_designation").disabled = true
+		}
+	}
+	function rsbsa_change(val){
+		if(val=="yes"){
+			$ID("farmer-rsbsa_no").disabled = false
+		}else{
+			$ID("farmer-rsbsa_no").disabled = true
+		}
+	}
+
+	function farmer_name(tag){
+		$ID("farmer_name").value = $ID("f_name").value +" "+ $ID("m_name").value +" "+ $ID("l_name").value +" "+ $ID("ext_name").value 
+	}
+
+	function ip_names(el){
+	_autocomplete(el,IP_NAMES)
+	// println(JSON.stringify(IP_NAMES))
+}
+
+function get_dip_ls(el){
+	_autocomplete(el,DIP_LIST)
+	// println(JSON.stringify(IP_NAMES))
+}
+
+function get_fo_ls(el){
+	_autocomplete(el,FO_LIST)
+	// println(JSON.stringify(IP_NAMES))
+}
+
+function region_sel(el){
+	var arrs = []
+	for (const [key, value] of Object.entries(ALL_LOCATION)) {
+		arrs.push(key)
+	}
+	_autocomplete(el,arrs)
+}
+
+function ls_prov(el){
+	var selregion = $ID('addr_region').value.toUpperCase();
+	var arrs = []
+	for (const [key, value] of Object.entries(ALL_LOCATION[selregion]['province_list'])) {
+		arrs.push(key)
+	}
+	_autocomplete(el,arrs)
+}
+
+
+function ls_city(el){
+	var arrs = []
+	var region = $ID("addr_region").value.toUpperCase();
+	var prov = $ID("addr_prov").value.toUpperCase();
+	for (const [key, value] of Object.entries(ALL_LOCATION[region]['province_list'][prov]['municipality_list'])) {
+		arrs.push(key)
+	}
+	_autocomplete(el,arrs)
+}
+
+
+function ls_brgy(el){
+	var arrs = []
+	var region = $ID("addr_region").value.toUpperCase();
+	var prov = $ID("addr_prov").value.toUpperCase();
+	var municipality = $ID("addr_city").value.toUpperCase();
+
+	for (var i = 0; i < ALL_LOCATION[region]['province_list'][prov]['municipality_list'][municipality]['barangay_list'].length; i++) {
+		var key = ALL_LOCATION[region]['province_list'][prov]['municipality_list'][municipality]['barangay_list'][i]
+		arrs.push(key)
+	}
+	_autocomplete(el,arrs)
+
+}
+
+
+// ====================================================
+function _autocomplete(inp, arr) {
+	var currentFocus;
+	inp.addEventListener("input", function(e) {
+			var a, b, i, val = this.value;
+			closeAllLists();
+			if (!val) { return false;}
+			currentFocus = -1;
+			a = document.createElement("DIV");
+			a.setAttribute("id", this.id + "autocomplete-list");
+			a.setAttribute("class", "autocomplete-items");
+			this.parentNode.appendChild(a);
+			for (i = 0; i < arr.length; i++) {
+				if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+					b = document.createElement("DIV");
+					b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+					b.innerHTML += arr[i].substr(val.length);
+					b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+					b.addEventListener("click", function(e) {
+							inp.value = this.getElementsByTagName("input")[0].value;
+							// closeAllLists();
+					});
+					a.appendChild(b);
+					// if(i >=5){
+					// 	break
+					// }
+				}
+
+			}
+	});
+	
+	inp.addEventListener("keydown", function(e) {
+			var x = document.getElementById(this.id + "autocomplete-list");
+			if (x) x = x.getElementsByTagName("div");
+			if (e.keyCode == 40) {
+				currentFocus++;
+				addActive(x);
+			} else if (e.keyCode == 38) { //up
+				currentFocus--;
+				addActive(x);
+			} else if (e.keyCode == 13) {
+				e.preventDefault();
+				if (currentFocus > -1) {
+					if (x) x[currentFocus].click();
+				}
+			}
+	});
+
+	function addActive(x) {
+		if (!x) return false;
+		removeActive(x);
+		if (currentFocus >= x.length) currentFocus = 0;
+		if (currentFocus < 0) currentFocus = (x.length - 1);
+		x[currentFocus].classList.add("autocomplete-active");
+	}
+
+	function removeActive(x) {
+		for (var i = 0; i < x.length; i++) {
+			x[i].classList.remove("autocomplete-active");
+		}
+	}
+
+	function closeAllLists(elmnt) {
+		var x = document.getElementsByClassName("autocomplete-items");
+		for (var i = 0; i < x.length; i++) {
+			if (elmnt != x[i] && elmnt != inp) {
+				x[i].parentNode.removeChild(x[i]);
+			}
+		}
+	}
+
+	document.addEventListener("click", function (e) {
+			closeAllLists(e.target);
+	});
+}
 </script>

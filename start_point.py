@@ -41,7 +41,6 @@ app.register_blueprint(doofen.app)
 app.register_blueprint(fund_tracker.app)
 app.register_blueprint(dcf.app)
 
-
 @app.route("/")
 def index():return redirect("/webrep")
 
