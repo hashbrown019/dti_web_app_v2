@@ -139,9 +139,14 @@
 										
 										var img_path = web_safe_decode(res["file_name"]).replaceAll("C:\\fakepath\\","") 
 										var f_format = img_path.split(".")[img_path.split(".").length-1]
-										if(f_format in ['jpeg','jpg','gif','png']){
+										println("f_format == "+ f_format)
+										if(['jpeg','jpg','gif','png'].indexOf(f_format)!=-1 ){
 											$ID("img_").src = "/webrep/article/get_img/"+ img_path
-										}else{
+										}
+										else if(f_format =="" || f_format ==" " || f_format ==undefined){
+											$ID("img_").src = "../../static/img/banner.png"
+										}
+										else{
 											$ID("media_container").innerHTML = (`
 												<video muted onloadstart ="this.play()" controls class="img_class vid_class rounded-2 w-100 article-img" src="/webrep/article/get_img/`+img_path+`">
 												</video>

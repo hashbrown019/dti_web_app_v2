@@ -5,57 +5,63 @@
 		<p class="display-3 newsfont">News & Stories</p>	
 	</div>
 	<div class="container flex-grow-1 col-sm-8 mt-3 mb-5">
-		<form class="searchbar d-flex mb-5" role="search">
-			<input class="form-control form-control-lg me-2 rounded-pill border border-secondary border-2 mb-5" type="search" placeholder="Search" aria-label="Search" onkeyup="search_article(this.value)">
+		<form class="searchbar d-flex mb-2" role="search">
+			<input class="form-control form-control-lg me-2 rounded-pill border border-secondary border-2" type="search" placeholder="Search" aria-label="Search" onkeyup="search_article(this.value)">
 			<!--<button class="btn btn-dark rounded-5 rounded-pill" type="submit">Search</button>-->
 		</form>
+		<span id="result" class="mt-5 ms-4"></span>
 	</div>
 	<div class="  mb-3 mt-5 ">
 		<span id="title_search" href="#" class="display-5">Latest News</span>
 	</div>
-	<div class=" mt-5 pb-5 border" style="max-height: 800px;">
-		<div class=" row g-2 g-lg-4 overflow-auto " style="max-height:800px;">
 
-			<div id="res_res_no" class="row row-cols-xxl-3 row-cols-xl-2  "></div>
-			<div id="res_res" class="row row-cols-xxl-3 row-cols-xl-2  ">
+
+
+	<div class="mt-5 pb-5 " style=" max-height: 800px;">
+		<div class="container g-2 g-lg-4 overflow-auto " style="max-height:800px;">
+
+			<div id="res_res_no" class=""></div>
+			<div id="res_res" class="row row-cols-xxl-3 row-cols-xl-2 ">
 				{% for post in page_data %}
 					{% if post["status"]=='posted'%}
-					<div class="card border-secondary WEBSAFE news_card  card_{{post['postCategory']}} mb-3 mt-2  shadow-sm bg-body rounded" vdate="{{post['date']}}" style="height: 265px;">
-						<div class="row d-flex">
-							<div class=" ">
-								{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
-								{% if f_format in ['jpeg','jpg','gif','png'] %}
-									<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
-								{% else %}
-									<video muted class="img_class vid_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" src="/webrep/article/get_img/{{post['file_name']}}">
-									</video>
-								{% endif %}
-							</div>
-							<div class="d-block">
-								<div class="container d-flex justify-content-between mt-1" >
-									<div class="" style="height: 20px;">
-										<p class="WEBSAFE xs-text texttheme">{{post['postRcu']}}<span class="WEBSAFE texttheme">&nbsp;&nbsp;{{post['posttype']}}</span></p>												
-									</div>
-									<div class="ms-5 me-5" style="height: 20px;">
+					<div onclick="go_to_post('{{post_id}}')">
+						<div class="col card border-secondary WEBSAFE news_card card_{{post['postCategory']}} mb-2 mt-3 shadow-sm bg-body rounded" vdate="{{post['date']}}" style="height: 265px;">
+							<div class=" row d-flex">
+								<div class=" ">
+									{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
+									{% if f_format|string in ['jpeg','jpg','gif','png'] %}
+										<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+									{% else %}
+										<video muted class="img_class vid_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" src="/webrep/article/get_img/{{post['file_name']}}">
+										</video>
+									{% endif %}
+								</div>
+								<div class="d-block">
+									<div class="container d-flex justify-content-between mt-1" >
+										<div class="" style="height: 20px;">
+											<p class="WEBSAFE xs-text texttheme">{{post['postRcu']}}<span class="WEBSAFE texttheme">&nbsp;&nbsp;{{post['posttype']}}</span></p>												
+										</div>
+										<div class="ms-5 me-5" style="height: 20px;">
 
+										</div>
+										<div class=" " style="height: 20px;">
+											<p class="WEBSAFE xs-text texttheme ">{{post['date']}}</p>												
+										</div>
 									</div>
-									<div class=" " style="height: 20px;">
-										<p class="WEBSAFE xs-text texttheme ">{{post['date']}}</p>												
+									<div class="ms-2 mt-1" style="width: 380px;">
+										<a class="WEBSAFE mytext-truncate texttheme fs-4 fw-bolder lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}</a>
 									</div>
+									<div class="ms-2 text-secondary mt-2 "  style="height:50px; width: 300px;">
+										<p class="WEBSAFE small mytext-truncate lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{post['postdescription']}}</p>
+									</div>
+									<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postContent']}}</p>	
+									<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postCategory']}}</p>	
+									<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['file_name']}}</p>	
+									<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postcaption']}}</p>	
+									<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['posttags']}}</p>	
+									<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postContent']}}</p>	
+									<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postRcu']}}</p>	
 								</div>
-								<div class="ms-2 mt-1" style="width: 350px;">
-									<a class="WEBSAFE mytext-truncate stretched-link texttheme fs-4 fw-bolder lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}</a>
-								</div>
-								<div class="ms-2 text-secondary mt-2 "  style="height:50px; width: 300px;">
-									<p class="WEBSAFE small mytext-truncate lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{post['postdescription']}}</p>
-								</div>
-								<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postContent']}}</p>	
-								<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postCategory']}}</p>	
-								<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['file_name']}}</p>	
-								<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postcaption']}}</p>	
-								<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['posttags']}}</p>	
-								<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postContent']}}</p>	
-								<p class="WEBSAFE xs-text texttheme " style="display:none">{{post['postRcu']}}</p>	
 							</div>
 						</div>
 					</div>
@@ -65,6 +71,9 @@
 		</div>
 	</div>
 </div>
+
+
+
 <script type="text/javascript">
 	let search_res = 0
 	function search_article(val){
@@ -90,10 +99,10 @@
 			}
 		}
 		if(search_res==0){
-			$ID('res_res_no').innerHTML = "No results found for <i>"+ val + "</i>"
+			$ID('result').innerHTML = "No results found for <i>"+ val + "</i>"
 		}
 		else{
-			$ID('res_res_no').innerHTML = "Showing "+search_res+" results for keywords <i>"+ val + "</i>"
+			$ID('result').innerHTML = "Showing "+search_res+" results for keywords <i>"+ val + "</i>"
 		}
 		println(search_res)
 		search_res = 0
