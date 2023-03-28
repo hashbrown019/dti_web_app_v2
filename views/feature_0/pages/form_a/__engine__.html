@@ -1,0 +1,84 @@
+<div id="form_a_forms_modal_container" style="display">
+
+	<div class="x-container x-row">
+		<h3 class="x-text-teal"><b id="sub_form_title">Form Title Loading</b></h3>
+	</div>
+	<div id="form_holder" class="x-container x-row" style="overflow-y:scroll;max-height: 60vh;">
+		<h2 class="x-text-grey fa-fading">Loading... </h2>
+	</div>
+	<div class="x-container x-row">
+		<button id="prev_btn_form_a" class="x-btn x-blue x-round-large x-left" onclick="prev_form()"><span class="fa fa-arrow-left"></span> Prev</button>
+		<button id="next_btn_form_a" class="x-btn x-blue x-round-large x-right" onclick="next_form()">Next <span class="fa fa-arrow-right"></span></button>
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+	var form_a_page = 0
+	let form_page_holder = undefined
+
+	$onload(function(){
+		form_page_holder=$ID("form_a_forms_modal_container").innerHTML;
+		$ID("form_a_forms_modal_container").innerHTML = "";
+	})
+
+	$onload(form_a_forms)
+
+	function form_a_forms(){
+		var form_a_dialog_container = $dialog({
+			title : "Farmer Profile Forms",
+			subtitle : "THe forms below are the sub-forms for Profiling Form A (Farmers Profile)",
+			content : form_page_holder,
+			footer_content : "sample footer",
+			buttons : ['Save','Cancel'],
+			buttons_actions :[save_form]
+		})
+		// form_a_dialog_container.dialog.style.width = "80vw"
+		form_a_dialog_container.show()
+		load_form(form_a_page)
+	}
+
+	function load_form(s_form){
+		if(s_form==0){$ID('prev_btn_form_a').style.display="none"}
+		else{$ID('prev_btn_form_a').style.display="block"}
+		if(form_a_page==FORM_A_LS.length-1){$ID('next_btn_form_a').style.display="none"}
+		else{$ID('next_btn_form_a').style.display="block"}
+
+		$ID('sub_form_title').innerText = FORM_A_LS[s_form].label
+		$ID("form_holder").innerHTML = `<h3 class="x-text-teal"><b id="sub_form_title">Form Title Loading</b></h3>`
+		$send({
+			action : "/form_a/get_sub_form/"+FORM_A_LS[s_form].file,
+			func : function(res){
+				$ID("form_holder").innerHTML = res
+				$("#form_holder").animate({ scrollTop: 0 }, "fast");
+			}
+		})
+	}
+
+	function save_form(){
+	}
+
+	function next_form(){
+		if(form_a_page!=FORM_A_LS.length-1){form_a_page+=1}
+		load_form(form_a_page)
+	}
+
+	function prev_form(){
+		if(form_a_page!=0){form_a_page-=1}
+		load_form(form_a_page)
+	}
+
+	// let FORM_A_LS = [
+	// 	{"file":"profile" , "label":"Farmer Basic Info" },
+	// 	{"file":"add_farm" , "label":"Farm Information" },
+	// 	{"file":"hh_profile" , "label":"Household Profiles" },
+	// 	{"file":"prod_cost" , "label":"Production Cost" },
+	// 	{"file":"workers_laborers" , "label":"Farm Workers and Labors" },
+	// 	{"file":"post_harvest" , "label":"Post Harvest" },
+	// 	{"file":"marketing_sales" , "label":"Marketing/Sales Distribution Channels" },
+	// 	{"file":"access_financial" , "label":"Access to Financial Services and Products" },
+	// 	{"file":"feedback" , "label":"Industry Feedback" },
+	// ]
+
+</script>

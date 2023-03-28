@@ -69,8 +69,6 @@ class _main:
 	def getsesh():
 		return session["USER_DATA"][0]
 
-
-
 	@app.route("/notification/web_safe_encode/<strs>",methods=["POST","GET"])
 	def web_safe_encode(strs):
 		return inbound.web_safe_encode(strs)
