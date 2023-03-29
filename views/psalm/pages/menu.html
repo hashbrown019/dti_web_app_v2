@@ -189,11 +189,13 @@
           {{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
         </span>
         <div id="button-container" style="display: flex; gap: 10px;">
+          {% if(user_data['job']=="Super Admin"): %}
           <button  data-toggle="modal" data-target="#usermang" class="userbtn">
             <i class="fa-solid fa-user"></i>
             User Management
             <span class="round"></span>
           </button>
+          {%endif%}
           <button onclick="location.href='/logout';" class="danger-button">
             <i class="fa-solid fa-right-from-bracket"></i>
             Logout
