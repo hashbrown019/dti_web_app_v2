@@ -115,6 +115,8 @@ def viewform1(viewform):
 def dcf_spreadsheet():
     return render_template("dcf_spreadsheet.html",user_data=session["USER_DATA"][0])
 
+#INSERT DATA -------------------------------------------------------
+
 @app.route('/insert_form4', methods = ['POST'])
 def insert_form4():
     insertData4.insert_form4(request)
@@ -161,11 +163,12 @@ def insert_form10():
     insertData10.insert_form10(request)
     return redirect("/dcf/form10")
 
-
 @app.route('/insert_form11', methods = ['POST'])
 def insert_form11():
     insertData11.insert_form11(request)
     return redirect("/dcf/form11")
+
+#-------------------------------------------------------
 
 #DELETE ROW DATA -------------------------------------------------------
 
