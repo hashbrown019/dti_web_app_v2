@@ -186,41 +186,45 @@ class _main:
 	def feature_0_get_farmer_data_a1():
 		sql_mobile = '''
 			SELECT 
-				`id` as 'db_id',
-				`f_name`,
-				`m_name`,
-				`l_name`,
-				`ext_name`,
-				`farmer_sex`,
-				`farmer_primary_crop`,
-				`farmer_fo_name_rapid`,
-				`addr_region`,
-				`addr_prov`,
-				`addr_city`,
-				`farmer_dip_ref`,
-				`farmer_code` as 'reference'
+				`form_a_farmer_profiles`.`id` as 'db_id',
+				`users`.`name` as 'inputed_by',
+				`form_a_farmer_profiles`.`f_name`,
+				`form_a_farmer_profiles`.`m_name`,
+				`form_a_farmer_profiles`.`l_name`,
+				`form_a_farmer_profiles`.`ext_name`,
+				`form_a_farmer_profiles`.`farmer_sex`,
+				`form_a_farmer_profiles`.`farmer_primary_crop`,
+				`form_a_farmer_profiles`.`farmer_fo_name_rapid`,
+				`form_a_farmer_profiles`.`addr_region`,
+				`form_a_farmer_profiles`.`addr_prov`,
+				`form_a_farmer_profiles`.`addr_city`,
+				`form_a_farmer_profiles`.`farmer_dip_ref`,
+				`form_a_farmer_profiles`.`farmer_code` as 'reference'
 				-- `farmer_head_of_house`,
 				-- `farmer_civil_status`,
-			FROM `form_a_farmer_profiles` {} ;'''.format(Filter.position_data_filter())
+			FROM `form_a_farmer_profiles`
+			INNER JOIN `users` ON `form_a_farmer_profiles`.`USER_ID` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 
 		sql_excel = '''
 			SELECT 
-				`id` as 'db_id',
-				`frmer_prof_@_basic_Info_@_First_name` as `f_name`,
-				`frmer_prof_@_basic_Info_@_Middle_name` as `m_name`,
-				`frmer_prof_@_basic_Info_@_Last_name` as `l_name`,
-				`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,
-				`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,
-				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,
-				`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,
-				`frmer_prof_@_frmer_addr_@_region` as `addr_region`,
-				`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
-				`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
-				`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
-				`file_name` as 'reference'
+				`excel_import_form_a`.`id` as 'db_id',
+				`users`.`name` as 'inputed_by',
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_First_name` as `f_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Middle_name` as `m_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Last_name` as `l_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_region` as `addr_region`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
+				`excel_import_form_a`.`file_name` as 'reference'
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
-			FROM `excel_import_form_a` {} ;'''.format(Filter.position_data_filter())
+			FROM `excel_import_form_a`
+			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		all_farmer_small_data = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False)
 		random.shuffle(all_farmer_small_data)
 		return jsonify(all_farmer_small_data)
