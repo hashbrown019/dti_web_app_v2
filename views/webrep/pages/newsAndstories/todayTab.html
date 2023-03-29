@@ -4,8 +4,8 @@
 	<div class=" row ">
 
 		<div class="col shadow-sm p-3 bg-body rounded-1 ">
-			<div class=" " style="display:block;" id="">
-				<div class="container m-1 mb-3">
+			<div class="d-flex row border justify-content-between" style="display:block;" id="">
+				<div class="container col-7 m-1 mb-3 border">
 					<a class="fs-2 dropdown-toggle texttheme" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="today">All</a>
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" type="button" id="All" onclick="clicked(this)">All</a></li>
@@ -13,6 +13,9 @@
 						<li><a class="dropdown-item" type="button" id="thisweek" onclick="clicked(this)">Less than a week</a></li>
 						<li><a class="dropdown-item" type="button" id="thismonth" onclick="clicked(this)">This month</a></li>
 					</ul>				
+				</div>
+				<div class="border col-4 d-flex align-items-center">
+					<input class="form-control form-control-sm me-2 rounded-pill border border-success border-1" type="search" placeholder="Search" aria-label="Search" onkeyup="search_article(this.value)">
 				</div>
 			</div>
 			<div class=" row row-cols-xxl-3 row-cols-xl-2 ">
