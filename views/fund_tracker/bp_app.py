@@ -32,12 +32,21 @@ def dashboard():
 @app.route("/fundtracker/submit_entry_ft_main",methods = ["POST"])
 def submit_entry_ft_main():
 	form_data = request.form
-	_key = ""; _val=""
-	for key in form_data:
-		print(key+" : "+form_data[key])
-		_key += ",`"+key+"`"
-		_val += ",'"+form_data[key]+"'"
-	sql = ("INSERT INTO `{}` ({}) VALUES ({})".format("ft_main",_key[1:],_val[1:]))
+	_key = ""; _val="";args=""
+
+	is_exist = len(rapid_mysql.select("SELECT * FROM `ft_main` WHERE `id` ='{}' ;".format(request.form['id'])))
+	if(is_exist==0):
+		for key in form_data:
+			print(key+" : "+form_data[key])
+			_key += ",`"+key+"`"
+			_val += ",'"+form_data[key]+"'"
+		sql = ("INSERT INTO `{}` ({}) VALUES ({})".format("ft_main",_key[1:],_val[1:]))
+	else:
+		print("Editing")
+		for datum in form_data:
+			args += ",`{}`='{}'".format(datum,form_data[datum])
+		sql = "UPDATE `ft_main` SET  {} WHERE `id`='{}';".format(args[1:],request.form['id'])
+	
 	last_row_id = rapid_mysql.do(sql)
 	return {"msg":"done","last_row_id":last_row_id}
 	# return render_template('ft_index.html',USER_DATA=session["USER_DATA"][0])
