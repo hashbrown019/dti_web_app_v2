@@ -179,24 +179,30 @@
       <div class="search"></div>
     </div>
   </div>
-  <div class=" text-white sl-primary" style=" position: absolute; right: 0; max-width: 18rem; padding: 1px;height: auto;border-radius: 0px 0px 0px 0px;  ">
+  <div class=" text-white sl-primary"style="position: absolute; right: 0; max-width: 22rem; padding: 1px; height: auto; border-radius: 0px 0px 0px 0px;">
     <!-- <div class="card-header">{{user_data['name']}}</div> -->
     <div class="card-body">
       <!-- <h5 class="card-title">Primary card title</h5> -->
-      <a data-toggle="modal" data-target="#usermang" class="btn btn-md ">
+      <a class="btn btn-md ">
         <span class="ms-start text-white">
           <i><img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;"></i> 
           {{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
         </span>
-        <div id="button-container">
+        <div id="button-container" style="display: flex; gap: 10px;">
+          <button  data-toggle="modal" data-target="#usermang" class="userbtn">
+            <i class="fa-solid fa-user"></i>
+            User Management
+            <span class="round"></span>
+          </button>
           <button onclick="location.href='/logout';" class="danger-button">
+            <i class="fa-solid fa-right-from-bracket"></i>
             Logout
             <span class="round"></span>
           </button>
         </div>
       </a>
     </div>
-  </div>
+</div>
 
   
   <div class="container">
