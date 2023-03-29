@@ -1,89 +1,32 @@
 <!-- Options Navbar -->
-<nav class="container navbar bg-light shadow-sm p-3 bg-body rounded">
-	<div class="container-fluid">
+	<nav class="container navbar bg-light shadow-sm p-3 bg-body rounded">
+	  <div class="container-fluid">
 		<div class="dropdown d-flex ">
 			<a class="dropdown-toggle me-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="color: #1F4F5A !important;">Upload files</a>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" type="button"  href="/rapid/admin/document.html">Document</a></li>
-				<li><a class="dropdown-item" type="button"  href="/rapid/admin/multimedia.html" href="#">Multimedia</a></li>
-				<li><a class="dropdown-item" type="button"  href="/rapid/admin/publication.html" href="#">Publication</a></li>
-			</ul>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" type="button"  href="/rapid/admin/document.html">Document</a></li>
+					<li><a class="dropdown-item" type="button"  href="/rapid/admin/multimedia.html" href="#">Multimedia</a></li>
+					<li><a class="dropdown-item" type="button"  href="/rapid/admin/publication.html" href="#">Publication</a></li>
+				</ul>
 			<a class=" me-4" style="color: #1F4F5A !important;" href="/rapid/articles/createPost.html" role="button">Create Post</a>
-
+				
 			<a class="me-4 dropdown-toggle" id="search" onclick="searchclicked()" style="color: #1F4F5A !important;" role="button">Browse Files</a>				
-			<script>
-				function searchclicked() {
-					var x = document.getElementById("searchdiv");
-					if (x.style.display === "none") {
+				<script>
+					function searchclicked() {
+					  var x = document.getElementById("searchdiv");
+					  if (x.style.display === "none") {
 						x.style.display = "block";
-					} else {
+					  } else {
 						x.style.display = "none";
+					  }
 					}
-				}
-			</script>
-		</div>
-
-		<div class="d-flex">
-
-			<a class="me-4 active"  data-bs-toggle="offcanvas" href="#notifications" role="button" aria-controls="notifications" style="color: #1F4F5A !important;" href=" " role="button">Notifications</a>				
-			<a id="user_man" class="me-4 active"  data-bs-toggle="modal" data-bs-target="#usermang" style="color: #1F4F5A !important;" href=" " role="button" onclick="get_user_data()">Users Management</a>
-
-
-			<div class="offcanvas offcanvas-end" tabindex="-1" id="notifications" aria-labelledby="notificationsLabel">
-				<div class="offcanvas-header">
-					<h5 class="offcanvas-title" id="notificationsLabel">Notifications</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-				</div>
-
-				<div></div>
-
+				</script>
 			</div>
-{% include 'superadmin/user_management_modal.html' %}
 
-		</div>
+			<div class="d-flex">
+				<!-- <a class="me-4 active" style="color: #1F4F5A !important;" href="#" role="button"><u>Files</u></a> -->
+				<!-- <a class="" style="color: #1F4F5A !important;" href="#" role="button">All Files</a> -->
+			</div>
 
-	</div>
-</nav >
-<script type="text/javascript">
-	// $onload(function(){
-	// 	$ID("user_man").click()
-	// 	get_user_data()
-	// })
-
-
-	function get_user_data(){
-		$send({
-			action : "/api/get_user_data/all",
-			func : function(r){
-				var resp = JSON.parse(r)
-				var ls_str = ""
-				for (var i = 0; i < resp.length; i++) {
-					
-					ls_str += (`
-						<tr onclick="set_user_datafield(`+resp[i]['id']+`)">
-							<th scope="row" class="texttheme">`+resp[i]['id']+`</th>
-							<td class="texttheme">`+resp[i]['name']+`</td>
-						</tr>		
-					`)
-				}
-				$ID('user_list').innerHTML = ls_str
-			}
-		})
-	}
-
-	function set_user_datafield(arr){
-
-		$send({
-			action : "/api/get_user_data/"+arr,
-			func : function(r){
-				var resp = JSON.parse(r)[0]
-				println(resp)
-				var USER_DATA = $CLASS('USER_DATA')
-				for (var i = 0; i < USER_DATA.length; i++) {
-					
-					USER_DATA[i].value = resp[USER_DATA[i].id]
-				}
-			}
-		})
-	}
-</script>
+	  </div>
+	</nav >
