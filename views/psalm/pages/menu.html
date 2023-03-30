@@ -69,6 +69,8 @@
   width: 300px;
   height: 100px;
 }
+
+
 .container2 .search {
   position: absolute;
   margin: auto;
@@ -87,6 +89,11 @@
 .container2 .search:hover {
   cursor: pointer;
 }
+.search{
+  opacity: 80%;
+}
+
+
 .container2 .search::before {
   content: "";
   position: absolute;
@@ -134,7 +141,6 @@
   transition: all 1s;
   opacity: 0;
   z-index: 5;
-  font-weight: bolder;
   letter-spacing: 0.1em;
 }
 .container2 input:hover {
@@ -190,6 +196,7 @@
         </span>
         <div id="button-container" style="display: flex; gap: 10px;">
           {% if(user_data['job']=="Super Admin"): %}
+          
           <button  data-toggle="modal" data-target="#usermang" class="userbtn">
             <i class="fa-solid fa-user"></i>
             User Management
