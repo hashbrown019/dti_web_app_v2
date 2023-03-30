@@ -1,62 +1,62 @@
-<table class="display" id="table_id" style="width:100%">
-	<thead class="x-rapid-teal-heavy" style="width:100%">
+<table class="display" id="table_id" style="width:50vh%">
+	<thead class="x-rapid-teal-heavy">
 		<tr class="">
-			<th>
+			<td>
 				ID<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="0" />
-			</th>
-			<th>
+			</td>
+			<td>
 				Inputed By<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
-			</th>
-			<th>
+			</td>
+			<td>
 				Farmer's First Name<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
-			</th>
-			<th>
+			</td>
+			<td>
 				Farmer's Middle Name<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="2" />
-			</th>
-			<th>
+			</td>
+			<td>
 				Farmer's Last Name<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index=3 />
-			</th>
-			<th>
+			</td>
+			<td>
 				Farmer's Ext Name<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="4" />
-			</th>
-			<th>
+			</td>
+			<td>
 				Farmer's Sex<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="5" />
-			</th>
-			<th>
+			</td>
+			<td>
 				Primary Crop<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index=6 />
-			</th>
-			<th>
+			</td>
+			<td>
 				Farmers Org<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index=7 />
-			</th>
-			<th>
+			</td>
+			<td>
 				Region<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index=8 />
-			</th>
-			<th>
+			</td>
+			<td>
 				Province<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="9" />
-			</th>
-			<th>
+			</td>
+			<td>
 				City/Municipality<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="10" />
-			</th>
-			<th>
+			</td>
+			<td>
 				DIP Ref<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="11" />
-			</th>
-			<th>
+			</td>
+			<td>
 				Reference Code<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="12" />
-			</th>
+			</td>
 		</tr>
 	</thead>
 	<tbody id="list_farmers" style="">
@@ -113,10 +113,26 @@
 	function create_table (data_){
 		println(" -- Creating Data Table")
 		TABLE = new DataTable('#table_id', {
-			"scrollY":'60vh',
+			// "scrollY":'60vh',
 			"scrollX":true,
-			"data" : data_
+			"data" : data_,
+			"scrollCollapse": true,
+			"autoWidth": true,
+			"columnDefs": [
+				{
+					target: 0,
+					visible: false,
+					searchable: false,
+				},
+				{
+					target: 5,
+					visible: false,
+					searchable: false,
+				}
+			]
 		});
+		TABLE.columns.width = "1%"
+		TABLE.columns.adjust().draw();
 		// TABLE.load(data_)
 		// TABLE.ajax.reload()
 		set_search_field()
@@ -140,8 +156,16 @@
 			println( data );
 		})
 
+		// $CLASS("dataTables_scroll")[0].style.width="80vh"
+		var tds = $(".dataTables_scroll td")
+		for (var i = 0; i < tds.length; i++) {
+			tds[i].style.width = "10px"
+		}
+		TABLE.columns.adjust().draw();
+
 	}
 	function show_t(){
 		// showing_table_ls_farmer()
 	}
+
 </script>
