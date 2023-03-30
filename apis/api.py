@@ -44,7 +44,10 @@ class data_handlers:
 		else:
 			sql = "SELECT `id`,`name`,`address`,`email`,`job`,`mobile`,`pcu`,`rcu`,`username`,`until`,`status` FROM `users` WHERE `id`='{}';".format(ids)
 		_user = rapid_mysql.select(sql)
-		return _user
+		if(data_handlers.is_on_session()):
+			return _user
+		else:
+			return [{"id":"0","name":"no_data"}]
 
 # def get_all_uploaded_excel_data_heads():
 # 	excel_f_a_heads = c.RECORDS+"/settings/db_sql_excel_form_a.head"

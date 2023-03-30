@@ -139,6 +139,8 @@ def download_file(filename_):
 	return send_file(path, as_attachment=True)
 
 
+# =======================================
+
 def position_data_filter():
 	_filter = "WHERE 1 "
 	JOB = session["USER_DATA"][0]["job"].lower()
@@ -171,3 +173,4 @@ def clean(dict_):
 		new_dict_[KEY] = new_dict_[KEY]+dict_[key]
 		
 	return json.loads(json.dumps(new_dict_))
+
