@@ -74,7 +74,7 @@
 				<form class=" row g-3 needs-validation texttheme" id="form_for_createPost1" novalidate>
 					<div class="col-md-12">
 						<label for="postAuthor" class="form-label small fw-bolder">Author name</label>
-						<input class="article_form form-control" id="postAuthor" rows="3" placeholder=""></input>
+						<input class="article_form form-control" id="postAuthor" value="{{user_data['name']}}" rows="3" placeholder=""></input>
 						<div class="invalid-feedback">
 							Please provide an Authur name.
 						</div>
@@ -120,19 +120,21 @@
 						</div>
 					</div>
 					<div class="col-12">
-						<label for="postGA" class="form-label small fw-bolder">General Access</label>
-						<select class="article_form form-select" id="postGA" required>
-							<option>Only me</option>
-							<option>Public</option>
-							<option>Administrators</option>
-						</select>
-						<div class="invalid-feedback">
-							Please select a General Access.
+						<div style="display:none">
+							<label for="postGA" class="form-label small fw-bolder">General Access</label>
+							<select class="article_form form-select" id="postGA" required>
+								<option>Only me</option>
+								<option selected>Public</option>
+								<option>Administrators</option>
+							</select>
+							<div class="invalid-feedback">
+								Please select a General Access.
+							</div>
 						</div>
 					</div>
-					<div>
-							<input class="article_form form-check-input" type="checkbox" id="sameName" value="" aria-label="sameName" checked>
-							<span class="small fw-lighter ">check if author & publisher has the same name?</span>
+					<div style="display:none">8
+						<input class="article_form form-check-input" type="checkbox" id="sameName" value="" aria-label="sameName" checked>
+						<span class="small fw-lighter ">check if author & publisher has the same name?</span>
 					</div>
 				</form>
 			</div>

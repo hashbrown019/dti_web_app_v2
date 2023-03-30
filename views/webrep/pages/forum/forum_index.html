@@ -32,181 +32,211 @@
 		<title>RAPID Growth</title>
 	</head>
 
-<body>
+	<body>
 
-<!-- NAVBAR -->
-<nav class=" navbar navbar-expand-lg fixed-top bg-white">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand d-flex ms-5" href="#">
-   	 <img src="../../static/img/mis_2023_v2.svg" width="50" height="50" class="d-inline-block align-top small" alt="">
-   	 <span class="align-self-center ms-2 small">forum</span>
- 	</a>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Topic</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Participants</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Create Topic</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
-
-
-<!-- MIS FUROM BANNER -->
-	<div class="position-relative">
-		<div class="cover-item" >
-			<div class="d-block w-100 bgfix" alt="..." style="background-image: url('/static/webrepstatic/img/rapidimage/forum.jpg'); filter: brightness(0.8)!important"></div>
+	<!-- NAVBAR -->
+	<nav class=" navbar navbar-expand-lg fixed-top bg-white">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a class="navbar-brand d-flex ms-5" href="#">
+			 <img src="../../static/img/mis_2023_v2.svg" width="50" height="50" class="d-inline-block align-top small" alt="">
+			 <span class="align-self-center ms-2 small">forum</span>
+		</a>
+			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+				<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Topic</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Participants</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Create Topic</a>
+					</li>
+				</ul>
+				<form class="d-flex" role="search">
+					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success" type="submit">Search</button>
+				</form>
+			</div>
 		</div>
-		<div class="container ">
-			<div class="col-sm position-absolute top-50 start-50 translate-middle mb-5 text-center">
-				 <img src="../../static/img/mis_2023_v2_white.svg" width="500" height="500" class="" alt="">
-				<!-- <p class="col-sm fst-italic text-white text-start mt-5">Forums</p>						 -->
-			 </div>
+	</nav>
+
+
+	<!-- MIS FUROM BANNER -->
+		<div class="position-relative">
+			<div class="cover-item" >
+				<div class="d-block w-100 bgfix" alt="..." style="background-image: url('/static/webrepstatic/img/rapidimage/forum.jpg'); filter: brightness(0.8)!important"></div>
+			</div>
+			<div class="container ">
+				<div class="col-sm position-absolute top-50 start-50 translate-middle mb-5 text-center">
+					 <img src="../../static/img/mis_2023_v2_white.svg" width="500" height="500" class="" alt="">
+					<!-- <p class="col-sm fst-italic text-white text-start mt-5">Forums</p>						 -->
+				 </div>
+			</div>
 		</div>
-	</div>
 
 
-<!-- Topics Card -->
+	<!-- Topics Card -->
 
-<div class="container mb-5 border-bottom border-light">
-	<div class="mt-5 texttheme">
-		<h4>Topics</h4>
-	</div>
-	<div class="row row-cols-xxl-4 mt-3">
-		<div class="col-12 mb-4">
-			<div class="card border-success">
-				<div class="row d-flex">
-					<div class="">
-						<img src="/static/webrepstatic/img/rapidimage/cover2.jpg" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+	<div class="container mb-5 border-bottom border-light">
+		<div class="mt-5 texttheme">
+			<h4>Topics</h4>
+		</div>
+		<div class="row row-cols-xxl-4 mt-3">
+			{% for forum in forum_ls %}
+			{% set f_id = forum['id'] %}
+			<div class="col-12 mb-4">
+				<!-- ========== -->
+				<div class="card border-success" onclick="goto('/forum_talks/{{f_id}}')">
+					<div class="row d-flex">
+						<!-- <div class="">
+							<img src="/static/webrepstatic/img/rapidimage/cover2.jpg" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+						</div> -->
+						<div class="d-block">
+							<div class="container d-flex justify-content-between mt-1" >
+								<div class="" style="height: 20px;">
+									<!-- <p class="xs-text texttheme">BARMM</p> -->
+								</div>
+								<div class="ms-5 me-5" style="height: 20px;">
+									
+								</div>
+								<div class=" " style="height: 20px;">
+									<p class="xs-text texttheme ">{{forum['date_created']}}</p>
+								</div>
+							</div>
+							<div class="ms-2 mt-1 " style="width: 280px;">
+								<a class="mytext-truncate stretched-link texttheme fs-4 fw-bolder lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" href="#" type="button">{{forum['topic']}}</a>
+							</div>
+							<div class="ms-2 text-secondary mt-1 "  style="height:20px; width: 300px;">
+								<p class="xs-text mytext-truncate lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">By {{forum['uploader']}}</p>
+							</div>
+						</div>
 					</div>
-					<div class="d-block">
-						<div class="container d-flex justify-content-between mt-1" >
+				</div>
+				<!-- ========== -->
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<!-- Participants -->
+
+	<div class="container">
+		<div class="mt-5 texttheme">
+			<h4>Participants</h4>
+		</div>
+		<div class="row row-cols-lg-3 ">
+			<div class="col mb-4">
+				<div class="card border-success">
+					<div class=" d-flex">
+						<div class="">
+							<img src="https://cdn.vectorstock.com/i/preview-1x/54/17/person-gray-photo-placeholder-man-vector-24005417.jpg" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+						</div>
+						<div class="d-block ">
+							
+							<div class="mt-2 " style="height: 20px;">
+								<p class="xs-text texttheme ">Online 2 hours ago</p>												
+							</div>
+							<div class=" mt-1" style="width: 250px;">
+								<a class="text-truncate stretched-link texttheme  fw-bolder fs-5" href="#" type="button">Doofen Smurf</a>
+							</div>
+							<div class="  " style="height:25px; width: 200px;">
+								<p class="small text-truncate">Project Manager</p>
+							</div>
 							<div class="" style="height: 20px;">
-								<p class="xs-text texttheme">BARMM</p>												
-							</div>
-							<div class="ms-5 me-5" style="height: 20px;">
-								
-							</div>
-							<div class=" " style="height: 20px;">
-								<p class="xs-text texttheme ">Jan. 28 2023</p>												
+								<p class="xs-text texttheme">RCU XIII</p>												
 							</div>
 						</div>
-						<div class="ms-2 mt-1 " style="width: 280px;">
-							<a class="mytext-truncate stretched-link texttheme fs-4 fw-bolder lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" href="#" type="button">This is an example Discussion for coffee</a>
-						</div>
-						<div class="ms-2 text-secondary mt-1 "  style="height:20px; width: 300px;">
-							<p class="xs-text mytext-truncate lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Posted by Christian Born 1 year ago</p>
-						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<!-- Participants -->
+	<!-- Create Topic Modal -->
+	<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalToggleLabel">Create Discussion</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input class="FORUM_DATA" id="created_by" value="{{USER_DATA['id']}}" hidden>
+					<input class="FORUM_DATA" id="id" hidden>
 
-<div class="container">
-	<div class="mt-5 texttheme">
-		<h4>Participants</h4>
-	</div>
-	<div class="row row-cols-lg-3 ">
-		<div class="col mb-4">
-			<div class="card border-success">
-				<div class=" d-flex">
-					<div class="">
-						<img src="https://cdn.vectorstock.com/i/preview-1x/54/17/person-gray-photo-placeholder-man-vector-24005417.jpg" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
-					</div>
-					<div class="d-block ">
-						
-						<div class="mt-2 " style="height: 20px;">
-							<p class="xs-text texttheme ">Online 2 hours ago</p>												
-						</div>
-						<div class=" mt-1" style="width: 250px;">
-							<a class="text-truncate stretched-link texttheme  fw-bolder fs-5" href="#" type="button">Doofen Smurf</a>
-						</div>
-						<div class="  " style="height:25px; width: 200px;">
-							<p class="small text-truncate">Project Manager</p>
-						</div>
-						<div class="" style="height: 20px;">
-							<p class="xs-text texttheme">RCU XIII</p>												
-						</div>
-					</div>
+					<label for="topic" class="form-label texttheme fontBold mt-2">Topic</label>
+					<input class="FORUM_DATA form-control"  id="topic" placeholder="Type your discussion here">
+					
+					<label for="description" class="form-label texttheme fontBold mt-2">Description</label>
+					<textarea class="FORUM_DATA form-control" id="description" rows="3"></textarea>
 
+					<label for="commodity" class="form-label texttheme fontBold mt-2">Commodity</label>
+					<select id="commodity" class="FORUM_DATA form-select" aria-label="Default select example">
+						<option selected>All</option>
+						<option></option>
+						<option></option>
+						<option></option>
+					</select>
+
+					<!-- <label for="formFile" class="form-label texttheme fontBold mt-2">Select Photo</label>
+					<input class="FORUM_DATA form-control" type="file" id="formFile"> -->
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" onclick="review_topic()">
+						Continue
+					</button>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+	<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Review your Discussion</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<h5>Topic</h5><h3 id="rev_topic"></h3><br>
+					<span>Description</span> : <b id="rev_description"></b><br>
+					<span>Commodity</span> : <b id="rev_commodity"></b><br>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-bs-toggle="modal" onclick="save_topic()">Post</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		let FORUM_DATA_INPUT = {}
+		function review_topic(){
+			var FORUM_DATA_FIELDS = $CLASS("FORUM_DATA")
+			for (var i = 0; i < FORUM_DATA_FIELDS.length; i++) {
+				try{
+					FORUM_DATA_INPUT[FORUM_DATA_FIELDS[i].id] = FORUM_DATA_FIELDS[i].value
+					$ID("rev_"+FORUM_DATA_FIELDS[i].id).innerText = FORUM_DATA_FIELDS[i].value
+				}catch(e){warnprintln(e)}
+			}
+		}
 
-<!-- Create Topic Modal -->
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Create Discussion</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-        <label for="topic" class="form-label texttheme fontBold mt-2">Topic</label>
-		<input class="form-control"  id="topic" placeholder="Type your discussion here">
-		
-		<label for="description" class="form-label texttheme fontBold mt-2">Description</label>
- 		<textarea class="form-control" id="description" rows="3"></textarea>
-
-		<label for="commodity" class="form-label texttheme fontBold mt-2">Commodity</label>
-		<select class="form-select" aria-label="Default select example">
-		  <option value=""></option>
-		  <option value=""></option>
-		  <option value=""></option>
-		  <option value=""></option>
-		</select>
-
-		<label for="formFile" class="form-label texttheme fontBold mt-2">Select Photo</label>
-  		<input class="form-control" type="file" id="formFile">
-
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Continue</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Review your Discussion</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-       
-
-
-
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-toggle="modal">Post</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-</body>
+		function save_topic(){
+			println(FORUM_DATA_INPUT)
+			$send({
+				action : "/forum/save_forum",
+				method : POST,
+				data : $DATA(FORUM_DATA_INPUT),
+				func : function(r){
+					var res = JSON.parse(r)
+					println(res)
+				}
+			})
+		}
+	</script>
+	</body>
 </html>

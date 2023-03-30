@@ -47,13 +47,10 @@
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 			<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="#">Topic</a>
+					<a class="nav-link active" aria-current="page" href="/forum">Topic</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Participants</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Create Topic</a>
 				</li>
 			</ul>
 			<form class="d-flex" role="search">
@@ -67,62 +64,185 @@
 <div class="bg-light" style="min-height:9000px; background-color: #e3ebd5 !important;">
 	<div class="" style="min-height: 150px;"></div>
 	<div class=" container texttheme bg-white pt-5 px-5 pb-5 rounded-2">
-		<h1 class="">This is an example of a RAPID GROWTH PROJECT discussion </h1>			
+		<!-- {{forum}} -->
+		<h1 class="">{{forum['topic']}}</h1>			
 		<div class="container bg-light rounded-2" >
 			<div class="d-flex justify-content-between pt-4 container text-white">
 				<div class="d-flex gap-3">
-					<p class="small">Posted by James Moderato</p>
-					<p class="xs-text align-self-center">2 hours ago</p>
-
+					<p class="small">Posted by {{forum['uploader']}}</p>
+					<p class="xs-text align-self-center">{{forum['date_created']}}</p>
 				</div>
 				<div>
-					<p class="small"><i class="fa-solid fa-eye"></i>&nbsp; 143 people</p>	
+					<p class="small"><i class="fa-solid fa-eye"></i>&nbsp; <b id="num_participants"></b> people</p>	
 				</div>
 				</div>
 				<div class="container">
-					
+					<span id="participants" class="blockquote-footer">
+						
+					</span>
 				</div>
 				<div class="container mt-3 pb-5">
-					<p class="">Lorem ipsum dolor sit amet. Sed ratione accusamus est deserunt expedita vel dolores eaque eos nobis corrupti quo mollitia odio vel explicabo consectetur. Qui quaerat minima qui distinctio quia vel cumque vero et accusantium animi et galisum odio ea quos reprehenderit. Est officiis quia ut pariatur tenetur sit omnis quisquam. Qui aliquid exercitationem qui fugit ratione ut nulla incidunt ea iusto aperiam. 33 quasi quidem qui fugiat praesentium quo iusto cupiditate aut cupiditate dolorum est rerum repellat eum consectetur rerum.
-					Aut dolores eligendi qui libero totam eum itaque sint a corrupti dolore sed veniam veniam sed quia beatae 33 laudantium numquam. Ut eligendi sint ut sint ratione a rerum libero sit eaque eaque aut asperiores accusamus. Cum nulla adipisci ab enim ullam At dicta omnis et autem quisquam ad  </p>
+					<p class="">
+						{{forum['description']}}
+					</p>
 				</div>
 			</div>
 			<div class="container mt-1 d-flex gap-3">
-				<div class="d-flex gap-3">
+				<!-- <div class="d-flex gap-3">
 					<p class="small "><i class="fa-solid fa-thumbs-up" style="color: #81a352;"></i>&nbsp;57 Likes</p>	
-					<!-- <p class="small "><i class="fa-regular fa-bookmark"></i></i>&nbsp;13 Saves</p>	 -->
-
-				</div>
+				</div> -->
 				<div>
-					<p class="small "><i class="fa-solid fa-message"></i>&nbsp;128 comments</p>				
+					<p class="small "><i class="fa-solid fa-message"></i>&nbsp;<b id="com_count"></b> comment/s</p>
 				</div>
 			</div>
-		<!-- Reply -->
-		<div class=" d-flex">
-			<div class="px-2">
-				<i class="fa-solid fa-reply"></i>
+			<!-- Reply -->
+			<div id="reply_container">
+				<div class=" d-flex">
+					<div class="px-2">
+						<i class="fa-solid">Loading. . .</i>
+					</div>
+				</div>
 			</div>
-			<div class="container bg-light rounded-2" >
-				<div class="d-flex justify-content-between pt-4 container text-white">
-					<div class="d-flex gap-3">
-						<p class="small">Replied by Doofen Smurf</p>
-						<p class="xs-text align-self-center">5 minutes ago</p>
-					</div>
-					<div>
-						<p class="small"><i class="fa-solid fa-eye"></i>&nbsp; 143 people</p>	
-					</div>
-					</div>
-					<div class="container">
-						
-					</div>
-					<div class="container pb-3">
-						<p class="">Lorem ipsum dolor sit amet. Sed ratione accusamus est deserunt expedita vel dolores eaque eos nobis corrupti </p>
-					</div>
-				</div>		
-		</div>	
+			<div id="input_rep_container" class="container">
+				<input type="text" id="id" hidden>
+				<input type="text" id="comment" name="comment" class="REPLY_DATA input form-control" placeholder="Input your commnet/Reply">
+				<button type="submit" class="btn btn-primary" onclick="send_comment()">Send</button>
+			</div>
+			<!-- ===== -->
 		</div>
 	</div>	
 </div>
+<script type="text/javascript">
+	function send_comment(){
+		var REPLY_DATA_INP = $DATA({"comment" : $ID("comment").value,"topic_id" : "{{forum['id']}}","comment_by" : "{{USER_DATA['id']}}","id":$ID("id").value})
+		$send({
+			action : "/forum/send_comment",
+			data : REPLY_DATA_INP,
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)
+				$ID("comment").value = ""
+				$ID("id").value = ""
+				load_comments()
+			}
+		})
+	}
 
+	function edit_comment(ids,comm_edt){
+		$ID('input_rep_container').scrollIntoView()
+		$ID("comment").value = comm_edt
+		$ID("id").value = ids
+	}
+
+	$onload(load_comments,function(){
+		window.setInterval(load_comments,5000)
+	})
+	function load_comments(){
+		$send({
+			action : "/forum/get_comment/{{forum['id']}}",
+			func : function(r){
+				var ls_comments = JSON.parse(r)[0]
+				var ls_participants = JSON.parse(r)[1]
+				$ID("num_participants").innerHTML= ls_participants.length
+				$ID("com_count").innerHTML = ls_comments.length
+				var com_cards = ""
+				$ID("reply_container").innerHTML="Loading"
+				for (var i = 0; i < ls_comments.length; i++) {
+					var com = ls_comments[i]
+					var edit_btn = "" ;
+					var rm_conts = "none" ; var com_conts = "block"
+					var commenter = "someone"
+					{% if USER_DATA['job']=="Admin" or USER_DATA['job']=="Super Admin" %}
+					/**/if(true){
+					{% else %}
+					/**/if(com['comment_by']=="{{USER_DATA['id']}}"){
+							commenter = "You"
+					{% endif %}
+						edit_btn = (`
+							<span class='small text-danger' onclick="del_comment('`+com['id']+`')">Delete Comment</span>&nbsp; | &nbsp;
+							<span class='small text-primary' onclick="edit_comment('`+com['id']+`','`+com['comment']+`')">Edit Comment</span>&nbsp; | &nbsp;
+						`)
+					}else{
+						commenter = com['commenter']
+						if(com['edit']=="1"){
+							edit_btn ="<span class='small text-secondary'>Editted</span>"
+						}else{
+							edit_btn =""
+						}
+					}
+
+
+					if(com['removed']=="1"){
+						rm_conts = "<span class='text-danger'> removed a comment</span";
+						com_conts = "";
+					}else{
+						rm_conts = "replied";
+						com_conts = (`
+							<div>
+								<div class="container pb-3">
+									<p class="">`+urlify(com['comment'])+` </p>
+								</div>
+								<div class="container text-end">
+									`+edit_btn+`
+									<span class="small ">
+										<i id="lk_btn" class="fs-5 fa-solid fa-thumbs-up" style="color:red;" onclick="send_com_likes('`+com['id']+`')"></i>
+										&nbsp;`+com['likes']+`
+									</span>
+								</div>
+							</div>
+						`)
+					}
+
+
+					com_cards +=(`
+						<div class=" d-flex">
+							<div class="px-2">
+								<i class="fa-solid fa-reply"></i>
+							</div>
+							<div class="container bg-light rounded-2" >
+								<div class="d-flex justify-content-between pt-4 container text-white">
+									<div class="d-flex gap-3">
+										<p class="small">`+commenter+` `+rm_conts+`</p>
+										<p class="xs-text align-self-center">`+com['date']+`</p>
+									</div>
+								</div>
+								`+com_conts+`
+							</div>
+						</div><br> `)
+				}
+				$ID("reply_container").innerHTML=com_cards
+			}
+		})
+	}
+
+	function del_comment(ids){
+		$send({
+			action : "/forum/delete_comment/"+ids,
+			func : function(r){
+				var res = JSON.parse(r)
+				println(res)
+				load_comments()
+			}
+		})
+	}
+	function send_com_likes(ids){
+		$send({
+			action : "/forum/send_comment_like/"+ids,
+			func : function(r){
+				var res = JSON.parse(r)
+				// println(res)
+			}
+		})
+	}
+
+	function urlify(text) {
+		var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+		return text.replace(urlRegex, function(url) {
+			return '<a href="' + url + '"  target="_blank">' + url + '</a>';
+		})
+		// or alternatively
+		// return text.replace(urlRegex, '<a href="$1">$1</a>')
+	}
+</script>
 </body>
 </html>

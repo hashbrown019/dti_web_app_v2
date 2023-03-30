@@ -6,6 +6,8 @@ import Configurations as c
 from werkzeug.utils import secure_filename
 import os
 
+from datetime import date, datetime
+from modules.Req_Brorn_util import file_from_request
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -18,8 +20,8 @@ class _main:
 
 	def __init__(self, arg):super(_main, self).__init__();self.arg = arg
 
-	app.errorhandler(404)
-	def is_on_session(): return ('USER_DATA' in session)
+	# app.errorhandler(404)
+	# def is_on_session(): return ('USER_DATA' in session)
 
 	# ======================================================================================================
 	@app.route("/webrep",methods=["POST","GET"])
@@ -40,6 +42,10 @@ class _main:
 		return render_template(
 			"home/home.html"
 		)
+	# ===========================================================/
+	# ===========================================================/
+	# ===========================================================/
+	# ===========================================================/
 	# ===========================================================/
 
 	@app.route("/rapid/<segment>/<page>",methods=["POST","GET"])
@@ -63,15 +69,8 @@ class _main:
 		elif(
 			page.lower()=="document.html".lower() or 
 			page.lower()=="multimedia.html".lower() or 
-			page.lower()=="publication.html".lower() or
-			page.lower()=="publication.html".lower()
-			# page.lower()=="about.html".lower() or 
-			# page.lower()=="NewsAndStories.html".lower()or 
-			# page.lower()=="adminKnowledgeCenter.html".lower()or 
-			# page.lower()=="knowledgecenter.html".lower()or 
-			# page.lower()=="scope.html".lower()or 
-			# page.lower()=="news.html".lower()or 
-			# page.lower()=="articles.html".lower()
+			page.lower()=="publication.html".lower()  or
+			page.lower()=="createPost.html".lower()
 			):
 			if(_main.is_on_session()):
 				return render_template(
@@ -102,6 +101,14 @@ class _main:
 			)
 		_main.moderator(segment,page)
 		return render_template("{}/{}".format(segment,page),is_session =_main.is_on_session())
+	# ==================================================================
+	# ==================================================================
+	# ==================================================================
+	# ==================================================================
+	# ==================================================================
+	# ==================================================================
+	# ==================================================================
+	# ==================================================================
 	# ==================================================================
 
 	@app.route("/webrep/check_pass",methods=["POST","GET"])
@@ -167,6 +174,7 @@ class _main:
 
 	@app.route("/webrep/upload_file_webrep",methods=["POST","GET"])
 	def upload_file_webrep():
+		print("  * Article Module")
 		from datetime import date, datetime
 		from modules.Req_Brorn_util import file_from_request
 		FILE_REQ = file_from_request(app)
@@ -178,16 +186,17 @@ class _main:
 		__f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
 		data["file_name"] = __f["file_arr_str"]
 
-		is_exist = len(db.select("SELECT * FROM `webrep_uploads` WHERE `id` ='{}' ;".format(request.form['id'])))
+		is_exist = len(db.select("SELECT * FROM `webrep_articles` WHERE `id` ='{}' ;".format(request.form['id'])))
 		if(is_exist==0):
+			print(" >> Adding Articles")
 			for datum in data:
-				print(datum)
+				# print(datum)
 				key.append("`{}`".format(datum))
 				val.append("'{}'".format(data[datum]))
 			sql = ('''INSERT INTO `webrep_articles` ({},`status`) VALUES ({},'pending')'''.format(", ".join(key),", ".join(val)))
 		
 		else:
-			print("Editing")
+			print(" >> Editing Articles")
 			for datum in data:
 				args += ",`{}`='{}'".format(datum,data[datum])
 			sql = "UPDATE `webrep_articles` SET  {}, `status`='pending' WHERE `id`='{}';".format(args[1:],request.form['id'])
@@ -198,8 +207,7 @@ class _main:
  
 	@app.route("/webrep/upload_file_webrep___",methods=["POST","GET"])
 	def upload_file_webrep___():
-		from datetime import date, datetime
-		from modules.Req_Brorn_util import file_from_request
+		print("  * Upload Module")
 		FILE_REQ = file_from_request(app)
 		data = dict(request.form)
 		key = [];val = [];args=""
@@ -211,19 +219,18 @@ class _main:
 
 		is_exist = len(db.select("SELECT * FROM `webrep_uploads` WHERE `id` ='{}' ;".format(request.form['id'])))
 		if(is_exist==0):
+			print(" >> Adding Uploads")
 			for datum in data:
-				print(datum)
 				key.append("`{}`".format(datum))
 				val.append("'{}'".format(data[datum]))
-			sql = ('''INSERT INTO `webrep_uploads` ({},`status`) VALUES ({},'pending')'''.format(", ".join(key),", ".join(val)))
+			sql = ('''INSERT INTO `webrep_uploads` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
 		
 		else:
-			print("Editing")
+			print(" >> Editing Uploads")
 			for datum in data:
 				args += ",`{}`='{}'".format(datum,data[datum])
 			sql = "UPDATE `webrep_uploads` SET  {}, `status`='pending' WHERE `id`='{}';".format(args[1:],request.form['id'])
 			pass
-		
 		last_row_id = db.do(sql)
 		return jsonify({"last_row_id":last_row_id,"FILES":__f})
  
@@ -251,17 +258,12 @@ class _main:
 		update_del = db.do("UPDATE `{}` SET `status`='posted' WHERE `id`='{}';".format(__table[table],ids))
 		return {"db_info":update_del}
 
-
-
 	@app.route("/webrep/download_file/<table>/<ids>",methods=["POST","GET"])
 	def download_excel(table,ids):
 		__table = {"docs":"webrep_uploads","mul":"webrep_uploads","pub":"webrep_uploads"}
 		res = db.select("SELECT `upload` FROM `{}` WHERE `id`='{}';".format(__table[table],ids))
 		return {"file_to_dl":res[0]['upload']}
 		# return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+file, as_attachment=True,download_name=file)
-
-
-
 
 	@app.route("/webrep/articles/delete/<ids>",methods=["POST","GET"])
 	def delete_article(ids):
@@ -279,10 +281,6 @@ class _main:
 		update_del = db.do("UPDATE `webrep_articles` SET `status`='revise' WHERE `id`='{}';".format(ids))
 		return {"db_info":update_del}
 
-
-
-
-
 	@app.route("/webrep/go_dl_file/<filename>",methods=["POST","GET"])
 	def go_dl_file(filename):
 		return send_file(c.RECORDS+"/objects/webrep/"+filename , as_attachment=True,download_name=filename )
@@ -296,7 +294,103 @@ class _main:
 
 	@app.route("/forum",methods=["POST","GET"])
 	def forum_index():
-		return render_template('forum/forum_index.html')
+		if(_main.is_on_session()):
+			forums = db.select("SELECT `webrep_forum_topics`.*, `users`.`name` as 'uploader' FROM `webrep_forum_topics` INNER JOIN `users` ON `webrep_forum_topics`.`created_by`= `users`.`id`;")
+			return render_template(
+				'forum/forum_index.html',
+				USER_DATA = session['USER_DATA'][0],
+				forum_ls = forums
+				)
+		else:
+			return redirect("/login?force_url=1")
+
+
+	@app.route("/forum_talks/<f_id>",methods=["POST","GET"])
+	def forum_talks(f_id):
+		if(_main.is_on_session()):
+			forum = db.select("SELECT `webrep_forum_topics`.*, `users`.`name` as 'uploader' FROM `webrep_forum_topics` INNER JOIN `users` ON `webrep_forum_topics`.`created_by`= `users`.`id` WHERE `webrep_forum_topics`.`id`='{}';".format(f_id))
+			return render_template(
+				'forum/forum_discussion.html',
+				USER_DATA = session['USER_DATA'][0],
+				forum = forum[0]
+				)
+		else:
+			return redirect("/login?force_url=1")
+
+
+	@app.route("/forum/save_forum",methods=["POST","GET"])
+	def save_forum():
+		print("  * save_forum")
+		FILE_REQ = file_from_request(app)
+		data = dict(request.form)
+		key = [];val = [];args=""
+
+		is_exist = len(db.select("SELECT * FROM `webrep_forum_topics` WHERE `id` ='{}' ;".format(request.form['id'])))
+		if(is_exist==0):
+			print(" >> Adding Forum")
+			for datum in data:
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(data[datum]))
+			sql = ('''INSERT INTO `webrep_forum_topics` ({},`status`) VALUES ({},'pending')'''.format(", ".join(key),", ".join(val)))
+		else:
+			print(" >> Editing Forum")
+			for datum in data:
+				args += ",`{}`='{}'".format(datum,data[datum])
+			sql = "UPDATE `webrep_forum_topics` SET  {}, `status`='pending' WHERE `id`='{}';".format(args[1:],request.form['id'])
+			pass
+		last_row_id = db.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+
+	@app.route("/forum/send_comment",methods=["POST","GET"])
+	def send_comment():
+		print("  * send_comment")
+		FILE_REQ = file_from_request(app)
+		data = dict(request.form)
+		key = [];val = [];args=""
+
+		is_exist = len(db.select("SELECT * FROM `webrep_forum_comments` WHERE `id` ='{}' ;".format(request.form['id'])))
+		if(is_exist==0):
+			print(" >> Adding Forum")
+			for datum in data:
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(data[datum]))
+			sql = ('''INSERT INTO `webrep_forum_comments` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+		else:
+			print(" >> Editing Forum")
+			for datum in data:
+				args += ",`{}`='{}'".format(datum,data[datum])
+			sql = "UPDATE `webrep_forum_comments` SET  {}, `edit`='1' WHERE `id`='{}';".format(args[1:],request.form['id'])
+			pass
+		last_row_id = db.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+
+	@app.route("/forum/send_comment_like/<com_id>",methods=["POST","GET"])
+	def send_comment_like(com_id):
+		sql = "UPDATE `webrep_forum_comments` SET `likes` = `likes` + 1 WHERE `id`='{}';".format(com_id)
+		last_row_id = db.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+
+	@app.route("/forum/delete_comment/<com_id>",methods=["POST","GET"])
+	def delete_comment(com_id):
+		sql = "UPDATE `webrep_forum_comments` SET `removed`='1' WHERE `id`='{}';".format(com_id)
+		last_row_id = db.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+
+	@app.route("/forum/get_comment/<com_id>",methods=["POST","GET"])
+	def get_comment(com_id):
+		if(_main.is_on_session()):
+			comments = db.select("SELECT `webrep_forum_comments`.*, `users`.`name` as 'commenter' FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by`= `users`.`id` WHERE `webrep_forum_comments`.`topic_id`='{}';".format(com_id))
+			return [comments,_main.get_topic_people(com_id)]
+		else:
+			return redirect("/login?force_url=1")
+
+	@app.route("/forum/get_topic_people/<com_id>",methods=["POST","GET"])
+	def get_topic_people(com_id):
+		if(_main.is_on_session()):
+			comments = db.select("SELECT `webrep_forum_comments`.`id` as 'first_comment_id', `users`.`name` as 'commenter' FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by` = `users`.`id` WHERE `webrep_forum_comments`.`topic_id` = '{}' GROUP BY `users`.`name`;".format(com_id))
+			return comments
+		else:
+			return redirect("/login?force_url=1")
 
 	@app.app_errorhandler(404)
 	def _404(err):
@@ -305,7 +399,6 @@ class _main:
 	@app.route("/webrep/get_user_all",methods=["POST","GET"])
 	def get_all_user():
 		users = db.select("SELECT * FROM `users`;")
-
 		if(_main.is_on_session()):
 			return users
 		else:

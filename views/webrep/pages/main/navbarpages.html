@@ -162,9 +162,11 @@
 					<li><a class="dropdown-item" role="button" href="/rapid/admin/adminKnowledgeCenter.html">Admin Knowledge</a></li>
 				</ul>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link ps-4 ms-3 disabled"  role="button" href="/forum">Community</a>
-			</li>	            
+			{% if is_session :%}
+				<li class="nav-item">
+					<a class="nav-link ps-4 ms-3"  role="button" href="/forum">Community</a>
+				</li>	            
+			{% endif %}
 		</ul>
 
 		{% if is_session :%}
