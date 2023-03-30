@@ -302,9 +302,14 @@ class _main:
 	def _404(err):
 		return render_template("error/404.html"), 404
 
+	@app.route("/webrep/get_user_all",methods=["POST","GET"])
 	def get_all_user():
 		users = db.select("SELECT * FROM `users`;")
-		return users
+
+		if(_main.is_on_session()):
+			return users
+		else:
+			return _main._404(404)
 
 	def moderator(segment,page):
 		pass;
