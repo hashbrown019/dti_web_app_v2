@@ -46,7 +46,9 @@
 
 			{% include 'admin/stickyNavbar.html' %}
 
-			{% include 'admin/optionsNavbar.html' %}
+			{%if is_session%}
+				{% include 'admin/optionsNavbar.html' %}
+			{%endif%}
 
 			{% include 'admin/searchArea.html' %}
 
