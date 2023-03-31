@@ -30,7 +30,7 @@
 								<div class=" row row-cols-xxl-3 row-cols-xl-2 " style="min-height: 550px;">
 									{% for post in page_data %}
 									{% if post["status"]=='posted' or user_data['job'] == 'Admin' or  user_data['job'] == 'Super Admin' or  user_data['id']|string == post["USER_ID"]|string%}
-									{% set post_id = post['id']}}
+									{% set post_id = post['id']%}
 									<div onclick="go_to_post('{{post_id}}')">
 										{% if post["removed"]|string=='0' %} 
 										{% if post["status"]=='pending' %}
