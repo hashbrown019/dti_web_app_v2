@@ -53,7 +53,14 @@
 						<div class="card border-success">
 							<div class="row d-flex">
 								<div class="">
-									<img src="/webrep/article/get_img/{{post['file_name']}}" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+									
+									{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
+									{% if f_format in ['jpeg','jpg','gif','png'] %}
+									<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+									{% else %}
+									<video muted class="img_class vid_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" src="/webrep/article/get_img/{{post['file_name']}}">
+									</video>
+									{% endif %}
 								</div>
 								<div class="d-block">
 									<div class="container d-flex justify-content-between mt-1" >
