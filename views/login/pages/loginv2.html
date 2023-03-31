@@ -175,7 +175,13 @@
 						// $ID('good_log').style.display = 'block'
 						// $ID('fname').innerHTML = JSON.parse(__).user[0].name
 						// return
-						redirectto("/menu") // NEW VERSION
+						// alert(JSON.parse(__)['user'][0]['status'])
+						if(JSON.parse(__)['user'][0]['status']=="halt"){
+							alert("Account has been temporarily disabled")
+						}else{
+							redirectto("/menu") // NEW VERSION
+
+						}
 						timeout(function(){
 							// redirectto("/home") // OLD VERSION
 							// alert("GOOD")
