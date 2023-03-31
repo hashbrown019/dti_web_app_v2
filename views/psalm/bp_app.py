@@ -27,6 +27,10 @@ def is_on_session(): return ('USER_DATA' in session)
 def index():
 	return render_template("index.html")
 
+@app.route('/acct_dis')
+def acct_dis():
+	return render_template("acct_dis.html")
+
 @app.route('/importcsv',methods = ['GET','POST'])
 def importcsv():
 	import_csv.importcsv(request)
