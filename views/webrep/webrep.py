@@ -54,18 +54,34 @@ class _main:
 		if(page.lower()=="adminKnowledgecenter.html".lower() or
 			page.lower()=="superadmin.html".lower()
 			):
+			sesh_ = [{"id":"none"}]
 			if(_main.is_on_session()):
-				return render_template(
-					"{}/{}".format(segment,page),
-					users=_main.get_all_user(),
-					is_session =_main.is_on_session(),
-					user_data=session["USER_DATA"][0],
-					upload_file_webrep=_main.get_uploads_docs(),
-					module_data = _main.get_module_data(),
-					articles = _main.get_uploads_article()
-					)
-			else:
-				return redirect("/login?force_url=1")
+				sesh_ = session["USER_DATA"]
+			return render_template(
+				"{}/{}".format(segment,page),
+				users=_main.get_all_user(),
+				is_session =_main.is_on_session(),
+				user_data=sesh_[0],
+				# user_data=session["USER_DATA"][0],
+				upload_file_webrep=_main.get_uploads_docs(),
+				module_data = _main.get_module_data(),
+				articles = _main.get_uploads_article()
+				)
+		# if(page.lower()=="adminKnowledgecenter.html".lower() or
+		# 	page.lower()=="superadmin.html".lower()
+		# 	):
+		# 	if(_main.is_on_session()):
+		# 		return render_template(
+		# 			"{}/{}".format(segment,page),
+		# 			users=_main.get_all_user(),
+		# 			is_session =_main.is_on_session(),
+		# 			user_data=session["USER_DATA"][0],
+		# 			upload_file_webrep=_main.get_uploads_docs(),
+		# 			module_data = _main.get_module_data(),
+		# 			articles = _main.get_uploads_article()
+		# 			)
+		# 	else:
+		# 		return redirect("/login?force_url=1")
 		elif(
 			page.lower()=="document.html".lower() or 
 			page.lower()=="multimedia.html".lower() or 
