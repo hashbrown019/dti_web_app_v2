@@ -29,7 +29,7 @@
 		<script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
 
 
-		<title>RAPID Growth</title>
+		<title>MIS Forum | {{forum['topic']}}</title>
 	</head>
 
 <body>
@@ -77,9 +77,7 @@
 				</div>
 				</div>
 				<div class="container">
-					<span id="participants" class="blockquote-footer">
-						
-					</span>
+					<i id="participants" class="xs-text"></i>
 				</div>
 				<div class="container mt-3 pb-5">
 					<p class="">
@@ -143,6 +141,13 @@
 			func : function(r){
 				var ls_comments = JSON.parse(r)[0]
 				var ls_participants = JSON.parse(r)[1]
+				$ID("participants").innerHTML = ""
+				for (var i = 0; i < ls_participants.length; i++) {
+					$ID("participants").innerHTML +=(`
+						<span>`+ls_participants[i]['commenter']+`, </span>
+					`)
+				}
+
 				$ID("num_participants").innerHTML= ls_participants.length
 				$ID("com_count").innerHTML = ls_comments.length
 				var com_cards = ""
@@ -165,7 +170,7 @@
 					}else{
 						commenter = com['commenter']
 						if(com['edit']=="1"){
-							edit_btn ="<span class='small text-secondary'>Editted</span>"
+							edit_btn ="<span class='small text-secondary'>Edited comment</span>&nbsp; | &nbsp;"
 						}else{
 							edit_btn =""
 						}
@@ -238,7 +243,7 @@
 	function urlify(text) {
 		var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
 		return text.replace(urlRegex, function(url) {
-			return '<a href="' + url + '"  target="_blank">' + url + '</a>';
+			return `<a href="#"  target="_blank" onclick="goto('`+ url +`')">`+ url +`</a>`;
 		})
 		// or alternatively
 		// return text.replace(urlRegex, '<a href="$1">$1</a>')
