@@ -55,6 +55,8 @@
 					<!-- News Content -->
 					{% for post in page_data %}
 					{% if (post['posttype'] =='Story' or post['posttype'] =='All')%}
+					{% if post["status"]=='posted' or user_data['job'] == 'Admin' or  user_data['job'] == 'Super Admin'  or  user_data['id']|string == post["USER_ID"]|string%}
+
 					<div class="card_{{post['postCategory']}} col-12 mb-4">
 						<div class="card border-success">
 							<div class=" d-flex">
@@ -80,12 +82,14 @@
 									</div>
 									<div class="mt-3" style="height:20px;">
 										<figcaption class="blockquote-footer  fst-italic ms-2">{{post['postAuthor']}}</figcaption>
+										<figcaption class="ms-2">{{post['status']}}</figcaption>
 									</div>
 								</div>
 
 							</div>
 						</div>
 					</div>
+					{% endif %}
 					{% endif %}
 					{% endfor %}
 
