@@ -47,7 +47,7 @@
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 				<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Topic</a>
+						<a class="nav-link active" aria-current="page" href="#">Discussion</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Participants</a>
@@ -88,39 +88,33 @@
 		<div class="align-self-center mt-5">
 						<p class="lh-sm container">This community is gender-inclusive. Be respectful. Be aware of strong language, all caps, and exclamation points. Be careful with humor and sarcasm. Grammar and spelling matter but you are encouraged to speak using your mother tongue language if you feel you can express your concerns better, and as long as all the participants in the group discussion understand it as well. Cite your sources. Don't post or share (even privately) inappropriate material. Be forgiving.</p>
 					</div>
-		<div class="mt-5 texttheme">
-			<h4>Topics</h4>
+		<div class="mt-5 text-center texttheme">
+			<h1>Discussion</h1>
 		</div>
-		<div class="row row-cols-xxl-4 mt-3">
+		<div class="row row-cols-xxl-2 mt-3 ">
 			{% for forum in forum_ls %}
 			{% set f_id = forum['id'] %}
 			<div class="col-12 mb-4">
 				<!-- ========== -->
-				<div class="card border-success" onclick="goto('/forum_talks/{{f_id}}')">
-					<div class="row d-flex">
-						<!-- <div class="">
-							<img src="/static/webrepstatic/img/rapidimage/cover2.jpg" class="img_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
-						</div> -->
-						<div class="d-block">
-							<div class="container d-flex justify-content-between mt-1" >
-								<div class="" style="height: 20px;">
-									<!-- <p class="xs-text texttheme">BARMM</p> -->
-								</div>
-								<div class="ms-5 me-5" style="height: 20px;">
-									
-								</div>
-								<div class=" " style="height: 20px;">
-									<p class="xs-text texttheme ">{{forum['date_created']}}</p>
-								</div>
+				<div class="card shadow mb-5 bg-body rounded border-0 mt-5" onclick="goto('/forum_talks/{{f_id}}')" style="height:400px; width: 600px">
+					<div class=" row d-flex ">
+						<div class="col-6 d-block px-auto px-5 pt-5">							
+							<div class="" style="width: 250px;">
+								<h2 class="mytext-truncate stretched-link texttheme  fw-bolder lh-sm" style="display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;" href="#" type="button">{{forum['topic']}}</h2>
 							</div>
-							<div class="ms-2 mt-1 " style="width: 280px;">
-								<a class="mytext-truncate stretched-link texttheme fs-4 fw-bolder lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" href="#" type="button">{{forum['topic']}}</a>
+							<div class=" text-secondary mt-3 "  style="height:20px; width: 300px;">
+								<p class="small mytext-truncate text-muted lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Moderated by&nbsp; {{forum['uploader']}}</p>
+
 							</div>
-							<div class="ms-2 text-secondary mt-1 "  style="height:20px; width: 300px;">
-								<p class="xs-text mytext-truncate lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">By {{forum['uploader']}}</p>
-							</div>
+							<div class="mt-4" style="height: 20px;">
+									<p class="small texttheme ">{{forum['date_created']}}</p>
+								</div>
+						</div>
+						<div class="col-6 dis-item">
+							<img src="../../static/webrepstatic/img/discuss_default.svg" loading="lazy" class=" dis-img rounded-end" alt="..." >
 						</div>
 					</div>
+						
 				</div>
 				<!-- ========== -->
 			</div>
