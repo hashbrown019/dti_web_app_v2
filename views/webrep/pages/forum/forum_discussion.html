@@ -66,14 +66,14 @@
 
 
 	<!-- Tittle Banner -->
-	<div class="position-relative">
+	<div class=" position-relative">
 		<div class="dis-banner-item" >
 			<img src="../../static/webrepstatic/img/dis_banner.svg" class="d-block dis-banner-img w-100" alt="..."></div>
 			<div class="container texttheme">
 				<div class="col-sm position-absolute top-50 start-50 translate-middle mt-3 ms-5" style="width: 1100px;">
 					<h5 class="display-5 fw-bolder ">{{forum['topic']}}</h5>
 					<div class="hstack gap-3 mt-5">
-						<p class="">Moderated by {{forum['uploader']}}</p>
+						<p class="">by {{forum['uploader']}}</p>
 						<div class="vr" style="height:27px;"></div>
 						<p class=" ">{{forum['date_created']}}</p>
 					</div>
@@ -98,7 +98,7 @@
 				<!-- <h1 class="">{{forum['topic']}}</h1>			 -->
 				<div class="rounded-1 " style="background-color:#F1F7E5;">
 					<div class="d-flex justify-content-between pt-3 container text-white">
-						<div class="d-flex gap-3  align-items-center">
+						<div class="d-flex gap-2 align-items-center">
 							<p><i class="fa-solid fa-circle-user fs-1"></i></p>
 							<p class="small">&nbsp;{{forum['uploader']}}</p>
 							<!-- <p class="xs-text ">{{forum['date_created']}}</p> -->
@@ -218,8 +218,10 @@
 					commenter = "You"
 					{% endif %}
 					edit_btn = (`
-						<span class='social_btn small text-danger' style="color: #cc0000;cursor: pointer;" onclick="del_comment('`+com['id']+`')"><i class="fa-solid fa-trash-can" ></i> Delete</span>&nbsp; &nbsp;
-						<span class='social_btn small text-primary'  style="color:#1F4F5A;cursor: pointer;" onclick="edit_comment('`+com['id']+`','`+com['comment']+`')"><i class="fa-solid fa-pen-to-square"></i> Edit</span>&nbsp; &nbsp;
+						
+						<a type="button" class='social_btn_del small' style="cursor: pointer;" onclick="del_comment('`+com['id']+`')"><i class="fa-solid fa-trash-can" ></i> Delete</a>&nbsp; &nbsp;
+						<a type="button" class='social_btn_edit small'  style="cursor: pointer;" onclick="edit_comment('`+com['id']+`','`+com['comment']+`')"><i class="fa-solid fa-pen-to-square"></i> Edit</a>&nbsp; &nbsp;
+						
 						`)
 				}else{
 					commenter = com['commenter']
@@ -237,16 +239,16 @@
 					rm_conts = "replied";
 					com_conts = (`
 						<div>
-						<div class="container pb-3">
-						<p class="">`+urlify(com['comment'])+` </p>
-						</div>
-						<div class="container text-end pb-2">
-						`+edit_btn+`
-						<span class="small ">
-						<i id="lk_btn" class="fs-5 fa-solid fa-heart" style="color: #ca0202; cursor: pointer;" onclick="send_com_likes('`+date_diff(com['date']) +` | `+date_readable(com['id'])+`')"></i>
-						&nbsp;`+com['likes']+`
-						</span>
-						</div>
+							<div class="container pb-3">
+								<p class="">`+urlify(com['comment'])+` </p>
+							</div>
+								<div class="container text-end pb-2 d-flex">
+										`+edit_btn+`
+									<span class="small ">
+										<i id="lk_btn" class="fs-5 fa-solid fa-thumbs-up" style="color: #1F4F5A; cursor: pointer;" onclick="send_com_likes('`+date_diff(com['date']) +` | `+date_readable(com['id'])+`')"></i>
+										&nbsp;`+com['likes']+`
+								</span>
+								</div>
 						</div>
 						`)
 				}
@@ -256,10 +258,11 @@
 					<div class="px-2">
 					</div>
 					<div class="container bg-light rounded-2" >
-					<div class="d-flex justify-content-between pt-4 container text-white">
-					<div class="d-flex gap-3">
-					<p class="small">`+commenter+` `+rm_conts+`</p>
-					<p class="xs-text align-self-center">`+date_diff((com['date'])) +` | `+date_readable(com['date'])+`</p>
+					<div class="d-flex justify-content-between pt-3  text-white">
+					<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
+					<p><i class="fa-solid fa-circle-user fs-1"></i></p>
+					<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
+					<p class="xs-text align-self-center" title=" `+date_readable(com['date'])+`">`+date_diff((com['date'])) +`</p>
 					</div>
 					</div>
 					`+com_conts+`
