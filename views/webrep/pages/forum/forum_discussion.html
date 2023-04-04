@@ -97,13 +97,14 @@
 				<!-- {{forum}} -->
 				<!-- <h1 class="">{{forum['topic']}}</h1>			 -->
 				<div class="rounded-1 " style="background-color:#F1F7E5;">
-					<div class="d-flex justify-content-between pt-4 container text-white">
-						<div class="d-flex gap-3">
-							<p class="small">Moderated by {{forum['uploader']}}</p>
-							<p class="xs-text align-self-center">{{forum['date_created']}}</p>
+					<div class="d-flex justify-content-between pt-3 container text-white">
+						<div class="d-flex gap-3  align-items-center">
+							<p><i class="fa-solid fa-circle-user fs-1"></i></p>
+							<p class="small">&nbsp;{{forum['uploader']}}</p>
+							<!-- <p class="xs-text ">{{forum['date_created']}}</p> -->
 						</div>
 						<div>
-							<p class="small"><i class="fa-solid fa-eye"></i>&nbsp; <b id="num_participants"></b> people</p>	
+							<p class="small"><i class="fa-solid fa-users"></i></i>&nbsp; <b id="num_participants"></b> people</p>	
 						</div>
 					</div>
 					<div class="container" hidden>
@@ -256,9 +257,10 @@
 					</div>
 					<div class="container bg-light rounded-2" >
 					<div class="d-flex justify-content-between pt-4 container text-white">
-					<div class="d-flex gap-3">
-					<p class="small">`+commenter+` `+rm_conts+`</p>
-					<p class="xs-text align-self-center">`+com['date']+`</p>
+					<div class="d-flex gap-3 align-items-center">
+						<p><i class="fa-solid fa-circle-user fs-1"></i></p>
+						<p class="small">`+commenter+` `+rm_conts+`</p>
+						<p class="xs-text align-self-center" hidden>`+com['date']+`</p>
 					</div>
 					</div>
 					`+com_conts+`
@@ -299,5 +301,6 @@
 		// return text.replace(urlRegex, '<a href="$1">$1</a>')
 	}
 </script>
+{% include 'main/footer.html' %}
 </body>
 </html>
