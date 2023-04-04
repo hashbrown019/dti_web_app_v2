@@ -242,7 +242,7 @@
 						<div class="container text-end pb-2">
 						`+edit_btn+`
 						<span class="small ">
-						<i id="lk_btn" class="fs-5 fa-solid fa-heart" style="color: #ca0202; cursor: pointer;" onclick="send_com_likes('`+com['id']+`')"></i>
+						<i id="lk_btn" class="fs-5 fa-solid fa-heart" style="color: #ca0202; cursor: pointer;" onclick="send_com_likes('`+date_diff(com['date']) +` | `+date_readable(com['id'])+`')"></i>
 						&nbsp;`+com['likes']+`
 						</span>
 						</div>
@@ -258,7 +258,7 @@
 					<div class="d-flex justify-content-between pt-4 container text-white">
 					<div class="d-flex gap-3">
 					<p class="small">`+commenter+` `+rm_conts+`</p>
-					<p class="xs-text align-self-center">`+com['date']+`</p>
+					<p class="xs-text align-self-center">`+date_diff((com['date'])) +` | `+date_readable(com['date'])+`</p>
 					</div>
 					</div>
 					`+com_conts+`
