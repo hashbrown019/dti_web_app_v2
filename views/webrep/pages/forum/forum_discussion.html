@@ -85,25 +85,26 @@
 		</div>
 	</div>
 
-	<nav class="mt-3 ">
-		<div class="container nav nav-tabs" id="nav-tab" role="tablist">
+	<nav class="mt-3">
+		<div class="container nav nav-tabs" id="nav-tab" role="tablist" style="width:1000px">
 			<a class="nav-link active texttheme" id="nav-discussion-tab" data-bs-toggle="tab" data-bs-target="#nav-discussion" type="button" role="tab" aria-controls="nav-discussion" aria-selected="true">Discussion</a>
 			<a class="nav-link texttheme" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Participants</a>
 		</div>
 	</nav>
 	<div class="container tab-content" id="nav-tabContent">
 		<div class=" container tab-pane fade show active" id="nav-discussion" role="tabpanel" aria-labelledby="nav-discussion-tab" tabindex="0"><div class="bg-light pb-5" style=" background-color: #ffffff !important;">
-			<div class="container texttheme bg-white pt-5 pb-5 ">
+			<div class="container texttheme bg-white pt-5 pb-5" style="width:1000px">
 				<!-- {{forum}} -->
 				<!-- <h1 class="">{{forum['topic']}}</h1>			 -->
 				<div class="rounded-1 " style="background-color:#F1F7E5;">
-					<div class="d-flex justify-content-between pt-4 container text-white">
-						<div class="d-flex gap-3">
-							<p class="small">Moderated by {{forum['uploader']}}</p>
-							<p class="xs-text align-self-center">{{forum['date_created']}}</p>
+					<div class="d-flex justify-content-between pt-3 container text-white">
+						<div class="d-flex gap-3  align-items-center">
+							<p><i class="fa-solid fa-circle-user fs-1"></i></p>
+							<p class="small">&nbsp;{{forum['uploader']}}</p>
+							<!-- <p class="xs-text ">{{forum['date_created']}}</p> -->
 						</div>
 						<div>
-							<p class="small"><i class="fa-solid fa-eye"></i>&nbsp; <b id="num_participants"></b> people</p>	
+							<p class="small"><i class="fa-solid fa-users"></i></i>&nbsp; <b id="num_participants"></b> people</p>	
 						</div>
 					</div>
 					<div class="container" hidden>
@@ -299,5 +300,6 @@
 		// return text.replace(urlRegex, '<a href="$1">$1</a>')
 	}
 </script>
+{% include 'main/footer.html' %}
 </body>
 </html>
