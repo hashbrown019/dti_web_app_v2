@@ -19,9 +19,10 @@ def display():
     USER_INFO = session["USER_DATA"]
     data_count_entry=db.select("SELECT * FROM form_c")
     datatable=db.select("SELECT * FROM form_c")
-    data_jan = db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
-    data_feb= db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
-    data_march = db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+    data_jan = db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    data_feb= db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    data_march= db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    data_april = db.select("SELECT * FROM form_c WHERE YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
     data_count_reg_business = db.select("SELECT reg_businessname FROM form_c")
     data_count_position_firm = db.select("SELECT position_firm FROM form_c where position_firm LIKE '%owner%'")
     data_count_cacao = db.select("SELECT * FROM form_c where industry_cluster = 'cacao'")
@@ -31,8 +32,8 @@ def display():
     intpfn= len(data_count_pfn)
     totalpfn = intpfn
     print(data_count_entry)
-    thismonth=len(data_march)
-    lastmonth=len(data_feb)
+    thismonth=len(data_april)
+    lastmonth=len(data_march)
     subperc= thismonth - lastmonth
     percentage= (subperc / lastmonth)
     all = data_count_cacao + data_count_coffee + data_count_coconut + data_count_pfn
@@ -48,6 +49,7 @@ def display():
     data_jan=len(data_jan)
     data_march=len(data_march)
     data_feb=len(data_feb)
+    data_april=len(data_april)
     percentages = round(percentage,2)
     totalpfn =totalpfn
     return{
@@ -57,6 +59,7 @@ def display():
         'datatable':  datatable,
         'data_jan':  data_jan,
         'data_march':  data_march,
+        'data_april':  data_april,
         'data_feb':  data_feb,
         'data_count_reg_business':  data_count_reg_business,
         'data_count_position_firm':  data_count_position_firm,
@@ -91,9 +94,10 @@ def display__():
     USER_INFO = session["USER_DATA"]
     data_count_entry=db.select("SELECT * FROM form_c {} ".format(position_data_filter()))
     datatable=db.select("SELECT * FROM form_c {};".format(position_data_filter()))
-    data_jan = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    data_feb= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    data_march = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+    data_jan = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    data_feb= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    data_march = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    data_april = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
     data_count_reg_business = db.select("SELECT reg_businessname FROM form_c {} ".format(position_data_filter()))
     data_count_position_firm = db.select("SELECT position_firm FROM form_c {} AND position_firm LIKE '%owner%'".format(position_data_filter()))
     data_count_cacao = db.select("SELECT * FROM form_c {} AND industry_cluster = 'cacao'".format(position_data_filter()))
@@ -102,8 +106,8 @@ def display__():
     data_count_pfn = db.select("SELECT industry_cluster FROM `form_c` {} AND industry_cluster !='cacao' AND industry_cluster !='coconut' AND industry_cluster !='coffee'  AND industry_cluster != '' AND industry_cluster!= ' ' AND industry_cluster NOT LIKE '%cacao%' AND industry_cluster NOT LIKE '%coconut%' AND industry_cluster NOT LIKE '%coffee%' ".format(position_data_filter()))
     intpfn= len(data_count_pfn)
     totalpfn = intpfn
-    thismonth=len(data_march)
-    lastmonth=len(data_feb)
+    thismonth=len(data_april)
+    lastmonth=len(data_march)
     subperc= thismonth - lastmonth
     try: percentage= (subperc / lastmonth)
     except Exception as e: percentage = 0
@@ -121,6 +125,7 @@ def display__():
     data_jan=len(data_jan)
     data_feb=len(data_feb)
     data_march=len(data_march)
+    data_april=len(data_april)
     percentages = round(percentage,2)
     totalpfn =totalpfn
     return{
@@ -131,6 +136,7 @@ def display__():
         'data_jan':  data_jan,
         'data_feb':  data_feb,
         'data_march':  data_march,
+        'data_april':  data_april,
         'data_count_reg_business':  data_count_reg_business,
         'data_count_position_firm':  data_count_position_firm,
         'data_count_cacao':  data_count_cacao,
