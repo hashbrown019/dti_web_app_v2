@@ -54,7 +54,7 @@
 					{% if post["status"]=='posted' or user_data['job'] == 'Admin' or  user_data['job'] == 'Super Admin'  or  user_data['id']|string == post["USER_ID"]|string%}
 
 					<div class="card_{{post['postCategory']}} col-12 mb-4">
-						<div class="card border-success">
+						<div class="card border-matcha">
 							<div class=" d-flex ">
 								<div class="" style="min-width: 200px ;">
 									{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
@@ -73,7 +73,7 @@
 										<div class="ms-5 me-5" style="height: 20px;">
 										</div>
 										<div class=" " style="height: 20px;">
-											<p class="xs-text texttheme ">{{post['date']}}</p>												
+											<p class="xs-text texttheme dates">{{post['date']}}</p>												
 										</div>
 									</div>
 									<div class="ms-2 mt-1" style="width: 300px;">
