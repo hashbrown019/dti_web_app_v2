@@ -1,0 +1,116 @@
+<!-- NAVBAR -->
+	<nav class=" navbar navbar-expand-lg fixed-top bg-white">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a class="navbar-brand d-flex align-self-center ms-5" href="#">
+			 <img src="../../static/webrepstatic/img/RAPID.svg" width="50" height="50" class="d-inline-block align-top small" alt="" style="margin-top: -10px;">
+			 <span class="align-self-center ms-2 small ">Community</span>
+			</a>
+			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+				<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="/forum">Discussion</a>
+					</li>
+					<!-- <li class="nav-item">
+						<a class="nav-link" href="#">Participants</a>
+					</li> -->
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Create Discussion</a>
+					</li>
+					<li class="nav-item">
+						
+					</li>
+				</ul>
+				<div class="d-flex" style="min-width: 300px;">
+					<a href="/menu" class="nav-link me-auto" role="button">Menu</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+
+		<!-- Create Topic Modal -->
+	<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title texttheme fw-bolder" id="exampleModalToggleLabel">Create Discussion</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input class="FORUM_DATA" id="created_by" value="{{USER_DATA['id']}}" hidden>
+					<input class="FORUM_DATA" id="id" hidden>
+
+					<label for="topic" class="form-label texttheme fontBold mt-2">Topic</label>
+					<input class="FORUM_DATA form-control"  id="topic" placeholder="Type your discussion here">
+					
+					<label for="description" class="form-label texttheme fontBold mt-2">Description</label>
+					<textarea class="FORUM_DATA form-control" id="description" rows="3"></textarea>
+
+					<label for="commodity" class="form-label texttheme fontBold mt-2">Commodity</label>
+					<select id="commodity" class="FORUM_DATA form-select" aria-label="Default select example">
+						<option selected>All</option>
+							<option>Coffee</option>
+							<option>Cacao</option>
+							<option>Coconut</option>
+							<option>Processed Fruits & Nuts</option>
+					</select>
+
+					<!-- <label for="formFile" class="form-label texttheme fontBold mt-2">Select Photo</label>
+					<input class="FORUM_DATA form-control" type="file" id="formFile"> -->
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" onclick="review_topic()">
+						Continue
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title texttheme fw-bolder" id="exampleModalToggleLabel2">Review your Discussion</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<h5 class=" fw-bolder" style="color: #81A33E;">Topic:</h5><h3 id="rev_topic" class="texttheme" ></h3><br>
+					<h5 class=" fw-bolder" style="color: #81A33E;">Description:</h5> <b id="rev_description" class="texttheme" ></b><br>
+					<br>
+					<h5 class=" fw-bolder" style="color: #81A33E;">Commodity:</h5> <b id="rev_commodity" class="texttheme" ></b><br>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-bs-toggle="modal" onclick="save_topic()">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		let FORUM_DATA_INPUT = {}
+		function review_topic(){
+			var FORUM_DATA_FIELDS = $CLASS("FORUM_DATA")
+			for (var i = 0; i < FORUM_DATA_FIELDS.length; i++) {
+				try{
+					FORUM_DATA_INPUT[FORUM_DATA_FIELDS[i].id] = FORUM_DATA_FIELDS[i].value
+					$ID("rev_"+FORUM_DATA_FIELDS[i].id).innerText = FORUM_DATA_FIELDS[i].value
+				}catch(e){warnprintln(e)}
+			}
+		}
+
+		function save_topic(){
+			println(FORUM_DATA_INPUT)
+			$send({
+				action : "/forum/save_forum",
+				method : POST,
+				data : $DATA(FORUM_DATA_INPUT),
+				func : function(r){
+					var res = JSON.parse(r)
+					println(res)
+				}
+			})
+		}
+	</script>
