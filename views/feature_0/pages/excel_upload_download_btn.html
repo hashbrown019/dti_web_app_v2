@@ -7,7 +7,6 @@
 </div>
 
 <script type="text/javascript">
-REQ_ERR_DIALOG = true
 function export_farmer_excel(argument) {
 	println(" Getting Data ")
 
@@ -29,6 +28,7 @@ function _export(args){
 			action : "/migrations/export_excel_mobile",
 			method : POST,
 			data : $DATA({"form":mobile_export_selection}),
+			err_dialog:true,
 			func : function (res){
 				println(" Generating Table")
 				var RES = JSON.parse(res) 
@@ -42,6 +42,7 @@ function _export(args){
 	if(args==1){
 		$send({
 			action : "/migrations/export_excel_excel",
+			err_dialog:true,
 			method : POST,
 			func : function (res){
 				println(" Generating Table")
@@ -110,6 +111,7 @@ function upload_excel(){
 	$send({
 		action : "/excel_upload",
 		data : $DATA({"uploader" : uploader_id}).appendFile($ID("excel_file")),
+		err_dialog:true,
 		method : POST,
 		err : function(r){
 			SPINNER_LOADER.hide()
