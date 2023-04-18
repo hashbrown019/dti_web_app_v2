@@ -50,6 +50,33 @@ class user_management:
 		else:
 			return [{"id":"0","name":"no_data"}]
 
+	@app.route("/api/edit_user",methods=["POST","GET"]) # GE
+	def edit_user():
+		print("  * Edit User Module")
+		# FILE_REQ = file_from_request(app)
+		data = dict(request.form)
+		# print(data)
+		key = [];val = [];args=""
+		# data["USER_ID"] = session["USER_DATA"][0]['id']
+		# __f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/",False,True)
+		# data["upload"] = __f["file_arr_str"]
+
+		is_exist = len(rapid_mysql.select("SELECT * FROM `users` WHERE `id` ='{}' ;".format(request.form['id'])))
+		if(is_exist==0):
+			print(" >> Adding User")
+			for datum in data:
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(data[datum]))
+			sql = ('''INSERT INTO `users` ({},`password`) VALUES ({},"dtirapid")'''.format(", ".join(key),", ".join(val)))
+		else:
+			print(" >> Editing User")
+			for datum in data:
+				args += ",`{}`='{}'".format(datum,data[datum])
+			sql = "UPDATE `users` SET  {} WHERE `id`='{}';".format(args[1:],request.form['id'])
+			pass
+		last_row_id = rapid_mysql.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+
 # def get_all_uploaded_excel_data_heads():
 # 	excel_f_a_heads = c.RECORDS+"/settings/db_sql_excel_form_a.head"
 # 	reader = open(excel_f_a_heads,"r");excel_f_a_heads = json.loads(reader.read());reader.close()

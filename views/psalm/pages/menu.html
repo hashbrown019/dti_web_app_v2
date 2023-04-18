@@ -7,224 +7,227 @@
 {% block body %}
 
 <html lang="en">
-  <title>Menu</title>
+	<title>Menu</title>
 <style type="text/css">
 
-  
-  
-      #container_b{
+	
+	
+			#container_b{
 /*        background-image: url('../static/img/login_bg_dark.jpg');*/
-        /*background-image: url('../static/img/bg.webp');*/
-        background: 
-          linear-gradient(rgba(0, 0, 0, 0.5),
-          rgba(0, 0, 0, 0.5)),
-          url('../static/img/bg.jpg');
-        background-position: center;
-        background-size: cover;
-      }
-      @media screen and (max-width: 768px) {
-  #search-bar {
-    z-index: 9999;
-    position: absolute;
-    top: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-  }
-  
-  .container2 {
-    position: relative;
-    width: 100%;
-    height: auto;
-    margin: 20px auto 20px;
-  }
-  
-  .container2 .search {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .container2 input {
-    width: 100%;
-  }
+				/*background-image: url('../static/img/bg.webp');*/
+				background: 
+					linear-gradient(rgba(0, 0, 0, 0.5),
+					rgba(0, 0, 0, 0.5)),
+					url('../static/img/bg.jpg');
+				background-position: center;
+				background-size: cover;
+			}
+			@media screen and (max-width: 768px) {
+	#search-bar {
+		z-index: 9999;
+		position: absolute;
+		top: 30px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 80%;
+	}
+	
+	.container2 {
+		position: relative;
+		width: 100%;
+		height: auto;
+		margin: 20px auto 20px;
+	}
+	
+	.container2 .search {
+		width: 50px;
+		height: 50px;
+	}
+	
+	.container2 input {
+		width: 100%;
+	}
 }
 
 
-      #search-bar {
-  position: absolute;
-  top: 30px;
-  left: 40%;
-  
-  transform: translateX(-50%);
+			#search-bar {
+	position: absolute;
+	top: 30px;
+	left: 40%;
+	
+	transform: translateX(-50%);
 }
 
 
 .container2 {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 300px;
-  height: 100px;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 300px;
+	height: 100px;
 }
 
 
 .container2 .search {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 55px;
-  height: 55px;
-  background: crimson;
-  border-radius: 50%;
-  transition: all 1s;
-  z-index: 4;
-  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+	position: absolute;
+	margin: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 55px;
+	height: 55px;
+	background: crimson;
+	border-radius: 50%;
+	transition: all 1s;
+	z-index: 4;
+	box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
 }
 .container2 .search:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 .search{
-  opacity: 70%;
+	opacity: 70%;
 }
 
 
 .container2 .search::before {
-  content: "";
-  position: absolute;
-  margin: auto;
-  top: 22px;
-  right: 0;
-  bottom: 0;
-  left: 22px;
-  width: 12px;
-  height: 2px;
-  background: white;
-  transform: rotate(45deg);
-  transition: all 0.5s;
+	content: "";
+	position: absolute;
+	margin: auto;
+	top: 22px;
+	right: 0;
+	bottom: 0;
+	left: 22px;
+	width: 12px;
+	height: 2px;
+	background: white;
+	transform: rotate(45deg);
+	transition: all 0.5s;
 }
 .container2 .search::after {
-  content: "";
-  position: absolute;
-  margin: auto;
-  top: -5px;
-  right: 0;
-  bottom: 0;
-  left: -5px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid white;
-  transition: all 0.5s;
+	content: "";
+	position: absolute;
+	margin: auto;
+	top: -5px;
+	right: 0;
+	bottom: 0;
+	left: -5px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 2px solid white;
+	transition: all 0.5s;
 }
 .container2 input {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 80px;
-  height: 40px;
-  outline: none;
-  border: none;
-  background: white;
-  color: black;
-  padding: 0 80px 0 20px;
-  border-radius: 30px;
-  box-shadow: 0 0 25px 0 black, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
-  transition: all 1s;
-  opacity: 0;
-  z-index: 5;
-  letter-spacing: 0.1em;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 80px;
+	height: 40px;
+	outline: none;
+	border: none;
+	background: white;
+	color: black;
+	padding: 0 80px 0 20px;
+	border-radius: 30px;
+	box-shadow: 0 0 25px 0 black, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+	transition: all 1s;
+	opacity: 0;
+	z-index: 5;
+	letter-spacing: 0.1em;
 }
 .container2 input:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 .container2 input:focus {
-  width: 300px;
-  opacity: 1;
-  cursor: text;
+	width: 300px;
+	opacity: 1;
+	cursor: text;
 }
 .container2 input:focus ~ .search {
-  right: -250px;
-  background: #151515;
-  z-index: 6;
+	right: -250px;
+	background: #151515;
+	z-index: 6;
 }
 .container2 input:focus ~ .search::before {
-  top: 0;
-  left: 0;
-  width: 25px;
+	top: 0;
+	left: 0;
+	width: 25px;
 }
 .container2 input:focus ~ .search::after {
-  top: 0;
-  left: 0;
-  width: 25px;
-  height: 2px;
-  border: none;
-  background: white;
-  border-radius: 0%;
-  transform: rotate(-45deg);
+	top: 0;
+	left: 0;
+	width: 25px;
+	height: 2px;
+	border: none;
+	background: white;
+	border-radius: 0%;
+	transform: rotate(-45deg);
 }
 .container2 input::placeholder {
-  color: black;
-  opacity: 0.5;
-  font-weight: bolder;
+	color: black;
+	opacity: 0.5;
+	font-weight: bolder;
 }
 </style>
 
 <body id="container_b">
-  <div id="search-bar" style="margin-top: 50px;">
-    <div class="container2">
-      <input type="text" placeholder="Search...">
-      <div class="search"></div>
-    </div>
-  </div>
-  <div class=" text-white sl-primary"style="position: absolute; right: 0; max-width: 22rem; padding: 1px; height: auto; border-radius: 0px 0px 0px 0px;">
-    <!-- <div class="card-header">{{user_data['name']}}</div> -->
-    <div class="card-body">
-      <!-- <h5 class="card-title">Primary card title</h5> -->
-      <a class="btn btn-md ">
-        <span class="ms-start text-white">
-          <i><img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;"></i> 
-          {{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
-        </span>
-        <div id="button-container" style="display: flex; gap: 10px;">
-          {% if(user_data['job']=="Super Admin"): %}
-          
-          <button  data-toggle="modal" data-target="#usermang" class="userbtn" id="userbtn">
-            <i class="fa-solid fa-user"></i>
-            User Management
-            <span class="round"></span>
-          </button>
-          {%endif%}
-          <button onclick="location.href='/logout';" class="danger-button">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Logout
-            <span class="round"></span>
-          </button>
-        </div>
-      </a>
-    </div>
+	<div id="search-bar" style="margin-top: 50px;">
+		<div class="container2">
+			<input type="text" placeholder="Search...">
+			<div class="search"></div>
+		</div>
+	</div>
+	<div class=" text-white sl-primary"style="position: absolute; right: 0; max-width: 22rem; padding: 1px; height: auto; border-radius: 0px 0px 0px 0px;">
+		<!-- <div class="card-header">{{user_data['name']}}</div> -->
+		<div class="card-body">
+			<!-- <h5 class="card-title">Primary card title</h5> -->
+			<a class="btn btn-md ">
+				<span class="ms-start text-white">
+					<i><img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;"></i> 
+					{{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
+				</span>
+				<div class="container row" id="button-container" style="display: flex; gap: 10px;">
+					{% if(user_data['job']=="Super Admin"): %}
+					<div class="container">
+						<button data-toggle="modal" data-target="#usermang" class="userbtn" id="userbtn">
+							<i class="fa-solid fa-user"></i>
+							User Management
+							<span class="round"></span>
+						</button>
+					</div>
+					{% endif %}
+					<div class="container">
+						<button onclick="location.href='/logout';" class="danger-button">
+							<i class="fa-solid fa-right-from-bracket"></i>
+							Logout
+							<span class="round"></span>
+						</button>
+					</div>
+				</div>
+			</a>
+		</div>
 </div>
 
-  
-  <div class="container">
-    <div class="row">
-      {% include "includes/menucards/adminknowledge.html" %}
-      {% include "includes/menucards/profiling.html" %}
-      {% include "includes/menucards/dcf.html" %}
-      {% include "includes/menucards/fmi.html" %}
-      {% include "includes/menucards/fundtracker.html" %}
-      {% include "user_management.html" %}
-    </div>
-  </div>
-  
-  </body>
-  
+	
+	<div class="container">
+		<div class="row">
+			{% include "includes/menucards/adminknowledge.html" %}
+			{% include "includes/menucards/profiling.html" %}
+			{% include "includes/menucards/dcf.html" %}
+			{% include "includes/menucards/fmi.html" %}
+			{% include "includes/menucards/fundtracker.html" %}
+			{% include "user_management.html" %}
+		</div>
+	</div>
+	
+	</body>
+	
 {% endblock %}
