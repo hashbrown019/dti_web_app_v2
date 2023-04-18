@@ -5,7 +5,7 @@
 	<div class="x-row x-container x-padding">
 		<div class="x-col m2 l2">
 			<span class="x-text-grey">Area</span>
-			<select class="x-input x-select x-border x-round">
+			<select id="f_rcu" class="FILTER_FIELD x-input x-select x-border x-round">
 				<option value="all"  selected disabled>Select Area</option>
 				<option>All</option>
 				<option>RCU 8</option>
@@ -19,7 +19,7 @@
 		</div>
 		<div class="x-col m2 l2">
 			<span class="x-text-grey">Sex</span>
-			<select class="x-input x-select x-border x-round">
+			<select id="f_sex" class="FILTER_FIELD x-input x-select x-border x-round">
 				<option value="all"  selected disabled>Select Sex</option>
 				<option>All</option>
 				<option>Female</option>
@@ -29,7 +29,7 @@
 		</div>
 		<div class="x-col m2 l2">
 			<span class="x-text-grey">Sub-Form A</span>
-			<select class="x-input x-select x-border x-round">
+			<select id="f_subform" class="FILTER_FIELD x-input x-select x-border x-round">
 				<option value="all" selected disabled>Select Subform</option>
 				<option value="form_a_farmer_profiles">A1: Farmer Profile</option>
 				<option value="form_a_farm_land">A2: Farm Information</option>
@@ -44,7 +44,7 @@
 		</div>
 		<div class="x-container x-col m2 l2 x-right">
 			<span>Submit Filters</span><br>
-			<button class="x-btn x-blue x-round x-block">
+			<button class="x-btn x-blue x-round x-block" onclick="filter()">
 				Filter <span class="fa fa-filter"></span>
 			</button>
 		</div>
@@ -57,3 +57,13 @@
 		====
 	</div>
 </div>
+<script type="text/javascript">
+	function filter() {
+		var filter_field_vals = {}
+		var filter_field = $CLASS('FILTER_FIELD')
+		for (var i = 0; i < filter_field.length; i++) {
+			filter_field_vals[filter_field[i].id] = filter_field[i].value
+		}
+		warnprintln(filter_field_vals)
+	}
+</script>
