@@ -16,7 +16,6 @@ rapid_mysql = mysql(*c.DB_CRED)
 
 class data_handlers:
 	def is_on_session(): return ('USER_DATA' in session)
-
 	def __init__(self, arg):super(data_handlers, self).__init__();self.arg = arg
 
 
@@ -34,7 +33,9 @@ class data_handlers:
 		# return objh.txt_file_dl("skkrt.sql",content)
 		# return objh.obj_file_dl("skkrt.objdmp",content)
 
-
+class user_management:
+	def is_on_session(): return ('USER_DATA' in session)
+	def __init__(self, arg):super(data_handlers, self).__init__();self.arg = arg
 
 	@app.route("/api/get_user_data/<ids>",methods=["POST","GET"]) # GE
 	def get_user_data(ids):

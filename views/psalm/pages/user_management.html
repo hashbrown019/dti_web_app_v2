@@ -44,7 +44,7 @@
 								</div>
 								
 								<div class="container mt-4 overflow-auto" style="height: 60vh;">
-									<div class="mb-3">													
+									<div class="mb-3" style="display: none;">													
 										<h5 class="small font-weight-bold ms-1 texttheme">ID</h5>
 										<input disabled class="USER_DATA form-control form-control " type="text" placeholder="" id="id">													
 									</div>
@@ -77,7 +77,7 @@
 											
 										</div>	
 										<div class="col-6">
-											<h5 class="small font-weight-bold ms-1 texttheme">PCU:</h5>												
+											<h5 class="small font-weight-bold ms-1 texttheme">PCU:</h5>
 											<input class="USER_DATA form-control form-control" type="text" placeholder="" id="rcu">														
 										</div>						
 									</div>
@@ -85,23 +85,26 @@
 										<h5 class="small font-weight-bold ms-1 texttheme">Username:</h5>
 										<input class="USER_DATA form-control form-control" type="text" placeholder="" id="username">													
 									</div>
-									<div class="mb-3">													
+									<!-- <div class="mb-3">													
 										<h5 class="small font-weight-bold ms-1 texttheme">Password:</h5>
 										<input class="USER_DATA form-control form-control" type="text" placeholder="" id="password">													
-									</div>
+									</div> -->
 									<div class="mb-3">													
 										<h5 class="small font-weight-bold ms-1 texttheme">Date:</h5>
 										<input class="USER_DATA form-control form-control" type="text" placeholder="" id="until">													
 									</div>
-									<div class="mb-3">													
+									<!-- <div class="mb-3">													
 										<h5 class="small font-weight-bold ms-1 texttheme">Status:</h5>
+										<select class="USER_DATA form-control form-control" id="status">
+											<option>Active</option>
+										</select>
 										<input class="USER_DATA form-control form-control" type="text" placeholder="" id="status" disabled>													
-									</div>												
+									</div>	 -->											
 								</div>
 
 								<div class="d-flex  mt-3">
 									<div>
-										<button type="button" class="btn btn-primary me-3">Save</button>	
+										<button type="button" class="btn btn-primary me-3" onclick="save_user_det()">Save</button>	
 									</div>
 								</div>
 							</div>
@@ -193,6 +196,14 @@
 		})
 	})
 
+	function save_user_det(){
+		var user_data_ = $CLASS('USER_DATA')
+		var user_info = {}
+		for (var i = 0; i < user_data_.length; i++) {
+			user_info[user_data_[i].id] = user_data_[i].value
+		}
+		println(user_info)
+	}
 
 	function get_user_data(){
 		$send({
@@ -201,7 +212,6 @@
 				var resp = JSON.parse(r)
 				var ls_str = ""
 				for (var i = 0; i < resp.length; i++) {
-					
 					ls_str += (`
 						<tr onclick="set_user_datafield(`+resp[i]['id']+`)">
 							<th scope="row" class="texttheme">`+resp[i]['id']+`</th>
@@ -217,6 +227,7 @@
 	function set_user_datafield(arr){
 		$send({
 			action : "/api/get_user_data/"+arr,
+			err_dialog : true,
 			func : function(r){
 				var resp = JSON.parse(r)[0]
 				println(resp)
