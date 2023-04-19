@@ -41,6 +41,8 @@ app.register_blueprint(doofen.app)
 app.register_blueprint(fund_tracker.app)
 app.register_blueprint(dcf.app)
 
+print(" * MIS Stats ¾")
+
 @app.route("/")
 def index():return redirect("/webrep")
 
