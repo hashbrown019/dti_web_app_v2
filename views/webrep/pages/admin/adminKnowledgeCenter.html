@@ -65,17 +65,28 @@
 			{% include 'admin/fileDetailsModal.html' %}
 
 			<!-- OVERVIEW -->
+			{%if is_session%}
+			{% include 'admin/contentOverview.html' %}
+			{%endif%}
 
 			<!-- Knowledge Products -->
 			{% include 'admin/contentKnowledgeProduct.html' %}
 
+			{%if is_session%}
 			<!-- Documents -->
 			{% include 'admin/contentDocument.html' %}
-
-			<!-- Templates -->
+			{%endif%}
 			
+			{%if is_session%}
+			<!-- Templates -->			
+			{% include 'admin/contentTemplates.html' %}
+			{%endif%}
 
+
+			{%if is_session%}
 			<!-- Tools & Guidelines -->
+			{% include 'admin/contentTools&Guidelines.html' %}
+			{%endif%}
 
 
 			<div class="" style="height:10px">

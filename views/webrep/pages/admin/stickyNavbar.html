@@ -2,21 +2,30 @@
 	<nav id="navbar-example2" class="navbar bg-light px-3 sticky-top shadow-sm p-3 bg-body mb-3 rounded ">
 		<div class=" mx-auto">
 			<ul class="nav nav-pills">
+			{%if is_session%}				
 				<li class="nav-item me-1">
 					<a class="nav-link rounded-pill " href="#OVER">OVERVIEW</a>
 				</li>
+			{%endif%}
 				<li class="nav-item me-1">
 					<a class="nav-link rounded-pill" href="#KP">KNOWLEDGE PRODUCTS</a>
 				</li>
+			{%if is_session%}			
 				<li class="nav-item me-1">
 					<a class="nav-link rounded-pill" href="#TEMP">TEMPLATES</a>
 				</li>
+
 				<li class="nav-item me-1">
 					<a class="nav-link rounded-pill" href="#TG">TOOLS & GUIDELINES</a>
 				</li>
+			{%endif%}
+			{%if is_session%}			
+
 				<li class="nav-item me-1">
 					<a class="nav-link rounded-pill" href="#DOC">DOCUMENTS</a>
 				</li>
+			{%endif%}
+				
 			</ul>
 		</div>
 	</nav>

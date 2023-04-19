@@ -8,22 +8,38 @@
 		<link rel="stylesheet" href="../../static/webrepstatic/css/style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&display=swap" rel="stylesheet">
-	 	
-	 	<!-- fontawesomeCDN -->
+		
+		<!-- fontawesomeCDN -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />     
 
-	 	<!-- CSS only -->
-	 	<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
+		<!-- CSS only -->
+		<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
 
 
-	 	<!-- JavaScript Bundle with Popper -->
-	 	
-	 	<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
-	 	<script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.js"></script>
+		<!-- JavaScript Bundle with Popper -->
+		
+		<!-- <script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script> -->
+		<!-- <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.js"></script> -->
+		<script src="../../static/js/Brorn.min.js"></script>
 
-	 	<title >Scope</title>
-	 </head>
+		<title >Scope</title>
+
+		<style type="text/css">
+			.fades{
+				position:relative;
+				animation:animateleft 0.3s
+			}
+			.zoom_in{
+				position:relative;
+				animation:animatezoom 0.3s
+			}
+			@keyframes animateleft{
+				from{left:-300px;opacity:0} to{left:0;opacity:1}
+			}
+
+			@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}
+		</style>
 
 
 
@@ -40,18 +56,21 @@
 			<!-- Where we work -->
 			<div class="container d-lg-flex">
 
-				<div class="container d-lg-flex" >
+				<div class="container d-lg-flex " >
+					<div class=" col-lg mx-auto mt-5 align-self-center">
+						<div id="scope_default" class=" zoom_in " style="display:block">
+							<h5 class=" headings display-3" style="color: #1F4F5A !important;">Where we work</h5>
+							<p class=" text-start mt-5 me-5 ">RAPID Growth project is being implemented in 21 target provinces in 7 regions nationwide. These were selected based on the growth potential of the selected priority agricultural value chains in the area, poverty incidence, and cluster operational efficiency considerations.</p >
+						</div>
 
-					<div class="col-lg mx-auto mt-5 align-self-center">
-
-						<h5 class=" headings display-3" style="color: #1F4F5A !important;">Where we work</h5>
-						<p class=" text-start mt-5 me-5 ">RAPID Growth project is being implemented in 21 target provinces in 7 regions nationwide. These were selected based on the growth potential of the selected priority agricultural value chains in the area, poverty incidence, and cluster operational efficiency considerations.</p >
+						<div id="scope_select_area" class="col-lg mx-auto mt-5 align-self-center" style="display:non`````e;">
+							<h5 class="zoom_in headings display-3" style="color: #1F4F5A !important;" id="prov_area"></h5>
+							<p class="zoom_in  text-start mt-5 me-5 " id="prov_dec"></p >
+						</div>
 					</div>
 
-					<div class="col-lg mx-auto mt-5">
-
+					<div class="col-lg mx-auto mt-5 ">
 						{% include 'scope/map.html' %}
-
 					</div>
 				</div>
 			</div>
@@ -69,10 +88,10 @@
 {% include 'main/footer.html' %}
 
 <script>
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+		return new bootstrap.Tooltip(tooltipTriggerEl)
+	})
 </script>
 </body>
 </html>
