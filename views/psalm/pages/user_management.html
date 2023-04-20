@@ -322,7 +322,7 @@
 										<h5 class="small font-weight-bold ms-1 texttheme">Current Password</h5>
 										<div class="input-group">
 										  <input class="form-control password-toggle" type="password" required placeholder="" id="currpass">
-									
+									  
 										</div>
 									  </div>
 									  
@@ -380,13 +380,15 @@
 
 .blur {
   filter: blur(3px);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.10s ease-in-out;
 }
 .toggle-password i.fas {
     display: none;
 }
 </style>
 
+<script src="/static/psalm_static/assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/static/psalm_static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="../../static/js/Brorn.min.js"></script>
 <script type="text/javascript">
 	$onload(function(){
@@ -463,7 +465,7 @@
 		})
 	}
 
-$(document).ready(function() {
+	$(document).ready(function() {
   $("#chngpassbtn").click(function() {
     $("#chngpass").modal('show');
     $("#usermang").addClass("blur");
@@ -473,7 +475,6 @@ $(document).ready(function() {
     $("#usermang").removeClass("blur");
   });
 });
-
 
 
 const newPasswordInput = $("#newpass");
@@ -513,5 +514,3 @@ $(document).on('click', '.password-toggle-icon', function() {
   }
 });
 </script>
-
-<script src="/static/psalm_static/assets/vendor/jquery/dist/jquery.min.js"></script>
