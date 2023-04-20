@@ -33,9 +33,16 @@
 						<p class=" mt-2 texttheme" id="fileName">Loading Filename</p>
 						<p class=" text-muted" id="fileuploadDate">22 October 2020</p>
 					</dd>
-					<dt class="col-3 mt-2">Accessed by:</dt>
+					<!-- <dt class="col-3 mt-2">Accessed by:</dt>
 					<dd class="col-8 border-top border-light">						
 						<p class=" mt-2 text-muted" id="fileTopic">Public</p>
+					</dd> -->
+					<dt class="col-3 mt-2">Public Download Link:</dt>
+					<dd class="col-8 border-top border-light">						
+						<p class=" mt-2 text-muted" id="fileTopic">
+							<i><span>http://dtirapid.ph/webrep/go_dl_file/<span id="fids"></span></span></i>
+						<br>
+					</p>
 					</dd>
 				</dl>
 			</div>
@@ -122,12 +129,12 @@
 				$ID("desc").innerHTML = res["Description"]
 				$ID("fileuploadDate").innerHTML = res["date_posted"]
 				$ID("fileName").innerHTML = res["upload"]
+				$ID("fids").innerHTML = res["upload"]
 				$ID("fileTopic").innerHTML = res["formCategory"]
 				$ID("uploadbyname").innerHTML = res["uploaded_by"]['name']
 				$ID("uploadbyemail").innerHTML = res["uploaded_by"]['email']
 				$ID("uploadbyjob").innerHTML = res["uploaded_by"]['job']
 				$ID("uploadbyrcu").innerHTML = res["uploaded_by"]['rcu'] +" | "+ res["uploaded_by"]['pcu']
-
 			}
 		})
 	}
@@ -148,8 +155,6 @@
 		$ID("file_id_req_table").value = table 
 		// alert(ids)
 	}
-
-
 	
 	function request_action(action){
 		var fileName = $ID("fileName").innerHTML
