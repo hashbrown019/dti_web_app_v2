@@ -1,6 +1,6 @@
 <!-- Users Management Modal -->
 
-<div class="modal fade" id="usermang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="bgmodal modal fade" id="usermang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl modal-dialog-scrollable" style="max-width: 80%;">
 		<div class="modal-content">
 			<div class="modal-header bg-light text-dark">
@@ -303,8 +303,8 @@
 </div>
 
 
-<div class="modal fade" id="chngpass" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" style="max-width: 50%;">
+<div class="bgmodal modal fade" id="chngpass" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" style="max-width: 30%;">
         <div class="modal-content">
             <div class="modal-header bg-light text-dark">
                 <h1 class="modal-title" id="exampleModalLabel">Change Password</h1>
@@ -318,29 +318,41 @@
 								
 								<div class="container mt-4 overflow-auto">
 								
-									<div class="mb-3">													
+									<div class="mb-3">
 										<h5 class="small font-weight-bold ms-1 texttheme">Current Password</h5>
-										<input class="form-control form-control" type="password" placeholder="" id="currpass">													
-									</div>
-
-									<div class="mb-3">													
+										<div class="input-group">
+										  <input class="form-control password-toggle" type="password" required placeholder="" id="currpass">
+									
+										</div>
+									  </div>
+									  
+									  <div class="mb-3">
 										<h5 class="small font-weight-bold ms-1 texttheme">New Password</h5>
-										<input class="form-control form-control" type="password" placeholder="" id="newpass">													
-									</div>
-
-									<div class="mb-3">													
+										<div class="input-group">
+										  <input class="form-control password-toggle" type="password" required placeholder="" id="newpass">
+										  <div class="input-group-append">
+											<div class="input-group-text">
+											  <span class="password-toggle-icon far fa-eye" toggle="#newpass"></span>
+											</div>
+										  </div>
+										</div>
+									  </div>
+									  
+									  <div class="mb-3">
 										<h5 class="small font-weight-bold ms-1 texttheme">Confirm New Password</h5>
-										<input class="form-control form-control" type="password" placeholder="" id="confpass">													
-									</div>
-
-									<div class="mt-3">
+										<div class="input-group">
+										  <input class="form-control password-toggle" type="password" required placeholder="" id="confpass">
+										  <div class="input-group-append">
+											<div class="input-group-text">
+											  <span class="password-toggle-icon far fa-eye" toggle="#confpass"></span>
+											</div>
+										  </div>
+										</div>
+									  </div>
+									  <div class="mt-3">
 										<div class="float-xl-right">
 											<button id="resetpass" type="button" class="btn btn-info me-3">Reset Password</button>	
-											<button type="button" class="btn btn-secondary me-3" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>	
-										</div>
-							
-									</div>
-																			
+											<button type="button" class="btn btn-secondary me-3" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>									
 								</div>
 
 							</div>
@@ -355,7 +367,7 @@
     </div>
 </div>
 <style>
-	.modal {
+	.bgmodal {
   /* Other modal styles */
   position: fixed;
   top: 0;
@@ -369,6 +381,9 @@
 .blur {
   filter: blur(3px);
   transition: all 0.3s ease-in-out;
+}
+.toggle-password i.fas {
+    display: none;
 }
 </style>
 
@@ -486,4 +501,17 @@ function validatePasswordMatch() {
   
   changePassButton.prop("disabled", !isValid);
 }
+
+$(document).on('click', '.password-toggle-icon', function() {
+  var input = $($(this).attr('toggle'));
+  if (input.attr('type') == 'password') {
+    input.attr('type', 'text');
+    $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+  } else {
+    input.attr('type', 'password');
+    $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+  }
+});
 </script>
+
+<script src="/static/psalm_static/assets/vendor/jquery/dist/jquery.min.js"></script>
