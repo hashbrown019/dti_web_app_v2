@@ -40,8 +40,7 @@
 					<dt class="col-3 mt-2">Public Download Link:</dt>
 					<dd class="col-8 border-top border-light">						
 						<p class=" mt-2 text-muted" id="fileTopic">
-
-						http://dtirapid.ph/webrep/download_file/<span id="tbs"></span>/<span id="fids"></span>
+							<i><span>http://dtirapid.ph/webrep/go_dl_file/<span id="fids"></span></span></i>
 						<br>
 					</p>
 					</dd>
@@ -113,9 +112,6 @@
 
 
 	function get_file__det(file_ids,table){ 
-
-		$ID("tbs").innerHTML = table // FOR DL LINK
-		$ID("fids").innerHTML = file_ids // FOR DL LINK
 		println(file_ids)
 		$send({
 			action : "/webrep/uploads/docs_item",
@@ -133,6 +129,7 @@
 				$ID("desc").innerHTML = res["Description"]
 				$ID("fileuploadDate").innerHTML = res["date_posted"]
 				$ID("fileName").innerHTML = res["upload"]
+				$ID("fids").innerHTML = res["upload"]
 				$ID("fileTopic").innerHTML = res["formCategory"]
 				$ID("uploadbyname").innerHTML = res["uploaded_by"]['name']
 				$ID("uploadbyemail").innerHTML = res["uploaded_by"]['email']
@@ -158,8 +155,6 @@
 		$ID("file_id_req_table").value = table 
 		// alert(ids)
 	}
-
-
 	
 	function request_action(action){
 		var fileName = $ID("fileName").innerHTML
