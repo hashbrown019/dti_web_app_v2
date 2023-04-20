@@ -291,7 +291,6 @@ class _main:
 		update_del = db.do("UPDATE `webrep_articles` SET `status`='posted' WHERE `id`='{}';".format(ids))
 		return {"db_info":update_del}
 
-
 	@app.route("/webrep/articles/revise/<ids>",methods=["POST","GET"])
 	def revise_article(ids):
 		update_del = db.do("UPDATE `webrep_articles` SET `status`='revise' WHERE `id`='{}';".format(ids))
@@ -306,7 +305,6 @@ class _main:
 		_modules = db.select("SELECT * FROM `__modules`;")
 		return _modules
 	# ======================================================================================================
-
 
 	@app.route("/forum",methods=["POST","GET"])
 	def forum_index():

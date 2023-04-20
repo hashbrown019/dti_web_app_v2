@@ -33,9 +33,17 @@
 						<p class=" mt-2 texttheme" id="fileName">Loading Filename</p>
 						<p class=" text-muted" id="fileuploadDate">22 October 2020</p>
 					</dd>
-					<dt class="col-3 mt-2">Accessed by:</dt>
+					<!-- <dt class="col-3 mt-2">Accessed by:</dt>
 					<dd class="col-8 border-top border-light">						
 						<p class=" mt-2 text-muted" id="fileTopic">Public</p>
+					</dd> -->
+					<dt class="col-3 mt-2">Public Download Link:</dt>
+					<dd class="col-8 border-top border-light">						
+						<p class=" mt-2 text-muted" id="fileTopic">
+
+						http://dtirapid.ph/webrep/download_file/<span id="tbs"></span>/<span id="fids"></span>
+						<br>
+					</p>
 					</dd>
 				</dl>
 			</div>
@@ -105,6 +113,9 @@
 
 
 	function get_file__det(file_ids,table){ 
+
+		$ID("tbs").innerHTML = table // FOR DL LINK
+		$ID("fids").innerHTML = file_ids // FOR DL LINK
 		println(file_ids)
 		$send({
 			action : "/webrep/uploads/docs_item",
@@ -127,7 +138,6 @@
 				$ID("uploadbyemail").innerHTML = res["uploaded_by"]['email']
 				$ID("uploadbyjob").innerHTML = res["uploaded_by"]['job']
 				$ID("uploadbyrcu").innerHTML = res["uploaded_by"]['rcu'] +" | "+ res["uploaded_by"]['pcu']
-
 			}
 		})
 	}

@@ -77,6 +77,22 @@ class user_management:
 		last_row_id = rapid_mysql.do(sql)
 		return jsonify({"last_row_id":last_row_id})
 
+	@app.route("/api/user_status",methods=["POST","GET"]) # GE
+	def user_status():
+		print("  * Edit User status")
+		# FILE_REQ = file_from_request(app)
+		data = dict(request.form)
+		# print(data)
+		key = [];val = [];args=""
+		# data["USER_ID"] = session["USER_DATA"][0]['id']
+		# __f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/",False,True)
+		# data["upload"] = __f["file_arr_str"]
+
+		sql = "UPDATE `users` SET  {} WHERE `id`='{}';".format(args[1:],request.form['id'])
+
+		last_row_id = rapid_mysql.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+
 # def get_all_uploaded_excel_data_heads():
 # 	excel_f_a_heads = c.RECORDS+"/settings/db_sql_excel_form_a.head"
 # 	reader = open(excel_f_a_heads,"r");excel_f_a_heads = json.loads(reader.read());reader.close()
