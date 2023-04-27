@@ -1,0 +1,196 @@
+{% extends "layouts/fmi_form_base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+	<div class="x-col l1 ">
+		&nbsp;
+	</div>
+
+	<div class=" x-col l10 x-container x-card " style="margin-top: 10px; margin-bottom: 20px; background-color: #152951;">
+<br>
+
+	<div class=" x-col l12  " style="margin-top: 10px; margin-bottom: 20px; background-color: white;">
+		
+
+		<div class=" x-container x-padding">
+			<h2 class=" x-container x-white x-padding" style="margin-bottom: -35px;">Project ID - Project Name</h2>
+
+			<button style="float: right;" class=" btn btn-gray-50 d-inline-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-edit"></i>&nbsp;
+                Choose Form to Edit
+            </button>
+            <br><br>
+            <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                <a class="dropdown-item d-flex align-items-center" target="_blank" href="/fmi_form_a">
+                   
+                    FMI Form A - General Information
+                </a>
+                <a class="dropdown-item d-flex align-items-center" target="_blank" href="/fmi_form_b">
+                    
+                    FMI Form B - Project Validation
+                </a>
+                <a class="dropdown-item d-flex align-items-center" target="_blank" href="/fmi_form_c1">
+                    
+                    FMI Form C1 - Procurement
+                </a>
+                <a class="dropdown-item d-flex align-items-center" target="_blank" href="/fmi_form_c2">
+                    
+                    FMI Form C2 - Procurement 2 (For Rebidding Only)
+                </a>
+
+                <a class="dropdown-item d-flex align-items-center" target="_blank" href="/fmi_form_d">
+                    
+                    FMI Form D - Procurement
+                </a>
+
+                <a class="dropdown-item d-flex align-items-center" target="_blank" href="/fmi_form_e">
+                    
+                    FMI Form E - Work Accomplishment
+                </a>
+            </div>
+			 
+		
+				<!--status	--->
+				<div class="x-container x-card x-light-grey" style="margin-bottom: 25px; margin-top: 5px;">
+					<h4 class=" x-container x-padding" style="margin-bottom: -5px; margin-top: -5px; margin-left: -20px;">STATUS OF THE PROJECT</h4>
+					<input class=" x-border x-input" id="status_of_the_project_1" name="status_of_the_project_1" type="text"></input>
+					<input class=" x-border x-input" style="margin-bottom: 10px;" id="status_of_the_project_2" name="status_of_the_project_2" type="text"></input>
+				</div>
+
+				<!---project--->
+				<div class="x-container x-card x-light-grey" style="margin-bottom: 20px;">
+					<h4 class=" x-container x-padding" style="margin-bottom: -5px; margin-top: -5px; margin-left: -20px;">PROJECT PROFILE</h4>
+					
+					<div class="input-group">
+						<span class="input-group-addon ">Location</span>
+						<input id="project_profile_location" type="text" class="form-control" style="width: 300%;" placeholder="Additional Info:">
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon" >Length of the Project</span>
+						<textarea id="project_profile_length_of_projet" type="text" class="form-control"style="width: 300%" placeholder="Additional Info:"></textarea>
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon ">Loan Amount</span>
+						<textarea id="project_profile_loan_amount" type="text" class="form-control" style="width: 300%" placeholder="Additional Info:"></textarea>
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon" >LGU Equity</span>
+						<textarea id="project_profile_lgu_equity" type="text" class="form-control"style="width: 300%" placeholder="Additional Info:"></textarea>
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon ">Total Project Cost</span>
+						<textarea id="project_profile_total_project_cost" type="text" class="form-control" style="width: 300%;"  placeholder="Additional Info:"></textarea>
+					</div>
+					<br>
+					<div class="input-group" style="margin-bottom: 10px;">
+						<span class="input-group-addon" >Supported Value Chain<br>Farmer Organizations Served</span>
+						<textarea id="project_profile_support_value_chain" type="text" class="form-control" style="width: 300%;" placeholder="Additional Info:"></textarea>
+					</div>
+				</div>
+
+
+					<!---not--->
+					<div class="x-container x-card x-light-grey" style="margin-bottom: 20px;">
+						<h4 class=" x-container x-padding" style="margin-bottom: -5px; margin-top: -5px; margin-left: -20px;">NO OBJECTION TRACKER</h4>
+
+						<div class="input-group">
+							<label class="input-group-addon ">No Objection 1</label>
+							<textarea id="no_of_objection_tracker_1" type="text" class="form-control" style="width: 299%"  placeholder="Date Issued: MM/DD/YYYY"></textarea>
+						</div>
+
+						<div class="input-group">
+							<span class="input-group-addon" >No Objection 2</span>
+							<textarea id="no_of_objection_tracker_2" type="text" class="form-control"style="width: 299%" placeholder="Date Issued: MM/DD/YYYY"></textarea>						</div>
+
+						<div class="input-group">
+							<span class="input-group-addon ">No Objection 3</span>
+							<textarea id="no_of_objection_tracker_3" type="text" class="form-control" style="width: 299%" placeholder="Date Issued: MM/DD/YYYY"></textarea>
+						</div>
+
+						<div class="input-group"  style="margin-bottom: 10px;">
+							<span class="input-group-addon" >No Objection 4</span>
+							<textarea id="no_of_objection_tracker_4" type="text" class="form-control"style="width: 299%;" placeholder="Date Issued: MM/DD/YYYY"></textarea>						</div>
+					</div>
+
+
+
+					<div class="x-container x-card x-light-grey">
+						<h4 class=" x-container x-padding" style="margin-bottom: -5px; margin-top: -5px; margin-left: -20px;">FARMER ORGANIZATION SERVED</h4>
+						<div class="x-row x-container x-padding">
+							<style>table, th, td{border: 1px solid black; }</style>
+							<table class="x-table x-container x-table-border" style="border-color: transparent;">
+								<tr>
+
+									<th style="font-size: 20px; background-color: #47d1d1;" colspan="1">
+										<p class="input-group-addon" style="font-size: 20px; background-color: #47d1d1; border: transparent; color: black;">Name of Farmer Organization</p>
+									</th>
+									<td  colspan="1">
+										<p><textarea class="x-input" cols="50" rows="1" id="name_of_farmer_organization_1" name="name_of_farmer_organization_1"></textarea></p>	
+									</td>
+									<td colspan="1">
+										<p><textarea class="x-input" cols="50" rows="1" id="name_of_farmer_organization_2" name="name_of_farmer_organization_2"></textarea></p>
+									</td>
+									<td colspan="1">
+										<p><textarea class="x-input" cols="50" rows="1" id="name_of_farmer_organization_3" name="name_of_farmer_organization_3"></textarea></p>
+									</td>
+									<td colspan="1">
+										<p><textarea class="x-input" cols="50" rows="1"   id="name_of_farmer_organization_4" name="name_of_farmer_organization_4"></textarea></p>
+									</td>
+								</tr>
+
+								<tr>
+
+									<th style="background-color: #47d1d1;" colspan="1">
+										<p class="input-group-addon" style="font-size: 20px; background-color: #47d1d1; border: transparent; color: black;">Number of Farmer Members</p>
+									</th>
+									<td><input class="x-input" type="number" id="number_of_farmer_members_1" name="number_of_farmer_members_1"></td>
+									<td><input class="x-input" type="number" id="number_of_farmer_members_2" name="number_of_farmer_members_2"></td>
+									<td><input class="x-input" type="number" id="number_of_farmer_members_3" name="number_of_farmer_members_3"></td>
+									<td><input class="x-input" type="number" id="number_of_farmer_members_4" name="number_of_farmer_members_4"></td>
+
+								</tr>
+
+								<tr>
+									<th style="background-color: #47d1d1;" colspan="1">
+										<p class="input-group-addon" style="font-size: 20px; background-color: #47d1d1; border: transparent; color: black;">Production Area</p>
+									</th>
+									<td><textarea class="x-input" id="production_area_1" placeholder="Hectares" name="production_area_1"></textarea></td>
+									<td><textarea class="x-input" id="production_area_2" placeholder="Hectares" name="production_area_2"></textarea></td>
+									<td><textarea class="x-input" id="production_area_3" placeholder="Hectares" name="production_area_3"></textarea></td>
+									<td><textarea class="x-input" id="production_area_4" placeholder="Hectares" name="production_area_4"></textarea></td>
+
+
+
+
+								</tr>
+								<tr>
+									<th style="background-color: #47d1d1;" colspan="1">
+										<p class="input-group-addon" style="font-size: 20px; background-color: #47d1d1; border: transparent; color: black;">Facilities Served</p>
+									</th>
+									<td><textarea class="x-input" id="facilities_served_1" name="facilities_served_1"></textarea></td>
+									<td><textarea class="x-input" id="facilities_served_2" name="facilities_served_2"></textarea></td>
+									<td><textarea class="x-input" id="facilities_served_3" name="facilities_served_3"></textarea></td>
+									<td><textarea class="x-input" id="facilities_served_4" name="facilities_served_4"></textarea></td>
+
+								</tr>
+							</table>
+						</div>
+					</div>
+					<input style="margin-bottom: 10px;" type="submit" value="SUBMIT" class="btns">
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
+
+
+{% block javascripts %}{% endblock javascripts %}
