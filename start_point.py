@@ -13,6 +13,7 @@ from views.psalm  import bp_app as psalm
 from views.doofen  import bp_app as doofen
 from views.fund_tracker  import bp_app as fund_tracker
 from views.dcf  import bp_app as dcf
+from views.fmi  import bp_app as fmi
 
 from modules.public_vars import public_vars
 from controllers.inbound import inbound
@@ -40,6 +41,7 @@ app.register_blueprint(psalm.app)
 app.register_blueprint(doofen.app)
 app.register_blueprint(fund_tracker.app)
 app.register_blueprint(dcf.app)
+app.register_blueprint(fmi.app)
 
 print(" * MIS Stats ¾")
 
