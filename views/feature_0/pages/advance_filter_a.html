@@ -149,27 +149,21 @@
 	<!-- =========================== -->
 </div>
 <script type="text/javascript">
-	
-	function dash_get_form_a1(){
-		$send({
-			action : "form_a/dash_a1/dash_get_form_a1",
-			// a_sync : false,
-			func : function(r){
-				var male_res = JSON.parse(r)["male"]
-				for(key in male_res ){
-					println(key)
-					try{$ID(key).innerHTML = male_res[key]}
-					catch(e){warnprintln(e)}
-				}
-				var female_res = JSON.parse(r)["female"]
-				for(key in female_res ){
-					println(key)
-					try{$ID(key).innerHTML = female_res[key]}
-					catch(e){warnprintln(e)}
-				}
-				__money_tag_exec()
-			}
-		})
+	function dash_get_form_a1(datum){
+		var male_res = datum["male"]
+		for(key in male_res ){
+			println(key)
+			try{$ID(key).innerHTML = Money(male_res[key])}
+			catch(e){warnprintln(e)}
+		}
+		var female_res = datum["female"]
+		for(key in female_res ){
+			println(key)
+			try{$ID(key).innerHTML =  Money(female_res[key])}
+			catch(e){warnprintln(e)}
+		}
+		// showing_table_ls_farmer()
+		// __money_tag_exec()
 	}
 
 
