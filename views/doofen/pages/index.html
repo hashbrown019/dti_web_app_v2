@@ -13,6 +13,8 @@
 	<link class="x-links" rel="stylesheet" href="../static/css/css">
 	<link class="x-links" rel="stylesheet" href="../static/css/chip.css">
 	<link class="x-links" rel="stylesheet" href="../static/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/css/fontawesome/css/fontawesome.min.css" type="text/css">
 	<!-- <link rel="icon" href="../static/img/icon.png"> -->
 
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -27,8 +29,9 @@
 
 
 	<link rel="stylesheet" type="text/css" href="../static/css/datatable/jquery.dataTables.css">
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 	<script type="text/javascript" charset="utf8" src="../static/js/datatable/jquery.dataTables.js"></script>
+	<script src="/static/psalm_static/dcf_static/assets/css/fontawesome/js/all.min.js"></script>
 	<script type="text/javascript">
 		// $.fn.dataTableExt.errMode = 'function'
 	</script>
@@ -114,13 +117,100 @@
 				<div class="card">
 					<div class="card-inner">
 						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
-						<span class="material-icons-outlined text-green">groups</span>
+						<span style="color: #009973;" class="material-icons-outlined ">groups</span>
 					</div>
 					<div class="card-progress">
 						<small>NO. OF INPUTED FARMERS ORGANIZATION</small>
 					</div>
 					<span class="text-primary font-weight-bold"></span>
 				</div>
+
+					<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+						<i style="height: 40px;width: 40px; color: #0099cc;" class="fa-solid fa-handshake"></i>
+					</div>
+					<div class="card-progress">
+						<small>NO. OF COOPERATIVE DEVELOPMENT AUTHORITY</small>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+						<i style="height: 30px;width: 30px; color: #b3b300;" class="fa-solid fa-briefcase"></i>
+					</div>
+					<div class="card-progress">
+						<small>NO. OF DEPARTMENT OF LABOR AND EMPLOYMENT</small>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+				
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+						<i style="height: 30px;width: 30px; color: #cc3300;"  class="fa-solid fa-shield-halved"></i>
+				
+					</div>
+					<div class="card-progress">
+						<small>NO. OF SECURITIES AND EXCHANGE COMMISSION</small>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+						<i style="height: 30px;width: 30px; color: #339966;"  class="fa-solid fa-building-wheat"></i>
+						
+					</div>
+					<div class="card-progress">
+						<small>NO. OF DEPARTMENT OF AGRICULTURE</small>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+						<i style="height: 30px;width: 30px; color: #006666;"  class="fa-solid fa-person-digging"></i>
+				
+					</div>
+					<div class="card-progress">
+						<small>NO. OF FARMERS/GROWERS ASSOCIATION</small>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+				<div class="card">
+					<div class="card-inner">
+						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+						<i style="height: 30px;width: 30px; color: #2e5cb8;"  class="fa-solid fa-users-between-lines"></i>
+					
+						
+						
+					</div>
+					<div class="card-progress">
+						<small>NO. OF FARMERS COOPERATIVE TYPE OF COOPERATIVE</small>
+					</div>
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+				<br>
+				<div style="height: 300px; width: 500px; background-color: #f2f2f2;" class="card">
+					<div class="card-inner">
+						<canvas id="myChart" style="width:100%;max-width:600px;"></canvas>
+					
+						
+						
+					</div>
+				
+					<span class="text-primary font-weight-bold"></span>
+				</div>
+
+
+				
 
 			<!-- 	<div class="card">
 					<div class="card-inner">
@@ -166,6 +256,7 @@
 					<span class="text-primary font-weight-bold"></span>
 				</div> -->
 			</div>
+		
 
 <!-- 			<div class="charts">
 				<div class="charts-card">
@@ -318,5 +409,33 @@
 		}, function (error) {
 		});
 	};
+
+
+	var xValues = ["Cacao", "Coffee", "Coconut", "PFN"];
+var yValues = [1, 1, 1, 1];
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9"
+];
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "INDUSTRY CLUSTER"
+    }
+  }
+  
+});
 </script>
 </html>
