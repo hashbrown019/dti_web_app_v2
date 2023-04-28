@@ -177,7 +177,7 @@ class _main:
 	def feature_0_filter_list_farmers():
 		return jsonify({
 			"dash1":_main.feature_0_get_farmer_data_a1(),
-			"dash2":sub_main_module.dash_get_form_a1()}
+			"dash2":sub_main_module.dash_get_form_a1("all")}
 		)
 
 
