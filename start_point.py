@@ -46,8 +46,14 @@ app.register_blueprint(fmi.app)
 print(" * MIS Stats ¾")
 
 @app.route("/")
-def index():return redirect("/webrep")
+def index():
+	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE]
+	return redirect("https://dtirapid.ph/webrep")
 
+@app.route("/test_server") #NOT FOR LOCAL USE
+def test_server():
+	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE_TEST]
+	return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
 
 @app.before_request
 def before_request():

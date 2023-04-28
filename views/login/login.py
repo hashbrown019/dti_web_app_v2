@@ -42,7 +42,7 @@ class _main:
 	@app.route("/nlog",methods=["POST","GET"])
 	def nlog():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
-		return render_template("loginv2.html")
+		return render_template("loginv2.html",DB_STAT=c.DB_CRED[3])
 
 
 	@app.route("/login_auth",methods=["POST"])

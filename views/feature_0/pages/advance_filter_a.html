@@ -1,10 +1,10 @@
 <div class="x-container x-padding x-card x-white x-round" style="display: block;">
 	<div class="x-container">
 		<span class="x-xlarge">Advance Filter</span>
-		<span class="w3-badge x-round-xlarge x-small x-red" style="padding:2px;">On Dev</span>
+		<span style="padding:5px;" class="x-red x-round-large">On-Dev</span>
 	</div>
 	<div class="x-row x-container x-padding">
-		<div class="x-col m2 l2">
+		<div class="">
 			<span class="x-text-grey">Area</span>
 			<select id="f_rcu" class="FILTER_FIELD x-input x-select x-border x-round">
 				<option value="all"  selected disabled>Select Area</option>
@@ -18,25 +18,27 @@
 				<option>BARMM</option>
 			</select>
 		</div>
-<!-- 		<div class="x-col m2 l2">
+		<div class="">
 			<span class="x-text-grey">Sub-Form A</span>
 			<select id="f_subform" class="FILTER_FIELD x-input x-select x-border x-round">
 				<option value="all" selected disabled>Select Subform</option>
 				<option value="form_a_farmer_profiles">A1: Farmer Profile</option>
-				<option value="form_a_farm_land">A2: Farm Information</option>
-				<option value="form_a_hh_profile">A3: Household Profiles</option>
-				<option value="form_a_prod_cost">A4: Production Cost</option>
-				<option value="form_a_farm_workers_laborers">A5: Farm Workers and Labors</option>
-				<option value="form_a_farm_post_harvest">A6: Post Harvest</option>
-				<option value="form_a_farm_marketing_sales">A7: Marketing/Sales Distribution Channels</option>
-				<option value="form_a_access_financial">A8: Access to Financial Services and Products</option>
-				<option value="form_a_feedback">A9: Industry Feedback</option>
+				<option disabled value="form_a_farm_land">A2: Farm Information</option>
+				<option disabled value="form_a_hh_profile">A3: Household Profiles</option>
+				<option disabled value="form_a_prod_cost">A4: Production Cost</option>
+				<option disabled value="form_a_farm_workers_laborers">A5: Farm Workers and Labors</option>
+				<option disabled value="form_a_farm_post_harvest">A6: Post Harvest</option>
+				<option disabled value="form_a_farm_marketing_sales">A7: Marketing/Sales Distribution Channels</option>
+				<option disabled value="form_a_access_financial">A8: Access to Financial Services and Products</option>
+				<option disabled value="form_a_feedback">A9: Industry Feedback</option>
 			</select>
-		</div> -->
-		<div class="x-container x-col m2 l2 x-right">
-			<span>Submit Filters</span><br>
+			<span style="padding:5px;" class="x-red x-round-large">On-Dev</span>
+		</div>
+		<div class="x-container  x-right">
+			<br>
 			<button class="x-btn x-blue x-round x-block" onclick="filter()">
 				Filter <span class="fa fa-filter"></span>
+				<span id="fltr_load" class="x-animate-fading" style="display:none;">| Loading</span>
 			</button>
 		</div>
 	</div>
@@ -51,8 +53,10 @@
 
 <div class="x-container x-padding x-card x-white x-round" style="display: block;">
 	<div class="x-container">
-		<span class="x-xlarge">Farmer Profile</span>
-		<span class="w3-badge x-round-xlarge x-small x-red" style="padding:2px;">On Dev</span>
+		<b class="x-xlarge">Farmer Profile</b>
+	</div>
+	<div class="x-container">
+		Some profiles will not reflect in the dashboard filter, this data is either corrupt, untagged in a specific category or an orphan data (data that has no associated user creator). some of this data are subject in validation and data cleansing 
 	</div>
 	<div class="x-row x-container x-padding">
 		<!-- DASH FOR MALE -->
@@ -60,9 +64,9 @@
 			<div class="x-row x-container x-padding">
 				<div class="x-container x-center x-teal x-padding x-round x-border-dashed x-border-teal">
 					<b id="total_mal" class="x-xxlarge _money_tag"> 00 </b><br>
-					<span class="x-small">
+					<b class="x-large">
 						Male<br>
-					</span>
+					</b>
 				</div>
 			</div>
 			<div class="x-row ">
@@ -103,16 +107,16 @@
 		<!-- DASH FOR FEMALE -->
 		<div class="x-container x-padding x-col l6 m6 x-border x-border-dashed">
 			<div class="x-row x-container x-padding">
-				<div class="x-container x-center x-teal x-padding x-round x-border-dashed x-border-teal">
+				<div class="x-container x-center x-orange x-padding x-round x-border-dashed x-border-orange">
 					<b id="total_female" class="x-xxlarge _money_tag"> 00 </b><br>
-					<span class="x-small">
+					<b class="x-large">
 						Female<br>
-					</span>
+					</b>
 				</div>
 			</div>
 			<div class="x-row ">
 				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
 						<b id="female_is_pwd" class="x-large _money_tag"> 00 </b><br>
 						<span class="x-small">
 							PWD<br>
@@ -120,7 +124,7 @@
 					</div>
 				</div>
 				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
 						<b id="female_is_ip" class="x-large _money_tag"> 00 </b><br>
 						<span class="x-small">
 							Youth<br>
@@ -128,7 +132,7 @@
 					</div>
 				</div>
 				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
 						<b id="female_is_youth" class="x-large _money_tag"> 00 </b><br>
 						<span class="x-small">
 							IP<br>
@@ -136,7 +140,7 @@
 					</div>
 				</div>
 				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
 						<b id="female_is_sen_cit" class="x-large _money_tag"> 00 </b><br>
 						<span class="x-small">
 							Senior Citizen<br>
@@ -166,13 +170,28 @@
 		// __money_tag_exec()
 	}
 
+	function filter_field_dash(area){
+		$send({
+			action : "/form_a/dash_a1/dash_get_form_a1/"+area,
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)
+				dash_get_form_a1(res)
+				println(" Requesting Done")
+				$ID('fltr_load').style.display = "none"
+			}
+		})
+		println(" Requesting Data")
+	}
 
 	function filter() {
+		$ID('fltr_load').style.display = "inline-block"
 		var filter_field_vals = {}
 		var filter_field = $CLASS('FILTER_FIELD')
 		for (var i = 0; i < filter_field.length; i++) {
 			filter_field_vals[filter_field[i].id] = filter_field[i].value
 		}
 		warnprintln(filter_field_vals)
+		filter_field_dash(filter_field_vals['f_rcu'])
 	}
 </script>
