@@ -45,6 +45,10 @@ class _main:
 		print(page)
 		return render_template(page)
 
+	@app.route("/form_a/dash_a1/dash_get_form_a1",methods=["POST","GET"])
+	def dash_get_form_a1():
+		return {"male":_main.dash_get_male(),"female":_main.dash_get_female()}
+
 	@app.route("/form_a/dash_a1/dash_get_male",methods=["POST","GET"])
 	def dash_get_male():
 		m_c_male = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE `farmer_sex` = 'male';")[0]['count']
@@ -78,8 +82,6 @@ class _main:
 							ex_c_male_sen_cit += 1
 				except Exception as e:
 					print(e)
-
-		
 		return {
 			'total_mal':ex_c_male + m_c_male,
 			'male_is_pwd':m_c_male_is_pwd + ex_c_male_is_pwd,
@@ -87,6 +89,45 @@ class _main:
 			'male_is_youth':m_c_male_is_youth + ex_c_male_is_youth,
 			'male_is_sen_cit':m_c_male_is_sen_cit + ex_c_male_sen_cit
 			}
-		# return {'ex_c_male_is_youth':ex_c_male_is_youth,"ex_c_male_sen_cit":ex_c_male_sen_cit}
 
 		
+	@app.route("/form_a/dash_a1/dash_get_female",methods=["POST","GET"])
+	def dash_get_female():
+		m_c_female = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE `farmer_sex` = 'female';")[0]['count']
+
+		m_c_female_is_pwd = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE `farmer_sex` = 'female' AND `farmer_is_pwd`='true';")[0]['count']
+		m_c_female_is_ip = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE `farmer_sex` = 'female' AND `farmer_is_ip`='true';")[0]['count']
+		m_c_female_is_youth = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE `farmer_sex` = 'female' AND `farmer_age` BETWEEN '15' AND '30';")[0]['count']
+		m_c_female_is_sen_cit = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE `farmer_sex` = 'female' AND `farmer_age` BETWEEN '60' AND '90';")[0]['count']
+		# =============
+		ex_c_female = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `excel_import_form_a` WHERE `frmer_prof_@_basic_Info_@_Sex`='female';")[0]['count']
+
+		ex_c_female_is_pwd = ex_c_female - rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `excel_import_form_a` WHERE `frmer_prof_@_basic_Info_@_Sex`='female' AND `frmer_prof_@_Farming_Basic_Info_@_Farmer_pwd` = '';")[0]['count'] # SUBTRACT TO THE TOTAL female IN EXCEL
+
+		ex_c_female_is_ip = ex_c_female - rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `excel_import_form_a` WHERE `frmer_prof_@_basic_Info_@_Sex`='female' AND `frmer_prof_@_hh_Head_Info_@_head_hh_ip` = '';")[0]['count'] # SUBTRACT TO THE TOTAL female IN EXCEL
+
+		_ex_mal_bday = rapid_mysql.select("SELECT `frmer_prof_@_basic_Info_@_birthday` as 'bday' FROM `excel_import_form_a` WHERE `frmer_prof_@_basic_Info_@_Sex`='female' AND `frmer_prof_@_basic_Info_@_birthday` LIKE '%-%';")
+		ex_c_female_is_youth = 0
+		ex_c_female_sen_cit = 0
+
+		current_year = date.today().year
+
+		for bd in _ex_mal_bday:
+			bday = bd['bday'].split("-")
+			if(len(bday)==3):
+				try:
+					age = int(current_year)-int(bday[2])
+					if(age <= 100):
+						if(age >= 15 and age <=30):
+							ex_c_female_is_youth += 1
+						if(age >= 60 and age <=90):
+							ex_c_female_sen_cit += 1
+				except Exception as e:
+					print(e)
+		return {
+			'total_female':ex_c_female + m_c_female,
+			'female_is_pwd':m_c_female_is_pwd + ex_c_female_is_pwd,
+			'female_is_ip':m_c_female_is_ip + ex_c_female_is_ip,
+			'female_is_youth':m_c_female_is_youth + ex_c_female_is_youth,
+			'female_is_sen_cit':m_c_female_is_sen_cit + ex_c_female_sen_cit
+			}
