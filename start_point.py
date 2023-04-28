@@ -46,7 +46,7 @@ app.register_blueprint(fmi.app)
 print(" * MIS Stats ¾")
 
 @app.route("/")
-def index():return redirect("/webrep")
+def index():return redirect("https://dtirapid.ph/webrep")
 
 @app.route("/test_server")
 def test_server():return redirect("http://18.138.151.175/")
