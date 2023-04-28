@@ -67,8 +67,8 @@
 	var init_counter = 0
 	let TABLE
 
-	// $onload(dash_get_form_a1) // FOR ADV FILTER LOAD DASH
 	$onload(showing_table_ls_farmer)
+	// $onload(dash_get_form_a1) // FOR ADV FILTER LOAD DASH
 
 	function showing_table_ls_farmer(){
 		println(" -- Getting List Farmers")
@@ -80,9 +80,10 @@
 			// a_sync : false,
 			func : function (rest){
 				println(" -- Getting List Farmers Done")
-				res = JSON.parse(rest)
+				res = JSON.parse(rest)['dash1']
+				res2 = JSON.parse(rest)['dash2']
 				create_table(res)
-				dash_get_form_a1()
+				dash_get_form_a1(res2)
 				// window.setTimeout(dash_get_form_a1,1000)
 				SPINNER_LOADER.hide()
 				window.setInterval(get_notif_unseen,1000)

@@ -7,8 +7,10 @@ import os, random, json, shutil
 from controllers.outbound import outbound as outb
 from controllers.inbound import inbound as inb
 from controllers.inbound import data_cleaning as  d_c
-from werkzeug.utils import secure_filename
 
+from views.feature_0.feature_0_sub import _main as sub_main_module
+from werkzeug.utils import secure_filename
+import requests
 from controllers.engine_excel_to_sql import form_excel_a_handler
 
 from multiprocessing import Process
@@ -173,7 +175,10 @@ class _main:
 # ==============================================================================
 	@app.route("/feature_0/filter_list_farmers",methods=["POST","GET"])
 	def feature_0_filter_list_farmers():
-		return _main.feature_0_get_farmer_data_a1()
+		return jsonify({
+			"dash1":_main.feature_0_get_farmer_data_a1(),
+			"dash2":sub_main_module.dash_get_form_a1()}
+		)
 
 
 	@app.route("/feature_0/get_uploaded_excel",methods=["POST","GET"])
@@ -227,7 +232,7 @@ class _main:
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		all_farmer_small_data = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False)
 		random.shuffle(all_farmer_small_data)
-		return jsonify(all_farmer_small_data)
+		return all_farmer_small_data
 		# return ({ "data" : all_farmer_small_data})
 
 	@app.route("/feature_0/dashboard_home_",methods=["POST","GET"])
