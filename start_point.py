@@ -53,7 +53,7 @@ def index():
 @app.route("/test_server") #NOT FOR LOCAL USE
 def test_server():
 	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE_TEST]
-	return redirect("http://18.138.151.175/") #NOT FOR LOCAL USE
+	return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
 
 @app.before_request
 def before_request():
