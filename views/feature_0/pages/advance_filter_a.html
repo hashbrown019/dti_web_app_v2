@@ -18,17 +18,7 @@
 				<option>BARMM</option>
 			</select>
 		</div>
-		<div class="x-col m2 l2">
-			<span class="x-text-grey">Sex</span>
-			<select id="f_sex" class="FILTER_FIELD x-input x-select x-border x-round">
-				<option value="all"  selected disabled>Select Sex</option>
-				<option>All</option>
-				<option>Female</option>
-				<option>Male</option>
-				<option>Untagged</option>
-			</select>
-		</div>
-		<div class="x-col m2 l2">
+<!-- 		<div class="x-col m2 l2">
 			<span class="x-text-grey">Sub-Form A</span>
 			<select id="f_subform" class="FILTER_FIELD x-input x-select x-border x-round">
 				<option value="all" selected disabled>Select Subform</option>
@@ -42,7 +32,7 @@
 				<option value="form_a_access_financial">A8: Access to Financial Services and Products</option>
 				<option value="form_a_feedback">A9: Industry Feedback</option>
 			</select>
-		</div>
+		</div> -->
 		<div class="x-container x-col m2 l2 x-right">
 			<span>Submit Filters</span><br>
 			<button class="x-btn x-blue x-round x-block" onclick="filter()">
@@ -51,14 +41,138 @@
 		</div>
 	</div>
 	<!-- =========================== --> 
-	<div class="x-container">
+	<!-- <div class="x-container">
 		<h3>Filter result</h3>
 	</div>
 	<div class="x-container  x-row">
 		<span class="w3-badge x-round-xlarge x-small x-red" style="padding:2px;">On Dev</span>
+	</div> -->
+</div>
+
+<div class="x-container x-padding x-card x-white x-round" style="display: block;">
+	<div class="x-container">
+		<span class="x-xlarge">Farmer Profile</span>
+		<span class="w3-badge x-round-xlarge x-small x-red" style="padding:2px;">On Dev</span>
 	</div>
+	<div class="x-row x-container x-padding">
+		<!-- DASH FOR MALE -->
+		<div class="x-container x-padding x-col l6 m6 x-border x-border-dashed">
+			<div class="x-row x-container x-padding">
+				<div class="x-container x-center x-teal x-padding x-round x-border-dashed x-border-teal">
+					<b id="total_mal" class="x-xxlarge _money_tag"> 00 </b><br>
+					<span class="x-small">
+						Male<br>
+					</span>
+				</div>
+			</div>
+			<div class="x-row ">
+				<div class="x-container x-padding">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+						<b id="male_is_pwd" class="x-large _money_tag"> 00 </b><br>
+						<span class="x-small">
+							PWD<br>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-padding">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+						<b id="male_is_ip" class="x-large _money_tag"> 00 </b><br>
+						<span class="x-small">
+							Youth<br>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-padding">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+						<b id="male_is_youth" class="x-large _money_tag"> 00 </b><br>
+						<span class="x-small">
+							IP<br>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-padding">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+						<b id="male_is_sen_cit" class="x-large _money_tag"> 00 </b><br>
+						<span class="x-small">
+							Senior Citizen<br>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- DASH FOR FEMALE -->
+		<div class="x-container x-padding x-col l6 m6 x-border x-border-dashed">
+			<div class="x-row x-container x-padding">
+				<div class="x-container x-center x-teal x-padding x-round x-border-dashed x-border-teal">
+					<b id="total_female" class="x-xxlarge _money_tag"> 00 </b><br>
+					<span class="x-small">
+						Female<br>
+					</span>
+				</div>
+			</div>
+			<div class="x-row ">
+				<div class="x-container x-padding">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+						<b id="female_is_pwd" class="x-large _money_tag"> 00 </b><br>
+						<span class="x-small">
+							PWD<br>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-padding">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+						<b id="female_is_ip" class="x-large _money_tag"> 00 </b><br>
+						<span class="x-small">
+							Youth<br>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-padding">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+						<b id="female_is_youth" class="x-large _money_tag"> 00 </b><br>
+						<span class="x-small">
+							IP<br>
+						</span>
+					</div>
+				</div>
+				<div class="x-container x-padding">
+					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+						<b id="female_is_sen_cit" class="x-large _money_tag"> 00 </b><br>
+						<span class="x-small">
+							Senior Citizen<br>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- =========================== -->
 </div>
 <script type="text/javascript">
+	
+	function dash_get_form_a1(){
+		$send({
+			action : "form_a/dash_a1/dash_get_form_a1",
+			// a_sync : false,
+			func : function(r){
+				var male_res = JSON.parse(r)["male"]
+				for(key in male_res ){
+					println(key)
+					try{$ID(key).innerHTML = male_res[key]}
+					catch(e){warnprintln(e)}
+				}
+				var female_res = JSON.parse(r)["female"]
+				for(key in female_res ){
+					println(key)
+					try{$ID(key).innerHTML = female_res[key]}
+					catch(e){warnprintln(e)}
+				}
+				__money_tag_exec()
+			}
+		})
+	}
+
+
 	function filter() {
 		var filter_field_vals = {}
 		var filter_field = $CLASS('FILTER_FIELD')
