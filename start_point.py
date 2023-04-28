@@ -48,6 +48,8 @@ print(" * MIS Stats ¾")
 @app.route("/")
 def index():return redirect("/webrep")
 
+@app.route("/test_server")
+def index():return redirect("http://18.138.151.175/")
 
 @app.before_request
 def before_request():
