@@ -56,20 +56,20 @@ def index():
 
 @app.route("/test_server") #NOT FOR LOCAL USE
 def test_server():
+	if(c.IS_ON_SERVER):
+		return redirect("http://18.138.151.175/test_server_on_aws") #NOT FOR LOCAL USE
+	else:
+		return redirect("http://localhost:5000/test_server_on_aws")
+
+
+@app.route("/test_server_on_aws")
+def test_server_on_aws():
 	c.DB_CRED[3] = c.MOCK_DATABASE_TEST
 	print("=====================================")
 	print(c.MOCK_DATABASE_TEST)
 	print(c.DB_CRED[3])
 	print("=====================================")
-	if(c.IS_ON_SERVER):
-		return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
-	else:
-		return redirect("http://localhost:5000/webrep")
-
-
-@app.route("/test_server_on_aws")
-def test_server_on_aws():
-	pass
+	return redirect("/webrep")
 
 
 @app.before_request
