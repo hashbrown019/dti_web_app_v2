@@ -11,6 +11,7 @@ def _init_config_():
 	c._DATABASE = c.SERVER_DATABASE
 	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE] # DEV
 	c.PORT = 80
+	c.IS_ON_SERVER = True
 # ======================================================================
 print(" * Providing Imports Flask app")
 

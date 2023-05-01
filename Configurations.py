@@ -41,6 +41,8 @@ SERVER_DATABASE_TEST = "mis_2023_test"
 
 # LOCAL_DATABASE = "dti_rapidxi"
 
+IS_ON_SERVER = False
+
 # SERVER_PORT=3306
 # SERVER_HOST = "dtirapid.mysql.pythonanywhere-services.com"
 # SERVER_USER = "dtirapid"
