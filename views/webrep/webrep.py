@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, redirect, jsonify, send_file
+from flask import Blueprint, flash, render_template, request, session, redirect, jsonify, send_file
 from flask_session import Session
 from modules.Connections import mysql
 from modules.Req_Brorn_util import string_websafe as STRS
@@ -27,6 +27,7 @@ class _main:
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
 		print("databse = "+c.DB_CRED[3])
+		db = mysql(*c.DB_CRED)
 		return redirect("/hi_there?ver=dti_rapidgrowth_"+c.DB_CRED[3])
 
 	@app.route("/hi_there",methods=["POST","GET"])

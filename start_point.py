@@ -48,29 +48,18 @@ print(" * MIS Stats ¾")
 @app.route("/")
 def index():
 	if(c.IS_ON_SERVER):
-		c.DB_CRED[3] = c.SERVER_DATABASE
+		# c.DB_CRED[3] = c.SERVER_DATABASE
 		return redirect("https://dtirapid.ph/webrep")
 	else:
-		c.DB_CRED[3] = c.LOCAL_DATABASE
+		# c.DB_CRED[3] = c.LOCAL_DATABASE
 		return redirect("http://localhost:5000/webrep")
 
 @app.route("/test_server") #NOT FOR LOCAL USE
-def test_server():
-	if(c.IS_ON_SERVER):
-		return redirect("http://18.138.151.175/test_server_on_aws") #NOT FOR LOCAL USE
-	else:
-		return redirect("http://localhost:5000/test_server_on_aws")
-
-
-@app.route("/test_server_on_aws")
-def test_server_on_aws():
-	c.DB_CRED[3] = c.MOCK_DATABASE_TEST
-	print("=====================================")
-	print(c.MOCK_DATABASE_TEST)
-	print(c.DB_CRED[3])
-	print("=====================================")
-	return redirect("/webrep")
-
+def test_server():#NOT FOR LOCAL USE
+	if(c.IS_ON_SERVER):#NOT FOR LOCAL USE
+		return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
+	else:#NOT FOR LOCAL USE
+		return redirect("http://localhost:5000/webrep")#NOT FOR LOCAL USE
 
 @app.before_request
 def before_request():
