@@ -26,9 +26,9 @@ class _main:
 	# ======================================================================================================
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
-		return redirect("/hi_there")
+		return redirect("/hi_there?ver=dti_rapidgrowth_"+c.DB_CRED[3])
 
-	@app.route("/hi_there?ver=dti_rapidgrowth_"+c.DB_CRED[3],methods=["POST","GET"])
+	@app.route("/hi_there",methods=["POST","GET"])
 	def hi_there():
 		return render_template(
 			"home/home.html",
