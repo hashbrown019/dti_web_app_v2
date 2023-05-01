@@ -31,13 +31,11 @@ class _main:
 		super(_main, self).__init__();
 		self.arg = arg
 
-
 	def is_on_session(): return ('USER_DATA' in session)
 	# ===========================V1==========================================
 	@app.route("/feature_0_sub",methods=["POST","GET"])
 	def feature_0_sub():
 		return {"status":"ok"}
-
 
 	@app.route("/form_a/get_sub_form/<s_form>",methods=["POST","GET"])
 	def get_sub_form(s_form):

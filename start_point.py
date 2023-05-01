@@ -20,7 +20,7 @@ from controllers.inbound import inbound
 from apis import api
 import json
 from controllers import Logs
-# from getmac import get_mac_address
+
 Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL")
 
 app = Flask(__name__)
@@ -31,17 +31,17 @@ app.secret_key=c.SECRET_KEY
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-app.register_blueprint(login.app)
-app.register_blueprint(home.app)
-app.register_blueprint(api.app)
-app.register_blueprint(feature_0.app)
-app.register_blueprint(feature_0_sub.app)
-app.register_blueprint(webrep.app)
-app.register_blueprint(psalm.app)
-app.register_blueprint(doofen.app)
-app.register_blueprint(fund_tracker.app)
-app.register_blueprint(dcf.app)
-app.register_blueprint(fmi.app)
+app.register_blueprint(login.app);
+app.register_blueprint(home.app);
+app.register_blueprint(api.app);
+app.register_blueprint(feature_0.app);
+app.register_blueprint(feature_0_sub.app);
+app.register_blueprint(webrep.app);
+app.register_blueprint(psalm.app);
+app.register_blueprint(doofen.app);
+app.register_blueprint(fund_tracker.app);
+app.register_blueprint(dcf.app);
+app.register_blueprint(fmi.app);
 
 print(" * MIS Stats ¾")
 
@@ -53,12 +53,16 @@ def index():
 	else:
 		return redirect("http://localhost/webrep")
 
-
 if(c.IS_ON_SERVER):
 	@app.route("/test_server") #NOT FOR LOCAL USE
 	def test_server():
 		c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE_TEST]
 		return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
+
+@app.route("/test_server_on_aws")
+def test_server_on_aws():
+	pass
+
 
 @app.before_request
 def before_request():
