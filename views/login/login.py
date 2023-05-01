@@ -28,7 +28,7 @@ class _main:
 	def login_dev_test():
 		return render_template("login.html")
 
-	@app.route("/login_v2023",methods=["POST","GET"])
+	@app.route("/login_v2023?ver=dti_rapidgrowth_"+c.DB_CRED[3],methods=["POST","GET"])
 	def login_v2023():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		# return render_template("login_v2.html")
