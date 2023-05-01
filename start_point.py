@@ -57,8 +57,10 @@ def index():
 @app.route("/test_server") #NOT FOR LOCAL USE
 def test_server():
 	c.DB_CRED[3] = c.MOCK_DATABASE_TEST
+	print("=====================================")
 	print(c.MOCK_DATABASE_TEST)
 	print(c.DB_CRED[3])
+	print("=====================================")
 	if(c.IS_ON_SERVER):
 		return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
 	else:
