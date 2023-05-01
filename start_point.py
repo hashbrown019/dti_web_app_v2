@@ -48,7 +48,7 @@ print(" * MIS Stats ¾")
 @app.route("/")
 def index():
 	if(c.IS_ON_SERVER):
-		c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE]
+		# c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE]
 		return redirect("https://dtirapid.ph/webrep")
 	else:
 		return redirect("http://localhost/webrep")
