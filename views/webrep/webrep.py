@@ -26,6 +26,7 @@ class _main:
 	# ======================================================================================================
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
+		print("databse = "+c.DB_CRED[3])
 		return redirect("/hi_there?ver=dti_rapidgrowth_"+c.DB_CRED[3])
 
 	@app.route("/hi_there",methods=["POST","GET"])

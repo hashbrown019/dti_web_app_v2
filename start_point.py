@@ -48,16 +48,20 @@ print(" * MIS Stats ¾")
 @app.route("/")
 def index():
 	if(c.IS_ON_SERVER):
-		# c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE]
+		c.DB_CRED[3] = c.SERVER_DATABASE
 		return redirect("https://dtirapid.ph/webrep")
 	else:
-		return redirect("http://localhost/webrep")
+		c.DB_CRED[3] = c.LOCAL_DATABASE
+		return redirect("http://localhost:5000/webrep")
 
-if(c.IS_ON_SERVER):
-	@app.route("/test_server") #NOT FOR LOCAL USE
-	def test_server():
-		c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE_TEST]
+@app.route("/test_server") #NOT FOR LOCAL USE
+def test_server():
+	c.DB_CRED[3] = c.MOCK_DATABASE_TEST
+	if(c.IS_ON_SERVER):
 		return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
+	else:
+		return redirect("http://localhost:5000/webrep")
+
 
 @app.route("/test_server_on_aws")
 def test_server_on_aws():
@@ -66,6 +70,7 @@ def test_server_on_aws():
 
 @app.before_request
 def before_request():
+	# print("databse = "+c.DB_CRED[3])
 	# ip_addr = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
 	ip_addr = request.access_route[0]
 	agent = request.headers.get('User-Agent')
