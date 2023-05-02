@@ -20,7 +20,7 @@ from controllers.inbound import inbound
 from apis import api
 import json
 from controllers import Logs
-# from getmac import get_mac_address
+
 Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL")
 
 app = Flask(__name__)
@@ -31,32 +31,39 @@ app.secret_key=c.SECRET_KEY
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-app.register_blueprint(login.app)
-app.register_blueprint(home.app)
-app.register_blueprint(api.app)
-app.register_blueprint(feature_0.app)
-app.register_blueprint(feature_0_sub.app)
-app.register_blueprint(webrep.app)
-app.register_blueprint(psalm.app)
-app.register_blueprint(doofen.app)
-app.register_blueprint(fund_tracker.app)
-app.register_blueprint(dcf.app)
-app.register_blueprint(fmi.app)
+app.register_blueprint(login.app);
+app.register_blueprint(home.app);
+app.register_blueprint(api.app);
+app.register_blueprint(feature_0.app);
+app.register_blueprint(feature_0_sub.app);
+app.register_blueprint(webrep.app);
+app.register_blueprint(psalm.app);
+app.register_blueprint(doofen.app);
+app.register_blueprint(fund_tracker.app);
+app.register_blueprint(dcf.app);
+app.register_blueprint(fmi.app);
 
 print(" * MIS Stats ¾")
 
 @app.route("/")
 def index():
-	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE]
-	return redirect("https://dtirapid.ph/webrep")
+	if(c.IS_ON_SERVER):
+		# c.DB_CRED[3] = c.SERVER_DATABASE
+		return redirect("https://dtirapid.ph/webrep")
+	else:
+		# c.DB_CRED[3] = c.LOCAL_DATABASE
+		return redirect("http://localhost:5000/webrep")
 
 @app.route("/test_server") #NOT FOR LOCAL USE
-def test_server():
-	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE_TEST]
-	return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
+def test_server():#NOT FOR LOCAL USE
+	if(c.IS_ON_SERVER):#NOT FOR LOCAL USE
+		return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
+	else:#NOT FOR LOCAL USE
+		return redirect("http://localhost:5000/webrep")#NOT FOR LOCAL USE
 
 @app.before_request
 def before_request():
+	# print("databse = "+c.DB_CRED[3])
 	# ip_addr = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
 	ip_addr = request.access_route[0]
 	agent = request.headers.get('User-Agent')

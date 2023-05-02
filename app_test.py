@@ -9,7 +9,7 @@ def _init_config_():
 	c._USER = c.SERVER_USER
 	c._PASSWORD = c.SERVER_PASSWORD
 	c._DATABASE = c.SERVER_DATABASE
-	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE] # DEV
+	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.MOCK_DATABASE_TEST] # DEV
 	c.PORT = 80
 	c.IS_ON_SERVER = True
 # ======================================================================
