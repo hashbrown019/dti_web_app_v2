@@ -177,6 +177,111 @@
 	font-weight: bolder;
 }
 
+.profile-dropdown {
+  position: relative;
+  width: fit-content;
+}
+
+.profile-dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 150px;
+  border-radius: 50px;
+  color: var(--black);
+  /* background-color: white;
+  box-shadow: var(--shadow); */
+
+  cursor: pointer;
+  border: 1px solid var(--secondary);
+  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in,
+    border 0.3s;
+}
+
+.profile-dropdown-btn:hover {
+  background-color: var(--secondary-light-2);
+  box-shadow: var(--shadow);
+}
+
+.profile-img {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: url(./assets/profile-pic.jpg);
+  background-size: cover;
+}
+
+.profile-img i {
+  position: absolute;
+  right: 0;
+  bottom: 0.3rem;
+  font-size: 0.5rem;
+  color: var(--green);
+}
+
+.profile-dropdown-btn span {
+  margin: 0 0.5rem;
+  margin-right: 0;
+}
+
+.profile-dropdown-list {
+  position: absolute;
+  top: 68px;
+  width: 220px;
+  right: 0;
+  background-color: var(--white);
+  border-radius: 10px;
+  max-height: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: max-height 0.5s;
+}
+
+.profile-dropdown-list hr {
+  border: 0.5px solid var(--green);
+}
+
+.profile-dropdown-list.active {
+  max-height: 500px;
+}
+
+.profile-dropdown-list-item {
+  padding: 0.5rem 0rem 0.5rem 1rem;
+  transition: background-color 0.2s ease-in, padding-left 0.2s;
+}
+
+.profile-dropdown-list-item a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.profile-dropdown-list-item a i {
+  margin-right: 0.8rem;
+  font-size: 1.1rem;
+  width: 2.3rem;
+  height: 2.3rem;
+  background-color: var(--secondary);
+  color: var(--white);
+  line-height: 2.3rem;
+  text-align: center;
+  margin-right: 1rem;
+  border-radius: 50%;
+  transition: margin-right 0.3s;
+}
+
+.profile-dropdown-list-item:hover {
+  padding-left: 1.5rem;
+  background-color: var(--secondary-light);
+}
+
 </style>
 
 <body id="container_b">
@@ -190,7 +295,68 @@
 		<!-- <div class="card-header">{{user_data['name']}}</div> -->
 		<div class="card-body">
 			<!-- <h5 class="card-title">Primary card title</h5> -->
-			<a class="btn btn-md ">
+
+
+			<div class="profile-dropdown">
+				<div onclick="toggle()" class="profile-dropdown-btn">
+				  <div class="profile-img">
+					<i class="fa-solid fa-circle"></i>
+				  </div>
+		
+				  <span
+					>Victoria
+					<i class="fa-solid fa-angle-down"></i>
+				  </span>
+				</div>
+		
+				<ul class="profile-dropdown-list">
+				  <li class="profile-dropdown-list-item">
+					<a href="#">
+					  <i class="fa-regular fa-user"></i>
+					  Edit Profile
+					</a>
+				  </li>
+		
+				  <li class="profile-dropdown-list-item">
+					<a href="#">
+					  <i class="fa-regular fa-envelope"></i>
+					  Inbox
+					</a>
+				  </li>
+		
+				  <li class="profile-dropdown-list-item">
+					<a href="#">
+					  <i class="fa-solid fa-chart-line"></i>
+					  Analytics
+					</a>
+				  </li>
+		
+				  <li class="profile-dropdown-list-item">
+					<a href="#">
+					  <i class="fa-solid fa-sliders"></i>
+					  Settings
+					</a>
+				  </li>
+		
+				  <li class="profile-dropdown-list-item">
+					<a href="#">
+					  <i class="fa-regular fa-circle-question"></i>
+					  Help & Support
+					</a>
+				  </li>
+				  <hr />
+		
+				  <li class="profile-dropdown-list-item">
+					<a href="#">
+					  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+					  Log out
+					</a>
+				  </li>
+				</ul>
+			  </div>
+
+
+			<!--<a class="btn btn-md ">
 				<span class="ms-start text-white">
 					<i><img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;"></i> 
 					{{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
@@ -213,7 +379,7 @@
 						</button>
 					</div>
 				</div>
-			</a>
+			</a>-->
 		</div>
 </div>
 
@@ -228,7 +394,19 @@
 			{% include "user_management.html" %}
 		</div>
 	</div>
-	
+	<script>
+		let profileDropdownList = document.querySelector(".profile-dropdown-list");
+let btn = document.querySelector(".profile-dropdown-btn");
+
+let classList = profileDropdownList.classList;
+
+const toggle = () => classList.toggle("active");
+
+window.addEventListener("click", function (e) {
+  if (!btn.contains(e.target)) classList.remove("active");
+});
+
+	</script>
 	</body>
 	
 {% endblock %}
