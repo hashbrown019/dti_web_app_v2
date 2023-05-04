@@ -10,6 +10,15 @@
 	<title>Menu</title>
 <style type="text/css">
 
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
 	
 	
 			#container_b{
@@ -22,160 +31,6 @@
 				background-position: center;
 				background-size: cover;
 			}
-			@media screen and (max-width: 768px) {
-	#search-bar {
-		z-index: 9999;
-		position: absolute;
-		top: 30px;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 80%;
-	}
-	
-	.container2 {
-		position: relative;
-		width: 100%;
-		height: auto;
-		margin: 20px auto 20px;
-	}
-	
-	.container2 .search {
-		width: 50px;
-		height: 50px;
-	}
-	
-	.container2 input {
-		width: 100%;
-	}
-}
-
-
-			#search-bar {
-	position: absolute;
-	top: 30px;
-	left: 40%;
-	
-	transform: translateX(-50%);
-}
-
-
-.container2 {
-	position: absolute;
-	margin: auto;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 300px;
-	height: 100px;
-}
-
-
-.container2 .search {
-	position: absolute;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 55px;
-	height: 55px;
-	background: crimson;
-	border-radius: 50%;
-	transition: all 1s;
-	z-index: 4;
-	box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
-}
-.container2 .search:hover {
-	cursor: pointer;
-}
-.search{
-	opacity: 70%;
-}
-
-
-.container2 .search::before {
-	content: "";
-	position: absolute;
-	margin: auto;
-	top: 22px;
-	right: 0;
-	bottom: 0;
-	left: 22px;
-	width: 12px;
-	height: 2px;
-	background: white;
-	transform: rotate(45deg);
-	transition: all 0.5s;
-}
-.container2 .search::after {
-	content: "";
-	position: absolute;
-	margin: auto;
-	top: -5px;
-	right: 0;
-	bottom: 0;
-	left: -5px;
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	border: 2px solid white;
-	transition: all 0.5s;
-}
-.container2 input {
-	position: absolute;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 80px;
-	height: 40px;
-	outline: none;
-	border: none;
-	background: white;
-	color: black;
-	padding: 0 80px 0 20px;
-	border-radius: 30px;
-	box-shadow: 0 0 25px 0 black, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
-	transition: all 1s;
-	opacity: 0;
-	z-index: 5;
-	letter-spacing: 0.1em;
-}
-.container2 input:hover {
-	cursor: pointer;
-}
-.container2 input:focus {
-	width: 300px;
-	opacity: 1;
-	cursor: text;
-}
-.container2 input:focus ~ .search {
-	right: -250px;
-	background: #151515;
-	z-index: 6;
-}
-.container2 input:focus ~ .search::before {
-	top: 0;
-	left: 0;
-	width: 25px;
-}
-.container2 input:focus ~ .search::after {
-	top: 0;
-	left: 0;
-	width: 25px;
-	height: 2px;
-	border: none;
-	background: white;
-	border-radius: 0%;
-	transform: rotate(-45deg);
-}
-.container2 input::placeholder {
-	color: black;
-	opacity: 0.5;
-	font-weight: bolder;
-}
 
 </style>
 
@@ -189,8 +44,44 @@
 	<div class=" text-white sl-primary"style="position: absolute; right: 0; max-width: 22rem; padding: 1px; height: auto; border-radius: 0px 0px 0px 0px;">
 		<!-- <div class="card-header">{{user_data['name']}}</div> -->
 		<div class="card-body">
-			<!-- <h5 class="card-title">Primary card title</h5> -->
-			<a class="btn btn-md ">
+      <div class="profile-dropdown">
+        <div onclick="toggle()" class="profile-dropdown-btn">
+          <div class="profile-img">
+			<img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;">
+          </div>
+
+          <span style="color: white;">{{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
+            <i class="fa-solid fa-angle-down"></i>
+          </span>
+        </div>
+
+        <ul class="profile-dropdown-list">
+          <li class="profile-dropdown-list-item">
+            <a href="#">
+              <i class="fa-regular fa-user"></i>
+               &nbsp;&nbsp; My Profile
+            </a>
+          </li>
+
+		  {% if(user_data['job']=="Super Admin"): %}
+          <li class="profile-dropdown-list-item">
+            <a href="#" data-toggle="modal" data-target="#usermang">
+				<i class="fa-solid fa-screwdriver-wrench"></i>
+			  &nbsp;&nbsp;User Management
+            </a>
+          </li>
+		  {% endif %}
+
+
+          <li class="profile-dropdown-list-item">
+            <a href="/logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              &nbsp;&nbsp;Log out
+            </a>
+          </li>
+        </ul>
+      </div>
+			<!--<a class="btn btn-md ">
 				<span class="ms-start text-white">
 					<i><img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;"></i> 
 					{{user_data['name']}}<br><i style="font-size:10px">{{user_data['job']}} | {{user_data['rcu']}}</i>
@@ -213,7 +104,7 @@
 						</button>
 					</div>
 				</div>
-			</a>
+			</a>-->
 		</div>
 </div>
 
@@ -228,7 +119,19 @@
 			{% include "user_management.html" %}
 		</div>
 	</div>
-	
+	<script>
+		let profileDropdownList = document.querySelector(".profile-dropdown-list");
+let btn = document.querySelector(".profile-dropdown-btn");
+
+let classList = profileDropdownList.classList;
+
+const toggle = () => classList.toggle("active");
+
+window.addEventListener("click", function (e) {
+  if (!btn.contains(e.target)) classList.remove("active");
+});
+
+	</script>
 	</body>
 	
 {% endblock %}
