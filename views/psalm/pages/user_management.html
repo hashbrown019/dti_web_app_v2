@@ -103,11 +103,12 @@
 										<input class="USER_DATA form-control form-control" type="date" id="until">													
 									</div>
 									<div class="mb-3">													
-										<h5 class="small font-weight-bold ms-1 texttheme">status</h5>
+										<h5 class="small font-weight-bold ms-1 texttheme">Account Status</h5>
 										<select class="USER_DATA form-control" id="status">
 											<option value="active">Active</option>
 											<option value="halt">Disabled</option>
 											<option value="expire" disabled>expired</option>
+											<option value="" disabled>No Account Status</option>
 										</select>											
 									</div>
 									<!-- <div class="mb-3">													
@@ -458,11 +459,19 @@
 				var resp = JSON.parse(r);
 				var ls_str = "";
 				for (var i = 0; i < resp.length; i++) {
-					var colr = "secondary";
+					var colr = "secondary";var stats = "null"
 					if(resp[i]['status']=="active"){
 						colr = "success";
+						stats = "Activated";
 					}else if(resp[i]['status']=="halt"){
 						colr = "danger";
+						stats = "Disabled";
+					}else if(resp[i]['status']=="expire"){
+						colr = "warning";
+						stats = "Expire";
+					}else{
+						colr = "secondary";
+						stats = "Undefined";
 					}
 
 					ls_str += (`
@@ -474,7 +483,7 @@
 								`+resp[i]['name']+`
 							</td>
 							<td class="texttheme text-`+colr+`">
-								`+resp[i]['status']+`
+								`+stats+`
 							</td>
 						</tr>		
 						`)
