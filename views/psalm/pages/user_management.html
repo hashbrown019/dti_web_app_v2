@@ -30,6 +30,7 @@
 											<tr>
 												<th scope="col" class="texttheme">ID</th>
 												<th scope="col" class="texttheme">Name</th>
+												<th scope="col" class="texttheme">Status</th>
 											</tr>
 										</thead>
 										<tbody id="user_list" class="table-bordered">
@@ -54,7 +55,7 @@
 								<div class="container mt-4 overflow-auto" style="height: 60vh;">
 									<div class="mb-3" style="display: none;">													
 										<h5 class="small font-weight-bold ms-1 texttheme">ID</h5>
-										<input disabled class="USER_DATA form-control form-control " type="text" placeholder="" id="id">													
+										<input disabled class="USER_DATA form-control form-control " type="text" placeholder="" id="id" name="SELECTED_USER_ID">													
 									</div>
 									<div class="mb-3">													
 										<h5 class="small font-weight-bold ms-1 texttheme">Name</h5>
@@ -100,6 +101,14 @@
 									<div class="mb-3">													
 										<h5 class="small font-weight-bold ms-1 texttheme">Date:</h5>
 										<input class="USER_DATA form-control form-control" type="date" id="until">													
+									</div>
+									<div class="mb-3">													
+										<h5 class="small font-weight-bold ms-1 texttheme">status</h5>
+										<select class="USER_DATA form-control" id="status">
+											<option value="active">Active</option>
+											<option value="halt">Disabled</option>
+											<option value="expire" disabled>expired</option>
+										</select>											
 									</div>
 									<!-- <div class="mb-3">													
 										<h5 class="small font-weight-bold ms-1 texttheme">Status:</h5>
@@ -324,13 +333,13 @@
 						
 						<div class="container mt-4 overflow-auto">
 							
-							<div class="mb-3">
+							<!-- <div class="mb-3">
 								<h5 class="small font-weight-bold ms-1 texttheme">Current Password</h5>
 								<div class="input-group">
 									<input class="CHNGEPASS_FORM form-control password-toggle" type="password" required placeholder="" id="currpass" name="currpass_">
 									
 								</div>
-							</div>
+							</div> -->
 							
 							<div class="mb-3">
 								<h5 class="small font-weight-bold ms-1 texttheme">New Password</h5>
@@ -402,7 +411,7 @@
 
 	function change_pass(){
 		var psswd_data =input_to_json("CHNGEPASS_FORM");
-		psswd_data['id'] = {{user_data['id']}} ;
+		psswd_data['id'] = $NAME("SELECTED_USER_ID")[0].value ;
 		$send({
 			action : "/api/user/change_pass",
 			data : $DATA(psswd_data),
@@ -410,6 +419,8 @@
 			func : function(r){
 				var res = JSON.parse(r);
 				println(res);
+				alert("Transaction complete with an ID["+psswd_data['id']+"]")
+				$ID("chngpass").style.display ="none"
 			}
 		});
 	}
@@ -444,13 +455,27 @@
 		$send({
 			action : "/api/get_user_data/all",
 			func : function(r){
-				var resp = JSON.parse(r)
-				var ls_str = ""
+				var resp = JSON.parse(r);
+				var ls_str = "";
 				for (var i = 0; i < resp.length; i++) {
+					var colr = "secondary";
+					if(resp[i]['status']=="active"){
+						colr = "success";
+					}else if(resp[i]['status']=="halt"){
+						colr = "danger";
+					}
+
 					ls_str += (`
 						<tr onclick="set_user_datafield(`+resp[i]['id']+`)">
-						<th scope="row" class="texttheme">`+resp[i]['id']+`</th>
-						<td class="texttheme">`+resp[i]['name']+`</td>
+							<th scope="row" class="texttheme">
+								`+resp[i]['id']+`
+							</th>
+							<td class="texttheme">
+								`+resp[i]['name']+`
+							</td>
+							<td class="texttheme text-`+colr+`">
+								`+resp[i]['status']+`
+							</td>
 						</tr>		
 						`)
 				}

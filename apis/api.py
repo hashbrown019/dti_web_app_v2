@@ -97,12 +97,11 @@ class user_management:
 	def change_pass():
 		msg = "on process"
 		if(user_management.is_on_session()):
-			cur_user = rapid_mysql.select("SELECT * FROM `users` WHERE `id`='{}';".format(request.form['id']))[0]
-			if(request.form['currpass']==cur_user['password']):
-				msg = "pass match"
-				do_change_pass = rapid_mysql.do("UPDATE `users` SET `password`=`{}` WHERE `id`='{}';".format(request.form['newpass'],request.form['id']))
-			else:
-				msg = "pass MISMATCH"
+			# cur_user = rapid_mysql.select("SELECT * FROM `users` WHERE `id`='{}';".format(request.form['id']))[0]
+			sql = "UPDATE `users` SET `password`='{}' WHERE `id`='{}';".format(request.form['newpass'],request.form['id'])
+			print(sql)
+			do_change_pass = rapid_mysql.do(sql)
+			
 			return jsonify({"msg":msg})
 		else:
 			return jsonify({"msg":"ERROR"})
