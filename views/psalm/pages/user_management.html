@@ -327,7 +327,7 @@
 							<div class="mb-3">
 								<h5 class="small font-weight-bold ms-1 texttheme">Current Password</h5>
 								<div class="input-group">
-									<input class="CHNGEPASS_FORM form-control password-toggle" type="password" required placeholder="" id="currpass">
+									<input class="CHNGEPASS_FORM form-control password-toggle" type="password" required placeholder="" id="currpass" name="currpass_">
 									
 								</div>
 							</div>
@@ -335,7 +335,7 @@
 							<div class="mb-3">
 								<h5 class="small font-weight-bold ms-1 texttheme">New Password</h5>
 								<div class="input-group">
-									<input class="CHNGEPASS_FORM form-control password-toggle" type="password" required placeholder="" id="newpass">
+									<input class="CHNGEPASS_FORM form-control password-toggle" type="password" required placeholder="" id="newpass" name="newpass_">
 									<div class="input-group-append">
 										<div class="input-group-text">
 											<span class="password-toggle-icon far fa-eye" toggle="#newpass"></span>
@@ -347,7 +347,7 @@
 							<div class="mb-3">
 								<h5 class="small font-weight-bold ms-1 texttheme">Confirm New Password</h5>
 								<div class="input-group">
-									<input class="CHNGEPASS_FORM form-control password-toggle" type="password" required placeholder="" id="confpass">
+									<input class="CHNGEPASS_FORM form-control password-toggle" type="password" required placeholder="" id="confpass" name="confpass_">
 									<div class="input-group-append">
 										<div class="input-group-text">
 											<span class="password-toggle-icon far fa-eye" toggle="#confpass"></span>
@@ -400,6 +400,20 @@
 	// 	})
 	// })
 
+	function change_pass(){
+		var psswd_data =input_to_json("CHNGEPASS_FORM");
+		psswd_data['id'] = {{user_data['id']}} ;
+		$send({
+			action : "/api/user/change_pass",
+			data : $DATA(psswd_data),
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r);
+				println(res);
+			}
+		});
+	}
+
 
 	function clear_field(){
 		var user_data_ = $CLASS('USER_DATA')
@@ -414,7 +428,6 @@
 		for (var i = 0; i < user_data_.length; i++) {
 			user_info[user_data_[i].id] = user_data_[i].value
 		}
-		println(user_info)
 		$send({
 			action : "/api/edit_user",
 			data : $DATA(user_info),

@@ -93,6 +93,20 @@ class user_management:
 		last_row_id = rapid_mysql.do(sql)
 		return jsonify({"last_row_id":last_row_id})
 
+	@app.route("/api/user/change_pass",methods=["POST","GET"]) # GE
+	def change_pass():
+		msg = "on process"
+		if(user_management.is_on_session()):
+			cur_user = rapid_mysql.select("SELECT * FROM `users` WHERE `id`='{}';".format(request.form['id']))[0]
+			if(request.form['currpass']==cur_user['password']):
+				msg = "pass match"
+				do_change_pass = rapid_mysql.do("UPDATE `users` SET `password`=`{}` WHERE `id`='{}';".format(request.form['newpass'],request.form['id']))
+			else:
+				msg = "pass MISMATCH"
+			return jsonify({"msg":msg})
+		else:
+			return jsonify({"msg":"ERROR"})
+
 # def get_all_uploaded_excel_data_heads():
 # 	excel_f_a_heads = c.RECORDS+"/settings/db_sql_excel_form_a.head"
 # 	reader = open(excel_f_a_heads,"r");excel_f_a_heads = json.loads(reader.read());reader.close()
