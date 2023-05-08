@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="profilemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 70%;">
       <div class="modal-content">
@@ -17,7 +18,7 @@
                                 <h4>John Doe</h4>
                                 <p class="text-secondary mb-1">{{user_data['job']}}</p>
                                 <p class="text-muted font-size-sm">{{user_data['rcu']}}</p>
-                                <button class="btn btn-dark" data-toggle="modal" data-target="#chngpass">Change Password</button>
+                                <button class="btn btn-dark" data-toggle="modal" data-target="#chngpass_user">Change Password</button>
                                
                             </div>
                         </div>
@@ -148,3 +149,118 @@
 </div>
 </div>
 </div>
+<style>
+    	.toggle-password i.fas {
+		display: none;
+	}
+</style>
+<div class="bgmodal modal fade" id="chngpass_user" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+	<div class="modal-dialog modal-xl modal-dialog-scrollable" style="max-width: 30%;">
+		<div class="modal-content">
+			<div class="modal-header bg-light text-dark">
+				<h1 class="modal-title" id="exampleModalLabel">Change Password</h1>
+				<button id="changebtnclose_user" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body bg-light ">
+
+				<div class=" ">
+					<div class="row">
+						
+						<div class="container mt-4 overflow-auto">
+							
+							<div class="mb-3">
+								<h5 class="small font-weight-bold ms-1 texttheme">Current Password</h5>
+								<div class="input-group">
+									<input class=" form-control password-toggle" type="password" required placeholder="" id="currpass_user" name="currpass_user">
+									
+								</div>
+							</div>
+							
+							<div class="mb-3">
+								<h5 class="small font-weight-bold ms-1 texttheme">New Password</h5>
+								<div class="input-group">
+									<input class=" form-control password-toggle" type="password" required placeholder="" id="newpass_user" name="newpass_user">
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="password-toggle-icon2 far fa-eye" toggle="#newpass_user"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="mb-3">
+								<h5 class="small font-weight-bold ms-1 texttheme">Confirm New Password</h5>
+								<div class="input-group">
+									<input class=" form-control password-toggle" type="password" required placeholder="" id="confpass_user" name="confpass_user">
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="password-toggle-icon2 far fa-eye" toggle="#confpass_user"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="mt-3">
+								<div class="float-xl-right">
+									<button onclick="change_pass_user()" id="resetpass_user" type="button" class="btn btn-info me-3">Reset Password</button>	
+									<button type="button" class="btn btn-secondary me-3" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>					
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+
+$(document).ready(function() {
+		$("#chngpassbtn").click(function() {
+			$("#chngpass_user").modal('show');
+			$("#usermang").addClass("blur");
+		});
+
+		$("#chngpass_user").on('hidden.bs.modal', function () {
+			$("#usermang").removeClass("blur");
+		});
+	});
+
+	const newPasswordInput2 = $("#newpass_user");
+	const confirmPassInput2 = $("#confpass_user");
+	const changePassButton2 = $("#resetpass_user");
+	const validationMessage2 = $("#validation-message");
+
+	newPasswordInput2.on("input", validatePasswordMatch2);
+	confirmPassInput2.on("input", validatePasswordMatch2);
+
+	function validatePasswordMatch2() {
+		const newPassword2 = newPasswordInput2.val();
+		const confirmPass2 = confirmPassInput2.val();
+		const isValid2 = newPassword2 === confirmPass2 && newPassword2.length > 0;
+		
+		if (isValid2) {
+			confirmPassInput2[0].setCustomValidity("");
+			confirmPassInput2.removeClass("is-invalid").addClass("is-valid");
+			validationMessage2.hide();
+		} else {
+			confirmPassInput2[0].setCustomValidity("Passwords do not match");
+			confirmPassInput2.removeClass("is-valid").addClass("is-invalid");
+			validationMessage2.show();
+		}
+		
+		changePassButton.prop("disabled", !isValid2);
+	}
+
+	$(document).on('click', '.password-toggle-icon2', function() {
+		var input = $($(this).attr('toggle'));
+		if (input.attr('type') == 'password') {
+			input.attr('type', 'text');
+			$(this).removeClass('fa-eye').addClass('fa-eye-slash');
+		} else {
+			input.attr('type', 'password');
+			$(this).removeClass('fa-eye-slash').addClass('fa-eye');
+		}
+	});
+</script>
