@@ -43,7 +43,7 @@ app.register_blueprint(fund_tracker.app);
 app.register_blueprint(dcf.app);
 app.register_blueprint(fmi.app);
 
-print(" * MIS Stats ¾")
+print(" * MIS Stat")
 
 @app.route("/")
 def index():
