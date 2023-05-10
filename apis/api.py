@@ -53,14 +53,8 @@ class user_management:
 	@app.route("/api/edit_user",methods=["POST","GET"]) # GE
 	def edit_user():
 		print("  * Edit User Module")
-		# FILE_REQ = file_from_request(app)
 		data = dict(request.form)
-		# print(data)
 		key = [];val = [];args=""
-		# data["USER_ID"] = session["USER_DATA"][0]['id']
-		# __f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/",False,True)
-		# data["upload"] = __f["file_arr_str"]
-
 		is_exist = len(rapid_mysql.select("SELECT * FROM `users` WHERE `id` ='{}' ;".format(request.form['id'])))
 		if(is_exist==0):
 			print(" >> Adding User")
@@ -76,6 +70,38 @@ class user_management:
 			pass
 		last_row_id = rapid_mysql.do(sql)
 		return jsonify({"last_row_id":last_row_id})
+
+	@app.route("/api/get_user_priv/<ids>",methods=["POST","GET"]) # GE
+	def get_user_priv(ids):
+		print(ids)
+		sql = "SELECT * FROM `__user_privilege` WHERE `user_id`='{}';".format(ids)
+		_user = rapid_mysql.select(sql)
+		if(data_handlers.is_on_session()):
+			return _user
+		else:
+			return [{"id":"0","name":"no_data"}]
+
+	@app.route("/api/edit_user_priv",methods=["POST","GET"]) # GE
+	def edit_user_priv():
+		print("  * Edit User Module")
+		data = dict(request.form)
+		key = [];val = [];args=""
+		is_exist = len(rapid_mysql.select("SELECT * FROM `__user_privilege` WHERE `user_id` ='{}' ;".format(request.form['user_id'])))
+		if(is_exist==0):
+			print(" >> Adding user_Privilege")
+			for datum in data:
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(data[datum]))
+			sql = ('''INSERT INTO `__user_privilege` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+		else:
+			print(" >> Editing user_Privilege")
+			for datum in data:
+				args += ",`{}`='{}'".format(datum,data[datum])
+			sql = "UPDATE `__user_privilege` SET  {} WHERE `user_id`='{}';".format(args[1:],request.form['user_id'])
+			pass
+		last_row_id = rapid_mysql.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+
 
 	@app.route("/api/user_status",methods=["POST","GET"]) # GE
 	def user_status():

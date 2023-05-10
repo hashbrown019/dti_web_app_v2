@@ -55,7 +55,7 @@
 								<div class="container mt-4 overflow-auto" style="height: 60vh;">
 									<div class="mb-3" style="display: none;">													
 										<h5 class="small font-weight-bold ms-1 texttheme">ID</h5>
-										<input disabled class="USER_DATA form-control form-control " type="text" placeholder="" id="id" name="SELECTED_USER_ID">													
+										<input disabled class="USER_DATA form-control form-control " type="text" id="id" name="SELECTED_USER_ID">													
 									</div>
 									<div class="mb-3">													
 										<h5 class="small font-weight-bold ms-1 texttheme">Name</h5>
@@ -126,7 +126,7 @@
 										<button type="button" class="btn btn-success me-3" onclick="save_user_det()">Save</button>	
 									</div>
 									<div class="float-xl-left">
-										<button type="button" class="btn btn-warning me-3" onclick="clear_field()">Clear</button>	
+										<button type="button" class="btn btn-warning me-3" onclick="clear_field('USER_DATA')">Clear</button>	
 									</div>
 								</div>
 							</div>
@@ -141,12 +141,13 @@
 								</div>
 								<div class="mt-5">
 									<p>Type:</p>
-									<select class="form-control" aria-label="">
-										<option value="">Super Admin</option>
-										<option value="">Admin</option>
-										<option value="">NPCO</option>
-										<option value="">Default</option>
-										<option value="">Guest</option>
+									<select id="type" class="PRIV_FORM form-control" aria-label="">
+										<option value="" selected disabled>Select options</option>
+										<option value="super_admin">Super Admin</option>
+										<option value="admin">Admin</option>
+										<option value="npco">NPCO</option>
+										<option value="default">Default</option>
+										<option value="guest">Guest</option>
 									</select>
 								</div>
 
@@ -295,11 +296,6 @@
 										
 									</div>	
 								</div>
-								<script type="text/javascript">
-									function save_priv(){
-										println(input_to_json('PRIV_FORM'))
-									}
-								</script>
 								<!-- <div class="d-flex ">
 									<div>
 										<button type="button" class="btn btn-primary me-3">Save</i></button>	
@@ -427,10 +423,11 @@
 	}
 
 
-	function clear_field(){
-		var user_data_ = $CLASS('USER_DATA')
+	function clear_field(class_n){
+		var user_data_ = $CLASS(class_n)
 		for (var i = 0; i < user_data_.length; i++) {
 			user_data_[i].value = ""
+			user_data_[i].checked = false
 		}
 	}
 
@@ -442,6 +439,22 @@
 		}
 		$send({
 			action : "/api/edit_user",
+			data : $DATA(user_info),
+			err_dialog : true,
+			method : POST,
+			func : function(r){
+				set_user_datafield(user_info['id'])
+				get_user_data()
+			} 
+		})
+	}
+
+	function save_priv(){
+		var user_info = input_to_json('PRIV_FORM')
+		user_info['user_id'] = $NAME("SELECTED_USER_ID")[0].value
+		println(user_info)
+		$send({
+			action : "/api/edit_user_priv",
 			data : $DATA(user_info),
 			err_dialog : true,
 			method : POST,
@@ -494,12 +507,13 @@
 	}
 
 	function set_user_datafield(arr){
+
 		$send({
 			action : "/api/get_user_data/"+arr,
 			err_dialog : true,
 			func : function(r){
+				set_user_privfield(arr)
 				var resp = JSON.parse(r)[0]
-				println(resp)
 				var USER_DATA = $CLASS('USER_DATA')
 				for (var i = 0; i < USER_DATA.length; i++) {
 					if(USER_DATA[i].id == "until"){
@@ -515,7 +529,36 @@
 			}
 		})
 	}
+	function set_user_privfield(arr){
+		clear_field('PRIV_FORM')
+		$send({
+			action : "/api/get_user_priv/"+arr,
+			err_dialog : true,
+			func : function(r){
+				var resp = JSON.parse(r)
+				var PRIV_FORM = $CLASS('PRIV_FORM')
+				for (var i = 0; i < PRIV_FORM.length; i++) {
+					if(resp.length > 0){
+						println(resp[0][PRIV_FORM[i].id])
+						if(PRIV_FORM[i].type=="checkbox"){
+							if(resp[0][PRIV_FORM[i].id].toLowerCase()=="true"){
+								try{
+									PRIV_FORM[i].click()
+								}catch(e){
+									warnprintln(PRIV_FORM[i].id+" || "+e)
+								}
+							}
+						}else{
+							PRIV_FORM[i].value = resp[0][PRIV_FORM[i].id]
+						}
+					}
+				}
+			}
+		})
+	}
 
+
+	// ===================================================================
 	$(document).ready(function() {
 		$("#chngpassbtn").click(function() {
 			$("#chngpass").modal('show');
