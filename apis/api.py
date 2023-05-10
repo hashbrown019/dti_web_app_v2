@@ -39,7 +39,7 @@ class user_management:
 
 	@app.route("/api/get_user_data/<ids>",methods=["POST","GET"]) # GE
 	def get_user_data(ids):
-		print(ids)
+		# print(ids)
 		if(ids=="all"):
 			sql = "SELECT `id`,`name`,`address`,`email`,`job`,`mobile`,`pcu`,`rcu`,`username`,`until`,`status` FROM `users`;"
 		else:
@@ -73,7 +73,6 @@ class user_management:
 
 	@app.route("/api/get_user_priv/<ids>",methods=["POST","GET"]) # GE
 	def get_user_priv(ids):
-		print(ids)
 		sql = "SELECT * FROM `__user_privilege` WHERE `user_id`='{}';".format(ids)
 		_user = rapid_mysql.select(sql)
 		if(data_handlers.is_on_session()):
