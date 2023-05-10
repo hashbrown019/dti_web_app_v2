@@ -159,9 +159,9 @@
 											<tr class=" ">
 												
 												<th scope="col" class="texttheme">Module Name</th>
-												<th scope="col" class="texttheme">Access</th>
+												<th scope="col" class="texttheme">Download</th>
 												<th scope="col" class="texttheme">Read</th>
-												<th scope="col" class="texttheme">Write</th>
+												<th scope="col" class="texttheme">Modify</th>
 												
 											</tr>
 										</thead>
@@ -171,8 +171,8 @@
 												<td scope="row" class="texttheme">Admin Knowledge Center</td>
 												<td class="texttheme">
 													<div class="form-check ms-2">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="km_access">
-														<label class="form-check-label" for="km_access">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="km_download">
+														<label class="form-check-label" for="km_download">
 														</label>
 													</div>
 												</td>
@@ -185,8 +185,8 @@
 												</td>
 												<td class="texttheme">
 													<div class="form-check d-flex justify-content-center ">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="km_write">
-														<label class="form-check-label" for="km_write">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="km_modify">
+														<label class="form-check-label" for="km_modify">
 														</label>
 													</div>
 												</td>
@@ -195,8 +195,8 @@
 												<td scope="row" class="texttheme">Profiling</td>
 												<td class="texttheme">
 													<div class="form-check ms-2">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="prof_access">
-														<label class="form-check-label" for="prof_access">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="prof_download">
+														<label class="form-check-label" for="prof_download">
 														</label>
 													</div>
 												</td>
@@ -209,8 +209,8 @@
 												</td>
 												<td class="texttheme">
 													<div class="form-check d-flex justify-content-center ">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="prof_write">
-														<label class="form-check-label" for="prof_write">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="prof_modify">
+														<label class="form-check-label" for="prof_modify">
 														</label>
 													</div>
 												</td>
@@ -219,8 +219,8 @@
 												<td scope="row" class="texttheme">Data Capture</td>
 												<td class="texttheme">
 													<div class="form-check ms-2">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="dcf_access">
-														<label class="form-check-label" for="dcf_access">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="dcf_download">
+														<label class="form-check-label" for="dcf_download">
 														</label>
 													</div>
 												</td>
@@ -233,8 +233,8 @@
 												</td>
 												<td class="texttheme">
 													<div class="form-check d-flex justify-content-center ">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="dcf_write">
-														<label class="form-check-label" for="dcf_write">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="dcf_modify">
+														<label class="form-check-label" for="dcf_modify">
 														</label>
 													</div>
 												</td>
@@ -243,8 +243,8 @@
 												<td scope="row" class="texttheme">FMI Tracker</td>
 												<td class="texttheme">
 													<div class="form-check ms-2">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="fmi_access">
-														<label class="form-check-label" for="fmi_access">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="fmi_download">
+														<label class="form-check-label" for="fmi_download">
 														</label>
 													</div>
 												</td>
@@ -257,8 +257,8 @@
 												</td>
 												<td class="texttheme">
 													<div class="form-check d-flex justify-content-center ">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="fmi_write">
-														<label class="form-check-label" for="fmi_write">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="fmi_modify">
+														<label class="form-check-label" for="fmi_modify">
 														</label>
 													</div>
 												</td>
@@ -267,8 +267,8 @@
 												<td scope="row" class="texttheme">Fund Tracker</td>
 												<td class="texttheme">
 													<div class="form-check ms-2">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="ft_access">
-														<label class="form-check-label" for="ft_access">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="ft_download">
+														<label class="form-check-label" for="ft_download">
 														</label>
 													</div>
 												</td>
@@ -281,8 +281,8 @@
 												</td>
 												<td class="texttheme">
 													<div class="form-check d-flex justify-content-center ">
-														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="ft_write">
-														<label class="form-check-label" for="ft_write">
+														<input class="PRIV_FORM form-check-input" type="checkbox" value="" id="ft_modify">
+														<label class="form-check-label" for="ft_modify">
 														</label>
 													</div>
 												</td>
@@ -539,14 +539,10 @@
 				var PRIV_FORM = $CLASS('PRIV_FORM')
 				for (var i = 0; i < PRIV_FORM.length; i++) {
 					if(resp.length > 0){
-						println(resp[0][PRIV_FORM[i].id])
 						if(PRIV_FORM[i].type=="checkbox"){
 							if(resp[0][PRIV_FORM[i].id].toLowerCase()=="true"){
-								try{
-									PRIV_FORM[i].click()
-								}catch(e){
-									warnprintln(PRIV_FORM[i].id+" || "+e)
-								}
+								try{PRIV_FORM[i].click()}
+								catch(e){warnprintln(PRIV_FORM[i].id+" || "+e)}
 							}
 						}else{
 							PRIV_FORM[i].value = resp[0][PRIV_FORM[i].id]
