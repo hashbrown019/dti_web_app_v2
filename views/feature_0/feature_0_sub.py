@@ -37,6 +37,10 @@ class _main:
 	def feature_0_sub():
 		return {"status":"ok"}
 
+	@app.route("/web_cast",methods=["POST","GET"])
+	def web_cast():
+		return render_template('web_cast.html')
+
 	@app.route("/form_a/get_sub_form/<s_form>",methods=["POST","GET"])
 	def get_sub_form(s_form):
 		page = "form_a/"+s_form+".html"
