@@ -1,0 +1,30 @@
+   <!-- Begin alerts -->                
+   {% with messages = get_flashed_messages(with_categories=true) %}
+   {% if messages %}
+   {% for category, message in messages %}
+   <script>
+      
+      swal.fire({
+    title: "{{ category.title() }}!",
+
+
+    text: "{{ message }}",
+
+
+    icon: "{{ category }}" === "danger" ? "error" : "{{ category }}",
+
+
+    showCancelButton: false,
+    showConfirmButton: true,
+    confirmButtonText: "OK"
+}).then((result) => {
+    if (result.isConfirmed) {
+        window.location.href = "/logout";  
+    }
+});
+   
+
+   </script>
+   {% endfor %}
+   {% endif %}
+   {% endwith %}

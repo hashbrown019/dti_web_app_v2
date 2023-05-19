@@ -106,7 +106,22 @@ def menu():
 		return render_template("menu.html",user_data=session["USER_DATA"][0])
 	else:
 		return redirect("/login?force_url=1")
+	
+@app.route("/change_password", methods=["POST"])
+def change_password():
+	current_password = request.form.get("currpass_user")
+	confirm_password = request.form.get("confpass_user")
+	user_id = session["USER_DATA"][0]['id']
+	sql = "SELECT password FROM users WHERE id = '{}'".format(user_id)
+	session_pass = db.select(sql)[0]['password']
+	if current_password == session_pass:
+		update = "UPDATE users SET password = '{}' WHERE id = '{}'".format(confirm_password, user_id)
+		db.do(update)
+		flash("Password changed successfully. You have been logged out. Please log in again with your new password.", "success")
+	else:
+		flash(f"An error occurred!", "error")
 
+	return redirect("/menu")
 
 @app.route("/cform")
 def cform():
