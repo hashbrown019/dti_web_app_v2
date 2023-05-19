@@ -119,7 +119,7 @@ def change_password():
 		db.do(update)
 		flash("Password changed successfully. You have been logged out. Please log in again with your new password.", "success")
 	else:
-		flash(f"An error occurred!", "error")
+		flash(f"Password Incorrect!", "error")
 
 	return redirect("/menu")
 

@@ -266,4 +266,22 @@ $(document).ready(function() {
 			$(this).removeClass('fa-eye-slash').addClass('fa-eye');
 		}
 	});
+
+
+     const newPasswordInput = document.getElementById('newpass_user');
+    const confirmPasswordInput = document.getElementById('confpass_user');
+    const resetPasswordButton = document.getElementById('resetpass_user');
+
+
+    newPasswordInput.addEventListener('input', validatePasswords);
+    confirmPasswordInput.addEventListener('input', validatePasswords);
+
+    function validatePasswords() {
+
+        const newPassword = newPasswordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+
+        resetPasswordButton.disabled = newPassword !== confirmPassword;
+    }
+
 </script>
