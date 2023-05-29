@@ -15,7 +15,7 @@
                             <img src="\static\psalm_static\menu\img\profilepic.png" alt="Admin"
                                 class="rounded-circle" >
                             <div class="mt-3">
-                                <h4>John Doe</h4>
+   
                                 <p class="text-secondary mb-1">{{user_data['job']}}</p>
                                 <p class="text-muted font-size-sm">{{user_data['rcu']}}</p>
                                 <button class="btn btn-dark" data-toggle="modal" data-target="#chngpass_user">Change Password</button>
@@ -70,8 +70,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-12">
-                                <a class="btn btn-primary " 
-                                    href="">Edit Profile</a>
+                                <a class="btn btn-primary "data-toggle="modal" data-target="#editprof" href="">Edit Profile</a>
                             </div>
                         </div>
                     </div>
@@ -175,7 +174,7 @@
 								<div class="input-group">
 									<input class=" form-control password-toggle" type="password" required placeholder="" id="currpass_user" name="currpass_user">
 									
-								</div>
+								</div>  
 							</div>
 							
 							<div class="mb-3">
@@ -215,21 +214,24 @@
         </div>
     </div>
 </div>
+
+
 <script>
 
 
 
 $(document).ready(function() {
 		$("#chngpassbtn").click(function() {
-			$("#chngpass_user").modal('show');
+			$("#chngpass").modal('show');
 			$("#usermang").addClass("blur");
 		});
 
-		$("#chngpass_user").on('hidden.bs.modal', function () {
+		$("#chngpass").on('hidden.bs.modal', function () {
 			$("#usermang").removeClass("blur");
 		});
 	});
 
+    
 	const newPasswordInput2 = $("#newpass_user");
 	const confirmPassInput2 = $("#confpass_user");
 	const changePassButton2 = $("#resetpass_user");
