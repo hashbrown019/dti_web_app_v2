@@ -100,7 +100,7 @@
 							</p>					
 						</div>
 						<div class="container border-bottom border-light mb-3 placeholder-glow">						
-							<p id="content" class="WEBSAFE content">
+							<p id="content" class="WEBSAFE content x-justify" style="text-align: justify;">
 								  <span class="placeholder col-10 rounded-1 mb-4"></span>
 								  <span class="placeholder col-10 rounded-1 mb-4"></span>
 								  <span class="placeholder col-10 rounded-1 mb-4"></span>
@@ -164,7 +164,7 @@
 										$ID("title").innerHTML = res["postheader"]
 										$ID("description").innerHTML = res["postdescription"]
 										$ID("photo_cap").innerHTML = res["postcaption"]
-										$ID("content").innerHTML = res["postContent"]
+										$ID("content").innerHTML = res["postContent"].replaceAll("\n","<br>&emsp;&emsp;")
 										__websafe_decode()
 
 									}

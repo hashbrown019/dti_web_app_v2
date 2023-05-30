@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, session, redirect, jsonif
 from flask_session import Session
 from modules.Connections import mysql,sqlite
 from modules.Utility import obj_handling as objh
+from modules.Req_Brorn_util import rsa_sec as _rsa
 import os, json
 from controllers.engine_block_to_sql import form_migration
 from controllers.engine_excel_to_sql import form_excel_a_handler
@@ -73,6 +74,7 @@ class user_management:
 
 	@app.route("/api/get_user_priv/<ids>",methods=["POST","GET"]) # GE
 	def get_user_priv(ids):
+
 		sql = "SELECT * FROM `__user_privilege` WHERE `user_id`='{}';".format(ids)
 		_user = rapid_mysql.select(sql)
 		if(data_handlers.is_on_session()):
@@ -131,6 +133,33 @@ class user_management:
 		else:
 			return jsonify({"msg":"ERROR"})
 
+
+class security:
+	@app.route("/api/sec/gen_key",methods=["POST","GET"]) # GE
+	def gen_key():
+		return jsonify(
+			_rsa.generate_key(
+				key_size=512,
+				key_name='dtirapid',
+				password='dtirapid'
+			)
+		)
+	@app.route("/api/sec/view_key",methods=["POST","GET"]) # GE
+	def view_key():
+		return jsonify(
+			_rsa.view_keys(
+				key_name='dtirapid',
+				password='dtirapidssss'
+			)
+		)
+
+	@app.route("/api/sec/encr/<raw_data>/<pubkey>",methods=["POST","GET"]) # GE
+	def encr(raw_data,pubkey):
+		return encrypt(pubkey,raw_data)
+
+	@app.route("/api/sec/decr/<raw_data>/<privkey>",methods=["POST","GET"]) # GE
+	def decr(raw_data,privkey):
+		return encrypt(privkey,raw_data)
 # def get_all_uploaded_excel_data_heads():
 # 	excel_f_a_heads = c.RECORDS+"/settings/db_sql_excel_form_a.head"
 # 	reader = open(excel_f_a_heads,"r");excel_f_a_heads = json.loads(reader.read());reader.close()
