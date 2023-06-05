@@ -215,7 +215,6 @@
 
 
 		$onload(function(){
-
 			$send({
 				action : "/webrep/article/get_post_ind",
 				method : POST,
@@ -227,7 +226,7 @@
 					for (var i = 0; i < from_field.length; i++) {
 						var _ID = from_field[i].id
 						try{
-							from_field[_ID].value = resp[_ID]
+							from_field[_ID].value = web_safe_decode(resp[_ID])
 						}catch(e){}
 					}
 				}
