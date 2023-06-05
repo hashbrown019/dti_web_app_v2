@@ -99,7 +99,7 @@ class rsa_sec:
 
 class base64_sec:
 	def encr(keyword,str_to_enc):
-		encoded = base64.b64encode(keyword.encode() + ":" + str_to_enc.encode())
+		encoded = base64.b64encode(keyword.encode() + b":" + str_to_enc.encode())
 		return encoded.decode("utf-8")
 
 
