@@ -140,7 +140,7 @@
 										var img_path = web_safe_decode(res["file_name"]).replaceAll("C:\\fakepath\\","") 
 										var f_format = img_path.split(".")[img_path.split(".").length-1]
 										println("f_format == "+ f_format)
-										if(['jpeg','jpg','gif','png'].indexOf(f_format)!=-1 ){
+										if(['jpeg','jpg','gif','png','webpg','svg'].indexOf(f_format.toLowerCase())!=-1 ){
 											$ID("img_").src = "/webrep/article/get_img/"+ img_path
 										}
 										
