@@ -52,14 +52,14 @@ def index():
 		return redirect("https://dtirapid.ph/webrep")
 	else:
 		# c.DB_CRED[3] = c.LOCAL_DATABASE
-		return redirect("http://localhost:5000/webrep")
+		return redirect("http://{}:5000/webrep".format(c.IP_address))
 
 @app.route("/test_server") #NOT FOR LOCAL USE
 def test_server():#NOT FOR LOCAL USE
 	if(c.IS_ON_SERVER):#NOT FOR LOCAL USE
 		return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
 	else:#NOT FOR LOCAL USE
-		return redirect("http://localhost:5000/webrep")#NOT FOR LOCAL USE
+		return redirect("http://{}:5000/webrep".format(c.IP_address))#NOT FOR LOCAL USE
 
 @app.before_request
 def before_request():
