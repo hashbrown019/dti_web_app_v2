@@ -31,6 +31,7 @@ from views.dcf.form_update import update_form10 as update_dataform10
 from views.dcf.form_update import update_form11 as update_dataform11
 import Configurations as c 
 from modules.Connections import mysql
+from views.dcf.spreadsheet import dcf_import_excel as importcsv_form1
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -292,6 +293,11 @@ def delete_form11(id):
 			print(str(delete))
 	return redirect("/dcf_dashboard")
 
+
+@app.route('/importcsvform1',methods = ['GET','POST'])
+def importcsvform1():
+	importcsv_form1.importcsvform1(request)
+	return redirect("/dcf_spreadsheet")
 #-------------------------------------------------------------------------------
 
 @app.route('/dcf', methods=['GET', 'POST'])
