@@ -556,16 +556,16 @@
 
 	// ===================================================================
 
-	const newPasswordInput = $("#newpass");
+	const newPasswordInputs = $("#newpass");
 	const confirmPassInput = $("#confpass");
 	const changePassButton = $("#resetpass");
 	const validationMessage = $("#validation-message");
 
-	newPasswordInput.on("input", validatePasswordMatch);
+	newPasswordInputs.on("input", validatePasswordMatch);
 	confirmPassInput.on("input", validatePasswordMatch);
 
 	function validatePasswordMatch() {
-		const newPassword = newPasswordInput.val();
+		const newPassword = newPasswordInputs.val();
 		const confirmPass = confirmPassInput.val();
 		const isValid = newPassword === confirmPass && newPassword.length > 0;
 		
