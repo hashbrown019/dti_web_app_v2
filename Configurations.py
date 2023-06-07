@@ -26,6 +26,7 @@ M_APPVER = "none";
 # --- DATABASE---- #
 
 LOCAL_PORT=3306
+# LOCAL_HOST = "0.0.0.0";
 LOCAL_HOST = "localhost";
 LOCAL_USER = "root";
 LOCAL_PASSWORD = "";

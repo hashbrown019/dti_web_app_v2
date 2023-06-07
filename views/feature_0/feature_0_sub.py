@@ -141,7 +141,7 @@ class _main:
 			'female_is_youth':m_c_female_is_youth + ex_c_female_is_youth,
 			'female_is_sen_cit':m_c_female_is_sen_cit + ex_c_female_sen_cit,
 			'female_is_head_hh':m_c_female_is_head_hh + ex_c_female_female_is_head_hh
-			}
+		}
 
 
 def _filter(area):
@@ -150,5 +150,4 @@ def _filter(area):
 		_filter =""
 	else:
 		_filter = "USER_ID in ( SELECT id from users WHERE rcu='{}' ) AND".format(area)
-
 	return _filter

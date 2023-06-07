@@ -43,7 +43,7 @@
 
 
 		<div class="">
-			<button class="btn btn-outline-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate">Submit</a>
+			<button class="btn btn-outline-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate"  onclick="submit_article()">Submit</a>
 		</div>
 	</div>
 
@@ -61,7 +61,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-					<button type="button" class="btn btn-primary" onclick="submit_article()">Continue</button>
+					<button type="button" class="btn btn-primary" onclick="goto('/rapid/NewsAndStories/NewsAndStories.html')">Continue</button>
 				</div>
 			</div>
 		</div>
@@ -198,7 +198,7 @@
 				if(from_field[i].type =="checkbox"){
 					data[from_field[i].id] = from_field[i].checked
 				}else{
-					data[from_field[i].id] = from_field[i].value
+					data[from_field[i].id] = web_safe_encode(from_field[i].value)
 				}
 			}
 			$send({
@@ -208,13 +208,13 @@
 				func : function(res){
 					resp = JSON.parse(res)
 					println(resp)
-					goto("/rapid/NewsAndStories/NewsAndStories.html")
+					// goto("/rapid/NewsAndStories/NewsAndStories.html")
 				}
 			})
 		}
 
-		$onload(function(){
 
+		$onload(function(){
 			$send({
 				action : "/webrep/article/get_post_ind",
 				method : POST,
@@ -226,7 +226,7 @@
 					for (var i = 0; i < from_field.length; i++) {
 						var _ID = from_field[i].id
 						try{
-							from_field[_ID].value = resp[_ID]
+							from_field[_ID].value = web_safe_decode(resp[_ID])
 						}catch(e){}
 					}
 				}

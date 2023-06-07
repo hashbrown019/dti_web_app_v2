@@ -11,7 +11,7 @@
 									<div class="STORY_CARD card rounded-2 mb-2" style="display: none;">
 
 										{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
-										{% if f_format in ['jpeg','jpg','gif','png'] %}
+										{% if f_format|lower in ['svg','webpg','jpeg','jpg','gif','png'] %}
 											<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content    rounded-1" alt="...">
 										{% else %}
 											<video muted class="img_class vid_class rounded-1 article-img-content    rounded-1" src="/webrep/article/get_img/{{post['file_name']}}">
@@ -22,7 +22,7 @@
 												<p class="text-white textshadow text-start small">{{post['postRcu']}}</p>
 												<p class="text-white textshadow text-start small"> {{post['date']}}</p>
 											</div>
-											<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 " href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}.</a>
+											<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 WEBSAFE" href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}.</a>
 										</div>
 									</div>
 								{% endif %}
@@ -65,7 +65,7 @@
 									<div class="EVENT_CARD card rounded-2 mb-2" style="display: none;">
 
 										{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
-										{% if f_format in ['jpeg','jpg','gif','png'] %}
+										{% if f_format|lower in ['svg','webpg','jpeg','jpg','gif','png'] %}
 											<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content    rounded-1" alt="...">
 										{% else %}
 											<video muted class="img_class vid_class rounded-1 article-img-content    rounded-1" src="/webrep/article/get_img/{{post['file_name']}}">
@@ -76,7 +76,7 @@
 												<p class="text-white textshadow text-start small">{{post['postRcu']}}</p>
 												<p class="text-white textshadow text-start small"> {{post['date']}}</p>
 											</div>
-											<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 " href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}.</a>
+											<a class="card-title fw-bolder text-white stretched-link fs-4 text-truncate textshadow mt-4 WEBSAFE" href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}.</a>
 										</div>
 									</div>
 									{% endif %}
@@ -118,7 +118,7 @@
 									<div class="NEWS_CARD card rounded-2 mb-2" style="display: none;">
 
 										{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
-										{% if f_format in ['jpeg','jpg','gif','png'] %}
+										{% if f_format|lower in ['svg','webpg','jpeg','jpg','gif','png'] %}
 											<img src="/webrep/article/get_img/{{post['file_name']}}" loading="lazy" class="img_class rounded-1 article-img-content    rounded-1" alt="...">
 										{% else %}
 											<video muted class="img_class vid_class rounded-1 article-img-content    rounded-1" src="/webrep/article/get_img/{{post['file_name']}}">
@@ -129,7 +129,7 @@
 												<p class="text-white textshadow text-start small">{{post['postRcu']}}</p>
 												<p class="text-white textshadow text-start small"> {{post['date']}}</p>
 											</div>
-											<a class="card-title fw-bolder text-white stretched-link fs-3 text-truncate textshadow mt-4 " href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}.</a>
+											<a class="card-title fw-bolder text-white stretched-link fs-3 text-truncate textshadow mt-4 WEBSAFE" href="/rapid/articles/articles.html?id={{post['id']}}" type="button">{{post['postheader']}}.</a>
 										</div>
 									</div>
 									{% endif %}
