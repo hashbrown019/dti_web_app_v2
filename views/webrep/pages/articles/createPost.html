@@ -214,7 +214,6 @@
 				func : function(res){
 					resp = JSON.parse(res)
 					println(resp)
-					SPINNER_LOADER.hide()
 					// goto("/rapid/NewsAndStories/NewsAndStories.html")
 				},
 				err : function(res){alert(res)},
@@ -225,7 +224,7 @@
 					var response_loaded = parseFloat(e.loaded)
 					var percent_  = (response_loaded / response_length) * 100;
 					var percent_rounded = Math.round(percent_ * 100) / 100
-					$ID(upload_process).innerHTML=(`
+					$ID("upload_process").innerHTML=(`
 						<span>
 							Gathering 
 							<b>`+Math.round(percent_)+`%</b><br>
