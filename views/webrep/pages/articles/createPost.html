@@ -47,25 +47,6 @@
 		</div>
 	</div>
 
-<!-- Article Confirmation modal -->
-	<div class="modal " id="createPostConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">You're going there!</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body mb-3">
-					<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
-					Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-					<button type="button" class="btn btn-primary" onclick="goto('/rapid/NewsAndStories/NewsAndStories.html')">Continue</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
 <!-- Arcticle News -->
 	<div class="container shadow-sm p-3 bg-body rounded mb-5">
@@ -191,8 +172,33 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Article Confirmation modal -->
+	<div class="modal " id="createPostConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">You're going there!</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body mb-3">
+					<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
+					Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
+					<hr>
+					<h3>Your Upload Process is</h3>
+					<h2 id="upload_process"></h2>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+					<button type="button" class="btn btn-primary" onclick="goto('/rapid/NewsAndStories/NewsAndStories.html')">Continue</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script type="text/javascript">
 		function submit_article(){
+			println(" * Posting Article")
 			var data = {}; var from_field = $CLASS('article_form')
 			for (var i = 0; i < from_field.length; i++) {
 				if(from_field[i].type =="checkbox"){
@@ -208,7 +214,27 @@
 				func : function(res){
 					resp = JSON.parse(res)
 					println(resp)
+					SPINNER_LOADER.hide()
 					// goto("/rapid/NewsAndStories/NewsAndStories.html")
+				},
+				err : function(res){alert(res)},
+				progress : function(e){
+					// var response_length = parseFloat(headerMap(e)['total'])
+					println(e)
+					var response_length = parseFloat(e.total)
+					var response_loaded = parseFloat(e.loaded)
+					var percent_  = (response_loaded / response_length) * 100;
+					var percent_rounded = Math.round(percent_ * 100) / 100
+					$ID(upload_process).innerHTML=(`
+						<span>
+							Gathering 
+							<b>`+Math.round(percent_)+`%</b><br>
+							<span class="x-small">
+								[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+								<i>`+(response_length-response_loaded)+` bytes remaining</i>
+							</span>
+						</span>
+					`);
 				}
 			})
 		}
