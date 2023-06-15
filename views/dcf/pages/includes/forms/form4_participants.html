@@ -2,7 +2,7 @@
     <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 80%;">
       <div class="modal-content prof-content">
         <div class="modalprof modal-header prof-header " style="background-color: #007399;" >
-          <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Add Particpants</h4>
+          <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Participants</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
   
           </button>
@@ -146,20 +146,13 @@
                   text-decoration: none;
                 }
                 
-                li a:hover {
-                  background-color:
-                #fa7d34;
-                }
+
                 </style>
                 </head>
                 <body>
                 
-         
-                
-<ul>
 
-    <li><div><a style="color: black;"  data-toggle="modal" data-target="#myModal" href="">Add Particpants</a></div></li>
-  </ul>
+<div><button data-toggle="modal" data-target="#myModal" type="button" id="addbtnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add</button></div><br>
                 
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 80%;">
@@ -172,26 +165,42 @@
         </div>
         <div class="modal-body" style="background-color: #c1d0f0" >
             
-            <p style="font-size:14px">Please Input data</p>
+            <h1 class="modal-title " id="exampleModalLabel" >Please Input Data</h1><br>
 
             <!-- parameter drop down -->
-                <form  method="post">
+                <form>
     
-                <label for="Parameter"> <b style="font-size:13px" >  Name </b></label>
-                <input class=" x-input x-border" id="name_part" type="text" placeholder="" name="name_part">
-    
-                </select>
-                <br><br>
-    
-                <label for="Condition">   <b style="font-size:13px" > Sex </b></label>
-                <input class=" x-input x-border" id="sex_part" type="text" placeholder="" name="sex_part">
-                <br><br>
-    
-                <label for="valuetomatch"> <b style="font-size:13px" > Value to match</b></label>
-                <input type="text" id="valuetomatch" name="valuetomatch" style="width:333px; margin-left:80px; font-family: 'Quicksand', sans-serif;">
+                    <div class="mb-3">													
+                        <h5 class="small font-weight-bold ms-1 texttheme">Name</h5>
+                        <input class=" form-control form-control" type="text" placeholder="" id="name_partc">													
+                    </div>
+                    <div class="mb-3">													
+                        <h5 class="small font-weight-bold ms-1 texttheme">Sex</h5>
+                        <select class=" form-control" id="sex_partc">
+                            <option >Male</option>
+                            <option >Female</option>
+                        </select>											
+                    </div>
+
+                    <div class="mb-3">													
+                        <h5 class="small font-weight-bold ms-1 texttheme">Address</h5>
+                        <input class=" form-control form-control" type="text" placeholder="" id="addr_partc">													
+                    </div>
+
+                    <div class="mb-3">													
+                        <h5 class="small font-weight-bold ms-1 texttheme">Commodity</h5>
+                        <input class=" form-control form-control" type="text" placeholder="" id="commodity_partc">													
+                    </div>
+                    <div class="mb-3">													
+                        <h5 class="small font-weight-bold ms-1 texttheme">Sector</h5>
+                        <select class=" form-control" id="sector_partc">
+                            <option >PWD</option>
+                            <option >OFW</option>
+                        </select>											
+                    </div>
                 <br>
                 <br>
-    <button  class="button" ><span>OK</span></button>
+
       </form>
     
     
@@ -221,6 +230,8 @@
                                 <th>Sex</th>
                                 <th>Address</th>
                                 <th>Commodity</th>
+                                <th>Sector</th>
+                                <th>Action</th>
                 
                             </tr>
                             <tr class='case'>
@@ -228,12 +239,14 @@
                                 <td><input class="form-control" type='text' disabled name='eventpara[]'/></td>
                                 <td><input class="form-control" type='text' disabled name='typecondition[]'/>
                                 <td><input class="form-control" type='text' disabled name='typecondition[]'/>
-                                     <td><input class="form-control" type='text'  disabled name='valuematch[]'/>
+                                <td><input class="form-control" type='text' disabled name='typecondition[]'/>
+                                <td><input class="form-control" type='text' disabled name='typecondition[]'/>
+                                <td><a style="color: #ff4d4d;" href=""> <span><i class="fa-solid fa-trash"></i></span> Delete</a></td>
                                     <table class="table table-bordered"></table>
                                 </td>
                             </tr>
                           </table>
-                          <button type="button" class='btn btn-success addmore'>+ add new Header</button> <br>
+               
                           
                     </div>
                     <input type="submit" name="submit" value="Submit" class="btn btn-info">
@@ -243,24 +256,6 @@
                 
                 
                 <script>
-                var arrayOfData = []
-
-                //add tablebox
-                $(document).ready(function(){
-                    $(".addmore").on('click', function () {
-                        var count = $('#form_table')[0].rows.length;
-                        var data = "<tr class='case'><td><span id='snum" + count + "'>" + count + ".</span></td>";
-                        data += "<td><input class='form-control' type='text' disabled name='eventpara[]'/></td><td><input class='form-control' type='text' disabled name='typecondition[]'/><td><input class='form-control' type='text' disabled name='valuematch[]'/><table class='table table-bordered'></table></td></tr>";
-                        $('#form_table').append(data);
-                    });
-                    $('form#test').on('click', '.childtbl', function () {
-                        var $titlesTable = $(this).next('table')[0];
-                        var titlesCount = $titlesTable.rows.length + 1;
-                        var data1 = "<tr class='case1'><td><span id='snum1" + titlesCount + "'>" + titlesCount + ".</span></td>";
-                        data1 += "<td>Title:<input class='form-control' type='text' name='wr[]'/></td></tr>";
-                        $($titlesTable).append(data1);
-                    });
-                });
 
                 
                 </script>
