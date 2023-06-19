@@ -45,6 +45,11 @@ def dcf_dashboard():
     form_disp = display_dataform.displayform()
     return render_template("dcf_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
+@app.route('/form1_dashboard')
+def form1_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form1_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
 @app.route('/updateform1',methods=['POST','GET'])
 def updateform1():
     update_dataform1.updateform1(request)
@@ -183,7 +188,7 @@ def delete_form1(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form1_dashboard")
 
 @app.route('/delete_form2/<string:id>', methods = ['POST','GET'])
 def delete_form2(id):
@@ -300,6 +305,7 @@ def importcsvform1():
 	return redirect("/dcf_spreadsheet")
 #-------------------------------------------------------------------------------
 
+
 @app.route('/dcf', methods=['GET', 'POST'])
 def dcfexport_data():
     if request.method == 'POST':
@@ -307,13 +313,13 @@ def dcfexport_data():
         if export_type == 'form1export':
             def form1export():
                 if request.method == "POST":
-                    query= db.select("SELECT dcf_prep_review_aprv_status  (upload_by,form_1_rcus,form_1_number_of_dips,form_1_anchor_firm,form_1_size_of_anchor,form_1_commodity,form_1_scope_provinces,form_1_for_development,form_1_cn_approved,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_uploading_to_ifad,form_1_date_of_ifad_no_inssuance,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_namefo,form_1_totalhectarage_cov,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_euqipment,form_1_facilities,form_1_warehouse,form_1_total_matching_grant,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_supply_chain_manager,form_1_totalproject_cost,form_1_fmi,form_1_fmi_kms FROM dcf_prep_review_aprv_status")
+                    query= db.select("SELECT form_1_rcus,form_1_number_of_dips,form_1_anchor_firm,form_1_size_of_anchor,form_1_commodity,form_1_scope_provinces,form_1_for_development,form_1_cn_approved,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_uploading_to_ifad,form_1_date_of_ifad_no_inssuance,form_1_namefo,form_1_totalmsme,form_1_total_farmerbene,form_1_totalhectarage_cov,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_totalcost_prodinvest,form_1_total_matching_grant,form_1_capbuilding,form_1_supply_chain_manager,form_1_totalproject_cost,form_1_fmi,form_1_fmi_kms FROM dcf_prep_review_aprv_status")
                     df_nested_list = pd.json_normalize(query)
                     df = pd.DataFrame(df_nested_list)
                     df = df.astype(str)
                     writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form1_exported_file.xlsx') 
                     df.to_excel(writer, sheet_name='dcf_form1_exported_file', index=False)
-                    new_column_names = 'RCUs,Number Of DIPs,Anchor Firm,Size Of Anchor,Commodity,Scope/Provinces,For development (indicate date),Date: CN Approved,Date: Full BPs and DIPs Finalized/Approved by RCUs and endorsed to NPCO for Review,Date of the Parallel Review with NPCO/RGMS-IFAD-RTWG,Date of submission of the revised DIPs based on the comments from the parallel review,Date of RTWG Approval,Date: NPCO cursory review of RCUs compliance to parallel review comments; and DIP endorsement to NOTUS Uploading,Date: Uploading to IFAD NOTUS c/o NPCO,Date: IFAD NO Issuance,Total # of MSMEs,Total # of farmer beneficiaries,Total # of FOs,Input Name of FO,Total Hectarage Covered,Hectares for Rehab,Total Cost of Rehab,Hectares for Expansion,Total Cost of Expansion,Total Cost of Productive Investments (equipment, facilities, warehouse),Total Matching Grant (AA+AB),Capacity Building (Organizational + Technical trainings: post-production, and etc.),Supply Chain Manager,Total Project Cost (Y+AC+AD+AE),FMI,FMI Kms'
+                    new_column_names = 'RCUs, Number Of DIPs, Anchor Firm, Size Of Anchor, Commodity, Scope/Provinces, For development(indicate date), Date: CN Approved, Date:Full BPs and DIPs Finalized/Approved by RCUs and endorsed to NPCO for Review, Date of the Parallel Review with NPCO/RGMS-IFAD-RTWG, Date of submission of the revised DIPs based on the comments from the parallel review, Date of RTWG Approval, Date: NPCO cursory review of RCUs compliance to parallel review comments and DIP endorsement to NOTUS Uploading, Date: Uploading to IFAD NOTUS c/o NPCO, Date: IFAD NO Issuance, Total # of FOs, Total # of MSMEs, Total # of farmer beneficiaries, Total Hectarage Covered, Hectares for Rehab, Total Cost of Rehab, Hectares for Expansion, Total Cost of Expansion, Total Cost of Productive Investments(equipment/facilities/warehouse), Total Matching Grant(AA+AB), Capacity Building (Organizational+Technical trainings: post-production and etc.), Supply Chain Manager, Total Project Cost (Y+AC+AD+AE), FMI, FMI Kms'
                     new_column_names_list = new_column_names.split(',')
                     df.columns = new_column_names_list
 
@@ -386,7 +392,7 @@ def dcfexport_data():
                     df = df.astype(str)
                     writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form4_exported_file.xlsx') 
                     df.to_excel(writer, sheet_name='dcf_form4_exported_file', index=False)
-                    new_column_names = 'Implementing Unit,Training Number, Activity Title,Types of Training , Topic Of Training, DIP-approved alignment,Name of DIP, ACTIVITY DURATION (Day/Month/Year) Start,ACTIVITY DURATION (Day/Month/Year) End,Total Number of Participants, Commodity,Venue,Name of Resource Person/Facilitator/BDSP(First Name/Middle Name/Last Name),RAPID Actual Budget Actual (CY 2022 Onwards e.g. 34000.00),Name of Partner/Organization,Counterpart Amount(monetize & estimates),Total number of beneficiaries per type,Total Number Per Gender male,Total Number Per Gender female,Total Number Gender, Total Number Per Sector-PWD,Total Number Per Sector-Youth,Total Number Per Sector-IP,Total Number Per Sector-SC,Total Number Sector, Results of activity (Average) Pre-test,Results of activity (Average) Post-Test, Client Feedback Survey Rating, Client Feedback Survey Comments/ Areas of Improvement'
+                    new_column_names = 'Implementing Unit,Training Number, Activity Title,Types of Training , Topic Of Training,  -approved alignment,Name of DIP, ACTIVITY DURATION (Day/Month/Year) Start,ACTIVITY DURATION (Day/Month/Year) End,Total Number of Participants, Commodity,Venue,Name of Resource Person/Facilitator/BDSP(First Name/Middle Name/Last Name),RAPID Actual Budget Actual (CY 2022 Onwards e.g. 34000.00),Name of Partner/Organization,Counterpart Amount(monetize & estimates),Total number of beneficiaries per type,Total Number Per Gender male,Total Number Per Gender female,Total Number Gender, Total Number Per Sector-PWD,Total Number Per Sector-Youth,Total Number Per Sector-IP,Total Number Per Sector-SC,Total Number Sector, Results of activity (Average) Pre-test,Results of activity (Average) Post-Test, Client Feedback Survey Rating, Client Feedback Survey Comments/ Areas of Improvement'
                     new_column_names_list = new_column_names.split(',')
                     df.columns = new_column_names_list
 
