@@ -18,5 +18,5 @@ def ACCESS_LOGS(addr, endpoint, session, agent):
 	DATE_NOW = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
 	strs = "{}||{}||{}||{}||{}||{}||{}||{}||{}".format(DATE_NOW, in_session, user_id,user_name, uname, addr, mac_addr,endpoint,agent)
 	file_object = open(c.RECORDS+'/objects/logs/access.logs', 'a')
-	file_object.write(('{}\n'.format(strs)).encode('utf-8').strip())
+	file_object.write(str(('{}\n'.format(strs)).encode('utf-8').strip()))
 	file_object.close()
