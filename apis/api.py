@@ -40,7 +40,6 @@ class data_handlers:
 
 class user_management:
 	def is_on_session(): return ('USER_DATA' in session)
-	def __init__(self, arg):super(data_handlers, self).__init__();self.arg = arg
 
 	@app.route("/api/get_user_data/<ids>",methods=["POST","GET"]) # GE
 	def get_user_data(ids):
@@ -115,7 +114,7 @@ class user_management:
 		data = dict(request.form)
 		# print(data)
 		key = [];val = [];args=""
-		# data["USER_ID"] = session["USER_DATA"][0]['id']
+		# data["USER_ID"] = session["USER_DATA"]['id']
 		# __f = FILE_REQ.save_file_from_request(request,"upload",c.RECORDS+"/objects/webrep/",False,True)
 		# data["upload"] = __f["file_arr_str"]
 
@@ -128,7 +127,7 @@ class user_management:
 	def change_pass():
 		msg = "on process"
 		if(user_management.is_on_session()):
-			# cur_user = rapid_mysql.select("SELECT * FROM `users` WHERE `id`='{}';".format(request.form['id']))[0]
+			# cur_user = rapid_mysql.select("SELECT * FROM `users` WHERE `id`='{}';".format(request.form['id']))
 			sql = "UPDATE `users` SET `password`='{}' WHERE `id`='{}';".format(request.form['newpass'],request.form['id'])
 			print(sql)
 			do_change_pass = rapid_mysql.do(sql)
@@ -136,6 +135,33 @@ class user_management:
 			return jsonify({"msg":msg})
 		else:
 			return jsonify({"msg":"ERROR"})
+
+	@app.route("/api/user/rankings/<user_id>",methods=["POST","GET"]) # GE
+	def user_rankings(user_id):
+		data = {}
+		msg = "on process"
+		if(user_management.is_on_session()):
+			prof_a_e = len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a` WHERE `user_id` = '{}';".format(user_id)))
+			prof_a = len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id)))
+			data['profiling_a'] = int(prof_a_e) + int(prof_a)
+			data['prof_b'] = len(rapid_mysql.select("SELECT `uploaded_by` FROM `form_b` WHERE `uploaded_by` = '{}';".format(user_id)))
+			data['prof_c'] = len(rapid_mysql.select("SELECT `upload_by` FROM `form_c` WHERE `upload_by` = '{}';".format(user_id)))
+			data
+			data['dcf_access_financing'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_bdsp_reg'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_capacity_building'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_enablers_activity'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_implementing_unit'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_matching_grant'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_negosyo_center'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_prep_review_aprv_status'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_product_development'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development` WHERE `upload_by` = '{}';".format(user_id)))
+			data['dcf_trade_promotion'] = len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion` WHERE `upload_by` = '{}';".format(user_id)))
+			data['webrep_articles'] = len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_articles` WHERE `USER_ID` = '{}';".format(user_id)))
+			data['webrep_forum_comments'] = len(rapid_mysql.select("SELECT `comment_by` FROM `webrep_forum_comments` WHERE `comment_by` = '{}';".format(user_id)))
+			data['webrep_uploads'] = len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_uploads` WHERE `USER_ID` = '{}';".format(user_id)))
+			
+			return data
 
 
 class security:
