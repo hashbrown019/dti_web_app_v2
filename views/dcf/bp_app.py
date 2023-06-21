@@ -50,6 +50,11 @@ def form1_dashboard():
     form_disp = display_dataform.displayform()
     return render_template("form1_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
+@app.route('/form2_dashboard')
+def form2_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form2_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
 @app.route('/updateform1',methods=['POST','GET'])
 def updateform1():
     update_dataform1.updateform1(request)

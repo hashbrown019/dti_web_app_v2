@@ -16,6 +16,7 @@ import xlrd
 import json
 from werkzeug.utils import secure_filename
 import os
+from modules.Req_Brorn_util import file_from_request
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -72,6 +73,26 @@ def insert():
 def update():
 	updateData.update(request)
 	return redirect("/formcdashboard")
+
+@app.route('/update_prof',methods=['POST','GET'])
+def update_prof():
+	if request.method == "POST":
+		
+		editfullname = request.form.get("editfullname")
+		editemail = request.form.get("editemail")
+		editphone = request.form.get("editphone")
+		editaddress = request.form.get("editaddress")
+		user_id = session["USER_DATA"][0]['id']
+
+		FILE_REQ = file_from_request(app)
+		__f = FILE_REQ.save_file_from_request(request,"profilepic",c.RECORDS+"/objects/userpics/",True,True)
+		print(__f)
+
+		#sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress, profilepic, user_id)
+		
+
+
+	return redirect("/menu")
 
 @app.route('/dcfweb')
 def dcfweb():
