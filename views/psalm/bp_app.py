@@ -85,8 +85,7 @@ def update_prof():
 		user_id = session["USER_DATA"][0]['id']
 
 		FILE_REQ = file_from_request(app)
-		__f = FILE_REQ.save_file_from_request(request,"profilepic",c.RECORDS+"/objects/userpics/",True,True)
-		print(__f)
+		__f = FILE_REQ.save_file_from_request(request,"file",c.RECORDS+"objects/userpics/",False,True)
 
 		#sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress, profilepic, user_id)
 		
