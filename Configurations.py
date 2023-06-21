@@ -6,6 +6,7 @@ IP_address = socket.gethostbyname(host_name)
 SECRET_KEY = "@002342562988603673976#131452@HHPLHKHHH"
 # HOST = host_name;
 
+LOCAL_IP ="127.0.0.1"
 HOST = "0.0.0.0";
 CUSTOM_HOST = "192.168.0.1";
 PORT = 5000;
