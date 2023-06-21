@@ -4,7 +4,9 @@ from decimal import Decimal
 import pandas as pd
 from tqdm import tqdm
 from time import sleep
+
 from flask_session import Session
+from apis.api import user_management
 from views.psalm.dashboard import display_data as displayData
 from views.psalm.dashboard import filter_data as filterData
 from views.psalm.formc_insert import insert_data as insertData
@@ -105,9 +107,10 @@ def update_prof():
 			sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
 			result=db.do(sql)
 			flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
+			
 
 
-	return redirect("/logout")
+	return redirect("/menu")
 
 @app.route('/dcfweb')
 def dcfweb():
@@ -140,7 +143,7 @@ def formcdashboardfilter():
 def menu():
 	if(is_on_session()):
 		sesh = session["USER_DATA"][0]
-		return render_template("menu.html",user_data=sesh)
+		return render_template("menu.html",user_data=sesh,user_rank=user_management.user_rankings(sesh['id']))
 	else:
 		return redirect("/login?force_url=1")
 	
