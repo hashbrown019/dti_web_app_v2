@@ -86,9 +86,9 @@ def update_prof():
 
 		FILE_REQ = file_from_request(app)
 		__f = FILE_REQ.save_file_from_request(request,"file",c.RECORDS+"objects/userpics/",False,True)
-
-		#sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress, profilepic, user_id)
-		
+		print(__f)
+		sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
+		db.do(sql)
 
 
 	return redirect("/menu")
