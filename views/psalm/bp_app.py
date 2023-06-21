@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint,request, flash, render_template, url_for,redirect, session,send_file
+from flask import Flask, Blueprint,request, flash, render_template, url_for,redirect, session,send_file, jsonify
 from modules.Connections import mysql
 from decimal import Decimal
 import pandas as pd
@@ -84,20 +84,22 @@ def update_prof():
 		editaddress = request.form.get("editaddress")
 		user_id = session["USER_DATA"][0]['id']
 
-		# return "-- {}".format(len(request.files.getlist('file')))
-		FILE_REQ = file_from_request(app)
-		__f = FILE_REQ.save_file_from_request(request,"file",c.RECORDS+"objects/userpics/",False,True)
-		print(__f)
-		sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
+		# return jsonify(request.files.getlist('file'))
+		if (len(request.files.getlist('file'))>1):
+			FILE_REQ = file_from_request(app)
+			__f = FILE_REQ.save_file_from_request(request,"file",c.RECORDS+"objects/userpics/",False,True)
+			print(__f)
+			sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
+		else:
+			sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress, user_id)
+
 		result=db.do(sql)
+
 		if(result["response"]=="error"):
-			# flash(f"An error occured !", "error")
+			flash(f"An error occured !", "error")
 			print(str(result))
 		else:
-			session.modified = True
-			session["USER_DATA"][0]['profilepic'] = __f['file_arr_str']
-			session["USER_DATA_ADMIN_"][0]['profilepic']  = __f['file_arr_str']
-			# flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
+			flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
 
 
 	return redirect("/menu")
@@ -133,7 +135,6 @@ def formcdashboardfilter():
 def menu():
 	if(is_on_session()):
 		sesh = session["USER_DATA"][0]
-		session.modified = False
 		return render_template("menu.html",user_data=sesh)
 	else:
 		return redirect("/login?force_url=1")
