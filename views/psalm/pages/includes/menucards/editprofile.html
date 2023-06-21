@@ -61,7 +61,8 @@
 										<div class="d-flex flex-column align-items-center text-center">
 
 
-												<form style="margin-left: 2%;  margin-right: 2%;" action="/update_prof" method="POST" enctype="multipart/form-data">                         
+												<form style="margin-left: 2%;  margin-right: 2%;" action="/update_prof" method="POST" enctype="multipart/form-data">    
+													 {% include "includes/sweetalert2.html" %}                     
 														<div class="profile-pic">
 																<label class="-label" for="file">
 																	<span class="glyphicon glyphicon-camera"></span>
@@ -69,7 +70,11 @@
 															</label>
 															<input multiple name="file" id="file" type="file" accept="image/png, image/gif, image/jpeg" onchange="loadFile(event)">
 															
-															<img src="\static\psalm_static\menu\img\profilepic.png" id="output" width="200" />
+															{% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
+															<img class="rounded-circle" src="\static\psalm_static\menu\img\profilepic.png" id="output" style="width: 200px;">
+															{% else: %}
+															<img class="rounded-circle" src="\api\user_pic\{{user_data['profilepic']}}" id="output" style="width: 200px; ">
+															{%endif%}
 													</div>
 													<div class="mt-3">
 													 

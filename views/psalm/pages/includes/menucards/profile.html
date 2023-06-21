@@ -12,8 +12,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="\static\psalm_static\menu\img\profilepic.png" alt="Admin"
-                                class="rounded-circle" >
+                            {% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
+                            <img class="rounded-circle" src="\static\psalm_static\menu\img\profilepic.png">
+                            {% else: %}
+                            <img class="rounded-circle" src="\api\user_pic\{{user_data['profilepic']}}">
+                            {%endif%}
                             <div class="mt-3">
    
                                 <p class="text-secondary mb-1">{{user_data['job']}}</p>
@@ -105,7 +108,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-sm-6 mb-3">
+                    <!--<div class="col-sm-6 mb-3">
                         <div class="card h-100">
                             <div class="card-body">
                                 <h6 class="d-flex align-items-center mb-3"><i
@@ -138,6 +141,8 @@
                             </div>
                         </div>
                     </div>
+                -->
+
                 </div>
             </div>
         </div>
