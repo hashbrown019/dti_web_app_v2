@@ -479,9 +479,10 @@ function myFunction3() {
           cancelButtonColor: '#d33',
           confirmButtonText: 'Yes, Set it now!'
       }).then((result) => {
-          if (result.value) {
-              window.location.href=url;
-          }
+        
+        if (result.isConfirmed) {
+          $('#editprof').modal({'show':true})
+        }
           
       })
     }

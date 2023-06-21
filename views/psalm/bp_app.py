@@ -110,7 +110,7 @@ def update_prof():
 			
 
 
-	return redirect("/menu")
+	return redirect("/logout")
 
 @app.route('/dcfweb')
 def dcfweb():
