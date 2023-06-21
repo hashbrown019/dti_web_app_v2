@@ -83,22 +83,27 @@ def update_prof():
 		editphone = request.form.get("editphone")
 		editaddress = request.form.get("editaddress")
 		user_id = session["USER_DATA"][0]['id']
+		# if (len(request.files.getlist('file'))>1):
+		FILE_REQ = file_from_request(app)
+		__f = FILE_REQ._save_file_from_request(request,"file",c.RECORDS+"objects/userpics/",False,False)
+		print(__f)
+		sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
+		# else:
 
-		# return jsonify(request.files.getlist('file'))
-		if (len(request.files.getlist('file'))>1):
-			FILE_REQ = file_from_request(app)
-			__f = FILE_REQ.save_file_from_request(request,"file",c.RECORDS+"objects/userpics/",False,True)
-			print(__f)
+		# result=db.do(sql)
+
+		if(__f["status"]=="error"):
+			if(__f['msg']=="No File Found in Form"):
+				sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress, user_id)
+				result=db.do(sql)
+				flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
+
+			else:
+				flash(f"An error occured !", "error")
+				print(str(result))
+		else:
 			sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
-		else:
-			sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress, user_id)
-
-		result=db.do(sql)
-
-		if(result["response"]=="error"):
-			flash(f"An error occured !", "error")
-			print(str(result))
-		else:
+			result=db.do(sql)
 			flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
 
 
