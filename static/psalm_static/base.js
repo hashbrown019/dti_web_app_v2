@@ -467,6 +467,25 @@ function myFunction3() {
       })
     }
 
+    
+    // function profileconfirmation() {
+      function profileconfirmation() {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Set Profile picture lezgooow!',
+          text: 'It seems that you dont have a profile picture you can set it now or do it later',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Set it now!'
+      }).then((result) => {
+          if (result.value) {
+              window.location.href=url;
+          }
+          
+      })
+    }
+
 
 
     

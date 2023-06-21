@@ -34,7 +34,8 @@ background-size: cover;
 
 </style>
 
-<body id="container_b">
+
+		<body id="container_b">
 	<div id="search-bar" style="margin-top: 20px;">
 		<div class="container2">
 			<input type="text" placeholder="Search...">
@@ -154,6 +155,10 @@ background-size: cover;
 		window.addEventListener("click", function (e) {
 			if (!btn.contains(e.target)) classList.remove("active");
 		});
+
+		{% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
+		$onload(profileconfirmation())
+		{% endif %}
 
 	</script>
 </body>
