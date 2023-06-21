@@ -472,7 +472,7 @@ function myFunction3() {
       function profileconfirmation() {
         Swal.fire({
           icon: 'warning',
-          title: 'Set Profile picture lezgooow!',
+          title: 'Set Profile picture!',
           text: 'It seems that you dont have a profile picture you can set it now or do it later',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
