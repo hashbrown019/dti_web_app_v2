@@ -36,7 +36,7 @@ class data_handlers:
 
 	@app.route("/api/user_pic/<fname>")
 	def get_user_pic(fname):
-		return send_file(c.RECORDS+"objects/userpics/"+excel_file, as_attachment=False,download_name=fname)
+		return send_file(c.RECORDS+"objects/userpics/"+fname, as_attachment=False,download_name=fname)
 
 class user_management:
 	def is_on_session(): return ('USER_DATA' in session)
