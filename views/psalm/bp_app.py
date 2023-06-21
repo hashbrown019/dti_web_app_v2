@@ -107,7 +107,7 @@ def update_prof():
 			flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
 
 
-	return redirect("/menu")
+	return redirect("/logout")
 
 @app.route('/dcfweb')
 def dcfweb():
