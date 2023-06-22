@@ -102,7 +102,6 @@ def update_prof():
 
 			else:
 				flash(f"An error occured !", "error")
-				print(str(result))
 		else:
 			sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
 			result=db.do(sql)

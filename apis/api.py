@@ -144,70 +144,102 @@ class user_management:
 			prof_a_e = len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a` WHERE `user_id` = '{}';".format(user_id)))
 			prof_a = len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id)))
 
-			data['profiling_a'] = {
+			try:
+				data['profiling_a'] = {
 				'total' : len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a`;")) + len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles`;")),
 				'inputed':int(prof_a_e) + int(prof_a)
-			}
-			data['prof_b'] = {
+				}
+			except:pass
+			try:
+				data['prof_b'] = {
 				'total' : len(rapid_mysql.select("SELECT `uploaded_by` FROM `form_b`;")),
 				'inputed': len(rapid_mysql.select("SELECT `uploaded_by` FROM `form_b` WHERE `uploaded_by` = '{}';".format(user_id)))
-			}
-			data['prof_c'] = {
+				}
+			except:pass
+			try:
+				data['prof_c'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `form_c`;")),
 				'inputed' :len(rapid_mysql.select("SELECT `upload_by` FROM `form_c` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_access_financing'] = {
+				}
+			except:pass
+			try:
+				data['dcf_access_financing'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing`;")),
 				'inputed':len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_bdsp_reg'] = {
+				}
+			except:pass
+			try:
+				data['dcf_bdsp_reg'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_capacity_building'] = {
+				}
+			except:pass
+			try:
+				data['dcf_capacity_building'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_enablers_activity'] = {
+				}
+			except:pass
+			try:
+				data['dcf_enablers_activity'] = {
 				"total" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity`;")),
 				"inputed" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_implementing_unit'] = {
+				}
+			except:pass
+			try:
+				data['dcf_implementing_unit'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_matching_grant'] = {
+				}
+			except:pass
+			try:
+				data['dcf_matching_grant'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_negosyo_center'] ={ 
+				}
+			except:pass
+			try:
+				data['dcf_negosyo_center'] ={ 
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_prep_review_aprv_status'] = {
+				}
+			except:pass
+			try:
+				data['dcf_prep_review_aprv_status'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_product_development'] = {
+				}
+			except:pass
+			try:
+				data['dcf_product_development'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['dcf_trade_promotion'] = {
+				}
+			except:pass
+			try:
+				data['dcf_trade_promotion'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion` WHERE `upload_by` = '{}';".format(user_id)))
-			}
-			data['webrep_articles'] ={
+				}
+			except:pass
+			try:
+				data['webrep_articles'] ={
 				'total' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_articles`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_articles` WHERE `USER_ID` = '{}';".format(user_id)))
-			}
-			data['webrep_forum_comments'] = {
+				}
+			except:pass
+			try:
+				data['webrep_forum_comments'] = {
 				'total' : len(rapid_mysql.select("SELECT `comment_by` FROM `webrep_forum_comments`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `comment_by` FROM `webrep_forum_comments` WHERE `comment_by` = '{}';".format(user_id)))
-			}
-			data['webrep_uploads'] = {
+				}
+			except:pass
+			try:
+				data['webrep_uploads'] = {
 				'total' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_uploads`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_uploads` WHERE `USER_ID` = '{}';".format(user_id)))
-			}
+				}
+			except:pass
 			return data
 
 class security:
