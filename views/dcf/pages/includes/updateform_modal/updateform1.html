@@ -71,11 +71,29 @@
                                 </div>
                                 <div class="x-col l4 x-container x-padding">
                                     <span class="">Scope/Provinces</span>
-                                    <select class=" x-border x-select x-border" id="form_1_scope_provinces" value="{{ row['form_1_scope_provinces'] }}" name="form_1_scope_provinces"><br>
-                                        <option >{{ row['form_1_scope_provinces'] }}</option>
-                                        <option >Conducted before DIP approval</option>
-                                        <option >Conducted after DIP approval</option>
-                                        <option >N/A</option>
+                                    <select class=" x-border x-select x-border" id="form_1_scope_provinces" name="form_1_scope_provinces"><br>
+                                        <option selected value="">Choose Province</option>
+                                    <option>Northern Samar</option>
+                                    <option>Leyte</option>
+                                    <option>Southern Leyte</option>
+                                    <option>Zamboanga del Norte</option>
+                                    <option>Zamboanga Sibugay</option>
+                                    <option>Zamboanga del Sur</option>
+                                    <option>Misamis Oriental</option>
+                                    <option>Bukidnon</option>
+                                    <option>Lanao del Norte</option>
+                                    <option>Davao de Oro</option>
+                                    <option>Davao Oriental</option>
+                                    <option>Davao del Norte</option>
+                                    <option>Davao del Sur</option>
+                                    <option>Davao Occidental</option>
+                                    <option>North Cotabato</option>
+                                    <option>Sultan Kudarat</option>
+                                    <option>Sarangani</option>
+                                    <option>Agusan del Norte</option>
+                                    <option>Agusan del Sur</option>
+                                    <option>Surigao del Sur</option>
+                                    <option>Maguindanao</option>
                                     </select>
                                 </div>
                             </div>
@@ -126,34 +144,22 @@
                         <center><h2 class=" text-white x-container" style="background-color: #007399;">DIP Details per FO </h2></center>
             
                         <div class="x-row x-padding x-container">
-                            <div class="x-col l4 x-container x-padding">
-                                <span class="">Total # of MSMEs</span>
-                                <select class=" x-border x-select x-border" value="{{ row['form_1_totalmsme'] }}" id="form_1_totalmsme" name="form_1_totalmsme"><br>
-                                    <option >{{ row['form_1_totalmsme'] }}</option>
-                                    <option >Large</option>
-                                    <option >Medium</option>
-                                    <option >Small</option>
-                                    <option >Micro</option>
-                                </select>
-                            </div>
-                            <div class="x-col l4 x-container x-padding">
-                                <span class="">Total # of farmer beneficiaries</span>
-                                <select class=" x-border x-select x-border" id="form_1_total_farmerbene" value="{{ row['form_1_total_farmerbene'] }}" name="form_1_total_farmerbene"><br>
-                                    <option >{{ row['form_1_total_farmerbene'] }}</option>
-                                    <option >Conducted before DIP approval</option>
-                                    <option >Conducted after DIP approval</option>
-                                    <option >N/A</option>
-                                </select>
-                            </div>
-                            <div class="x-col l4 x-container x-padding">
-                                <span class="">Total # of FOs </span>
-                                <select class=" x-border x-select x-border" id="form_1_totalfo" value="{{ row['form_1_totalfo'] }}" name="form_1_totalfo"><br>
-                                    <option >{{ row['form_1_totalfo'] }}</option>
-                                    <option >Conducted before DIP approval</option>
-                                    <option >Conducted after DIP approval</option>
-                                    <option >N/A</option>
-                                </select>
-                            </div>
+                            <div class="x-col l4 x-container x-padding">	
+                                <label>Total # of MSME's</label>
+                                <input class=" x-input x-border" id="form_1_totalmsme"  value="{{ row['form_1_totalmsme'] }}" type="text" name="form_1_totalmsme" placeholder="">
+    
+                    </div>
+                            <div class="x-col l4 x-container x-padding">	
+                                <label>Total # of farmer beneficiaries</label>
+                                <input class=" x-input x-border" id="form_1_total_farmerbene" value="{{ row['form_1_total_farmerbene'] }}" type="text" name="form_1_total_farmerbene" placeholder="">
+            
+                    </div>
+
+                            <div class="x-col l4 x-container x-padding">	
+                                <label>Total # of FOs </label>
+                                <input class=" x-input x-border" id="form_1_totalfo" value="{{ row['form_1_totalfo'] }}" type="text" name="form_1_totalfo" placeholder="">
+            
+                    </div>
                         </div>
                         <div class="x-row">
                             <div class="x-container x-padding ">
