@@ -48,92 +48,107 @@ def dcf_dashboard():
 @app.route('/form1_dashboard')
 def form1_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form1_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form1_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form2_dashboard')
 def form2_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form2_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form2_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form3_dashboard')
 def form3_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form3_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form3_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form4_dashboard')
 def form4_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form4_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form4_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form5_dashboard')
 def form5_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form5_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form5_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form6_dashboard')
 def form6_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form6_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form6_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form7_dashboard')
 def form7_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form7_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form7_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
+@app.route('/form9_dashboard')
+def form9_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form_dashboard/form9_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
+@app.route('/form10_dashboard')
+def form10_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form10_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
+@app.route('/form11_dashboard')
+def form11_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form11_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/updateform1',methods=['POST','GET'])
 def updateform1():
     update_dataform1.updateform1(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form1_dashboard")
 
 @app.route('/updateform2',methods=['POST','GET'])
 def updateform2():
     update_dataform2.updateform2(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form2_dashboard")
 
 
 @app.route('/updateform3',methods=['POST','GET'])
 def updateform3():
     update_dataform3.updateform3(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form3_dashboard")
 
 
 @app.route('/updateform4',methods=['POST','GET'])
 def updateform4():
     update_dataform4.updateform4(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form4_dashboard")
 
 @app.route('/updateform5',methods=['POST','GET'])
 def updateform5():
     update_dataform5.updateform5(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form5_dashboard")
 
 @app.route('/updateform6',methods=['POST','GET'])
 def updateform6():
     update_dataform6.updateform6(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form6_dashboard")
 
 
 @app.route('/updateform7',methods=['POST','GET'])
 def updateform7():
     update_dataform7.updateform7(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form7_dashboard")
 
 
 @app.route('/updateform9',methods=['POST','GET'])
 def updateform9():
     update_dataform9.updateform9(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form9_dashboard")
 
 
 @app.route('/updateform10',methods=['POST','GET'])
 def updateform10():
     update_dataform10.updateform10(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form10_dashboard")
 
 @app.route('/updateform11',methods=['POST','GET'])
 def updateform11():
     update_dataform11.updateform11(request)
-    return redirect("/dcf_dashboard")
+    return redirect("/form11_dashboard")
 
 @app.route('/dcf_forms')
 def dcf_forms():
@@ -230,7 +245,7 @@ def delete_form2(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form2_dashboard")
 
 @app.route('/delete_form3/<string:id>', methods = ['POST','GET'])
 def delete_form3(id):
@@ -242,7 +257,7 @@ def delete_form3(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form3_dashboard")
 
 @app.route('/delete_form4/<string:id>', methods = ['POST','GET'])
 def delete_form4(id):
@@ -254,7 +269,7 @@ def delete_form4(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form4_dashboard")
 
 @app.route('/delete_form5/<string:id>', methods = ['POST','GET'])
 def delete_form5(id):
@@ -266,7 +281,7 @@ def delete_form5(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form5_dashboard")
 
 @app.route('/delete_form6/<string:id>', methods = ['POST','GET'])
 def delete_form6(id):
@@ -278,7 +293,7 @@ def delete_form6(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form6_dashboard")
 
 @app.route('/delete_form7/<string:id>', methods = ['POST','GET'])
 def delete_form7(id):
@@ -290,7 +305,7 @@ def delete_form7(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form7_dashboard")
 
 @app.route('/delete_form9/<string:id>', methods = ['POST','GET'])
 def delete_form9(id):
@@ -302,7 +317,7 @@ def delete_form9(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form9_dashboard")
 
 @app.route('/delete_form10/<string:id>', methods = ['POST','GET'])
 def delete_form10(id):
@@ -314,7 +329,7 @@ def delete_form10(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form10_dashboard")
 
 @app.route('/delete_form11/<string:id>', methods = ['POST','GET'])
 def delete_form11(id):
@@ -326,7 +341,7 @@ def delete_form11(id):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/dcf_dashboard")
+	return redirect("/form11_dashboard")
 
 
 @app.route('/importcsvform1',methods = ['GET','POST'])
