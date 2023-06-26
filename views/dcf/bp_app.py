@@ -55,6 +55,31 @@ def form2_dashboard():
     form_disp = display_dataform.displayform()
     return render_template("form2_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
+@app.route('/form3_dashboard')
+def form3_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form3_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
+@app.route('/form4_dashboard')
+def form4_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form4_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
+@app.route('/form5_dashboard')
+def form5_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form5_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
+@app.route('/form6_dashboard')
+def form6_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form6_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
+@app.route('/form7_dashboard')
+def form7_dashboard():
+    form_disp = display_dataform.displayform()
+    return render_template("form7_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
 @app.route('/updateform1',methods=['POST','GET'])
 def updateform1():
     update_dataform1.updateform1(request)

@@ -1,0 +1,56 @@
+<div class="card" style="width:60%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+    <div class="card-header bg-fav">
+        <h3 style="color: white;">FORM 4 Capacity Building for Beneficiaries <div class="h4 fw-bolder text-success mb-2">SPREADSHEET MANAGEMENT</div></h3>
+    </div>
+    <div class="card-body" style="background-color: #b4cde4;;">
+        <form action="/dcf" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col">
+                  <select id="export_type" name="export_type" class="form-control">
+                    <option value="form4export">Form 4 Capacity Building for Beneficiaries</option>
+                  </select>
+                </div>
+              </div>
+            <div class="form-row">
+              <div class="col">
+                <strong>
+                  <label for="position">Export Data:</label>
+              </strong><br>
+                <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span> Export</button>
+              </div>
+            </div>
+            </div>
+          </form>
+
+          <form action="/importcsvform1" method="POST"  enctype="multipart/form-data">
+            {% include "includes/sweetalert.html" %}
+            <div class="form-group">
+                <div class="form-row" >
+         
+                    <div class="col">
+                        <strong>
+                            <label for="position">Import Data:</label>
+                        </strong><br>
+                        <div class="file-upload">
+                            <div class="file-select">
+                              <div class="file-select-button" id="fileName">Choose File</div>
+                              <div class="file-select-name" id="noFile">No file chosen...</div> 
+                              <input multiple type="file"accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="chooseFile" id="chooseFile" required>
+                             
+                            </div>
+                          </div>
+                          <br>
+                          <button type="submit"  class="btn btn-md btn-default"><span><i class="fa-solid fa-file-arrow-down"></i></span> Import</button>
+                    </div>
+                    </div>
+                </form>
+
+    </div>
+</div>
+</div>
+
+
+
+

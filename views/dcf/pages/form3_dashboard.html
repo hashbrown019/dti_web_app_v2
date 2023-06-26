@@ -1,0 +1,104 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "dcf_dashboard" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="header bg-primary pb-6" >
+  <div class="container-fluid">
+    <div class="header-body">
+
+        <div class="d-flex align-items-center">
+            <!-- Search form -->
+            <div class="h1 fw-bolder text-gray mb-2">FORM 3 BDSP REGISTRY</div>
+            <!-- / Search form -->
+          </div>
+
+
+    <!-- Card header -->
+    <div class="d-flex justify-content-center">
+        <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
+          <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4" >
+            <table class="table table-dark table-flush dataTable " id="datatable-buttons3" role="grid" aria-describedby="datatable-buttons_info" style="width:100% !important">
+            <thead class="thead" >
+              <tr role="row">
+                <th>ID</th>
+                <th>Types of BDSP</th>
+                <th>Contact Person</th>
+                <th>Training Number</th>
+                <th>Sex</th>
+                <th>Office/Main Address</th>
+                <th>Email Address</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+              <tr>
+             <div>
+                {% for row in form3_datatable %}
+                <td>{{ row['id'] }}</td>
+                <td>{{ row['form_3_types_of_bdsp'] }}</td>
+                <td>{{ row['form_3_contact_person'] }}</td>  
+                <td>{{ row['form_3_training_number'] }}</td>
+                <td>{{ row['form_3_sex'] }}</td>
+                <td>{{ row['form_3_office_addr'] }}</td>
+                <td>{{ row['form_3_email'] }}</td>
+                <td>
+                  {% if(row['upload_by']==user_data['id'] or user_data['job']=="Super Admin"): %}
+                  <a style="color: #00cc66;" data-toggle="modal" data-target="#form3edit{{row['id']}}" href="/updateform3/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square" aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                {%endif%}
+                {% if(user_data['job']=="Super Admin"): %}
+                  <a style="color: #ff4d4d;"  href="/delete_form3/{{row['id']}}" onclick="confirmation(event)"> <span><i class="fa-solid fa-trash"></i></span> Delete</a>&nbsp;&nbsp;&nbsp; &nbsp;
+                  {% endif %}
+                <a style="color: #1ac6ff; " data-toggle="modal" data-target="#formview3{{row['id']}}" href="/updateform3/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
+                </td>
+    
+         
+            </tr>
+          
+            {% endfor  %}
+              </tbody>
+    </table>
+    
+    </div>
+              
+              
+              
+</div>
+            
+        </div>
+    {% include "includes/viewform_modal/viewform3.html" %}
+    {% include "includes/updateform_modal/updateform3.html" %}
+
+    <div class="py-4">
+      <div class="dropdown">
+        <button class="btn btn-default d-inline-flex align-items-center me-2" onclick="window.open('/dcf/form3', '_blank')">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              &nbsp; GO TO BDSP Registry FORM
+          </button>
+      </div>
+  </div>
+    {% include "includes/form3spreadsheet.html" %}
+
+    <!-- Page content -->
+</div>
+</div>
+</div>
+
+
+    
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+<script>
+
+</script>
+  <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  
+
+{% endblock javascripts %}
