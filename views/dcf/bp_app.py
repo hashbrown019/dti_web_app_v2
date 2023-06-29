@@ -88,12 +88,12 @@ def form9_dashboard():
 @app.route('/form10_dashboard')
 def form10_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form10_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form10_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form11_dashboard')
 def form11_dashboard():
     form_disp = display_dataform.displayform()
-    return render_template("form11_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+    return render_template("form_dashboard/form11_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/updateform1',methods=['POST','GET'])
 def updateform1():
