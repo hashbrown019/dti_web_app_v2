@@ -118,7 +118,6 @@ class rsa_sec:
 			file_.close()
 		except Exception as e:
 			raise e
-
 		return data
 
 	def encrypt(pubkey,raw_data):
