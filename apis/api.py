@@ -34,20 +34,20 @@ class data_handlers:
 		# return objh.txt_file_dl("skkrt.sql",content)
 		# return objh.obj_file_dl("skkrt.objdmp",content)
 
-	@app.route("/api/user_pic/<fname>")
-	def get_user_pic(fname):
-		return send_file(c.RECORDS+"objects/userpics/"+fname, as_attachment=False,download_name=fname)
+	@app.route("/api/user_pic/<file_name>")
+	def get_user_pic(file_name):
+		return send_file(c.RECORDS+"objects/userpics/"+file_name, as_attachment=False,download_name=file_name)
 
 class user_management:
 	def is_on_session(): return ('USER_DATA' in session)
 
-	@app.route("/api/get_user_data/<ids>",methods=["POST","GET"]) # GE
+	@app.route("/api/get_user_data/<ids>",methods=["POST","GET"])
 	def get_user_data(ids):
 		# print(ids)
 		if(ids=="all"):
-			sql = "SELECT `id`,`name`,`address`,`email`,`job`,`mobile`,`pcu`,`rcu`,`username`,`until`,`status` FROM `users`;"
+			sql = "SELECT `id`,`name`,`address`,`email`,`job`,`mobile`,`pcu`,`rcu`,`username`,`until`,`status`, `profilepic` FROM `users`;"
 		else:
-			sql = "SELECT `id`,`name`,`address`,`email`,`job`,`mobile`,`pcu`,`rcu`,`username`,`until`,`status` FROM `users` WHERE `id`='{}';".format(ids)
+			sql = "SELECT `id`,`name`,`address`,`email`,`job`,`mobile`,`pcu`,`rcu`,`username`,`until`,`status`, `profilepic` FROM `users` WHERE `id`='{}';".format(ids)
 		_user = rapid_mysql.select(sql)
 		if(data_handlers.is_on_session()):
 			return _user
@@ -241,6 +241,8 @@ class user_management:
 				}
 			except:pass
 			return data
+		else:
+			return {'msg':'session required','err':404}
 
 class security:
 	@app.route("/api/sec/gen_key",methods=["POST","GET"]) # GE
