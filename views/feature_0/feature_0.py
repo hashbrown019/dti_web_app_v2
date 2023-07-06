@@ -95,23 +95,29 @@ class _main:
 
 	# ========================================================================
 
+	@app.route("/data_cleaning_excel/get_table_col",methods=["POST","GET"])
+	def get_table_col_excel():
+		table = "excel_import_form_a"
+		print("===== GEtting SQL")
+		cols = data_clean.get_table_columns(table)
+		print("===== Retruning Data")
+		return cols
+
 	@app.route("/data_cleaning/get_table_col",methods=["POST","GET"])
 	def get_table_col():
 		table = request.form['table']
 		print("===== GEtting SQL")
 		cols = data_clean.get_table_columns(table)
 		print("===== Retruning Data")
-		print(table)
 		return cols
 
 	@app.route("/data_cleaning/get_table_col_val",methods=["POST","GET"])
 	def get_table_col_val():
 		table = request.form['table']
 		col = request.form['col']
-		print(table)
-		print(col)
 		vals = data_clean.get_table_columns_value(col,table)
 		return vals
+	
 	# ========================================================================
 	@app.route("/migrations/export_excel_mobile",methods=["POST","GET"])
 	def export_excel_mobile():

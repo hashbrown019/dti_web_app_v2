@@ -7,49 +7,50 @@
 		List of encoded farmer profiles, click on of the rows to show full details of the farmers. In some cases, you'll need
 		a higher permission, authority or request access key to view, update or delete a records on the system
 	</div>
-	<div class="x-container x-row x-padding">
-		<b class="x-large x-red">Tables</b>
-		<div class="x-container x-padding x-border-dashed">
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_farmer_profiles')">Farmer Basic Info: FORM A-1 </button>
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_farm_land')">Farm Information: FORM A-2 </button>
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_hh_profile')">Household Profiles: FORM A-3 </button>
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_prod_cost')">Production Cost: FORM A-4 </button>
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_farm_workers_laborers')">Farm Workers and Labors: FORM A-5 </button>
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_farm_post_harvest')">Post Harvest: FORM A-6 </button>
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_farm_marketing_sales')">Marketing/Sales Distribution Channels: FORM A-7 </button>
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_access_financial')">Access to Financial Services and Products: FORM A-8 </button>
-			<button class="x-zoom x-btn" onclick="get_table_cols_dc('form_a_feedback')">Industry Feedback: FORM A-9 </button>
+	<div class="x-row">	
+		<div class="x-col l6 m6">
+			<h4>Mobile Data Cleaning</h4>
+			{%include 'dc_mobile.html'%}
 		</div>
-		<br>
-		<b class="x-large x-red">Columns</b>
-		<div class="x-container  x-padding x-border-dashed" id='col_btn_container'>
-			<span class="x-text-grey ">Please select table First</span>
-		</div>
-		<br>
-		<b class="x-large x-red">Values</b>
-		<div class="x-container  x-padding x-border-dashed" id='val_btn_container'>
-			<span class="x-text-grey ">Please select Columns First</span>
+		<div class="x-col l6 m6">
+			<h4>Excel Data Cleaning</h4>
+			{%include 'dc_excel.html'%}
 		</div>
 	</div>
 </div>
+
 <div id="hidden_dc_content" style="display:none">
 	<div class="x-container">
 		<span>Please select or input a value</span><br>
-		<input class="x-input x-border x-round-large" onkeyup="suggest_ins(this,'suggested_vals')" id=" " type="text"  placeholder="Add Unit" value="">
-		<div class="x-container container">
-			<div id="suggested_vals" class="x-container x-card">
+		<div>
+			<input class="x-input x-border x-round-large" onkeyup="suggest_ins(this,'suggested_vals')" id="clean_value_replace" type="text">
+			<div class="x-container">
+				<div class="x-left">
+					<span class="x-text-grey">
+						<span class="x-text-red">*</span>
+						Check Carefully the punctuation, Capitalization, and spelling of the values you're about to add
+					</span>
+				</div>
+				<div class="x-right x-padding">
+					<button onclick="clean_btn()" id="clean_btn" class="x-btn x-green x-round-large">
+						Start Cleaning
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="x-border x-container x-card">
+			<div id="suggested_vals" class="x-padding">
 			</div>
 		</div>
 	</div>
-</div>
 <script>
-	let SUGGESTED_VAL_ARR = ["hi","HELLO"]
+	let SUGGESTED_VAL_ARR = ["None/Untagged"]
 	function suggest_ins(el,post_container){
 		// var arrs = []
 		// for (const [key, value] of Object.entries(SUGGESTED_VAL_ARR)) {
 		// 	arrs.push(SUGGESTED_VAL_ARR)
 		// }
-		_autocomplete(el,SUGGESTED_VAL_ARR,post_container)
+		_autocomplete_(el,SUGGESTED_VAL_ARR,post_container)
 	}
 
 	function get_table_cols_dc(table){
@@ -62,7 +63,7 @@
 			method : POST,
 			func : function(res){
 				var resp = JSON.parse(res)
-				println(resp)
+				// println(resp)
 				for (var i = 0; i < resp.length; i++) {
 					col_btns += `<button class="x-zoom x-btn x-hover-black" onclick="get_table_cols_value('`+resp[i]["Field"]+`','`+table+`','`+resp[i]["Field"]+`')">`+resp[i]["Field"]+`</button>`
 				}
@@ -71,7 +72,7 @@
 		})
 	}
 	function get_table_cols_value(col,table,field){
-		alert(field)
+		// alert(field)
 		var val_btns = ""
 		$ID('val_btn_container').innerHTML="Please Wait . . . "
 		$send({
@@ -80,24 +81,100 @@
 			method : POST,
 			func : function(res){
 				var resp = JSON.parse(res)
-				println(resp)
+				// println(resp)
 				for (var i = 0; i < resp.length; i++) {
 					val_btns += `<button class="x-zoom x-btn x-hover-black" onclick="get_table_cols_value_selected('`+resp[i]["key"]+`','`+table+`','`+resp[i]["total"]+`','`+field+`')">`+resp[i]["key"]+` <span class="x-tiny">[`+resp[i]["total"]+`]</span></button>`
 				}
 				$ID('val_btn_container').innerHTML=val_btns
+
+				$send({
+					action : "/form_a/clean_get_val_table/"+field,
+					method : POST,
+					func :function(r_){
+						res = JSON.parse(r_)
+						println(res)
+						SUGGESTED_VAL_ARR = []
+						for (var i = 0; i < res.length; i++) {
+							SUGGESTED_VAL_ARR.push(res[i]["val"])
+						}
+					}
+				})
+
 			}
 		})
 	}
+	// ===============================================================================================
+	function load_excel_cols(){
+		var col_btns = ""
+		var table = 'excel_import_form_a'
+		$send({
+			action : "/data_cleaning_excel/get_table_col",
+			method : POST,
+			func :function(r_){
+				resp = JSON.parse(r_)
+				println(resp)
+				for (var i = 0; i < resp.length; i++) {
+					col_btns += `<button class="x-zoom x-btn x-hover-black" onclick="get_excel_table_cols_value('`+resp[i]["Field"]+`','`+table+`','`+resp[i]["Field"]+`')">`+resp[i]["Field"]+`</button>`
+				}
+				$ID('col_excel_btn_container').innerHTML=col_btns
+			}
+		})
+	}
+
+
+
+	function get_excel_table_cols_value(col,table,field){
+		// alert(field)
+		var val_btns = ""
+		$ID('val_excel_btn_container').innerHTML="Please Wait . . . "
+		$send({
+			action : "/data_cleaning/get_table_col_val",
+			data : $DATA({"col":col,"table":table}),
+			method : POST,
+			func : function(res){
+				var resp = JSON.parse(res)
+				// println(resp)
+				for (var i = 0; i < resp.length; i++) {
+					val_btns += `<button class="x-zoom x-btn x-hover-black" onclick="get_table_cols_value_selected('`+resp[i]["key"]+`','`+table+`','`+resp[i]["total"]+`','`+field+`')">`+resp[i]["key"]+` <span class="x-tiny">[`+resp[i]["total"]+`]</span></button>`
+				}
+				$ID('val_excel_btn_container').innerHTML=val_btns
+				$ID('val_excel_btn_container').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+
+				$send({
+					action : "/form_a/clean_get_val_table/"+field,
+					method : POST,
+					func :function(r_){
+						res = JSON.parse(r_)
+						println(res)
+						SUGGESTED_VAL_ARR = []
+						for (var i = 0; i < res.length; i++) {
+							SUGGESTED_VAL_ARR.push(res[i]["val"])
+						}
+					}
+				})
+
+			}
+		})
+	}
+
+
+	// ===============================================================================================
+	let dclean_modal
+	let dclean_params
 	function get_table_cols_value_selected(col,table,total,field){
 		var val_btns = ""
 		// alert(col+" : "+table+" : "+total+" : "+field)
-		var dclean_modal = $dialog({
+
+		dclean_params = [table,field,col]
+		dclean_modal = $dialog({
 			title : "Data Cleanining and Correction Alert",
 			type : 'warning',
-			subtitle : "You are about to modify all data of the column <b>"+field+"</b>. Please be informed that this is undoable after it is executed. Contact the Devs if the values you are about to enroll is NOT on the DROPDOWN LIST",
+			subtitle : "You are about to modify all data of the column <b>"+field+"</b> with a value [<b>"+col+"</b>]. Please be informed that this is undoable after it is executed. Contact the Devs if the values you are about to enroll is NOT on the DROPDOWN LIST",
 			content : $ID('hidden_dc_content').innerHTML
 		})
 		dclean_modal.show()
+
+
 		// $send({
 		// 	action : "/data_cleaning/get_table_col_val",
 		// 	data : $DATA({"col":col,"table":le}),
@@ -114,10 +191,38 @@
 		// })
 	}
 
+	function clean_btn(){
+		dclean_modal.destroy()
+		var ins_val = $ID("clean_value_replace").value
+		dclean_params.push(ins_val)
+		var dclean_loading_modal = $dialog({
+			title : "Data Cleanining and Correction Alert",
+			type : 'success',
+			subtitle : "You are about to modify all data of the column <b>"+dclean_params[1]+"</b> with a value [<b>"+dclean_params[2]+"</b>]. Please be informed that this is undoable after it is executed. Contact the Devs if the values you are about to enroll is NOT on the DROPDOWN LIST",
+			content : (`
+				<b>Changing all Values with [`+dclean_params[3]+`]</b> in table [`+dclean_params[0]+`]
+				Your transaction is being process. You can close this dialog to continue other task, Some changes may only appear once you refresh the page 
+			`)
+		})
+		dclean_loading_modal.show()
+		println(dclean_params)
+
+		$send({
+			action : "/form_a/clean_set_val_table/"+dclean_params[0]+"/"+dclean_params[1]+"/"+dclean_params[2]+"/"+dclean_params[3],
+			method : POST,
+			func : function(re_){
+				var res = JSON.parse(re_)
+				println(" -- Change Results")
+				println(res)
+			}
+		})
+	}
+
 
 	// ==================================================================================
-	function _autocomplete(inp, arr,post_container) {
+	function _autocomplete_(inp, arr,post_container) {
 		var currentFocus;
+		$ID("clean_value_replace").value = inp.value
 		inp.addEventListener("input", function(e) {
 			var a, b, i, val = this.value;
 			// println(a)
@@ -130,16 +235,19 @@
 			this.parentNode.appendChild(a);
 			for (i = 0; i < arr.length; i++) {
 				var ARRSTRS = arr[i] + ""
+				$ID("clean_value_replace").value = ARRSTRS
 				if (ARRSTRS.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
 					b = document.createElement("DIV");
 					b.innerHTML = "<strong>" + ARRSTRS.substr(0, val.length) + "</strong>";
 					b.innerHTML += ARRSTRS.substr(val.length);
 					b.innerHTML += "<input type='hidden' value='" + ARRSTRS + "'>";
-					// println(ARRSTRS)
 					b.addEventListener("click", function(e) {
 						inp.value = this.getElementsByTagName("input")[0].value;
 						// closeAllLists();
-						push_user(this.getElementsByTagName("input")[0].value,post_container,inp)
+						// alert(e.getElementsByTagName("input")[0].value)]
+						$ID("clean_value_replace").value =  inp.value
+
+
 					});
 					a.appendChild(b);
 				// if(i >=5){
@@ -156,16 +264,16 @@
 			if (e.keyCode == 40) {
 				currentFocus++;
 				addActive(x);
-		} else if (e.keyCode == 38) { //up
-			currentFocus--;
-			addActive(x);
-		} else if (e.keyCode == 13) {
-			e.preventDefault();
-			if (currentFocus > -1) {
-				if (x) x[currentFocus].click();
+			} else if (e.keyCode == 38) { //up
+				currentFocus--;
+				addActive(x);
+			} else if (e.keyCode == 13) {
+				e.preventDefault();
+				if (currentFocus > -1) {
+					if (x) x[currentFocus].click();
+				}
 			}
-		}
-	});
+		});
 
 		function addActive(x) {
 			if (!x) return false;

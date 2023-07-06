@@ -65,14 +65,28 @@ class data_cleaning:
 		datums = []
 		for count in range(len(ress)-1):
 			datums.append({'Field':str(ress[count]['Field'])})
-		print(ress)
+		# print(ress)
+		print("===== Passing Data")
+
+		return datums
+	def get_table_columns_excel(self,table):
+		print("===== Querying")
+
+		ress = self.db.select("DESCRIBE `{}`;".format(table))
+		print("===== LOOPING")
+		datums = []
+		for count in range(len(ress)-1):
+			datums.append({'Field':str(ress[count]['Field'])})
+		# print(ress)
 		print("===== Passing Data")
 
 		return datums
 
 	def get_table_columns_value(self,col,table):
 		FILTER_SUFFIX = Filter.position_data_filter(self)
-		return self.db.select("SELECT `{}` as `key`, count({}) as `total` FROM {}  {} GROUP by {};".format(col,col,table,FILTER_SUFFIX,col))
+		sql = "SELECT `{}` as `key`, count(`{}`) as `total` FROM `{}`  {} GROUP by `{}`;".format(col,col,table,FILTER_SUFFIX,col)
+		print(sql)
+		return self.db.select(sql)
 
 class Filter:
 	def position_data_filter(clss_):
