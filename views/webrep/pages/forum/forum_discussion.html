@@ -252,7 +252,7 @@
 						</div>
 						`)
 				}
-
+				var date_diffs = date_diff((com['date_created']))
 				com_cards +=(`
 					<div class=" d-flex">
 					<div class="px-2">
@@ -262,7 +262,7 @@
 					<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
 					<p><i class="fa-solid fa-circle-user fs-1"></i></p>
 					<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
-					<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+date_diff((com['date_created'])) +`</p>
+					<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+com['date_created'] +`</p>
 					</div>
 					</div>
 					`+com_conts+`
