@@ -73,7 +73,7 @@ DATA_CLEAN_FORM_A_REF = {
 		"table":"dcf_prep_review_aprv_status",
 		"col":"form_1_anchor_firm"
 	},
-	"farmer_fo_designation":{
+	"farmer_fo_name_rapid":{
 		"table":"form_b",
 		"col":"organization_registered_name"
 	},
