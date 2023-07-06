@@ -59,6 +59,25 @@ _USER = "not initialized";
 _PASSWORD = "not initialized";
 _DATABASE = "not initialized";
 
+# =====Data CLEANING===========================================================
+DATA_CLEAN_FORM_A_REF = {
+	"frmer_prof_@_Farming_Basic_Info_@_DIP_name":{
+		"table":"dcf_prep_review_aprv_status",
+		"col":"form_1_anchor_firm"
+	},
+	"frmer_prof_@_Farming_Basic_Info_@_Name_coop":{
+		"table":"form_b",
+		"col":"organization_registered_name"
+	},
+	"farmer_dip_ref":{
+		"table":"dcf_prep_review_aprv_status",
+		"col":"form_1_anchor_firm"
+	},
+	"farmer_fo_designation":{
+		"table":"form_b",
+		"col":"organization_registered_name"
+	},
+}
 
 
 
