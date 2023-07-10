@@ -47,14 +47,13 @@
                         <td>{{ row['form_10_date'] }}</td>
                         <td>{{ row['form_10_type_of_beneficiary'] }}</td>
                         <td>
-                           
+                          <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form10view{{row['id']}}" href="/updateform10/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp;&nbsp;
                           {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
                             <a style="color: #00cc66;" data-toggle="modal" data-target="#form10edit{{row['id']}}" href="/updateform10/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square" aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        {%endif%}
-                        {% if(user_data['job']=="Super Admin"): %}
-                          <a style="color: #ff4d4d;"  href="/delete_form10/{{row['id']}}" onclick="confirmation(event)"> <span><i class="fa-solid fa-trash"></i></span> Delete</a>&nbsp;&nbsp;&nbsp; &nbsp;
-                          {% endif %}
-                        <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form10view{{row['id']}}" href="/updateform10/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
+                            <a style="color: #ff4d4d;"  href="/delete_form10/{{row['id']}}" onclick="confirmation(event)"> <span><i class="fa-solid fa-trash"></i></span> Delete</a>
+                            {%endif%}
+
+                      
                         </td>
             
                  
