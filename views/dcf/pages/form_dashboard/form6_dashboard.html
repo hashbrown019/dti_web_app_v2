@@ -47,7 +47,8 @@
                         <td>{{ row['form_6_dip_alignment'] }}</td>
                         <td>{{ row['form_6_venue'] }}</td>
                         <td>
-                            {% if(row['upload_by']==user_data['id'] or user_data['job']=="Super Admin"): %}
+                            
+                          {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
                             <a style="color: #00cc66;" data-toggle="modal" data-target="#form6edit{{row['id']}}" href="/updateform6/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square" aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {%endif%}
                         {% if(user_data['job']=="Super Admin"): %}
