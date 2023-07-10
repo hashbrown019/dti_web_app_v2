@@ -120,6 +120,23 @@ def dcfweb():
 def fmiweb():
 	return render_template("fmiweb.html")
 
+
+@app.route("/menuv2")
+def menuv2():
+	if(is_on_session()):
+		sesh = session["USER_DATA"][0]
+		user_rank=user_management.user_rankings(sesh['id'])
+		prof_a_inputed_data = user_rank['profiling_a']['inputed']
+		prof_a_total_data = user_rank['profiling_a']['total']
+		prof_a_percentage = (prof_a_inputed_data / prof_a_total_data) * 100
+
+		prof_c_inputed_data = user_rank['prof_c']['inputed']
+		prof_c_total_data = user_rank['prof_c']['total']
+		prof_c_percentage = (prof_c_inputed_data / prof_c_total_data) * 100
+
+		return render_template("menuv2.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),user_rank=user_management.user_rankings(sesh['id']))
+	else:
+		return redirect("/login?force_url=1")
 @app.route('/fundtrackerweb')
 def fundtrackerweb():
 	return render_template("fundtrackerweb.html")
@@ -174,6 +191,7 @@ def change_password():
 @app.route("/cform")
 def cform():
 	return render_template("formc.html",user_data=session["USER_DATA"][0])
+
 
 
 @app.route("/spreadsheet")

@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
+<style>
+body{margin-top:20px;}
+.icon-box.medium {
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+}
+.icon-box {
+    font-size: 30px;
+    margin-bottom: 33px;
+    display: inline-block;
+    color: #ffffff;
+    height: 65px;
+    width: 65px;
+    line-height: 65px;
+    background-color: #15395A;
+    text-align: center;
+    border-radius: 0.3rem;
+}
+.social-icon-style2 li a {
+    display: inline-block;
+    font-size: 14px;
+    text-align: center;
+    color: #ffffff;
+    background: #15395A;
+    height: 41px;
+    line-height: 41px;
+    width: 41px;
+}
+.rounded-3 {
+    border-radius: 0.3rem !important;
+}
+
+.social-icon-style2 {
+    margin-bottom: 0;
+    display: inline-block;
+    padding-left: 10px;
+    list-style: none;
+}
+
+.social-icon-style2 li {
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+a, a:active, a:focus {
+    color: #616161;
+    text-decoration: none;
+    transition-timing-function: ease-in-out;
+    -ms-transition-timing-function: ease-in-out;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    -o-transition-timing-function: ease-in-out;
+    transition-duration: .2s;
+    -ms-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+    -webkit-transition-duration: .2s;
+    -o-transition-duration: .2s;
+}
+
+.text-secondary, .text-secondary-hover:hover {
+    color: #15395A  !important;
+}
+.display-25 {
+    font-size: 1.4rem;
+}
+
+.text-primary, .text-primary-hover:hover {
+    color: #ff712a !important;
+}
+
+p {
+    margin: 0 0 20px;
+}
+
+.mb-1-6, .my-1-6 {
+    margin-bottom: 1.6rem;
+}
+
+.single-chart {
+  width: 40%;
+  justify-content: space-around ;
+}
+
+.circular-chart {
+  display: block;
+  margin: 10px auto;
+  max-width: 80%;
+  max-height: 250px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+.circular-chart.blue .circle {
+  stroke: #3c9ee5;
+}
+
+.circular-chart.green .circle {
+  stroke: #339966;
+}
+
+.circular-chart.gray .circle {
+  stroke: #3d5c5c;
+}
+
+.percentage {
+  fill: #666;
+  font-family: sans-serif;
+  font-size: 0.4em;
+  text-anchor: middle;
+}
+.single-chart {
+    display: flex;
+    align-items: center;
+  }
+
+  .data-statement {
+    margin-left: 10px;
+  }
+
+</style>
+{% include "includes/menucards/profile.html" %}
+
+{% include "includes/menucards/editprofile.html" %}
+<div style="margin-top: 100px;" class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+            <div class="card border-0 shadow"><br>
+                <div class="d-flex flex-column align-items-center text-center">
+                {% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
+                <img src="\static\psalm_static\menu\img\profilepic.png" style="height: 200px; width: 200px; border: 3px solid #15395A ;">
+                {% else: %}
+                <img  src="\api\user_pic\{{user_data['profilepic']}}" style="height: 200px; width: 200px; border: 3px solid #15395A ;">
+                {%endif%}
+                </div>
+                <div class="card-body p-1-9 p-xl-5">
+                    <div class="mb-4">
+                        <h3 class="h4 mb-0">{{user_data['name']}}</h3>
+                        <span class="text-primary">{{user_data['job']}} | {{user_data['rcu']}}</span>
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i> {{user_data['email']}}</a></li>
+                        <li class="mb-3"><a href="#!"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i> {{user_data['mobile']}}</a></li>
+                        <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i> {{user_data['address']}}</a></li>
+                    </ul>
+
+                    <button id="editprofbtn" class="btn btn-primary "data-toggle="modal" data-target="#editprof" href="">Edit Profile</button>
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#chngpass_user">Change Password</button>
+                    <br>
+                    <br>{% if(user_data['job']=="Super Admin"): %}
+                    <center><button class="btn btn-success" style="width: 200px;" data-toggle="modal" data-target="#chngpass_user">User Management</button></center>{% endif %}
+                    <br>
+                    <br>
+                    <center><button class="btn btn-danger" onclick="location.href='/logout'">Log out</button></center>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="ps-lg-1-6 ps-xl-5">
+
+                <div class="mb-5 wow fadeIn">
+                    <div class="text-start mb-1-6 wow fadeIn">
+                        <h2 class="mb-0 text-primary">MIS Cards</h2>
+                    </div>
+                    <div class="row mt-n4">
+                        <div class="col-md-6 col-xl-4 mt-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <i class="ti-world icon-box medium rounded-3 mb-4" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" style="cursor: pointer;"></i>
+                                    <h3 class="h5 mb-3" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" style="cursor: pointer;">Admin Knowledgement Center</h3>
+                                    <p class="mb-0">DTI Rapid knowledge portal</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-4 mt-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <i class="ti-id-badge icon-box medium rounded-3 mb-4"  data-toggle="modal" data-target="#profilingmodal" style="cursor: pointer;"></i>
+                                    <h3 class="h5 mb-3" data-toggle="modal" data-target="#profilingmodal" style="cursor: pointer;">Profiling</h3>
+                                    <p class="mb-0">Form A,B,C Dashboards</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-4 mt-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <i class="ti-files icon-box medium rounded-3 mb-4" style=" cursor: pointer;" onclick="location.href='/dcf_dashboard'"></i>
+                                    <h3 class="h5 mb-3" style=" cursor: pointer;" onclick="location.href='/dcf_dashboard'">Data Capture Form</h3>
+                                    <p class="mb-0">Data Capture Form Dasboard<br> Form 1-11 Dashboards</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-4 mt-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <i class="ti-home icon-box medium rounded-3 mb-4" style=" cursor: pointer; "  onclick="location.href='/fmi_dashboard'"></i>
+                                    <h3 class="h5 mb-3" style=" cursor: pointer; "  onclick="location.href='/fmi_dashboard'">FMI</h3>
+                                    <p class="mb-0">FMI Dashboard</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-4 mt-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <i class="ti-server icon-box medium rounded-3 mb-4" style=" cursor: pointer; "  onclick="location.href='/fundtracker'"></i>
+                                    <h3 class="h5 mb-3" style=" cursor: pointer; "  onclick="location.href='/fundtracker'">Fund Tracker</h3>
+                                    <p class="mb-0">Fund Tracker Dashboard</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wow fadeIn">
+                    <div class="text-start mb-1-6 wow fadeIn">
+                        <h2 class="mb-0 text-primary">Profiling</h2>
+                    </div>
+                    <div class="row mt-n4">
+                        <div class="col-md-6 col-xl-6 mt-6">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme">Form A: <samuel class="material-icons text-info mr-2 font-weight-bold">Profiling</samuel></h3>
+                                    <div style="display: flex; align-items: center;">
+                                     
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 36 36" class="circular-chart blue">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{prof_a_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">{{prof_a_percentage}}%</text>
+                                        </svg>
+                                      </div>
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-right: 10px;">Inputed Data: <samuel style="font-size: 15px;" class="material-icons text-info mr-1 font-weight-bold ">{{ user_rank['profiling_a']['inputed'] }}</samuel>out of<br> <samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['profiling_a']['total'] }}</samuel>Total Data</p>
+                                    </div>
+            
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-6 mt-6">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme">Form B: <samuel style="color: #339966;" class="material-icons mr-2">Farmer's Organization</samuel></h3>
+                                    <div style="display: flex; align-items: center;">
+                                     
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 36 36" class="circular-chart green">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">0%</text>
+                                        </svg>
+                                      </div>
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-right: 10px;">Inputed Data: <samuel style="color: #339966; font-size: 15px;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['prof_b']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['prof_b']['total'] }}</samuel>Total Data</p>
+                                    </div>
+            
+            
+                                </div>
+                            </div>
+                        </div>
+
+    
+                        <div class="col-md-6 col-xl-6 mt-6">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme">Form C: <samuel style="color: #3d5c5c;" class=" material-icons mr-2">MSME</samuel></h3>
+                                    <div style="display: flex; align-items: center;">
+                                     
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 36 36" class="circular-chart gray">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{prof_c_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text  x="18" y="20.35" class="percentage">{{prof_c_percentage}}%</text>
+                                        </svg>
+                                      </div>
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-right: 10px;">Inputed Data: <samuel style="font-size: 15px; color: #3d5c5c;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['prof_c']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['prof_c']['total'] }}</samuel>Total Data</p>
+                                    </div>
+            </div>
+            
+            
+                                </div>
+                            </div>
+                        </div>
+                           
+                           
+    
+                        
+                    
+    
+                    
+                  </div>
+
+                  <div class="mb-5 wow fadeIn">
+                    <div class="text-start mb-1-6 wow fadeIn">
+                        <h2 class="mb-0 text-primary">Knowledge Center</h2>
+                    </div>
+                    <div class="row mt-n4">
+
+                        <div class="col-md-6 col-xl-4 mt-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-newspaper"></i> Articles</h3>
+                                    <p class="mb-0">Posted : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_articles']['inputed'] }}</samuel></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-xl-4 mt-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-comments"></i> Comments</h3>
+                                    <p class="mb-0">Replies : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_forum_comments']['inputed'] }}</samuel></p>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col-md-6 col-xl-4 mt-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-cloud-arrow-up"></i> Uploads</h3>
+                                    <p class="mb-0">Uploaded : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_uploads']['inputed'] }}</samuel></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                
+                
+                                  </div>
+            
+                                </div>
+                            </div>
+
+                        </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+
+<div class="modal fade" id="profilingmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content prof-content">
+        <div class="modalprof modal-header prof-header " >
+          <h4 class="modal-title w-100 text-center" id="exampleModalLongTitle">PROFILING</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="profiling-bt">
+              <button onclick="location.href='/feature_0'"  class='form_a'>From A - Farmer</button>
+              <button onclick="location.href='/formb'"  class='form_b'>From B - Farmer's Organization</button>
+              <button onclick="location.href='/formcdashboard'" class='form_c'>From C - MSME</button>
+              <!-- <button class='sp_sheet'>Spreadsheet Management</button> -->
+               
+        </div>
+        </div>
+        <div class="modal-footer prof-footer">
+          <button type="button" class="btn text-white" style="background-color: #3366cc;" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
