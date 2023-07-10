@@ -147,7 +147,7 @@ p {
 
 </style>
 {% include "includes/menucards/profile.html" %}
-
+{% include "user_management.html" %}
 {% include "includes/menucards/editprofile.html" %}
 <div style="margin-top: 100px;" class="container">
     <div class="row justify-content-center">
@@ -175,7 +175,7 @@ p {
                     <button class="btn btn-dark" data-toggle="modal" data-target="#chngpass_user">Change Password</button>
                     <br>
                     <br>{% if(user_data['job']=="Super Admin"): %}
-                    <center><button class="btn btn-success" style="width: 200px;" data-toggle="modal" data-target="#chngpass_user">User Management</button></center>{% endif %}
+                    <center><button class="btn btn-success" style="width: 200px;" data-toggle="modal" data-target="#usermang" onclick="get_user_data()">User Management</button></center>{% endif %}
                     <br>
                     <br>
                     <center><button class="btn btn-danger" onclick="location.href='/logout'">Log out</button></center>
