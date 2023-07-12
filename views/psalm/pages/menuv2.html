@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
 <style>
 body{margin-top:20px;}
@@ -27,6 +27,16 @@ body{margin-top:20px;}
     text-align: center;
     border-radius: 0.3rem;
 }
+
+.icon-box:hover {
+  border: 2px solid #1F4F5A;
+  background-color: #0c89a5;    
+}
+
+.cardtitle:hover  {
+    color: #0c89a5;
+}
+
 .social-icon-style2 li a {
     display: inline-block;
     font-size: 14px;
@@ -153,6 +163,7 @@ p {
 
 }
 
+
 </style>
 {% include "includes/menucards/profile.html" %}
 {% include "user_management.html" %}
@@ -181,8 +192,8 @@ p {
                     <div class="mb-3"><center>
                     <button id="editprofbtn" class="btn btn-primary "data-toggle="modal" data-target="#editprof" href="">Edit Profile</button>
                     <button class="btn btn-dark" data-toggle="modal" data-target="#chngpass_user">Change Password</button></center>
-                </div><center>
-                    {% if(user_data['job']=="Super Admin"): %}
+                </div>
+                    {% if(user_data['job']=="Super Admin"): %}<center>
                     <button class="btn btn-success" style="width: 200px;" data-toggle="modal" data-target="#usermang" onclick="get_user_data()">User Management</button>
                 </center>
                     <br>
@@ -205,7 +216,7 @@ p {
                             <div class="card text-center border-0 rounded-3">
                                 <div class="card-body">
                                     <i class="ti-world icon-box medium rounded-3 mb-4" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" style="cursor: pointer;"></i>
-                                    <h3 class="h5 mb-3 texttheme font-weight-bold" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" style="cursor: pointer;">Admin Knowledgement Center</h3>
+                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" style="cursor: pointer; ">Admin Knowledgement Center</h3>
                                     <p class="mb-0">DTI Rapid knowledge portal</p>
                                 </div>
                             </div>
@@ -214,7 +225,7 @@ p {
                             <div class="card text-center border-0 rounded-3">
                                 <div class="card-body">
                                     <i class="ti-id-badge icon-box medium rounded-3 mb-4"  data-toggle="modal" data-target="#profilingmodal" style="cursor: pointer;"></i>
-                                    <h3 class="h5 mb-3 texttheme font-weight-bold" data-toggle="modal" data-target="#profilingmodal" style="cursor: pointer;">Profiling</h3>
+                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" data-toggle="modal" data-target="#profilingmodal" style="cursor: pointer;">Profiling</h3>
                                     <p class="mb-0">Form A,B,C Dashboards</p>
                                 </div>
                             </div>
@@ -223,7 +234,7 @@ p {
                             <div class="card text-center border-0 rounded-3">
                                 <div class="card-body">
                                     <i class="ti-files icon-box medium rounded-3 mb-4" style=" cursor: pointer;" onclick="location.href='/dcf_dashboard'"></i>
-                                    <h3 class="h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer;" onclick="location.href='/dcf_dashboard'">Data Capture Form</h3>
+                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer;" onclick="location.href='/dcf_dashboard'">Data Capture Form</h3>
                                     <p class="mb-0">Data Capture Form Dasboard<br> Form 1-11 Dashboards</p>
                                 </div>
                             </div>
@@ -232,7 +243,7 @@ p {
                             <div class="card text-center border-0 rounded-3">
                                 <div class="card-body">
                                     <i class="ti-home icon-box medium rounded-3 mb-4" style=" cursor: pointer; "  onclick="location.href='/fmi_dashboard'"></i>
-                                    <h3 class="h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer; "  onclick="location.href='/fmi_dashboard'">FMI</h3>
+                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer; "  onclick="location.href='/fmi_dashboard'">FMI</h3>
                                     <p class="mb-0">FMI Dashboard</p>
                                 </div>
                             </div>
@@ -241,7 +252,7 @@ p {
                             <div class="card text-center border-0 rounded-3">
                                 <div class="card-body">
                                     <i class="ti-server icon-box medium rounded-3 mb-4" style=" cursor: pointer; "  onclick="location.href='/fundtracker'"></i>
-                                    <h3 class="h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer; "  onclick="location.href='/fundtracker'">Fund Tracker</h3>
+                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer; "  onclick="location.href='/fundtracker'">Fund Tracker</h3>
                                     <p class="mb-0">Fund Tracker Dashboard</p>
                                 </div>
                             </div>
