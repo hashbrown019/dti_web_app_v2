@@ -121,6 +121,26 @@ def fmiweb():
 	return render_template("fmiweb.html")
 
 
+
+@app.route("/viewprofile")
+def viewprofile():
+	if(is_on_session()):
+		sesh = db.select("SELECT `id`,`name`,`job`,`email`,`mobile`,`address`,`profilepic`,`rcu`,`pcu` FROM `users` WHERE `id`='{}' ;".format(request.args['_id']))[0]
+		print(sesh)
+		user_rank_=user_management.user_rankings(sesh['id'])
+		prof_a_inputed_data = user_rank_['profiling_a']['inputed']
+		prof_a_total_data = user_rank_['profiling_a']['total']
+		prof_a_percentage = (prof_a_inputed_data / prof_a_total_data) * 100
+
+		prof_c_inputed_data = user_rank_['prof_c']['inputed']
+		prof_c_total_data = user_rank_['prof_c']['total']
+		prof_c_percentage = (prof_c_inputed_data / prof_c_total_data) * 100
+
+		return render_template("viewprofile.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),user_rank=user_rank_)
+	else:
+		return redirect("/login?force_url=1")
+
+
 @app.route("/menuv2")
 def menuv2():
 	if(is_on_session()):
