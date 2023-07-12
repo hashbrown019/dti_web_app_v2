@@ -65,7 +65,13 @@
 				<div class="rounded-1 " style="background-color:#F1F7E5;">
 					<div class="d-flex justify-content-between pt-3 container text-white">
 						<div class="d-flex gap-2 align-items-center">
-							<p><i class="fa-solid fa-circle-user fs-1"></i></p>
+							<p>
+								{% if(forum['profilepic']=="" or forum['profilepic']==" " ): %}
+								<img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;">
+								{% else: %}
+								<img class="rounded-circle" src="\api\user_pic\{{forum['profilepic']}}" alt="{{forum['profilepic']}}" style="width: 50px; height: 50px;">
+								{%endif%}
+							</p>
 							<p class="small">&nbsp;{{forum['uploader']}}</p>
 							<!-- <p class="xs-text ">{{forum['date_created']}}</p> -->
 						</div>
@@ -117,38 +123,9 @@
 		</div>
 	</div>
 	<div class="container tab-pane fade mb-5 mt-3 d-flex justify-content-center" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-
-			<div class=" d-flex gap-4 row row-cols-2 justify-content-center" style="width: 1000px; min-height: 100px;">
-				<div class="border border-light rounded-3 d-flex" style="width: 300px; height: 100px;">
-					<div class="d-flex align-self-center">
-						<div>							
-							<p class="fs-1 mt-3"><i class="fa-solid fa-user fa-lg" style="color: #9db96a;"></i></p>						
-						</div>
-						<div class="mt-3 ms-4 lh-sm">
-							<span>Christian Bron</span><br>
-							<span class="text-muted small">ISA</span><br>
-							<span class="text-muted small">NPCO</span>
-
-						</div>
-					</div>
-				</div>
-				<div class="border border-light rounded-3" style="width: 300px; height: 100px;">
-					
-				</div>
-				<div class="border border-light rounded-3" style="width: 300px; height: 100px;">
-					
-				</div>
-				<div class="border border-light rounded-3" style="width: 300px; height: 100px;">
-					
-				</div>
-				<div class="border border-light rounded-3" style="width: 300px; height: 100px;">
-					
-				</div>
-				<div class="border border-light rounded-3" style="width: 300px; height: 100px;">
-					
-				</div>
-			</div>
-		
+		<div id="card_participants" class=" d-flex gap-4 row row-cols-2" style="width: 1000px; min-height: 100px;">
+			<!-- CARD FOR PARTICIPANTS -->
+		</div>
 	</div>
 </div>
 
@@ -192,6 +169,8 @@
 		$send({
 			action : "/forum/get_comment/{{forum['id']}}",
 			func : function(r){
+				var com_cards = ""
+				var card_participants = ""
 				var ls_comments = JSON.parse(r)[0]
 				var ls_participants = JSON.parse(r)[1]
 				$ID("participants").innerHTML = ""
@@ -203,10 +182,10 @@
 
 				$ID("num_participants").innerHTML= ls_participants.length
 				$ID("com_count").innerHTML = ls_comments.length
-				var com_cards = ""
 				$ID("reply_container").innerHTML="Loading"
 				for (var i = 0; i < ls_comments.length; i++) {
 					var com = ls_comments[i]
+					println(com)
 					var edit_btn = "" ;
 					var rm_conts = "none" ; var com_conts = "block"
 					var commenter = "someone"
@@ -223,54 +202,79 @@
 						<a type="button" class='social_btn_edit small'  style="cursor: pointer;" onclick="edit_comment('`+com['id']+`','`+com['comment']+`')"><i class="fa-solid fa-pen-to-square"></i> Edit</a>&nbsp; &nbsp;
 						
 						`)
-				}else{
-					commenter = com['commenter']
-					if(com['edit']=="1"){
-						edit_btn ="<span class='small text-secondary'>Edited comment</span>&nbsp; | &nbsp;"
 					}else{
-						edit_btn =""
+						commenter = com['commenter']
+						if(com['edit']=="1"){
+							edit_btn ="<span class='small text-secondary'>Edited comment</span>&nbsp; | &nbsp;"
+						}else{
+							edit_btn =""
+						}
 					}
-				}
 
-				if(com['removed']=="1"){
-					rm_conts = "<span class='text-danger fst-italic'> removed a comment</span";
-					com_conts = "";
-				}else{
-					rm_conts = "replied";
-					com_conts = (`
-						<div class="">
-							<div class="container pb-3 mb-2 rounded-1" style="background-color: #FBFBFB;">
-								<p class="pt-2">`+urlify(com['comment'])+` </p>
-							</div>
-								<div class="container text-end d-flex">
-										`+edit_btn+`
-									<span class="small ">
-										<i id="lk_btn" class="fs-5 fa-solid fa-thumbs-up" style="color: #1F4F5A; cursor: pointer;" onclick="send_com_likes('`+(com['id'])+`')"></i>
-										&nbsp;`+com['likes']+`
-								</span>
+					if(com['removed']=="1"){
+						rm_conts = "<span class='text-danger fst-italic'> removed a comment</span";
+						com_conts = "";
+					}else{
+						rm_conts = "replied";
+						com_conts = (`
+							<div class="">
+								<div class="container pb-3 mb-2 rounded-1" style="background-color: #FBFBFB;">
+									<p class="pt-2">`+urlify(com['comment'])+` </p>
 								</div>
+									<div class="container text-end d-flex">
+											`+edit_btn+`
+										<span class="small ">
+											<i id="lk_btn" class="fs-5 fa-solid fa-thumbs-up" style="color: #1F4F5A; cursor: pointer;" onclick="send_com_likes('`+(com['id'])+`')"></i>
+											&nbsp;`+com['likes']+`
+									</span>
+									</div>
+							</div>
+							`)
+					}
+					var date_diffs = date_diff((com['date_created']))
+
+					prof_pic = '<img src="/static/psalm_static/menu/img/profilepic.png" style="width: 50px; height: 50px;">'
+					if(com['profilepic'].length>0){
+						prof_pic = "<img class='rounded-circle' src='/api/user_pic/"+com['profilepic']+"' alt='"+com['profilepic'] +"' style='width: 50px; height: 50px;'>"
+					}
+
+					com_cards +=(`
+						<div class=" d-flex">
+						<div class="px-2">
 						</div>
-						`)
+						<div class="container bg-light rounded-2" >
+						<div class="d-flex justify-content-between pt-3  text-white">
+						<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
+						<p>`+prof_pic+`</p>
+						<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
+						<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+com['date_created'] +`</p>
+						</div>
+						</div>
+						`+com_conts+`
+						</div>
+						</div><br> `)
+
+					card_participants += (`
+
+						<div class="border border-light rounded-3 d-flex" style="width: 300px; height: 100px;">
+							<div class="d-flex align-self-center">
+								<div>							
+									<p class="fs-1 mt-3">
+										`+prof_pic+`
+									</p>						
+								</div>
+								<div class="mt-3 ms-4 lh-sm">
+									<span>`+commenter+`</span><br>
+									<span class="text-muted small">`+com['job']+`</span><br>
+
+								</div>
+							</div>
+						</div>
+					`)
 				}
-				var date_diffs = date_diff((com['date_created']))
-				com_cards +=(`
-					<div class=" d-flex">
-					<div class="px-2">
-					</div>
-					<div class="container bg-light rounded-2" >
-					<div class="d-flex justify-content-between pt-3  text-white">
-					<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
-					<p><i class="fa-solid fa-circle-user fs-1"></i></p>
-					<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
-					<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+com['date_created'] +`</p>
-					</div>
-					</div>
-					`+com_conts+`
-					</div>
-					</div><br> `)
+				$ID('card_participants').innerHTML = card_participants
+				$ID("reply_container").innerHTML=com_cards
 			}
-			$ID("reply_container").innerHTML=com_cards
-		}
 		})
 	}
 

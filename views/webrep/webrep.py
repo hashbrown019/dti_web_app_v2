@@ -324,7 +324,7 @@ class _main:
 	@app.route("/forum_talks/<f_id>",methods=["POST","GET"])
 	def forum_talks(f_id):
 		if(_main.is_on_session()):
-			forum = db.select("SELECT `webrep_forum_topics`.*, `users`.`name` as 'uploader' FROM `webrep_forum_topics` INNER JOIN `users` ON `webrep_forum_topics`.`created_by`= `users`.`id` WHERE `webrep_forum_topics`.`id`='{}';".format(f_id))
+			forum = db.select("SELECT `webrep_forum_topics`.*, `users`.`name` as 'uploader', `users`.`profilepic`, `users`.`job` FROM `webrep_forum_topics` INNER JOIN `users` ON `webrep_forum_topics`.`created_by`= `users`.`id` WHERE `webrep_forum_topics`.`id`='{}';".format(f_id))
 			return render_template(
 				'forum/forum_discussion.html',
 				USER_DATA = session['USER_DATA'][0],
@@ -395,7 +395,7 @@ class _main:
 	@app.route("/forum/get_comment/<com_id>",methods=["POST","GET"])
 	def get_comment(com_id):
 		if(_main.is_on_session()):
-			comments = db.select("SELECT `webrep_forum_comments`.*, `users`.`name` as 'commenter' FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by`= `users`.`id` WHERE `webrep_forum_comments`.`topic_id`='{}';".format(com_id))
+			comments = db.select("SELECT `webrep_forum_comments`.*, `users`.`name` as 'commenter', `users`.`profilepic` as 'profilepic', `users`.`job` FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by`= `users`.`id` WHERE `webrep_forum_comments`.`topic_id`='{}';".format(com_id))
 			return [comments,_main.get_topic_people(com_id)]
 		else:
 			return redirect("/login?force_url=1")
