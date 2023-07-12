@@ -186,7 +186,7 @@ def change_password():
 	else:
 		flash(f"Password Incorrect!", "error")
 
-	return redirect("/menu")
+	return redirect("/menuv2")
 
 @app.route("/cform")
 def cform():
