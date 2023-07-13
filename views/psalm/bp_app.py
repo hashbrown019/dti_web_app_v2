@@ -28,20 +28,25 @@ def is_on_session(): return ('USER_DATA' in session)
 
 @app.route('/formc')
 def index():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	return render_template("index.html")
 
 @app.route('/acct_dis')
 def acct_dis():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	return render_template("acct_dis.html")
 
 @app.route('/importcsv',methods = ['GET','POST'])
 def importcsv():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	import_csv.importcsv(request)
 	return redirect("/spreadsheet")
 
 @app.route('/exportcsv',methods = ['POST'])
 
+
 def exportcsv():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if request.method == "POST":
 		query= db.select("SELECT name,position_firm, sex, age, contact_details, email_add,vc_stakeholders, industry_cluster,reg_businessname,business_addr, form_interprise, issued_by_business_reg,issued_by_product_reg,issued_by_cert_reg, issued_by_lic_op,issued_by_iso_cert, issued_by_gapgmp_cert,issued_by_organic,issued_by_halal,issued_by_other_cert, type_enterprise, store_capacity_organic,potential_organic,other_info_organic,store_capacity_synthetic,potential_synthetic, other_info_synthetic, store_capacity_pesticides,potential_pesticides,other_info_pesticides, store_capacity_herbicides, potential_herbicides,other_info_herbicides,store_capacity_vermicast_compost,potential_vermicast_compost,other_info_vermicast_compost, store_capacity_seedlings,potential_seedlings,other_info_seedlings,store_capacity_others_specific_products,potential_others_specific_products,other_info_others_specific_products, area_capacity_drying, potential_exp_drying, other_info_drying,area_capacity_storage,potential_exp_storage,other_info_storage,area_capacity_storage_hauling,potential_exp_storage_hauling,other_info_storage_hauling,current_capacity_semi_processing,potential_exp_semi_processing,other_info_semi_processing,current_capacity_final_product, potential_exp_final_product,other_info_final_product,volume_consolidation, potential_consolidation, other_info_consolidation,production_pack_label,potential_pack_label, other_info_pack_label,loan_portfo_micro_financing,potential_micro_financing, other_info_micro_financing,loan_portfo_insurance,potential_insurance,other_info_insurance, prodsales_product_service, prodsales_sales_vol,prodsales_unit_selling,prodsales_unit_measurement,prodsales_payment_terms, raw_materials, volume_supply, quality_requirement,unit_measurement_raw, distrib_point_local_cust,sales_vol_local_cust, payment_terms_local_cust,inhouse_num_workersmale, inhouse_num_workersfemale, inhouse_memb_ip_group,inhouse_ave_workdays, inhouse_ave_salary, sub_cont_num_workersmale,sub_cont_num_workersfemale,sub_cont_memb_ip_group,sub_cont_ave_workdays,sub_cont_ave_salary,piece_rate_num_workersmale,piece_rate_num_workersfemale, piece_rate_memb_ip_group,piece_rate_ave_workdays, piece_rate_ave_salary,form_interprise2,pricing,quality_raw,quality_final_prod, other_specifyc3, existing_comm, prov_supp_assis, business_prodc3,member_livelihood,what_cluster_industry FROM form_c")
 
@@ -67,17 +72,20 @@ def exportcsv():
 
 @app.route('/insert', methods = ['POST'])
 def insert():   
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	insertData.insert(request)
 	return redirect("/cform")
 	
 
 @app.route('/update',methods=['POST','GET'])
 def update():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	updateData.update(request)
 	return redirect("/formcdashboard")
 
 @app.route('/update_prof',methods=['POST','GET'])
 def update_prof():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if request.method == "POST":
 		
 		editfullname = request.form.get("editfullname")
@@ -113,17 +121,20 @@ def update_prof():
 
 @app.route('/dcfweb')
 def dcfweb():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	return render_template("dcfweb.html")
 
 
 @app.route('/fmiweb')
 def fmiweb():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	return render_template("fmiweb.html")
 
 
 
 @app.route("/viewprofile")
 def viewprofile():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if(is_on_session()):
 		sesh = db.select("SELECT `id`,`name`,`job`,`email`,`mobile`,`address`,`profilepic`,`rcu`,`pcu` FROM `users` WHERE `id`='{}' ;".format(request.args['_id']))[0]
 		print(sesh)
@@ -143,6 +154,7 @@ def viewprofile():
 
 @app.route("/menuv2")
 def menuv2():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if(is_on_session()):
 		sesh = session["USER_DATA"][0]
 		user_rank=user_management.user_rankings(sesh['id'])
@@ -159,12 +171,14 @@ def menuv2():
 		return redirect("/login?force_url=1")
 @app.route('/fundtrackerweb')
 def fundtrackerweb():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	return render_template("fundtrackerweb.html")
 
 
 
 @app.route("/formcdashboard")
 def formcdashboard():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	disp = displayData.display__()
 	# disp = displayData.display()
 	# return disp
@@ -172,11 +186,13 @@ def formcdashboard():
 
 @app.route("/formcdashboardfilter",methods=['POST','GET'])
 def formcdashboardfilter():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	filt = filterData.data_filter(request)
 	return render_template("formcdashboardfilter.html",user_data=session["USER_DATA"][0],**filt)
 
 @app.route("/menu")
 def menu():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if(is_on_session()):
 		sesh = session["USER_DATA"][0]
 		user_rank=user_management.user_rankings(sesh['id'])
@@ -194,6 +210,7 @@ def menu():
 	
 @app.route("/change_password", methods=["POST"])
 def change_password():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	current_password = request.form.get("currpass_user")
 	confirm_password = request.form.get("confpass_user")
 	user_id = session["USER_DATA"][0]['id']
@@ -210,12 +227,14 @@ def change_password():
 
 @app.route("/cform")
 def cform():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	return render_template("formc.html",user_data=session["USER_DATA"][0])
 
 
 
 @app.route("/spreadsheet")
 def spreadsheet():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	SQL ="""
 	SELECT form_c.filename, COUNT(form_c.filename) AS _COUNT, users.name
 	FROM `form_c`
