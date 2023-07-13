@@ -26,12 +26,14 @@ class _main:
 	# ======================================================================================================
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
+		if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 		print("databse = "+c.DB_CRED[3])
 		db = mysql(*c.DB_CRED)
 		return redirect("/hi_there?ver=dti_rapidgrowth_"+c.DB_CRED[3])
 
 	@app.route("/hi_there",methods=["POST","GET"])
 	def hi_there():
+		if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 		return render_template(
 			"home/home.html",
 			page_data=_main.get_post()
@@ -419,6 +421,10 @@ class _main:
 			return users
 		else:
 			return _main._404(404)
+
+	@app.route("/we_will_be_back_later")
+	def we_will_be_back_later():
+		return render_template("error/maintenance.html")
 
 	def moderator(segment,page):
 		pass;

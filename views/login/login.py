@@ -21,6 +21,7 @@ class _main:
 	@app.route("/login",methods=["POST","GET"])
 	def login():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
+		if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 		return redirect("/login_v2023?ver=dti_rapidgrowth_"+c.DB_CRED[3])
 
 	@app.route("/login_dev_test",methods=["POST","GET"])

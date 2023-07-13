@@ -1,4 +1,10 @@
 import socket
+
+# =================================
+IN_MAINTENANCE = True
+# IN_MAINTENANCE = False
+# =================================
+
 print(" ++ Configuration Setting ++")
 host_name = socket.gethostname()
 IP_address = socket.gethostbyname(host_name)

@@ -47,6 +47,7 @@ print(" * MIS Stat")
 
 @app.route("/")
 def index():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if(c.IS_ON_SERVER):
 		# c.DB_CRED[3] = c.SERVER_DATABASE
 		return redirect("https://dtirapid.ph/webrep")
@@ -79,6 +80,13 @@ def before_request():
 			# print(request.headers)
 	pass
 
+
+# 	return redirect("/we_will_be_back_later")
+@app.after_request
+def after_request_func(response):
+	# if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	print(response.get_json())
+	return response
 # - Dutchmil strawberry:
 # SECRET RECIPEE COCKTAIL
 # - Zafiro Premium GIN
