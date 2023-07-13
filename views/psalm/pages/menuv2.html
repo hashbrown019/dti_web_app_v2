@@ -28,14 +28,7 @@ body{margin-top:20px;}
     border-radius: 0.3rem;
 }
 
-.icon-box:hover {
-  border: 2px solid #1F4F5A;
-  background-color: #0c89a5;    
-}
 
-.cardtitle:hover  {
-    color: #81A33E;
-}
 
 .social-icon-style2 li a {
     display: inline-block;
@@ -163,6 +156,130 @@ p {
 
 }
 
+.module-admin {
+  transition: box-shadow .3s;
+  border: 1px solid #ccc;
+  background: #ebf0fa !important;
+  color: #1F4F5A;
+  position: relative;
+  display: inline-block;
+}
+
+.module-admin:hover {
+  box-shadow: 0 0 11px #035c63; 
+  border: 1px solid #00838d;
+  background: #fff !important;
+  color: #00838d;
+}
+
+.icon-admin {
+  background-color: #035c63;
+}
+
+
+.module-admin:hover .icon-admin {
+  background-color: #00838d;
+}
+
+.module-profiling {
+  transition: box-shadow .3s;
+  border: 1px solid #ccc;
+  background: #ebf0fa !important;
+  color: #1F4F5A;
+  position: relative;
+  display: inline-block;
+}
+
+.module-profiling:hover {
+  box-shadow: 0 0 11px #3366cc; 
+  background: #fff !important;
+  border: 1px solid #3366cc;
+  color: #3366cc;
+}
+
+.icon-profiling{
+    background-color: #1a3365;
+}
+
+.module-profiling:hover .icon-profiling {
+  background-color: #3366cc;
+}
+
+
+.module-dcf {
+  transition: box-shadow .3s;
+  border: 1px solid #ccc;
+  background: #ebf0fa !important;
+  color: #1F4F5A;
+  position: relative;
+  display: inline-block;
+}
+
+.module-dcf:hover {
+  box-shadow: 0 0 11px #009999; 
+  background: #fff !important;
+  border: 1px solid #009999;
+  color: #009999;
+}
+
+.icon-dcf{
+    background-color: #007399;
+}
+
+
+.module-dcf:hover .icon-dcf {
+  background-color: #009999;
+}
+
+.module-fmi {
+  transition: box-shadow .3s;
+  border: 1px solid #ccc;
+  background: #ebf0fa !important;
+  color: #1F4F5A;
+  position: relative;
+  display: inline-block;
+}
+
+.module-fmi:hover {
+  box-shadow: 0 0 11px #6666ff; 
+  background: #fff !important;
+  border: 1px solid #6666ff;
+  color: #6666ff;
+}
+
+.icon-fmi{
+    background-color: #3939ac;
+}
+
+
+.module-fmi:hover .icon-fmi {
+  background-color: #6666ff;
+}
+
+.module-fund {
+  transition: box-shadow .3s;
+  border: 1px solid #ccc;
+  background: #ebf0fa !important;
+  color: #1F4F5A;
+  position: relative;
+  display: inline-block;
+}
+
+.module-fund:hover {
+  box-shadow: 0 0 11px #a047cc; 
+  border: 1px solid #a047cc;
+  color: #a047cc;
+  background: #fff !important;
+}
+
+.icon-fund{
+    background-color: #4c1b64;
+}
+
+.module-fund:hover .icon-fund {
+  background-color: #a047cc;
+}
+
 
 </style>
 {% include "includes/menucards/profile.html" %}
@@ -218,46 +335,46 @@ p {
                     </div>
                     <div class="row mt-n4">
                         <div class="col-md-6 col-xl-4 mt-4">
-                            <div class="card text-center border-0 rounded-3">
+                            <div class="card text-center  rounded-3 module-admin">
                                 <div class="card-body">
-                                    <i class="ti-world icon-box medium rounded-3 mb-4" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" style="cursor: pointer;"></i>
-                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" style="cursor: pointer; ">Admin Knowledgement Center</h3>
+                                    <i class="ti-world icon-box icon-admin medium rounded-3 mb-4" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html';" ></i>
+                                    <h3 class="cardtitle h5 mb-3 font-weight-bold" onclick="location.href='/rapid/admin/adminKnowledgeCenter.html'; ">Admin Knowledgement Center</h3>
                                     <p class="mb-0">DTI Rapid knowledge portal</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-xl-4 mt-4">
-                            <div class="card text-center border-0 rounded-3">
+                            <div class="card text-center rounded-3 module-profiling">
                                 <div class="card-body">
-                                    <i class="ti-id-badge icon-box medium rounded-3 mb-4"  data-toggle="modal" data-target="#profilingmodal" style="cursor: pointer;"></i>
-                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" data-toggle="modal" data-target="#profilingmodal" style="cursor: pointer;">Profiling</h3>
+                                    <i class="ti-id-badge icon-box icon-profiling medium rounded-3 mb-4"  data-toggle="modal" data-target="#profilingmodal" ></i>
+                                    <h3 class="cardtitle h5 mb-3 font-weight-bold" data-toggle="modal" data-target="#profilingmodal" >Profiling</h3>
                                     <p class="mb-0">Form A,B,C Dashboards</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-xl-4 mt-4">
-                            <div class="card text-center border-0 rounded-3">
+                            <div class="card text-center  rounded-3 module-dcf">
                                 <div class="card-body">
-                                    <i class="ti-files icon-box medium rounded-3 mb-4" style=" cursor: pointer;" onclick="location.href='/dcf_dashboard'"></i>
-                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer;" onclick="location.href='/dcf_dashboard'">Data Capture Form</h3>
-                                    <p class="mb-0">Data Capture Form Dasboard<br> Form 1-11 Dashboards</p>
+                                    <i class="ti-files icon-box icon-dcf medium rounded-3 mb-4"  onclick="location.href='/dcf_dashboard'"></i>
+                                    <h3 class="cardtitle h5 mb-3 font-weight-bold"  onclick="location.href='/dcf_dashboard'">Data Capture Form</h3>
+                                    <p class="mb-0">Data Capture Forms Dasboard</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-xl-4 mt-4">
-                            <div class="card text-center border-0 rounded-3">
+                            <div class="card text-center rounded-3 module-fmi">
                                 <div class="card-body">
-                                    <i class="ti-home icon-box medium rounded-3 mb-4" style=" cursor: pointer; "  onclick="location.href='/fmi_dashboard'"></i>
-                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer; "  onclick="location.href='/fmi_dashboard'">FMI</h3>
+                                    <i class="ti-home icon-box icon-fmi medium rounded-3 mb-4"  onclick="location.href='/fmi_dashboard'"></i>
+                                    <h3 class="cardtitle h5 mb-3 font-weight-bold"   onclick="location.href='/fmi_dashboard'">FMI</h3>
                                     <p class="mb-0">FMI Dashboard</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-xl-4 mt-4">
-                            <div class="card text-center border-0 rounded-3">
+                            <div class="card text-center rounded-3 module-fund">
                                 <div class="card-body">
-                                    <i class="ti-server icon-box medium rounded-3 mb-4" style=" cursor: pointer; "  onclick="location.href='/fundtracker'"></i>
-                                    <h3 class="cardtitle h5 mb-3 texttheme font-weight-bold" style=" cursor: pointer; "  onclick="location.href='/fundtracker'">Fund Tracker</h3>
+                                    <i class="ti-server icon-box icon-fund medium rounded-3 mb-4"   onclick="location.href='/fundtracker'"></i>
+                                    <h3 class="cardtitle h5 mb-3 font-weight-bold"   onclick="location.href='/fundtracker'">Fund Tracker</h3>
                                     <p class="mb-0">Fund Tracker Dashboard</p>
                                 </div>
                             </div>
