@@ -85,6 +85,7 @@ def update():
 
 @app.route('/update_prof',methods=['POST','GET'])
 def update_prof():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if request.method == "POST":
 		
 		editfullname = request.form.get("editfullname")
@@ -247,6 +248,7 @@ def spreadsheet():
 
 @app.route('/delete/<string:filename_>', methods = ['POST','GET'])
 def delete(filename_):
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	sql='DELETE FROM form_c WHERE filename = {0}'.format(filename_)
 	delete=db.do(sql)
 	if(delete["response"]=="error"):
@@ -259,6 +261,7 @@ def delete(filename_):
 
 @app.route('/download/<string:filename_>', methods=['GET'], endpoint='download_file')
 def download_file(filename_):
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	path = "assets/objects/spreadsheets_c/queued/" + filename_
 	return send_file(path, as_attachment=True)
 
