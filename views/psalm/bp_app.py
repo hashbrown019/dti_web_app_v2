@@ -85,7 +85,6 @@ def update():
 
 @app.route('/update_prof',methods=['POST','GET'])
 def update_prof():
-	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if request.method == "POST":
 		
 		editfullname = request.form.get("editfullname")
@@ -154,7 +153,6 @@ def viewprofile():
 
 @app.route("/menuv2")
 def menuv2():
-	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if(is_on_session()):
 		sesh = session["USER_DATA"][0]
 		user_rank=user_management.user_rankings(sesh['id'])
@@ -169,6 +167,7 @@ def menuv2():
 		return render_template("menuv2.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),user_rank=user_management.user_rankings(sesh['id']))
 	else:
 		return redirect("/login?force_url=1")
+	
 @app.route('/fundtrackerweb')
 def fundtrackerweb():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
@@ -192,7 +191,7 @@ def formcdashboardfilter():
 
 @app.route("/menu")
 def menu():
-	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+
 	if(is_on_session()):
 		sesh = session["USER_DATA"][0]
 		user_rank=user_management.user_rankings(sesh['id'])

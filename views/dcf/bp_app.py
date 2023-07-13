@@ -41,57 +41,68 @@ def is_on_session(): return ('USER_DATA' in session)
 
 @app.route('/dcf_dashboard')
 def dcf_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     count = displayCount.display__()
     form_disp = display_dataform.displayform()
     return render_template("dcf_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form1_dashboard')
 def form1_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form1_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form2_dashboard')
 def form2_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form2_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form3_dashboard')
 def form3_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form3_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form4_dashboard')
 def form4_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form4_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form5_dashboard')
 def form5_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form5_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form6_dashboard')
 def form6_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form6_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form7_dashboard')
 def form7_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form7_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form9_dashboard')
 def form9_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form9_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form10_dashboard')
 def form10_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form10_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form11_dashboard')
 def form11_dashboard():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     form_disp = display_dataform.displayform()
     return render_template("form_dashboard/form11_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
@@ -156,14 +167,17 @@ def dcf_forms():
  
 @app.route('/dcf/<form>')
 def form1(form):
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0])
 
 @app.route('/dcf/<viewform>')
 def viewform1(viewform):
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     return render_template('includes/viewform_modal/{}.html'.format(viewform),user_data=session["USER_DATA"][0])
 
 @app.route('/dcf_spreadsheet')
 def dcf_spreadsheet():
+    if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     return render_template("dcf_spreadsheet.html",user_data=session["USER_DATA"][0])
 
 #INSERT DATA -------------------------------------------------------
