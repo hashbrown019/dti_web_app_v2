@@ -155,10 +155,10 @@
 	function edit_comment(ids,comm_edt){
 		$ID('input_rep_container').scrollIntoView()
 		// println($ID('input_rep_container'))
-		$ID("comment").value = comm_edt
-		$ID("id").value = ids
-		$ID("edit_com").innerHTML = "Editing"
-		$ID("send_btn").innerHTML = "Save"
+		$ID("comment").value = comm_edt;
+		$ID("id").value = ids;
+		$ID("edit_com").innerHTML = "Editing";
+		$ID("send_btn").innerHTML = "Save";
 
 	}
 
@@ -197,7 +197,6 @@
 					commenter = "You"
 					{% endif %}
 					edit_btn = (`
-						
 						<a type="button" class='social_btn_del small' style="cursor: pointer;" onclick="del_comment('`+com['id']+`')"><i class="fa-solid fa-trash-can" ></i> Delete</a>&nbsp; &nbsp;
 						<a type="button" class='social_btn_edit small'  style="cursor: pointer;" onclick="edit_comment('`+com['id']+`','`+com['comment']+`')"><i class="fa-solid fa-pen-to-square"></i> Edit</a>&nbsp; &nbsp;
 						
