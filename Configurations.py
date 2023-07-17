@@ -1,7 +1,7 @@
 import socket
 
 # =================================
-IN_MAINTENANCE = True
+IN_MAINTENANCE = False
 # IN_MAINTENANCE = False
 # =================================
 
