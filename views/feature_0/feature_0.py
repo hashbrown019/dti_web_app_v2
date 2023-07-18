@@ -378,6 +378,7 @@ class _main:
 			unique_name_arr[unique_name].append({
 				"name":fr_name,
 				"db_id":datum[0],
+				"inputed":datum[1],
 				"ref_code":datum[13],
 			})
 

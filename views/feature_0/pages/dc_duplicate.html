@@ -17,19 +17,8 @@
 		</div>
 
 		<div id="dup_modal" style="display: none;">
-			<div id="ls_dups" class="x-container">
-				<div class="x-card x-container x-padding">
-					<div class="x-row">
-						<b>Name of Entry</b> |
-						<span>Database ID</span> |
-						<span>Reference</span> |
-					</div>
-					<div class="x-row">
-						<b>Name of Entry</b> |
-						<span>Database ID</span> |
-						<span>Reference</span> |
-					</div>
-				</div>
+			<div id="ls_dups" class="x-container" style="overflow-y:scroll;height: 60vh;">
+				Loading
 			</div>
 		</div>
 
@@ -57,7 +46,6 @@
 								View Duplicate Results
 							</button>
 						`)
-
 						create_modal_duplicates(res)
 					},
 					progress : function(e){
@@ -80,7 +68,37 @@
 				})
 			}
 
-			function create_modal_duplicates(res){
+			function create_modal_duplicates(res_){
+				var out_dup = ""
+				for (var i = 0; i < res_.length; i++) {
+					var in_dup = ""
+					for (var x = 0; x < res_[i].length; x++) {
+						in_dup +=(`
+							<div class="x-row x-hover-red">
+								<div class='x-col m10 l10'>
+									<b>`+res_[i][x]['name']+`</b> |
+									<span><span class='x-text-grey'>Database ID :</span> 
+									`+res_[i][x]['db_id']+`</span> |
+									<span><span class='x-text-grey'>Inputed By :</span> 
+									`+res_[i][x]['inputed']+`</span><br>
+									<span><span class='x-text-grey'>Reference :</span> 
+									<i class='x-tiny'>`+res_[i][x]['ref_code']+`</i></span>
+								</div>
+								<div class='x-col m2 l2'>
+									<button class='x-right x-btn x-red x-hover-black x-round-large'>
+										<span class='fa fa-trash'></span>
+									</button>
+								</div>
+							</div>
+						`)
+					}
+					out_dup +=(`
+						<div class="x-container x-padding" style='padding-bottom:10px;'>
+							<div class="x-card x-container x-hover-pale-red">`+in_dup+`</div>
+						</div>
+					`)
+				}
+				$ID('ls_dups').innerHTML = out_dup
 				duplicate_modal = $dialog({
 					title : "Duplicated Records",
 					subtitle : "Below are the list of records having a duplicates of two ore more",
