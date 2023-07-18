@@ -238,10 +238,9 @@ class _main:
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a`
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
-		all_farmer_small_data = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False)
-		random.shuffle(all_farmer_small_data)
-		return all_farmer_small_data
-		# return ({ "data" : all_farmer_small_data})
+		RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False)
+		random.shuffle(RES)
+		return RES
 
 	@app.route("/feature_0/dashboard_home_",methods=["POST","GET"])
 	def dashboard_home_sql_driven_():
