@@ -151,7 +151,7 @@ class _main:
 	@app.route("/download_excel/<excel_file>",methods=["POST","GET"])
 	def download_excel(excel_file):
 		# excel_file = request.form['file']
-		print(excel_file)
+		# print(excel_file)
 		def_name = excel_file.split("@@")[2]
 		excel_file = excel_file.replace("@@","#")
 		return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
@@ -368,7 +368,7 @@ class Populate:
 			if(cmdty_sndrd not in mobi):mobi[cmdty_sndrd] = 0
 			if(cmdty_sndrd not in excl):excl[cmdty_sndrd] = 0
 			new_comd[cmdty_sndrd] = new_comd[cmdty_sndrd] + mobi[cmdty_sndrd] + excl[cmdty_sndrd]
-		print(sorted(new_comd))
+		# print(sorted(new_comd))
 		return sorted(new_comd.items(), key=lambda x:x[1], reverse=True)
 
 

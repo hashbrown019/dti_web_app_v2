@@ -44,12 +44,12 @@ class _main:
 	@app.route("/form_a/get_sub_form/<s_form>",methods=["POST","GET"])
 	def get_sub_form(s_form):
 		page = "form_a/"+s_form+".html"
-		print(page)
+		# print(page)
 		return render_template(page)
 
 	@app.route("/form_a/dash_a1/dash_get_form_a1/<area>",methods=["POST","GET"])
 	def dash_get_form_a1(area):
-		print(area)
+		# print(area)
 		return {"male":_main.dash_get_male(area),"female":_main.dash_get_female(area)}
 
 	@app.route("/form_a/dash_a1/dash_get_male/<area>",methods=["POST","GET"])
@@ -161,7 +161,7 @@ class _main:
 
 		try:
 			sql = "UPDATE `{}` SET `{}`='{}' WHERE `{}`='{}';".format(table,col,newval,col,oldval)
-			print(sql)
+			# print(sql)
 			row_ch = rapid_mysql.do(sql)
 			return {"status":"done","data":row_ch}
 		except Exception as e:

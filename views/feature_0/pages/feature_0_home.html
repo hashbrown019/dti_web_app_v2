@@ -10,11 +10,17 @@
 			<div class="x-row">
 				<div class="x-container x-padding x-light-grey x-left"  onclick="x_open()" style="width:200px;">
 					<div class="x-center x-container">
-						<img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:100%">
+						<!-- <img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:100%"> -->
+						{% if(USER_DATA['profilepic']=="" or USER_DATA['profilepic']==" " ): %}
+						<img src="\static\psalm_static\menu\img\profilepic.png" style="width: 150px; height: 150px;">
+						{% else: %}
+						<img class="rounded-circle x-circle" src="\api\user_pic\{{USER_DATA['profilepic']}}" alt="{{USER_DATA['profilepic']}}" style="width: 150px; height: 150px;">
+						{%endif%}
 					</div>
 				</div>
 				<div class="x-container x-padding">
 					<br><br>
+
 					<span class="x-text-shrink ">
 						<b>{{USER_DATA['name']}}</b><br>
 						<span class="x-text-shrink x-tiny">{{USER_DATA['job']}}</span>

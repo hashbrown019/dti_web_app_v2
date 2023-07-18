@@ -85,7 +85,7 @@ class data_cleaning:
 	def get_table_columns_value(self,col,table):
 		FILTER_SUFFIX = Filter.position_data_filter(self)
 		sql = "SELECT `{}` as `key`, count(`{}`) as `total` FROM `{}`  {} GROUP by `{}`;".format(col,col,table,FILTER_SUFFIX,col)
-		print(sql)
+		# print(sql)
 		return self.db.select(sql)
 
 class Filter:
