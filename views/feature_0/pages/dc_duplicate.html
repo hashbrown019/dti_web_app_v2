@@ -1,17 +1,20 @@
 
 		<div class="x-container x-row x-padding">
-			<div class="x-container x-col l2 m2">
+			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-grey">
 				<button class="x-btn x-round x-padding x-orange" onclick="start_scan_dup()">
 					Start Scanning Duplicates <b class="fa fa-clone x-text-white"></b>
 				</button>
 			</div>
-			<div class="x-container x-col l2 m2">
+			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-green">
 				<div class="x-row x-container" id="dup_loading"></div>
 			</div>
-			<div class="x-container x-col l2 m2">
+			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-yellow">
 				<div class="x-row x-container" id="dup_res"></div>
 			</div>
-			<div class="x-container x-col l2 m2">
+			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-red">
+				<div class="x-row x-container" id="dup_excess"></div>
+			</div>
+			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-grey">
 				<div class="x-row x-container" id="btn_dup"></div>
 			</div>
 		</div>
@@ -27,17 +30,27 @@
 			function start_scan_dup(){
 				$ID("dup_loading").innerHTML = "Loading please wait"
 				$ID("dup_res").innerHTML = ""
+				$ID('dup_excess').innerHTML =""
 				$ID('btn_dup').innerHTML =""
 				$send({
 					action : "/feature_0/data_clean_duplicates",
 					method : POST,
 					func : function(_r){
 						var res = JSON.parse(_r)
-						// println(res)
+						var total_excess = 0
+						for (var i = 0; i < res.length; i++) {
+							total_excess+=res[i]['length']
+						}
 						$ID('dup_res').innerHTML = (`
 							<span class='x-center'>
 								<b class='x-large'>`+res['length']+`</b><br>
-								Records found that has duplicates 
+								Unique records found that has a number duplicates 
+							</span>
+						`)
+						$ID('dup_excess').innerHTML = (`
+							<span class='x-center'>
+								<b class='x-large'>`+total_excess+`</b><br>
+								Total of excess entry <i class='x-text-grey'>(entry:#duplicate)</i>
 							</span>
 						`)
 						$ID('btn_dup').innerHTML = (`
@@ -85,7 +98,7 @@
 									<i class='x-tiny'>`+res_[i][x]['ref_code']+`</i></span>
 								</div>
 								<div class='x-col m2 l2'>
-									<button class='x-right x-btn x-red x-hover-black x-round-large'>
+									<button class='x-right x-btn x-red x-hover-black x-round-large' onclick="del_dup_entry('`+res_[i][x]['db_id']+`','`+res_[i][x]['ref_code']+`')">
 										<span class='fa fa-trash'></span>
 									</button>
 								</div>
@@ -109,5 +122,14 @@
 			function view_duplicates(){
 				// duplicate_modal.dialog.style.width = "75vw";
 				duplicate_modal.show()
+			}
+
+			function del_dup_entry(ids,ref_num){
+				$dialog({
+					title : "Delete Duplicated Entry",
+					type : 'warning',
+					subtitle : "You are about to delete one of the duplicate of an entry. Proceed with precautions",
+					content : (`<h3>This feature is under development and will available Soon, Stay tuned</h3>`)
+				}).show()
 			}
 		</script>
