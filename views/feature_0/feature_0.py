@@ -15,7 +15,7 @@ from controllers.engine_excel_to_sql import form_excel_a_handler
 
 from multiprocessing import Process
 import threading
-import time
+import time, re
 
 app = Blueprint("feature_0",__name__,template_folder='pages')
 _excel = form_excel_a_handler(__name__)
@@ -173,12 +173,12 @@ class _main:
 		)
 		rapid_mysql.do("DELETE FROM `excel_import_form_a` WHERE `file_name`='{}' ;".format(excel_file))
 		return jsonify({"status":"done"})
-# ==============================================================================
-# ==============================================================================
-# ==============================================================================
-# ==============================================================================
-# ==============================================================================
-# ==============================================================================
+	# ==============================================================================
+	# ==============================================================================
+	# ==============================================================================
+	# ==============================================================================
+	# ==============================================================================
+	# ==============================================================================
 	@app.route("/feature_0/filter_list_farmers",methods=["POST","GET"])
 	def feature_0_filter_list_farmers():
 		return jsonify({
@@ -210,7 +210,9 @@ class _main:
 				`form_a_farmer_profiles`.`addr_prov`,
 				`form_a_farmer_profiles`.`addr_city`,
 				`form_a_farmer_profiles`.`farmer_dip_ref`,
-				`form_a_farmer_profiles`.`farmer_code` as 'reference'
+				`form_a_farmer_profiles`.`farmer_code` as 'reference',
+				`form_a_farmer_profiles`.`farmer_name` as 'name_complete'
+
 				-- `farmer_head_of_house`,
 				-- `farmer_civil_status`,
 			FROM `form_a_farmer_profiles`
@@ -357,6 +359,35 @@ class _main:
 		}
 		return data
 		# return [all_mob_female[0]['f'],all_mob_male[0]['m']]
+
+	@app.route("/feature_0/data_clean_duplicates",methods=["POST","GET"])
+	def feature_0_data_clean_duplicates():
+		_data = _main.feature_0_get_farmer_data_a1()
+		unique_name_arr = {}
+		for datum in _data:
+			fr_name = datum[2]+" "+datum[3]+" "+datum[4]
+			if(len(fr_name.replace(" ",""))<=1):
+				fr_name = datum[14]
+				# print(len(datum))
+
+			unique_name = re.sub(r'[^\w\s]', '',fr_name.replace(" ","") ).lower()
+
+			if(unique_name not in unique_name_arr):
+				unique_name_arr[unique_name] = []
+
+			unique_name_arr[unique_name].append({
+				"name":fr_name,
+				"db_id":datum[0],
+				"ref_code":datum[13],
+			})
+
+		new_unique_name_arr=[]
+		for arrs in unique_name_arr:
+			if(len(unique_name_arr[arrs])>=2):
+				# print("Duplicate : {}".format(len(unique_name_arr[arrs])))
+				new_unique_name_arr.append(unique_name_arr[arrs])
+		new_new_unique_name_arr = sorted(new_unique_name_arr, key=len, reverse=True)
+		return new_new_unique_name_arr
 
 class Populate:
 	def primary_crop(mobi,excl):

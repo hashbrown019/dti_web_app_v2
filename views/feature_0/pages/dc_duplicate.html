@@ -1,0 +1,95 @@
+
+		<div class="x-container x-row x-padding">
+			<div class="x-container x-col l2 m2">
+				<button class="x-btn x-round x-padding x-orange" onclick="start_scan_dup()">
+					Start Scanning Duplicates <b class="fa fa-clone x-text-white"></b>
+				</button>
+			</div>
+			<div class="x-container x-col l2 m2">
+				<div class="x-row x-container" id="dup_loading"></div>
+			</div>
+			<div class="x-container x-col l2 m2">
+				<div class="x-row x-container" id="dup_res"></div>
+			</div>
+			<div class="x-container x-col l2 m2">
+				<div class="x-row x-container" id="btn_dup"></div>
+			</div>
+		</div>
+
+		<div id="dup_modal" style="display: none;">
+			<div id="ls_dups" class="x-container">
+				<div class="x-card x-container x-padding">
+					<div class="x-row">
+						<b>Name of Entry</b> |
+						<span>Database ID</span> |
+						<span>Reference</span> |
+					</div>
+					<div class="x-row">
+						<b>Name of Entry</b> |
+						<span>Database ID</span> |
+						<span>Reference</span> |
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var duplicate_modal = undefined
+			function start_scan_dup(){
+				$ID("dup_loading").innerHTML = "Loading please wait"
+				$ID("dup_res").innerHTML = ""
+				$ID('btn_dup').innerHTML =""
+				$send({
+					action : "/feature_0/data_clean_duplicates",
+					method : POST,
+					func : function(_r){
+						var res = JSON.parse(_r)
+						println(res)
+						$ID('dup_res').innerHTML = (`
+							<span class='x-center'>
+								<b class='x-large'>`+res['length']+`</b><br>
+								Records found that has duplicates 
+							</span>
+						`)
+						$ID('btn_dup').innerHTML = (`
+							<span>Click to the list of Records</span>
+							<button class='x-btn x-green' onclick="view_duplicates()">
+								View Duplicate Results
+							</button>
+						`)
+
+						create_modal_duplicates(res)
+					},
+					progress : function(e){
+						// var response_length = parseFloat(headerMap(e)['total'])
+						var response_length = parseFloat(e.total)
+						var response_loaded = parseFloat(e.loaded)
+						var percent_  = (response_loaded / response_length) * 100;
+						var percent_rounded = Math.round(percent_ * 100) / 100
+						$ID("dup_loading").innerHTML = (`
+							<span>
+								Gathered
+								<b>`+Math.round(percent_)+`%</b><br>
+								<span class="x-small">
+									[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+									<i>`+(response_length-response_loaded)+` bytes remaining</i>
+								</span>
+							</span>
+						`);
+					}
+				})
+			}
+
+			function create_modal_duplicates(res){
+				duplicate_modal = $dialog({
+					title : "Duplicated Records",
+					subtitle : "Below are the list of records having a duplicates of two ore more",
+					content : $ID('dup_modal').innerHTML
+				})
+			}
+
+			function view_duplicates(){
+				// duplicate_modal.dialog.style.width = "75vw";
+				duplicate_modal.show()
+			}
+		</script>

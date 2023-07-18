@@ -7,14 +7,23 @@
 		List of encoded farmer profiles, click on of the rows to show full details of the farmers. In some cases, you'll need
 		a higher permission, authority or request access key to view, update or delete a records on the system
 	</div>
+
+	<div class="x-row">	
+		<h2>Duplicate Scanner</h2>
+		{%include 'dc_duplicate.html'%}
+	</div>
+	<hr>
+	<div class="x-row">	
+		<h2>Database Column Data cleaning</h2>
+	</div>
 	<div class="x-row">	
 		<div class="x-col l6 m6">
-			<h4>Mobile Data Cleaning</h4>
-			{%include 'dc_mobile.html'%}
+			<h4><b>Excel Data Cleaning</b></h4>
+			{%include 'dc_excel.html'%}
 		</div>
 		<div class="x-col l6 m6">
-			<h4>Excel Data Cleaning</h4>
-			{%include 'dc_excel.html'%}
+			<h4><b>Mobile Data Cleaning</b></h4>
+			{%include 'dc_mobile.html'%}
 		</div>
 	</div>
 </div>
@@ -65,7 +74,7 @@
 				var resp = JSON.parse(res)
 				// println(resp)
 				for (var i = 0; i < resp.length; i++) {
-					col_btns += `<button class="x-zoom x-btn x-hover-black" onclick="get_table_cols_value('`+resp[i]["Field"]+`','`+table+`','`+resp[i]["Field"]+`')">`+resp[i]["Field"]+`</button>`
+					col_btns += `<button class="x-card x-round x-zoom x-btn x-hover-black" onclick="get_table_cols_value('`+resp[i]["Field"]+`','`+table+`','`+resp[i]["Field"]+`')">`+resp[i]["Field"]+`</button>`
 				}
 				$ID('col_btn_container').innerHTML=col_btns
 			}
@@ -92,7 +101,7 @@
 					method : POST,
 					func :function(r_){
 						res = JSON.parse(r_)
-						println(res)
+						// println(res)
 						SUGGESTED_VAL_ARR = []
 						for (var i = 0; i < res.length; i++) {
 							SUGGESTED_VAL_ARR.push(res[i]["val"])
@@ -112,19 +121,17 @@
 			method : POST,
 			func :function(r_){
 				resp = JSON.parse(r_)
-				println(resp)
+				// println(resp)
 				for (var i = 0; i < resp.length; i++) {
 					var __f_name = resp[i]["Field"].replaceAll("_", " ").split("@")
 					var field_name = (`
 						<span class='x-small'>
-							<b>`+__f_name[2].toCamelCase()+`</b><br>
-							<span>`+__f_name[0].toCamelCase()+`</span><br>
-							<i>`+__f_name[1].toCamelCase()+`</i><br>
+							<b>`+upeachword(__f_name[2])+`</b><br>
+							<span>`+upeachword(__f_name[0])+`</span><br>
+							<i>`+upeachword(__f_name[1])+`</i><br>
 						</span
 					`)
-
-
-					col_btns += `<button class="x-zoom x-btn x-hover-black" onclick="get_excel_table_cols_value('`+resp[i]["Field"]+`','`+table+`','`+resp[i]["Field"]+`')">`+field_name+`</button>`
+					col_btns += `<button class="x-card x-round x-zoom x-btn x-hover-black" onclick="get_excel_table_cols_value('`+resp[i]["Field"]+`','`+table+`','`+resp[i]["Field"]+`')">`+field_name+`</button>`
 				}
 				$ID('col_excel_btn_container').innerHTML=col_btns
 			}
@@ -223,7 +230,7 @@
 			func : function(re_){
 				var res = JSON.parse(re_)
 				println(" -- Change Results")
-				println(res)
+				// println(res)
 			}
 		})
 	}
