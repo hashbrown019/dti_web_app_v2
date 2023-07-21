@@ -260,7 +260,6 @@
 		</div>
 
 	<div class="x-row x-container x-padding">
-		<form method="post" enctype="multipart/form-data">
 			<div class="x-col l8 x-container x-padding" id="form_3_choose_files">
 				<label for="image_uploads">Choose file</label>
 				<input
@@ -270,14 +269,17 @@
 				accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx"
 				multiple />
 			</div>
+			<div class="x-col l4 x-container x-padding">	
+				<button data-toggle="modal" data-target="#form3_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
+			</div>
 			<div class="x-right">
 					<input class="x-blue btn" id="form3_sub"  type="submit">
 				</div>
-		</form> 
+	 
 	</div>
 
 </div>
-
+{% include "includes/forms/form3_participants.html" %}
 </form>
 
 <script>
