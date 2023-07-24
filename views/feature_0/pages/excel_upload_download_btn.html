@@ -163,6 +163,7 @@ function get_uploaded_excel(){
 	var uploader_id  = ("{{USER_DATA['id']}}")
 	$send({
 		action : "/feature_0/get_uploaded_excel",
+		err_dialog : true,
 		method : POST,
 		func : function(res){
 			excel_upload_dialog.show()
@@ -231,6 +232,7 @@ function delete_excel(fff){
 	$send({
 		action : "https://dtirapid.ph/delete_excel/",
 		method : POST,
+		err_dialog : true,
 		data : $DATA({"file":fff.replace("#","@@").replace("#","@@")}),
 		func : function(res){
 			SPINNER_LOADER.hide()
