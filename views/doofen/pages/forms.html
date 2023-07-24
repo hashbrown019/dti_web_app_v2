@@ -1,8 +1,15 @@
+
+
 <input class="form_data_b" id="id" name="first" type="text" hidden required>
 
 <div id="form_header" class="main-title">
-	<p class="font-weight-bold x-left" >FORM B</p>
-	<p class="font-weight-bold x-btn x-right x-green" onclick="save_form()" >Save</p>
+	<div class="x-left">
+		<p class="font-weight-bold " >FORM B</p>
+	</div>
+	<div class="x-right">
+		<p class="font-weight-bold x-btn x-text-blue x-round-large" onclick="show_mem_modal()">Add Farmer Members</p>
+		<p class="font-weight-bold x-btn x-green" onclick="save_form()" >Save</p>
+	</div>
 </div>
 
 <div id="respondents" class="form_container x-container" style="display:block;">
@@ -31,3 +38,50 @@
 	<p class="font-weight-bold x-left" >FORM B</p>
 	<p class="font-weight-bold x-btn x-right x-green" onclick="save_form()" >Save</p>
 </div>
+
+<div id="mem_modal_conts" style="display: block;">
+	<div class="x-container x-row">
+		<div class="x-col l6 m6">
+			<b>Select Farmer</b>
+			<div id="sample_dropdown" class="name_f x-select x-dropdown_multiple x-container x-row"></div>
+		</div>
+		<div class="x-col l6 m6">
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var dd1, dd1_c
+	
+	$onload(function(){
+		dd1_c = $ID('mem_modal_conts').innerHTML
+		$ID('mem_modal_conts').innerHTML = ""
+	})
+
+
+	function show_mem_modal(){
+		var mem_modal = $modal({
+			title : "Add Farmer Member",
+			type : "done",
+			subtitle : "You are about to add a farmer from Profiling Form A to the selected FO",
+			content : dd1_c
+		})
+		mem_modal.dialog.style.width = "80vw"
+		mem_modal.show()
+		set_dropdown()
+	}
+
+	function set_dropdown(){
+		dd1 = $dropdown_multiple({
+			id : "sample_dropdown",
+			dd_id : "typed_name",
+			classn : "name_f",
+			option : ['yes','no','maybe'],
+			search : true,
+			// add : true,
+			// option_display :'block',
+			option_display :'none',
+			on_add : function(item){}
+		})
+	}
+</script>

@@ -14,7 +14,7 @@
 	<link class="x-links" rel="stylesheet" href="../static/css/chip.css">
 	<link class="x-links" rel="stylesheet" href="../static/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/css/fontawesome/css/fontawesome.min.css" type="text/css">
+	<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/css/fontawesome/css/fontawesome.min.css" type="text/css">
 	<!-- <link rel="icon" href="../static/img/icon.png"> -->
 
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -125,7 +125,7 @@
 					<span class="text-primary font-weight-bold"></span>
 				</div>
 
-					<div class="card">
+				<div class="card">
 					<div class="card-inner">
 						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
 						<i style="height: 40px;width: 40px; color: #0099cc;" class="fa-solid fa-handshake"></i>
@@ -152,7 +152,7 @@
 					<div class="card-inner">
 						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
 						<i style="height: 30px;width: 30px; color: #cc3300;"  class="fa-solid fa-shield-halved"></i>
-				
+						
 					</div>
 					<div class="card-progress">
 						<small>NO. OF SECURITIES AND EXCHANGE COMMISSION</small>
@@ -176,7 +176,7 @@
 					<div class="card-inner">
 						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
 						<i style="height: 30px;width: 30px; color: #006666;"  class="fa-solid fa-person-digging"></i>
-				
+						
 					</div>
 					<div class="card-progress">
 						<small>NO. OF FARMERS/GROWERS ASSOCIATION</small>
@@ -188,7 +188,7 @@
 					<div class="card-inner">
 						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
 						<i style="height: 30px;width: 30px; color: #2e5cb8;"  class="fa-solid fa-users-between-lines"></i>
-					
+						
 						
 						
 					</div>
@@ -201,74 +201,15 @@
 				<div style="height: 300px; width: 500px; background-color: #f2f2f2;" class="card">
 					<div class="card-inner">
 						<canvas id="myChart" style="width:100%;max-width:600px;"></canvas>
+						
+						
+						
+					</div>
 					
-						
-						
-					</div>
-				
 					<span class="text-primary font-weight-bold"></span>
 				</div>
 
-
-				
-
-			<!-- 	<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary">10</h2>
-						<span class="material-icons-outlined text-blue">diversity_3</span>
-					</div>
-
-					<div class="card-progress">
-						<small>REGISTERING AGENCIES</small>
-						<div class="card-indicator">
-							<div class="indicator two" style="width: 1%"></div>
-						</div>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
-				</div>
-
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold">79</h2>
-						<span class="material-icons-outlined text-orange">diversity_1</span>
-					</div>
-					<div class="card-progress">
-						<small>MANAGEMENT COMMITTE</small>
-						<div class="card-indicator">
-							<div class="indicator three" style="width: 7%"></div>
-						</div>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
-				</div>
-
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold">10</h2>
-						<span class="material-icons-outlined text-red">handshake</span>
-					</div>
-
-					<div class="card-progress">
-						<small>PARTNERSHIP</small>
-						<div class="card-indicator">
-							<div class="indicator four" style="width: 1%"></div>
-						</div>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
-				</div> -->
 			</div>
-		
-
-<!-- 			<div class="charts">
-				<div class="charts-card">
-					<p class="chart-title">AREA/SCOPE OF OPERATION</p>
-					<div id="bar-chart"></div>
-				</div>
-
-				<div class="charts-card">
-					<p class="chart-title">COMMUNICATION AND PLANNING</p>
-					<div id="area-chart"></div>
-				</div>
-			</div> -->
 			<br>
 			<div class="x-row">
 				{% include 'list_data_table.html' %}
@@ -320,122 +261,122 @@
 		for (var i = 0; i < form_data_b.length; i++) {
 			var input_type = form_data_b[i].type
 			if(form_data_b[i].id==""){continue}
-			if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
-				FORM_DATA[form_data_b[i].id] = form_data_b[i].value
+				if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
+					FORM_DATA[form_data_b[i].id] = form_data_b[i].value
+				}
+				if( (["checkbox","radio"]).includes(input_type) ){
+					FORM_DATA[form_data_b[i].id] = form_data_b[i].checked
+				}
 			}
-			if( (["checkbox","radio"]).includes(input_type) ){
-				FORM_DATA[form_data_b[i].id] = form_data_b[i].checked
-			}
+
+
+			$send({
+				action : "/formb/save_form",
+				method : POST,
+				data : $DATA(FORM_DATA),
+				func : function(r){
+					SPINNER_LOADER.hide()
+					// println(r)
+					var res = JSON.parse(r)
+					// println(res)
+					var diadata = {} 
+					if(res['status']=="failed"){
+						diadata = {
+							type :"error",
+							title : "Data insertion Failed",
+							content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+							buttons : ['Finished Transaction'],
+							buttons_actions : [done_transac_excel]
+						}
+						SPINNER_LOADER.hide()
+						var dialog = $dialog(diadata)
+						dialog.show()
+					}
+					else if(res['status']=="success"){
+						diadata = {
+							title : "Data insertion Success",
+							type :"success",
+							content : "Your Data insertion had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+							buttons : ['Finished Transaction'],
+							buttons_actions : [done_transac_excel]
+						}
+						SPINNER_LOADER.hide()
+						var dialog = $dialog(diadata)
+						dialog.show()
+					}
+					SPINNER_LOADER.hide()
+				}
+			})
+		}
+		function done_transac_excel(){
+			location.reload()
 		}
 
 
-		$send({
-			action : "/formb/save_form",
-			method : POST,
-			data : $DATA(FORM_DATA),
-			func : function(r){
-				SPINNER_LOADER.hide()
-				println(r)
-				var res = JSON.parse(r)
-				println(res)
-				var diadata = {} 
-				if(res['status']=="failed"){
-					diadata = {
-						type :"error",
-						title : "Data insertion Failed",
-						content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
-						buttons : ['Finished Transaction'],
-						buttons_actions : [done_transac_excel]
-					}
-					SPINNER_LOADER.hide()
-					var dialog = $dialog(diadata)
-					dialog.show()
-				}
-				else if(res['status']=="success"){
-					diadata = {
-						title : "Data insertion Success",
-						type :"success",
-						content : "Your Data insertion had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
-						buttons : ['Finished Transaction'],
-						buttons_actions : [done_transac_excel]
-					}
-					SPINNER_LOADER.hide()
-					var dialog = $dialog(diadata)
-					dialog.show()
-				}
-				SPINNER_LOADER.hide()
-			}
-		})
-	}
-	function done_transac_excel(){
-		location.reload()
-	}
+		var TYPES_ORG = [
+			"None",
+			"Farmers’/ Growers’ Association",
+			"Farmers’ Cooperative Type of Cooperative",
+			"Others"
+			]
+		var REG_AGENCIES = [
+			"None",
+			"Cooperative Development Authority ",
+			"Department of Labor and Employment",
+			"Securities and Exchange Commission",
+			"Department of Agriculture",
+			"Others"
+			]
 
-
-	var TYPES_ORG = [
-		"None",
-		"Farmers’/ Growers’ Association",
-		"Farmers’ Cooperative Type of Cooperative",
-		"Others"
-	]
-	var REG_AGENCIES = [
-		"None",
-		"Cooperative Development Authority ",
-		"Department of Labor and Employment",
-		"Securities and Exchange Commission",
-		"Department of Agriculture",
-		"Others"
-	]
-
-	var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-	s1.async=true;
-	s1.src='https://embed.tawk.to/62f9c9c554f06e12d88ea549/1gafrob5j';
-	s1.charset='UTF-8';
-	s1.setAttribute('crossorigin','*');
-	s0.parentNode.insertBefore(s1,s0);
+		var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+		s1.async=true;
+		s1.src='https://embed.tawk.to/62f9c9c554f06e12d88ea549/1gafrob5j';
+		s1.charset='UTF-8';
+		s1.setAttribute('crossorigin','*');
+		s0.parentNode.insertBefore(s1,s0);
 	// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-	window.Tawk_API.visitor = {
-		'name' : "{{USER_DATA['name']}}",
-		'email': "{{USER_DATA['email']}}",
-	};
-	
-	// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-	Tawk_API.onLoad = function(){
-		Tawk_API.setAttributes({
+		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+		window.Tawk_API.visitor = {
 			'name' : "{{USER_DATA['name']}}",
 			'email': "{{USER_DATA['email']}}",
-			'hash' : "{{USER_DATA['rcu']}}"+"_"+"{{USER_DATA['job']}}"
-		}, function (error) {
+		};
+		
+	// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+		Tawk_API.onLoad = function(){
+			Tawk_API.setAttributes({
+				'name' : "{{USER_DATA['name']}}",
+				'email': "{{USER_DATA['email']}}",
+				'hash' : "{{USER_DATA['rcu']}}"+"_"+"{{USER_DATA['job']}}"
+			}, function (error) {
+			});
+		};
+
+
+		var xValues = ["Cacao", "Coffee", "Coconut", "PFN"];
+		var yValues = [1, 1, 1, 1];
+		var barColors = [
+			"#b91d47",
+			"#00aba9",
+			"#2b5797",
+			"#e8c3b9"
+			];
+
+		new Chart("myChart", {
+			type: "pie",
+			data: {
+				labels: xValues,
+				datasets: [{
+					backgroundColor: barColors,
+					data: yValues
+				}]
+			},
+			options: {
+				title: {
+					display: true,
+					text: "INDUSTRY CLUSTER"
+				}
+			}
+			
 		});
-	};
-
-
-	var xValues = ["Cacao", "Coffee", "Coconut", "PFN"];
-var yValues = [1, 1, 1, 1];
-var barColors = [
-  "#b91d47",
-  "#00aba9",
-  "#2b5797",
-  "#e8c3b9"
-];
-
-new Chart("myChart", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    title: {
-      display: true,
-      text: "INDUSTRY CLUSTER"
-    }
-  }
-  
-});
-</script>
-</html>
+	</script>
+	</html>

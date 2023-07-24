@@ -46,8 +46,6 @@
 				println(" -- Getting List Farmers Done")
 				var raw_data = JSON.parse(rest)
 				$ID('num_input_fo').innerHTML = raw_data.length
-				println("raw_data")
-				println(raw_data)
 
 				var res = popu__int_toData(raw_data)
 
@@ -58,7 +56,6 @@
 					alert("An Error/Warning occurred during Data Loading\n\nErro/Warningr message\n[ "+e+" ]\n\n You may continue your transaction by clicking the button below")
 				}
 				SPINNER_LOADER.hide()
-				println("res---")
 
 			},
 			err : function(res){println(res);SPINNER_LOADER.hide()},
@@ -149,7 +146,7 @@
 					data : $DATA({"id":ids}),
 					func : function(r){
 						var res = JSON.parse(r)
-						println(res)
+						// println(res)
 						goto("/formb/dashboard")
 					}
 				})
@@ -178,7 +175,7 @@
 			data : $DATA({"id":ids}),
 			func : function(rrr){
 				var resp = JSON.parse(rrr)
-				println(resp)
+				// println(resp)
 
 				var FORM_DATA = {}
 				var form_data_b = $CLASS("form_data_b")
