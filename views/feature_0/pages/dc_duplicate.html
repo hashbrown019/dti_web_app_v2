@@ -88,13 +88,15 @@
 					var in_dup = ""
 					for (var x = 0; x < res_[i].length; x++) {
 						in_dup +=(`
-							<div class="x-row x-hover-red">
+							<div class="x-row x-leftbar x-hover-border-red x-hover-pale-red">
 								<div class='x-col m10 l10'>
+									&nbsp;
 									<b>`+res_[i][x]['name']+`</b> |
 									<span><span class='x-text-grey'>Database ID :</span> 
 									`+res_[i][x]['db_id']+`</span> |
 									<span><span class='x-text-grey'>Inputed By :</span> 
 									`+res_[i][x]['inputed']+`</span><br>
+									&nbsp;
 									<span><span class='x-text-grey'>Reference :</span> 
 									<i class='x-tiny'>`+res_[i][x]['ref_code']+`</i></span>
 								</div>
@@ -108,7 +110,7 @@
 					}
 					out_dup +=(`
 						<div class="x-container x-padding" style='padding-bottom:10px;'>
-							<div class="x-card x-container x-hover-pale-red">`+in_dup+`</div>
+							<div class="x-container">`+in_dup+`</div>
 						</div>
 					`)
 				}
