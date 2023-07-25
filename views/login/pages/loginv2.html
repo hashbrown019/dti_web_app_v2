@@ -26,16 +26,16 @@
 		}
 
 		.password-container {
-        position: relative;
-    }
+			position: relative;
+		}
 
-    .password-toggle {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
-        cursor: pointer;
-    }
+		.password-toggle {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			cursor: pointer;
+		}
 	</style>
 
 
@@ -147,20 +147,20 @@
 	</body>
 	<script type="text/javascript">
 
-$(document).ready(function() {
-        $('.password-toggle').click(function() {
-            var passwordInput = $('.login_field');
-            var passwordToggle = $(this);
+		$(document).ready(function() {
+			$('.password-toggle').click(function() {
+				var passwordInput = $('.login_field');
+				var passwordToggle = $(this);
 
-            if (passwordInput.attr('type') === 'password') {
-                passwordInput.attr('type', 'text');
-                passwordToggle.html('<i style="color: #262626; font-weight: 800;" class="fa fa-eye-slash"></i>');
-            } else {
-                passwordInput.attr('type', 'password');
-                passwordToggle.html('<i style="color: #262626; font-weight: 800;" class="fa fa-eye"></i>');
-            }
-        });
-    });
+				if (passwordInput.attr('type') === 'password') {
+					passwordInput.attr('type', 'text');
+					passwordToggle.html('<i style="color: #262626; font-weight: 800;" class="fa fa-eye-slash"></i>');
+				} else {
+					passwordInput.attr('type', 'password');
+					passwordToggle.html('<i style="color: #262626; font-weight: 800;" class="fa fa-eye"></i>');
+				}
+			});
+		});
 
 		function check_user_name(){
 			var fields = $CLASS('login_field')
