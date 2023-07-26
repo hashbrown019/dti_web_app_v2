@@ -1,267 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<script type="text/javascript" src="../static/js/jquery.min.js"></script>
-	<script src="../static/js/Brorn.min.js"></script>
-	<script src="../static/doofen_static/js/scripts.js"></script>
-	<link class="x-links" rel="stylesheet" href="../static/css/x.css">
-	<link class="x-links" rel="stylesheet" href="../static/css/other.css">
-	<link class="x-links" rel="stylesheet" href="../static/css/other2.css">
-	<link class="x-links" rel="stylesheet" href="../static/css/loader.css">
-	<link class="x-links" rel="stylesheet" href="../static/css/scroll_bar.css">
-	<link class="x-links" rel="stylesheet" href="../static/css/css">
-	<link class="x-links" rel="stylesheet" href="../static/css/chip.css">
-	<link class="x-links" rel="stylesheet" href="../static/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-	<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/css/fontawesome/css/fontawesome.min.css" type="text/css">
-	<link rel="stylesheet" href="/static/css/datatabletheme1.css">
-	<!-- <link rel="icon" href="../static/img/icon.png"> -->
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../static/js/jquery.min.js"></script>
+		<script src="../static/js/Brorn.min.js"></script>
+		<script src="../static/doofen_static/js/scripts.js"></script>
+		<link class="x-links" rel="stylesheet" href="../static/css/x.css">
+		<link class="x-links" rel="stylesheet" href="../static/css/other.css">
+		<link class="x-links" rel="stylesheet" href="../static/css/other2.css">
+		<link class="x-links" rel="stylesheet" href="../static/css/loader.css">
+		<link class="x-links" rel="stylesheet" href="../static/css/scroll_bar.css">
+		<link class="x-links" rel="stylesheet" href="../static/css/css">
+		<link class="x-links" rel="stylesheet" href="../static/css/chip.css">
+		<link class="x-links" rel="stylesheet" href="../static/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+		<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/css/fontawesome/css/fontawesome.min.css" type="text/css">
+		<link rel="stylesheet" href="/static/css/datatabletheme1.css">
+		<!-- <link rel="icon" href="../static/img/icon.png"> -->
 
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<title>RAPID Growth || Form B</title>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-	<link rel="stylesheet" href="../static/doofen_static/css/style.css">
-	<link rel="stylesheet" href="../static/doofen_static/css/styles.css">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>RAPID Growth || Form B</title>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+		<link rel="stylesheet" href="../static/doofen_static/css/style.css">
+		<link rel="stylesheet" href="../static/doofen_static/css/styles.css">
 
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script> -->
-	<link rel="icon" href="../static/img/mis_2023_v2.svg">
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script> -->
+		<link rel="icon" href="../static/img/mis_2023_v2.svg">
 
 
-	<link rel="stylesheet" type="text/css" href="../static/css/datatable/jquery.dataTables.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-	<script type="text/javascript" charset="utf8" src="../static/js/datatable/jquery.dataTables.js"></script>
-	<script src="/static/psalm_static/dcf_static/assets/css/fontawesome/js/all.min.js"></script>
-	<script type="text/javascript">
-		// $.fn.dataTableExt.errMode = 'function'
-	</script>
-</head>
-<body onload="loaded()" style="height:80vh">
-	{% include 'spinner_loader.html' %}
-	<div class="grid-container">
+		<link rel="stylesheet" type="text/css" href="../static/css/datatable/jquery.dataTables.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+		<script type="text/javascript" charset="utf8" src="../static/js/datatable/jquery.dataTables.js"></script>
+		<script src="/static/psalm_static/dcf_static/assets/css/fontawesome/js/all.min.js"></script>
+		<script type="text/javascript">
+			// $.fn.dataTableExt.errMode = 'function'
+		</script>
+	</head>
+	<body onload="loaded()" style="height:80vh">
+		{% include 'spinner_loader.html' %}
+		<div class="grid-container">
 
-		<!-- Header -->
-		<header class="header">
-			<div class="menu-icon" onclick="openSidebar()">
-				<span class="material-icons-outlined">menu</span>
-			</div>
-			<div class="header-left">
-				<span class="material-icons-outlined"></span>
-			</div>
-			<div class="header-right">
-				<!-- {% include 'excel_management.html' %} -->
-			</div>
-		</header>
-		<!-- End Header -->
-
-		<!-- Sidebar -->
-		<aside id="sidebar">
-			<div class="sidebar-title x-center">
-				<div class="x-padding x-container x-center">
-
-					<div class="x-roww"  onclick="x_open()">
-						<span class="x-text-shrink "><strong>{{USER_DATA['name']}}</strong></span>
-						<span class="x-text-shrink x-tiny">{{USER_DATA['job']}}</span>
-					</div>
-					<div class="x-small x-row x-text-rapid-macha-light" style="width:200px;">
-						<span>
-							Showing figures for <b class="">{{USER_DATA['rcu']}}</b>
-						</span>
-					</div>
+			<!-- Header -->
+			<header class="header">
+				<div class="menu-icon" onclick="openSidebar()">
+					<span class="material-icons-outlined">menu</span>
 				</div>
-				<span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-			</div>
-
-
-			<ul class="sidebar-list">
-				<li class="sidebar-list-item" onclick="show_view('main','main-container')">
-					<a href="#">
-						<span class="material-icons-outlined">dashboard</span> Dashboard
-					</a>
-				</li>
-				<li class="sidebar-list-item" onclick="show_view('forms','main-container')" >
-					<a href="#">
-						<span class="material-icons-outlined">folder_open</span> Form B
-					</a>
-				</li>
-				<li class="sidebar-list-item">
-					<a href="#">
-						<span class="material-icons-outlined">fact_check</span> Excel
-					</a>
-				</li>
-			</ul>
-
-			<div class="x-rowx-center" style="display: fixed;bottom: 100px;">
-				<div class="x-container x-row x-padding">
-					<button class="x-block x-btn x-border x-round x-border-orange" onclick="goto('/menuv2')"> <span class="x-text-orange x-hover-orange fa fa-home"></span> Home</button>
+				<div class="header-left">
+					<span class="material-icons-outlined"></span>
 				</div>
-				<div class="x-container x-row x-padding">
-					<button class="x-block x-btn x-round x-red" onclick="goto('/logout')"> <span class="x-text fa fa-power-off"></span> Logout</button>
+				<div class="header-right">
+					<!-- {% include 'excel_management.html' %} -->
 				</div>
-			</div>
+			</header>
+			<!-- End Header -->
 
-		</aside>
-		<!-- End Sidebar -->
+			<!-- Sidebar -->
+			<aside id="sidebar">
+				<div class="sidebar-title x-center">
+					<div class="x-padding x-container x-center">
 
-
-
-		<!-- Main -->
-		<main class="main-container" id="main">
-			<div id="form_header" class="main-title">
-				<p class="font-weight-bold">DASHBOARD</p>
-
-			</div>
-
-			<div class="main-cards">
-
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
-						<span style="color: #009973;" class="material-icons-outlined ">groups</span>
+						<div class="x-roww"  onclick="x_open()">
+							<span class="x-text-shrink "><strong>{{USER_DATA['name']}}</strong></span>
+							<span class="x-text-shrink x-tiny">{{USER_DATA['job']}}</span>
+						</div>
+						<div class="x-small x-row x-text-rapid-macha-light" style="width:200px;">
+							<span>
+								Showing figures for <b class="">{{USER_DATA['rcu']}}</b>
+							</span>
+						</div>
 					</div>
-					<div class="card-progress">
-						<small>NO. OF INPUTED FARMERS ORGANIZATION</small>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
+					<span class="material-icons-outlined" onclick="closeSidebar()">close</span>
 				</div>
 
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
-						<i style="height: 40px;width: 40px; color: #0099cc;" class="fa-solid fa-handshake"></i>
+
+				<ul class="sidebar-list">
+					<li class="sidebar-list-item" onclick="show_view('main','main-container')">
+						<a href="#">
+							<span class="material-icons-outlined">dashboard</span> Dashboard
+						</a>
+					</li>
+					<li class="sidebar-list-item" onclick="show_view('forms','main-container');clear_form_field()" >
+						<a href="#">
+							<span class="material-icons-outlined">folder_open</span> Form B
+						</a>
+					</li>
+					<li class="sidebar-list-item">
+						<a href="#">
+							<span class="material-icons-outlined">fact_check</span> Excel
+						</a>
+					</li>
+				</ul>
+
+				<div class="x-rowx-center" style="display: fixed;bottom: 100px;">
+					<div class="x-container x-row x-padding">
+						<button class="x-block x-btn x-border x-round x-border-orange" onclick="goto('/menuv2')"> <span class="x-text-orange x-hover-orange fa fa-home"></span> Home</button>
 					</div>
-					<div class="card-progress">
-						<small>NO. OF COOPERATIVE DEVELOPMENT AUTHORITY</small>
+					<div class="x-container x-row x-padding">
+						<button class="x-block x-btn x-round x-red" onclick="goto('/logout')"> <span class="x-text fa fa-power-off"></span> Logout</button>
 					</div>
-					<span class="text-primary font-weight-bold"></span>
 				</div>
 
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
-						<i style="height: 30px;width: 30px; color: #b3b300;" class="fa-solid fa-briefcase"></i>
-					</div>
-					<div class="card-progress">
-						<small>NO. OF DEPARTMENT OF LABOR AND EMPLOYMENT</small>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
+			</aside>
+			<!-- End Sidebar -->
+
+
+
+			<!-- Main -->
+			<main class="main-container" id="main">
+				<div id="form_header" class="main-title">
+					<p class="font-weight-bold">DASHBOARD</p>
+
 				</div>
 
-				
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
-						<i style="height: 30px;width: 30px; color: #cc3300;"  class="fa-solid fa-shield-halved"></i>
+				<div class="main-cards">
+
+					<div class="card">
+						<div class="card-inner">
+							<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+							<span style="color: #009973;" class="material-icons-outlined ">groups</span>
+						</div>
+						<div class="card-progress">
+							<small>NO. OF INPUTED FARMERS ORGANIZATION</small>
+						</div>
+						<span class="text-primary font-weight-bold"></span>
+					</div>
+
+					<div class="card">
+						<div class="card-inner">
+							<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+							<i style="height: 40px;width: 40px; color: #0099cc;" class="fa-solid fa-handshake"></i>
+						</div>
+						<div class="card-progress">
+							<small>NO. OF COOPERATIVE DEVELOPMENT AUTHORITY</small>
+						</div>
+						<span class="text-primary font-weight-bold"></span>
+					</div>
+
+					<div class="card">
+						<div class="card-inner">
+							<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+							<i style="height: 30px;width: 30px; color: #b3b300;" class="fa-solid fa-briefcase"></i>
+						</div>
+						<div class="card-progress">
+							<small>NO. OF DEPARTMENT OF LABOR AND EMPLOYMENT</small>
+						</div>
+						<span class="text-primary font-weight-bold"></span>
+					</div>
+
+					
+					<div class="card">
+						<div class="card-inner">
+							<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+							<i style="height: 30px;width: 30px; color: #cc3300;"  class="fa-solid fa-shield-halved"></i>
+							
+						</div>
+						<div class="card-progress">
+							<small>NO. OF SECURITIES AND EXCHANGE COMMISSION</small>
+						</div>
+						<span class="text-primary font-weight-bold"></span>
+					</div>
+
+					<div class="card">
+						<div class="card-inner">
+							<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+							<i style="height: 30px;width: 30px; color: #339966;"  class="fa-solid fa-building-wheat"></i>
+							
+						</div>
+						<div class="card-progress">
+							<small>NO. OF DEPARTMENT OF AGRICULTURE</small>
+						</div>
+						<span class="text-primary font-weight-bold"></span>
+					</div>
+
+					<div class="card">
+						<div class="card-inner">
+							<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+							<i style="height: 30px;width: 30px; color: #006666;"  class="fa-solid fa-person-digging"></i>
+							
+						</div>
+						<div class="card-progress">
+							<small>NO. OF FARMERS/GROWERS ASSOCIATION</small>
+						</div>
+						<span class="text-primary font-weight-bold"></span>
+					</div>
+
+					<div class="card">
+						<div class="card-inner">
+							<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
+							<i style="height: 30px;width: 30px; color: #2e5cb8;"  class="fa-solid fa-users-between-lines"></i>
+							
+							
+							
+						</div>
+						<div class="card-progress">
+							<small>NO. OF FARMERS COOPERATIVE TYPE OF COOPERATIVE</small>
+						</div>
+						<span class="text-primary font-weight-bold"></span>
+					</div>
+					<br>
+					<div style="height: 300px; width: 500px; background-color: #f2f2f2;" class="card">
+						<div class="card-inner">
+							<canvas id="myChart" style="width:100%;max-width:600px;"></canvas>
+							
+							
+							
+						</div>
 						
+						<span class="text-primary font-weight-bold"></span>
 					</div>
-					<div class="card-progress">
-						<small>NO. OF SECURITIES AND EXCHANGE COMMISSION</small>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
-				</div>
 
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
-						<i style="height: 30px;width: 30px; color: #339966;"  class="fa-solid fa-building-wheat"></i>
-						
-					</div>
-					<div class="card-progress">
-						<small>NO. OF DEPARTMENT OF AGRICULTURE</small>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
-				</div>
-
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
-						<i style="height: 30px;width: 30px; color: #006666;"  class="fa-solid fa-person-digging"></i>
-						
-					</div>
-					<div class="card-progress">
-						<small>NO. OF FARMERS/GROWERS ASSOCIATION</small>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
-				</div>
-
-				<div class="card">
-					<div class="card-inner">
-						<h2 class="text-primary font-weight-bold " id="num_input_fo">00</h2>
-						<i style="height: 30px;width: 30px; color: #2e5cb8;"  class="fa-solid fa-users-between-lines"></i>
-						
-						
-						
-					</div>
-					<div class="card-progress">
-						<small>NO. OF FARMERS COOPERATIVE TYPE OF COOPERATIVE</small>
-					</div>
-					<span class="text-primary font-weight-bold"></span>
 				</div>
 				<br>
-				<div style="height: 300px; width: 500px; background-color: #f2f2f2;" class="card">
-					<div class="card-inner">
-						<canvas id="myChart" style="width:100%;max-width:600px;"></canvas>
-						
-						
-						
-					</div>
-					
-					<span class="text-primary font-weight-bold"></span>
+				<div class="x-row">
+					{% include 'list_data_table.html' %}
 				</div>
-
-			</div>
-			<br>
-			<div class="x-row">
-				{% include 'list_data_table.html' %}
-			</div>
-		</main>
-		<!-- End Main -->
+			</main>
+			<!-- End Main -->
 
 
-		<main class="main-container" id="forms" style="display: none;height: 85vh;">
-			{% include 'forms.html' %}
-		</main>
+			<main class="main-container" id="forms" style="display: none;height: 85vh;">
+				{% include 'forms.html' %}
+			</main>
 
-		<hr>
-	</div>
-</body>
+			<hr>
+		</div>
+	</body>
 
-<script type="text/javascript">
-	function loaded(argument) {
-		// body...
-		get_forms('respondents')
-		// init_charts()
-		onloads()
-	}
+	<script type="text/javascript">
+		function loaded(argument) {
+			// body...
+			get_forms('respondents')
+			// init_charts()
+			onloads()
+		}
 
 
 
-	function get_forms(form_ui){
-		// form_ui = form_ui.replaceAll("/formb/","").toLowerCase()
-		// println(" * Showing Form UI "+ form_ui)
-		// var form_container = $CLASS("form_container")
-		// for (var i = 0; i < form_container.length; i++) {
-		// 	form_container[i].style.display =" none"
-		// }
-		// $ID(form_ui).style.display = "block"
-		// topFunction()
-	}
-	// When the user clicks on the button, scroll to the top of the document
-	function topFunction() {
-		$ID('forms').scrollTop = 0;
-		$ID('forms').scrollTop = 0;
-		document.body.scrollTop = 0;
-		document.documentElement.scrollTop = 0;
-		$ID('form_header').scrollIntoView();
-	}
+		function get_forms(form_ui){
+			// form_ui = form_ui.replaceAll("/formb/","").toLowerCase()
+			// println(" * Showing Form UI "+ form_ui)
+			// var form_container = $CLASS("form_container")
+			// for (var i = 0; i < form_container.length; i++) {
+			// 	form_container[i].style.display =" none"
+			// }
+			// $ID(form_ui).style.display = "block"
+			// topFunction()
+		}
+		// When the user clicks on the button, scroll to the top of the document
+		function topFunction() {
+			$ID('forms').scrollTop = 0;
+			$ID('forms').scrollTop = 0;
+			document.body.scrollTop = 0;
+			document.documentElement.scrollTop = 0;
+			$ID('form_header').scrollIntoView();
+		}
 
-	function save_form(){
-		var FORM_DATA = {}
-		var form_data_b = $CLASS("form_data_b")
-		for (var i = 0; i < form_data_b.length; i++) {
-			var input_type = form_data_b[i].type
-			if(form_data_b[i].id==""){continue}
+		function save_form(){
+			var FORM_DATA = {}
+			var form_data_b = $CLASS("form_data_b")
+			for (var i = 0; i < form_data_b.length; i++) {
+				var input_type = form_data_b[i].type
+				if(form_data_b[i].id==""){
+					continue
+				}
 				if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
 					FORM_DATA[form_data_b[i].id] = form_data_b[i].value
 				}
@@ -269,17 +271,15 @@
 					FORM_DATA[form_data_b[i].id] = form_data_b[i].checked
 				}
 			}
-
-
 			$send({
 				action : "/formb/save_form",
 				method : POST,
 				data : $DATA(FORM_DATA),
 				func : function(r){
 					SPINNER_LOADER.hide()
-					// println(r)
+						// println(r)
 					var res = JSON.parse(r)
-					// println(res)
+						// println(res)
 					var diadata = {} 
 					if(res['status']=="failed"){
 						diadata = {
@@ -335,14 +335,14 @@
 		s1.charset='UTF-8';
 		s1.setAttribute('crossorigin','*');
 		s0.parentNode.insertBefore(s1,s0);
-	// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+		// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 		window.Tawk_API.visitor = {
 			'name' : "{{USER_DATA['name']}}",
 			'email': "{{USER_DATA['email']}}",
 		};
-		
-	// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+		// tawkto ==-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 		Tawk_API.onLoad = function(){
 			Tawk_API.setAttributes({
 				'name' : "{{USER_DATA['name']}}",
@@ -377,7 +377,7 @@
 					text: "INDUSTRY CLUSTER"
 				}
 			}
-			
+
 		});
 	</script>
-	</html>
+</html>

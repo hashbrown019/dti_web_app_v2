@@ -128,11 +128,11 @@
 		var item_dialog = $dialog({
 			title : nameorg,
 			subtitle : "Control the data for the entry ["+nameorg+"]",
-			buttons : ["Edit","Delete","Cancel"],
-			buttons_actions : [edit_form,delete_form]
+			buttons : ["View","Delete","Cancel"],
+			buttons_actions : [show_form_fo,delete_form]
 		})
 		item_dialog.show()
-		function edit_form(){show_fo_ind_(ids);item_dialog.destroy()}
+		function show_form_fo(){show_fo_ind_(ids);item_dialog.destroy()}
 		function delete_form(){
 			item_dialog.destroy()
 			var del_dialog = $dialog({
@@ -158,9 +158,7 @@
 		}
 	}
 
-
 	function popu__int_toData(res){
-
 		for (var i = 0; i < res.length; i++) {
 			if(parseInt(res[i][3]) != NaN ){
 				res[i][3] = TYPES_ORG[parseInt(res[i][3])]
@@ -170,6 +168,22 @@
 			}
 		}
 		return res
+	}
+
+	function clear_form_field(){
+		var form_data_b = $CLASS("form_data_b")
+		for (var i = 0; i < form_data_b.length; i++) {
+			var input_type = form_data_b[i].type
+			if(form_data_b[i].id==""){continue}
+			if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
+				form_data_b[i].value = ""
+			}
+			else if( (["radio"]).includes(input_type) ){
+				form_data_b[i].checked = ""
+			}
+			form_data_b[i].disabled = false
+		}
+
 	}
 
 	function show_fo_ind_(ids){
@@ -197,6 +211,7 @@
 							form_data_b[i].click()
 						}
 					}
+					form_data_b[i].disabled = true
 				}
 				show_view('forms','main-container')
 			}

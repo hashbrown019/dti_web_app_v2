@@ -52,13 +52,15 @@
 	<p class="font-weight-bold x-btn x-right x-green" onclick="save_form()" >Save</p>
 </div>
 
+<!-- ==================================================================================================== -->
+
 <div id="mem_modal_conts" style="display: block;">
 	<div class="x-container x-row">
 		<div class="x-col l6 m6 x-container x-padding">
 			<div class="x-row">
 				<b>Farmer's Name</b>
 				<div class="x-row password-container">
-					<input id="search_key" class="search_profile x-input x-border" type="text" placeholder="Farmers Name"
+					<input id="fname" class="search_profile f_profile main_input x-input x-border" type="text" placeholder="Input farmers name or search from inputed profiles to auto fill-up the fields"
 						style="" required>
 					<span class="password-toggle"><i style="color: #262626; font-weight: 800;" class="fa fa-search x-hover-text-blue" onclick="search_profile()"></i></span>
 				</div>
@@ -67,34 +69,38 @@
 			<div class="x-row">
 				<div class="x-col l3">
 					<span>Region</span>
-					<input class="x-input x-border" type="" name="">
+					<input id="addr_region" class="f_profile main_input x-input x-border" type="" name="">
 				</div>
 				<div class="x-col l3">
 					<span>Province</span>
-					<input class="x-input x-border" type="" name="">
+					<input id="addr_prov" class="f_profile main_input x-input x-border" type="" name="">
 				</div>
 				<div class="x-col l3">
 					<span>City</span>
-					<input class="x-input x-border" type="" name="">
+					<input id="addr_city" class="f_profile main_input x-input x-border" type="" name="">
 				</div>
 				<div class="x-col l3">
 					<span>Brgy</span>
-					<input class="x-input x-border" type="" name="">
+					<input id="addr_brgy" class="f_profile main_input x-input x-border" type="" name="">
 				</div>
 			</div>
 			<b>Primary Crop/Commodity</b>
-			<input class="x-input x-border" type="" name="">
+			<input id="farmer_primary_crop" class="f_profile main_input x-input x-border" type="" name="">
 		</div>
 		<div class="x-col l6 m6 x-container x-padding">
 			<b>Sex</b>
-			<select class="x-input x-select x-border">
+			<select id="sex" class="f_profile main_input x-input x-select x-border">
 				<option value="Male">Male</option>
 				<option value="Female">Female</option>
 			</select>
 			<b>Birthday</b>
-			<input class="x-input x-border" type="date" name="">
+			<input id="farmer_bday" class="f_profile main_input x-input x-border" type="date" name="">
 			<b>Civil Status</b>
-			<input class="x-input x-border" type="text" name="">
+			<input id="civil_status" class="f_profile main_input x-input x-border" type="text" name="">
+			<div class="x-container">
+				<input id="id" class="f_profile x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%;text-align:right;font-weight:bold" disabled>
+				<input id="reference" class="f_profile x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%" disabled>
+			</div>
 		</div>
 	</div>
 </div>
@@ -107,25 +113,41 @@
 
 <script type="text/javascript">
 	var dd1, dd1_c
-	
+	var farmer_ls_modal
+
 	$onload(function(){
 		dd1_c = $ID('mem_modal_conts').innerHTML
 		$ID('mem_modal_conts').innerHTML = ""
-	},show_mem_modal)
+	},
+	// show_mem_modal
+	)
 
 	function show_mem_modal(){
 		var mem_modal = $modal({
 			title : "Add Farmer Member",
 			type : "done",
 			subtitle : "You are about to add a farmer from Profiling Form A to the selected FO",
-			content : dd1_c
+			content : dd1_c,
+			buttons : ['Add Profile','Clear fields'],
+			buttons_actions : [ add_profile,
+				function(){
+					var main_input = $CLASS('main_input')
+					for (var i = 0; i < main_input.length; i++) {
+						main_input[i].disabled = false
+						main_input[i].value = ""
+					}
+					var f_profile = $CLASS('f_profile')
+					for (var i = 0; i < f_profile.length; i++) {
+						f_profile[i].value = ""
+				}
+			}]
 		})
 		mem_modal.dialog.style.width = "80vw"
 		mem_modal.show()
 	}
 
 	function search_profile(){
-		var search_key = $ID('search_key').value
+		var search_key = $ID('fname').value
 		alert('Click to continue searching ['+search_key+']')
 		SPINNER_LOADER.show()
 		$send({
@@ -137,10 +159,11 @@
 				var res_ = JSON.parse(rest)
 				var out_dup = ""
 				for (var x = 0; x < res_.length; x++) {
+					var str_res = JSON.stringify(res_[x]).replaceAll('"',"^")
 					out_dup +=(`
 						<div class="x-row x-padding x-leftbar x-hover-border-green x-hover-pale-green">
 							<div class='x-col m10 l10'>
-								<b>`+res_[x]['Names']+`</b> |
+								<b>`+res_[x]['fname']+`</b> |
 								<span><span class='x-text-grey'>Address :</span> 
 								R`+res_[x]['addr_region']+`, `+res_[x]['addr_prov']+`, `+res_[x]['addr_city']+`, `+res_[x]['addr_brgy']+` 
 								</span> |
@@ -151,7 +174,7 @@
 								<i class='x-tiny'>`+res_[x]['reference']+`</i></span>
 							</div>
 							<div class='x-col m2 l2'>
-								<button class='x-right x-btn x-green x-hover-black x-round-large' onclick="fill_selected_profile('`+res_[x]['db_id']+`','`+res_[x]['reference']+`')">
+								<button class='x-right x-btn x-green x-hover-black x-round-large' onclick='fill_selected_profile("`+str_res+`")'>
 									<span class='fa fa-plus'></span>
 								</button>
 							</div>
@@ -159,12 +182,12 @@
 					`)
 				}
 				$ID('ls_farmer').innerHTML = out_dup
-				var farmer_ls_modal = $dialog({
+				farmer_ls_modal = $dialog({
 					title : "Search Results",
 					subtitle : "Below are the list of search records result you may click one and the system will auto feel the fields (not editable)",
 					content : $ID('ls_modal').innerHTML
 				})
-				farmer_ls_modal.show()
+				farmer_ls_modal.show()  
 				SPINNER_LOADER.hide()
 			},
 			err : function(res){println(res)},
@@ -188,10 +211,23 @@
 			}
 		})
 
-		function fill_selected_profile(db_id,ref_code){
-
-		}
 		// TABLE.ajax.url('/feature_0/filter_list_farmers')
 		// TABLE.ajax.reload()
+	}
+
+	function fill_selected_profile(profile_){
+		profile_ = JSON.parse(profile_.replaceAll("^",'"'))
+		json_to_input("f_profile",profile_)
+		farmer_ls_modal.destroy()
+
+		var main_input = $CLASS('main_input')
+		for (var i = 0; i < main_input.length; i++) {
+			main_input[i].disabled = true
+		}
+		println(profile_)
+	}
+
+	function add_profile(){
+		println(input_to_json('f_profile'))
 	}
 </script>

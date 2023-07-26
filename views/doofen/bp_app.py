@@ -102,7 +102,7 @@ def search_farmer_profile():
 	data_m = '''
 		SELECT 
 			`id`,
-			CONCAT(`f_name`,' ',`m_name`,' ',`l_name`) as 'Names',
+			CONCAT(`f_name`,' ',`m_name`,' ',`l_name`) as 'fname',
 		    `farmer_name` as 'complete_name',
 			`farmer_code` as 'reference',
 			`farmer_bday`,
@@ -115,7 +115,6 @@ def search_farmer_profile():
 			`farmer_civil_status` as 'civil_status'
 		FROM 
 			`form_a_farmer_profiles` 
-
 		WHERE 
 			`f_name` LIKE '{}' OR
 			`m_name` LIKE '{}' OR
@@ -126,7 +125,7 @@ def search_farmer_profile():
 	data_ex = '''
 		SELECT 
 			`id`,
-			 CONCAT(`frmer_prof_@_basic_Info_@_First_name`,' ',`frmer_prof_@_basic_Info_@_Middle_name`,' ',`frmer_prof_@_basic_Info_@_Last_name`) as 'names',
+			 CONCAT(`frmer_prof_@_basic_Info_@_First_name`,' ',`frmer_prof_@_basic_Info_@_Middle_name`,' ',`frmer_prof_@_basic_Info_@_Last_name`) as 'fname',
 			`file_name` as 'reference',
 			`frmer_prof_@_basic_Info_@_birthday` as 'farmer_bday',
 			`frmer_prof_@_frmer_addr_@_region` as 'addr_region',
@@ -136,8 +135,6 @@ def search_farmer_profile():
 			`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'farmer_primary_crop',
 			`frmer_prof_@_basic_Info_@_Sex` as 'sex',
 			`frmer_prof_@_basic_Info_@_civil_status` as 'civil_status'
-
-
 		FROM 
 			`excel_import_form_a` 
 		WHERE 
