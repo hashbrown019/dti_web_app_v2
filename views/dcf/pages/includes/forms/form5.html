@@ -12,7 +12,6 @@
 <div class="x-col l1 ">
     &nbsp;
 </div>
-
 <div class=" x-col l10 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
     <center><h2 class=" x-container x-padding text-white" style="background-color: #007399;">Matching Grant Implementation Tracker</h2></center>
 
@@ -116,20 +115,38 @@
                 </tr>
             </table>
         </div>
+        <script>
+            $(document).ready(function() {
+                $("#prodex, #prodex2, #prodex3, #rehab, #rehab2").hide();
+ 
+                $("#mgit_type_of_investment").change(function() {
 
+                    $("#prodex, #prodex2, #prodex3, #rehab, #rehab2").hide();
+    
+              
+                    var selectedOption = $(this).val();
+
+                    if (selectedOption === "Productive investments" || selectedOption === "Expansion") {
+                        $("#prodex, #prodex2, #prodex3").show();
+                    } else if (selectedOption === "Rehabilitation") {
+                        $("#rehab, #rehab2").show();
+                    }
+                });
+            });
+        </script>
         <div class="x-row x-padding x-container">
             <div class="x-col l4 x-container x-padding">
                 <span class="">Type of Investment</span>
                 <select class=" x-border x-select x-border" id="mgit_type_of_investment" name="mgit_type_of_investment"><br>
-                    <option value="" >Choose your option</option>
-                    <option >Productive investments</option>
-                    <option >Expansion</option>
-                    <option >Rehabilitation</option>
+                    <option value="">Choose your option</option>
+                    <option>Productive investments</option>
+                    <option>Expansion</option>
+                    <option>Rehabilitation</option>
                 </select>
             </div>
         </div>
 
-        <div class="x-container x-padding">
+        <div id="prodex"  class="x-container x-padding">
             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
             <table class="x-table x-container x-table-border">
                 <tr>
@@ -158,7 +175,7 @@
             </table>
         </div>
 
-        <div class="x-container x-padding">
+        <div id="prodex2"  class="x-container x-padding">
             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
             <table class="x-table x-container x-table-border">
                 <tr>
@@ -184,12 +201,15 @@
         </div>
 
 
-        <div class="x-col l4 x-container x-padding">
+        <div id="prodex3"  class="x-col l5 x-container x-padding">
             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
             <table class="x-table x-container x-table-border">
                 <tr>
                     <th colspan="2">
                         <center>INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA)</center>
+                    </th>
+                    <th>
+                        <center>TIME ELAPSE (autocalculate:  IN REFERENCE TO END DATE OF  MG AVAILMENT)</center>
                     </th>
                     
                 </tr>
@@ -202,18 +222,15 @@
                 <tr>
                     <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_start" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_start"></td>
                     <td><input class=" x-input x-border" id="mgit_inclusive_timeline_implementation_end" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_end"></td>
+                    <td><input class=" x-light-grey x-input" id="mgit_time_elapse" type="text" name="mgit_time_elapse"></td>
                 </tr>
             </table>
         </div>
 
-        <div class="x-container x-padding">
+        <div id="rehab"  class="x-container x-padding">
             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
             <table class="x-table x-container x-table-border">
-                <tr>
-                    <th>
-                        <center>TIME ELAPSE (autocalculate:  IN REFERENCE TO END DATE OF  MG AVAILMENT)</center>
-                    </th>
-                    <th>
+<th>
                         <center>TOTAL BUDGET AS APPROVED IN THE DIP</center>
                     </th>
                     <th>
@@ -227,14 +244,14 @@
 
                 <tr>
                 <!--sectorG--->
-                    <td><input class=" x-light-grey x-input" id="mgit_time_elapse" type="text" name="mgit_time_elapse"></td>
+                
                     <td><input class=" x-light-grey x-input" id="mgit_total_budget_approved_in_the_DIP" type="text" name="mgit_total_budget_approved_in_the_DIP"></td>
                     <td><input class=" x-light-grey x-input" id="mgit_actual_cost_of_procurement" type="text" name="mgit_actual_cost_of_procurement"></td>
                     <td><input class=" x-light-grey x-input" id="mgit_summary_of_actual_tools_procured" type="text" name="mgit_summary_of_actual_tools_procured"></td>
                 </tr>
             </table>
         </div>
-        <div class="x-row x-container x-padding">
+        <div id="rehab2" class="x-row x-container x-padding">
             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
             <table class="x-table x-container x-table-border">
                 <tr>
