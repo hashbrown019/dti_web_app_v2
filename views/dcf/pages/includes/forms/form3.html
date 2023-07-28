@@ -126,28 +126,48 @@
 
 			<div class="x-row x-container x-padding">
 				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-				<table class="x-table x-container x-table-border">
-					<tr>
-						<th colspan="3">
-							<center>BDSP Team Composition</center>
-						</th>
-					</tr>
-
-					<tr>
-						<td><center>Name</center></td>
-						<td><center>Education</center></td>
-						<td><center>Expertise</center></td>
-					</tr>	
-
-					<tr>	
-						<td><input class=" x-light-grey x-input" id="form_3_name" type="text" name="form_3_name"></td>
-						<td><input class=" x-light-grey x-input" id="form_3_education" type="text" name="form_3_education"></td>
-						<td><input class=" x-light-grey x-input" id="form_3_expertise" type="text" name="form_3_expertise"></td>
-					</tr>
+				<table id="form3_table_org_comp" class="x-table x-container x-table-border">
+					<thead>
+						<tr>
+							<th colspan="2">
+								<center>BDSP Team Composition</center>
+							</th>
+							<th colspan>
+								<center>
+									<button type="button" class="x-btn x-blue" onclick="add_row()">add</button>
+								</center>
+							</th>
+						</tr>
+						<tr >
+							<td><center>Name</center></td>
+							<td><center>Education</center></td>
+							<td><center>Expertise</center></td>
+						</tr>
+					</thead>
+					<tbody id="main_">
+						<tr id="main_row">	
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
+		<script>
+			let og_row = $ID('main_row').parentNode.innerHTML
+		// Find a <table> element with id="myTable":
+			var form3_table_org_comp = document.getElementById("form3_table_org_comp");
 
+			function add_row(){
+				// $ID('main_').innerHTML += og_row
+				// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+				var row = form3_table_org_comp.insertRow(2);
+				// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+				row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" type="text" name="form_3_name[]"></td>`
+				row.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" type="text" name="form_3_education[]"></td>`
+				row.insertCell(2).innerHTML = `<td><input class=" x-light-grey x-input" type="text" name="form_3_expertise[]"></td>`
+				
+				// Add some text to the new cells:
+			}
+		</script>
 		<!---Prior Engagment/ experience--->
 		<center><h2 class="text-white x-container x-padding"  style="background-color: #007399;">Prior Engagment / Experience</h2></center>
 		<div class="x-container x-padding">

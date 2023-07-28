@@ -136,28 +136,40 @@
             
                         <div class="x-row x-container x-padding">
                             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-                            <table class="x-table x-container x-table-border">
-                                <tr>
-                                    <th colspan="3">
-                                        <center>BDSP Team Composition</center>
-                                    </th>
-                                </tr>
-            
-                                <tr>
-                                    <td><center>Name</center></td>
-                                    <td><center>Education</center></td>
-                                    <td><center>Expertise</center></td>
-                                </tr>	
-            
-                                <tr>	
-                                    <td><input class=" x-light-grey x-input" id="form_3_name" value="{{ row['form_3_name'] }}" type="text" name="form_3_name"></td>
-                                    <td><input class=" x-light-grey x-input" id="form_3_education" value="{{ row['form_3_education'] }}" type="text" name="form_3_education"></td>
-                                    <td><input class=" x-light-grey x-input" id="form_3_expertise" value="{{ row['form_3_expertise'] }}" type="text" name="form_3_expertise"></td>
-                                </tr>
+                            <table id="form3_table_org_comp_update{{row['id']}}" class="x-table x-container x-table-border">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">
+                                            <center>BDSP Team Composition</center>
+                                        </th>
+                                        <th>
+                                            <center>
+                                                <button type="button" class="x-btn x-blue" onclick='add_row("{{row.id}}")'>add</button>
+                                            </center>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td><center>Name</center></td>
+                                        <td><center>Education</center></td>
+                                        <td><center>Expertise</center></td>
+                                    </tr>	
+                                </thead>
+                                
+                                <tbody id="update_table_">
+                                    {% set list1 = row['form_3_name'].split(',') %}
+                                    {% for index in range(list1|length) %}
+                                    <tr>	
+                                        <td><input class=" x-light-grey x-input" value="{{ row['form_3_name'].split(',')[index] }}" type="text" name="form_3_name[]"></td>
+                                        <td><input class=" x-light-grey x-input" value="{{ row['form_3_education'].split(',')[index] }}" type="text" name="form_3_education[]"></td>
+                                        <td><input class=" x-light-grey x-input" value="{{ row['form_3_expertise'].split(',')[index] }}" type="text" name="form_3_expertise[]"></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+    
                             </table>
                         </div>
                     </div>
-            
+                  
                     <!---Prior Engagment/ experience--->
                     <center><h2 class="text-white x-container x-padding"  style="background-color: #007399;">Prior Engagment / Experience</h2></center>
                     <div class="x-container x-padding">
@@ -342,3 +354,21 @@
   
   {% endfor  %}
 
+  <script>
+                        
+
+    function add_row(ids){
+        // $ID('main_').innerHTML += og_row
+        // Create an empty <tr> element and add it to the 1st position of the table_org_update:
+        var table_org_update = document.getElementById('form3_table_org_comp_update'+ids);
+        var row = table_org_update.insertRow(2);
+        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+        row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" type="text" name="form_3_name[]"></td>`
+        row.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" type="text" name="form_3_education[]"></td>`
+        // row.insertCell(2).innerHTML = `<h1>HAHAHHAHHAHAHHHA YAW</h1>`
+        row.insertCell(2).innerHTML = `<td><input class=" x-light-red x-input" type="text" name="form_3_expertise[]"></td>`
+        // Add some text to the new cells:
+        println(table_org_update)
+        println('form3_table_org_comp_update'+ids)
+    }
+</script>

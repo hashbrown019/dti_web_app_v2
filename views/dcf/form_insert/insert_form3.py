@@ -19,9 +19,9 @@ def insert_form3(request):
         form_3_choices = request.form.getlist('form_3_choices[]')
         form_3_preferred_region = request.form.get('form_3_preferred_region')
         form_3_preferred_province = request.form.get('form_3_preferred_province')
-        form_3_name = request.form['form_3_name']
-        form_3_education = request.form.get('form_3_education')
-        form_3_expertise = request.form.get('form_3_expertise')
+        form_3_name =', '.join(request.form.getlist('form_3_name[]') )
+        form_3_education =', '.join(request.form.getlist('form_3_education[]') )
+        form_3_expertise =', '.join(request.form.getlist('form_3_expertise[]') )
         form_3_prior_rapid_engagements = request.form.get('form_3_prior_rapid_engagements')
         form_3_date_registered = request.form.get('form_3_date_registered')
         form_3_rapid_implementing_unit = request.form.get('form_3_rapid_implementing_unit')
