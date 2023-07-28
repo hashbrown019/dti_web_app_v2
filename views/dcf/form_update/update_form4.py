@@ -20,8 +20,8 @@ def updateform4(request):
         cbb_date_end = request.form.get('cbb_date_end')
         cbb_total_number_of_participants = request.form['cbb_total_number_of_participants']
         cbb_commodity = request.form['cbb_commodity']
-        cbb_venue = request.form.get('cbb_venue')
-        cbb_name_of_resource_person = request.form.get('cbb_name_of_resource_person')
+        cbb_venue =', '.join(request.form.getlist('cbb_venue[]'))
+        cbb_name_of_resource_person = ', '.join(request.form.getlist('cbb_name_of_resource_person[]'))
         cbb_rapid_actual_budget = request.form.get('cbb_rapid_actual_budget')
         cbb_dip_capbuild_activities_NPO = request.form.get('cbb_dip_capbuild_activities_NPO')
         cbb_dip_capbuild_activities_CA = request.form.get('cbb_dip_capbuild_activities_CA')

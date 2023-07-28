@@ -135,22 +135,38 @@
 
 				<div class="x-row x-container x-padding">
 					<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-						<table class="x-table x-container x-table-border">
+						<table id="form4_table" class="x-table x-container x-table-border">
+							<thead>
 							<tr>
 								<th>
-									<center>Venue</center>
+									<center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row()"><i class="fa-solid fa-circle-plus"></i></button> Venue</center>
 								</th>
 								<th>
 									<center>Name of Resource Person/Facilitator/BDSP<br>(First Name, Middle Name, Last Name)</center>
 								</th>
 							</tr>
-
+						</thead>
+						<tbody>
 							<tr>
-								<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text" name="cbb_venue"></td>
-								<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person"></td>
+								<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text" name="cbb_venue[]"></td>
+								<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>
 							</tr>
+						</tbody>
 						</table>
 				</div>
+				<script>
+		
+					function add_row(){
+						// $ID('main_').innerHTML += og_row
+						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+						var row = form4_table.insertRow(1);
+						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+						row.insertCell(0).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text" name="cbb_venue[]"></td>`
+						row.insertCell(1).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>`
+						
+						// Add some text to the new cells:
+					}
+				</script>
 
 				<div class="x-row x-container x-padding">
 					<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
