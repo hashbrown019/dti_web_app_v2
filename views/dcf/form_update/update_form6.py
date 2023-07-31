@@ -18,8 +18,8 @@ def updateform6(request):
         form_6_venue = request.form['form_6_venue']
         form_6_resource_person = request.form['form_6_resource_person']
         form_6_rapid_actual_budget = request.form['form_6_rapid_actual_budget']
-        form_6_name_of_partner_organization_1 = request.form['form_6_name_of_partner_organization_1']
-        form_6_name_of_partner_organization_2 = request.form['form_6_name_of_partner_organization_2']
+        form_6_name_of_partner_organization_1 = ', '.join(request.form.getlist('form_6_name_of_partner_organization_1[]'))
+        form_6_name_of_partner_organization_2 = ', '.join(request.form.getlist('form_6_name_of_partner_organization_2[]'))
         form_6_beneficiary_participant = request.form['form_6_beneficiary_participant']
         form_6_commodity = request.form['form_6_commodity']
         form_6_type_of_beneficiary = request.form['form_6_type_of_beneficiary']

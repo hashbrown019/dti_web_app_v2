@@ -77,7 +77,7 @@
                     </div>
                     <div class="x-row x-container x-padding">
                         <style>table, th, td{border: 1px ; border-collapse: collapse;}</style>
-                        <table class="x-table x-container x-table-border" style="border-color: transparent;" >
+                        <table id="form6_table_update{{row['id']}}" class="x-table x-container x-table-border" style="border-color: transparent;" >
                             <tr>
                                 <th colspan="2">
                                     <center>Fully & partially funded by partners outside RAPID </center>
@@ -85,15 +85,33 @@
                             </tr>
             
                             <tr>
-                                <td><center>Name of Partner/Organization</center></td>
+                                <td><center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row({{row['id']}})"><i class="fa-solid fa-circle-plus"></i></button><center>Name of Partner/Organization</center></td>
                                 <td><center>Name of Partner/Organization</center></td>
                             </tr>
-            
-                            <tr>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_name_of_partner_organization_1'] }}" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_name_of_partner_organization_2'] }}" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2"></td>
-                            </tr>
+                            <tbody  id="update_table_">
+                                {% set list1 = row['form_6_name_of_partner_organization_1'].split(',') %}
+                                {% for index in range(list1|length) %}
+                                <tr>
+                                    <td><input class="form_data_b x-light-grey x-input" value="{{ row['form_6_name_of_partner_organization_1'].split(',')[index] }}" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1[]"></td>
+                                    <td><input class="form_data_b x-light-grey x-input" value="{{ row['form_6_name_of_partner_organization_2'].split(',')[index] }}" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2[]"></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
                         </table>
+                        <script>
+                        
+
+                            function add_row(ids){
+                                println('form6_table_update'+ids)
+                                var table6_org_update = document.getElementById('form6_table_update'+ids);
+                                println(table6_org_update)
+                                var row = table6_org_update.insertRow(2);
+                                // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                                row.insertCell(0).innerHTML = ` <td><input class="form_data_b x-light-grey x-input" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1[]"></td>`
+                                row.insertCell(1).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2[]"></td>`
+                                println(table6_org_update)
+                            }
+                        </script>
                     </div>
                     <div class="x-row x-container x-padding">
                         <div class="x-col l4 x-container x-padding">
