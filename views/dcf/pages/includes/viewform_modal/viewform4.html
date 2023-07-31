@@ -133,11 +133,17 @@
                                                 <center>Name of Resource Person/Facilitator/BDSP<br>(First Name, Middle Name, Last Name)</center>
                                             </th>
                                         </tr>
-            
-                                        <tr>
-                                            <td><input disabled class="form_data_b  x-input" value="{{ row['cbb_venue'] }}" id="cbb_venue" type="text" name="cbb_venue"></td>
-                                            <td><input disabled class="form_data_b  x-input" value="{{ row['cbb_name_of_resource_person'] }}" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person"></td>
-                                        </tr>
+        
+
+                                        <tbody  id="update_table_">
+                                            {% set list1 = row['cbb_venue'].split(',') %}
+                                            {% for index in range(list1|length) %}
+                                            <tr>
+                                                <td><input class="form_data_b x-input" disabled value="{{ row['cbb_venue'].split(',')[index] }}" id="cbb_venue" type="text" name="cbb_venue[]"></td>
+                                                <td><input class="form_data_b x-input" disabled value="{{ row['cbb_name_of_resource_person'].split(',')[index] }}" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
                                     </table>
                             </div>
             

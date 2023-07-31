@@ -149,10 +149,17 @@
                                     <td><center>Expertise</center></td>
                                 </tr>	
             
-                                <tr>	
-                                    <td><input class="  x-input" id="form_3_education" disabled value="{{ row['form_3_education'] }}" type="text" name="form_3_education"></td>
-                                    <td><input class="  x-input" id="form_3_expertise" disabled value="{{ row['form_3_expertise'] }}" type="text" name="form_3_expertise"></td>
-                                </tr>
+
+                                <tbody id="update_table_">
+                                    {% set list1 = row['form_3_name'].split(',') %}
+                                    {% for index in range(list1|length) %}
+                                    <tr>	
+                                        <td><input class=" x-input" value="{{ row['form_3_name'].split(',')[index] }}" type="text" name="form_3_name[]" disabled></td>
+                                        <td><input class=" x-input" value="{{ row['form_3_education'].split(',')[index] }}" type="text" name="form_3_education[]" disabled></td>
+                                        <td><input class=" x-input" value="{{ row['form_3_expertise'].split(',')[index] }}" type="text" name="form_3_expertise[]" disabled></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
                             </table>
                         </div>
                     </div>
