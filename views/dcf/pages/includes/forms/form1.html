@@ -299,7 +299,47 @@
 		</div>
 		{% include "includes/forms/form1_participants.html" %}
 </form>
+
+<script>
+    document.querySelector('#myModal .close').addEventListener('click', function() {
+    $('#myModal').modal('hide');
+  });
+
+  function generate_modal(){
+    var modal_ls_search = $dialog({
+      title : "adad"
+    })
     
+    modal_ls_search.show()
+  }
+
+	function search_profile(){
+		var search_key = $ID('name_partc').value
+		alert('Click to continue searching ['+search_key+']')
+		$send({
+			action : "/formb/search_farmer_profile",
+			method : POST,
+			err_dialog:true,
+			data : $DATA({'search_item':search_key}),
+			func : function(rest){
+				var res_ = JSON.parse(rest)
+				println(res_)
+        		generate_modal(res_)
+			},
+			err : function(res){println(res)},
+			progress : function(e){ 
+				// var response_length = parseFloat(headerMap(e)['total'])
+				var response_length = parseFloat(e.total)
+				var response_loaded = parseFloat(e.loaded)
+				var percent_  = (response_loaded / response_length) * 100;
+				var percent_rounded = Math.round(percent_ * 100) / 100
+			}
+		})
+
+		// TABLE.ajax.url('/feature_0/filter_list_farmers')
+		// TABLE.ajax.reload()
+	}
+</script>
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
