@@ -7,6 +7,7 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<title>Form 6</title>
 	<form action="/insert_form6" method="POST">
         {% include "includes/sweetalert.html" %}
 	<div class="x-col l1 ">
@@ -152,7 +153,29 @@
 			</div>
 		</div>
 
-		<div class="x-row x-container x-padding">
+		<div class="x-col l3 x-container x-padding">
+			<span class="">Sex</span>
+			<select class="form_data_b x-border x-select x-border" id="form_6_sex" name="form_6_sex"><br>
+				<option value="">Choose your option</option>
+					<option>Male</option>
+					<option>Female</option>
+			</select>
+
+		</div>
+
+		<div class="x-col l3 x-container x-padding">
+			<span class="">Sector</span>
+			<select class="form_data_b x-border x-select x-border" id="form_6_sector" name="form_6_sector"><br>
+				<option value="">Choose your option</option>
+					<option>PWD</option>
+					<option>Youth</option>
+					<option>IP</option>
+					<option>SC</option>
+			</select>
+
+		</div>
+
+		<!-- <div class="x-row x-container x-padding">
 			<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
 			<table class="x-table x-container x-table-border" style="border-color: transparent;">
 				<tr>
@@ -189,12 +212,12 @@
 					<td><input class=" x-light-grey x-input" id="form_6_total_2" type="text" name="form_6_total_2"></td>
 				</tr>
 			</table>
-		</div>
+		</div> -->
 
 
 		<div class="x-row x-container x-padding">
 			<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-			<table class="x-table x-container x-table-border" style="border-color: transparent;">
+			<table id="form6table2" class="x-table x-container x-table-border" style="border-color: transparent;">
 				<tr>
 					<th colspan="4">
 						<center>Outputs for Product Development</center>
@@ -208,7 +231,7 @@
 				</tr>
 
 				<tr>
-					<td><center>Name of Product Developed</center></td>
+					<td><center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row2()"><i class="fa-solid fa-circle-plus"></i></button>Name of Product Developed</center></td>
 					<td><center>Date Launched to Market</center></td>
 
 					<td><center>Name of Improved Product</center></td>
@@ -216,21 +239,56 @@
 				</tr>
 
 				<tr>
-					<td><input class=" x-light-grey x-input" id="form_6_product_developed" type="text" name="form_6_product_developed"></td>
-					<td><input class=" x-light-grey x-input" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market"></td>
+					<td><input class=" x-light-grey x-input" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>
+					<td><input class=" x-light-grey x-input" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>
 
-					<td><input class=" x-light-grey x-input" id="form_6_improved_product" type="text" name="form_6_improved_product"></td>
-					<td><div class="x-row x-container x-padding">
-						<select class=" x-border x-select x-border" id="form_6_type_of_product_improvement" name="form_6_type_of_product_improvement"><br>
-							<option value="" selected>Choose your option</option>
-							<option >Product Quality</option>
-							<option >Packaging</option>
-							<option>Labels</option>
-						</select>
-					</div></td>
+					<td><input class=" x-light-grey x-input" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>
+					<td>
+							<select id="form_6_choices_multiple_remove_button_0" name="form_6_type_of_product_improvement[]" placeholder="Select upto 4 tags" multiple>
+								<option value="Product Quality">Product Quality</option>
+								<option value="Packaging">Packaging</option>
+								<option value="Labels">Labels</option>   
+							</select>
+						
+					</td>
 				</tr>
 			</table>
 		</div>
+		<script>
+			var form_6_choices_counter = 1
+			function add_row2(){
+				// $ID('main_').innerHTML += og_row
+				// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+				var row2 = form6table2.insertRow(3);
+				// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+				row2.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>`
+				row2.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>`
+				row2.insertCell(2).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>`
+				row2.insertCell(3).innerHTML = `<td>
+							<select id="form_6_choices_multiple_remove_button_${form_6_choices_counter}" name="form_6_type_of_product_improvement[]" placeholder="Select upto 4 tags" multiple>
+								<option value="Product Quality">Product Quality</option>
+								<option value="Packaging">Packaging</option>
+								<option value="Labels">Labels</option>   
+							</select>
+						
+					</td>`
+				asdasd(form_6_choices_counter)
+				// Add some text to the new cells:
+				form_6_choices_counter +=1
+			}
+			$onload(function(){asdasd(0)})
+			function asdasd(ccc){
+				var multipleCancelButton = new Choices('#form_6_choices_multiple_remove_button_'+ccc, {
+					removeItemButton: true,
+					maxItemCount:4,
+					searchResultLimit:4,
+					renderChoiceLimit:4,
+					delimiter : '|'
+				}); 
+				// multipleCancelButton.config.delimiter = "||"
+				println(multipleCancelButton)
+			}
+		</script>
 
 		<!----outputs---->
 		<div class="x-row x-container x-padding">
@@ -329,9 +387,9 @@
 
 			
 		</div>
-		<div class="x-col l4 x-container x-padding">	
+		<!-- <div class="x-col l4 x-container x-padding">	
             <button data-toggle="modal" data-target="#form6_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
-        </div>
+        </div> -->
 		<div class="x-right" style="margin-bottom: 10%;">
 			<input class="x-blue btn " id="form6_submit"  type="submit">
 		</div>

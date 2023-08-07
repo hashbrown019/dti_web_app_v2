@@ -129,7 +129,29 @@
                         
                     </div>
             
-                    <div class="x-row x-container x-padding">
+
+                    <div class="x-col l3 x-container x-padding">
+                        <span class="">Sex</span>
+                        <select class="form_data_b x-border x-select x-border" value="{{ row['form_6_sex'] }}" id="form_6_sex" name="form_6_sex"><br>
+                            <option>{{ row['form_6_sex'] }}</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                        </select>
+            
+                    </div>
+            
+                    <div class="x-col l3 x-container x-padding">
+                        <span class="">Sector</span>
+                        <select class="form_data_b x-border x-select x-border" value="{{ row['form_6_sector'] }}" id="form_6_sector" name="form_6_sector"><br>
+                            <option>{{ row['form_6_sector'] }}</option>
+                                <option>PWD</option>
+                                <option>Youth</option>
+                                <option>IP</option>
+                                <option>SC</option>
+                        </select>
+            
+                    </div>
+                    <!-- <div class="x-row x-container x-padding">
                         <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
                         <table class="x-table x-container x-table-border" style="border-color: transparent;">
                             <tr>
@@ -166,12 +188,12 @@
                                 <td><input class=" x-light-grey x-input" value="{{ row['form_6_total_2'] }}" id="form_6_total_2" type="text" name="form_6_total_2"></td>
                             </tr>
                         </table>
-                    </div>
+                    </div> -->
             
             
                     <div class="x-row x-container x-padding">
                         <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-                        <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                        <table id="form6_table_update2{{row['id']}}" class="x-table x-container x-table-border" style="border-color: transparent;">
                             <tr>
                                 <th colspan="4">
                                     <center>Outputs for Product Development</center>
@@ -185,28 +207,55 @@
                             </tr>
             
                             <tr>
-                                <td><center>Name of Product Developed</center></td>
+                                <td><center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row2({{row['id']}})"><i class="fa-solid fa-circle-plus"></i></button>Name of Product Developed</center></td>
                                 <td><center>Date Launched to Market</center></td>
             
                                 <td><center>Name of Improved Product</center></td>
                                 <td><center>Type of Product Improvement </center></td>
                             </tr>
-            
+                            <tbody  id="update_table2_">
+                                {% set list1 = row['form_6_product_developed'].split(',') %}
+                                {% for index in range(list1|length) %}
                             <tr>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_product_developed'] }}" id="form_6_product_developed" type="text" name="form_6_product_developed"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_date_launched_to_market'] }}" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market"></td>
+                                <td><input class=" x-light-grey x-input"  value="{{ row['form_6_product_developed'].split(',')[index] }}" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_date_launched_to_market'].split(',')[index] }}" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>
             
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_improved_product'] }}" id="form_6_improved_product" type="text" name="form_6_improved_product"></td>
+                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_improved_product'].split(',')[index] }}" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>
                                 <td><div class="x-row x-container x-padding">
-                                    <select class=" x-border x-select x-border" value="{{ row['form_6_type_of_product_improvement'] }}" id="form_6_type_of_product_improvement" name="form_6_type_of_product_improvement"><br>
-                                        <option>{{ row['form_6_type_of_product_improvement'] }}</option>
+                                    <select class=" x-border x-select x-border" value="{{ row['form_6_type_of_product_improvement'].split(',')[index] }}" id="form_6_type_of_product_improvement" name="form_6_type_of_product_improvement[]"><br>
+                                        <option>{{ row['form_6_type_of_product_improvement'].split(',')[index] }}</option>
                                         <option >Product Quality</option>
                                         <option >Packaging</option>
                                         <option>Labels</option>
                                     </select>
                                 </div></td>
                             </tr>
+                            {% endfor %}
+                            </tbody>
                         </table>
+                        <script>
+                        
+
+                            function add_row2(ids){
+                                println('form6_table_update2'+ids)
+                                var table6_org_update2 = document.getElementById('form6_table_update2'+ids);
+            
+                                var row2 = table6_org_update2.insertRow(3);
+                                // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                                    row2.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>`
+				                    row2.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>`
+				                    row2.insertCell(2).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>`
+				                    row2.insertCell(3).innerHTML = `<td><div class="x-row x-container x-padding">
+						<select class=" x-border x-select x-border" id="form_6_type_of_product_improvement" name="form_6_type_of_product_improvement[]"><br>
+							<option value="" selected>Choose your option</option>
+							<option >Product Quality</option>
+							<option >Packaging</option>
+							<option>Labels</option>
+						</select>
+					</div></td>`
+                              
+                            }
+                        </script>
                     </div>
             
                     <!----outputs---->
