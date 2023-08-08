@@ -119,26 +119,40 @@
                                  <td><center>Counterpart Amount</center></td>
                                  
                              </tr>
-         
+                             <tbody id="update_table_">
+                                {% set list1 = row['form_9_name_of_participant_org'].split(',') %}
+                                {% for index in range(list1|length) %}
                              <tr>
-                                 <td><input disabled class="t1 x-input"  value="{{ row['form_9_name_of_participant_org'] }}" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org" type="text"></td>
-                                 <td><input disabled class="t1 x-input" value="{{ row['form_9_counterpart_amount'] }}" id="form_9_counterpart_amount" name="form_9_counterpart_amount" type="text"></td>
-                             </table>
+                                 <td><input disabled class="t1 x-input"  value="{{ row['form_9_name_of_participant_org'].split(',')[index] }}" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org[]" type="text"></td>
+                                 <td><input disabled class="t1 x-input" value="{{ row['form_9_counterpart_amount'].split(',')[index] }}" id="form_9_counterpart_amount" name="form_9_counterpart_amount[]" type="text"></td>
+                             </tr>
+                             {% endfor %}
+                             </tbody>
+                                </table>
                          </div>
                          <div class="x-row x-container x-padding">
-                             <div class="x-col l3 x-container x-padding">
-                                 <label>Name of Participant: </label>
-                                 <input disabled class=" x-input x-border" value="{{ row['form_9_name_of_participant'] }}" id="form_9_name_of_participant" name="form_9_name_of_participant" type="text" autocomplete="on" placeholder="">
-                             </div>
-                             <div class="x-col l3 x-container x-padding">
-                                 <label>Organization: </label>
-                                 <input disabled class=" x-input x-border" value="{{ row['form_9_organization'] }}"  id="form_9_organization" name="form_9_organization" type="text" autocomplete="on" placeholder="">
-                             </div>
-                             <div class="x-col l4 x-container x-padding">
-                                 <label>Designation: </label>
-                                 <input disabled class=" x-input x-border" value="{{ row['form_9_designation'] }}" id="form_9_designation" name="form_9_designation" type="text" autocomplete="on" placeholder="">
-                             </div>
-                         </div>
+                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <table class="x-table x-container x-table-border" style="border-color: transparent;">
+        
+            
+                                <tr>
+                                    <td><center>Name of Participant</center></td>
+                                    <td><center>Organization</center></td>
+                                    <td><center>Designation</center></td>
+                                    
+                                </tr>
+                                <tbody id="update_table2_">
+                                    {% set list1 = row['form_9_name_of_participant'].split(',') %}
+                                    {% for index in range(list1|length) %}
+                                <tr>
+                                    <td><input disabled class="t1  x-input" value="{{ row['form_9_name_of_participant'].split(',')[index] }}" id="form_9_name_of_participant" name="form_9_name_of_participant[]" type="text"></td>
+                                    <td><input disabled class="t1  x-input" value="{{ row['form_9_organization'].split(',')[index] }}"  id="form_9_organization" name="form_9_organization[]" type="text"></td>
+                                    <td><input disabled class="t1  x-input" value="{{ row['form_9_designation'].split(',')[index] }}"  id="form_9_designation" name="form_9_designation[]" type="text"></td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                      <div class="x-row x-container x-padding">
                          <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
                          <table class="x-table x-container x-table-border" style="border-color: transparent;">
@@ -184,15 +198,13 @@
                              </tr>
                          </table>
                      </div>
+
+
                      <div class="x-col l3 x-container x-padding">
-                         <span class="">Activity Output:</span>
-                         <select disabled id="form_9_activity_output" value="{{ row['form_9_activity_output'] }}" name="form_9_activity_output" class="x-container x-padding">
-                             <option>{{ row['form_9_activity_output'] }}</option>
-                             <option >Policy Issuances/recommendations</option>
-                             <option >Resolutions</option>
-                             <option >Studies</option>
-                         </select>	
-                     </div>
+				
+                        <span class="">Activity Output:</span>
+                        <input disabled class=" x-input x-border" id="form_9_activity_output" value="{{ row['form_9_activity_output'] }}" type="text" name="form_9_activity_output">
+                    </div>
                      <div class="x-row x-container x-padding">
                          <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
                          <table class="x-table x-container x-table-border" style="border-color: transparent;">

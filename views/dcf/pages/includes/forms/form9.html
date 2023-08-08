@@ -7,6 +7,7 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<title>Form 9</title>
 	<form action="/insert_form9" method="POST">
         {% include "includes/sweetalert.html" %}
         <style>
@@ -136,7 +137,7 @@
 			</div>
 			<div class="x-row x-container x-padding">
 				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-				<table class="x-table x-container x-table-border" style="border-color: transparent;">
+				<table id="form9table" class="x-table x-container x-table-border" style="border-color: transparent;">
 					<tr>
 
 						<th colspan="4">
@@ -145,30 +146,67 @@
 					</tr>
 
 					<tr>
-						<td><center>Name of Partner/Organization</center></td>
+						<td><center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row()"><i class="fa-solid fa-circle-plus"></i></button>Name of Partner/Organization</center></td>
 						<td><center>Counterpart Amount</center></td>
 						
 					</tr>
 
 					<tr>
-						<td><input class="t1 x-light-grey x-input" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org" type="text"></td>
-						<td><input class="t1 x-light-grey x-input" id="form_9_counterpart_amount" name="form_9_counterpart_amount" type="text"></td>
+						<td><input class="t1 x-light-grey x-input" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org[]" type="text"></td>
+						<td><input class="t1 x-light-grey x-input" id="form_9_counterpart_amount" name="form_9_counterpart_amount[]" type="text"></td>
 					</table>
+					<script>
+		
+						function add_row(){
+							// $ID('main_').innerHTML += og_row
+							// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+							var row = form9table.insertRow(2);
+							// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+							row.insertCell(0).innerHTML = `<td><input class="t1 x-light-grey x-input" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org[]" type="text"></td>`
+							row.insertCell(1).innerHTML = `<td><input class="t1 x-light-grey x-input" id="form_9_counterpart_amount" name="form_9_counterpart_amount[]" type="text"></td>`
+							
+							// Add some text to the new cells:
+						}
+					</script>
 				</div>
+
 				<div class="x-row x-container x-padding">
-					<div class="x-col l3 x-container x-padding">
-						<label>Name of Participant: </label>
-						<input class=" x-input x-border" id="form_9_name_of_participant" name="form_9_name_of_participant" type="text" autocomplete="on" placeholder="">
+					<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+					<table id="form9table2" class="x-table x-container x-table-border" style="border-color: transparent;">
+
+	
+						<tr>
+							<td><center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row2()"><i class="fa-solid fa-circle-plus"></i></button>Name of Participant</center></td>
+							<td><center>Organization</center></td>
+							<td><center>Designation</center></td>
+							
+						</tr>
+	
+						<tr>
+							<td><input class="t1 x-light-grey x-input" id="form_9_name_of_participant" name="form_9_name_of_participant[]" type="text"></td>
+							<td><input class="t1 x-light-grey x-input" id="form_9_organization" name="form_9_organization[]" type="text"></td>
+							<td><input class="t1 x-light-grey x-input" id="form_9_designation" name="form_9_designation[]" type="text"></td>
+							
+						</table>
+						<script>
+			
+							function add_row2(){
+								// $ID('main_').innerHTML += og_row
+								// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+								var row2 = form9table2.insertRow(1);
+								// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+								row2.insertCell(0).innerHTML = `<td><input class="t1 x-light-grey x-input" id="form_9_name_of_participant" name="form_9_name_of_participant[]" type="text"></td>`
+								row2.insertCell(1).innerHTML = `<td><input class="t1 x-light-grey x-input" id="form_9_organization" name="form_9_organization[]" type="text"></td>`
+								row2.insertCell(2).innerHTML = `<td><input class="t1 x-light-grey x-input" id="form_9_designation" name="form_9_designation[]" type="text"></td>`
+								
+								// Add some text to the new cells:
+							}
+						</script>
 					</div>
-					<div class="x-col l3 x-container x-padding">
-						<label>Organization: </label>
-						<input class=" x-input x-border" id="form_9_organization" name="form_9_organization" type="text" autocomplete="on" placeholder="">
-					</div>
-					<div class="x-col l4 x-container x-padding">
-						<label>Designation: </label>
-						<input class=" x-input x-border" id="form_9_designation" name="form_9_designation" type="text" autocomplete="on" placeholder="">
-					</div>
-				</div>
+
+
+
+
 			<div class="x-row x-container x-padding">
 				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
 				<table class="x-table x-container x-table-border" style="border-color: transparent;">
@@ -215,13 +253,9 @@
 				</table>
 			</div>
 			<div class="x-col l3 x-container x-padding">
+				
 				<span class="">Activity Output:</span>
-				<select id="form_9_activity_output" name="form_9_activity_output" class="x-container x-padding" required>
-					<option value="" selected>Choose your option</option>
-					<option >Policy Issuances/recommendations</option>
-					<option >Resolutions</option>
-					<option >Studies</option>
-				</select>	
+				<input class=" x-input x-border" id="form_9_activity_output" type="text" name="form_9_activity_output">
 			</div>
 			<div class="x-row x-container x-padding">
 				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>

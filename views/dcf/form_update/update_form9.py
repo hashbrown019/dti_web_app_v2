@@ -18,11 +18,11 @@ def updateform9(request):
         form_9_venue = request.form['form_9_venue']
         form_9_rapid_actual_budget = request.form['form_9_rapid_actual_budget']
         form_9_name_of_resource_person = request.form['form_9_name_of_resource_person']
-        form_9_name_of_participant_org = request.form['form_9_name_of_participant_org']
-        form_9_counterpart_amount = request.form['form_9_counterpart_amount']
-        form_9_name_of_participant = request.form['form_9_name_of_participant']
-        form_9_organization = request.form['form_9_organization']
-        form_9_designation = request.form['form_9_designation']
+        form_9_name_of_participant_org = ', '.join(request.form.getlist('form_9_name_of_participant_org[]'))
+        form_9_counterpart_amount = ', '.join(request.form.getlist('form_9_counterpart_amount[]'))
+        form_9_name_of_participant =', '.join(request.form.getlist('form_9_name_of_participant[]'))
+        form_9_organization = ', '.join(request.form.getlist('form_9_organization[]'))
+        form_9_designation = ', '.join(request.form.getlist('form_9_designation[]'))
         form_9_male = request.form['form_9_male']
         form_9_female = request.form['form_9_female']
         form_9_pwd = request.form['form_9_pwd']
