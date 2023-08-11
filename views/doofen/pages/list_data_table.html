@@ -131,6 +131,7 @@
 			buttons : ["View","Delete","Cancel"],
 			buttons_actions : [show_form_fo,delete_form]
 		})
+		item_dialog.dialog.style.display = " "
 		item_dialog.show()
 		function show_form_fo(){show_fo_ind_(ids);item_dialog.destroy()}
 		function delete_form(){
@@ -141,6 +142,7 @@
 				subtitle : "You are about to delete a entry. choose carefully",
 				buttons : ["Go Back","Delete"],
 			})
+
 			del_dialog.actions([del_dialog.destroy,del_item])
 			del_dialog.show()
 			function del_item(){
