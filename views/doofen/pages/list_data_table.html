@@ -195,7 +195,7 @@
 			data : $DATA({"id":ids}),
 			func : function(rrr){
 				var resp = JSON.parse(rrr)
-				// println(resp)
+				println(resp)
 
 				var FORM_DATA = {}
 				var form_data_b = $CLASS("form_data_b")
@@ -213,7 +213,10 @@
 							form_data_b[i].click()
 						}
 					}
-					form_data_b[i].disabled = true
+					// if(parseInt(form_data_b[i].uploaded_by)==parseInt("{{USER_DATA['name']}}")){
+					// 	println('OWNED')
+					// 	form_data_b[i].disabled = true
+					// }
 				}
 				show_view('forms','main-container')
 			}
