@@ -159,3 +159,74 @@ def excel_upload_open2(path):
 	else:
 		flash(f"The file was imported successfully!", "success")
 	return "done"
+
+
+def importcsvform2(request):
+	from datetime import date, datetime
+	today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
+	uploader = session["USER_DATA"][0]["id"]
+	if request.method == "POST":
+		try:
+			files = request.files
+			for file in files:
+				f = files[file]
+				global UPLOAD_NAME
+				UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
+				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+				excel_upload_open2(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+		except IndexError:
+			flash(f"Invalid file template!", "error")
+			
+	return redirect("/dcfspreadsheet")
+
+def excel_upload_open2(path):  
+	book = xlrd.open_workbook(path)
+	sheet = book.sheet_by_index(0)
+	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	header = data[3]
+	print("tafdagfefgrhgragharghahu")
+	print(sheet.name)
+	if(sheet.name !='form3'):
+		flash(f"Invalid file template!", "error")
+		return "done:Sheet Error"
+	for row in data[3:]:
+		upload_by = session["USER_DATA"][0]['id']
+		 form_3_types_of_bdsp = row[0]
+		 form_3_contact_person = row[1]
+		 form_3_sex = row[2]
+		 form_3_office_addr = row[3]
+		 form_3_email = row[4]
+		 form_3_breif_description = row[5]
+		 phone = row[6]
+		 form_3_choices = row[7]
+		 form_3_preferred_region = row[8]
+		 form_3_preferred_province = row[9]
+		 form_3_name = row[10]
+		 form_3_education = row[11]
+		 form_3_expertise = row[12]
+		 form_3_prior_rapid_engagements = row[13]
+		 form_3_date_registered = row[14]
+		 form_3_rapid_implementing_unit = row[15]
+		 form_3_nature_engagements = row[16]
+		 form_3_suppliers_evaluation = row[17]
+		 form_3_other_engagement_outside_rapid = row[18]
+		 form_3_lecture_training_seminar = row[19]
+		 form_3_training_materials = row[20]
+		 form_3_organize_pool = row[21]
+		 form_3_demand_basis = row[22]
+		 form_3_extension_service_facilitation = row[23]
+ 		 form_3_philgeps_registered = row[24]                                                                                                                             
+		 filename = UPLOAD_NAME
+
+		querycsv = ("INSERT INTO dcf_implementing_unit ( upload_by,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename))
+		insert=db.do(querycsv)
+		print(insert)
+		print("===============================================")
+
+	if(insert["response"]=="error"):
+		flash(f"An error occured!", "error")
+		print(str(insert))
+	else:
+		flash(f"The file was imported successfully!", "success")
+	return "done"
