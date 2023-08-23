@@ -375,6 +375,8 @@ def importcsvform2():
 def dcfexport_data():
     if request.method == 'POST':
         export_type = request.form.get('export_type')
+        print("---------------------------")
+        print(export_type)
         if export_type == 'form1export':
             def form1export():
                 if request.method == "POST":
