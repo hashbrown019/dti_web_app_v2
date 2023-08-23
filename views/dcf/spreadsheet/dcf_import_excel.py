@@ -34,7 +34,7 @@ def excel_upload_open(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	if(sheet.name !='Form1DIPdetails'):
+	if(sheet.name !='DIP Status_data'):
 		flash(f"Invalid file template!", "error")
 		return "done:Sheet Error"
 	for row in data[5:]:
