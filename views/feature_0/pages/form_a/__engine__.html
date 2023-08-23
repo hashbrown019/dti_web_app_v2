@@ -289,4 +289,59 @@ function _autocomplete(inp, arr) {
 			closeAllLists(e.target);
 	});
 }
+// ----------------------------------
+var iii = 0;
+function duplicate_POST_harv() {
+	var original = $ID('post_harvest' + iii);
+	var clone = original.cloneNode(true); // "deep" clone
+	clone.id = "post_harvest" + ++ iii; // there can only be one element with an ID
+	// clone.onclick = duplicate; // event handlers are not cloned
+	var elemets_ = clone.querySelectorAll(".form_data");
+
+	for (var i = 0; i < elemets_.length; i++) {
+		elemets_[i].id = elemets_[i].id + iii
+		// println(elemets_[i].id)
+	}
+
+	original.parentNode.appendChild(clone);
+
+	$ID('record_num').value = iii
+	for (var i = 0; i < $CLASS('post_num').length; i++) {
+		$CLASS('post_num')[i].innerHTML = i+1
+	}
+}
+
+var www = 0;
+
+function duplicate_Market_sales() {
+	var original = $ID('market_sales0' + www);
+	var clone = original.cloneNode(true); // "deep" clone
+	clone.id = "market_sales0" + ++ www; // there can only be one element with an ID
+	// clone.onclick = duplicate; // event handlers are not cloned
+	var elemets_ = clone.querySelectorAll(".form_data");
+
+	for (var i = 0; i < elemets_.length; i++) {
+		elemets_[i].id = elemets_[i].id + www
+		// println(elemets_[i].id)
+	}
+
+	original.parentNode.appendChild(clone);
+
+	$ID('record_num').value = www
+	for (var i = 0; i < $CLASS('post_num').length; i++) {
+		$CLASS('post_num')[i].innerHTML = i+1
+	}
+}
+
+
+function interc(inter){
+	println(inter.checked)
+	// $ID("farm-isfarm").disabled = inter.checked
+	// $ID("farm-isfarm").checked = !inter.checked
+	if(inter.checked){
+		$ID("sec_crop").style.display = "block"
+	}else{
+		$ID("sec_crop").style.display = "none"
+	}
+}
 </script>
