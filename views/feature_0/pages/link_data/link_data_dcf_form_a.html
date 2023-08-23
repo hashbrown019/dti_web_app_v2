@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+{% include 'head.html' %}
+
+	<body>
+		<header class="x-container x-grey x-padding">
+			{% if(USER_DATA['profilepic']=="" or USER_DATA['profilepic']==" " ): %}
+			<img src="\static\psalm_static\menu\img\profilepic.png" style="width: 50px; height: 50px;">
+			{% else: %}
+			<img class="rounded-circle x-circle" src="\api\user_pic\{{USER_DATA['profilepic']}}" alt="{{USER_DATA['profilepic']}}" style="width: 50px; height: 50px;">
+			{%endif%}
+		</header>
+		<div class="x-container x-row">
+			<div class="x-col l6 m6">
+				<br><br><br>
+				<div id="accordion_form" class="x-container">
+					<h3>Input Form</h3>
+					<div class="x-row x-container">
+						<div class="x-col l6 m6 x-container x-padding">
+							<div class="x-row">
+								<b>Farmer's Name</b>
+								<div class="x-row password-container">
+									<input id="fname" class="search_profile f_profile x-round-large main_input x-input x-border" type="text" placeholder="Input farmers name or search from inputed profiles to auto fill-up the fields"
+										style="" required>
+									<span class="password-toggle"><i style="color: #262626; font-weight: 800;" class="fa fa-search x-hover-text-blue" onclick="search_profile()"></i></span>
+								</div>
+							</div>
+							<b>Address</b>
+							<div class="x-row">
+								<div class="x-col l3">
+									<span>Region</span>
+									<input id="addr_region" class="f_profile x-round-large main_input x-input x-border" type="" name="">
+								</div>
+								<div class="x-col l3">
+									<span>Province</span>
+									<input id="addr_prov" class="f_profile x-round-large main_input x-input x-border" type="" name="">
+								</div>
+								<div class="x-col l3">
+									<span>City</span>
+									<input id="addr_city" class="f_profile x-round-large main_input x-input x-border" type="" name="">
+								</div>
+								<div class="x-col l3">
+									<span>Brgy</span>
+									<input id="addr_brgy" class="f_profile x-round-large main_input x-input x-border" type="" name="">
+								</div>
+							</div>
+							<b>Primary Crop/Commodity</b>
+							<input id="farmer_primary_crop" class="f_profile x-round-large main_input x-input x-border" type="" name="">
+						</div>
+						<div class="x-col l6 m6 x-container x-padding">
+							<b>Sex</b>
+							<select id="sex" class="f_profile x-round-large main_input x-input x-select x-border">
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+							</select>
+							<b>Birthday</b>
+							<input id="farmer_bday" class="f_profile x-round-large main_input x-input x-border" type="date" name="">
+							<b>Civil Status</b>
+							<input id="civil_status" class="f_profile x-round-large main_input x-input x-border" type="text" name="">
+							<select class="f_profile x-round-large x-input x-border">
+								
+							</select>
+							<div class="x-container">
+								<input id="id" class="f_profile x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%;text-align:right;font-weight:bold" disabled>
+								<input id="reference" class="f_profile x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%" disabled>
+							</div>
+						</div>
+					</div>
+					<div class="x-row x-container">
+						<div class="x-container x-right">
+							<button class="x-btn x-round-large x-green" onclick="add_profile()">Add Profile to the list</button>
+							<button class="x-btn x-round-large x-red" onclick="clear_form_field()">Clear Input Fields</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="x-col l6 m6">
+				<div class="x-container x-row">
+					<br><br><br>
+					<h3>Entry List</h3>
+				</div>
+
+				<div class="x-container x-row">
+
+					<div class="x-container">
+						<div class="x-container x-card x-round x-white">
+							<div class="x-col l6 m6">
+								<b>Juan Dela Cruz</b> | Male | Single | Oct 19 1994
+								<br>
+								<b>Cacao</b> | tungao, Butuan, Agusan del Norte, 13
+							</div>
+							<div class="x-col l6 m6 x-text-red">
+								<span class="fa fa-trash x-text-red"></span> Remove
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div id="ls_modal" style="display: none;">
+			<div id="ls_farmer" class="x-container" style="overflow-y:scroll;height: 60vh;">
+				Loading
+			</div>
+		</div>
+		<script type="text/javascript">
+			var farmer_ls_modal
+
+			function clear_form_field(){
+				var main_input = $CLASS('main_input')
+				for (var i = 0; i < main_input.length; i++) {
+					main_input[i].disabled = false
+					main_input[i].value = ""
+				}
+				var f_profile = $CLASS('f_profile')
+				for (var i = 0; i < f_profile.length; i++) {
+					f_profile[i].value = ""
+				}
+			}
+
+
+			function search_profile(){
+				var search_key = $ID('fname').value
+				alert('Click to continue searching ['+search_key+']')
+				SPINNER_LOADER.show()
+				$send({
+					action : "/formb/search_farmer_profile",
+					method : POST,
+					err_dialog:true,
+					data : $DATA({'search_item':search_key}),
+					func : function (rest){
+						var res_ = JSON.parse(rest)
+						var out_dup = ""
+						for (var x = 0; x < res_.length; x++) {
+							var str_res = JSON.stringify(res_[x]).replaceAll('"',"^")
+							out_dup +=(`
+								<div class="x-row x-padding x-leftbar x-hover-border-green x-hover-pale-green">
+									<div class='x-col m10 l10'>
+										<b>`+res_[x]['fname']+`</b> |
+										<span><span class='x-text-grey'>Address :</span> 
+										R`+res_[x]['addr_region']+`:, `+res_[x]['addr_prov']+`, `+res_[x]['addr_city']+`, `+res_[x]['addr_brgy']+` 
+										</span> |
+										<span><span class='x-text-grey'>Crop/Commodity :</span> 
+										`+res_[x]['farmer_primary_crop']+`</span><br>
+										&nbsp;
+										<span><span class='x-text-grey'>reference :</span> 
+										<i class='x-tiny'>`+res_[x]['reference']+`</i></span>
+									</div>
+									<div class='x-col m2 l2'>
+										<button class='x-right x-btn x-green x-hover-black x-round-large' onclick='fill_selected_profile("`+str_res+`")'>
+											<span class='fa fa-plus'></span>
+										</button>
+									</div>
+								</div>
+							`)
+						}
+						$ID('ls_farmer').innerHTML = out_dup
+						farmer_ls_modal = $dialog({
+							title : "Search Results",
+							subtitle : "Below are the list of search records result you may click one and the system will auto feel the fields (not editable)",
+							content : $ID('ls_modal').innerHTML
+						})
+						farmer_ls_modal.show()  
+						SPINNER_LOADER.hide()
+					},
+					err : function(res){println(res)},
+					progress : function(e){ 
+						// var response_length = parseFloat(headerMap(e)['total'])
+						var response_length = parseFloat(e.total)
+						var response_loaded = parseFloat(e.loaded)
+						var percent_  = (response_loaded / response_length) * 100;
+						var percent_rounded = Math.round(percent_ * 100) / 100
+						SPINNER_LOADER.loading(Math.round(percent_))
+						SPINNER_LOADER.message(`
+							<span>
+								Gathering 
+								<b>`+Math.round(percent_)+`%</b><br>
+								<span class="x-small">
+									[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+									<i>`+(response_length-response_loaded)+` bytes remaining</i>
+								</span>
+							</span>
+						`);
+					}
+				})
+				// TABLE.ajax.url('/feature_0/filter_list_farmers')
+				// TABLE.ajax.reload()
+			}
+
+			function fill_selected_profile(profile_){
+				profile_ = JSON.parse(profile_.replaceAll("^",'"'))
+				json_to_input("f_profile",profile_)
+				farmer_ls_modal.destroy()
+
+				var main_input = $CLASS('main_input')
+				for (var i = 0; i < main_input.length; i++) {
+					main_input[i].disabled = true
+				}
+				println(profile_)
+			}
+
+			function add_profile(){
+				println(input_to_json('f_profile'))
+			}
+
+
+			function myFunction(id) {
+				var x = document.getElementById(id);
+				if (x.className.indexOf("x-show") == -1) {
+					x.className += " x-show";
+				} else { 
+					x.className = x.className.replace(" x-show", "");
+				}
+			}
+		</script>
+	</body>
+
+</html>
