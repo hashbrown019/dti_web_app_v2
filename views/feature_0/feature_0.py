@@ -440,6 +440,24 @@ class _main:
 		new_new_unique_name_arr = sorted(new_unique_name_arr, key=len, reverse=True)
 		return new_new_unique_name_arr
 
+
+
+	# ===================================================================
+	# =================LINK_DATA=========================================
+	# ===================================================================
+	# ===================================================================
+
+	@app.route("/feature_0/link_data_dcf_form_a",methods=["POST","GET"])
+	def feature_0_link_data_dcf_form_a():
+		return render_template("link_data/link_data_dcf_form_a.html",USER_DATA = session["USER_DATA"][0])
+
+	# ====================================================================
+	# ===================LINK_DATA_END_===================================
+	# ====================================================================
+	# ====================================================================
+
+
+
 class Populate:
 	def primary_crop(mobi,excl):
 		new_comd = {}
