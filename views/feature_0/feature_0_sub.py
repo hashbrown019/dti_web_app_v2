@@ -176,3 +176,8 @@ def _filter(area):
 	else:
 		_filter = "USER_ID in ( SELECT id from users WHERE rcu='{}' ) AND".format(area)
 	return _filter
+
+
+# netbank
+# christian
+# 900118000017442
