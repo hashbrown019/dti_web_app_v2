@@ -23,6 +23,22 @@ $(document).ready(function(){
   });  
   });
 
+  $(document).ready(function(){
+    $(".hidden-textbox2").hide();
+    
+    $("select#form_2_remarks_status").change(function(){
+        var currentVal = $(this).val();
+        var hiddenTextbox = $(".hidden-textbox2");
+        
+        if (currentVal == "Cancelled" || currentVal == "Non-renewal") {
+            hiddenTextbox.show();
+            hiddenTextbox.prop("required", true); 
+        } else {
+            hiddenTextbox.hide();
+            hiddenTextbox.prop("required", false);
+        }
+    });  
+});
 
 
 $(document).ready(function(){

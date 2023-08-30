@@ -42,13 +42,19 @@ def insert_form2(request):
         form_2_days_remaining = request.form.get('form_2_days_remaining')
         form_2_date_renewed = request.form.get('form_2_date_renewed')
         form_2_notable_cpa_incentives = request.form.get('form_2_notable_cpa_incentives')
-        form_2_remarks_status = request.form.get('form_2_remarks_status')
+        form_2_remarks_status = request.form.get('form_2_remarks_status', None)
+        form_2_remarks_status_why = request.form.get('form_2_remarks_status_why', None)
+        
+        if (form_2_remarks_status == 'Cancelled' or form_2_remarks_status == 'Non-renewal') and form_2_remarks_status_why:
+            remarks_status_why = f"{form_2_remarks_status}, {form_2_remarks_status_why}"
+        else:
+            remarks_status_why = form_2_remarks_status
         form_2_activity_agreements = request.form.get('form_2_activity_agreements')
         form_2_date_conducted = request.form.get('form_2_date_conducted')
 
         
         form2_data = db.do("INSERT INTO dcf_implementing_unit  (upload_by,form_2_rcus	,form_2_pcu,form_2_commodity,form_2_dip_alignment,form_2_yes,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_address_of_fo_members,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,form_2_remarks_status,form_2_activity_agreements,form_2_date_conducted) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')". 
-        format(upload_by,form_2_rcus,form_2_pcu,chosen_commodity,form_2_dip_alignment,form_2_yes,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_address_of_fo_members,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,form_2_remarks_status,form_2_activity_agreements,form_2_date_conducted))
+        format(upload_by,form_2_rcus,form_2_pcu,chosen_commodity,form_2_dip_alignment,form_2_yes,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_address_of_fo_members,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,remarks_status_why,form_2_activity_agreements,form_2_date_conducted))
         #return str(form2_data)
      
         if(form2_data["response"]=="error"):
