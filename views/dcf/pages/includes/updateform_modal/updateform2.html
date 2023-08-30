@@ -67,15 +67,17 @@
                                     </select>
                         </div>
 
+
                         <div class="x-col l4 x-container x-padding">
-                            <span class="">Commodity:</span>
-                            <select class=" x-border x-select x-border" id="form_2_commodity" value="{{ row['form_2_commodity'] }}" name="form_2_commodity" required><br>
+                            <span class="">Commodity</span>
+                            <select class="x-border x-select x-border" value="{{ row['form_2_commodity'] }}" id="form_2_commodity" name="form_2_commodity">
                                 <option>{{ row['form_2_commodity'] }}</option>
-                                <option >Coffee</option>
-                                <option >Cacao</option>
-                                <option >Coconut</option>
-                                <option >PFN</option>
+                                <option>Coffee</option>
+                                <option>Cacao</option>
+                                <option>Coconut</option>
+                                <option>Others</option>
                             </select>
+                            <input type="text" class="hidden-textbox x-input x-border" name="form_2_commodity_others" id="form_2_commodity_others" placeholder="Please specify">
                         </div>
 
                         
@@ -114,15 +116,9 @@
                     </div>
                     <div class="x-row x-container x-padding">
                         <div class="x-col l5 x-container x-padding">
-                            <span class="">Sector of  Owner or manager of the anchor firm:</span>
-                            <select class="form_data_b x-border x-select x-border" id="form_2_sector_owner_manager" value="{{ row['form_2_sector_owner_manager'] }}" name="form_2_sector_owner_manager"><br>
-                                <option>{{ row['form_2_sector_owner_manager'] }}</option>
-                                <option>PWD</option>
-                                <option>Youth</option>
-                                <option>IP</option>
-                                <option>SC</option>
-                                <option>N/A</option>
-                            </select>
+                            <label class="">Sector of  Owner or manager of the anchor firm:</label>
+                            <input class=" x-input x-border" id="form_2_sector_owner_manager" value="{{ row['form_2_sector_owner_manager'] }}" name="form_2_sector_owner_manager" type="text" placeholder="">
+                        
                         </div>
                         <div class="x-col l6 x-container x-padding">
                             <label class="">Business Address of  Owner or manager of the anchor firm:</label>
@@ -167,7 +163,7 @@
                 
                     <div class="x-row x-container x-padding">
                         <div class="x-col l4 x-container x-padding">
-                            <label class="">Total number of FO members:</label>
+                            <label class="">Total number of FO member:</label>
                             <input class=" x-input x-border" id="form_2_total_number_fo" name="form_2_total_number_fo" value="{{ row['form_2_total_number_fo'] }}" type="number" placeholder="">
                         </div>
                         <div class="x-container x-padding">
@@ -175,7 +171,7 @@
                             <table class="x-table x-container x-table-border">
                                 <tr>
                                     <th colspan="2">
-                                        <center>Total number of  FO members by Gender</center>
+                                        <center>Total number of  FO members by Sex</center>
                                     </th>
                                     <th colspan="4">
                                         <center>Total number of FO members by Sector</center>

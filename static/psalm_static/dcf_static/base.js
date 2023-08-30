@@ -1,15 +1,27 @@
 
 $(document).ready(function(){
 $(".hidden-textbox").hide();
-$("select#form_interprise").change(function(){
+$("select#form_1_commodity").change(function(){
 var currentVal = $(this).val();
-if(currentVal == "others"){
+if(currentVal == "Others"){
 $(".hidden-textbox").show();
 }
 else
 $(".hidden-textbox").hide();
 });  
 });
+
+$(document).ready(function(){
+  $(".hidden-textbox").hide();
+  $("select#form_2_commodity").change(function(){
+  var currentVal = $(this).val();
+  if(currentVal == "Others"){
+  $(".hidden-textbox").show();
+  }
+  else
+  $(".hidden-textbox").hide();
+  });  
+  });
 
 
 $(document).ready(function(){

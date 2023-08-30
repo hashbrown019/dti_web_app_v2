@@ -8,7 +8,7 @@
 
 {% block content %}
 <title>Form 1</title>
-<form action="/insert_form1" method="POST" enctype="multipart/form-data">
+<form action="/insert_form1" method="POST" enctype="multipart/form-data" id="form1">
     {% include "includes/sweetalert.html" %}
     <div class="x-col l1 ">
 		&nbsp;
@@ -63,14 +63,16 @@
 					</div>
 					<div class="x-col l4 x-container x-padding">
 						<span class="">Commodity</span>
-						<select class=" x-border x-select x-border" id="form_1_commodity" name="form_1_commodity" required><br>
-							<option value="" >Choose your option</option>
-                			<option >Coffee</option>
-                			<option >Cacao</option>
-                			<option >Coconut</option>
-                			<option >PFN</option>
+						<select class="x-border x-select x-border" id="form_1_commodity" name="form_1_commodity">
+							<option value="">Choose your option</option>
+							<option>Coffee</option>
+							<option>Cacao</option>
+							<option>Coconut</option>
+							<option>Others</option>
 						</select>
+						<input type="text" class="hidden-textbox x-input x-border" name="form_1_commodity_others" id="form_1_commodity_others" placeholder="Please specify">
 					</div>
+					
 					<div class="x-col l4 x-container x-padding">
 						<span class="">Scope/Provinces</span>
 						<select class=" x-border x-select x-border" id="form_1_scope_provinces" name="form_1_scope_provinces" required><br>
@@ -137,7 +139,7 @@
 						<input class=" x-input x-border" id="form_1_date_of_uploading_to_ifad" name="form_1_date_of_uploading_to_ifad" type="date" placeholder="">
 					</div>
 					<div class="x-col l3 x-container x-padding" style="width: 50%;">	
-						<label>Date: IFAD NO Issuance </label>
+						<label>Date: NPCO Date of Approval </label>
 						<input class=" x-input x-border" id="form_1_date_of_ifad_no_inssuance" name="form_1_date_of_ifad_no_inssuance" type="date" placeholder="">
 					</div>
 				</div>
@@ -145,7 +147,7 @@
 			</div>
 		</div>
 		<div class=" x-container" style="margin-top: 10px; margin-bottom: 20px;"  >
-			<center><h2 class=" text-white x-container" style="background-color: #007399;">DIP Details per FO </h2></center>
+			<center><h2 class=" text-white x-container" style="background-color: #007399;">DIP Details</h2></center>
 
 			<div class="x-row x-padding x-container">
 					<div class="x-col l4 x-container x-padding">	
@@ -155,7 +157,7 @@
 				</div>
 
 				<div class="x-col l4 x-container x-padding">	
-					<label>Total # of farmer beneficiaries</label>
+					<label>Total # of Small Holder Farmers</label>
 					<input class=" x-input x-border" id="form_1_total_farmerbene" type="text" name="form_1_total_farmerbene" placeholder="">
 
 		</div>
@@ -338,6 +340,7 @@
 		// TABLE.ajax.url('/feature_0/filter_list_farmers')
 		// TABLE.ajax.reload()
 	}
+
 </script>
 {% endblock content %}
 
