@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 $(".hidden-textbox").hide();
-$("select#form_1_commodity").change(function(){
+$("select#form_1_commodity,select#form_2_commodity,select#cbb_commodity,select#mgit_commodity,select#form_6_commodity,select#form_7_commodity,select#form_11_industry_cluster").change(function(){
 var currentVal = $(this).val();
 if(currentVal == "PFN"){
 $(".hidden-textbox").show();
@@ -12,16 +12,17 @@ $(".hidden-textbox").hide();
 });
 
 $(document).ready(function(){
-  $(".hidden-textbox").hide();
-  $("select#form_2_commodity").change(function(){
+  $(".hidden-textbox2").hide();
+  $("select#form_11_dip_alignment").change(function(){
   var currentVal = $(this).val();
-  if(currentVal == "PFN"){
-  $(".hidden-textbox").show();
+  if(currentVal == "Yes"){
+  $(".hidden-textbox2").show();
   }
   else
-  $(".hidden-textbox").hide();
+  $(".hidden-textbox2").hide();
   });  
   });
+
 
 
 $(document).ready(function(){

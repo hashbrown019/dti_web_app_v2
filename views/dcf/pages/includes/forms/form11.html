@@ -39,18 +39,15 @@
 
 			<div class="x-row x-container x-padding">
 				<div class="x-col l4 x-container x-padding">
-					<span class="">DIP Alignment :</span>
-					<select id="form_11_dip_alignment" name="form_11_dip_alignment" class="x-container x-padding" required>
+					<label class="">DIP Alignment :</label>
+					<select id="form_11_dip_alignment" name="form_11_dip_alignment" class=" x-border x-select x-border" required>
 						<option value="">Choose your option</option>
-						<option value="yes">Yes</option>
-						<option value ="">No</option>
+						<option>Yes</option>
+						<option>No</option>
 					</select>	
+					<input type="text" class="hidden-textbox2 x-input x-border" name="form_11_dip_alignment_yes" id="form_11_dip_alignment_yes" placeholder="Please specify">
 				</div>
-				<div class="x-col l2" style="margin-left: -6%;">
-					<div id="showyes" class="myDiv" >
-						<input class="x-padding x-container" id="form_11_dip_alignment_yes" size="28" type="text" name="form_11_dip_alignment_yes" placeholder="Write here">
-					</div> 
-				</div>
+
 				<div class="x-col l4 x-container x-padding" style="margin-left: 21%;" >
 					<label>Activity Title:</label>
 					<input required class=" x-input x-border" id="form_11_activity_title" name="form_11_activity_title" type="text" autocomplete="on" placeholder="">
@@ -62,23 +59,19 @@
 					<input required class=" x-input x-border" id="form_11_name_of_beneficiary" name="form_11_name_of_beneficiary" size="10" type="text" autocomplete="on" placeholder="">
 				</div>
 			</div>
-			<div class="x-row x-container">
-				<div class="x-col l3 x-container x-padding">
-					<span class="">Industry Cluster:</span>
-					<select required id="form_11_industry_cluster" class=" x-border x-select x-border" name="form_11_industry_cluster" required><br>
-						<option value="" selected>Choose your option</option>
-						<option>Coffee</option>
-						<option>Cacao</option>
-						<option>Coconut</option>
-						<option value="pfn">PFN</option>
-					</select>
-				</div>
-				<div class="x-col l2" style="margin-left: -1%;">
-					<div id="showpfn" class="myInd" >
-						<input class="x-padding x-container" id="form_11_industry_pfn" name="form_11_industry_pfn" size="30" type="text" name="others" placeholder="Specify PFN commodity">
-					</div> 
-				</div>
+
+			<div class="x-col l4 x-container x-padding">
+				<span class="">Industry Cluster:</span>
+				<select class="x-border x-select x-border" id="form_11_industry_cluster" name="form_11_industry_cluster" required>
+					<option value="">Choose your option</option>
+					<option>Coffee</option>
+					<option>Cacao</option>
+					<option>Coconut</option>
+					<option>PFN</option>
+				</select>
+				<input type="text" class="hidden-textbox x-input x-border" name="form_11_industry_cluster_others" id="form_11_industry_cluster_others" placeholder="Please specify">
 			</div>
+
 			<div class="x-row x-container x-padding">
 				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
 				<table class="x-table x-container x-table-border" style="border-color: transparent;">
@@ -199,22 +192,6 @@
 
 
 
-		<script>
-			$(document).ready(function(){
-				$('#form_11_dip_alignment').on('change', function(){
-					var demovalue = $(this).val(); 
-					$("div.myDiv").hide();
-					$("#show"+demovalue).show();
-				});
-			});
-			$(document).ready(function(){
-				$('#form_11_industry_cluster').on('change', function(){
-					var demovalue = $(this).val(); 
-					$("div.myInd").hide();
-					$("#show"+demovalue).show();
-				});
-			});
-		</script>
 			{% include "includes/forms/form11_participants.html" %}
 	</form>			
     {% endblock content %}

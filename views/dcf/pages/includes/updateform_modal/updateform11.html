@@ -29,6 +29,7 @@
                 <div class="x-col l1 ">
                     &nbsp;
                 </div>
+                <input type="hidden"  name="id" value="{{ row['id'] }}">
                 <div class=" x-col l13 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
                     <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">Access to Financing Tracker</h2></center>
         
@@ -40,15 +41,17 @@
         
         
                     <div class="x-row x-container x-padding">
+
                         <div class="x-col l4 x-container x-padding">
-                            <input type="hidden"  name="id" value="{{ row['id'] }}">
-                            <span class="">DIP Alignment :</span>
-                            <select id="form_11_dip_alignment" name="form_11_dip_alignment" value="{{ row['form_11_dip_alignment'] }}" class="x-container x-padding">
-                                <option >{{ row['form_11_dip_alignment'] }}</option>
-                                <option >Yes</option>
-                                <option >No</option>
+                            <label class="">DIP Alignment :</label>
+                            <select id="form_11_dip_alignment" name="form_11_dip_alignment"  value="{{ row['form_11_dip_alignment'] }}"  class=" x-border x-select x-border" required>
+                                <option>{{ row['form_11_dip_alignment'] }}</option>
+                                <option>Yes</option>
+                                <option>No</option>
                             </select>	
+                            <input type="text" class="hidden-textbox2 x-input x-border" name="form_11_dip_alignment_yes" id="form_11_dip_alignment_yes" placeholder="Please specify">
                         </div>
+
                         <div class="x-col l2" style="margin-left: -6%;">
                             <div id="showyes" class="myDiv" >
                                 <input class="x-padding x-container" value="{{ row['form_11_dip_alignment_yes'] }}" id="form_11_dip_alignment_yes" size="28" type="text" name="form_11_dip_alignment_yes" placeholder="Write here">
@@ -65,22 +68,17 @@
                             <input class=" x-input x-border" id="form_11_name_of_beneficiary" value="{{ row['form_11_name_of_beneficiary'] }}" name="form_11_name_of_beneficiary" size="10" type="text" autocomplete="on" placeholder="">
                         </div>
                     </div>
-                    <div class="x-row x-container">
-                        <div class="x-col l3 x-container x-padding">
-                            <span class="">Industry Cluster:</span>
-                            <select id="form_11_industry_cluster" class=" x-border x-select x-border" value="{{ row['form_11_industry_cluster'] }}" name="form_11_industry_cluster"><br>
-                                <option >{{ row['form_11_industry_cluster'] }}</option>
-                                <option>Coffee</option>
-                                <option>Cacao</option>
-                                <option>Coconut</option>
-                                <option value="pfn">PFN</option>
-                            </select>
-                        </div>
-                        <div class="x-col l2" style="margin-left: -1%;">
-                            <div id="showpfn" class="myInd" >
-                                <input class="x-padding x-container" id="form_11_industry_pfn" value="{{ row['form_11_industry_pfn'] }}" name="form_11_industry_pfn" size="30" type="text" name="others" placeholder="Specify PFN commodity">
-                            </div> 
-                        </div>
+
+                    <div class="x-col l4 x-container x-padding">
+                        <span class="">Industry Cluster:</span>
+                        <select class="x-border x-select x-border" id="form_11_industry_cluster" value="{{ row['form_11_industry_cluster'] }}" name="form_11_industry_cluster" required>
+                            <option>{{ row['form_11_industry_cluster'] }}</option>
+                            <option>Coffee</option>
+                            <option>Cacao</option>
+                            <option>Coconut</option>
+                            <option>PFN</option>
+                        </select>
+                        <input type="text" class="hidden-textbox x-input x-border" name="form_11_industry_cluster_others" id="form_11_industry_cluster_others" placeholder="Please specify">
                     </div>
                     <div class="x-row x-container x-padding">
                         <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
