@@ -3,7 +3,7 @@ $(document).ready(function(){
 $(".hidden-textbox").hide();
 $("select#form_1_commodity").change(function(){
 var currentVal = $(this).val();
-if(currentVal == "Others"){
+if(currentVal == "PFN"){
 $(".hidden-textbox").show();
 }
 else
@@ -15,7 +15,7 @@ $(document).ready(function(){
   $(".hidden-textbox").hide();
   $("select#form_2_commodity").change(function(){
   var currentVal = $(this).val();
-  if(currentVal == "Others"){
+  if(currentVal == "PFN"){
   $(".hidden-textbox").show();
   }
   else

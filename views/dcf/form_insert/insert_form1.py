@@ -16,7 +16,7 @@ def insert_form1(request):
         form_1_commodity = request.form.get('form_1_commodity', None)
         form_1_commodity_others = request.form.get('form_1_commodity_others', None)
 
-        if form_1_commodity == 'Others' and form_1_commodity_others:
+        if form_1_commodity == 'PFN' and form_1_commodity_others:
             chosen_commodity = form_1_commodity_others
         else:
             chosen_commodity = form_1_commodity
