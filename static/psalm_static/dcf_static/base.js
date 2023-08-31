@@ -40,6 +40,33 @@ $(document).ready(function(){
     });  
 });
 
+$(document).ready(function() {
+  $(".form-1-y, .form-1-ac, .form-1-ad, .form-1-ae").on("input", updateTotalProjectCost);
+
+  function updateTotalProjectCost() {
+      const yValue = parseFloat($(this).closest("tr").find(".form-1-y").val()) || 0;
+      const acValue = parseFloat($(this).closest("tr").find(".form-1-ac").val()) || 0;
+      const adValue = parseFloat($(this).closest("tr").find(".form-1-ad").val()) || 0;
+      const aeValue = parseFloat($(this).closest("tr").find(".form-1-ae").val()) || 0;
+      const totalProjectCost = yValue + acValue + adValue + aeValue;
+      $(this).closest("tr").find(".form-1-totalproject_cost").val(totalProjectCost);
+  }
+});
+
+$(document).ready(function() {
+  $(".form-1-aa").on("input", updateTotalMatchingGrant);
+  $(".form-1-ab").on("input", updateTotalMatchingGrant);
+
+  function updateTotalMatchingGrant() {
+      const aaValue = parseFloat($(this).closest("tr").find(".form-1-aa").val()) || 0;
+      const abValue = parseFloat($(this).closest("tr").find(".form-1-ab").val()) || 0;
+      const total = $(this).closest("tr").find(".form-1-total-matching-grant-update");
+      const totalMatchingGrant = aaValue + abValue;
+      total.val(totalMatchingGrant);
+  }
+});
+
+
 
 $(document).ready(function(){
 $(".hidden-textbox2").hide();
