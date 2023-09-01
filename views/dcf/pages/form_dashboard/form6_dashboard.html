@@ -42,11 +42,11 @@
                         <th>ID</th>
                         <th>Name of Resource Person/Facilitator/BDSP</th>
                         <th>Implementing Unit</th>
-                        <th>Type of Assistance</th>
                         <th>Type of Activity</th>
-                        <th>DIP Alignment</th>
                         <th>Venue</th>
                         <th>Action</th>
+                        <th>Date</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -56,9 +56,7 @@
                         <td>{{ row['id'] }}</td>
                         <td>{{ row['form_6_resource_person'] }}</td>
                         <td>{{ row['form_6_implementing_unit'] }}</td>  
-                        <td>{{ row['form_6_type_of_assisstance'] }}</td>
                         <td>{{ row['form_6_type_of_activity'] }}</td>
-                        <td>{{ row['form_6_dip_alignment'] }}</td>
                         <td>{{ row['form_6_venue'] }}</td>
                         <td>
                           <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form6view{{row['id']}}" href="/updateform6/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,6 +67,7 @@
 
                         
                         </td>
+                        <td><i>{{ row['date_created'] }}</i></td>
             
                  
                     </tr>

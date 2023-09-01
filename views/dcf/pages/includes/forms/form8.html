@@ -1,0 +1,102 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "form11" %}
+{% set forms = "forms" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<title>Form 8 </title>
+
+
+	<form action="/insert_form11" method="POST">
+        {% include "includes/sweetalert.html" %}
+        <style>
+            .myDiv{
+                display:none;
+                padding:10px;
+                margin-top:20px;
+            } 
+            .myInd{
+                display:none;
+                padding:10px;
+                margin-top:20px;
+            }  
+            
+        </style> 
+        <div class="x-col l1 ">
+            &nbsp;
+        </div>
+		<div class=" x-col l10 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
+			<center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">SAMPLE FORM</h2></center>
+
+			<div class="x-container x-padding">
+				<style> 
+					table, th, td{border: 1px solid black;border-collapse: collapse;}
+				</style>
+			</div>
+
+
+			<div class="x-row x-container x-padding">
+				<div class="x-col l4 x-container x-padding">
+					<label class="">DIP Alignment :</label>
+					<select id="form_11_dip_alignment" name="form_11_dip_alignment" class=" x-border x-select x-border" required>
+						<option value="">Choose your option</option>
+						<option>Yes</option>
+						<option>No</option>
+					</select>	
+					<input type="text" class="hidden-textbox2 x-input x-border" name="form_11_dip_alignment_yes" id="form_11_dip_alignment_yes" placeholder="Please specify">
+				</div>
+
+				<div class="x-col l4 x-container x-padding" style="margin-left: 21%;" >
+					<label>Activity Title:</label>
+					<input required class=" x-input x-border" id="form_11_activity_title" name="form_11_activity_title" type="text" autocomplete="on" placeholder="">
+				</div>
+			</div>
+			<div class="x-row x-container">
+				<div class="x-col l8 x-container x-padding">
+					<label>Name of Beneficiary (Registered Business/FO Name):</label>
+					<input required class=" x-input x-border" id="form_11_name_of_beneficiary" name="form_11_name_of_beneficiary" size="10" type="text" autocomplete="on" placeholder="">
+				</div>
+			</div>
+
+			<div class="x-col l4 x-container x-padding">
+				<span class="">Industry Cluster:</span>
+				<select class="x-border x-select x-border" id="form_11_industry_cluster" name="form_11_industry_cluster" required>
+					<option value="">Choose your option</option>
+					<option>Coffee</option>
+					<option>Cacao</option>
+					<option>Coconut</option>
+					<option>PFN</option>
+				</select>
+				<input type="text" class="hidden-textbox x-input x-border" name="form_11_industry_cluster_others" id="form_11_industry_cluster_others" placeholder="Please specify">
+			</div>
+
+
+
+			<div class="x-row x-container x-padding">
+				<div class="x-col l6 x-container x-padding">
+					<label>Amount of Equity Financing Approved/Accessed:</label>
+					<input class=" x-input x-border" id="form_11_amount_of_equity" name="form_11_amount_of_equity" type="text" autocomplete="on" placeholder="">
+				</div>
+				<div class="x-col l4 x-container x-padding">
+					<label>Date Released:</label>
+					<input class=" x-input x-border" id="form_11_date_released" name="form_11_date_released" type="date" autocomplete="on" placeholder="">
+				</div>
+			
+                <div class="x-right" style="margin-top: 5%;">
+                    <input class="x-blue btn " id="form_11_submit"  type="submit">
+                </div>
+			</div>
+            
+		</div>
+
+
+
+	</form>			
+    {% endblock content %}
+
+    {% block javascripts %}
+    
+    {% endblock javascripts %}

@@ -41,12 +41,10 @@
                           <tr role="row">
                             <th>ID</th>
                             <th>Implementing Unit</th>
-                            <th>Training Number</th>
                             <th>Activity Title</th>
                             <th>Types of Training</th>
-                            <th>Topic Of Training</th>
-                            <th>Total Number of Participants</th>
                             <th>Action</th>
+                            <th>Date</th>
                             </tr>
                         </thead>
                     
@@ -56,11 +54,8 @@
                             {% for row in form4_datatable %}
                             <td>{{ row['id'] }}</td>
                             <td>{{ row['cbb_implementing_unit'] }}</td>
-                            <td>{{ row['cbb_training_number'] }}</td>  
                             <td>{{ row['cbb_activity_title'] }}</td>
                             <td>{{ row['cbb_types_of_training'] }}</td>
-                            <td>{{ row['cbb_topic_of_training'] }}</td>
-                            <td>{{ row['cbb_total_number_of_participants'] }}</td>
                             <td>
                               <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form4view{{row['id']}}" href="/updateform4/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp;&nbsp;
                               {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
@@ -69,6 +64,7 @@
                               {%endif%}
                            
                             </td>
+                            <td><i>{{ row['date_created'] }}</i></td>
                 
                      
                         </tr>

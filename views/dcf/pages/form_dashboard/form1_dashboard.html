@@ -41,12 +41,10 @@
           <tr role="row">
             <th>ID</th>
             <th>RCUs</th>
-            <th>Number Of DIPs</th>
-            <th>Anchor Firm</th>
-            <th>Size Of Anchor</th>
-            <th>Commodity</th>
             <th>Scope/Provinces</th>
+            <th>Commodity</th>
             <th>Action</th>
+            <th>Date</th>
             </tr>
         </thead>
     
@@ -55,12 +53,9 @@
          <div>
             {% for row in form1_datatable %}
             <td>{{ row['id'] }}</td>
-            <td>{{ row['form_1_rcus'] }}</td>
-            <td>{{ row['form_1_number_of_dips'] }}</td>  
-            <td>{{ row['form_1_anchor_firm'] }}</td>
-            <td>{{ row['form_1_size_of_anchor'] }}</td>
-            <td>{{ row['form_1_commodity'] }}</td>
+            <td>{{ row['form_1_rcus'] }}</td> 
             <td>{{ row['form_1_scope_provinces'] }}</td>
+            <td>{{ row['form_1_commodity'] }}</td>
             <td>
               <!-- {{row['upload_by']}} === {{user_data['id']}} -->
               <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form1view{{row['id']}}" href="/updateform1/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp; &nbsp;
@@ -70,6 +65,7 @@
               {% endif %}
              
             </td>
+            <td><i>{{ row['date_created'] }}</i></td>
 
      
         </tr>

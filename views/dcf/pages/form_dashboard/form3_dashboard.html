@@ -42,11 +42,9 @@
                 <th>ID</th>
                 <th>Types of BDSP</th>
                 <th>Contact Person</th>
-                <th>Training Number</th>
-                <th>Sex</th>
                 <th>Office/Main Address</th>
-                <th>Email Address</th>
                 <th>Action</th>
+                <th>Date</th>
                 </tr>
             </thead>
         
@@ -57,10 +55,7 @@
                 <td>{{ row['id'] }}</td>
                 <td>{{ row['form_3_types_of_bdsp'] }}</td>
                 <td>{{ row['form_3_contact_person'] }}</td>  
-                <td>{{ row['form_3_training_number'] }}</td>
-                <td>{{ row['form_3_sex'] }}</td>
                 <td>{{ row['form_3_office_addr'] }}</td>
-                <td>{{ row['form_3_email'] }}</td>
                 <td>
                   <a style="color: #1ac6ff; " data-toggle="modal" data-target="#formview3{{row['id']}}" href="/updateform3/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp;&nbsp;
                   {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
@@ -69,6 +64,7 @@
                   {%endif%}
                
                 </td>
+                <td><i>{{ row['date_created'] }}</i></td>
     
          
             </tr>

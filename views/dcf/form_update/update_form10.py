@@ -20,7 +20,7 @@ def updateform10(request):
         form_10_commodity=request.form['form_10_commodity']
 
         sql = """UPDATE dcf_negosyo_center
-               SET form_10_nc_location='{}',form_10_name_of_nc='{}',form_10_title_of_rapid_activity='{}',form_10_type_of_assistance='{}',form_10_date='{}',form_10_type_of_beneficiary='{}',form_10_sex_male='{}',form_10_sex_female='{}',form_10_commodity='{}'
+               SET form_10_nc_location='{}',form_10_name_of_nc='{}',form_10_title_of_rapid_activity='{}',form_10_type_of_assistance='{}',form_10_date='{}',form_10_type_of_beneficiary='{}',form_10_sex_male='{}',form_10_sex_female='{}',form_10_commodity='{}',date_created=CURRENT_TIMESTAMP
                WHERE id={}
             """.format(form_10_nc_location,form_10_name_of_nc,form_10_title_of_rapid_activity,form_10_type_of_assistance,form_10_date,form_10_type_of_beneficiary,form_10_sex_male,form_10_sex_female,form_10_commodity, id)
         db.err_page = "asdasd"

@@ -44,9 +44,9 @@
                             <th>PCU</th>
                             <th>Name Of DIP</th>
                             <th>Name of FO/MSME RECIPIENT</th>
-                            <th>total # of FO Member Recipients</th>
                             <th>Commodity</th>
                             <th>Action</th>
+                            <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,7 +58,6 @@
                             <td>{{ row['mgit_implementing_unit_pcu'] }}</td>  
                             <td>{{ row['mgit_name_of_dip'] }}</td>
                             <td>{{ row['mgit_msme_recipient'] }}</td>
-                            <td>{{ row['mgit_total_member_recipient'] }}</td>
                             <td>{{ row['mgit_commodity'] }}</td>
                             <td>
                               <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form5view{{row['id']}}" href="/updateform5/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,6 +68,7 @@
 
                         
                             </td>
+                            <td><i>{{ row['date_created'] }}</i></td>
                 
                      
                         </tr>

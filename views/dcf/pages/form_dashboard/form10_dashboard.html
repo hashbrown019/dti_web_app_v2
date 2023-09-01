@@ -43,10 +43,10 @@
                         <th>Name of NC </th>
                         <th>NC Location</th>
                         <th>Title of RAPID Activity</th>
-                        <th>Type of Assistance Provided</th>
-                        <th>Date</th>
                         <th>Type of beneficiary</th>
                         <th>Action</th>
+                        <th>Date</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -57,8 +57,6 @@
                         <td>{{ row['form_10_name_of_nc'] }}</td>
                         <td>{{ row['form_10_nc_location'] }}</td>  
                         <td>{{ row['form_10_title_of_rapid_activity'] }}</td>
-                        <td>{{ row['form_10_type_of_assistance'] }}</td>
-                        <td>{{ row['form_10_date'] }}</td>
                         <td>{{ row['form_10_type_of_beneficiary'] }}</td>
                         <td>
                           <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form10view{{row['id']}}" href="/updateform10/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,6 +67,7 @@
 
                       
                         </td>
+                        <td><i>{{ row['date_created'] }}</i></td>
             
                  
                     </tr>

@@ -40,13 +40,14 @@
                     <thead class="thead" >
                       <tr role="row">
                         <th>ID</th>
-                        <th>DIP Alignment</th>
                         <th>Activity Title</th>
                         <th>Name of Beneficiary</th>
                         <th>Industry Cluster</th>
                         <th>Region</th>
                         <th>Province</th>
                         <th>Action</th>
+                        <th>Date</th>
+                        
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +55,6 @@
                      <div>
                         {% for row in form11_datatable %}
                         <td>{{ row['id'] }}</td>
-                        <td>{{ row['form_11_dip_alignment'] }}</td>
                         <td>{{ row['form_11_activity_title'] }}</td>  
                         <td>{{ row['form_11_name_of_beneficiary'] }}</td>
                         <td>{{ row['form_11_industry_cluster'] }}</td>
@@ -70,6 +70,7 @@
                        
                         </td>
             
+                        <td><i>{{ row['date_created'] }}</i></td>
                  
                     </tr>
                   
