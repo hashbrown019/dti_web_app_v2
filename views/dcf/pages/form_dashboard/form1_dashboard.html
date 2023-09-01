@@ -44,7 +44,7 @@
             <th>Scope/Provinces</th>
             <th>Commodity</th>
             <th>Action</th>
-            <th>Date</th>
+            <th>Submitted</th>
             </tr>
         </thead>
     
@@ -65,7 +65,7 @@
               {% endif %}
              
             </td>
-            <td><i>{{ row['date_created'] }}</i></td>
+            <td class="date-cell" data-timestamp="{{ row['date_created'] }}"><i>{{ row['date_created'] }}</i></td>
 
      
         </tr>
@@ -100,12 +100,15 @@
 </div>
 </div>
 </div>
+<script>
 
+  </script>
 
     
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
+
 {% block javascripts %}
 <script>
 
