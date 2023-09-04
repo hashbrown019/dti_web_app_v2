@@ -99,14 +99,17 @@ def format_timestamp(timestamp):
     now = datetime.now()
     time_difference = now - timestamp
 
-    if time_difference.total_seconds() == 1:
+    if time_difference.total_seconds() < 1:
+        return "Just now"
+    elif time_difference.total_seconds() == 1:
         return "1 second ago"
     elif time_difference.total_seconds() < 60:
         return f"{int(time_difference.total_seconds())} seconds ago"
     elif time_difference.total_seconds() == 60:
         return "1 minute ago"
     elif time_difference.total_seconds() < 3600:
-        return f"{int(time_difference.total_seconds() / 60)} minutes ago"
+        minutes_ago = int(time_difference.total_seconds() / 60)
+        return f"{minutes_ago} minute{'s' if minutes_ago != 1 else ''} ago"
     elif time_difference.total_seconds() == 3600:
         return "1 hour ago"
     elif time_difference.total_seconds() < 86400:
