@@ -6,6 +6,7 @@ from time import sleep
 import xlrd
 import json
 from werkzeug.utils import secure_filename
+import jinja2
 import os
 from views.dcf.form_insert import insert_form4 as insertData4
 from views.dcf.form_insert import insert_form5 as insertData5
@@ -47,6 +48,8 @@ def dcf_dashboard():
     count = displayCount.display__()
     form_disp = display_dataform.displayform()
     return render_template("dcf_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
+
+
 
 @app.route('/form1_dashboard')
 def form1_dashboard():

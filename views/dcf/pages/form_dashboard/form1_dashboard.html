@@ -7,6 +7,7 @@
 
 {% block content %}
 <title>Form 1 Dasboard</title>
+
 <div class="header bg-primary pb-6" >
   <div class="container-fluid">
     <div class="header-body">
@@ -65,7 +66,7 @@
               {% endif %}
              
             </td>
-            <td class="date-cell" data-timestamp="{{ row['date_created'] }}"><i>{{ row['date_created'] }}</i></td>
+            <td class="date-cell"><i>{{ row['date_created'] | format_timestamp }}</i></td>
 
      
         </tr>

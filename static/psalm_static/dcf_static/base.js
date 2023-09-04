@@ -68,30 +68,6 @@ $(document).ready(function() {
   }
 });
 
-function updateTimestamps() {
-  $('.date-cell').each(function() {
-    const timestamp = new Date($(this).data('timestamp'));
-    const now = new Date();
-
-    const diffInSeconds = Math.floor((now - timestamp) / 1000);
-
-    if (diffInSeconds < 60) {
-      $(this).text(`${diffInSeconds} seconds ago`);
-    } else if (diffInSeconds < 3600) {
-      const diffInMinutes = Math.floor(diffInSeconds / 60);
-      $(this).text(`${diffInMinutes} minutes ago`);
-    } else if (diffInSeconds < 86400) {
-      const diffInHours = Math.floor(diffInSeconds / 3600);
-      $(this).text(`${diffInHours} hours ago`);
-    } else {
-      // Display the full date
-      const formattedDate = `${timestamp.toLocaleDateString()} ${timestamp.toLocaleTimeString()}`;
-      $(this).text(formattedDate);
-    }
-  });
-}
-
-updateTimestamps();
 
 $(document).ready(function() {
   $(".form-1-aa").on("input", updateTotalMatchingGrant);

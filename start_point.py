@@ -3,6 +3,7 @@ import Configurations as c
 from flask import Flask, session, jsonify, request, redirect
 from flask_cors import CORS,cross_origin
 from flask_minify import Minify
+from datetime import datetime, timedelta
 
 from views.login import login
 from views.home  import home
@@ -93,3 +94,19 @@ def after_request_func(response):
 # - COLD- 
 
 # BE YOURSELF, TRUST UR GUTS 
+
+def format_timestamp(timestamp):
+	now = datetime.now()
+	time_difference = now - timestamp
+
+	if time_difference.total_seconds() < 60:
+		return f"{int(time_difference.total_seconds())} second/s ago"
+	elif time_difference.total_seconds() < 3600:
+		return f"{int(time_difference.total_seconds() / 60)} minute/s ago"
+	elif time_difference.total_seconds() < 86400:
+		return f"{int(time_difference.total_seconds() / 3600)} hour/s ago"
+	else:
+		return timestamp.strftime("%Y-%m-%d %H:%M:%S")
+
+# Register the custom filter on the Flask application
+app.jinja_env.filters['format_timestamp'] = format_timestamp
