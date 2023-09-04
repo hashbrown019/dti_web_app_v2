@@ -41,10 +41,11 @@ def updateform1(request):
         form_1_hect_exp = request.form.get('form_1_hect_exp')
         form_1_cost_exp = request.form.get('form_1_cost_exp')
         form_1_euqipment = request.form.get('form_1_euqipment')
-        form_1_facilities = request.form.get('form_1_facilities')
-        form_1_warehouse = request.form.get('form_1_warehouse')
-        form_1_aa = request.form.get('form_1_aa')
-        form_1_ab = request.form.get('form_1_ab')
+        form_1_Facilities_warehouse = request.form.get('form_1_Facilities_warehouse')
+        form_1_totalcost_prodinvest = request.form.get('form_1_totalcost_prodinvest')
+        form_1_total_rehab = request.form.get('form_1_total_rehab')
+        form_1_total_exp = request.form.get('form_1_total_exp')
+        form_1_totalcost_prodinvest2 = request.form.get('form_1_totalcost_prodinvest2')
         form_1_total_matching_grant = request.form.get('form_1_total_matching_grant')
         form_1_organizational = request.form.get('form_1_organizational')
         form_1_technical_trainings = request.form.get('form_1_technical_trainings')
@@ -64,10 +65,10 @@ def updateform1(request):
                    form_1_finalized_approved='{}', form_1_date_of_parallel_review='{}', form_1_date_of_submission='{}', form_1_date_of_rtwg='{}', form_1_date_of_npco_cursory='{}', form_1_date_of_uploading_to_ifad='{}',
                    form_1_date_of_ifad_no_inssuance='{}', form_1_totalmsme='{}', form_1_total_farmerbene='{}', form_1_totalfo='{}', form_1_totalhectarage_cov='{}',
                     form_1_hect_rehab='{}', form_1_total_cost_rehab='{}', form_1_hect_exp='{}', form_1_cost_exp='{}', form_1_euqipment='{}',
-                     form_1_facilities='{}', form_1_warehouse='{}',form_1_aa='{}', form_1_ab='{}', form_1_total_matching_grant='{}', form_1_organizational='{}', form_1_technical_trainings='{}', form_1_post_production='{}',
+                     form_1_Facilities_warehouse='{}',form_1_totalcost_prodinvest='{}',form_1_total_rehab='{}', form_1_total_exp='{}',form_1_totalcost_prodinvest2='{}', form_1_total_matching_grant='{}', form_1_organizational='{}', form_1_technical_trainings='{}', form_1_post_production='{}',
                       form_1_others='{}', form_1_supply_chain_manager='{}',form_1_y='{}', form_1_ac='{}', form_1_ad='{}', form_1_ae='{}', form_1_totalproject_cost='{}', form_1_fmi='{}', form_1_fmi_kms='{}', date_created=CURRENT_TIMESTAMP
                WHERE id={}
-            """.format(form_1_rcus,form_1_name_dip,form_1_anchor_firm,form_1_size_of_anchor,chosen_commodity,form_1_scope_provinces,form_1_for_development,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_uploading_to_ifad,form_1_date_of_ifad_no_inssuance,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_totalhectarage_cov,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_euqipment,form_1_facilities,form_1_warehouse,form_1_aa,form_1_ab,form_1_total_matching_grant,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_supply_chain_manager,form_1_y,form_1_ac,form_1_ad,form_1_ae,form_1_totalproject_cost,form_1_fmi,form_1_fmi_kms, id)
+            """.format(form_1_rcus,form_1_name_dip,form_1_anchor_firm,form_1_size_of_anchor,chosen_commodity,form_1_scope_provinces,form_1_for_development,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_uploading_to_ifad,form_1_date_of_ifad_no_inssuance,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_totalhectarage_cov,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_euqipment,form_1_Facilities_warehouse,form_1_totalcost_prodinvest,form_1_total_rehab,form_1_total_exp,form_1_totalcost_prodinvest2,form_1_total_matching_grant,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_supply_chain_manager,form_1_y,form_1_ac,form_1_ad,form_1_ae,form_1_totalproject_cost,form_1_fmi,form_1_fmi_kms, id)
         db.err_page = "asdasd"
         last_row_update_id = db.do(sql)
         if(last_row_update_id["response"]=="error"):

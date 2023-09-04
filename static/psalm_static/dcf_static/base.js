@@ -53,6 +53,21 @@ $(document).ready(function() {
   }
 });
 
+$(document).ready(function() {
+  $(".form_1_euqipments, .form_1_Facilities_warehouses").on("input", updateTotalProdInv);
+
+  function updateTotalProdInv() {
+      const form_1_euqipments2 = parseFloat($(this).closest("tr").find(".form_1_euqipments").val()) || 0;
+      const form_1_Facilities_warehouses2 = parseFloat($(this).closest("tr").find(".form_1_Facilities_warehouses").val()) || 0;
+      const totalProdInv = form_1_euqipments2 + form_1_Facilities_warehouses2;
+      $(this).closest("tr").find(".form_1_total_prod_invs").val(totalProdInv);
+      $("#form_1_totalcost_prodinvest2").val(totalProdInv);
+      $("#form_1_totalcost_prodinvest3").val(totalProdInv);
+      $(".form_1_totalcost_prodinvest3").val(totalProdInv);
+
+  }
+});
+
 function updateTimestamps() {
   $('.date-cell').each(function() {
     const timestamp = new Date($(this).data('timestamp'));
@@ -81,16 +96,36 @@ updateTimestamps();
 $(document).ready(function() {
   $(".form-1-aa").on("input", updateTotalMatchingGrant);
   $(".form-1-ab").on("input", updateTotalMatchingGrant);
+  $("#form_1_totalcost_prodinvest2").on("input", updateTotalMatchingGrant);
+  
 
   function updateTotalMatchingGrant() {
       const aaValue = parseFloat($(this).closest("tr").find(".form-1-aa").val()) || 0;
       const abValue = parseFloat($(this).closest("tr").find(".form-1-ab").val()) || 0;
+      const acValue = parseFloat($(this).closest("tr").find("#form_1_totalcost_prodinvest2").val()) || 0;
       const total = $(this).closest("tr").find(".form-1-total-matching-grant-update");
-      const totalMatchingGrant = aaValue + abValue;
+      const totalMatchingGrant = aaValue + abValue + acValue;
       total.val(totalMatchingGrant);
   }
 });
 
+
+
+$(document).ready(function() {
+  $(".form-1-aa2").on("input", updateTotalMatchingGrant);
+  $(".form-1-ab2").on("input", updateTotalMatchingGrant);
+  $(".form_1_totalcost_prodinvest3").on("input", updateTotalMatchingGrant);
+  
+
+  function updateTotalMatchingGrant() {
+      const aaValue2 = parseFloat($(this).closest("tr").find(".form-1-aa2").val()) || 0;
+      const abValue2 = parseFloat($(this).closest("tr").find(".form-1-ab2").val()) || 0;
+      const acdalue2 = parseFloat($(this).closest("tr").find(".form_1_totalcost_prodinvest3").val()) || 0;
+      const total2 = $(this).closest("tr").find(".form-1-total-matching-grant-update2");
+      const totalMatchingGrant2 = aaValue2 + abValue2 + acdalue2;
+      total2.val(totalMatchingGrant2);
+  }
+});
 
 
 $(document).ready(function(){
