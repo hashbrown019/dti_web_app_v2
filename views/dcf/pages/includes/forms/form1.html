@@ -122,7 +122,7 @@
 						<label>Date: Full BPs and DIPs Finalized/Approved by RCUs and endorsed to NPCO for Review</label>
 						<input class=" x-input x-border" id="form_1_finalized_approved" name="form_1_finalized_approved" type="date" placeholder="">
 					</div>
-					<div class="x-col l3 x-container x-padding" style="width: 30%;">	
+					<div class="x-col l3 x-container x-padding" style="width: 40%;">	
 						<label>Date of the Parallel Review with NPCO/RGMS-IFAD-RTWG</label>
 						<input class=" x-input x-border" id="form_1_date_of_parallel_review" name="form_1_date_of_parallel_review" type="date" placeholder="">
 					</div>
@@ -255,7 +255,7 @@
 				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
 				<table class="x-table x-container x-table-border">
 					<tr>
-						<th colspan="5">
+						<th colspan="4">
 							<center>Capacity Building</center>
 						</th>
 
@@ -266,22 +266,20 @@
 						<td><center>Technical Trainings</center></td>
 						<td><center>Post-Production</center></td>
 						<td><center>Others</center></td>
-						<td><center>Total</center></td>
 					</tr>
 
 					<tr>
-						<td><input class=" x-input x-border form1_org" id="form_1_organizational" name="form_1_organizational" type="number" placeholder=""></td>
-						<td><input class=" x-input x-border form1_tech" id="form_1_technical_trainings" name="form_1_technical_trainings" type="number" placeholder=""></td>
-						<td><input class=" x-input x-border form1_postprod" id="form_1_post_production" name="form_1_post_production" type="number" placeholder=""></td>
-						<td><input class=" x-input x-border form1_otherz" id="form_1_others" type="number" name="form_1_others" placeholder=""></td>
-						<td><input class=" x-input x-border form1_total_caps" id="form_1_total_capbuild" type="text" name="form_1_total_capbuild" placeholder="" readonly></td>
+						<td><input class=" x-input x-border" id="form_1_organizational" name="form_1_organizational" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_technical_trainings" name="form_1_technical_trainings" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_post_production" name="form_1_post_production" type="text" placeholder=""></td>
+						<td><input class=" x-input x-border" id="form_1_others" type="text" name="form_1_others" placeholder=""></td>
 					</tr>
 				</table>
 			</div>
 			<div class="x-row">
 					<div class="x-col l6 x-container x-padding">
 						<label>Supply Chain Manager</label>
-						<input class=" x-input x-border form1_total_sup" id="form_1_supply_chain_manager" name="form_1_supply_chain_manager" type="number" placeholder="">
+						<input class=" x-input x-border" id="form_1_supply_chain_manager" name="form_1_supply_chain_manager" type="text" placeholder="">
 					</div>
 	
 			</div>
@@ -291,22 +289,24 @@
 				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
 				<table class="x-table x-container x-table-border">
 					<tr>
-						<th colspan="4">
+						<th colspan="5">
 							<center>Total Project Cost</center>
 						</th>
 					</tr>
 			
 					<tr>
-						<td><center>Total Matching Grant</center></td>
-						<td><center>Total Capacity Building</center></td>
-						<td><center>Supply Chain Manager</center></td>
+						<td><center>Y</center></td>
+						<td><center>AC</center></td>
+						<td><center>AD</center></td>
+						<td><center>AE</center></td>
 						<td><center>Total</center></td>
 					</tr>
 			
 					<tr>
-						<td><input class="x-input x-border form1_mg" id="form_1_y" name="form_1_y" type="number" placeholder="" readonly></td>
-						<td><input class="x-input x-border form1_cap" id="form_1_ac" name="form_1_ac" type="number" placeholder="" readonly></td>
-						<td><input class="x-input x-border form1_sup" id="form_1_ad" name="form_1_ad" type="number" placeholder="" readonly></td>
+						<td><input class="x-input x-border form-1-y" id="form_1_y" name="form_1_y" type="number" placeholder=""></td>
+						<td><input class="x-input x-border form-1-ac" id="form_1_ac" name="form_1_ac" type="number" placeholder=""></td>
+						<td><input class="x-input x-border form-1-ad" id="form_1_ad" name="form_1_ad" type="number" placeholder=""></td>
+						<td><input class="x-input x-border form-1-ae" id="form_1_ae" name="form_1_ae" type="number" placeholder=""></td>
 						<td><input class="x-input x-border form-1-totalproject_cost" id="form_1_totalproject_cost" name="form_1_totalproject_cost" placeholder="" readonly></td>
 					</tr>
 				</table>
@@ -351,22 +351,6 @@
     document.querySelector('#myModal .close').addEventListener('click', function() {
     $('#myModal').modal('hide');
   });
-
-
-  var x_inputs_ = $CLASS('x-input')
-  for (let index = 0; index < x_inputs_.length; index++) {
-	if(x_inputs_[index].id!='form_1_totalproject_cost'){
-		x_inputs_[index].addEventListener('keyup',function(ee){
-			var num1 = parseFloat($ID("form_1_y").value) ;var num2 = parseFloat($ID("form_1_ac").value) ;var num3 = parseFloat($ID("form_1_ad").value) 
-			if(isNaN(num1)){ num1 = 0} 
-			if(isNaN(num2)){ num2 = 0} 
-			if(isNaN(num3)){ num3 = 0}
-			println(num3)
-			$ID('form_1_totalproject_cost').value = num1 + num2 + num3
-
-		})
-	}
-  }
 
   function generate_modal(){
     var modal_ls_search = $dialog({
