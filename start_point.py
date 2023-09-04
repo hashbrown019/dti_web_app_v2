@@ -96,17 +96,24 @@ def after_request_func(response):
 # BE YOURSELF, TRUST UR GUTS 
 
 def format_timestamp(timestamp):
-	now = datetime.now()
-	time_difference = now - timestamp
+    now = datetime.now()
+    time_difference = now - timestamp
 
-	if time_difference.total_seconds() < 60:
-		return f"{int(time_difference.total_seconds())} second/s ago"
-	elif time_difference.total_seconds() < 3600:
-		return f"{int(time_difference.total_seconds() / 60)} minute/s ago"
-	elif time_difference.total_seconds() < 86400:
-		return f"{int(time_difference.total_seconds() / 3600)} hour/s ago"
-	else:
-		return timestamp.strftime("%Y-%m-%d %H:%M:%S")
+    if time_difference.total_seconds() == 1:
+        return "1 second ago"
+    elif time_difference.total_seconds() < 60:
+        return f"{int(time_difference.total_seconds())} seconds ago"
+    elif time_difference.total_seconds() == 60:
+        return "1 minute ago"
+    elif time_difference.total_seconds() < 3600:
+        return f"{int(time_difference.total_seconds() / 60)} minutes ago"
+    elif time_difference.total_seconds() == 3600:
+        return "1 hour ago"
+    elif time_difference.total_seconds() < 86400:
+        hours_ago = int(time_difference.total_seconds() / 3600)
+        return f"{hours_ago} hour{'s' if hours_ago != 1 else ''} ago"
+    else:
+        return timestamp.strftime("%Y-%m-%d %H:%M:%S")
 
 # Register the custom filter on the Flask application
 app.jinja_env.filters['format_timestamp'] = format_timestamp
