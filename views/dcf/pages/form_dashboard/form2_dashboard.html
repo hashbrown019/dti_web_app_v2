@@ -45,7 +45,7 @@
             <th>PCU</th>
             <th>Commodity</th>
             <th>Action</th>
-            <th>Submitted</th>
+            <th>Timestamp</th>
             </tr>
         </thead>
     
@@ -67,7 +67,10 @@
 
            
             </td>
-            <td class="date-cell" data-timestamp="{{ row['date_created'] }}"><i>{{ row['date_created'] }}</i></td>
+            <td class="date-cell"> {{ row['date_created'] }}<br>
+              {% if row['date_modified'] %}
+                <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp }}</i>
+              {% endif %}</i></td>
 
 
 

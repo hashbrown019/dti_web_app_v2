@@ -41,7 +41,7 @@ def updateform11(request):
         form_11_date_released=request.form['form_11_date_released']
 
         sql = """UPDATE dcf_access_financing
-               SET form_11_dip_alignment='{}',form_11_activity_title='{}',form_11_name_of_beneficiary='{}',form_11_industry_cluster='{}',form_11_msme_regional='{}',form_11_msme_province='{}',form_11_male='{}',form_11_female='{}',form_11_pwd='{}',form_11_youth='{}',form_11_ip='{}',form_11_sc='{}',form_11_date_submitted='{}',form_11_date_approved='{}',form_11_name_of_fsp='{}',form_11_location_address='{}',form_11_amount_of_equity='{}',form_11_date_released='{}',date_created=CURRENT_TIMESTAMP
+               SET form_11_dip_alignment='{}',form_11_activity_title='{}',form_11_name_of_beneficiary='{}',form_11_industry_cluster='{}',form_11_msme_regional='{}',form_11_msme_province='{}',form_11_male='{}',form_11_female='{}',form_11_pwd='{}',form_11_youth='{}',form_11_ip='{}',form_11_sc='{}',form_11_date_submitted='{}',form_11_date_approved='{}',form_11_name_of_fsp='{}',form_11_location_address='{}',form_11_amount_of_equity='{}',form_11_date_released='{}',date_modified=CURRENT_TIMESTAMP
                WHERE id={}
             """.format(chosen_dip,form_11_activity_title,form_11_name_of_beneficiary,chosen_commodity,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released, id)
         db.err_page = "asdasd"
