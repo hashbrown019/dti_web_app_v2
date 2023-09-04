@@ -7,6 +7,7 @@
 
 {% block content %}
 <title>Form 1 Dasboard</title>
+
 <div class="header bg-primary pb-6" >
   <div class="container-fluid">
     <div class="header-body">
@@ -44,7 +45,7 @@
             <th>Scope/Provinces</th>
             <th>Commodity</th>
             <th>Action</th>
-            <th>Submitted</th>
+            <th>Timestamp</th>
             </tr>
         </thead>
     
@@ -65,7 +66,10 @@
               {% endif %}
              
             </td>
-            <td class="date-cell" data-timestamp="{{ row['date_created'] }}"><i>{{ row['date_created'] }}</i></td>
+            <td class="date-cell"> {{ row['date_created'] }}<br>
+              {% if row['date_modified'] %}
+                <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp }}</i>
+              {% endif %}</i></td>
 
      
         </tr>

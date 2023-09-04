@@ -6,8 +6,10 @@
 
     <div class="card-body" style="background-color: #b4cde4;;">
 
-        <form style="margin-left: 2%;  margin-right: 2%;" action="/insert" method="POST">
+        <!-- <form style="margin-left: 2%;  margin-right: 2%;" action="/insert" method="POST"> -->
             {% include "includes/sweetalert.html" %}
+	        <input class="form_data_c x-input" type="hidden"  id="id">
+
             <div class="form-group">
                 <div class="form-row">
                     <div class="col-md-6">
@@ -15,15 +17,15 @@
                         <strong>
                             <label for="name">Name:</label>
                         </strong>
-                        <input type="hidden" name="id" value="1">
-                        <input type="text" class="form-control form_data_c" id="name" name="name" required>
+                        <input type="hidden" id="id" value="1">
+                        <input type="text" class="form-control form_data_c" id__="name" id="name" required>
                         
                     </div>
                     <div class="col-md-6">
                         <strong>
                             <label for="position">Position in the Firm/ Company:</label>
                         </strong>
-                        <input type="text" class="form-control form_data_c" id="position_company" name="position_firm">
+                        <input type="text" class="form-control form_data_c" id__="position_company" id="position_firm">
                     </div>
 
                 </div>
@@ -36,12 +38,12 @@
                         <strong>
                             <label for="no_indigenous_group">Member of Indigenous Group:</label>
                         </strong>
-                        <select class="form-control form_data_c" name="member_indegenous" id="no_indigenous_group">
+                        <select class="form-control form_data_c" id="member_indegenous" id__="no_indigenous_group">
                             <option value="" selected disabled>Please select</option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
-                        <input type="text" name="member_indegenous" class="form-control hidden-textbox3 form_data_c" id="indigenous_group" placeholder="Please specify which group" style="display: none;">
+                        <input type="text" id="member_indegenous" class="form-control hidden-textbox3 form_data_c" id__="indigenous_group" placeholder="Please specify which group" style="display: none;">
                     </div>
 
 
@@ -50,7 +52,7 @@
                         <strong>
                             <label for="exampleFormControlSelect1">Sex:</label>
                         </strong>
-                        <select class="form-control form_data_c" id="sex" name="sex">
+                        <select class="form-control form_data_c" id__="sex" id="sex">
                             <option value="" selected disabled>Please select</option>
                             <option>Male</option>
                             <option>Female</option>
@@ -61,7 +63,7 @@
                         <strong>
                             <label for="age">Age:</label>
                         </strong>
-                        <input type="text" class="form-control form_data_c" id="age" name="age">
+                        <input type="text" class="form-control form_data_c" id__="age" id="age">
                     </div>
                 </div>
             </div>
@@ -73,14 +75,14 @@
                         <strong>
                             <label for="age">Contact Details (Phone Number):</label>
                         </strong>
-                        <input  type="text" class="form-control form_data_c" name="contact_details" id="phone_no">
+                        <input  type="text" class="form-control form_data_c" id="contact_details" id__="phone_no">
                     </div>
 
                     <div class="col-md-4">
                         <strong>
                             <label for="email">Email Address:</label>
                         </strong>
-                        <input type="email" class="form-control form_data_c" id="email_add" name="email_add">
+                        <input type="email" class="form-control form_data_c" id__="email_add" id="email_add">
                     </div>
                 </div>
             </div>

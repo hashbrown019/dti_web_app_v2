@@ -1,4 +1,5 @@
 
+
 $(document).ready(function(){
 $(".hidden-textbox").hide();
 $("select#form_1_commodity,select#form_2_commodity,select#cbb_commodity,select#mgit_commodity,select#form_6_commodity,select#form_7_commodity,select#form_11_industry_cluster").change(function(){
@@ -41,17 +42,18 @@ $(document).ready(function(){
 });
 
 $(document).ready(function() {
-  $(".form-1-y, .form-1-ac, .form-1-ad, .form-1-ae").on("input", updateTotalProjectCost);
+  $(".form1_mg, .form1_cap, .form1_sup").on("input", updateTotalProjectCost);
 
   function updateTotalProjectCost() {
-      const yValue = parseFloat($(this).closest("tr").find(".form-1-y").val()) || 0;
-      const acValue = parseFloat($(this).closest("tr").find(".form-1-ac").val()) || 0;
-      const adValue = parseFloat($(this).closest("tr").find(".form-1-ad").val()) || 0;
-      const aeValue = parseFloat($(this).closest("tr").find(".form-1-ae").val()) || 0;
-      const totalProjectCost = yValue + acValue + adValue + aeValue;
+      const form1_mgz = parseFloat($(this).closest("tr").find(".form1_mg").val()) || 0;
+      const form1_capz = parseFloat($(this).closest("tr").find(".form1_cap").val()) || 0;
+      const form1_supz = parseFloat($(this).closest("tr").find(".form1_sup").val()) || 0;
+      const totalProjectCost = form1_mgz + form1_capz + form1_supz;
       $(this).closest("tr").find(".form-1-totalproject_cost").val(totalProjectCost);
   }
 });
+
+
 
 $(document).ready(function() {
   $(".form_1_euqipments, .form_1_Facilities_warehouses").on("input", updateTotalProdInv);
@@ -68,30 +70,27 @@ $(document).ready(function() {
   }
 });
 
-function updateTimestamps() {
-  $('.date-cell').each(function() {
-    const timestamp = new Date($(this).data('timestamp'));
-    const now = new Date();
+$(document).ready(function() {
+  $(".form1_org, .form1_tech, .form1_postprod, .form1_otherz").on("input", updateTotalProdInv);
 
-    const diffInSeconds = Math.floor((now - timestamp) / 1000);
+  function updateTotalProdInv() {
+      const form1_orgz = parseFloat($(this).closest("tr").find(".form1_org").val()) || 0;
+      const form1_techz = parseFloat($(this).closest("tr").find(".form1_tech").val()) || 0;
+      const form1_postprodz = parseFloat($(this).closest("tr").find(".form1_postprod").val()) || 0;
+      const form1_otherzz = parseFloat($(this).closest("tr").find(".form1_otherz").val()) || 0;
+      const totalCap = form1_orgz + form1_techz + form1_postprodz + form1_otherzz;
+      $(this).closest("tr").find(".form1_total_caps").val(totalCap);
+      $(".form1_cap").val(totalCap);
 
-    if (diffInSeconds < 60) {
-      $(this).text(`${diffInSeconds} seconds ago`);
-    } else if (diffInSeconds < 3600) {
-      const diffInMinutes = Math.floor(diffInSeconds / 60);
-      $(this).text(`${diffInMinutes} minutes ago`);
-    } else if (diffInSeconds < 86400) {
-      const diffInHours = Math.floor(diffInSeconds / 3600);
-      $(this).text(`${diffInHours} hours ago`);
-    } else {
-      // Display the full date
-      const formattedDate = `${timestamp.toLocaleDateString()} ${timestamp.toLocaleTimeString()}`;
-      $(this).text(formattedDate);
-    }
+  }
+});
+
+$(document).ready(function() {
+  $('#form_1_supply_chain_manager').on('input', function() {
+      var supplyChainManagerValue = $(this).val();
+      $('.form1_sup').val(supplyChainManagerValue);
   });
-}
-
-updateTimestamps();
+});
 
 $(document).ready(function() {
   $(".form-1-aa").on("input", updateTotalMatchingGrant);
@@ -106,6 +105,7 @@ $(document).ready(function() {
       const total = $(this).closest("tr").find(".form-1-total-matching-grant-update");
       const totalMatchingGrant = aaValue + abValue + acValue;
       total.val(totalMatchingGrant);
+      $(".form1_mg").val(totalMatchingGrant);
   }
 });
 
@@ -607,4 +607,15 @@ function toastr(type, message, title, options) {
   toastr.options = options;
   toastr[type](message, title);
 }
+
+
+
+
+
+
+
+
+
+
+
  
