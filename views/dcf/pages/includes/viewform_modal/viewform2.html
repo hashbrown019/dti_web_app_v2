@@ -18,15 +18,15 @@
                     &nbsp;
                 </div>
                 
-                <div class=" x-col l13 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+                <div class=" x-col l13 x-padding x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
                     <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">Implementing Unit</h2></center>
                 
                     <!---text--->
-                    <div class="x- row x-container x-padding">
+                    <div class="x-row x-container x-padding">
                 
                         <div class="x-col l4 x-container x-padding">
                             <input type="hidden"  name="id" value="{{ row['id'] }}">
-                            <span class="">RCUs</span>
+                            <label class="">RCUs</label>
                                     <select class="form_data_b x-border x-select x-border" id="form_2_rcus" name="form_2_rcus" disabled><br>
                                         <option>{{ row['form_2_rcus'] }}</option>
                                             <option value="8">Region Vlll - Eastern Visayas</option>
@@ -39,7 +39,7 @@
                                     </select>
                         </div>
                         <div class="x-col l4 x-container x-padding">
-                            <span class="">PCU</span>
+                            <label class="">PCU</label>
                                     <select class="form_data_b x-border x-select x-border" id="form_2_pcu" name="form_2_pcu" disabled><br>
                                         <option>{{ row['form_2_pcu'] }}</option>
                                         <option>Northern Samar</option>
@@ -66,7 +66,7 @@
                                     </select>
                         </div>
                         <div class="x-col l4 x-container x-padding">
-                            <span class="">Commodity:</span>
+                            <label class="">Commodity:</label>
                             <select class=" x-border x-select x-border" id="form_2_commodity" value="{{ row['form_2_commodity'] }}" name="form_2_commodity" disabled><br>
                                 <option>{{ row['form_2_commodity'] }}</option>
                                 <option >Coffee</option>
@@ -77,9 +77,9 @@
                         </div>
                 
                         <div class="x-row">
-                            <div class="x-col l9 x-container x-padding">
-                                <span class="">DIP Alignment: (If Yes, select Yes and type the name of the Anchor Firm/DIP Name and Select No for no DIP alignment):
-                                </span>
+                            <div class="x-col l8 x-container x-padding">
+                                <label class="">DIP Alignment: (If Yes, select Yes and type the name of the Anchor Firm/DIP Name and Select No for no DIP alignment):
+                                </label>
                                 <select disabled class=" x-border x-select x-border" id="form_2_dip_alignment"  value="{{ row['form_2_dip_alignment'] }}" name="form_2_dip_alignment" onChange="getDropDown(this)"><br>
                                     <option selected>{{ row['form_2_dip_alignment'] }}</option>
                                     <option>Yes</option>
@@ -99,7 +99,7 @@
                             <input class=" x-input x-border" id="form_2_name_owner_manager" value="{{ row['form_2_name_owner_manager'] }}" disabled  name="form_2_name_owner_manager" type="text" autocomplete="on" placeholder="Write Here">
                         </div>
                         <div class="x-col l6 x-container x-padding">
-                            <span class="">Sex of the Owner or Manager of the anchor Firm:</span>
+                            <label class="">Sex of the Owner or Manager of the anchor Firm:</label>
                             <select class="form_data_b x-border x-select x-border" id="form_2_sex_owner_manager" disabled value="{{ row['form_2_sex_owner_manager'] }}" name="form_2_sex_owner_manager"><br>
                                 <option>{{ row['form_2_sex_owner_manager'] }}</option>
                                 <option >Male</option>
@@ -127,7 +127,7 @@
                             <input class=" x-input x-border" id="form_2_chairperson_manager" disabled value="{{ row['form_2_chairperson_manager'] }}" name="form_2_chairperson_manager" type="text" placeholder="">
                         </div>
                         <div class="x-col l6 x-container x-padding">
-                            <span class="">Sex of the Chairperson or Manager of Partner FO:</span>
+                            <label class="">Sex of the Chairperson or Manager of Partner FO:</label>
                             <select class="form_data_b x-border x-select x-border" disabled id="form_2_sex_chairperson_manager"  value="{{ row['form_2_sex_chairperson_manager'] }}" name="form_2_sex_chairperson_manager"><br>
                                 <option>{{ row['form_2_sex_chairperson_manager'] }}</option>
                                 <option >Male</option>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="x-row x-container x-padding">
                         <div class="x-col l6 x-container x-padding">
-                            <span class="">Sector of  Chairperson or Manager of Partner FO:</span>
+                            <label class="">Sector of  Chairperson or Manager of Partner FO:</label>
                             
                             <select class="form_data_b x-border x-select x-border" disabled id="form_2_sector_chairperson_manager" value="{{ row['form_2_sector_chairperson_manager'] }}" name="form_2_sector_chairperson_manager"><br>
                                 <option>{{ row['form_2_sector_chairperson_manager'] }}</option>
@@ -228,7 +228,7 @@
                             <input class=" x-input x-border" id="form_2_notable_cpa_incentives" disabled value="{{ row['form_2_notable_cpa_incentives'] }}" name="form_2_notable_cpa_incentives" style="width: 100%;" type="text" placeholder="">
                         </div>
                         <div class="x-col l5 x-container x-padding">
-                            <span class="">Remarks/Status :</span>
+                            <label class="">Remarks/Status :</label>
                             <select class="form_data_b x-border x-select x-border" id="form_2_remarks_status" disabled value="{{ row['form_2_remarks_status'] }}" name="form_2_remarks_status"><br>
                                 <option>{{ row['form_2_remarks_status'] }}</option>
                                 <option >Non-renewal</option>

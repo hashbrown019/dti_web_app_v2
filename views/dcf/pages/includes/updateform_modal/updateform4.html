@@ -17,7 +17,7 @@
                 <div class="x-col l1 " >
                     &nbsp;
                 </div>
-                <div class=" x-col l13 x-container x-card x-light-grey" style=" margin-top: 10px; margin-bottom: 20px;" >
+                <div class=" x-col l13 x-padding x-container x-card x-light-grey " style=" margin-top: 10px; margin-bottom: 20px;" >
                     <center><h2 class=" x-container x-padding text-white" style="background-color: #007399;">Capacity Building for Beneficiaries</h2></center>
             
                     <div class="x-container x-padding">
@@ -30,7 +30,7 @@
                         <div class="x-row x-container x-padding">
                             <div class="x-col l3 x-container x-padding">
                                 <input type="hidden"  name="id" value="{{ row['id'] }}">
-                                <span class="">Implementing Unit</span>
+                                <label class="">Implementing Unit</label>
                                 <select required class="form_data_b x-border x-select x-border"  value="{{ row['cbb_implementing_unit'] }}" id="cbb_implementing_unit" name="cbb_implementing_unit"><br>
                                     <option >{{ row['cbb_implementing_unit'] }}</option>
                                     <option value="">Choose your option</option>
@@ -76,8 +76,8 @@
                                 <input class="form_data_b x-input x-border" value="{{ row['cbb_activity_title'] }}" name="cbb_activity_title" id="cbb_activity_title" type="text" placeholder="">
                             </div>
 
-                            <div class="x-col l3 x-container x-padding">
-                                <span class="">Types of Training</span>
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Types of Training</label>
                                 <select required class="form_data_b x-border x-select x-border" name="cbb_types_of_training" value="{{ row['cbb_types_of_training'] }}" id="cbb_types_of_training">
                                     <option selected>{{ row['cbb_types_of_training'] }}</option>
                                     <optgroup label="Farmer Organizations">
@@ -158,7 +158,7 @@
                             </div>
 
                             <div class="x-col l3 x-container x-padding">
-                                <span class="">Commodity</span>
+                                <label class="">Commodity</label>
                                 <select class="x-border x-select x-border" id="cbb_commodity" value="{{ row['cbb_commodity'] }}" name="cbb_commodity">
                                     <option>{{ row['cbb_commodity'] }}</option>
                                     <option>Coffee</option>
@@ -185,8 +185,8 @@
                                             {% set list1 = row['cbb_venue'].split(',') %}
                                             {% for index in range(list1|length) %}
                                             <tr>
-                                                <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_venue'].split(',')[index] }}" id="cbb_venue" type="text" name="cbb_venue[]"></td>
-                                                <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_name_of_resource_person'].split(',')[index] }}" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>
+                                                <td><input class="form_data_b  x-input" value="{{ row['cbb_venue'].split(',')[index] }}" id="cbb_venue" type="text" name="cbb_venue[]"></td>
+                                                <td><input class="form_data_b  x-input" value="{{ row['cbb_name_of_resource_person'].split(',')[index] }}" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -209,15 +209,15 @@
                                             <td><center>Counterpart Amount<br>(monetize & estimates)</center></td>
             
                                         <tr>
-                                            <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_rapid_actual_budget'] }}" name="cbb_rapid_actual_budget" id="cbb_rapid_actual_budget" type="text" ></td>
-                                            <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_dip_capbuild_activities_NPO'] }}" name="cbb_dip_capbuild_activities_NPO" id="cbb_dip_capbuild_activities_NPO" type="text" ></td>
-                                            <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_dip_capbuild_activities_CA'] }}" name="cbb_dip_capbuild_activities_CA" id="cbb_dip_capbuild_activities_CA" type="text" ></td>
+                                            <td><input class="form_data_b  x-input" value="{{ row['cbb_rapid_actual_budget'] }}" name="cbb_rapid_actual_budget" id="cbb_rapid_actual_budget" type="text" ></td>
+                                            <td><input class="form_data_b  x-input" value="{{ row['cbb_dip_capbuild_activities_NPO'] }}" name="cbb_dip_capbuild_activities_NPO" id="cbb_dip_capbuild_activities_NPO" type="text" ></td>
+                                            <td><input class="form_data_b  x-input" value="{{ row['cbb_dip_capbuild_activities_CA'] }}" name="cbb_dip_capbuild_activities_CA" id="cbb_dip_capbuild_activities_CA" type="text" ></td>
                                         </tr>
                                     </table>
                             </div>
             
                             <div class="x-col l5 x-container x-padding">
-                                <span class="">Type of Beneficiaries</span>
+                                <label class="">Type of Beneficiaries</label>
                                 <select class="form_data_b x-border x-select x-border" value="{{ row['cbb_total_number_of_beneficiaries_per_type'] }}" id="cbb_total_number_of_beneficiaries_per_type" name="cbb_total_number_of_beneficiaries_per_type"><br>
                                     <option >{{ row['cbb_total_number_of_beneficiaries_per_type'] }}</option>
                                     <option>MSME</option>
@@ -258,16 +258,16 @@
             
                                     <tr>
                                     <!---gender--->	
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_male" value="{{ row['cbb_total_number_per_gender_male'] }}" type="text" name="cbb_total_number_per_gender_male"></td>
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_female" value="{{ row['cbb_total_number_per_gender_female'] }}" type="text" name="cbb_total_number_per_gender_female"></td>
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_total" value="{{ row['cbb_total_number_per_gender_total'] }}" type="text" name="cbb_total_number_per_gender_total"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_total_number_per_gender_male" value="{{ row['cbb_total_number_per_gender_male'] }}" type="text" name="cbb_total_number_per_gender_male"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_total_number_per_gender_female" value="{{ row['cbb_total_number_per_gender_female'] }}" type="text" name="cbb_total_number_per_gender_female"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_total_number_per_gender_total" value="{{ row['cbb_total_number_per_gender_total'] }}" type="text" name="cbb_total_number_per_gender_total"></td>
             
                                     <!--sector--->
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_pwd" value="{{ row['cbb_total_number_per_sector_pwd'] }}" type="text" name="cbb_total_number_per_sector_pwd"></td>
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_youth" value="{{ row['cbb_total_number_per_sector_youth'] }}"  type="text" name="cbb_total_number_per_sector_youth"></td>
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_ip" value="{{ row['cbb_total_number_per_sector_ip'] }}" type="text" name="cbb_total_number_per_sector_ip"></td>
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_sc" value="{{ row['cbb_total_number_per_sector_sc'] }}"  type="text" name="cbb_total_number_per_sector_sc"></td>
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_total" value="{{ row['cbb_total_number_per_sector_total'] }}" type="text" name="cbb_total_number_per_sector_total"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_total_number_per_sector_pwd" value="{{ row['cbb_total_number_per_sector_pwd'] }}" type="text" name="cbb_total_number_per_sector_pwd"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_total_number_per_sector_youth" value="{{ row['cbb_total_number_per_sector_youth'] }}"  type="text" name="cbb_total_number_per_sector_youth"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_total_number_per_sector_ip" value="{{ row['cbb_total_number_per_sector_ip'] }}" type="text" name="cbb_total_number_per_sector_ip"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_total_number_per_sector_sc" value="{{ row['cbb_total_number_per_sector_sc'] }}"  type="text" name="cbb_total_number_per_sector_sc"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_total_number_per_sector_total" value="{{ row['cbb_total_number_per_sector_total'] }}" type="text" name="cbb_total_number_per_sector_total"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -299,11 +299,11 @@
                                     </tr>
             
                                     <tr>	
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_results_of_activity_pre_test" value="{{ row['cbb_results_of_activity_pre_test'] }}" type="text" name="cbb_results_of_activity_pre_test"></td>
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_results_of_activity_post_test" value="{{ row['cbb_results_of_activity_post_test'] }}" type="text" name="cbb_results_of_activity_post_test"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_results_of_activity_pre_test" value="{{ row['cbb_results_of_activity_pre_test'] }}" type="text" name="cbb_results_of_activity_pre_test"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_results_of_activity_post_test" value="{{ row['cbb_results_of_activity_post_test'] }}" type="text" name="cbb_results_of_activity_post_test"></td>
             
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_client_feedback_survey_rating" value="{{ row['cbb_client_feedback_survey_rating'] }}" type="text" name="cbb_client_feedback_survey_rating"></td>
-                                        <td><input class="form_data_b x-light-grey x-input" id="cbb_client_feedback_survey_comments_AOI" value="{{ row['cbb_client_feedback_survey_comments_AOI'] }}" type="text" name="cbb_client_feedback_survey_comments_AOI"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_client_feedback_survey_rating" value="{{ row['cbb_client_feedback_survey_rating'] }}" type="text" name="cbb_client_feedback_survey_rating"></td>
+                                        <td><input class="form_data_b  x-input" id="cbb_client_feedback_survey_comments_AOI" value="{{ row['cbb_client_feedback_survey_comments_AOI'] }}" type="text" name="cbb_client_feedback_survey_comments_AOI"></td>
                                         
             
                                     </tr>
@@ -351,8 +351,8 @@
         println(table_org_update)
         var row = table_org_update.insertRow(1);
         // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-        row.insertCell(0).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text" name="cbb_venue[]"></td>`
-        row.insertCell(1).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>`
+        row.insertCell(0).innerHTML = `<td><input class="form_data_b  x-input" id="cbb_venue" type="text" name="cbb_venue[]"></td>`
+        row.insertCell(1).innerHTML = `<td><input class="form_data_b  x-input" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>`
         println(table_org_update)
     }
 </script>

@@ -6,7 +6,7 @@
       <div class="modal-header" style="background-color: #007399;">
         <h5 class="modal-title text-white" id="exampleModalLabel">UPDATE DATA</h5>       
         <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
-          <span class="text-white" aria-hidden="true">&times;</span>
+          <label class="text-white" aria-hidden="true">&times;</label>
         </button>
       </div>
       <div class="modal-body" id="modalbodyedit">
@@ -18,7 +18,7 @@
                     &nbsp;
                 </div>
             
-                <div class="x-col l13 x-row x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+                <div class="x-col l13 x-padding x-row x-container x-card x-light-grey " style="margin-top: 10px; margin-bottom: 20px;"  >
                     <center><h2 class=" text-white x-container x-padding" style="background-color: #007399;">Product Development/ Enhancement Assistance Provided/ Consultancy Services</h2></center>
             
             
@@ -31,7 +31,7 @@
 
 
                         <div class="x-col l3 x-container x-padding">
-                            <span class="">Implementing Unit</span>
+                            <label class="">Implementing Unit</label>
                             <select required class="form_data_b x-border x-select x-border" id="form_6_implementing_unit" name="form_6_implementing_unit" value="{{ row['form_6_implementing_unit'] }}"><br>
                                 <option selected>{{ row['form_6_implementing_unit'] }}</option>
                                 <optgroup label="RCU">
@@ -74,7 +74,7 @@
 
                         <div class="x-col l3 x-container x-padding">
                             <label>Type of Assistance:</label>
-                            <input required class=" x-input x-border" value="{{ row['form_6_type_of_assisstance'] }}"  id="form_6_type_of_assisstance" name="form_6_type_of_assisstance" type="text" autocomplete="on" placeholder="Write Here">
+                            <input required class=" x-input x-border " value="{{ row['form_6_type_of_assisstance'] }}"  id="form_6_type_of_assisstance" name="form_6_type_of_assisstance" type="text" autocomplete="on" placeholder="Write Here">
                         </div>
                         <div class="x-col l3 x-container x-padding">
                             <label>Type of Activity:</label>
@@ -127,8 +127,8 @@
                                 {% set list1 = row['form_6_name_of_partner_organization_1'].split(',') %}
                                 {% for index in range(list1|length) %}
                                 <tr>
-                                    <td><input class="form_data_b x-light-grey x-input" value="{{ row['form_6_name_of_partner_organization_1'].split(',')[index] }}" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1[]"></td>
-                                    <td><input class="form_data_b x-light-grey x-input" value="{{ row['form_6_name_of_partner_organization_2'].split(',')[index] }}" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2[]"></td>
+                                    <td><input class="form_data_b  x-input" value="{{ row['form_6_name_of_partner_organization_1'].split(',')[index] }}" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1[]"></td>
+                                    <td><input class="form_data_b  x-input" value="{{ row['form_6_name_of_partner_organization_2'].split(',')[index] }}" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2[]"></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -141,8 +141,8 @@
                                 println(table6_org_update)
                                 var row = table6_org_update.insertRow(2);
                                 // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-                                row.insertCell(0).innerHTML = ` <td><input class="form_data_b x-light-grey x-input" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1[]"></td>`
-                                row.insertCell(1).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2[]"></td>`
+                                row.insertCell(0).innerHTML = ` <td><input class="form_data_b  x-input" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1[]"></td>`
+                                row.insertCell(1).innerHTML = `<td><input class="form_data_b  x-input" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2[]"></td>`
                                 println(table6_org_update)
                             }
                         </script>
@@ -153,7 +153,7 @@
                             <input class=" x-input x-border" value="{{ row['form_6_beneficiary_participant'] }}" id="form_6_beneficiary_participant" name="form_6_beneficiary_participant" type="text" autocomplete="on" placeholder="Write Here">
                         </div>
                         <div class="x-col l4 x-container x-padding">
-                            <span class="">Commodity</span>
+                            <label class="">Commodity</label>
                             <select class="x-border x-select x-border" id="form_6_commodity" value="{{ row['form_6_commodity'] }}" name="form_6_commodity" required>
                                 <option>{{ row['form_6_commodity'] }}</option>
                                 <option>Coffee</option>
@@ -165,7 +165,7 @@
                         </div>
                       
                         <div class="x-col l3 x-container x-padding">
-                            <span class="">Type of Beneficiary:</span>
+                            <label class="">Type of Beneficiary:</label>
                             <input class=" x-input x-border" id="form_6_type_of_beneficiary" name="form_6_type_of_beneficiary" value="{{ row['form_6_type_of_beneficiary'] }}" type="text" autocomplete="on" placeholder="Write Here">
                         </div>
                         
@@ -173,7 +173,7 @@
             
 
                     <div class="x-col l3 x-container x-padding">
-                        <span class="">Sex</span>
+                        <label class="">Sex</label>
                         <select class="form_data_b x-border x-select x-border" value="{{ row['form_6_sex'] }}" id="form_6_sex" name="form_6_sex"><br>
                             <option>{{ row['form_6_sex'] }}</option>
                                 <option>Male</option>
@@ -183,7 +183,7 @@
                     </div>
             
                     <div class="x-col l3 x-container x-padding">
-                        <span class="">Sector</span>
+                        <label class="">Sector</label>
                         <select class="form_data_b x-border x-select x-border" value="{{ row['form_6_sector'] }}" id="form_6_sector" name="form_6_sector"><br>
                             <option>{{ row['form_6_sector'] }}</option>
                                 <option>PWD</option>
@@ -219,15 +219,15 @@
                             </tr>
             
                             <tr>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_male'] }}" id="form_6_male" type="text" name="form_6_male"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_female'] }}" id="form_6_female" type="text" name="form_6_female"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_total_1'] }}" id="form_6_total_1" type="text" name="form_6_total_1"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_male'] }}" id="form_6_male" type="text" name="form_6_male"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_female'] }}" id="form_6_female" type="text" name="form_6_female"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_total_1'] }}" id="form_6_total_1" type="text" name="form_6_total_1"></td>
             
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_pwd'] }}" id="form_6_pwd" type="text" name="form_6_pwd"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_youth'] }}"  id="form_6_youth" type="text" name="form_6_youth"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_ip'] }}" id="form_6_ip" type="text" name="form_6_ip"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_sc'] }}" id="form_6_sc" type="text" name="form_6_sc"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_total_2'] }}" id="form_6_total_2" type="text" name="form_6_total_2"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_pwd'] }}" id="form_6_pwd" type="text" name="form_6_pwd"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_youth'] }}"  id="form_6_youth" type="text" name="form_6_youth"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_ip'] }}" id="form_6_ip" type="text" name="form_6_ip"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_sc'] }}" id="form_6_sc" type="text" name="form_6_sc"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_total_2'] }}" id="form_6_total_2" type="text" name="form_6_total_2"></td>
                             </tr>
                         </table>
                     </div> -->
@@ -259,10 +259,10 @@
                                 {% set list1 = row['form_6_product_developed'].split(',') %}
                                 {% for index in range(list1|length) %}
                             <tr>
-                                <td><input class=" x-light-grey x-input"  value="{{ row['form_6_product_developed'].split(',')[index] }}" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_date_launched_to_market'].split(',')[index] }}" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>
+                                <td><input class="  x-input"  value="{{ row['form_6_product_developed'].split(',')[index] }}" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_date_launched_to_market'].split(',')[index] }}" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>
             
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_improved_product'].split(',')[index] }}" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_improved_product'].split(',')[index] }}" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>
                                 <td><div class="x-row x-container x-padding">
                                     <select class=" x-border x-select x-border" value="{{ row['form_6_type_of_product_improvement'].split(',')[index] }}" id="form_6_type_of_product_improvement" name="form_6_type_of_product_improvement[]"><br>
                                         <option>{{ row['form_6_type_of_product_improvement'].split(',')[index] }}</option>
@@ -284,9 +284,9 @@
             
                                 var row2 = table6_org_update2.insertRow(3);
                                 // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-                                    row2.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>`
-				                    row2.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>`
-				                    row2.insertCell(2).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>`
+                                    row2.insertCell(0).innerHTML = `<td><input class="  x-input" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>`
+				                    row2.insertCell(1).innerHTML = `<td><input class="  x-input" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>`
+				                    row2.insertCell(2).innerHTML = `<td><input class="  x-input" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>`
 				                    row2.insertCell(3).innerHTML = `<td><div class="x-row x-container x-padding">
 						<select class=" x-border x-select x-border" id="form_6_type_of_product_improvement" name="form_6_type_of_product_improvement[]"><br>
 							<option value="" selected>Choose your option</option>
@@ -332,8 +332,8 @@
                             <tr>
             
                                 <!---1--->
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_name_of_product_developed'] }}" id="form_6_name_of_product_developed" type="text" name="form_6_name_of_product_developed"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_'] }}" id="form_6_" type="date" name="form_6_"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_name_of_product_developed'] }}" id="form_6_name_of_product_developed" type="text" name="form_6_name_of_product_developed"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_'] }}" id="form_6_" type="date" name="form_6_"></td>
             
                                 <!---2--->
                                 <td><div class="x-row x-container x-padding">
@@ -362,9 +362,9 @@
                                         <option>Others, Specify</option>
                                     </select>
                                 </div></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_date_issuance'] }}" id="form_6_date_issuance" type="date" name="form_6_date_issuance"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_expiration_date'] }}" id="form_6_expiration_date" type="date" name="form_6_expiration_date"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_product_certified'] }}" id="form_6_product_certified" type="text" name="form_6_product_certified"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_date_issuance'] }}" id="form_6_date_issuance" type="date" name="form_6_date_issuance"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_expiration_date'] }}" id="form_6_expiration_date" type="date" name="form_6_expiration_date"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_product_certified'] }}" id="form_6_product_certified" type="text" name="form_6_product_certified"></td>
                             </tr>
                         </table>
                     </div>
@@ -383,8 +383,8 @@
                             </tr>
             
                             <tr>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_rating'] }}" id="form_6_rating" type="text" name="form_6_rating"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_6_comment_ares_of_improvement'] }}" id="form_6_comment_ares_of_improvement" type="text" name="form_6_comment_ares_of_improvement"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_rating'] }}" id="form_6_rating" type="text" name="form_6_rating"></td>
+                                <td><input class="  x-input" value="{{ row['form_6_comment_ares_of_improvement'] }}" id="form_6_comment_ares_of_improvement" type="text" name="form_6_comment_ares_of_improvement"></td>
                             </tr>
                         </table>
                     </div>
