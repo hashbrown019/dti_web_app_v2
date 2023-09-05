@@ -53,7 +53,6 @@
 				
 				</div>
 
-				<!---dropdown--->
 				<div class="x-row x-padding x-container">
 					<div class="x-col l4 x-container x-padding">
 						<label class="">Size Of Anchor:</label>
@@ -65,18 +64,45 @@
 							<option >Micro</option>
 						</select>
 					</div>
+
+
+
 					<div class="x-col l4 x-container x-padding">
-						<label class="">Commodity:</label>
-						<select class="x-border x-select x-border" id="form_1_commodity" name="form_1_commodity" required>
-							<option value="">Choose your option</option>
-							<option>Coffee</option>
-							<option>Cacao</option>
-							<option>Coconut</option>
-							<option>PFN</option>
+						<label class="">MSMEs: <i style="font-size: smaller;">(Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.)</i></label>
+						<select class=" x-border x-select x-border" id="form_1_msmes" name="form_1_msmes" multiple><br>
+							<option >Large</option>
+							<option >Medium</option>
+							<option >Small</option>
+							<option >Micro</option>
 						</select>
-						<input type="text" class="hidden-textbox x-input x-border" name="form_1_commodity_others" id="form_1_commodity_others" placeholder="Please specify">
+						<!-- <div id="sample_dropdown" class="name_f x-select x-dropdown_multiple x-container x-row">
+						</div> -->
 					</div>
 					
+					<!-- <script>
+						$onload(function(){
+							dd1 = $dropdown_multiple({
+								id : "sample_dropdown",
+								dd_id : "ID WHERE VALUE WILL PUT: AUTO_GEN",
+								classn : "name_f",
+								option :  (VALUE_CHAIN_CROP),
+								search : true,
+								add : true,
+								on_add : function(item){}
+							})
+						})
+					</script> -->
+				
+					
+				
+				</div>
+			
+
+
+				<!---date--->
+				<div class="x-row x-padding x-container">
+
+
 					<div class="x-col l4 x-container x-padding">
 						<label class="">Scope/Provinces:</label>
 						<select class=" x-border x-select x-border" id="form_1_scope_provinces" name="form_1_scope_provinces" required><br>
@@ -104,12 +130,18 @@
 						<option>Maguindanao</option>
 						</select>
 					</div>
-				</div>
+					<div class="x-col l4 x-container x-padding">
+						<label class="">Commodity:</label>
+						<select class="x-border x-select x-border" id="form_1_commodity" name="form_1_commodity" required>
+							<option value="">Choose your option</option>
+							<option>Coffee</option>
+							<option>Cacao</option>
+							<option>Coconut</option>
+							<option>PFN</option>
+						</select>
+						<input type="text" class="hidden-textbox x-input x-border" name="form_1_commodity_others" id="form_1_commodity_others" placeholder="Please specify">
+					</div>
 
-
-
-				<!---date--->
-				<div class="x-row x-padding x-container">
 					<div class="x-col l5 x-container x-padding" style="width: 30%;">	
 						<label>For development (indicate date):</label>
 						<input class=" x-input x-border" id="form_1_for_development" name="form_1_for_development" type="date" placeholder="">
@@ -160,7 +192,7 @@
 			<div class="x-padding x-container">
 				<div class="x-padding">
 					<div class="x-col l4 x-container x-padding">	
-							<label>Total # of MSME's:</label>
+							<label>Total # of MSMEs:</label>
 							<input class=" x-input x-border" id="form_1_totalmsme" type="text" name="form_1_totalmsme" placeholder="">
 
 					</div>

@@ -89,9 +89,9 @@ $(".hidden-column_22_28").hide();
 
 $(document).ready(function(){
 $(".hidden-textbox3").hide();
-$("select#no_indigenous_group").change(function(){
+$("select#member_indegenous").change(function(){
 var currentVal = $(this).val();
-if(currentVal == "Yes"){
+if(currentVal == "yes"){
 $(".hidden-textbox3").show();
 }
 else
@@ -282,8 +282,9 @@ $(document).ready(function(){
     });
 
     window.onload = function(){
-      document.getElementById('viewgraph').click();
-      document.getElementById('viewchart').click();
+      try { document.getElementById('viewgraph').click();} catch (error) { warnprintln(error) }
+      try { document.getElementById('viewchart').click();} catch (error) { warnprintln(error) }
+      
     }
 
    
