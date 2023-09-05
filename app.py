@@ -15,6 +15,9 @@ def _init_config_():
 # ======================================================================
 print(" * Providing Imports Flask app")
 
+def nullified(args):pass
+print = nullified
+
 _init_config_()
 import start_point as sp
 _init_config_()

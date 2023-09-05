@@ -43,7 +43,7 @@ class outbound:
 		print(" *  Generating DATA FRAME ")
 		df_nested_list = pd.json_normalize(DATA)
 		# print(res[0])
-		print(df_nested_list)
+		# print(df_nested_list)
 		print(" *  Writing to spreadsheet ")
 		FILE_NAME_EXPORTED = '{}_{}_{}.xlsx'.format(USER_ID,form,DATE_NOW)
 		__TO_DL_EXCEL = c.RECORDS+'/objects/spreadsheets/exports/'+FILE_NAME_EXPORTED
@@ -76,7 +76,7 @@ class outbound:
 		print(" *  Generating DATA FRAME ")
 		df_nested_list = pd.json_normalize(DATA)
 		# print(res[0])
-		print(df_nested_list)
+		# print(df_nested_list)
 		print(" *  Writing to spreadsheet ")
 		FILE_NAME_EXPORTED = '{}_{}_{}.xlsx'.format(USER_ID,"EXCEL_UPLOADS",DATE_NOW)
 		__TO_DL_EXCEL = c.RECORDS+'/objects/spreadsheets/exports/'+FILE_NAME_EXPORTED
