@@ -33,9 +33,13 @@
             <td>
         
               {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
-              <!-- <a style="color:  #00cc66;" href="/cform?id={{row['id']}}&table=form_c"> <span><i class="fa-solid fa-pen-to-square" aria-hidden="true"> </i></span> Edit &nbsp; &nbsp; &nbsp; &nbsp;</a> -->
+              <a style="color: #1ac6ff; "    href="/cform?id={{row['id']}}&table=form_c"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a> &nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="color: #ff4d4d;"  href="/delete_record/form_c/{{row['id']}}" > <span><i class="fa-solid fa-trash"></i></span> Delete</a>
+              
               {%endif%}
-              <a style="color: #1ac6ff; "    href="/cform?id={{row['id']}}&table=form_c"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
+              
+              
+
             </td>
 
      

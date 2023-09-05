@@ -704,20 +704,21 @@ def delete_record(table,ids):
 	else:
 			flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
-	return redirect("/{}_dashboard".format(FORM_NAME[table]))
+	return redirect("/{}dashboard".format(FORM_NAME[table]))
 
 FORM_NAME={
-	'dcf_prep_review_aprv_status' : 'form1',
-	'dcf_implementing_unit' : 'form2',
-	'dcf_bdsp_reg' : 'form3',
-	'dcf_capacity_building' : 'form4',
-	'dcf_matching_grant' : 'form5',
-	'dcf_product_development' : 'form6',
-	'dcf_trade_promotion' : 'form7',
-	'form8' : 'form8',
-	'dcf_enablers_activity' : 'form9',
-	'dcf_negosyo_center' : 'form10',
-	'dcf_access_financing' : 'form11',
+	'dcf_prep_review_aprv_status' : 'form1_',
+	'dcf_implementing_unit' : 'form2_',
+	'dcf_bdsp_reg' : 'form3_',
+	'dcf_capacity_building' : 'form4_',
+	'dcf_matching_grant' : 'form5_',
+	'dcf_product_development' : 'form6_',
+	'dcf_trade_promotion' : 'form7_',
+	'form8' : 'form8_',
+	'dcf_enablers_activity' : 'form9_',
+	'dcf_negosyo_center' : 'form10_',
+	'dcf_access_financing' : 'form11_',
+	'form_c' : 'formc',
 }
 # if __name__ == "__main__":
 #     app.run(debug=True)
