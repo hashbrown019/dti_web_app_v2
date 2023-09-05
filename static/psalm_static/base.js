@@ -11,6 +11,18 @@ $(".hidden-textbox").hide();
 });  
 });
 
+$(document).ready(function(){
+  $(".hidden-textboxx").hide();
+  $("select#industry_cluster").change(function(){
+  var currentVal = $(this).val();
+  if(currentVal == "PFN"){
+  $(".hidden-textboxx").show();
+  }
+  else
+  $(".hidden-textboxx").hide();
+  });  
+  });
+
 
 $(document).ready(function(){
 $(".hidden-textbox2").hide();

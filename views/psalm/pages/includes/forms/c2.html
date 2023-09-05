@@ -21,23 +21,25 @@
                     <div class="col-md-6">
                         <strong> <label for="exampleFormControlSelect1">VC Stakeholder Category:</label></strong>
                         <select class="form-control form_data_c" id="vc_stakeholders" name="vc_stakeholders">
-                            <option value="" selected disabled>Please select</option>
+                            <option value="" selected>Please select</option>
                             <option value="MSME">MSME</option>
                             <option value="Large Firm">Large Firm</option>
                         </select>
                     </div>
 
+
                     <div class="col-md-6">
                         <strong>
-                            <label for="industry_cluster">Industry Cluster:</label>
+                            <label>Industry Cluster:</label>  
                         </strong>
-                        <input type="text" class="form-control form_data_c" name="industry_cluster" list="industry_cluster">
-                        <datalist id="industry_cluster">
-                            <option value="Cacao">  
-                            <option value="Coconut">
-                            <option value="Coffee">
-                          </datalist>
-                            
+                        <select class="form-control form_data_c" name="industry_cluster" id="industry_cluster">
+                            <option value="" selected>Please select</option>
+                            <option value="Cacao">Cacao</option>
+                            <option value="Coconut">Coconut</option>
+                            <option value="Coffee">Coffee</option>
+                            <option value="PFN">PFN</option>
+                        </select> 
+                        <input type="text" class="form-control hidden-textboxx form_data_c" name="pfn_specify" id="pfn_specify" placeholder="Please specify" style="display: none;">
                     </div>
 
                 </div>
@@ -76,7 +78,7 @@
                             <label>Form of Enterprise:</label>  
                         </strong>
                         <select class="form-control form_data_c" name="form_interprise" id="form_interprise">
-                            <option value="" selected disabled>Please select</option>
+                            <option value="" selected>Please select</option>
                             <option value="Single/Sole">Single/Sole</option>
                             <option value="Partnership">Partnership</option>
                             <option value="Corporation">Corporation</option>
@@ -113,17 +115,10 @@
                 <div class="form-row">
                     <div class="col-md-4">
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" name="pick" value="1" id="business_reg_check"
-                            onclick="myFunction()" />
                             <strong>  <label class="form-check-label" for="business_reg_check">Business Registration</label></strong>
-
-                    
-                            <div id="textt" style="display: none;">
                                 <div class="input-group">
                                     <label style=" background-color: #b3ffec;" class="input-group-text">Issued by:</label>
-                                    <input type="text" class="form-control form_data_c" id="issued_by_business_reg" name="issued_by_business_reg">
-                                  
-                                        
+                                    <input type="text" class="form-control form_data_c" id="issued_by_business_reg" name="issued_by_business_reg">   
                                 </div>
                                 <div class="input-group date">
                                     <label style=" background-color: #ffcccc;"
@@ -131,7 +126,6 @@
                                     <input type="date" class="form-control form_data_c" id="expired_date_business_reg" name="expired_date_business_reg">
                                   
                                 </div>
-</div>
                             
                         </div>
                     </div>
@@ -143,10 +137,8 @@
                 <div class="form-row">
                     <div class="col-md-4">
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" value="" id="product_reg_check" onclick="myFunction()" />
                            <strong><label class="form-check-label" for="product_reg_check">Product Registration</label></strong> 
 
-                           <div id="textt2" style="display: none;">
                                 <div class="input-group">
                                     <label style="background-color: #b3ffec; "
                                         class="input-group-text">Issued by:</label>
@@ -159,8 +151,6 @@
                                     <input type="date" class="form-control form_data_c" id="expired_date_product_reg" name="expired_date_product_reg">
                              
                                 </div>
-                           
-</div>
                         </div>
 
 
@@ -175,10 +165,7 @@
                     <div class="col-md-4">
 
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" value="" id="cert_reg" onclick="myFunction()" />
                             <strong><label class="form-check-label" for="cert_reg">Certificate of Registration</label></strong>
-
-                            <div id="textt3" style="display: none;">
                                 <div class="input-group">
                                     <label style=" background-color: #b3ffec; "
                                         class="input-group-text">Issued by:</label>
@@ -191,7 +178,6 @@
                                     <input type="date" class="form-control form_data_c" id="expired_date_cert_reg" name="expired_date_cert_reg">
                                   
                                 </div>
-                         </div>
                         </div>
                     </div>
                 </div>
@@ -202,10 +188,7 @@
                     <div class="col-md-4">
 
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" value="" id="lic_op" onclick="myFunction()" />
                             <strong><label class="form-check-label" for="lic_op">License to Operation</label></strong>
-
-                            <div id="textt4" style="display: none;">
                                 <div class="input-group">
                                     <label style=" background-color: #b3ffec;"
                                         class="input-group-text">Issued by:</label>
@@ -218,8 +201,6 @@
                                     <input type="date" class="form-control form_data_c" id="expired_date_lic_op" name="expired_date_lic_op">
                                     
                                 </div>
-                           
-</div>
                         </div>
                     </div>
                 </div>
@@ -239,13 +220,10 @@
                 <div class="form-row">
                     <div class="col-md-4">
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" name="pick" value="1" id="iso_cert"
-                            onclick="myFunction()" />
                            <strong> <label class="form-check-label" for="iso_cert">ISO Certification</label></strong>
                             <input type="text" class="form-control form_data_c" name="iso_cert_specific" id="iso_cert_specific" style="display: none;" placeholder="Please Specify">
 
                             
-                            <div id="textt5" style="display: none;">
                                 <div class="input-group">
                                     <label style="background-color: #b3ffec;"
                                         class="input-group-text">Issued by:</label>
@@ -262,7 +240,6 @@
 
 
                                 </div>
-                           </div>
                         </div>
 
 
@@ -275,10 +252,8 @@
                 <div class="form-row">
                     <div class="col-md-4">
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" value="" id="gapgmp_cert"onclick="myFunction()" />
                            <strong> <label class="form-check-label" for="Gap_cert">GAP/GMP Certification</label></strong>
 
-                           <div id="textt6" style="display: none;">
                                 <div class="input-group">
                                     <label style=" background-color: #b3ffec;"
                                         class="input-group-text">Issued by:</label>
@@ -292,7 +267,6 @@
                                     <input type="date" class="form-control form_data_c" id="expired_date_gapgmp_cert" name="expired_date_gapgmp_cert">
                                     
                                 </div>
-                            </div>
 
                         </div>
 
@@ -308,9 +282,7 @@
                     <div class="col-md-4">
 
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" value="" id="organic" onclick="myFunction()" />
                         <strong>  <label class="form-check-label" for="organic">Organic</label></strong>  
-                        <div id="textt7" style="display: none;">
                                 <div class="input-group">
                                     <label style=" background-color: #b3ffec;"
                                         class="input-group-text">Issued by:</label>
@@ -324,7 +296,6 @@
                                    
 
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -335,10 +306,7 @@
                     <div class="col-md-4">
 
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" value="" id="halal" onclick="myFunction()" />
                            <strong> <label class="form-check-label" for="halal">Halal</label></strong>
-
-                           <div id="textt8" style="display: none;">
                                 <div class="input-group">
                                     <label style=" background-color: #b3ffec;"
                                         class="input-group-text">Issued by:</label>
@@ -351,7 +319,6 @@
                                     <input type="date" class="form-control form_data_c" id="expired_date_halal" name="expired_date_halal">
                                     
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -361,12 +328,8 @@
                 <div class="form-row">
                     <div class="col-md-4">
                         <div class="form-check">
-                            <input class="form-check-input form_data_c" type="checkbox" value="" id="other_cert"
-                                onclick="myFunction()" />
                            <strong> <label class="form-check-label" for="other_cert">Other Certification</label></strong>
                             <input type="text" class="form-control form_data_c" id="other_cert_specify" name="other_cert_specify" placeholder="Please Specify " style="display: none;">
-
-                            <div id="textt9" style="display: none;">
                                 <div class="input-group">
                                     <label style=" background-color: #b3ffec;"
                                         class="input-group-text">Issued by:</label>
@@ -379,7 +342,6 @@
                                     <input type="date" class="form-control form_data_c" id="expired_date_other_cert" name="expired_date_other_cert">
                                     
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -389,7 +351,7 @@
             <div class="form-group">
                 <div class="form-row">
                     <div class="col">
-                        <div class="form-check">
+                        <div class="form-check" style="display: none;">
                       <input class="form-check-input form_data_c" type="checkbox" value="None of the Above/On-process/Informal" name="none_of_the_above" id="none_of_the_above" />
                       <strong> <label class="form-check-label">None of the Above/On-process/Informal</label></strong> 
                         </div>
@@ -403,7 +365,7 @@
                     <div class="col-md-6">
                         <strong> <label for="exampleFormControlSelect1">Type of Enterprise/Business Size</strong> <i>(by asset, exc. land)</i></label>
                         <select class="form-control form_data_c" id="type_enterprise" name="type_enterprise">
-                            <option value="" selected disabled>Please select</option>
+                            <option value="" selected>Please select</option>
                             <option value="Micro (3M below) ">Micro (3M below) </option>
                             <option value="Small (3-15M)">Small (3-15M)</option>
                             <option value="Medium (15.1M-100M)">Medium (15.1M-100M)</option>
@@ -424,14 +386,14 @@
                     </div>
                 </div>
                 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <div class="form-row">
                     <div class="col">
                 <label>Please mark&nbsp;&nbsp;<i class="fa fa-check-square"
                     aria-hidden="true"></i>&nbsp;&nbsp;the main economic activity of the enterprise.</label>
                     </div>
                     </div>
-        </div>
+        </div> -->
 
             </div>
 
