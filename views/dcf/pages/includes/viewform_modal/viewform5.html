@@ -19,58 +19,79 @@
                     &nbsp;
                 </div>
                 
-                <div class=" x-col l13 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+                <div class=" x-col l13 x-container x-card " style="margin-top: 10px; margin-bottom: 20px;"  >
                     <center><h2 class=" x-container x-padding text-white" style="background-color: #007399;">Matching Grant Implementation Tracker</h2></center>
                 
                     <div class="x-container x-padding">
                         <style> 
                             table, th, td{border: 1px solid black;border-collapse: collapse;}
                         </style>
-                
                     </div>
                     <input type="hidden"  name="id" value="{{ row['id'] }}">
+                  <div class="x-col l3 x-container x-padding">
+                        <label class="">Implementing Unit:</label>
+                        <select class="form_data_b x-border x-select x-border" disabled  value="{{ row['mgit_implementing_unit'] }}" id="mgit_implementing_unit" name="mgit_implementing_unit" required><br>
+                            <option>{{ row['mgit_implementing_unit'] }}</option>
+                            <optgroup label="RCU">
+                                <option value="8">Region Vlll - Eastern Visayas</option>
+                                <option value="9">Region lX -  Zamboanga Peninsula</option>
+                                <option value="10">Region X - Northern Mindanao</option>
+                                <option value="11">Region Xl - Davao Region</option>
+                                <option value="12">Region Xll - SOCCSKSARGEN</option>
+                                <option value="13">Region Xlll - Caraga</option>
+                                <option value="BARMM">BARMM</option>
+                            </optgroup>
+                            <optgroup label="PCU">
+
+                                <option>Northern Samar</option>
+                                <option>Leyte</option>
+                                <option>Southern Leyte</option>
+                                <option>Zamboanga del Norte</option>
+                                <option>Zamboanga Sibugay</option>
+                                <option>Zamboanga del Sur</option>
+                                <option>Misamis Oriental</option>
+                                <option>Bukidnon</option>
+                                <option>Lanao del Norte</option>
+                                <option>Davao de Oro</option>
+                                <option>Davao Oriental</option>
+                                <option>Davao del Norte</option>
+                                <option>Davao del Sur</option>
+                                <option>Davao Occidental</option>
+                                <option>North Cotabato</option>
+                                <option>Sultan Kudarat</option>
+                                <option>Sarangani</option>
+                                <option>Agusan del Norte</option>
+                                <option>Agusan del Sur</option>
+                                <option>Surigao del Sur</option>
+                                <option>Maguindanao</option>
+                            </optgroup>
+                            <option style="font-weight: bold;">NGA Partners</option>
+                        </select>
+                    </div>
+
                     <div class="x-container x-padding">
-                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-                            <table class="x-table x-container x-table-border">
-                                <tr>
-                                    
-                                    <th colspan="2">
-                                        <center>Implementing Unit</center>
-                                    </th>
-                                    <th rowspan="2">
-                                        <center>Name Of DIP</center>
-                                    </th>
-                                    <th rowspan="2">
-                                        <center>Name of FO/MSME RECIPIENT  (type name of FO / MSME)</center>
-                                    </th>
-                                    <th rowspan="2">
-                                        <center>total # of FO Member Recipients</center>
-                                    </th>
-                                    
-                                </tr>
-                
-                                <tr>
-                                
-                                    <!---gender---->
-                                    <td><center>RCU</center></td>
-                                    <td><center>PCU</center></td>
-                
-                                </tr>
-                
-                                <tr>
-                                <!---gender--->	
-                                    <td><input disabled class=" x-input" id="mgit_implementing_unit_rcu"  value="{{ row['mgit_implementing_unit_rcu'] }}" type="text" name="mgit_implementing_unit_rcu"></td>
-                                    <td><input disabled class=" x-input" id="mgit_implementing_unit_pcu" value="{{ row['mgit_implementing_unit_pcu'] }}" type="text" name="mgit_implementing_unit_pcu"></td>
-                                    <td><input disabled class=" x-input" id="mgit_name_of_dip" value="{{ row['mgit_name_of_dip'] }}" type="text" name="mgit_name_of_dip"></td>
-                
-                                <!--sector--->
-                                    <td><input disabled class=" x-input" id="mgit_msme_recipient" value="{{ row['mgit_msme_recipient'] }}" type="text" name="mgit_msme_recipient"></td>
-                                    <td><input disabled class=" x-input" id="mgit_total_member_recipient" value="{{ row['mgit_total_member_recipient'] }}" type="text" name="mgit_total_member_recipient"></td>
-                                    
-                                
-                                </tr>
-                            </table>
-                        </div>
+                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                        <table class="x-table x-container x-table-border">
+                            <tr>
+                                <th rowspan="2">
+                                    <center>Name Of DIP</center>
+                                </th>
+                                <th rowspan="2">
+                                    <center>Name of FO/MSME RECIPIENT  (type name of FO / MSME)</center>
+                                </th>
+                                <th rowspan="2">
+                                    <center>total # of FO Member Recipients</center>
+                                </th>
+                            </tr>
+                            <tr></tr>
+                            <tr>
+                                <!---gender---> 
+                                <td><input required class="  x-input" disabled  value="{{ row['mgit_name_of_dip'] }}" id="mgit_name_of_dip" type="text" name="mgit_name_of_dip" ></td>
+                                <td><input class="  x-input" disabled  value="{{ row['mgit_msme_recipient'] }}" id="mgit_msme_recipient" type="text" name="mgit_msme_recipient"></td>
+                                <td><input class="  x-input" disabled  value="{{ row['mgit_total_member_recipient'] }}" id="mgit_total_member_recipient" type="text" name="mgit_total_member_recipient"></td>
+                            </tr>
+                        </table>
+                    </div>
                 
                         <div class="x-row x-padding x-container">
                             <div class="x-col l4 x-container x-padding">
@@ -110,14 +131,14 @@
                 
                                 <tr>
                                 <!---gender--->	
-                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_gender_male'] }}" id="mgit_total_number_fo_gender_male" type="text" name="mgit_total_number_fo_gender_male"></td>
-                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_gender_female'] }}" id="mgit_total_number_fo_gender_female" type="text" name="mgit_total_number_fo_gender_female"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_gender_male'] }}" id="mgit_total_number_fo_gender_male" type="number" name="mgit_total_number_fo_gender_male"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_gender_female'] }}" id="mgit_total_number_fo_gender_female" type="number" name="mgit_total_number_fo_gender_female"></td>
                 
                                 <!--sectorG--->
-                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_pwd'] }}" id="mgit_total_number_fo_sectoral_pwd" type="text" name="mgit_total_number_fo_sectoral_pwd"></td>
-                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_youth'] }}" id="mgit_total_number_fo_sectoral_youth" type="text" name="mgit_total_number_fo_sectoral_youth"></td>
-                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_IP'] }}" id="mgit_total_number_fo_sectoral_IP" type="text" name="mgit_total_number_fo_sectoral_IP"></td>
-                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_SC'] }}" id="mgit_total_number_fo_sectoral_SC" type="text" name="mgit_total_number_fo_sectoral_SC"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_pwd'] }}" id="mgit_total_number_fo_sectoral_pwd" type="number" name="mgit_total_number_fo_sectoral_pwd"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_youth'] }}" id="mgit_total_number_fo_sectoral_youth" type="number" name="mgit_total_number_fo_sectoral_youth"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_IP'] }}" id="mgit_total_number_fo_sectoral_IP" type="number" name="mgit_total_number_fo_sectoral_IP"></td>
+                                    <td><input disabled class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_SC'] }}" id="mgit_total_number_fo_sectoral_SC" type="number" name="mgit_total_number_fo_sectoral_SC"></td>
                                 </tr>
                             </table>
                         </div>
