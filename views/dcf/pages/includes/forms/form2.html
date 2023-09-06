@@ -233,10 +233,10 @@
     <div class="x-row x-container x-padding">
         <div class="x-col l7 x-container x-padding" style="width: 55%;">
             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-            <table class="x-table x-container x-table-border">
+            <table id="form2_table" class="x-table x-container x-table-border">
                 <tr>
                     <th colspan="2">
-                        <center>CPA  Implementation</center>
+                        <center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row()"><i class="fa-solid fa-circle-plus"></i></button>CPA  Implementation</center>
                     </th>
                 </tr>
 
@@ -246,8 +246,8 @@
                 </tr>
 
                 <tr>
-                    <td><input class=" x-light-grey x-input" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements"></td>
-                    <td><input class=" x-light-grey x-input" id="form_2_date_conducted" type="date" name="form_2_date_conducted"></td>
+                    <td><input class=" x-light-grey x-input" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements[]"></td>
+                    <td><input class=" x-light-grey x-input" id="form_2_date_conducted" type="date" name="form_2_date_conducted[]"></td>
                 </tr>
             </table>
         </div>
@@ -263,6 +263,21 @@
             <button data-toggle="modal" data-target="#form2_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
         </div> -->
     </div>
+
+    <script>
+		
+        function add_row(){
+            // $ID('main_').innerHTML += og_row
+            // Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+            var row = form2_table.insertRow(3);
+            // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+            row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements[]"></td>`
+            row.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" id="form_2_date_conducted" type="date" name="form_2_date_conducted[]"></td>`
+            
+            // Add some text to the new cells:
+        }
+    </script>
+
     <div class="x-right" style="margin-bottom: 20px;">
         <input class="x-blue btn " id="form2_sub"  type="submit">
     </div>

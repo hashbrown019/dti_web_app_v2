@@ -252,10 +252,16 @@
                                     <td><center>Date conducted/implemented</center></td>
                                 </tr>
                 
-                                <tr>
-                                    <td><input class="  x-input" disabled id="form_2_activity_agreements" value="{{ row['form_2_activity_agreements'] }}" type="text" name="form_2_activity_agreements"></td>
-                                    <td><input class="  x-input" disabled id="form_2_date_conducted" value="{{ row['form_2_date_conducted'] }}" type="date" name="form_2_date_conducted"></td>
-                                </tr>
+
+                                <tbody  id="update_table_">
+                                    {% set list1 = row['form_2_activity_agreements'].split(',') %}
+                                    {% for index in range(list1|length) %}
+                                    <tr>
+                                        <td><input class="x-input" disabled value="{{ row['form_2_activity_agreements'].split(',')[index] }}" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements[]"></td>
+                                        <td><input class="x-input" disabled value="{{ row['form_2_date_conducted'].split(',')[index] }}" id="form_2_date_conducted" type="text" name="form_2_date_conducted[]"></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
                             </table>
                         </div>
                         <div class="x-col l5">
