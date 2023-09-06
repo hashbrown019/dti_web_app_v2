@@ -1,220 +1,213 @@
 
 {% for row in form11_datatable %}
 <div class="modal fade" id="form11edit{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
-    <div class="modal-content">
-      <div class="modal-header" style="background-color: #007399;">
-        <h5 class="modal-title text-white" id="exampleModalLabel">UPDATE DATA</h5>       
-        <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
-          <span class="text-white" aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="modalbodyedit">
+    <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #007399;">
+                <h5 class="modal-title text-white" id="exampleModalLabel">UPDATE DATA</h5>       
+                <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
+                    <label class="text-white" aria-hidden="true">&times;</label>
+                </button>
+            </div>
+            <div class="modal-body" id="modalbodyedit">
 
-              <form style="margin-left: 2%; margin-right: 2%;" id="form11" action="/updateform11" method="POST">
-                {% include "includes/sweetalert.html" %}
-                <style>
-                    .myDiv{
-                        display:none;
-                        padding:10px;
-                        margin-top:20px;
-                    } 
-                    .myInd{
-                        display:none;
-                        padding:10px;
-                        margin-top:20px;
-                    }  
-                    
-                </style> 
-                <div class="x-col l1 ">
-                    &nbsp;
-                </div>
-                <input type="hidden"  name="id" value="{{ row['id'] }}">
-                <div class=" x-col l13 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
-                    <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">Access to Financing Tracker</h2></center>
-        
-                    <div class="x-container x-padding">
-                        <style> 
-                            table, th, td{border: 1px solid black;border-collapse: collapse;}
-                        </style>
-                    </div>
-        
-        
-                    <div class="x-row x-container x-padding">
+                <form style="margin-left: 2%; margin-right: 2%;" id="form11" action="/updateform11" method="POST">
+                    {% include "includes/sweetalert.html" %}
+                    <style>
+                        .myDiv{
+                            display:none;
+                            padding:10px;
+                            margin-top:20px;
+                        } 
+                        .myInd{
+                            display:none;
+                            padding:10px;
+                            margin-top:20px;
+                        }  
 
-                        <div class="x-col l4 x-container x-padding">
-                            <label class="">DIP Alignment :</label>
-                            <select id="form_11_dip_alignment" name="form_11_dip_alignment"  value="{{ row['form_11_dip_alignment'] }}"  class=" x-border x-select x-border" required>
-                                <option>{{ row['form_11_dip_alignment'] }}</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>	
-                            <input type="text" class="hidden-textbox2 x-input x-border" name="form_11_dip_alignment_yes" id="form_11_dip_alignment_yes" placeholder="Please specify">
-                        </div>
+                    </style> 
+                    <div class="x-col l1 ">
+                        &nbsp;
+                    </div>
+                    <input type="hidden"  name="id" value="{{ row['id'] }}">
+                    <div class=" x-col l13 x-padding x-container x-card x-light-grey " style="margin-top: 10px; margin-bottom: 20px;">
+                        <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">Access to Financing Tracker</h2></center>
 
-                        <div class="x-col l2" style="margin-left: -6%;">
-                            <div id="showyes" class="myDiv" >
-                                <input class="x-padding x-container" value="{{ row['form_11_dip_alignment_yes'] }}" id="form_11_dip_alignment_yes" size="28" type="text" name="form_11_dip_alignment_yes" placeholder="Write here">
-                            </div> 
-                        </div>
-                        <div class="x-col l4 x-container x-padding" style="margin-left: 21%;" >
-                            <label>Activity Title:</label>
-                            <input class=" x-input x-border" id="form_11_activity_title" value="{{ row['form_11_activity_title'] }}" name="form_11_activity_title" type="text" autocomplete="on" placeholder="">
-                        </div>
-                    </div>
-                    <div class="x-row x-container">
-                        <div class="x-col l8 x-container x-padding">
-                            <label>Name of Beneficiary (Registered Business/FO Name):</label>
-                            <input class=" x-input x-border" id="form_11_name_of_beneficiary" value="{{ row['form_11_name_of_beneficiary'] }}" name="form_11_name_of_beneficiary" size="10" type="text" autocomplete="on" placeholder="">
-                        </div>
-                    </div>
+                        <div class="x-row x-container x-padding">
+                            <div class="x-col l4 x-container x-padding">
+                                <label class="">DIP Alignment :</label>
+                                <select id="form_11_dip_alignment" name="form_11_dip_alignment"  value="{{ row['form_11_dip_alignment'] }}"  class=" x-border x-select x-border" required>
+                                    <option>{{ row['form_11_dip_alignment'] }}</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>	
+                                <input type="text" class="hidden-textbox2 x-input x-border" name="form_11_dip_alignment_yes" id="form_11_dip_alignment_yes" placeholder="Please specify">
+                            </div>
 
-                    <div class="x-col l4 x-container x-padding">
-                        <span class="">Industry Cluster:</span>
-                        <select class="x-border x-select x-border" id="form_11_industry_cluster" value="{{ row['form_11_industry_cluster'] }}" name="form_11_industry_cluster" required>
-                            <option>{{ row['form_11_industry_cluster'] }}</option>
-                            <option>Coffee</option>
-                            <option>Cacao</option>
-                            <option>Coconut</option>
-                            <option>PFN</option>
-                        </select>
-                        <input type="text" class="hidden-textbox x-input x-border" name="form_11_industry_cluster_others" id="form_11_industry_cluster_others" placeholder="Please specify">
-                    </div>
-                    <div class="x-row x-container x-padding">
-                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-                        <table class="x-table x-container x-table-border" style="border-color: transparent;">
-                            <tr>
-                                
-                                <th colspan="2">
-                                    <center>MSME/FO Location</center>
-                                </th>
-                                <th colspan="2">
-                                    <center>Sex</center>
-                                </th>
-                            </tr>
-        
-                            <tr>
-                                <td><center>Region</center></td>
-                                <td><center>Province</center></td>
-        
-                                <td><center>Male</center></td>
-                                <td><center>Female</center></td>
-                                            
-                            </tr>
-        
-                            <tr>
-                                
-                                <td><input class=" x-light-grey x-input" id="form_11_msme_regional" value="{{ row['form_11_msme_regional'] }}" type="text" name="form_11_msme_regional"></td>
-                                <td><input class=" x-light-grey x-input" id="form_11_msme_province" value="{{ row['form_11_msme_province'] }}" type="text" name="form_11_msme_province"></td>
-                                
-        
-                                <td><input class=" x-light-grey x-input" id="form_11_male" type="number" value="{{ row['form_11_male'] }}" name="form_11_male"></td>
-                                <td><input class=" x-light-grey x-input" id="form_11_female" type="number" value="{{ row['form_11_female'] }}" name="form_11_female"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="x-col 9 x-container x-padding">
-                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-                        <table class="x-table x-container x-table-border" style="border-color: transparent;">
-                            <tr>
-                                
-                                <th colspan="4">
-                                    <center>Sector</center>
-                                </th>
-                                <th colspan="2">
-                                    <center>Proposal Submission</center>
-                                </th>
-        
-                            </tr>
-        
-                            <tr>
-        
-                                <td><center>PWD</center></td>
-                                <td><center>Youth</center></td>
-                                <td><center>IP</center></td>
-                                <td><center>SC</center></td>
-        
-                                <td><center>Date Submitted to FSP</center></td>
-                                <td><center>Date Approved</center></td>
-                                
-                            </tr>
-        
-                            <tr>
-                                
-                                <td><input class=" x-light-grey x-input" id="form_11_pwd" type="text" value="{{ row['form_11_pwd'] }}" name="form_11_pwd"></td>
-                                <td><input class=" x-light-grey x-input" id="form_11_youth" type="text" value="{{ row['form_11_youth'] }}" name="form_11_youth"></td>
-                                <td><input class=" x-light-grey x-input" id="form_11_ip" type="text" value="{{ row['form_11_ip'] }}" name="form_11_ip"></td>
-                                <td><input class=" x-light-grey x-input" id="form_11_sc" type="text" value="{{ row['form_11_sc'] }}" name="form_11_sc"></td>
-        
-                                <td><input class=" x-light-grey x-input" id="form_11_date_submitted" value="{{ row['form_11_date_submitted'] }}" type="date" name="form_11_date_submitted"></td>
-                                <td><input class=" x-light-grey x-input" id="form_11_date_approved" value="{{ row['form_11_date_approved'] }}" type="date" name="form_11_date_approved"></td>
-        
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="x-row x-container x-padding">
-                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-                        <table class="x-table x-container x-table-border" style="border-color: transparent;">
-                            <tr>
-                                <th colspan="2">
-                                    <center>Partner FSP</center>
-                                </th>
-                            </tr>
-        
-                            <tr>
-        
-                                <td><center>Name of FSP</center></td>
-                                <td><center>Location/Address</center></td>
-                                
-                            </tr>
-                            <tr>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_11_name_of_fsp'] }}" id="form_11_name_of_fsp" type="text" name="form_11_name_of_fsp"></td>
-                                <td><input class=" x-light-grey x-input" value="{{ row['form_11_location_address'] }}" id="form_11_location_address" type="text" name="form_11_location_address"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="x-row x-container x-padding">
-                        <div class="x-col l6 x-container x-padding">
-                            <label>Amount of Equity Financing Approved/Accessed:</label>
-                            <input class=" x-input x-border" id="form_11_amount_of_equity" value="{{ row['form_11_amount_of_equity'] }}" name="form_11_amount_of_equity" type="text" autocomplete="on" placeholder="">
+                            <div class="x-col l2">
+                                <div id="showyes" class="myDiv" >
+                                    <input class="x-padding x-container" value="{{ row['form_11_dip_alignment_yes'] }}" id="form_11_dip_alignment_yes" size="28" type="text" name="form_11_dip_alignment_yes" placeholder="Write here">
+                                </div> 
+                            </div>
+                            <div class="x-col l4 x-container x-padding">
+                                <label>Activity Title:</label>
+                                <input class=" x-input x-border" id="form_11_activity_title" value="{{ row['form_11_activity_title'] }}" name="form_11_activity_title" type="text" autocomplete="on" placeholder="">
+                            </div>
                         </div>
-                        <div class="x-col l4 x-container x-padding">
-                            <label>Date Released:</label>
-                            <input class=" x-input x-border" id="form_11_date_released" value="{{ row['form_11_date_released'] }}" name="form_11_date_released" type="date" autocomplete="on" placeholder="">
+                        <div class="x-row x-container">
+                            <div class="x-col l8 x-container x-padding">
+                                <label>Name of Beneficiary (Registered Business/FO Name):</label>
+                                <input class=" x-input x-border" id="form_11_name_of_beneficiary" value="{{ row['form_11_name_of_beneficiary'] }}" name="form_11_name_of_beneficiary" size="10" type="text" autocomplete="on" placeholder="">
+                            </div>
+
+
+                            <div class="x-col l4 x-container x-padding">
+                                <label class="">Industry Cluster:</label>
+                                <select class="x-border x-select x-border" id="form_11_industry_cluster" value="{{ row['form_11_industry_cluster'] }}" name="form_11_industry_cluster" required>
+                                    <option>{{ row['form_11_industry_cluster'] }}</option>
+                                    <option>Coffee</option>
+                                    <option>Cacao</option>
+                                    <option>Coconut</option>
+                                    <option>PFN</option>
+                                </select>
+                                <input type="text" class="hidden-textbox x-input x-border" name="form_11_industry_cluster_others" id="form_11_industry_cluster_others" placeholder="Please specify">
+                            </div>
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                                <tr>
+
+                                    <th colspan="2">
+                                        <center>MSME/FO Location</center>
+                                    </th>
+                                    <th colspan="2">
+                                        <center>Sex</center>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <td><center>Region</center></td>
+                                    <td><center>Province</center></td>
+
+                                    <td><center>Male</center></td>
+                                    <td><center>Female</center></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td><input class="  x-input" id="form_11_msme_regional" value="{{ row['form_11_msme_regional'] }}" type="text" name="form_11_msme_regional"></td>
+                                    <td><input class="  x-input" id="form_11_msme_province" value="{{ row['form_11_msme_province'] }}" type="text" name="form_11_msme_province"></td>
+
+
+                                    <td><input class="  x-input" id="form_11_male" type="number" value="{{ row['form_11_male'] }}" name="form_11_male"></td>
+                                    <td><input class="  x-input" id="form_11_female" type="number" value="{{ row['form_11_female'] }}" name="form_11_female"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="x-col 9 x-container x-padding">
+                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                                <tr>
+
+                                    <th colspan="4">
+                                        <center>Sector</center>
+                                    </th>
+                                    <th colspan="2">
+                                        <center>Proposal Submission</center>
+                                    </th>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td><center>PWD</center></td>
+                                    <td><center>Youth</center></td>
+                                    <td><center>IP</center></td>
+                                    <td><center>SC</center></td>
+
+                                    <td><center>Date Submitted to FSP</center></td>
+                                    <td><center>Date Approved</center></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td><input class="  x-input" id="form_11_pwd" type="text" value="{{ row['form_11_pwd'] }}" name="form_11_pwd"></td>
+                                    <td><input class="  x-input" id="form_11_youth" type="text" value="{{ row['form_11_youth'] }}" name="form_11_youth"></td>
+                                    <td><input class="  x-input" id="form_11_ip" type="text" value="{{ row['form_11_ip'] }}" name="form_11_ip"></td>
+                                    <td><input class="  x-input" id="form_11_sc" type="text" value="{{ row['form_11_sc'] }}" name="form_11_sc"></td>
+
+                                    <td><input class="  x-input" id="form_11_date_submitted" value="{{ row['form_11_date_submitted'] }}" type="date" name="form_11_date_submitted"></td>
+                                    <td><input class="  x-input" id="form_11_date_approved" value="{{ row['form_11_date_approved'] }}" type="date" name="form_11_date_approved"></td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <table class="x-table x-container x-table-border" style="border-color: transparent;">
+                                <tr>
+                                    <th colspan="2">
+                                        <center>Partner FSP</center>
+                                    </th>
+                                </tr>
+
+                                <tr>
+
+                                    <td><center>Name of FSP</center></td>
+                                    <td><center>Location/Address</center></td>
+
+                                </tr>
+                                <tr>
+                                    <td><input class="  x-input" value="{{ row['form_11_name_of_fsp'] }}" id="form_11_name_of_fsp" type="text" name="form_11_name_of_fsp"></td>
+                                    <td><input class="  x-input" value="{{ row['form_11_location_address'] }}" id="form_11_location_address" type="text" name="form_11_location_address"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <div class="x-col l6 x-container x-padding">
+                                <label>Amount of Equity Financing Approved/Accessed:</label>
+                                <input class=" x-input x-border" id="form_11_amount_of_equity" value="{{ row['form_11_amount_of_equity'] }}" name="form_11_amount_of_equity" type="text" autocomplete="on" placeholder="">
+                            </div>
+                            <div class="x-col l4 x-container x-padding">
+                                <label>Date Released:</label>
+                                <input class=" x-input x-border" id="form_11_date_released" value="{{ row['form_11_date_released'] }}" name="form_11_date_released" type="date" autocomplete="on" placeholder="">
+                            </div>
+
                         </div>
 
                     </div>
-                    
-                </div>
 
-                <script>
-                    $(document).ready(function(){
-                        $('#form_11_dip_alignment').on('change', function(){
-                            var demovalue = $(this).val(); 
-                            $("div.myDiv").hide();
-                            $("#show"+demovalue).show();
+                    <script>
+                        $(document).ready(function(){
+                            $('#form_11_dip_alignment').on('change', function(){
+                                var demovalue = $(this).val(); 
+                                $("div.myDiv").hide();
+                                $("#show"+demovalue).show();
+                            });
                         });
-                    });
-                    $(document).ready(function(){
-                        $('#form_11_industry_cluster').on('change', function(){
-                            var demovalue = $(this).val(); 
-                            $("div.myInd").hide();
-                            $("#show"+demovalue).show();
+                        $(document).ready(function(){
+                            $('#form_11_industry_cluster').on('change', function(){
+                                var demovalue = $(this).val(); 
+                                $("div.myInd").hide();
+                                $("#show"+demovalue).show();
+                            });
                         });
-                    });
-                </script>
-          </div>
-          <div class="modal-footer bg-light">
-             <button type="submit" class="btn btn-primary" style="justify-content: right;">Save changes</button>
-            <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
-      </div>
-    </form>
+                    </script>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="submit" class="btn btn-primary" style="justify-content: right;">Save changes</button>
+                    <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
 
-      
-      </div>
-   
+
+        </div>
+
     </div>
-  </div>
-  
-  {% endfor  %}
+</div>
+
+{% endfor  %}
 

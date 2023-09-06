@@ -11,6 +11,18 @@ $(".hidden-textbox").hide();
 });  
 });
 
+$(document).ready(function(){
+  $(".hidden-textboxx").hide();
+  $("select#industry_cluster").change(function(){
+  var currentVal = $(this).val();
+  if(currentVal == "PFN"){
+  $(".hidden-textboxx").show();
+  }
+  else
+  $(".hidden-textboxx").hide();
+  });  
+  });
+
 
 $(document).ready(function(){
 $(".hidden-textbox2").hide();
@@ -77,9 +89,9 @@ $(".hidden-column_22_28").hide();
 
 $(document).ready(function(){
 $(".hidden-textbox3").hide();
-$("select#no_indigenous_group").change(function(){
+$("select#member_indegenous").change(function(){
 var currentVal = $(this).val();
-if(currentVal == "Yes"){
+if(currentVal == "yes"){
 $(".hidden-textbox3").show();
 }
 else
@@ -269,11 +281,18 @@ $(document).ready(function(){
     });  
     });
 
-    window.onload = function(){
-      document.getElementById('viewgraph').click();
-      document.getElementById('viewchart').click();
-    }
-
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if the current page is 'formcdashboard'
+      if (window.location.pathname === '/formcdashboard') {
+        try { 
+          // Trigger a click on the elements
+          document.getElementById('viewgraph').click();
+          document.getElementById('viewchart').click();
+        } catch (error) { 
+          console.warn(error); 
+        }
+      }
+    });
    
 
 
@@ -486,9 +505,3 @@ function myFunction3() {
           
       })
     }
-
-
-
-    
-
- 

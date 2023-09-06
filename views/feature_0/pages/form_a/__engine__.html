@@ -13,7 +13,6 @@
 </div>
 
 
-
 <script type="text/javascript">
 	var form_a_page = 0
 	let form_page_holder = undefined
@@ -25,21 +24,21 @@
 
 	// $onload(form_a_forms)
 
-	function form_a_forms(){
+	function form_a_forms(RECORD_PROFILE_ID,REFNUM){
 		var form_a_dialog_container = $dialog({
 			title : "Farmer Profile Forms",
 			subtitle : "THe forms below are the sub-forms for Profiling Form A (Farmers Profile)",
 			content : form_page_holder,
 			footer_content : "sample footer",
 			buttons : ['Save','Cancel'],
-			buttons_actions :[save_form]
+			buttons_actions :[save_form,function(){RECORD_PROFILE_ID = undefined;}]
 		})
 		// form_a_dialog_container.dialog.style.width = "80vw"
 		form_a_dialog_container.show()
-		load_form(form_a_page)
+		load_form(form_a_page,RECORD_PROFILE_ID,REFNUM)
 	}
 
-	function load_form(s_form){
+	function load_form(s_form,RECORD_PROFILE_ID,REFNUM){
 		if(s_form==0){$ID('prev_btn_form_a').style.display="none"}
 		else{$ID('prev_btn_form_a').style.display="block"}
 		if(form_a_page==FORM_A_LS.length-1){$ID('next_btn_form_a').style.display="none"}
@@ -52,11 +51,13 @@
 			func : function(res){
 				$ID("form_holder").innerHTML = res
 				$("#form_holder").animate({ scrollTop: 0 }, "fast");
+				get_record_data_farmer(RECORD_PROFILE_ID,REFNUM)
 			}
 		})
 	}
 
 	function save_form(){
+		RECORD_PROFILE_ID = undefined;
 	}
 
 	function next_form(){
@@ -68,6 +69,56 @@
 		if(form_a_page!=0){form_a_page-=1}
 		load_form(form_a_page)
 	}
+
+	function get_record_data_farmer(RECORD_PROFILE_ID,REFNUM){
+		var _table = "";
+		if(REFNUM != undefined){
+			if(REFNUM.includes(".xl")){
+				_table = ["excel_import_form_a"]
+			}else{
+				_table = ["form_a_farmer_profiles","form_a_farm_land","form_a_hh_profile","form_a_prod_cost","form_a_farm_workers_laborers","form_a_farm_post_harvest","form_a_farm_marketing_sales","form_a_access_financial","form_a_feedback"]
+			}
+		}else{
+			return
+		}
+
+		$send({
+			action : "/form_a/get_ind_data_val",
+			method : POST,
+			data : $DATA({"tables":_table,"record_id":RECORD_PROFILE_ID}),
+			err_dialog : true,
+			func : function(r){
+				var res = JSON.parse(r)
+				println(res)
+			}
+		})
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// ================================================================================
 	// ================================================================================
@@ -215,6 +266,15 @@ function ls_brgy(el){
 
 
 // ====================================================
+// ====================================================
+// ====================================================
+// ====================================================
+// ====================================================
+// ====================================================
+// ====================================================
+// ====================================================
+// ====================================================
+// ====================================================
 function _autocomplete(inp, arr) {
 	var currentFocus;
 	inp.addEventListener("input", function(e) {
@@ -289,7 +349,19 @@ function _autocomplete(inp, arr) {
 			closeAllLists(e.target);
 	});
 }
-// ----------------------------------
+
+
+
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
 var iii = 0;
 function duplicate_POST_harv() {
 	var original = $ID('post_harvest' + iii);

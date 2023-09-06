@@ -119,8 +119,8 @@
                                  </tr>
          
                                  <tr>
-                                     <td><input for=" x-light-grey x-input"  value="{{ row['form_9_start_date'] }}" id="form_9_start_date" type="date" name="form_9_start_date"></td>
-                                     <td><input for=" x-light-grey x-input" value="{{ row['form_9_end_date'] }}" id="form_9_end_date" type="date" name="form_9_end_date"></td>
+                                     <td><input for="  x-input"  value="{{ row['form_9_start_date'] }}" id="form_9_start_date" type="date" name="form_9_start_date"></td>
+                                     <td><input for="  x-input" value="{{ row['form_9_end_date'] }}" id="form_9_end_date" type="date" name="form_9_end_date"></td>
                                  </tr>
                              </table>
                          </div>
@@ -158,8 +158,8 @@
                                 {% set list1 = row['form_9_name_of_participant_org'].split(',') %}
                                 {% for index in range(list1|length) %}
                              <tr>
-                                 <td><input class="t1 x-light-grey x-input"  value="{{ row['form_9_name_of_participant_org'].split(',')[index] }}" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org[]" type="text"></td>
-                                 <td><input class="t1 x-light-grey x-input" value="{{ row['form_9_counterpart_amount'].split(',')[index] }}" id="form_9_counterpart_amount" name="form_9_counterpart_amount[]" type="text"></td>
+                                 <td><input class="t1  x-input"  value="{{ row['form_9_name_of_participant_org'].split(',')[index] }}" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org[]" type="text"></td>
+                                 <td><input class="t1  x-input" value="{{ row['form_9_counterpart_amount'].split(',')[index] }}" id="form_9_counterpart_amount" name="form_9_counterpart_amount[]" type="text"></td>
                                  </tr>
                                  {% endfor %}
                                  </tbody>
@@ -174,8 +174,8 @@
                 
                                     var row = table9_org_update.insertRow(2);
                                     // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-                                        row.insertCell(0).innerHTML = ` <td><input class="t1 x-light-grey x-input"  value="{{ row['form_9_name_of_participant_org'].split(',')[index] }}" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org[]" type="text"></td>`
-                                        row.insertCell(1).innerHTML = `<td><input class="t1 x-light-grey x-input" value="{{ row['form_9_counterpart_amount'].split(',')[index] }}" id="form_9_counterpart_amount" name="form_9_counterpart_amount[]" type="text"></td>`
+                                        row.insertCell(0).innerHTML = ` <td><input class="t1  x-input"  value="{{ row['form_9_name_of_participant_org'].split(',')[index] }}" id="form_9_name_of_participant_org" name="form_9_name_of_participant_org[]" type="text"></td>`
+                                        row.insertCell(1).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_counterpart_amount'].split(',')[index] }}" id="form_9_counterpart_amount" name="form_9_counterpart_amount[]" type="text"></td>`
                                   
                                 }
                             </script>
@@ -195,9 +195,9 @@
                                     {% set list1 = row['form_9_name_of_participant'].split(',') %}
                                     {% for index in range(list1|length) %}
                                 <tr>
-                                    <td><input class="t1 x-light-grey x-input" value="{{ row['form_9_name_of_participant'].split(',')[index] }}" id="form_9_name_of_participant" name="form_9_name_of_participant[]" type="text"></td>
-                                    <td><input class="t1 x-light-grey x-input" value="{{ row['form_9_organization'].split(',')[index] }}" id="form_9_organization" name="form_9_organization[]" type="text"></td>
-                                    <td><input class="t1 x-light-grey x-input" value="{{ row['form_9_designation'].split(',')[index] }}" id="form_9_designation" name="form_9_designation[]" type="text"></td>
+                                    <td><input class="t1  x-input" value="{{ row['form_9_name_of_participant'].split(',')[index] }}" id="form_9_name_of_participant" name="form_9_name_of_participant[]" type="text"></td>
+                                    <td><input class="t1  x-input" value="{{ row['form_9_organization'].split(',')[index] }}" id="form_9_organization" name="form_9_organization[]" type="text"></td>
+                                    <td><input class="t1  x-input" value="{{ row['form_9_designation'].split(',')[index] }}" id="form_9_designation" name="form_9_designation[]" type="text"></td>
                                     </tr>
                                     {% endfor %}
                                     </tbody>
@@ -210,9 +210,9 @@
                 
                                     var row2 = table9_org_update2.insertRow(1);
                                     // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-                                        row2.insertCell(0).innerHTML = `<td><input class="t1 x-light-grey x-input" value="{{ row['form_9_name_of_participant'].split(',')[index] }}" id="form_9_name_of_participant" name="form_9_name_of_participant[]" type="text"></td>`
-                                        row2.insertCell(1).innerHTML = `<td><input class="t1 x-light-grey x-input" value="{{ row['form_9_organization'].split(',')[index] }}" id="form_9_organization" name="form_9_organization[]" type="text"></td>`
-                                        row2.insertCell(2).innerHTML = `<td><input class="t1 x-light-grey x-input" value="{{ row['form_9_designation'].split(',')[index] }}" id="form_9_designation" name="form_9_designation[]" type="text"></td>`
+                                        row2.insertCell(0).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_name_of_participant'].split(',')[index] }}" id="form_9_name_of_participant" name="form_9_name_of_participant[]" type="text"></td>`
+                                        row2.insertCell(1).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_organization'].split(',')[index] }}" id="form_9_organization" name="form_9_organization[]" type="text"></td>`
+                                        row2.insertCell(2).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_designation'].split(',')[index] }}" id="form_9_designation" name="form_9_designation[]" type="text"></td>`
                                   
                                 }
                     
@@ -275,16 +275,16 @@
          
                              <tr>
 <!--                                  
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_male'] }}"  id="form_9_male" type="text" name="form_9_male"></td>
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_female'] }}"  id="form_9_female" type="text" name="form_9_female"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_male'] }}"  id="form_9_male" type="text" name="form_9_male"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_female'] }}"  id="form_9_female" type="text" name="form_9_female"></td>
                                  
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_pwd'] }}" id="form_9_pwd" type="text" name="form_9_pwd"></td>
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_youth'] }}" id="form_9_youth" type="text" name="form_9_youth"></td>
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_ip'] }}" id="form_9_ip" type="text" name="form_9_ip"></td>
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_sc'] }}" id="form_9_sc" type="text" name="form_9_sc"></td> -->
+                                 <td><input class="  x-input" value="{{ row['form_9_pwd'] }}" id="form_9_pwd" type="text" name="form_9_pwd"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_youth'] }}" id="form_9_youth" type="text" name="form_9_youth"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_ip'] }}" id="form_9_ip" type="text" name="form_9_ip"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_sc'] }}" id="form_9_sc" type="text" name="form_9_sc"></td> -->
          
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_pre_test1'] }}" id="form_9_pre_test1" type="text" name="form_9_pre_test1"></td>
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_post_test1'] }}" id="form_9_post_test1" type="text" name="form_9_post_test1"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_pre_test1'] }}" id="form_9_pre_test1" type="text" name="form_9_pre_test1"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_post_test1'] }}" id="form_9_post_test1" type="text" name="form_9_post_test1"></td>
                              </tr>
                          </table>
                      </div>
@@ -319,12 +319,12 @@
          
                              <tr>
                                  
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_pre_test2'] }}" id="form_9_pre_test2" type="text" name="form_9_pre_test2"></td>
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_post_test2'] }}" id="form_9_post_test2" type="text" name="form_9_post_test2"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_pre_test2'] }}" id="form_9_pre_test2" type="text" name="form_9_pre_test2"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_post_test2'] }}" id="form_9_post_test2" type="text" name="form_9_post_test2"></td>
                                  
          
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_rating'] }}" id="form_9_rating" type="text" name="form_9_rating"></td>
-                                 <td><input class=" x-light-grey x-input" value="{{ row['form_9_comments'] }}" id="form_9_comments" type="text" name="form_9_comments"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_rating'] }}" id="form_9_rating" type="text" name="form_9_rating"></td>
+                                 <td><input class="  x-input" value="{{ row['form_9_comments'] }}" id="form_9_comments" type="text" name="form_9_comments"></td>
                              </tr>
                          </table>
                      </div>

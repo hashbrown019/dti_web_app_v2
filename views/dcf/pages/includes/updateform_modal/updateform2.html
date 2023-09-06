@@ -18,16 +18,16 @@
                     &nbsp;
                 </div>
                 
-                <div class=" x-col l13 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+                <div class=" x-col l13 x-container x-padding x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
                     <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">Implementing Unit</h2></center>
                 
                     <!---text--->
-                    <div class="x- row x-container x-padding">
+                    <div class="x-row x-container x-padding">
             
 
                         <div class="x-col l4 x-container x-padding">
                             <input type="hidden"  name="id" value="{{ row['id'] }}">
-                            <span class="">RCUs</span>
+                            <label class="">RCUs</label>
                                     <select class="form_data_b x-border x-select x-border" id="form_2_rcus" name="form_2_rcus" required><br>
                                         <option>{{ row['form_2_rcus'] }}</option>
                                             <option value="8">Region Vlll - Eastern Visayas</option>
@@ -40,7 +40,7 @@
                                     </select>
                         </div>
                         <div class="x-col l4 x-container x-padding">
-                            <span class="">PCU</span>
+                            <label class="">PCU</label>
                                     <select class="form_data_b x-border x-select x-border" id="form_2_pcu" name="form_2_pcu" required><br>
                                         <option>{{ row['form_2_pcu'] }}</option>
                                         <option>Northern Samar</option>
@@ -69,7 +69,7 @@
 
 
                         <div class="x-col l4 x-container x-padding">
-                            <span class="">Commodity</span>
+                            <label class="">Commodity</label>
                             <select class="x-border x-select x-border" value="{{ row['form_2_commodity'] }}" id="form_2_commodity" name="form_2_commodity">
                                 <option>{{ row['form_2_commodity'] }}</option>
                                 <option>Coffee</option>
@@ -84,9 +84,9 @@
         
                 
                         <div class="x-row">
-                            <div class="x-col l9 x-container x-padding">
-                                <span class="">DIP Alignment: (If Yes, select Yes and type the name of the Anchor Firm/DIP Name and Select No for no DIP alignment):
-                                </span>
+                            <div class="x-col l8 x-container x-padding">
+                                <label class="">DIP Alignment: (If Yes, select Yes and type the name of the Anchor Firm/DIP Name and Select No for no DIP alignment):
+                                </label>
                                 <select class=" x-border x-select x-border" id="form_2_dip_alignment"  value="{{ row['form_2_dip_alignment'] }}" name="form_2_dip_alignment" onChange="getDropDown(this)"><br>
                                     <option selected>{{ row['form_2_dip_alignment'] }}</option>
                                     <option>Yes</option>
@@ -102,11 +102,11 @@
                     </div>
                     <div class="x-row x-container x-padding">
                         <div class="x-col l6 x-container x-padding">
-                            <label class="">Name of Owner or Manager of the anchor Firm:</label>
+                            <label class="">Name of Owner or Manager of the anchor Firm/MSMEs:</label>
                             <input class=" x-input x-border" id="form_2_name_owner_manager" value="{{ row['form_2_name_owner_manager'] }}"  name="form_2_name_owner_manager" type="text" autocomplete="on" placeholder="Write Here">
                         </div>
                         <div class="x-col l6 x-container x-padding">
-                            <span class="">Sex of the Owner or Manager of the anchor Firm:</span>
+                            <label class="">Sex of the Owner or Manager of the anchor Firm/MSMEs:</label>
                             <select class="form_data_b x-border x-select x-border" id="form_2_sex_owner_manager" value="{{ row['form_2_sex_owner_manager'] }}" name="form_2_sex_owner_manager"><br>
                                 <option>{{ row['form_2_sex_owner_manager'] }}</option>
                                 <option >Male</option>
@@ -116,12 +116,12 @@
                     </div>
                     <div class="x-row x-container x-padding">
                         <div class="x-col l5 x-container x-padding">
-                            <label class="">Sector of  Owner or manager of the anchor firm:</label>
+                            <label class="">Sector of  Owner or manager of the anchor firm/MSMEs:</label>
                             <input class=" x-input x-border" id="form_2_sector_owner_manager" value="{{ row['form_2_sector_owner_manager'] }}" name="form_2_sector_owner_manager" type="text" placeholder="">
                         
                         </div>
                         <div class="x-col l6 x-container x-padding">
-                            <label class="">Business Address of  Owner or manager of the anchor firm:</label>
+                            <label class="">Business Address of  Owner or manager of the anchor firm/MSMEs:</label>
                             <input class=" x-input x-border" id="form_2_business_owner_manager" value="{{ row['form_2_business_owner_manager'] }}" name="form_2_business_owner_manager" type="text" placeholder="">
                         </div>
                         <div class="x-row x-container x-padding">
@@ -135,7 +135,7 @@
                             <input class=" x-input x-border" id="form_2_chairperson_manager" value="{{ row['form_2_chairperson_manager'] }}" name="form_2_chairperson_manager" type="text" placeholder="">
                         </div>
                         <div class="x-col l6 x-container x-padding">
-                            <span class="">Sex of the Chairperson or Manager of Partner FO:</span>
+                            <label class="">Sex of the Chairperson or Manager of Partner FO:</label>
                             <select class="form_data_b x-border x-select x-border" id="form_2_sex_chairperson_manager"  value="{{ row['form_2_sex_chairperson_manager'] }}" name="form_2_sex_chairperson_manager"><br>
                                 <option>{{ row['form_2_sex_chairperson_manager'] }}</option>
                                 <option >Male</option>
@@ -145,7 +145,7 @@
                     </div>
                     <div class="x-row x-container x-padding">
                         <div class="x-col l6 x-container x-padding">
-                            <span class="">Sector of  Chairperson or Manager of Partner FO:</span>
+                            <label class="">Sector of  Chairperson or Manager of Partner FO:</label>
                             <select class="form_data_b x-border x-select x-border" id="form_2_sector_chairperson_manager" value="{{ row['form_2_sector_chairperson_manager'] }}" name="form_2_sector_chairperson_manager"><br>
                                 <option>{{ row['form_2_sector_chairperson_manager'] }}</option>
                                 <option >PWD</option>
@@ -192,14 +192,14 @@
                 
                                 <tr>
                                     <!---gender--->	
-                                    <td><input class=" x-light-grey x-input" id="form_2_male" value="{{ row['form_2_male'] }}" type="number" name="form_2_male"></td>
-                                    <td><input class=" x-light-grey x-input" id="form_2_female" value="{{ row['form_2_female'] }}" type="number" name="form_2_female"></td>
+                                    <td><input class="  x-input" id="form_2_male" value="{{ row['form_2_male'] }}" type="number" name="form_2_male"></td>
+                                    <td><input class="  x-input" id="form_2_female" value="{{ row['form_2_female'] }}" type="number" name="form_2_female"></td>
                 
                                     <!--sectorG--->
-                                    <td><input class=" x-light-grey x-input" id="form_2_pwde" value="{{ row['form_2_pwde'] }}" type="number" name="form_2_pwde"></td>
-                                    <td><input class=" x-light-grey x-input" id="form_2_youth" value="{{ row['form_2_youth'] }}" type="number" name="form_2_youth"></td>
-                                    <td><input class=" x-light-grey x-input" id="form_2_ip" value="{{ row['form_2_ip'] }}" type="number" name="form_2_ip"></td>
-                                    <td><input class=" x-light-grey x-input" id="form_2_sc" value="{{ row['form_2_sc'] }}" type="number" name="form_2_sc"></td>
+                                    <td><input class="  x-input" id="form_2_pwde" value="{{ row['form_2_pwde'] }}" type="number" name="form_2_pwde"></td>
+                                    <td><input class="  x-input" id="form_2_youth" value="{{ row['form_2_youth'] }}" type="number" name="form_2_youth"></td>
+                                    <td><input class="  x-input" id="form_2_ip" value="{{ row['form_2_ip'] }}" type="number" name="form_2_ip"></td>
+                                    <td><input class="  x-input" id="form_2_sc" value="{{ row['form_2_sc'] }}" type="number" name="form_2_sc"></td>
                                 </tr>
                             </table>
                         </div>
@@ -236,7 +236,7 @@
                         </div>
 
                         <div class="x-col l5 x-container x-padding">
-                            <span class="">Remarks/Status :</span>
+                            <label class="">Remarks/Status :</label>
                             <select class="form_data_b x-border x-select x-border" id="form_2_remarks_status" value="{{ row['form_2_remarks_status'] }}" name="form_2_remarks_status"><br>
                                 <option>{{ row['form_2_remarks_status'] }}</option>
                                 <option >Non-renewal</option>
@@ -249,10 +249,10 @@
                     <div class="x-row x-container x-padding">
                         <div class="x-col l7 x-container x-padding" style="width: 55%;">
                             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-                            <table class="x-table x-container x-table-border">
+                            <table id="form2_table_update{{row['id']}}" class="x-table x-container x-table-border">
                                 <tr>
                                     <th colspan="2">
-                                        <center>CPA  Implementation</center>
+                                        <center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row({{row['id']}})"><i class="fa-solid fa-circle-plus"></i></button>CPA  Implementation</center>
                                     </th>
                                 </tr>
                 
@@ -260,11 +260,16 @@
                                     <td><center>Activity/Agreements (Outputs vis-à-vis signed CPA)</center></td>
                                     <td><center>Date conducted/implemented</center></td>
                                 </tr>
-                
-                                <tr>
-                                    <td><input class=" x-light-grey x-input" id="form_2_activity_agreements" value="{{ row['form_2_activity_agreements'] }}" type="text" name="form_2_activity_agreements"></td>
-                                    <td><input class=" x-light-grey x-input" id="form_2_date_conducted" value="{{ row['form_2_date_conducted'] }}" type="date" name="form_2_date_conducted"></td>
-                                </tr>
+
+                                <tbody  id="update_table_">
+                                    {% set list1 = row['form_2_activity_agreements'].split(',') %}
+                                    {% for index in range(list1|length) %}
+                                    <tr>
+                                        <td><input class=" x-input" value="{{ row['form_2_activity_agreements'].split(',')[index] }}" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements[]"></td>
+                                        <td><input class=" x-input" value="{{ row['form_2_date_conducted'].split(',')[index] }}" id="form_2_date_conducted" type="text" name="form_2_date_conducted[]"></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
                             </table>
                         </div>
                         <div class="x-col l5">
@@ -275,6 +280,22 @@
                      
                         </div>
                     </div>
+
+                    <script>
+                        
+
+                        function add_row(ids){
+                            println('form2_table_update'+ids)
+                            var table_org_update = document.getElementById('form2_table_update'+ids);
+                            println(table_org_update)
+                            var row = table_org_update.insertRow(2);
+                            // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                            row.insertCell(0).innerHTML = `<td><input class="  x-input" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements[]"></td>`
+                            row.insertCell(1).innerHTML = `<td><input class="  x-input" id="form_2_date_conducted" type="date" name="form_2_date_conducted[]"></td>`
+                            println(table_org_update)
+                        }
+                    </script>
+                    
 
                 </div>
                 

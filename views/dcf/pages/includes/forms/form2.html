@@ -14,14 +14,14 @@
     &nbsp;
 </div>
 
-<div class=" x-col l10 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+<div class=" x-col l10 x-container x-padding x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
     <center><h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 2 - CPA TRACKER</h2></center>
 
     <!---text--->
-    <div class="x- row x-container x-padding">
+    <div class="x-row x-container x-padding">
 
         <div class="x-col l4 x-container x-padding">
-            <span class="">RCUs</span>
+            <label class="">RCUs:</label>
 					<select class="form_data_b x-border x-select x-border" id="form_2_rcus" name="form_2_rcus" required><br>
 						<option value="">Choose your option</option>
 							<option value="8">Region Vlll - Eastern Visayas</option>
@@ -34,7 +34,7 @@
 					</select>
         </div>
         <div class="x-col l4 x-container x-padding">
-            <span class="">PCU</span>
+            <label class="">PCU:</label>
 					<select class="form_data_b x-border x-select x-border" id="form_2_pcu" name="form_2_pcu" required><br>
 						<option value="">Choose your option</option>
                         <option>Northern Samar</option>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="x-col l4 x-container x-padding">
-            <span class="">Commodity</span>
+            <label class="">Commodity:</label>
             <select class="x-border x-select x-border" id="form_2_commodity" name="form_2_commodity" required>
                 <option value="">Choose your option</option>
                 <option>Coffee</option>
@@ -88,11 +88,11 @@
     </div>
     <div class="x-row x-container x-padding">
         <div class="x-col l6 x-container x-padding">
-            <label class="">Name of Owner or Manager of the anchor Firm:</label>
+            <label class="">Name of Owner or Manager of the anchor Firm/MSMEs:</label>
             <input class=" x-input x-border" id="form_2_name_owner_manager" name="form_2_name_owner_manager" type="text" autocomplete="on" placeholder="Write Here">
         </div>
         <div class="x-col l6 x-container x-padding">
-            <span class="">Sex of the Owner or Manager of the anchor Firm:</span>
+            <label class="">Sex of the Owner or Manager of the anchor Firm/MSMEs:</label>
             <select class="form_data_b x-border x-select x-border" id="form_2_sex_owner_manager" name="form_2_sex_owner_manager"><br>
                 <option value="">Choose Sex</option>
                 <option >Male</option>
@@ -102,11 +102,11 @@
     </div>
     <div class="x-row x-container x-padding">
         <div class="x-col l5 x-container x-padding">
-            <label class="">Sector of  Owner or manager of the anchor firm:</label>
+            <label class="">Sector of  Owner or manager of the anchor firm/MSMEs:</label>
             <input class=" x-input x-border" id="form_2_sector_owner_manager" name="form_2_sector_owner_manager" type="text" placeholder="">
         </div>
         <div class="x-col l6 x-container x-padding">
-            <label class="">Business Address of  Owner or manager of the anchor firm:</label>
+            <label class="">Business Address of  Owner or manager of the anchor firm/MSMEs:</label>
             <input class=" x-input x-border" id="form_2_business_owner_manager" name="form_2_business_owner_manager" type="text" placeholder="">
         </div>
         <div class="x-row x-container x-padding">
@@ -120,7 +120,7 @@
             <input class=" x-input x-border" id="form_2_chairperson_manager" name="form_2_chairperson_manager" type="text" placeholder="">
         </div>
         <div class="x-col l6 x-container x-padding">
-            <span class="">Sex of the Chairperson or Manager of Partner FO:</span>
+            <label class="">Sex of the Chairperson or Manager of Partner FO:</label>
             <select class="form_data_b x-border x-select x-border" id="form_2_sex_chairperson_manager" name="form_2_sex_chairperson_manager"><br>
                 <option value="">Choose Sex</option>
                 <option >Male</option>
@@ -130,7 +130,7 @@
     </div>
     <div class="x-row x-container x-padding">
         <div class="x-col l6 x-container x-padding">
-            <span class="">Sector of  Chairperson or Manager of Partner FO:</span>
+            <label class="">Sector of  Chairperson or Manager of Partner FO:</label>
             <select class="form_data_b x-border x-select x-border" id="form_2_sector_chairperson_manager" name="form_2_sector_chairperson_manager"><br>
                 <option value="">Choose Sector</option>
                 <option >PWD</option>
@@ -220,7 +220,7 @@
             <input class=" x-input x-border" id="form_2_notable_cpa_incentives" name="form_2_notable_cpa_incentives" style="width: 100%;" type="text" placeholder="">
         </div>
         <div class="x-col l5 x-container x-padding">
-            <span class="">Remarks/Status :</span>
+            <label class="">Remarks/Status :</label>
             <select class="form_data_b x-border x-select x-border" id="form_2_remarks_status" name="form_2_remarks_status"><br>
                 <option value="">Choose Option</option>
                 <option >Non-renewal</option>
@@ -233,10 +233,10 @@
     <div class="x-row x-container x-padding">
         <div class="x-col l7 x-container x-padding" style="width: 55%;">
             <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-            <table class="x-table x-container x-table-border">
+            <table id="form2_table" class="x-table x-container x-table-border">
                 <tr>
                     <th colspan="2">
-                        <center>CPA  Implementation</center>
+                        <center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row()"><i class="fa-solid fa-circle-plus"></i></button>CPA  Implementation</center>
                     </th>
                 </tr>
 
@@ -246,8 +246,8 @@
                 </tr>
 
                 <tr>
-                    <td><input class=" x-light-grey x-input" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements"></td>
-                    <td><input class=" x-light-grey x-input" id="form_2_date_conducted" type="date" name="form_2_date_conducted"></td>
+                    <td><input class=" x-light-grey x-input" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements[]"></td>
+                    <td><input class=" x-light-grey x-input" id="form_2_date_conducted" type="date" name="form_2_date_conducted[]"></td>
                 </tr>
             </table>
         </div>
@@ -263,6 +263,21 @@
             <button data-toggle="modal" data-target="#form2_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
         </div> -->
     </div>
+
+    <script>
+		
+        function add_row(){
+            // $ID('main_').innerHTML += og_row
+            // Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+            var row = form2_table.insertRow(3);
+            // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+            row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements[]"></td>`
+            row.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" id="form_2_date_conducted" type="date" name="form_2_date_conducted[]"></td>`
+            
+            // Add some text to the new cells:
+        }
+    </script>
+
     <div class="x-right" style="margin-bottom: 20px;">
         <input class="x-blue btn " id="form2_sub"  type="submit">
     </div>

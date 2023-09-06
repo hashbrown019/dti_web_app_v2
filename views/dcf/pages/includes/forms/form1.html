@@ -14,7 +14,7 @@
 		&nbsp;
 	</div>
 
-	<div class=" x-col l10 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
+	<div class=" x-col l10 x-container x-card x-padding x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
 		<center><h2 class=" text-white x-container x-padding" style="background-color: #007399;">FORM 1 - PREPARATION, REVIEW AND APPROVAL STATUS</h2></center>
 
 		<div class="x-container x-padding">
@@ -24,39 +24,38 @@
 			
 			<!---text---> 
 			<div class="x-row x-section x-padding ">
-				<div class="x-row">
+				<div class="x-padding">
 					<div class="x-col l4 x-container x-padding">
-							<span class="">RCUs</span>
-					<select class="form_data_b x-border x-select x-border" id="form_1_rcus" name="form_1_rcus" required><br>
-						<option value="">Choose your option</option>
-							<option value="8">Region Vlll - Eastern Visayas</option>
-							<option value="9">Region lX -  Zamboanga Peninsula</option>
-							<option value="10">Region X - Northern Mindanao</option>
-							<option value="11">Region Xl - Davao Region</option>
-							<option value="12">Region Xll - SOCCSKSARGEN</option>
-							<option value="13">Region Xlll - Caraga</option>
-							<option value="BARMM">BARMM</option>
-					</select>
-						</div>
+							<label class="">RCUs:</label>
+						<select class="form_data_b x-border x-select x-border" id="form_1_rcus" name="form_1_rcus" required><br>
+							<option value="">Choose your option</option>
+								<option value="8">Region Vlll - Eastern Visayas</option>
+								<option value="9">Region lX -  Zamboanga Peninsula</option>
+								<option value="10">Region X - Northern Mindanao</option>
+								<option value="11">Region Xl - Davao Region</option>
+								<option value="12">Region Xll - SOCCSKSARGEN</option>
+								<option value="13">Region Xlll - Caraga</option>
+								<option value="BARMM">BARMM</option>
+						</select>
+					</div>
 						<!-- <div class="x-col l4 x-container x-padding">
 							<label>Number Of DIPs</label>
 							<input class=" x-input x-border" id="form_1_number_of_dips" type="Number" name="form_1_number_of_dips" placeholder="">
 						</div> -->
 						<div class="x-col l4 x-container x-padding">
-							<label>Name of DIP</label>
+							<label>Name of DIP:</label>
 							<input class=" x-input x-border" id="form_1_name_dip" type="text" name="form_1_name_dip" placeholder="">
 						</div>
 						<div class="x-col l4 x-container x-padding">
-							<label>Anchor Firm</label>
+							<label>Anchor Firm:</label>
 							<input class=" x-input x-border" id="form_1_anchor_firm" type="text" name="form_1_anchor_firm" placeholder="">
 						</div>
 				
 				</div>
 
-				<!---dropdown--->
 				<div class="x-row x-padding x-container">
 					<div class="x-col l4 x-container x-padding">
-						<span class="">Size Of Anchor</span>
+						<label class="">Size Of Anchor:</label>
 						<select class=" x-border x-select x-border" id="form_1_size_of_anchor" name="form_1_size_of_anchor"><br>
 							<option value="" >Choose your option</option>
 							<option >Large</option>
@@ -65,20 +64,47 @@
 							<option >Micro</option>
 						</select>
 					</div>
+
+
+
 					<div class="x-col l4 x-container x-padding">
-						<span class="">Commodity</span>
-						<select class="x-border x-select x-border" id="form_1_commodity" name="form_1_commodity" required>
-							<option value="">Choose your option</option>
-							<option>Coffee</option>
-							<option>Cacao</option>
-							<option>Coconut</option>
-							<option>PFN</option>
+						<label class="">MSMEs: <i style="font-size: smaller;">(Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.)</i></label>
+						<select class=" x-border x-select x-border" id="form_1_msmes" name="form_1_msmes" multiple><br>
+							<option >Large</option>
+							<option >Medium</option>
+							<option >Small</option>
+							<option >Micro</option>
 						</select>
-						<input type="text" class="hidden-textbox x-input x-border" name="form_1_commodity_others" id="form_1_commodity_others" placeholder="Please specify">
+						<!-- <div id="sample_dropdown" class="name_f x-select x-dropdown_multiple x-container x-row">
+						</div> -->
 					</div>
 					
+					<!-- <script>
+						$onload(function(){
+							dd1 = $dropdown_multiple({
+								id : "sample_dropdown",
+								dd_id : "ID WHERE VALUE WILL PUT: AUTO_GEN",
+								classn : "name_f",
+								option :  (VALUE_CHAIN_CROP),
+								search : true,
+								add : true,
+								on_add : function(item){}
+							})
+						})
+					</script> -->
+				
+					
+				
+				</div>
+			
+
+
+				<!---date--->
+				<div class="x-row x-padding x-container">
+
+
 					<div class="x-col l4 x-container x-padding">
-						<span class="">Scope/Provinces</span>
+						<label class="">Scope/Provinces:</label>
 						<select class=" x-border x-select x-border" id="form_1_scope_provinces" name="form_1_scope_provinces" required><br>
 							<option selected value="">Choose Province</option>
 						<option>Northern Samar</option>
@@ -104,13 +130,19 @@
 						<option>Maguindanao</option>
 						</select>
 					</div>
-				</div>
+					<div class="x-col l4 x-container x-padding">
+						<label class="">Commodity:</label>
+						<select class="x-border x-select x-border" id="form_1_commodity" name="form_1_commodity" required>
+							<option value="">Choose your option</option>
+							<option>Coffee</option>
+							<option>Cacao</option>
+							<option>Coconut</option>
+							<option>PFN</option>
+						</select>
+						<input type="text" class="hidden-textbox x-input x-border" name="form_1_commodity_others" id="form_1_commodity_others" placeholder="Please specify">
+					</div>
 
-
-
-				<!---date--->
-				<div class="x-row x-padding x-container">
-					<div class="x-col l5 x-container x-padding" style="width: 38%;">	
+					<div class="x-col l5 x-container x-padding" style="width: 30%;">	
 						<label>For development (indicate date):</label>
 						<input class=" x-input x-border" id="form_1_for_development" name="form_1_for_development" type="date" placeholder="">
 					</div>
@@ -118,7 +150,7 @@
 						<label>Date: CN Approved</label>
 						<input class=" x-input x-border" id="form_1_cn_approved" type="date" name="form_1_cn_approved" placeholder="">
 					</div> -->
-					<div class="x-col l3 x-container x-padding" style="width: 100%;">	
+					<div class="x-col l3 x-container x-padding" style="width: 60%;">	
 						<label>Date: Full BPs and DIPs Finalized/Approved by RCUs and endorsed to NPCO for Review</label>
 						<input class=" x-input x-border" id="form_1_finalized_approved" name="form_1_finalized_approved" type="date" placeholder="">
 					</div>
@@ -126,21 +158,25 @@
 						<label>Date of the Parallel Review with NPCO/RGMS-IFAD-RTWG</label>
 						<input class=" x-input x-border" id="form_1_date_of_parallel_review" name="form_1_date_of_parallel_review" type="date" placeholder="">
 					</div>
-					<div class="x-col l3 x-container x-padding" style="width: 100%;">	
+					<div class="x-col l3 x-container x-padding" style="width: 60%;">	
 						<label>Date of submission of the  revised DIPs based on the comments from the parallel review</label>
 						<input class=" x-input x-border" id="form_1_date_of_submission" name="form_1_date_of_submission" type="date" placeholder="">
 					</div>
-					<div class="x-col l3 x-container x-padding" style="width: 40%;">	
+					<div class="x-col l3 x-container x-padding" style="width: 20%;">	
 						<label>Date of RTWG Approval</label>
 						<input class=" x-input x-border" id="form_1_date_of_rtwg" name="form_1_date_of_rtwg" type="date" placeholder="">
 					</div>
-					<div class="x-col l3 x-container x-padding" style="width: 100%;">	
+					<div class="x-col l3 x-container x-padding" style="width: 80%;">	
 						<label>Date: NPCO cursory review of RCU's compliance to parallel review comments; and DIP  endorsement to NOTUS Uploading</label>
 						<input class=" x-input x-border" id="form_1_date_of_npco_cursory" name="form_1_date_of_npco_cursory" type="date" placeholder="">
 					</div>
 					<div class="x-col l3 x-container x-padding" style="width: 50%;">	
 						<label>Date: Uploading to IFAD NOTUS c/o NPCO</label>
 						<input class=" x-input x-border" id="form_1_date_of_uploading_to_ifad" name="form_1_date_of_uploading_to_ifad" type="date" placeholder="">
+					</div>
+					<div class="x-col l3 x-container x-padding" style="width: 50%;">	
+						<label>Date: IFAD Approval/No Objection Issuance</label>
+						<input class=" x-input x-border" id="form_1_date_of_approval_to_ifad" name="form_1_date_of_approval_to_ifad" type="date" placeholder="">
 					</div>
 					<div class="x-col l3 x-container x-padding" style="width: 50%;">	
 						<label>Date: NPCO Date of Approval </label>
@@ -150,26 +186,28 @@
 
 			</div>
 		</div>
-		<div class=" x-container" style="margin-top: 10px; margin-bottom: 20px;"  >
+		<div class="x-container" style="margin-top: 10px; margin-bottom: 20px;"  >
 			<center><h2 class=" text-white x-container" style="background-color: #007399;">DIP Details</h2></center>
 
-			<div class="x-row x-padding x-container">
+			<div class="x-padding x-container">
+				<div class="x-padding">
 					<div class="x-col l4 x-container x-padding">	
-							<label>Total # of MSME's</label>
+							<label>Total # of MSMEs:</label>
 							<input class=" x-input x-border" id="form_1_totalmsme" type="text" name="form_1_totalmsme" placeholder="">
 
-				</div>
+					</div>
 
-				<div class="x-col l4 x-container x-padding">	
-					<label>Total # of Small Holder Farmers</label>
-					<input class=" x-input x-border" id="form_1_total_farmerbene" type="text" name="form_1_total_farmerbene" placeholder="">
+					<div class="x-col l4 x-container x-padding">	
+						<label>Total # of Small Holder Farmers:</label>
+						<input class=" x-input x-border" id="form_1_total_farmerbene" type="text" name="form_1_total_farmerbene" placeholder="">
 
-		</div>
-		<div class="x-col l4 x-container x-padding">	
-			<label>Total # of FOs </label>
-			<input class=" x-input x-border" id="form_1_totalfo"  type="text" name="form_1_totalfo" placeholder="">
+					</div>
+					<div class="x-col l4 x-container x-padding">	
+						<label>Total # of FOs:</label>
+						<input class=" x-input x-border" id="form_1_totalfo"  type="text" name="form_1_totalfo" placeholder="">
 
-			</div>
+					</div>
+				</div>	
 			<div class="x-row">
 				<div class="x-container x-padding ">
 					<!-- <div class="x-col l8 x-container x-padding">
@@ -177,23 +215,23 @@
 						<input class=" x-input x-border" id="form_1_namefo" type="text" name="form_1_namefo" placeholder="">
 					</div> -->
 					<div class="x-col l4 x-container x-padding" >
-						<label>Total Hectarage Covered</label>
+						<label>Total Hectarage Covered:</label>
 						<input class=" x-input x-border" id="form_1_totalhectarage_cov" name="form_1_totalhectarage_cov"  placeholder="">
 					</div>
 					<div class="x-col l4 x-container x-padding">
-						<label>Hectares for Rehab</label>
+						<label>Hectares for Rehab:</label>
 						<input class=" x-input x-border" id="form_1_hect_rehab" name="form_1_hect_rehab" type="Number" placeholder="">
 					</div>
 					<div class="x-col l4 x-container x-padding">
-						<label>Total Cost of Rehab </label>
+						<label>Total Cost of Rehab:</label>
 						<input class=" x-input x-border" id="form_1_total_cost_rehab" name="form_1_total_cost_rehab" type="Number" placeholder="">
 					</div>
 					<div class="x-col l4 x-container x-padding">
-						<label>Hectares for Expansion</label>
+						<label>Hectares for Expansion:</label>
 						<input class=" x-input x-border" id="form_1_hect_exp" name="form_1_hect_exp" type="Number" placeholder="">
 					</div>
 					<div class="x-col l4 x-container x-padding">
-						<label>Total Cost of Expansion</label>
+						<label>Total Cost of Expansion:</label>
 						<input class=" x-input x-border" id="form_1_cost_exp" name="form_1_cost_exp" type="Number" placeholder="">
 					</div>
 				</div>
@@ -212,37 +250,14 @@
 
 					<tr>
 						<td><center>Equipment</center></td>
-						<td><center>Facilities</center></td>
-						<td><center>Warehouse</center></td>
-					</tr>
-
-					<tr>
-						<td><input class=" x-input x-border" id="form_1_euqipment" name="form_1_euqipment" type="number" placeholder=""></td>
-						<td><input class=" x-input x-border" id="form_1_facilities" name="form_1_facilities" type="number" placeholder=""></td>
-						<td><input class=" x-input x-border" id="form_1_warehouse" name="form_1_warehouse" type="number" placeholder=""></td>
-					</tr>
-				</table>
-			</div>
-
-			<div class="x-row x-container x-padding">
-				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-				<table class="x-table x-container x-table-border">
-					<tr>
-						<th colspan="3">
-							<center>Total Matching Grant</center>
-						</th>
-					</tr>
-			
-					<tr>
-						<td><center>AA</center></td>
-						<td><center>AB</center></td>
+						<td><center>Facilities/Warehouse</center></td>
 						<td><center>Total</center></td>
 					</tr>
-			
+
 					<tr>
-						<td><input class="x-input x-border form-1-aa" id="form_1_aa" name="form_1_aa" type="number" placeholder=""></td>
-						<td><input class="x-input x-border form-1-ab" id="form_1_ab" name="form_1_ab" type="number" placeholder=""></td>
-						<td><input class="x-input x-border form-1-total-matching-grant-update" id="form_1_total_matching_grant" name="form_1_total_matching_grant" placeholder="" readonly></td>
+						<td><input class=" x-input x-border form_1_euqipments" id="form_1_euqipment" name="form_1_euqipment" type="number" placeholder=""></td>
+						<td><input class=" x-input x-border form_1_Facilities_warehouses" id="form_1_Facilities_warehouse" name="form_1_Facilities_warehouse" type="number" placeholder=""></td>
+						<td><input class=" x-input x-border form_1_total_prod_invs" id="form_1_totalcost_prodinvest" name="form_1_totalcost_prodinvest" type="number" placeholder="" readonly></td>
 					</tr>
 				</table>
 			</div>
@@ -252,6 +267,31 @@
 				<table class="x-table x-container x-table-border">
 					<tr>
 						<th colspan="4">
+							<center>Total Matching Grant</center>
+						</th>
+					</tr>
+			
+					<tr>
+						<td><center>Total cost of Rehab</center></td>
+						<td><center>Total Cost of Expansion</center></td>
+						<td><center>Total Cost of Productive Investments</center></td>
+						<td><center>Total</center></td>
+					</tr>
+			
+					<tr>
+						<td><input class="x-input x-border form-1-aa" id="form_1_total_rehab" name="form_1_total_rehab"  type="number" placeholder=""></td>
+						<td><input class="x-input x-border form-1-ab" id="form_1_total_exp" name="form_1_total_exp"  type="number" placeholder=""></td>
+						<td><input class="x-input x-border form_1_totalcost_prodinvest2" id="form_1_totalcost_prodinvest2" name="form_1_totalcost_prodinvest2" type="number" placeholder="" readonly></td>
+						<td><input class="x-input x-border form-1-total-matching-grant-update" id="form_1_total_matching_grant" name="form_1_total_matching_grant" placeholder="" readonly></td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="x-row x-container x-padding">
+				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+				<table class="x-table x-container x-table-border">
+					<tr>
+						<th colspan="5">
 							<center>Capacity Building</center>
 						</th>
 
@@ -262,20 +302,22 @@
 						<td><center>Technical Trainings</center></td>
 						<td><center>Post-Production</center></td>
 						<td><center>Others</center></td>
+						<td><center>Total</center></td>
 					</tr>
 
 					<tr>
-						<td><input class=" x-input x-border" id="form_1_organizational" name="form_1_organizational" type="text" placeholder=""></td>
-						<td><input class=" x-input x-border" id="form_1_technical_trainings" name="form_1_technical_trainings" type="text" placeholder=""></td>
-						<td><input class=" x-input x-border" id="form_1_post_production" name="form_1_post_production" type="text" placeholder=""></td>
-						<td><input class=" x-input x-border" id="form_1_others" type="text" name="form_1_others" placeholder=""></td>
+						<td><input class=" x-input x-border form1_org" id="form_1_organizational" name="form_1_organizational" type="number" placeholder=""></td>
+						<td><input class=" x-input x-border form1_tech" id="form_1_technical_trainings" name="form_1_technical_trainings" type="number" placeholder=""></td>
+						<td><input class=" x-input x-border form1_postprod" id="form_1_post_production" name="form_1_post_production" type="number" placeholder=""></td>
+						<td><input class=" x-input x-border form1_otherz" id="form_1_others" type="number" name="form_1_others" placeholder=""></td>
+						<td><input class=" x-input x-border form1_total_caps" id="form_1_total_capbuild" type="text" name="form_1_total_capbuild" placeholder="" readonly></td>
 					</tr>
 				</table>
 			</div>
 			<div class="x-row">
 					<div class="x-col l6 x-container x-padding">
-						<label>Supply Chain Manager</label>
-						<input class=" x-input x-border" id="form_1_supply_chain_manager" name="form_1_supply_chain_manager" type="text" placeholder="">
+						<label>Supply Chain Manager:</label>
+						<input class=" x-input x-border form1_total_sup" id="form_1_supply_chain_manager" name="form_1_supply_chain_manager" type="number" placeholder="">
 					</div>
 	
 			</div>
@@ -285,24 +327,22 @@
 				<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
 				<table class="x-table x-container x-table-border">
 					<tr>
-						<th colspan="5">
+						<th colspan="4">
 							<center>Total Project Cost</center>
 						</th>
 					</tr>
 			
 					<tr>
-						<td><center>Y</center></td>
-						<td><center>AC</center></td>
-						<td><center>AD</center></td>
-						<td><center>AE</center></td>
+						<td><center>Total Matching Grant</center></td>
+						<td><center>Total Capacity Building</center></td>
+						<td><center>Supply Chain Manager</center></td>
 						<td><center>Total</center></td>
 					</tr>
 			
 					<tr>
-						<td><input class="x-input x-border form-1-y" id="form_1_y" name="form_1_y" type="number" placeholder=""></td>
-						<td><input class="x-input x-border form-1-ac" id="form_1_ac" name="form_1_ac" type="number" placeholder=""></td>
-						<td><input class="x-input x-border form-1-ad" id="form_1_ad" name="form_1_ad" type="number" placeholder=""></td>
-						<td><input class="x-input x-border form-1-ae" id="form_1_ae" name="form_1_ae" type="number" placeholder=""></td>
+						<td><input class="x-input x-border form1_mg" id="form_1_y" name="form_1_y" type="number" placeholder="" readonly></td>
+						<td><input class="x-input x-border form1_cap" id="form_1_ac" name="form_1_ac" type="number" placeholder="" readonly></td>
+						<td><input class="x-input x-border form1_sup" id="form_1_ad" name="form_1_ad" type="number" placeholder="" readonly></td>
 						<td><input class="x-input x-border form-1-totalproject_cost" id="form_1_totalproject_cost" name="form_1_totalproject_cost" placeholder="" readonly></td>
 					</tr>
 				</table>
@@ -312,11 +352,11 @@
 			<div class="x-row">
 				<div class="x-container x-padding ">
 					<div class="x-col l6 x-container x-padding">
-						<label>FMI</label>
+						<label>FMI:</label>
 						<input class=" x-input x-border" id="form_1_fmi" name="form_1_fmi" type="text" placeholder="">
 					</div>
 					<div class="x-col l6 x-container x-padding">
-						<label>FMI Kms</label>
+						<label>FMI Kms:</label>
 						<input class=" x-input x-border" id="form_1_fmi_kms" name="form_1_fmi_kms" type="text" placeholder="">
 					</div>
 				</div>
@@ -347,6 +387,22 @@
     document.querySelector('#myModal .close').addEventListener('click', function() {
     $('#myModal').modal('hide');
   });
+
+
+  var x_inputs_ = $CLASS('x-input')
+  for (let index = 0; index < x_inputs_.length; index++) {
+	if(x_inputs_[index].id!='form_1_totalproject_cost'){
+		x_inputs_[index].addEventListener('keyup',function(ee){
+			var num1 = parseFloat($ID("form_1_y").value) ;var num2 = parseFloat($ID("form_1_ac").value) ;var num3 = parseFloat($ID("form_1_ad").value) 
+			if(isNaN(num1)){ num1 = 0} 
+			if(isNaN(num2)){ num2 = 0} 
+			if(isNaN(num3)){ num3 = 0}
+			println(num3)
+			$ID('form_1_totalproject_cost').value = num1 + num2 + num3
+
+		})
+	}
+  }
 
   function generate_modal(){
     var modal_ls_search = $dialog({
