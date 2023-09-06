@@ -702,7 +702,7 @@ def delete_record(table,ids):
 			flash(f"An error occured !", "error") 
 			print(str(delete))
 	else:
-			flash(f"The data was deleted successfully!", "success")
+			# flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
 	return redirect("/{}dashboard".format(FORM_NAME[table]))
 
