@@ -46,6 +46,7 @@ app.register_blueprint(fmi.app);
 
 print(" * MIS Stat")
 
+
 @app.route("/")
 def index():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
@@ -86,14 +87,18 @@ def before_request():
 @app.after_request
 def after_request_func(response):
 	# if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
-	print(response.get_json())
+	# print(response.get_json())
 	return response
+
+	
 # - Dutchmil strawberry:
 # SECRET RECIPEE COCKTAIL
 # - Zafiro Premium GIN
 # - COLD- 
 
 # BE YOURSELF, TRUST UR GUTS 
+
+
 
 def format_timestamp(timestamp):
     now = datetime.now()
@@ -117,6 +122,7 @@ def format_timestamp(timestamp):
         return f"{hours_ago} hour{'s' if hours_ago != 1 else ''} ago"
     else:
         return timestamp.strftime("%Y-%m-%d %H:%M:%S")
+
 
 # Register the custom filter on the Flask application
 app.jinja_env.filters['format_timestamp'] = format_timestamp

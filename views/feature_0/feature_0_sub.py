@@ -168,6 +168,29 @@ class _main:
 			return {"status":"Error","data":e}
 
 
+	@app.route("/form_a/get_ind_data_val",methods=["POST","GET"])
+	def get_ind_data_val():
+		data = [];
+		identifier_ = "" 
+		record_id = request.form['record_id']
+		table = request.form['tables'].split(",")
+		table_count = len(table)
+		print(table_count)
+
+		if(table_count>1):
+			identifier_ = "farmer_code"
+			record_id = rapid_mysql.select("SELECT `farmer_code` FROM `form_a_farmer_profiles` WHERE `id`='{}' ;".format(record_id))[0]['farmer_code']
+		else:
+			identifier_ = "id"
+			record_id = request.form['record_id']
+
+		_res = {"len":len(table),"tables":table,"data":[]}
+		_res[identifier_]=record_id
+
+		for table_index in range(table_count):
+			data.append(rapid_mysql.select("SELECT * FROM `{}` WHERE `{}`='{}';".format(table[table_index],identifier_, record_id )))
+		_res['data'] = data
+		return _res
 
 def _filter(area):
 	_filter =""
