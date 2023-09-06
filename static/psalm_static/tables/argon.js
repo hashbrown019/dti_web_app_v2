@@ -1195,7 +1195,7 @@ var SalesChart = (function() {
 				}
 			},
 			data: {
-				labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+				labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept'],
 				datasets: [{
 					label: 'Entries'
 				}]
@@ -1253,10 +1253,10 @@ var SalesChart = (function() {
 				}
 			},
 			data: {
-				labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+				labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept'],
 				datasets: [{
 					label: 'Entries',
-					data: [0, 5, 10, 15, 20, 25, 30, 35]
+					data: [0, 5, 10, 15, 20, 25, 30, 35, 40]
 				}]
 			}
 		});

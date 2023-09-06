@@ -1,58 +1,116 @@
-<div class="card" style=" margin: 25px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #c1d0f0;">
-    <!-- Card header -->
+<div class="card"
+  style=" margin: 25px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #c1d0f0;">
+  <!-- Card header -->
 
-    <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center">
     <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
-      <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4" style="margin: 5%; margin-top: 3%;" >
-        <table class="table table-dark table-bordered table-flush dataTable" id="datatable-buttons" role="grid" aria-describedby="datatable-buttons_info" style=" width:100% !important" >
-        <thead class="thead">
-          <tr role="row">
-            <th>ID</th>
-            <th>Business Name</th>
-            <th>Business Address</th>
-            <th>Name</th>
-            <th>Sex</th>
-            <th>VC Stakeholder</th>
-            <th>Industry Cluster</th>
-            <th>Action</th>
+      <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4"
+        style="margin: 5%; margin-top: 3%;">
+        <table class="table table-dark table-bordered table-flush dataTable" id="datatable-buttons" role="grid"
+          aria-describedby="datatable-buttons_info" style=" width:100% !important">
+          <thead class="thead">
+            <tr role="row">
+              <th>ID</th>
+              <th>Business Name</th>
+              <th>Business Address</th>
+              <th>Name</th>
+              <th>Industry Cluster</th>
+              <th>Action</th>
+              <th>Timestamp</th>
             </tr>
-        </thead>
-    
-        <tbody>
-          <tr >
-         <div>
-            {% for row in datatable %}
-            <td>{{ row['id'] }}</td>
-            <td>{{ row['reg_businessname'] }}</td>
-            <td>{{ row['business_addr'] }}</td>  
-            <td>{{ row['name'] }}</td>
-            <td>{{ row['sex'] }}</td>
-            <td>{{ row['vc_stakeholders'] }}</td>
-            <td>{{ row['industry_cluster'] }}</td>
- 
-            <td>
-        
-              {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
-              <a style="color: #1ac6ff; "    href="/cform?id={{row['id']}}&table=form_c"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a> &nbsp;&nbsp;&nbsp;&nbsp;
-              <a style="color: #ff4d4d;"  href="/delete_record/form_c/{{row['id']}}" > <span><i class="fa-solid fa-trash"></i></span> Delete</a>
-              
-              {%endif%}
-              
-              
+          </thead>
 
-            </td>
+          <tbody>
+            <tr>
+              <div>
+                {% for row in datatable %}
+                <td>{{ row['id'] }}</td>
+                <td>{{ row['reg_businessname'] }}</td>
+                <td>{{ row['business_addr'] }}</td>
+                <td>{{ row['name'] }}</td>
+                <td>{{ row['industry_cluster'] }}</td>
 
-     
-        </tr>
-        
-        {% endfor  %}
+                <td>
+
+                  {% if row['upload_by']|string == user_data['id']|string %}
+                  <a style="color: #1ac6ff;" href="/cform?id={{ row['id'] }}&table=form_c">
+                    <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                  </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                  <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+                    href="/delete_record/form_c/{{ row['id'] }}">
+                    <span><i class="fa-solid fa-trash"></i></span> Delete
+                  </a>
+                  {% elif user_data['job'] == "Super Admin" %}
+                  <a style="color: #1ac6ff;" href="/cform?id={{ row['id'] }}&table=form_c">
+                    <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                  </a>
+                  {% else %}
+                  <a style="color: #1ac6ff;" href="/cform?id={{ row['id'] }}&table=form_c">
+                    <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                  </a>
+                  {% endif %}
+
+                </td>
+                <td class="date-cell"> {{ row['date_created'] }}<br>
+                  {% if row['date_modified'] %}
+                  <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
+                    }}</i>
+                  {% endif %}</i>
+                </td>
+
+
+
+
+            </tr>
+            <script>
+              const swalWithCustomButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              });
+
+              function showDeleteConfirmation(id) {
+                swalWithCustomButtons.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, delete it!',
+                  cancelButtonText: 'No, cancel',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    // If the user confirms, navigate to the delete URL
+                    window.location.href = `/delete_record/form_c/${id}`;
+                  } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // If the user cancels, show the cancellation message
+                    swalWithCustomButtons.fire(
+                      'Cancelled',
+                      'Your record is safe',
+                      'error'
+                    );
+                  }
+                });
+
+                // Prevent the default link behavior
+                return false;
+              }
+            </script>
+
+            {% endfor %}
           </tbody>
-</table>
+        </table>
 
+      </div>
+
+
+    </div>
+
+  </div>
 </div>
-          
-          
-</div>
-          
-        </div>
-        </div>

@@ -94,14 +94,15 @@ def display__():
     USER_INFO = session["USER_DATA"]
     data_count_entry=db.select("SELECT * FROM form_c {} ".format(position_data_filter()))
     datatable=db.select("SELECT * FROM form_c {};".format(position_data_filter()))
-    data_jan = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    data_feb= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    data_march = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    data_april = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    data_may = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    data_june= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    data_july = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    data_august = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+    data_jan = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    data_feb= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
+    data_march = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    data_april = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    data_may = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    data_june= db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    data_july = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    data_august = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    data_sept = db.select("SELECT * FROM form_c {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
     data_count_reg_business = db.select("SELECT reg_businessname FROM form_c {} ".format(position_data_filter()))
     data_count_position_firm = db.select("SELECT position_firm FROM form_c {} AND position_firm LIKE '%owner%'".format(position_data_filter()))
     data_count_cacao = db.select("SELECT * FROM form_c {} AND industry_cluster = 'cacao'".format(position_data_filter()))
@@ -110,8 +111,8 @@ def display__():
     data_count_pfn = db.select("SELECT industry_cluster FROM `form_c` {} AND industry_cluster !='cacao' AND industry_cluster !='coconut' AND industry_cluster !='coffee'  AND industry_cluster != '' AND industry_cluster!= ' ' AND industry_cluster NOT LIKE '%cacao%' AND industry_cluster NOT LIKE '%coconut%' AND industry_cluster NOT LIKE '%coffee%' ".format(position_data_filter()))
     intpfn= len(data_count_pfn)
     totalpfn = intpfn
-    thismonth=len(data_august)
-    lastmonth=len(data_july)
+    thismonth=len(data_sept)
+    lastmonth=len(data_august)
     subperc= thismonth - lastmonth
     try: percentage= (subperc / lastmonth)
     except Exception as e: percentage = 0
@@ -134,6 +135,7 @@ def display__():
     data_june=len(data_june)
     data_july=len(data_july)
     data_august=len(data_august)
+    data_sept=len(data_sept)
     percentages = round(percentage,2)
     totalpfn =totalpfn
     return{
@@ -149,6 +151,7 @@ def display__():
         'data_june':  data_june,
         'data_july':  data_july,
         'data_august':  data_august,
+        'data_sept':  data_sept,
         'data_count_reg_business':  data_count_reg_business,
         'data_count_position_firm':  data_count_position_firm,
         'data_count_cacao':  data_count_cacao,

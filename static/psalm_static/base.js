@@ -281,12 +281,18 @@ $(document).ready(function(){
     });  
     });
 
-    window.onload = function(){
-      try { document.getElementById('viewgraph').click();} catch (error) { warnprintln(error) }
-      try { document.getElementById('viewchart').click();} catch (error) { warnprintln(error) }
-      
-    }
-
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if the current page is 'formcdashboard'
+      if (window.location.pathname === '/formcdashboard') {
+        try { 
+          // Trigger a click on the elements
+          document.getElementById('viewgraph').click();
+          document.getElementById('viewchart').click();
+        } catch (error) { 
+          console.warn(error); 
+        }
+      }
+    });
    
 
 
@@ -499,9 +505,3 @@ function myFunction3() {
           
       })
     }
-
-
-
-    
-
- 

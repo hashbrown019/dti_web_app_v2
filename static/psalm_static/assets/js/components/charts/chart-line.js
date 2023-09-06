@@ -52,10 +52,10 @@ var SalesChart = (function() {
         }
       },
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept'],
         datasets: [{
           label: 'Performance',
-          data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+          data: [0, 20, 10, 30, 15, 40, 20, 60, 60,60]
         }]
       }
     });

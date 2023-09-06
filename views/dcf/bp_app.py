@@ -677,7 +677,7 @@ def set_data(table):
 		print("Editing")
 		for data_ in form_data:
 			args += ",`{}`='{}'".format(data_,form_data[data_])
-		sql = "UPDATE `{}` SET {} WHERE `id`='{}';".format(table,args[1:],request.form['id'])
+		sql = "UPDATE `{}` SET {},date_modified=CURRENT_TIMESTAMP WHERE `id`='{}';".format(table,args[1:],request.form['id'])
 		pass
 
 	last_row_id ="None"
