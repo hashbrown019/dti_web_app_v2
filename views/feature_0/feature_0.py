@@ -343,7 +343,6 @@ class _main:
 		excl_fo = dic_(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_Name_coop`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_Name_coop`;".format(FILTER_SUFFIX) ))
 		excl_dip = dic_(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_DIP_name`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_DIP_name`;".format(FILTER_SUFFIX) ))
 		excl_primary_c = dic(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_primary_crop`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_primary_crop`;".format(FILTER_SUFFIX) ))
-		
 
 		enumerator_mobile = (query(('''
 				SELECT 
