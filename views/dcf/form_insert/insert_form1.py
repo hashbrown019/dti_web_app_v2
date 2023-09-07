@@ -13,11 +13,10 @@ def insert_form1(request):
         # form_1_number_of_dips = request.form['form_1_number_of_dips']
         form_1_name_dip = request.form['form_1_name_dip']
         form_1_anchor_firm = request.form['form_1_anchor_firm']
-        form_1_size_of_anchor = request.form.get('form_1_size_of_anchor')
-        form_1_msmes = request.form.get('form_1_msmes')
+        form_1_size_of_anchor =', '.join(request.form.getlist('form_1_size_of_anchor[]') )
+        form_1_msmes =', '.join(request.form.getlist('form_1_msmes[]') )
         form_1_commodity = request.form.get('form_1_commodity', None)
         form_1_commodity_others = request.form.get('form_1_commodity_others', None)
-
         if form_1_commodity == 'PFN' and form_1_commodity_others:
             chosen_commodity = form_1_commodity_others
         else:

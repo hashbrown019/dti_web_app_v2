@@ -589,6 +589,7 @@ function myFunction3() {
 
 })();
 
+
 $(document).ready(function(){
   var multipleCancelButton = new Choices('#form_3_choices_multiple_remove_button', {
     removeItemButton: true,
@@ -597,6 +598,24 @@ $(document).ready(function(){
     renderChoiceLimit:4
   }); 
 });
+$(document).ready(function(){
+  var multipleCancelButton = new Choices('#form_1_size_of_anchor', {
+    removeItemButton: true,
+    maxItemCount:4,
+    searchResultLimit:4,
+    renderChoiceLimit:4
+  }); 
+});
+
+$(document).ready(function(){
+  var multipleCancelButton = new Choices('#form_1_msmes', {
+    removeItemButton: true,
+    maxItemCount:4,
+    searchResultLimit:4,
+    renderChoiceLimit:4
+  }); 
+});
+
 
 
 
