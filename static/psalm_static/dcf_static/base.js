@@ -607,6 +607,7 @@ $(document).ready(function(){
   }); 
 });
 
+
 $(document).ready(function(){
   var multipleCancelButton = new Choices('#form_1_msmes', {
     removeItemButton: true,
@@ -615,6 +616,16 @@ $(document).ready(function(){
     renderChoiceLimit:4
   }); 
 });
+
+$(document).ready(function(){
+  var multipleCancelButton = new Choices('#form_1_scope_provinces', {
+    removeItemButton: true,
+    maxItemCount:21,
+    searchResultLimit:21,
+    renderChoiceLimit:21
+  }); 
+});
+
 
 
 
