@@ -148,51 +148,96 @@
                         </script>
                     </div>
                     <div class="x-row x-container x-padding">
-                        <div class="x-col l4 x-container x-padding">
-                            <label>Name of Beneficiary/Participant:</label>
-                            <input class=" x-input x-border" value="{{ row['form_6_beneficiary_participant'] }}" id="form_6_beneficiary_participant" name="form_6_beneficiary_participant" type="text" autocomplete="on" placeholder="Write Here">
-                        </div>
-                        <div class="x-col l4 x-container x-padding">
-                            <label class="">Commodity</label>
-                            <select class="x-border x-select x-border" id="form_6_commodity" value="{{ row['form_6_commodity'] }}" name="form_6_commodity" required>
-                                <option>{{ row['form_6_commodity'] }}</option>
-                                <option>Coffee</option>
-                                <option>Cacao</option>
-                                <option>Coconut</option>
-                                <option>PFN</option>
-                            </select>
-                            <input type="text" class="hidden-textbox x-input x-border" name="form_6_commodity_others" id="form_6_commodity_others" placeholder="Please specify">
-                        </div>
-                      
-                        <div class="x-col l3 x-container x-padding">
-                            <label class="">Type of Beneficiary:</label>
-                            <input class=" x-input x-border" id="form_6_type_of_beneficiary" name="form_6_type_of_beneficiary" value="{{ row['form_6_type_of_beneficiary'] }}" type="text" autocomplete="on" placeholder="Write Here">
-                        </div>
+                        <style>table, th, td{border: 1px ; border-collapse: collapse;}</style>
+                        <table id="form6_table_updatexx{{row['id']}}" class="x-table x-container x-table-border" style="border-color: transparent;" >
                         
-                    </div>
             
+                            <tr>
+                                <td><center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row({{row['id']}})"><i class="fa-solid fa-circle-plus"></i></button><center>Name of Beneficiary/Participant</center></td>
+                                <td><center>Commodity</center></td>
+                                <td><center>Type of Beneficiary</center></td>
+                                <td><center>Sex</center></td>
+                                <td><center>Sector</center></td>
+            
+                            </tr>
+            
+                        
+                                <tbody  id="update_tablex_">
+                                    <tr>
+                                    {% set list1 = row['form_6_beneficiary_participant'].split(',') %}
+                                    {% for index in range(list1|length) %}
+                                <td><input class=" x-light-grey x-input"  value="{{ row['form_6_beneficiary_participant'].split(',')[index] }}" id="form_6_beneficiary_participant" type="text" name="form_6_beneficiary_participant[]"></td>
+                                <td>
+                                    <select class="x-border x-select x-border" id="form_6_commodity" value="{{ row['form_6_commodity'].split(',')[index] }}" name="form_6_commodity[]" required>
+                                        <option>{{ row['form_6_commodity'].split(',')[index] }}</option>
+                                        <option>Coffee</option>
+                                        <option>Cacao</option>
+                                        <option>Coconut</option>
+                                        <option>PFN</option>
+                                    </select>
+                                    <input type="text" class="hidden-textbox x-input x-border" name="form_6_commodity_others[]" id="form_6_commodity_others" placeholder="Please specify">
+                                </td>
+                                <td><input class=" x-light-grey x-input" id="form_6_type_of_beneficiary" value="{{ row['form_6_type_of_beneficiary'].split(',')[index] }}" type="text" name="form_6_type_of_beneficiary[]"></td>
+                                <td><select class="form_data_b x-border x-select x-border"  value="{{ row['form_6_sex'].split(',')[index] }}" id="form_6_sex" name="form_6_sex[]"><br>
+                                    <option>{{ row['form_6_sex'].split(',')[index] }}</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                </select></td>
+                                <td><select class="form_data_b x-border x-select x-border"  value="{{ row['form_6_sector'].split(',')[index] }}" id="form_6_sector" name="form_6_sector[]"><br>
+                                    <option>{{ row['form_6_sector'].split(',')[index] }}</option>
+                                        <option>PWD</option>
+                                        <option>Youth</option>
+                                        <option>IP</option>
+                                        <option>SC</option>
+                                </select></td>
+                            </tr>
+                            {% endfor %}
 
-                    <div class="x-col l3 x-container x-padding">
-                        <label class="">Sex</label>
-                        <select class="form_data_b x-border x-select x-border" value="{{ row['form_6_sex'] }}" id="form_6_sex" name="form_6_sex"><br>
-                            <option>{{ row['form_6_sex'] }}</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                        </select>
+            </tbody>
+                          
+                        </table>
+                        <script>
+                    
+                            function add_row(ids){
+                                // $ID('main_').innerHTML += og_row
+                                // Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+                                var table6_org_updatex = document.getElementById('form6_table_updatexx'+ids);
+                                var row = table6_org_updatex.insertRow(1);
+                                // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                                row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_beneficiary_participant" type="text" name="form_6_beneficiary_participant[]"></td>`
+                                row.insertCell(1).innerHTML = `<td>
+                                    <select class="x-border x-select x-border" name="form_6_commodity2[]">
+                                        <option value="">Choose your option</option>
+                                        <option>Coffee</option>
+                                        <option>Cacao</option>
+                                        <option>Coconut</option>
+                                        <option>PFN</option>
+                                    </select>
+                                    <input type="text" class=" x-input x-border" name="form_6_commodity_others2[]" id="form_6_commodity_others" placeholder="PFN please specify">
+                                </td>`
+                                row.insertCell(2).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_type_of_beneficiary" type="text" name="form_6_type_of_beneficiary[]"></td>`
+                                row.insertCell(3).innerHTML = `<td><select class="form_data_b x-border x-select x-border" id="form_6_sex" name="form_6_sex[]"><br>
+                                    <option value="">Choose your option</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                </select></td>`
+                                row.insertCell(4).innerHTML = `<td><select class="form_data_b x-border x-select x-border" id="form_6_sector" name="form_6_sector[]"><br>
+                                    <option value="">Choose your option</option>
+                                        <option>PWD</option>
+                                        <option>Youth</option>
+                                        <option>IP</option>
+                                        <option>SC</option>
+                                </select></td>`
             
+            
+            
+                                
+                                // Add some text to the new cells:
+                            }
+
+                        </script>
                     </div>
             
-                    <div class="x-col l3 x-container x-padding">
-                        <label class="">Sector</label>
-                        <select class="form_data_b x-border x-select x-border" value="{{ row['form_6_sector'] }}" id="form_6_sector" name="form_6_sector"><br>
-                            <option>{{ row['form_6_sector'] }}</option>
-                                <option>PWD</option>
-                                <option>Youth</option>
-                                <option>IP</option>
-                                <option>SC</option>
-                        </select>
-            
-                    </div>
                     <!-- <div class="x-row x-container x-padding">
                         <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
                         <table class="x-table x-container x-table-border" style="border-color: transparent;">
@@ -334,34 +379,39 @@
                                 <!---1--->
                                 <td><input class="  x-input" value="{{ row['form_6_name_of_product_developed'] }}" id="form_6_name_of_product_developed" type="text" name="form_6_name_of_product_developed"></td>
                                 <td><input class="  x-input" value="{{ row['form_6_'] }}" id="form_6_" type="date" name="form_6_"></td>
-            
-                                <!---2--->
-                                <td><div class="x-row x-container x-padding">
-                                    <select class=" x-border x-select x-border" value="{{ row['form_6_commodity1'] }}" id="form_6_commodity1" name="form_6_commodity1"><br>
-                                        <option>{{ row['form_6_commodity1'] }}</option>
-                                        <option >GMP</option>
-                                        <option >HACCP</option>
-                                        <option>Halal</option>
-                                        <option>Organic Certification</option>
-                                        <option>FDA-LTO Certification</option>
-                                        <option>FDA-CPR</option>
-                                        <option>Others, Specify</option>
-                                    </select>
-                                </div></td>
-            
-                                <!---3--->
-                                <td><div class="x-row x-container x-padding">
-                                    <select class=" x-border x-select x-border" value="{{ row['form_6_commodity2'] }}" id="form_6_commodity2" name="form_6_commodity2"><br>
-                                        <option>{{ row['form_6_commodity2'] }}</option>
-                                        <option >GMP</option>
-                                        <option >HACCP</option>
-                                        <option>Halal</option>
-                                        <option>Organic Certification</option>
-                                        <option>FDA-LTO Certification</option>
-                                        <option>FDA-CPR</option>
-                                        <option>Others, Specify</option>
-                                    </select>
-                                </div></td>
+     
+                                	<!---2--->
+					<td><div class="x-row x-container x-padding">
+						<select class=" x-border x-select x-border" value="{{ row['form_6_commodity1'] }}" id="form_6_commodity1" name="form_6_commodity1"><br>
+							<option selected>{{ row['form_6_commodity1'] }}</option>
+							<option >GMP</option>
+							<option >HACCP</option>
+							<option>Halal</option>
+							<option>Organic Certification</option>
+							<option>FDA-LTO Certification</option>
+							<option>FDA-CPR</option>
+							<option value="other">Others</option>
+						</select>
+						<input type="text" class="hidden-textboxform6 x-input x-border" name="form6_otherss1" id="form6_otherss1" placeholder="Please specify">
+
+					</div></td>
+
+					<!---3--->
+					<td><div class="x-row x-container x-padding">
+						<select class=" x-border x-select x-border" value="{{ row['form_6_commodity2'] }}" id="form_6_commodity2" name="form_6_commodity2"><br>
+							<option selected>{{ row['form_6_commodity2'] }}</option>
+							<option >GMP</option>
+							<option >HACCP</option>
+							<option>Halal</option>
+							<option>Organic Certification</option>
+							<option>FDA-LTO Certification</option>
+							<option>FDA-CPR</option>
+							<option value="other">Others</option>
+						</select>
+						<input type="text" class="hidden-textboxform62 x-input x-border" name="form6_otherss2" id="form6_otherss2" placeholder="Please specify">
+
+					</div></td>
+
                                 <td><input class="  x-input" value="{{ row['form_6_date_issuance'] }}" id="form_6_date_issuance" type="date" name="form_6_date_issuance"></td>
                                 <td><input class="  x-input" value="{{ row['form_6_expiration_date'] }}" id="form_6_expiration_date" type="date" name="form_6_expiration_date"></td>
                                 <td><input class="  x-input" value="{{ row['form_6_product_certified'] }}" id="form_6_product_certified" type="text" name="form_6_product_certified"></td>

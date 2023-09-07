@@ -21,7 +21,7 @@ def updateform1(request):
             chosen_commodity = form_1_commodity_others
         else:
             chosen_commodity = form_1_commodity
-        form_1_scope_provinces = request.form['form_1_scope_provinces']
+        form_1_scope_provinces =', '.join(request.form.getlist('form_1_scope_provinces[]') )
         form_1_for_development = request.form['form_1_for_development']
         # form_1_cn_approved = request.form.get('form_1_cn_approved')
         form_1_finalized_approved = request.form.get('form_1_finalized_approved')

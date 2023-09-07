@@ -25,6 +25,43 @@ $(document).ready(function(){
   });
 
   $(document).ready(function(){
+    $(".hidden-textboxform9").hide();
+    $("select#form_9_type_of_training").change(function(){
+    var currentVal = $(this).val();
+    if(currentVal == "other"){
+    $(".hidden-textboxform9").show();
+    }
+    else
+    $(".hidden-textboxform9").hide();
+    });  
+    });
+
+    $(document).ready(function(){
+      $(".hidden-textboxform6").hide();
+      $("select#form_6_commodity1").change(function(){
+      var currentVal = $(this).val();
+      if(currentVal == "other"){
+      $(".hidden-textboxform6").show();
+      }
+      else
+      $(".hidden-textboxform6").hide();
+      });  
+      });
+
+      $(document).ready(function(){
+        $(".hidden-textboxform62").hide();
+        $("select#form_6_commodity2").change(function(){
+        var currentVal = $(this).val();
+        if(currentVal == "other"){
+        $(".hidden-textboxform62").show();
+        }
+        else
+        $(".hidden-textboxform62").hide();
+        });  
+        });
+  
+
+  $(document).ready(function(){
     $(".hidden-textbox2").hide();
     
     $("select#form_2_remarks_status").change(function(){

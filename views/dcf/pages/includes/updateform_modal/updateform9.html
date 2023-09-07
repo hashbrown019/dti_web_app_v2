@@ -81,27 +81,26 @@
                         </div>
 
 
-                         <div class="x-col l5 x-container x-padding" >
+                         <div class="x-col l5" >
                              <label>Activity Title:</label>
                              <input required class=" x-input x-border" value="{{ row['form_9_title_trade_promotion'] }}" id="form_9_title_trade_promotion" name="form_9_title_trade_promotion" type="text" autocomplete="on" placeholder="">
-                         </div><br>
-                         <div class="x-row">
-                             <div class="x-col l3 x-container x-padding">
-                               <span class="">Type of Training/Activity :</span>
-                               <select required id="form_9_type_of_training" value="{{ row['form_9_type_of_training'] }}" name="form_9_type_of_training" class="x-container x-padding">
-                                 <option>{{ row['form_9_type_of_training'] }}</option>
-                                 <option>Capbuild</option>
-                                 <option>Meetings</option>
-                                 <option>Policy issuances</option>
-                                 <option>Others to be specified</option>
-                               </select>
-                             </div>
-                             <div class="x-col l3 x-container x-padding">
-                               <div id="showot" class="myDiv">
-                                 <input class="x-padding x-container" size="30" type="text"  id="form_9_others" name="form_9_others" placeholder="Write here">
-                               </div>
-                             </div>
-                           </div>
+                         </div>
+                        
+
+                         <div class="x-col l3 x-container x-padding">
+                            <span class="">Type of Training/Activity :</span>
+                            <select  id="form_9_type_of_training" name="form_9_type_of_training" value="{{ row['form_9_type_of_training'] }}" class="x-select x-border x-container x-padding"required>
+                                <option selected>{{ row['form_9_type_of_training'] }}</option>
+                                <option>Capbuild</option>
+                                <option>Meetings</option>
+                                <option>Policy issuances</option>
+                                <option value="other">Others</option>
+                            </select>
+                            <input type="text" class="hidden-textboxform9 x-input x-border" name="form_9_othertypetraining"  id="form_9_othertypetraining" placeholder="Please specify">
+                        </div>
+
+                 
+                        
                      </div>
                      <div class="x-row x-container x-padding">
                          <div class="x-row x-container x-padding">
