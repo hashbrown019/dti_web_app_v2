@@ -254,6 +254,12 @@
                                         </center>
                                     </td>
                                     <td>
+                                        <center>Sex</center>
+                                    </td>
+                                    <td>
+                                        <center>Sector</center>
+                                    </td>
+                                    <td>
                                         <center>Organization</center>
                                     </td>
                                     <td>
@@ -265,10 +271,27 @@
                                     {% set list1 = row['form_9_name_of_participant'].split(',') %}
                                     {% for index in range(list1|length) %}
                                     <tr>
+                                      
                                         <td><input class="t1  x-input"
                                                 value="{{ row['form_9_name_of_participant'].split(',')[index] }}"
                                                 id="form_9_name_of_participant" name="form_9_name_of_participant[]"
                                                 type="text"></td>
+                                                <td> <select class="form_data_b x-border x-select x-border" value="{{ row['form_9_sex'].split(',')[index] }}"
+                                                    id="form_9_sex" name="form_9_sex[]">
+                                                    <option>{{ row['form_9_sex'].split(',')[index] }}</option>
+                                                    <option>Male</option>
+                                                    <option>Female</option>
+                                                </select></td>
+                                                <td>  <select class="form_data_b x-border x-select x-border" value="{{ row['form_9_sector'].split(',')[index] }}"
+                                                    id="form_9_sector" name="form_9_sector[]">
+                                                    <option>{{ row['form_9_sector'].split(',')[index] }}</option>
+                                                    <option>PWD</option>
+                                                    <option>Youth</option>
+                                                    <option>IP</option>
+                                                    <option>SC</option>
+                                                    <option>Abled</option>
+                                                    
+                                                </select></td>
                                         <td><input class="t1  x-input"
                                                 value="{{ row['form_9_organization'].split(',')[index] }}"
                                                 id="form_9_organization" name="form_9_organization[]" type="text"></td>
@@ -288,40 +311,31 @@
                                     var row2 = table9_org_update2.insertRow(1);
                                     // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
                                     row2.insertCell(0).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_name_of_participant'].split(',')[index] }}" id="form_9_name_of_participant" name="form_9_name_of_participant[]" type="text"></td>`
-                                    row2.insertCell(1).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_organization'].split(',')[index] }}" id="form_9_organization" name="form_9_organization[]" type="text"></td>`
-                                    row2.insertCell(2).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_designation'].split(',')[index] }}" id="form_9_designation" name="form_9_designation[]" type="text"></td>`
+                                    row2.insertCell(1).innerHTML = `<td> <select class="form_data_b x-border x-select x-border" value="{{ row['form_9_sex'].split(',')[index] }}"
+                                            id="form_9_sex" name="form_9_sex[]">
+                                            <option>{{ row['form_9_sex'] }}</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                        </select></td>`
+                                    row2.insertCell(2).innerHTML = `<td><td>  <select class="form_data_b x-border x-select x-border" value="{{ row['form_9_sector'].split(',')[index] }}"
+                                            id="form_9_sector" name="form_9_sector[]">
+                                            <option>{{ row['form_9_sector'] }}</option>
+                                            <option>PWD</option>
+                                            <option>Youth</option>
+                                            <option>IP</option>
+                                            <option>SC</option>
+                                            <option>Abled</option>
+                                            
+                                        </select></td>`
+                                   
+                                    row2.insertCell(3).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_organization'].split(',')[index] }}" id="form_9_organization" name="form_9_organization[]" type="text"></td>`
+                                    row2.insertCell(4).innerHTML = `<td><input class="t1  x-input" value="{{ row['form_9_designation'].split(',')[index] }}" id="form_9_designation" name="form_9_designation[]" type="text"></td>`
 
                                 }
 
                             </script>
                         </div>
 
-
-                        <div class="x-col l3 x-container x-padding">
-                            <span class="">Sex</span>
-                            <select class="form_data_b x-border x-select x-border" value="{{ row['form_9_sex'] }}"
-                                id="form_9_sex" name="form_9_sex"><br>
-                                <option>{{ row['form_9_sex'] }}</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                            </select>
-
-                        </div>
-
-                        <div class="x-col l3 x-container x-padding">
-                            <span class="">Sector</span>
-                            <select class="form_data_b x-border x-select x-border" value="{{ row['form_9_sector'] }}"
-                                id="form_9_sector" name="form_9_sector"><br>
-                                <option>{{ row['form_9_sector'] }}</option>
-                                <option>PWD</option>
-                                <option>Youth</option>
-                                <option>IP</option>
-                                <option>SC</option>
-					            <option>Abled</option>
-                                
-                            </select>
-
-                        </div>
 
 
                         <div class="x-row x-container x-padding">

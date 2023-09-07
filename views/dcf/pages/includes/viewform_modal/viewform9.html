@@ -196,6 +196,12 @@
                                         <center>Name of Participant</center>
                                     </td>
                                     <td>
+                                        <center>Sex</center>
+                                    </td>
+                                    <td>
+                                        <center>Sector</center>
+                                    </td>
+                                    <td>
                                         <center>Organization</center>
                                     </td>
                                     <td>
@@ -207,10 +213,27 @@
                                     {% set list1 = row['form_9_name_of_participant'].split(',') %}
                                     {% for index in range(list1|length) %}
                                     <tr>
+                                       
                                         <td><input disabled class="t1  x-input"
                                                 value="{{ row['form_9_name_of_participant'].split(',')[index] }}"
                                                 id="form_9_name_of_participant" name="form_9_name_of_participant[]"
                                                 type="text"></td>
+                                                <td> <select disabled class="form_data_b x-border x-select x-border" value="{{ row['form_9_sex'].split(',')[index] }}"
+                                                    id="form_9_sex" name="form_9_sex[]">
+                                                    <option>{{ row['form_9_sex'].split(',')[index] }}</option>
+                                                    <option>Male</option>
+                                                    <option>Female</option>
+                                                </select></td>
+                                                <td>  <select disabled class="form_data_b x-border x-select x-border" value="{{ row['form_9_sector'].split(',')[index] }}"
+                                                    id="form_9_sector" name="form_9_sector[]">
+                                                    <option>{{ row['form_9_sector'].split(',')[index] }}</option>
+                                                    <option>PWD</option>
+                                                    <option>Youth</option>
+                                                    <option>IP</option>
+                                                    <option>SC</option>
+                                                    <option>Abled</option>
+                                                    
+                                                </select></td>
                                         <td><input disabled class="t1  x-input"
                                                 value="{{ row['form_9_organization'].split(',')[index] }}"
                                                 id="form_9_organization" name="form_9_organization[]" type="text"></td>

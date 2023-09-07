@@ -26,8 +26,8 @@ def insert_form9(request):
         form_9_name_of_participant = ', '.join(request.form.getlist('form_9_name_of_participant[]'))
         form_9_organization = ', '.join(request.form.getlist('form_9_organization[]'))
         form_9_designation =', '.join(request.form.getlist('form_9_designation[]'))
-        form_9_sex = request.form['form_9_sex']
-        form_9_sector = request.form['form_9_sector']
+        form_9_sex = ', '.join(request.form.getlist('form_9_sex[]'))
+        form_9_sector =', '.join(request.form.getlist('form_9_sector[]'))
         form_9_pre_test1 = request.form['form_9_pre_test1']
         form_9_post_test1 = request.form['form_9_post_test1']
         form_9_activity_output = request.form['form_9_activity_output']
