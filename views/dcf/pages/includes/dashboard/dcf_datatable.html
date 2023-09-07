@@ -1,9 +1,10 @@
 <div class="card" style=" margin: 25px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-    <!-- Card header -->
+  <!-- Card header -->
 
-    <div class="table-responsive table py-4">
-      <div id="datatable-buttons_wrapper" class="dataTables_wrapper dt-bootstrap4" style="margin: 5%; margin-top: 3%;" >
-        <table class="table table-flush dataTable" id="datatable-buttons" role="grid" aria-describedby="datatable-buttons_info" >
+  <div class="table-responsive table py-4">
+    <div id="datatable-buttons_wrapper" class="dataTables_wrapper dt-bootstrap4" style="margin: 5%; margin-top: 3%;">
+      <table class="table table-flush dataTable" id="datatable-buttons" role="grid"
+        aria-describedby="datatable-buttons_info">
         <thead class="thead">
           <tr role="row">
             <th>ID</th>
@@ -16,36 +17,37 @@
             <th>Industry Cluster</th>
             <th>Form of Enterprise</th>
             <th>Action</th>
-            </tr>
+          </tr>
         </thead>
-    
+
         <tbody>
           <tr>
-         <div>
-            {% for row in datatable %}
-            <td>{{ row['id'] }}</td>
-            <td>{{ row['reg_businessname'] }}</td>
-            <td>{{ row['business_addr'] }}</td>  
-            <td>{{ row['name'] }}</td>
-            <td>{{ row['sex'] }}</td>
-            <td>{{ row['contact_details'] }}</td>
-            <td>{{ row['vc_stakeholders'] }}</td>
-            <td>{{ row['industry_cluster'] }}</td>
-            <td>{{ row['form_interprise'] }}</td>
-            <td><a style="color: #5e72e4;" data-toggle="modal" data-target="#modaledit{{row['id']}}" href="/update/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
-            </td>
+            <div>
+              {% for row in datatable %}
+              <td>{{ row['id'] }}</td>
+              <td>{{ row['reg_businessname'] }}</td>
+              <td>{{ row['business_addr'] }}</td>
+              <td>{{ row['name'] }}</td>
+              <td>{{ row['sex'] }}</td>
+              <td>{{ row['contact_details'] }}</td>
+              <td>{{ row['vc_stakeholders'] }}</td>
+              <td>{{ row['industry_cluster'] }}</td>
+              <td>{{ row['form_interprise'] }}</td>
+              <td><a style="color: #5e72e4;" data-toggle="modal" data-target="#modaledit{{row['id']}}"
+                  href="/update/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
+              </td>
 
-     
-        </tr>
-      
-        {% endfor  %}
-          </tbody>
-</table>
 
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+
+
+
+
+  </div>
 </div>
-          
-          
-          
-          
-        </div>
-        </div>

@@ -17,7 +17,7 @@ def insert_form3(request):
         phone = request.form['phone']
         form_3_choices = request.form.getlist('form_3_choices[]')
         form_3_preferred_region = request.form.get('form_3_preferred_region')
-        form_3_preferred_province = request.form.get('form_3_preferred_province')
+        form_3_preferred_province =', '.join(request.form.getlist('form_3_preferred_province[]') )
         form_3_name =', '.join(request.form.getlist('form_3_name[]') )
         form_3_education =', '.join(request.form.getlist('form_3_education[]') )
         form_3_expertise =', '.join(request.form.getlist('form_3_expertise[]') )

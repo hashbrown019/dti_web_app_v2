@@ -5,22 +5,31 @@
 
 <!-- Specific CSS goes HERE -->
 <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 <title>Form 4</title>
 <form action="/insert_form4" method="POST">
 	{% include "includes/sweetalert.html" %}
-	<div class="x-col l1 " >
+	<div class="x-col l1 ">
 		&nbsp;
 	</div>
-	<div class=" x-col l12 x-container x-card x-light-grey" style=" margin-top: 10px; margin-bottom: 20px;" >
-		<center><h2 class=" x-container x-padding text-white" style="background-color: #007399;">FORM 4 - CAPACITY BUILDING FOR BENEFICIARIES</h2></center>
+	<div class=" x-col l12 x-container x-card x-light-grey" style=" margin-top: 10px; margin-bottom: 20px;">
+		<center>
+			<h2 class=" x-container x-padding text-white" style="background-color: #007399;">FORM 4 - CAPACITY BUILDING
+				FOR BENEFICIARIES</h2>
+		</center>
 
 		<div class="x-container x-padding">
-			<style> 
-				table, th, td{border: 1px solid black;border-collapse: collapse;}
+			<style>
+				table,
+				th,
+				td {
+					border: 1px solid black;
+					border-collapse: collapse;
+				}
 			</style>
 
 
@@ -28,11 +37,12 @@
 			<div class="x-row x-container x-padding">
 				<div class="x-col l3 x-container x-padding">
 					<label class="">Implementing Unit:</label>
-					<select class="form_data_b x-border x-select x-border" id="cbb_implementing_unit" name="cbb_implementing_unit" required><br>
+					<select class="form_data_b x-border x-select x-border" id="cbb_implementing_unit"
+						name="cbb_implementing_unit" required><br>
 						<option value="">Choose your option</option>
 						<optgroup label="RCU">
 							<option value="8">Region Vlll - Eastern Visayas</option>
-							<option value="9">Region lX -  Zamboanga Peninsula</option>
+							<option value="9">Region lX - Zamboanga Peninsula</option>
 							<option value="10">Region X - Northern Mindanao</option>
 							<option value="11">Region Xl - Davao Region</option>
 							<option value="12">Region Xll - SOCCSKSARGEN</option>
@@ -40,67 +50,79 @@
 							<option value="BARMM">BARMM</option>
 						</optgroup>
 						<optgroup label="PCU">
-			
-						<option>Northern Samar</option>
-						<option>Leyte</option>
-						<option>Southern Leyte</option>
-						<option>Zamboanga del Norte</option>
-						<option>Zamboanga Sibugay</option>
-						<option>Zamboanga del Sur</option>
-						<option>Misamis Oriental</option>
-						<option>Bukidnon</option>
-						<option>Lanao del Norte</option>
-						<option>Davao de Oro</option>
-						<option>Davao Oriental</option>
-						<option>Davao del Norte</option>
-						<option>Davao del Sur</option>
-						<option>Davao Occidental</option>
-						<option>North Cotabato</option>
-						<option>Sultan Kudarat</option>
-						<option>Sarangani</option>
-						<option>Agusan del Norte</option>
-						<option>Agusan del Sur</option>
-						<option>Surigao del Sur</option>
-						<option>Maguindanao</option>
-							</optgroup>
+
+							<option>Northern Samar</option>
+							<option>Leyte</option>
+							<option>Southern Leyte</option>
+							<option>Zamboanga del Norte</option>
+							<option>Zamboanga Sibugay</option>
+							<option>Zamboanga del Sur</option>
+							<option>Misamis Oriental</option>
+							<option>Bukidnon</option>
+							<option>Lanao del Norte</option>
+							<option>Davao de Oro</option>
+							<option>Davao Oriental</option>
+							<option>Davao del Norte</option>
+							<option>Davao del Sur</option>
+							<option>Davao Occidental</option>
+							<option>North Cotabato</option>
+							<option>Sultan Kudarat</option>
+							<option>Sarangani</option>
+							<option>Agusan del Norte</option>
+							<option>Agusan del Sur</option>
+							<option>Surigao del Sur</option>
+							<option>Maguindanao</option>
+						</optgroup>
 						<option style="font-weight: bold;">NGA Partners</option>
 					</select>
 				</div>
-				
+
 				<!-- <div class="x-col l3 x-container">
 					<label>Training Number</label>
 					<input class="form_data_b x-input x-border" name="cbb_training_number" id="cbb_training_number" type="text" placeholder="">
 				</div> -->
 				<div class="x-col l3 x-padding x-container">
 					<label>Activity Title:</label>
-					<input class="form_data_b x-input x-border" name="cbb_activity_title" id="cbb_activity_title" type="text" placeholder="">
+					<input class="form_data_b x-input x-border" name="cbb_activity_title" id="cbb_activity_title"
+						type="text" placeholder="">
 				</div>
 				<div class="x-col l6 x-container x-padding">
 					<label class="">Types of Training:</label>
-					<select required class="form_data_b x-border x-select x-border" name="cbb_types_of_training" id="cbb_types_of_training">
+					<select required class="form_data_b x-border x-select x-border" name="cbb_types_of_training"
+						id="cbb_types_of_training">
 						<option value="" disabled selected>Choose your option</option>
 						<optgroup label="Farmer Organizations">
-						  <option value="FO-Organization Entrepreneurial Competency">Organization Entrepreneurial Competency</option>
-						  <option value="FO-Governance">Governance</option>
-						  <option value="FO-Organizational Management">Organizational Management</option>
-						  <option value="FO-Operations">Operations</option>
-						  <option value="FO-Technology and Product Development (Business Development)">Technology and Product Development (Business Development)</option>
-						  <option value="FO-Institutional Marketing Management">Institutional Marketing Management</option>
-						  <option value="FO-Human Resource Management">Human Resource Management</option>
-						  <option value="FO-Financial Management">Financial Management</option>
-						  <option value="FO-Networking and Linkage-Building (External Relation; Business Membership Organization)">Networking and Linkage-Building (External Relation; Business Membership Organization)</option>
+							<option value="FO-Organization Entrepreneurial Competency">Organization Entrepreneurial
+								Competency</option>
+							<option value="FO-Governance">Governance</option>
+							<option value="FO-Organizational Management">Organizational Management</option>
+							<option value="FO-Operations">Operations</option>
+							<option value="FO-Technology and Product Development (Business Development)">Technology and
+								Product Development (Business Development)</option>
+							<option value="FO-Institutional Marketing Management">Institutional Marketing Management
+							</option>
+							<option value="FO-Human Resource Management">Human Resource Management</option>
+							<option value="FO-Financial Management">Financial Management</option>
+							<option
+								value="FO-Networking and Linkage-Building (External Relation; Business Membership Organization)">
+								Networking and Linkage-Building (External Relation; Business Membership Organization)
+							</option>
 						</optgroup>
 						<optgroup label="MSME">
-						  <option value="MSME-Entrepreneurial Competency">Entrepreneurial Competency</option>
-						  <option value="MSME-Operations">Operations</option>
-						  <option value="MSME-Management">Management</option>
-						  <option value="MSME-Technology and Product Development">Technology and Product Development</option>
-						  <option value="MSME-Marketing Management">Marketing Management</option>
-						  <option value="MSME-Human Resource Management">Human Resource Management</option>
-						  <option value="MSME-Financial Management">Financial Management</option>
-						  <option value="MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)">Networking and Linkage-Building (External Relation; Business Membership Organization)</option>
+							<option value="MSME-Entrepreneurial Competency">Entrepreneurial Competency</option>
+							<option value="MSME-Operations">Operations</option>
+							<option value="MSME-Management">Management</option>
+							<option value="MSME-Technology and Product Development">Technology and Product Development
+							</option>
+							<option value="MSME-Marketing Management">Marketing Management</option>
+							<option value="MSME-Human Resource Management">Human Resource Management</option>
+							<option value="MSME-Financial Management">Financial Management</option>
+							<option
+								value="MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)">
+								Networking and Linkage-Building (External Relation; Business Membership Organization)
+							</option>
 						</optgroup>
-					  </select>
+					</select>
 				</div>
 			</div>
 
@@ -108,52 +130,69 @@
 			<div class="x-row x-padding x-container">
 				<div class="x-col l4 x-container x-padding">
 					<label>Topic Of Training:</label>
-					<input class="form_data_b x-input x-border" name="cbb_topic_of_training" id="cbb_topic_of_training" type="text" placeholder="">
+					<input class="form_data_b x-input x-border" name="cbb_topic_of_training" id="cbb_topic_of_training"
+						type="text" placeholder="">
 				</div>
 				<div class="x-col l4 x-container x-padding">
 					<label class="">DIP-approved alignment:</label>
-					<select class="form_data_b x-border x-select x-border" name="cbb_dip_approved_alignment" id="cbb_dip_approved_alignment"><br>
+					<select class="form_data_b x-border x-select x-border" name="cbb_dip_approved_alignment"
+						id="cbb_dip_approved_alignment"><br>
 						<option value="">Choose your option</option>
 						<option>Conducted before DIP approval</option>
 						<option>Conducted after DIP approval</option>
 						<option>N/A</option>
 					</select>
 				</div>
-				
+
 				<div class="x-col l4 x-container x-padding">
 					<label>Name of DIPs:</label>
-					<input class="form_data_b x-input x-border" name="cbb_name_of_dip" id="cbb_name_of_dip" type="text" placeholder="">
+					<input class="form_data_b x-input x-border" name="cbb_name_of_dip" id="cbb_name_of_dip" type="text"
+						placeholder="">
 				</div>
-			</div>	
+			</div>
 
 			<!---3--->
 			<div class="x-row x-container x-padding">
 
 				<div class="x-col l5 x-container x-padding">
-					<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+					<style>
+						table,
+						th,
+						td {
+							border: 1px solid black;
+							border-collapse: collapse;
+						}
+					</style>
 					<table class="x-table x-container x-table-border">
 						<tr>
 							<th colspan="2">
 								<center>ACTIVITY DURATION<br>(Day, Month, Year)</center>
 							</th>
-							
+
 						</tr>
 
 						<tr>
-							<td><center>Start Date</center></td>
-							<td><center>End Date</center></td>
+							<td>
+								<center>Start Date</center>
+							</td>
+							<td>
+								<center>End Date</center>
+							</td>
 						</tr>
 
 						<tr>
-							<td><input class="form_data_b x-input x-border" name="cbb_date_start" id="cbb_date_start" type="date" placeholder=""></td>
-							<td><input class="form_data_b x-input x-border" name="cbb_date_end" id="cbb_date_end" type="date" placeholder=""></td>
+							<td><input class="form_data_b x-input x-border" name="cbb_date_start" id="cbb_date_start"
+									type="date" placeholder=""></td>
+							<td><input class="form_data_b x-input x-border" name="cbb_date_end" id="cbb_date_end"
+									type="date" placeholder=""></td>
 						</tr>
 					</table>
-				</div>	
-	
+				</div>
+
 				<div class="x-col l4 x-container x-padding">
 					<label>Total Number of Participants:</label>
-					<input class="form_data_b x-input x-border" name="cbb_total_number_of_participants" id="cbb_total_number_of_participants" type="Number" placeholder="Input Number">
+					<input class="form_data_b x-input x-border" name="cbb_total_number_of_participants"
+						id="cbb_total_number_of_participants" type="Number" placeholder="Input Number">
 				</div>
 
 				<div class="x-col l3 x-container x-padding">
@@ -165,65 +204,96 @@
 						<option>Coconut</option>
 						<option>PFN</option>
 					</select>
-					<input type="text" class="hidden-textbox x-input x-border" name="cbb_commodity_others" id="cbb_commodity_others" placeholder="Please specify">
+					<input type="text" class="hidden-textbox x-input x-border" name="cbb_commodity_others"
+						id="cbb_commodity_others" placeholder="Please specify">
 				</div>
 
 				<div class="x-row x-container x-padding">
-					<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-						<table id="form4_table" class="x-table x-container x-table-border">
-							<thead>
+					<style>
+						table,
+						th,
+						td {
+							border: 1px solid black;
+							border-collapse: collapse;
+						}
+					</style>
+					<table id="form4_table" class="x-table x-container x-table-border">
+						<thead>
 							<tr>
 								<th>
-									<center><button type="button" style="float: left;" class="btn btn-primary" onclick="add_row()"><i class="fa-solid fa-circle-plus"></i>&nbsp;&nbsp;Add</button> Venue</center>
+									<center><button type="button" style="float: left;" class="btn btn-primary"
+											onclick="add_row()"><i
+												class="fa-solid fa-circle-plus"></i>&nbsp;&nbsp;Add</button> Venue
+									</center>
 								</th>
 								<th>
-									<center>Name of Resource Person/Facilitator/BDSP<br>(First Name, Middle Name, Last Name)</center>
+									<center>Name of Resource Person/Facilitator/BDSP<br>(First Name, Middle Name, Last
+										Name)</center>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text" name="cbb_venue[]"></td>
-								<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>
+								<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text"
+										name="cbb_venue[]"></td>
+								<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person"
+										type="text" name="cbb_name_of_resource_person[]"></td>
 							</tr>
 						</tbody>
-						</table>
+					</table>
 				</div>
 				<script>
-		
-					function add_row(){
+
+					function add_row() {
 						// $ID('main_').innerHTML += og_row
 						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 						var row = form4_table.insertRow(1);
 						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
 						row.insertCell(0).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text" name="cbb_venue[]"></td>`
 						row.insertCell(1).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>`
-						
+
 						// Add some text to the new cells:
 					}
 				</script>
 
 				<div class="x-row x-container x-padding">
-					<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-						<table class="x-table x-container x-table-border">
-							<tr>
-								<th>
-									<center>RAPID Actual Budget</center>
-								</th>
-								<th colspan="2">
-									<center>DIP Capbuild Activities fully & partially funded by partners outside RAPID </center>
-								</th>
-							</tr>
-								<td><center>Actual (CY 2022 Onwards e.g., 34,000.00)</center></td>
-								<td><center>Name of Partner/Organization</center></td>
-								<td><center>Counterpart Amount<br>(monetize & estimates)</center></td>
+					<style>
+						table,
+						th,
+						td {
+							border: 1px solid black;
+							border-collapse: collapse;
+						}
+					</style>
+					<table class="x-table x-container x-table-border">
+						<tr>
+							<th>
+								<center>RAPID Actual Budget</center>
+							</th>
+							<th colspan="2">
+								<center>DIP Capbuild Activities fully & partially funded by partners outside RAPID
+								</center>
+							</th>
+						</tr>
+						<td>
+							<center>Actual (CY 2022 Onwards e.g., 34,000.00)</center>
+						</td>
+						<td>
+							<center>Name of Partner/Organization</center>
+						</td>
+						<td>
+							<center>Counterpart Amount<br>(monetize & estimates)</center>
+						</td>
 
-							<tr>
-								<td><input class="form_data_b x-light-grey x-input" name="cbb_rapid_actual_budget" id="cbb_rapid_actual_budget" type="text" ></td>
-								<td><input class="form_data_b x-light-grey x-input" name="cbb_dip_capbuild_activities_NPO" id="cbb_dip_capbuild_activities_NPO" type="text" ></td>
-								<td><input class="form_data_b x-light-grey x-input" name="cbb_dip_capbuild_activities_CA" id="cbb_dip_capbuild_activities_CA" type="text" ></td>
-							</tr>
-						</table>
+						<tr>
+							<td><input class="form_data_b x-light-grey x-input" name="cbb_rapid_actual_budget"
+									id="cbb_rapid_actual_budget" type="text"></td>
+							<td><input class="form_data_b x-light-grey x-input" name="cbb_dip_capbuild_activities_NPO"
+									id="cbb_dip_capbuild_activities_NPO" type="text"></td>
+							<td><input class="form_data_b x-light-grey x-input" name="cbb_dip_capbuild_activities_CA"
+									id="cbb_dip_capbuild_activities_CA" type="text"></td>
+						</tr>
+					</table>
 				</div>
 
 				<!-- <div class="x-col l5 x-container x-padding">
@@ -237,115 +307,169 @@
 				</div> -->
 
 				<div class="x-container x-padding">
-					<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-					<table class="x-table x-container x-table-border" >
+					<style>
+						table,
+						th,
+						td {
+							border: 1px solid black;
+							border-collapse: collapse;
+						}
+					</style>
+					<table class="x-table x-container x-table-border">
 						<tr>
-							
-							<th colspan="3"><label style="background-color: #ff4d4d; color: white;" class="badge badge-pill">On Dev</label>
+
+							<th colspan="3"><label style="background-color: #ff4d4d; color: white;"
+									class="badge badge-pill">On Dev</label>
 								<center>Total Number Per Sex</center>
 							</th>
 							<th colspan="5">
 								<center>Total Number Per Sector</center>
 							</th>
-							
+
 						</tr>
 
 						<tr>
-						
+
 							<!---gender---->
-							<td><center>male</center></td>
-							<td><center>female</center></td>
-							<td><center>total</center></td>
+							<td>
+								<center>male</center>
+							</td>
+							<td>
+								<center>female</center>
+							</td>
+							<td>
+								<center>total</center>
+							</td>
 
 							<!---sector---->
-							<td><center>PWD</center></td>
-							<td><center>Youth</center></td>
-							<td><center>IP</center></td>
-							<td><center>SC</center></td>
-							<td><center>Total</center></td>
+							<td>
+								<center>PWD</center>
+							</td>
+							<td>
+								<center>Youth</center>
+							</td>
+							<td>
+								<center>IP</center>
+							</td>
+							<td>
+								<center>SC</center>
+							</td>
+							<td>
+								<center>Total</center>
+							</td>
 
 						</tr>
 
 						<tr>
-						<!---gender--->	
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_male" type="text" name="cbb_total_number_per_gender_male"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_female" type="text" name="cbb_total_number_per_gender_female"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_total" type="text" name="cbb_total_number_per_gender_total"></td>
+							<!---gender--->
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_male"
+									type="text" name="cbb_total_number_per_gender_male"></td>
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_female"
+									type="text" name="cbb_total_number_per_gender_female"></td>
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_total"
+									type="text" name="cbb_total_number_per_gender_total"></td>
 
-						<!--sector--->
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_pwd" type="text" name="cbb_total_number_per_sector_pwd"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_youth" type="text" name="cbb_total_number_per_sector_youth"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_ip" type="text" name="cbb_total_number_per_sector_ip"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_sc" type="text" name="cbb_total_number_per_sector_sc"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_total" type="text" name="cbb_total_number_per_sector_total"></td>
+							<!--sector--->
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_pwd"
+									type="text" name="cbb_total_number_per_sector_pwd"></td>
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_youth"
+									type="text" name="cbb_total_number_per_sector_youth"></td>
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_ip"
+									type="text" name="cbb_total_number_per_sector_ip"></td>
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_sc"
+									type="text" name="cbb_total_number_per_sector_sc"></td>
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_total"
+									type="text" name="cbb_total_number_per_sector_total"></td>
 						</tr>
 					</table>
 				</div>
 				<div class="x-container x-padding">
-					<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+					<style>
+						table,
+						th,
+						td {
+							border: 1px solid black;
+							border-collapse: collapse;
+						}
+					</style>
 					<table class="x-table x-container x-table-border">
 						<tr>
-							
+
 							<th colspan="2">
 								<center>Results of activity (Average)</center>
 							</th>
 							<th colspan="2">
 								<center>Client Feedback Survey </center>
 							</th>
-							
-							
+
+
 						</tr>
 
 						<tr>
-						
-							<td><center>Pre-Test</center></td>
-							<td><center>Post-Test</center></td>
 
-							<td><center>Rating</center></td>
-							<td><center>Comments/ Areas of Improvement</center></td>
+							<td>
+								<center>Pre-Test</center>
+							</td>
+							<td>
+								<center>Post-Test</center>
+							</td>
 
-							
-							
+							<td>
+								<center>Rating</center>
+							</td>
+							<td>
+								<center>Comments/ Areas of Improvement</center>
+							</td>
+
+
+
 						</tr>
 
-						<tr>	
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_results_of_activity_pre_test" type="text" name="cbb_results_of_activity_pre_test"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_results_of_activity_post_test" type="text" name="cbb_results_of_activity_post_test"></td>
+						<tr>
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_results_of_activity_pre_test"
+									type="text" name="cbb_results_of_activity_pre_test"></td>
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_results_of_activity_post_test"
+									type="text" name="cbb_results_of_activity_post_test"></td>
 
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_client_feedback_survey_rating" type="text" name="cbb_client_feedback_survey_rating"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_client_feedback_survey_comments_AOI" type="text" name="cbb_client_feedback_survey_comments_AOI"></td>
-							
+							<td><input class="form_data_b x-light-grey x-input" id="cbb_client_feedback_survey_rating"
+									type="text" name="cbb_client_feedback_survey_rating"></td>
+							<td><input class="form_data_b x-light-grey x-input"
+									id="cbb_client_feedback_survey_comments_AOI" type="text"
+									name="cbb_client_feedback_survey_comments_AOI"></td>
+
 
 						</tr>
 					</table>
 				</div>
 
 				<div class="x-row x-container x-padding">
-					<div class="x-col l3 x-container x-padding">	
+					<div class="x-col l3 x-container x-padding">
 						<label for="avatar">Choose MOVs:</label>
 						<input type="file" id="cbb_avatar" name="avatar" accept="image/png, image/jpeg, video/mp4">
 					</div>
-					<div class="x-col l4 x-container x-padding">	
-						<button data-toggle="modal" data-target="#form4_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
+					<div class="x-col l4 x-container x-padding">
+						<button data-toggle="modal" data-target="#form4_modalpart" href=""
+							style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart"
+							class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add
+							Participants</button>
 					</div>
-					
-				</div>       
-							      
-		
+
+				</div>
+
+
 				<p class="x-right">
-					<input class="x-blue btn " id="form4sub"  type="submit">
-					</p>
-			
-		</div>
-		{% include "includes/forms/form4_participants.html" %}
+					<input class="x-blue btn " id="form4sub" type="submit">
+				</p>
+
+			</div>
+			{% include "includes/forms/form4_participants.html" %}
 </form>
-    
-		{% endblock content %}
 
-		<!-- Specific JS goes HERE --> 
-		<script>
-		</script>
-		{% block javascripts %}
+{% endblock content %}
 
-		{% endblock javascripts %}
-		
+<!-- Specific JS goes HERE -->
+<script>
+</script>
+{% block javascripts %}
+
+{% endblock javascripts %}

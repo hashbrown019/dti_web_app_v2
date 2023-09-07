@@ -1,56 +1,62 @@
-<div class="card" style="width:60%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+<div class="card"
+  style="width:60%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
-    <div class="card-header bg-fav">
-        <h3 style="color: white;">FORM 6 Product Development/ Enhancement Assistance Provided/ Consultancy Services <span style="background-color: #ff4d4d; color: white;" class="badge badge-pill">On Dev</span> <div class="h4 fw-bolder text-success mb-2">SPREADSHEET MANAGEMENT</div></h3>
-    </div>
-    <div class="card-body" style="background-color: #b4cde4;;">
-        <form action="/dcf" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col">
-                  <select id="export_type" name="export_type" class="form-control">
-                    <option value="form6export">Form 6 Product Development/ Enhancement Assistance Provided/ Consultancy Services</option>
-                  </select>
-                </div>
-              </div>
-            <div class="form-row">
-              <div class="col">
-                <strong>
-                  <label for="position">Export Data:</label>
-              </strong><br>
-                <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span> Export</button>
+  <div class="card-header bg-fav">
+    <h3 style="color: white;">FORM 6 Product Development/ Enhancement Assistance Provided/ Consultancy Services <span
+        style="background-color: #ff4d4d; color: white;" class="badge badge-pill">On Dev</span>
+      <div class="h4 fw-bolder text-success mb-2">SPREADSHEET MANAGEMENT</div>
+    </h3>
+  </div>
+  <div class="card-body" style="background-color: #b4cde4;;">
+    <form action="/dcf" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col">
+            <select id="export_type" name="export_type" class="form-control">
+              <option value="form6export">Form 6 Product Development/ Enhancement Assistance Provided/ Consultancy
+                Services</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <strong>
+              <label for="position">Export Data:</label>
+            </strong><br>
+            <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span>
+              Export</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <form action="/importcsvform1" method="POST" enctype="multipart/form-data">
+      {% include "includes/sweetalert.html" %}
+      <div class="form-group">
+        <div class="form-row">
+
+          <div class="col">
+            <strong>
+              <label for="position">Import Data:</label>
+            </strong><br>
+            <div class="file-upload">
+              <div class="file-select">
+                <div class="file-select-button" id="fileName">Choose File</div>
+                <div class="file-select-name" id="noFile">No file chosen...</div>
+                <input disabled multiple type="file"
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  name="chooseFile" id="chooseFile" required>
+
               </div>
             </div>
-            </div>
-          </form>
+            <br>
+            <button disabled type="submit" class="btn btn-md btn-default"><span><i
+                  class="fa-solid fa-file-arrow-down"></i></span> Import<span class="icon-button__badge"><i
+                  class="fa-solid fa-lock"></i></span></button>
+          </div>
+        </div>
+    </form>
 
-          <form action="/importcsvform1" method="POST"  enctype="multipart/form-data">
-            {% include "includes/sweetalert.html" %}
-            <div class="form-group">
-                <div class="form-row" >
-         
-                    <div class="col">
-                        <strong>
-                            <label for="position">Import Data:</label>
-                        </strong><br>
-                        <div class="file-upload">
-                            <div class="file-select">
-                              <div class="file-select-button" id="fileName">Choose File</div>
-                              <div class="file-select-name" id="noFile">No file chosen...</div> 
-                              <input disabled multiple type="file"accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="chooseFile" id="chooseFile" required>
-                             
-                            </div>
-                          </div>
-                          <br>
-                          <button disabled type="submit"  class="btn btn-md btn-default"><span><i class="fa-solid fa-file-arrow-down"></i></span> Import<span class="icon-button__badge"><i class="fa-solid fa-lock"></i></span></button>
-                    </div>
-                    </div>
-                </form>
-
-    </div>
+  </div>
 </div>
 </div>
-
-
-
-

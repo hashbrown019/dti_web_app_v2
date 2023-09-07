@@ -1,72 +1,81 @@
-<div class="modal fade" id="form9_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 80%;">
-      <div class="modal-content prof-content">
-        <div class="modalprof modal-header prof-header " style="background-color: #007399;" >
-          <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle" >Form 7 Trade Promotion Services Tracker</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  
-          </button>
-        </div>
-        <div class="modal-body" style="background-color: #c1d0f0" >
-            
-                <!-- Card header -->
-                <div class="d-flex justify-content-center">
-                <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
-                  <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4" >
-                    <table class="table table-dark table-flush dataTable " id="datatable-buttons9" role="grid" aria-describedby="datatable-buttons_info" style="width:100% !important">
-                    <thead class="thead" >
-                      <tr role="row">
-                        <th>ID</th>
-                        <th>Implementing Unit</th>
-                        <th>Activity Title</th>
-                        <th>Type of Training/Activity</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Name of Resource Person/Facilitator/BDSP</th>
-                        <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                     <div>
-                        {% for row in form9_datatable %}
-                        <td>{{ row['id'] }}</td>
-                        <td>{{ row['form_9_implementing_unit'] }}</td>
-                        <td>{{ row['form_9_title_trade_promotion'] }}</td>  
-                        <td>{{ row['form_9_type_of_training'] }}</td>
-                        <td>{{ row['form_9_start_date'] }}</td>
-                        <td>{{ row['form_9_end_date'] }}</td>
-                        <td>{{ row['form_9_name_of_resource_person'] }}</td>
-                        <td>
-                            {% if(row['upload_by']==user_data['id'] or user_data['job']=="Super Admin"): %}
-                            <a style="color: #00cc66;" data-toggle="modal" data-target="#form9edit{{row['id']}}" href="/updateform9/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square" aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="modal fade" id="form9_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 80%;">
+    <div class="modal-content prof-content">
+      <div class="modalprof modal-header prof-header " style="background-color: #007399;">
+        <h4 class="modal-title w-100 text-center text-white" id="exampleModalLongTitle">Form 7 Trade Promotion Services
+          Tracker</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #c1d0f0">
+
+        <!-- Card header -->
+        <div class="d-flex justify-content-center">
+          <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
+            <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4">
+              <table class="table table-dark table-flush dataTable " id="datatable-buttons9" role="grid"
+                aria-describedby="datatable-buttons_info" style="width:100% !important">
+                <thead class="thead">
+                  <tr role="row">
+                    <th>ID</th>
+                    <th>Implementing Unit</th>
+                    <th>Activity Title</th>
+                    <th>Type of Training/Activity</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Name of Resource Person/Facilitator/BDSP</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <div>
+                      {% for row in form9_datatable %}
+                      <td>{{ row['id'] }}</td>
+                      <td>{{ row['form_9_implementing_unit'] }}</td>
+                      <td>{{ row['form_9_title_trade_promotion'] }}</td>
+                      <td>{{ row['form_9_type_of_training'] }}</td>
+                      <td>{{ row['form_9_start_date'] }}</td>
+                      <td>{{ row['form_9_end_date'] }}</td>
+                      <td>{{ row['form_9_name_of_resource_person'] }}</td>
+                      <td>
+                        {% if(row['upload_by']==user_data['id'] or user_data['job']=="Super Admin"): %}
+                        <a style="color: #00cc66;" data-toggle="modal" data-target="#form9edit{{row['id']}}"
+                          href="/updateform9/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square"
+                              aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         {%endif%}
                         {% if(user_data['job']=="Super Admin"): %}
-                          <a style="color: #ff4d4d;"  href="/delete_form9/{{row['id']}}" onclick="confirmation(event)"> <span><i class="fa-solid fa-trash"></i></span> Delete</a>&nbsp;&nbsp;&nbsp; &nbsp;
-                          {% endif %}
-                        <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form9view{{row['id']}}" href="/updateform9/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>
-                        </td>
-            
-                 
-                    </tr>
-                  
-                    {% endfor  %}
-                      </tbody>
-            </table>
-            
+                        <a style="color: #ff4d4d;" href="/delete_form9/{{row['id']}}" onclick="confirmation(event)">
+                          <span><i class="fa-solid fa-trash"></i></span> Delete</a>&nbsp;&nbsp;&nbsp; &nbsp;
+                        {% endif %}
+                        <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form9view{{row['id']}}"
+                          href="/updateform9/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span>
+                          View</a>
+                      </td>
+
+
+                  </tr>
+
+                  {% endfor %}
+                </tbody>
+              </table>
+
             </div>
-                      
-                      
-                      
-        </div>
-                    
-                </div>
-                    
+
+
+
+          </div>
 
         </div>
-        <div class="modal-footer prof-footer" style="background-color: #c1d0f0">
-          <button type="button" class="btn text-white" style="background-color: #3366cc;" data-dismiss="modal">Close</button>
-        </div>
+
+
+      </div>
+      <div class="modal-footer prof-footer" style="background-color: #c1d0f0">
+        <button type="button" class="btn text-white" style="background-color: #3366cc;"
+          data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>

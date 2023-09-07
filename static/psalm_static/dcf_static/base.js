@@ -644,6 +644,14 @@ $(document).ready(function(){
   }); 
 });
 
+$(document).ready(function(){
+  var multipleCancelButton = new Choices('#form_3_preferred_province', {
+    removeItemButton: true,
+    maxItemCount:21,
+    searchResultLimit:21,
+    renderChoiceLimit:21
+  }); 
+});
 
 $(document).ready(function(){
   var multipleCancelButton = new Choices('#form_1_msmes', {

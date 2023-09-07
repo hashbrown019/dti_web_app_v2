@@ -7,112 +7,118 @@
 
 {% block content %}
 <title>Form 8 Dasboard</title>
-<div class="header bg-primary pb-6" >
+<div class="header bg-primary pb-6">
   <div class="container-fluid">
     <div class="header-body">
 
-        <div class="d-flex align-items-center">
-            <!-- Search form -->
-            <div class="h1 fw-bolder text-gray mb-2">FORM 8</div>
-            <!-- / Search form -->
-          </div>
-          <style>
-                    
-            .icon-button__badge {
-              position: absolute;
-              top: -10px;
-              right: -10px;
-              width: 25px;
-              height: 25px;
-              background: #ff4d4d;
-              color: #ffffff;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              border-radius: 50%;
-            }</style>
-
-            <!-- Card header -->
-            <div class="d-flex justify-content-center">
-
-                <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
-                  <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4" >
-                    <table class="table table-dark table-flush dataTable " id="datatable-buttons9" role="grid" aria-describedby="datatable-buttons_info" style="width:100% !important">
-                    <thead class="thead" >
-                      <tr role="row">
-                        <th>ID</th>
-                        <th>DIP Alignment</th>
-                        <th>Activity Title</th>
-                        <th>Name of Beneficiary (Registered Business/FO Name)</th>
-                        <th>Action</th>
-                        <th>Timestamp</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                     <div>
-                        {% for row in form8_datatable %}
-                        <td>{{ row['id'] }}</td>
-                        <td>{{ row['dip'] }}</td>
-                        <td>{{ row['act'] }}</td>  
-                        <td>{{ row['name'] }}</td>
-                        <td>
-                          <a style="color: #1ac6ff; " href="/dcf/form8?id={{ row['id'] }}&table=form8"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                          {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
-                            <!-- <a style="color: #00cc66;" href="/dcf/form8?id=1&table=form8"> <span><i class="fa-solid fa-pen-to-square" aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
-                            <a style="color: #ff4d4d;"  href="/delete_record/form8/{{row['id']}}" onclick="confirmation(event)"> <span><i class="fa-solid fa-trash"></i></span> Delete</a>
-                            {%endif%}
-                        </td>
-                        <td class="date-cell"> {{ row['date_created'] }}<br>
-                          {% if row['date_modified'] %}
-                            <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp }}</i>
-                          {% endif %}</i></td>
-
-            
-                 
-                    </tr>
-                  
-                    {% endfor  %}
-                      </tbody>
-            </table>
-            
-            </div>
-                      
-                      
-                      
-        </div>
-                    
-                </div>
-    {% include "includes/viewform_modal/viewform9.html" %}
-    {% include "includes/updateform_modal/updateform9.html" %}
-
-    <div class="py-4">
-      <div class="dropdown">
-        <button class="btn btn-default d-inline-flex align-items-center me-2" onclick="window.open('/dcf/form9', '_blank')">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-              &nbsp; GO TO Enablers' Activity Tracker FORM
-          </button>
+      <div class="d-flex align-items-center">
+        <!-- Search form -->
+        <div class="h1 fw-bolder text-gray mb-2">FORM 8</div>
+        <!-- / Search form -->
       </div>
+      <style>
+        .icon-button__badge {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          width: 25px;
+          height: 25px;
+          background: #ff4d4d;
+          color: #ffffff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+        }
+      </style>
+
+      <!-- Card header -->
+      <div class="d-flex justify-content-center">
+
+        <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
+          <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4">
+            <table class="table table-dark table-flush dataTable " id="datatable-buttons9" role="grid"
+              aria-describedby="datatable-buttons_info" style="width:100% !important">
+              <thead class="thead">
+                <tr role="row">
+                  <th>ID</th>
+                  <th>DIP Alignment</th>
+                  <th>Activity Title</th>
+                  <th>Name of Beneficiary (Registered Business/FO Name)</th>
+                  <th>Action</th>
+                  <th>Timestamp</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <div>
+                    {% for row in form8_datatable %}
+                    <td>{{ row['id'] }}</td>
+                    <td>{{ row['dip'] }}</td>
+                    <td>{{ row['act'] }}</td>
+                    <td>{{ row['name'] }}</td>
+                    <td>
+                      <a style="color: #1ac6ff; " href="/dcf/form8?id={{ row['id'] }}&table=form8"> <span><i
+                            class="fa fa-eye" aria-hidden="true"> </i></span> View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                      {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
+                      <!-- <a style="color: #00cc66;" href="/dcf/form8?id=1&table=form8"> <span><i class="fa-solid fa-pen-to-square" aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
+                      <a style="color: #ff4d4d;" href="/delete_record/form8/{{row['id']}}"
+                        onclick="confirmation(event)"> <span><i class="fa-solid fa-trash"></i></span> Delete</a>
+                      {%endif%}
+                    </td>
+                    <td class="date-cell"> {{ row['date_created'] }}<br>
+                      {% if row['date_modified'] %}
+                      <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
+                        }}</i>
+                      {% endif %}</i>
+                    </td>
+
+
+
+                </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+
+
+
+        </div>
+
+      </div>
+      {% include "includes/viewform_modal/viewform9.html" %}
+      {% include "includes/updateform_modal/updateform9.html" %}
+
+      <div class="py-4">
+        <div class="dropdown">
+          <button class="btn btn-default d-inline-flex align-items-center me-2"
+            onclick="window.open('/dcf/form9', '_blank')">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            &nbsp; GO TO Enablers' Activity Tracker FORM
+          </button>
+        </div>
+      </div>
+      {% include "includes/form_spreadsheet/form9spreadsheet.html" %}
+
+      <!-- Page content -->
+    </div>
   </div>
-    {% include "includes/form_spreadsheet/form9spreadsheet.html" %}
-
-    <!-- Page content -->
-</div>
-</div>
 </div>
 
 
-    
+
 {% endblock content %}
 
-<!-- Specific JS goes HERE --> 
+<!-- Specific JS goes HERE -->
 {% block javascripts %}
 <script>
 
 </script>
-  <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
-  
+<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
 
 {% endblock javascripts %}

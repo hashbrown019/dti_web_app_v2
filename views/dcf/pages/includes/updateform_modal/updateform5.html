@@ -1,165 +1,231 @@
-
 {% for row in form5_datatable %}
-<div class="modal fade" id="form5edit{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
-    <div class="modal-content">
-      <div class="modal-header" style="background-color: #007399;">
-        <h5 class="modal-title text-white" id="exampleModalLabel">UPDATE DATA</h5>       
-        <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
-          <span class="text-white" aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="modalbodyedit">
+<div class="modal fade" id="form5edit{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #007399;">
+                <h5 class="modal-title text-white" id="exampleModalLabel">UPDATE DATA</h5>
+                <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="text-white" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalbodyedit">
 
-              <form style="margin-left: 2%; margin-right: 2%;" id="form5" action="/updateform5" method="POST">
-                {% include "includes/sweetalert.html" %}
+                <form style="margin-left: 2%; margin-right: 2%;" id="form5" action="/updateform5" method="POST">
+                    {% include "includes/sweetalert.html" %}
 
-                
-                <div class="x-col l1 ">
-                    &nbsp;
-                </div>
-                
-                <div class=" x-col l13 x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;"  >
-                    <center><h2 class=" x-container x-padding text-white" style="background-color: #007399;">Matching Grant Implementation Tracker</h2></center>
-                
-                    <div class="x-container x-padding">
-                        <style> 
-                            table, th, td{border: 1px solid black;border-collapse: collapse;}
-                        </style>
-                
-                    </div>
-                    <input type="hidden"  name="id" value="{{ row['id'] }}">
-                    <div class="x-col l3 x-container x-padding">
-                        <label class="">Implementing Unit:</label>
-                        <select class="form_data_b x-border x-select x-border"  value="{{ row['mgit_implementing_unit'] }}" id="mgit_implementing_unit" name="mgit_implementing_unit" required><br>
-                            <option>{{ row['mgit_implementing_unit'] }}</option>
-                            <optgroup label="RCU">
-                                <option value="8">Region Vlll - Eastern Visayas</option>
-                                <option value="9">Region lX -  Zamboanga Peninsula</option>
-                                <option value="10">Region X - Northern Mindanao</option>
-                                <option value="11">Region Xl - Davao Region</option>
-                                <option value="12">Region Xll - SOCCSKSARGEN</option>
-                                <option value="13">Region Xlll - Caraga</option>
-                                <option value="BARMM">BARMM</option>
-                            </optgroup>
-                            <optgroup label="PCU">
 
-                                <option>Northern Samar</option>
-                                <option>Leyte</option>
-                                <option>Southern Leyte</option>
-                                <option>Zamboanga del Norte</option>
-                                <option>Zamboanga Sibugay</option>
-                                <option>Zamboanga del Sur</option>
-                                <option>Misamis Oriental</option>
-                                <option>Bukidnon</option>
-                                <option>Lanao del Norte</option>
-                                <option>Davao de Oro</option>
-                                <option>Davao Oriental</option>
-                                <option>Davao del Norte</option>
-                                <option>Davao del Sur</option>
-                                <option>Davao Occidental</option>
-                                <option>North Cotabato</option>
-                                <option>Sultan Kudarat</option>
-                                <option>Sarangani</option>
-                                <option>Agusan del Norte</option>
-                                <option>Agusan del Sur</option>
-                                <option>Surigao del Sur</option>
-                                <option>Maguindanao</option>
-                            </optgroup>
-                            <option style="font-weight: bold;">NGA Partners</option>
-                        </select>
+                    <div class="x-col l1 ">
+                        &nbsp;
                     </div>
 
-                    <div class="x-container x-padding">
-                        <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-                        <table class="x-table x-container x-table-border">
-                            <tr>
-                                <th rowspan="2">
-                                    <center>Name Of DIP</center>
-                                </th>
-                                <th rowspan="2">
-                                    <center>Name of FO/MSME RECIPIENT  (type name of FO / MSME)</center>
-                                </th>
-                                <th rowspan="2">
-                                    <center>total # of FO Member Recipients</center>
-                                </th>
-                            </tr>
-                            <tr></tr>
-                            <tr>
-                                <!---gender---> 
-                                <td><input required class=" x-light-grey x-input"  value="{{ row['mgit_name_of_dip'] }}" id="mgit_name_of_dip" type="text" name="mgit_name_of_dip" ></td>
-                                <td><input class=" x-light-grey x-input"  value="{{ row['mgit_msme_recipient'] }}" id="mgit_msme_recipient" type="text" name="mgit_msme_recipient"></td>
-                                <td><input class=" x-light-grey x-input"  value="{{ row['mgit_total_member_recipient'] }}" id="mgit_total_member_recipient" type="text" name="mgit_total_member_recipient"></td>
-                            </tr>
-                        </table>
-                    </div>
+                    <div class=" x-col l13 x-container x-card x-light-grey"
+                        style="margin-top: 10px; margin-bottom: 20px;">
+                        <center>
+                            <h2 class=" x-container x-padding text-white" style="background-color: #007399;">Matching
+                                Grant Implementation Tracker</h2>
+                        </center>
+
+                        <div class="x-container x-padding">
+                            <style>
+                                table,
+                                th,
+                                td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                }
+                            </style>
+
+                        </div>
+                        <input type="hidden" name="id" value="{{ row['id'] }}">
+                        <div class="x-col l3 x-container x-padding">
+                            <label class="">Implementing Unit:</label>
+                            <select class="form_data_b x-border x-select x-border"
+                                value="{{ row['mgit_implementing_unit'] }}" id="mgit_implementing_unit"
+                                name="mgit_implementing_unit" required><br>
+                                <option>{{ row['mgit_implementing_unit'] }}</option>
+                                <optgroup label="RCU">
+                                    <option value="8">Region Vlll - Eastern Visayas</option>
+                                    <option value="9">Region lX - Zamboanga Peninsula</option>
+                                    <option value="10">Region X - Northern Mindanao</option>
+                                    <option value="11">Region Xl - Davao Region</option>
+                                    <option value="12">Region Xll - SOCCSKSARGEN</option>
+                                    <option value="13">Region Xlll - Caraga</option>
+                                    <option value="BARMM">BARMM</option>
+                                </optgroup>
+                                <optgroup label="PCU">
+
+                                    <option>Northern Samar</option>
+                                    <option>Leyte</option>
+                                    <option>Southern Leyte</option>
+                                    <option>Zamboanga del Norte</option>
+                                    <option>Zamboanga Sibugay</option>
+                                    <option>Zamboanga del Sur</option>
+                                    <option>Misamis Oriental</option>
+                                    <option>Bukidnon</option>
+                                    <option>Lanao del Norte</option>
+                                    <option>Davao de Oro</option>
+                                    <option>Davao Oriental</option>
+                                    <option>Davao del Norte</option>
+                                    <option>Davao del Sur</option>
+                                    <option>Davao Occidental</option>
+                                    <option>North Cotabato</option>
+                                    <option>Sultan Kudarat</option>
+                                    <option>Sarangani</option>
+                                    <option>Agusan del Norte</option>
+                                    <option>Agusan del Sur</option>
+                                    <option>Surigao del Sur</option>
+                                    <option>Maguindanao</option>
+                                </optgroup>
+                                <option style="font-weight: bold;">NGA Partners</option>
+                            </select>
+                        </div>
+
+                        <div class="x-container x-padding">
+                            <style>
+                                table,
+                                th,
+                                td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                }
+                            </style>
+                            <table class="x-table x-container x-table-border">
+                                <tr>
+                                    <th rowspan="2">
+                                        <center>Name Of DIP</center>
+                                    </th>
+                                    <th rowspan="2">
+                                        <center>Name of FO/MSME RECIPIENT (type name of FO / MSME)</center>
+                                    </th>
+                                    <th rowspan="2">
+                                        <center>total # of FO Member Recipients</center>
+                                    </th>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <!---gender--->
+                                    <td><input required class=" x-light-grey x-input"
+                                            value="{{ row['mgit_name_of_dip'] }}" id="mgit_name_of_dip" type="text"
+                                            name="mgit_name_of_dip"></td>
+                                    <td><input class=" x-light-grey x-input" value="{{ row['mgit_msme_recipient'] }}"
+                                            id="mgit_msme_recipient" type="text" name="mgit_msme_recipient"></td>
+                                    <td><input class=" x-light-grey x-input"
+                                            value="{{ row['mgit_total_member_recipient'] }}"
+                                            id="mgit_total_member_recipient" type="text"
+                                            name="mgit_total_member_recipient"></td>
+                                </tr>
+                            </table>
+                        </div>
 
                         <div class="x-col l4 x-container x-padding">
                             <span class="">Commodity</span>
-                            <select class="x-border x-select x-border" value="{{ row['mgit_commodity'] }}" id="mgit_commodity" name="mgit_commodity">
+                            <select class="x-border x-select x-border" value="{{ row['mgit_commodity'] }}"
+                                id="mgit_commodity" name="mgit_commodity">
                                 <option>{{ row['mgit_commodity'] }}</option>
                                 <option>Coffee</option>
                                 <option>Cacao</option>
                                 <option>Coconut</option>
                                 <option>PFN</option>
                             </select>
-                            <input type="text" class="hidden-textbox x-input x-border" name="mgit_commodity_others" id="mgit_commodity_others" placeholder="Please specify">
+                            <input type="text" class="hidden-textbox x-input x-border" name="mgit_commodity_others"
+                                id="mgit_commodity_others" placeholder="Please specify">
                         </div>
-                
-                    
-                
+
+
+
                         <div class="x-container x-padding">
-                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <style>
+                                table,
+                                th,
+                                td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                }
+                            </style>
                             <table class="x-table x-container x-table-border">
                                 <tr>
                                     <th colspan="2">
-                                        <center>Total number of  FO members by Gender</center>
+                                        <center>Total number of FO members by Gender</center>
                                     </th>
                                     <th colspan="4">
                                         <center>Total number of FO members by sectoral group </center>
                                     </th>
                                 </tr>
-                
+
                                 <tr>
                                     <!---gender---->
-                                    <td><center>Male</center></td>
-                                    <td><center>Female</center></td>
-                
+                                    <td>
+                                        <center>Male</center>
+                                    </td>
+                                    <td>
+                                        <center>Female</center>
+                                    </td>
+
                                     <!---SectorG---->
-                                    <td><center>PWD</center></td>
-                                    <td><center>Youth</center></td>
-                                    <td><center>IP</center></td>
-                                    <td><center>SC</center></td>
+                                    <td>
+                                        <center>PWD</center>
+                                    </td>
+                                    <td>
+                                        <center>Youth</center>
+                                    </td>
+                                    <td>
+                                        <center>IP</center>
+                                    </td>
+                                    <td>
+                                        <center>SC</center>
+                                    </td>
                                 </tr>
-                
+
                                 <tr>
-                                <!---gender--->	
-                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_gender_male'] }}" id="mgit_total_number_fo_gender_male" type="number" name="mgit_total_number_fo_gender_male"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_gender_female'] }}" id="mgit_total_number_fo_gender_female" type="number" name="mgit_total_number_fo_gender_female"></td>
-                
-                                <!--sectorG--->
-                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_pwd'] }}" id="mgit_total_number_fo_sectoral_pwd" type="number" name="mgit_total_number_fo_sectoral_pwd"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_youth'] }}" id="mgit_total_number_fo_sectoral_youth" type="number" name="mgit_total_number_fo_sectoral_youth"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_IP'] }}" id="mgit_total_number_fo_sectoral_IP" type="number" name="mgit_total_number_fo_sectoral_IP"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_SC'] }}" id="mgit_total_number_fo_sectoral_SC" type="number" name="mgit_total_number_fo_sectoral_SC"></td>
+                                    <!---gender--->
+                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_gender_male'] }}"
+                                            id="mgit_total_number_fo_gender_male" type="number"
+                                            name="mgit_total_number_fo_gender_male"></td>
+                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_gender_female'] }}"
+                                            id="mgit_total_number_fo_gender_female" type="number"
+                                            name="mgit_total_number_fo_gender_female"></td>
+
+                                    <!--sectorG--->
+                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_pwd'] }}"
+                                            id="mgit_total_number_fo_sectoral_pwd" type="number"
+                                            name="mgit_total_number_fo_sectoral_pwd"></td>
+                                    <td><input class="  x-input"
+                                            value="{{ row['mgit_total_number_fo_sectoral_youth'] }}"
+                                            id="mgit_total_number_fo_sectoral_youth" type="number"
+                                            name="mgit_total_number_fo_sectoral_youth"></td>
+                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_IP'] }}"
+                                            id="mgit_total_number_fo_sectoral_IP" type="number"
+                                            name="mgit_total_number_fo_sectoral_IP"></td>
+                                    <td><input class="  x-input" value="{{ row['mgit_total_number_fo_sectoral_SC'] }}"
+                                            id="mgit_total_number_fo_sectoral_SC" type="number"
+                                            name="mgit_total_number_fo_sectoral_SC"></td>
                                 </tr>
                             </table>
                         </div>
-                
+
                         <div class="x-row x-padding x-container">
                             <div class="x-col l4 x-container x-padding">
                                 <span class="">Type of Investment</span>
-                                <select class=" x-border x-select x-border" value="{{ row['mgit_type_of_investment'] }}"  id="mgit_type_of_investment" name="mgit_type_of_investment"><br>
-                                    <option >{{ row['mgit_type_of_investment'] }}</option>
-                                    <option >Productive investments</option>
-                                    <option >Expansion</option>
-                                    <option >Rehabilitation</option>
+                                <select class=" x-border x-select x-border" value="{{ row['mgit_type_of_investment'] }}"
+                                    id="mgit_type_of_investment" name="mgit_type_of_investment"><br>
+                                    <option>{{ row['mgit_type_of_investment'] }}</option>
+                                    <option>Productive investments</option>
+                                    <option>Expansion</option>
+                                    <option>Rehabilitation</option>
                                 </select>
                             </div>
                         </div>
-                
+
                         <div class="x-container x-padding">
-                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <style>
+                                table,
+                                th,
+                                td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                }
+                            </style>
                             <table class="x-table x-container x-table-border">
                                 <tr>
                                     <th>
@@ -172,82 +238,131 @@
                                         <center>Total of MGAs not yet signed</center>
                                     </th>
                                     <th>
-                                        <center>TOTAL MATCHING GRANT BASED ON APPROVED BUSINESS PLAN  (IN PHP)</center>
+                                        <center>TOTAL MATCHING GRANT BASED ON APPROVED BUSINESS PLAN (IN PHP)</center>
                                     </th>
                                 </tr>
-                
-                
+
+
                                 <tr>
-                                <!--sectorG--->
-                                    <td><input class="  x-input" value="{{ row['mgit_total_mgas_based_approved_DIP'] }}" id="mgit_total_mgas_based_approved_DIP" type="text" name="mgit_total_mgas_based_approved_DIP"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_total_mgas_signed'] }}"  id="mgit_total_mgas_signed" type="text" name="mgit_total_mgas_signed"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_total_mgas_not_yet_signed'] }}" id="mgit_total_mgas_not_yet_signed" type="text" name="mgit_total_mgas_not_yet_signed"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_total_matching_grant_based_on_approved_business'] }}" id="mgit_total_matching_grant_based_on_approved_business" type="text" name="mgit_total_matching_grant_based_on_approved_business"></td>
+                                    <!--sectorG--->
+                                    <td><input class="  x-input" value="{{ row['mgit_total_mgas_based_approved_DIP'] }}"
+                                            id="mgit_total_mgas_based_approved_DIP" type="text"
+                                            name="mgit_total_mgas_based_approved_DIP"></td>
+                                    <td><input class="  x-input" value="{{ row['mgit_total_mgas_signed'] }}"
+                                            id="mgit_total_mgas_signed" type="text" name="mgit_total_mgas_signed"></td>
+                                    <td><input class="  x-input" value="{{ row['mgit_total_mgas_not_yet_signed'] }}"
+                                            id="mgit_total_mgas_not_yet_signed" type="text"
+                                            name="mgit_total_mgas_not_yet_signed"></td>
+                                    <td><input class="  x-input"
+                                            value="{{ row['mgit_total_matching_grant_based_on_approved_business'] }}"
+                                            id="mgit_total_matching_grant_based_on_approved_business" type="text"
+                                            name="mgit_total_matching_grant_based_on_approved_business"></td>
                                 </tr>
                             </table>
                         </div>
-                
+
                         <div class="x-container x-padding">
-                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <style>
+                                table,
+                                th,
+                                td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                }
+                            </style>
                             <table class="x-table x-container x-table-border">
                                 <tr>
                                     <th>
-                                        <center>PREVIOUS MATCHING GRANT AVAILMENT  (IN PHP) - FIRST AVAILMENT</center>
+                                        <center>PREVIOUS MATCHING GRANT AVAILMENT (IN PHP) - FIRST AVAILMENT</center>
                                     </th>
                                     <th>
-                                        <center>MATCHING GRANT AVAILMENT AS OF THIS REPORTING PERIOD (IN PHP) and date</center>
+                                        <center>MATCHING GRANT AVAILMENT AS OF THIS REPORTING PERIOD (IN PHP) and date
+                                        </center>
                                     </th>
                                     <th>
                                         <center>REMAINING MATCHING GRANT BALANCE (in PHP)</center>
-                                    </th>	
+                                    </th>
                                 </tr>
-                
-                
+
+
                                 <tr>
-                                <!--sectorG--->
-                                    <td><input class="  x-input" value="{{ row['mgit_pmga_first_availment'] }}" id="mgit_pmga_first_availment" type="text" name="mgit_pmga_first_availment"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_mgar_period_date'] }}" id="mgit_mgar_period_date" type="text" name="mgit_mgar_period_date"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_remaining_matching_grant_balance'] }}" id="mgit_remaining_matching_grant_balance" type="text" name="mgit_remaining_matching_grant_balance"></td>
+                                    <!--sectorG--->
+                                    <td><input class="  x-input" value="{{ row['mgit_pmga_first_availment'] }}"
+                                            id="mgit_pmga_first_availment" type="text" name="mgit_pmga_first_availment">
+                                    </td>
+                                    <td><input class="  x-input" value="{{ row['mgit_mgar_period_date'] }}"
+                                            id="mgit_mgar_period_date" type="text" name="mgit_mgar_period_date"></td>
+                                    <td><input class="  x-input"
+                                            value="{{ row['mgit_remaining_matching_grant_balance'] }}"
+                                            id="mgit_remaining_matching_grant_balance" type="text"
+                                            name="mgit_remaining_matching_grant_balance"></td>
                                 </tr>
                             </table>
                         </div>
 
 
 
-                        
-        <div id="prodex3" class="x-col l5 x-container x-padding">
-            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
-            <table class="x-table x-container x-table-border">
-              <tr>
-                <th colspan="2">
-                  <center>INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA)</center>
-                </th>
-                <th>
-                  <center>TIME ELAPSE (autocalculate: IN REFERENCE TO END DATE OF MG AVAILMENT)</center>
-                </th>
-              </tr>
-          
-              <tr>
-                <td><center>Start</center></td>
-                <td><center>End</center></td>
-              </tr>
-          
-              <tr>
-                <td><input class="x-input x-border" value="{{ row['mgit_inclusive_timeline_implementation_start'] }}" id="mgit_inclusive_timeline_implementation_start" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_start"></td>
-                <td><input class="x-input x-border" value="{{ row['mgit_inclusive_timeline_implementation_end'] }}"  id="mgit_inclusive_timeline_implementation_end" type="date" placeholder="" name="mgit_inclusive_timeline_implementation_end"></td>
-                <td><input class=" x-input" value="{{ row['mgit_time_elapse'] }}"  id="mgit_time_elapse" type="text" name="mgit_time_elapse" disabled></td>
-              </tr>
-            </table>
-          </div>
-                
-                
-                
+
+                        <div id="prodex3" class="x-col l5 x-container x-padding">
+                            <style>
+                                table,
+                                th,
+                                td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                }
+                            </style>
+                            <table class="x-table x-container x-table-border">
+                                <tr>
+                                    <th colspan="2">
+                                        <center>INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA)</center>
+                                    </th>
+                                    <th>
+                                        <center>TIME ELAPSE (autocalculate: IN REFERENCE TO END DATE OF MG AVAILMENT)
+                                        </center>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <center>Start</center>
+                                    </td>
+                                    <td>
+                                        <center>End</center>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input class="x-input x-border"
+                                            value="{{ row['mgit_inclusive_timeline_implementation_start'] }}"
+                                            id="mgit_inclusive_timeline_implementation_start" type="date" placeholder=""
+                                            name="mgit_inclusive_timeline_implementation_start"></td>
+                                    <td><input class="x-input x-border"
+                                            value="{{ row['mgit_inclusive_timeline_implementation_end'] }}"
+                                            id="mgit_inclusive_timeline_implementation_end" type="date" placeholder=""
+                                            name="mgit_inclusive_timeline_implementation_end"></td>
+                                    <td><input class=" x-input" value="{{ row['mgit_time_elapse'] }}"
+                                            id="mgit_time_elapse" type="text" name="mgit_time_elapse" disabled></td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+
                         <div class="x-container x-padding">
-                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <style>
+                                table,
+                                th,
+                                td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                }
+                            </style>
                             <table class="x-table x-container x-table-border">
                                 <tr>
                                     <th>
-                                        <center>TIME ELAPSE (autocalculate:  IN REFERENCE TO END DATE OF  MG AVAILMENT)</center>
+                                        <center>TIME ELAPSE (autocalculate: IN REFERENCE TO END DATE OF MG AVAILMENT)
+                                        </center>
                                     </th>
                                     <th>
                                         <center>TOTAL BUDGET AS APPROVED IN THE DIP</center>
@@ -259,26 +374,42 @@
                                         <center>SUMMARY OF ACTUAL TOOLS PROCURED</center>
                                     </th>
                                 </tr>
-                 
-                
+
+
                                 <tr>
-                                <!--sectorG--->
-                                    <td><input class="  x-input" value="{{ row['mgit_time_elapse'] }}" id="mgit_time_elapse" type="text" name="mgit_time_elapse"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_total_budget_approved_in_the_DIP'] }}" id="mgit_total_budget_approved_in_the_DIP" type="text" name="mgit_total_budget_approved_in_the_DIP"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_actual_cost_of_procurement'] }}" id="mgit_actual_cost_of_procurement" type="text" name="mgit_actual_cost_of_procurement"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_summary_of_actual_tools_procured'] }}" id="mgit_summary_of_actual_tools_procured" type="text" name="mgit_summary_of_actual_tools_procured"></td>
+                                    <!--sectorG--->
+                                    <td><input class="  x-input" value="{{ row['mgit_time_elapse'] }}"
+                                            id="mgit_time_elapse" type="text" name="mgit_time_elapse"></td>
+                                    <td><input class="  x-input"
+                                            value="{{ row['mgit_total_budget_approved_in_the_DIP'] }}"
+                                            id="mgit_total_budget_approved_in_the_DIP" type="text"
+                                            name="mgit_total_budget_approved_in_the_DIP"></td>
+                                    <td><input class="  x-input" value="{{ row['mgit_actual_cost_of_procurement'] }}"
+                                            id="mgit_actual_cost_of_procurement" type="text"
+                                            name="mgit_actual_cost_of_procurement"></td>
+                                    <td><input class="  x-input"
+                                            value="{{ row['mgit_summary_of_actual_tools_procured'] }}"
+                                            id="mgit_summary_of_actual_tools_procured" type="text"
+                                            name="mgit_summary_of_actual_tools_procured"></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="x-row x-container x-padding">
-                            <style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+                            <style>
+                                table,
+                                th,
+                                td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                }
+                            </style>
                             <table class="x-table x-container x-table-border">
                                 <tr>
                                     <th colspan="2">
                                         <center>INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA)</center>
                                     </th>
                                     <th rowspan="2">
-                                        <center>TIME ELAPSE (autocalculate:  in reference tostart and end date)</center>
+                                        <center>TIME ELAPSE (autocalculate: in reference tostart and end date)</center>
                                     </th>
                                     <th rowspan="2">
                                         <center>DATE OF DISTRIBUTION/<br>TRAINING</center>
@@ -286,40 +417,56 @@
                                     <th rowspan="2">
                                         <center>REMARKS ON THE DELIVERED TOOLS</center>
                                     </th>
-                                    
+
                                 </tr>
-                
+
                                 <tr>
-                                    <td><center>Start</center></td>
-                                    <td><center>End</center></td>
-                                    
-                                    
+                                    <td>
+                                        <center>Start</center>
+                                    </td>
+                                    <td>
+                                        <center>End</center>
+                                    </td>
+
+
                                 </tr>
-                
+
                                 <tr>
-                                    <td><input class=" x-input x-border" value="{{ row['mgit_inclusive_timeline_implementation_start1'] }}" id="mgit_inclusive_timeline_implementation_start1" name="mgit_inclusive_timeline_implementation_start1" type="date" placeholder=""></td>
-                                    <td><input class=" x-input x-border" value="{{ row['mgit_inclusive_timeline_implementation_end1'] }}" id="mgit_inclusive_timeline_implementation_end1" name="mgit_inclusive_timeline_implementation_end1" type="date" placeholder=""></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_time_elapse1'] }}" id="mgit_time_elapse1" type="text" name="mgit_time_elapse1"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_date_of_distribution'] }}" id="mgit_date_of_distribution" type="text" name="mgit_date_of_distribution"></td>
-                                    <td><input class="  x-input" value="{{ row['mgit_remarks_on_the_deliverd_tools'] }}" id="mgit_remarks_on_the_deliverd_tools" type="text" name="mgit_remarks_on_the_deliverd_tools"></td>
-                                    
+                                    <td><input class=" x-input x-border"
+                                            value="{{ row['mgit_inclusive_timeline_implementation_start1'] }}"
+                                            id="mgit_inclusive_timeline_implementation_start1"
+                                            name="mgit_inclusive_timeline_implementation_start1" type="date"
+                                            placeholder=""></td>
+                                    <td><input class=" x-input x-border"
+                                            value="{{ row['mgit_inclusive_timeline_implementation_end1'] }}"
+                                            id="mgit_inclusive_timeline_implementation_end1"
+                                            name="mgit_inclusive_timeline_implementation_end1" type="date"
+                                            placeholder=""></td>
+                                    <td><input class="  x-input" value="{{ row['mgit_time_elapse1'] }}"
+                                            id="mgit_time_elapse1" type="text" name="mgit_time_elapse1"></td>
+                                    <td><input class="  x-input" value="{{ row['mgit_date_of_distribution'] }}"
+                                            id="mgit_date_of_distribution" type="text" name="mgit_date_of_distribution">
+                                    </td>
+                                    <td><input class="  x-input" value="{{ row['mgit_remarks_on_the_deliverd_tools'] }}"
+                                            id="mgit_remarks_on_the_deliverd_tools" type="text"
+                                            name="mgit_remarks_on_the_deliverd_tools"></td>
+
                                 </tr>
                             </table>
                         </div>
                     </div>
-              
-          </div>
-          <div class="modal-footer bg-light">
-             <button type="submit" class="btn btn-primary" style="justify-content: right;">Save changes</button>
-            <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
-      </div>
-    </form>
 
-      
-      </div>
-   
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="submit" class="btn btn-primary" style="justify-content: right;">Save changes</button>
+                <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+
+
+        </div>
+
     </div>
-  </div>
-  
-  {% endfor  %}
+</div>
 
+{% endfor %}
