@@ -54,7 +54,7 @@ def updateform5(request):
         last_row_update_id = db.do(sql)
         if(last_row_update_id["response"]=="error"):
             flash(f"An error occured !", "error")
-            print(str(last_row_update_id))
+            # print(str(last_row_update_id))
         else:
             flash(f"Data Updated! ", "success")
         # return redirect(url_for('formcdashboard'))

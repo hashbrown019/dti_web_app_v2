@@ -184,14 +184,14 @@
                             <script>
 
                                 function add_row(ids) {
-                                    println('form6_table_update' + ids)
+                                    // println('form6_table_update' + ids)
                                     var table6_org_update = document.getElementById('form6_table_update' + ids);
-                                    println(table6_org_update)
+                                    // println(table6_org_update)
                                     var row = table6_org_update.insertRow(2);
                                     // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
                                     row.insertCell(0).innerHTML = ` <td><input class="form_data_b  x-input" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1[]"></td>`
                                     row.insertCell(1).innerHTML = `<td><input class="form_data_b  x-input" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2[]"></td>`
-                                    println(table6_org_update)
+                                    // println(table6_org_update)
                                 }
                             </script>
                         </div>
@@ -211,7 +211,7 @@
                                 <tr>
                                     <td>
                                         <center><button type="button" style="float: left;" class="btn btn-primary"
-                                                onclick="add_row({{row['id']}})"><i
+                                                onclick="add_row3({{row['id']}})"><i
                                                     class="fa-solid fa-circle-plus"></i></button>
                                             <center>Name of Beneficiary/Participant</center>
                                     </td>
@@ -281,7 +281,7 @@
                             </table>
                             <script>
 
-                                function add_row(ids) {
+                                function add_row3(ids) {
                                     // $ID('main_').innerHTML += og_row
                                     // Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
                                     var table6_org_updatex = document.getElementById('form6_table_updatexx' + ids);
@@ -446,7 +446,7 @@
 
 
                                 function add_row2(ids) {
-                                    println('form6_table_update2' + ids)
+                                    // println('form6_table_update2' + ids)
                                     var table6_org_update2 = document.getElementById('form6_table_update2' + ids);
 
                                     var row2 = table6_org_update2.insertRow(3);
@@ -641,12 +641,12 @@
             </div>
             </form>
             <script>
-                const elementsWithName = document.querySelectorAll('[name]');
+                // const elementsWithName = document.querySelectorAll('[name]');
 
 
-                elementsWithName.forEach(element => {
-                    console.log(element.getAttribute('name'));
-                });
+                // elementsWithName.forEach(element => {
+                //     ////console.log(element.getAttribute('name'));
+                // });
             </script>
 
         </div>
