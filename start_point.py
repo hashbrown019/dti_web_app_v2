@@ -103,7 +103,6 @@ def after_request_func(response):
 def format_timestamp(timestamp):
     now = datetime.now()
     time_difference = now - timestamp
-
     if time_difference.total_seconds() < 1:
         return "Just now"
     elif time_difference.total_seconds() == 1:

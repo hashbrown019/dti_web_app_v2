@@ -699,11 +699,11 @@ def delete_record(table,ids):
 	sql='DELETE FROM `{}` WHERE id = {}'.format(table,ids)
 	delete=db.do(sql)
 	if(delete["response"]=="error"):
-			# flash(f"An error occured !", "error") 
 			print(str(delete))
+			flash(f"An error occured !", "error") 
 	else:
-			# flash(f"The data was deleted successfully!", "success")
 			print(str(delete))
+			flash(f"The data was deleted successfully!", "success")
 	return redirect("/{}dashboard".format(FORM_NAME[table]))
 
 FORM_NAME={

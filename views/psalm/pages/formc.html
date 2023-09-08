@@ -39,25 +39,28 @@
 			func: function (r) {
 				var res = JSON.parse(r)[0]
 				var x_ins = $CLASS(class_name)
-
-
 				for (let index = 0; index < x_ins.length; index++) {
 					disabled_ins(res, x_ins, index)
 
 					// println((x_ins[index].id))
 					// println((x_ins[index].id)+ ' || '+ x_ins[index].type)
 					if (x_ins[index].type == "checkbox") {
-						if (res[x_ins[index].id] === "true") {
-							x_ins[index].click()
-
+						try{
+							if (res[x_ins[index].id] === "true") {
+								x_ins[index].click()
+							}
+						}catch(err){
+							warnprintln(x_ins[index].id + " ||| " + err)
 						}
 					} else if (x_ins[index].type == "select-one") {
-						x_ins[index].value = res[x_ins[index].id]
-						triggerChange(x_ins[index])
+						try{
+							x_ins[index].value = res[x_ins[index].id]
+							triggerChange(x_ins[index])
+						}catch(err){
+							warnprintln(x_ins[index].id + " ||| " + err)
+						}
 
 					} else {
-						// x_ins[index].value = res[x_ins[index].id]
-
 						try {
 							x_ins[index].value = res[x_ins[index].id]
 						} catch (error) {
@@ -79,18 +82,19 @@
 		var USER_ID = JSON.parse('{{user_data}}'.replaceAll('&#39;', '"'))['id']
 		var JOB = JSON.parse('{{user_data}}'.replaceAll('&#39;', '"'))['job']
 		// if(USER_ID==parseInt(res['upload_by']) || JOB=="Super Admin"){}
-		if (USER_ID == parseInt(res['upload_by'])) {
-			x_ins[index].disabled = false
-		} else {
-			var not_owner = "<br><i class='x-text-red'>Not editable. Viewing as <b>Admin</b></i>"
-			x_ins[index].disabled = true
-			if (JOB != "Super Admin") {
-				$ID('c1_kampownkhap').innerHTML = "<i class='x-text-red' style='color:#9A3B3B; font-size: medium; font-weight: bolder;'><i class='fa-solid fa-circle-exclamation'></i> You cannot view this form section since you are not the owner of this record/entries</i>"
-				not_owner = "<i style='font-size: medium; font-weight: bolder; 'class='x-text-red'><i class='fa-solid fa-circle-exclamation'></i> This record is not yours </i>"
+		if(res!=undefined){
+			if (USER_ID == parseInt(res['upload_by'])) {
+				x_ins[index].disabled = false
+			} else {
+				var not_owner = "<br><i class='x-text-red'>Not editable. Viewing as <b>Admin</b></i>"
+				x_ins[index].disabled = true
+				if (JOB != "Super Admin") {
+					$ID('c1_kampownkhap').innerHTML = "<i class='x-text-red' style='color:#9A3B3B; font-size: medium; font-weight: bolder;'><i class='fa-solid fa-circle-exclamation'></i> You cannot view this form section since you are not the owner of this record/entries</i>"
+					not_owner = "<i style='font-size: medium; font-weight: bolder; 'class='x-text-red'><i class='fa-solid fa-circle-exclamation'></i> This record is not yours </i>"
+				}
+				$ID('submit_btn_holder').innerHTML = not_owner
+				$ID('top_note').innerHTML = not_owner
 			}
-			$ID('submit_btn_holder').innerHTML = not_owner
-			$ID('top_note').innerHTML = not_owner
-
 		}
 	}
 
