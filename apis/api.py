@@ -7,6 +7,7 @@ from modules.Req_Brorn_util import rsa_sec as _rsa
 import os, json
 from controllers.engine_block_to_sql import form_migration
 from controllers.engine_excel_to_sql import form_excel_a_handler
+from tqdm import tqdm
 
 app = Blueprint("api",__name__)
 
@@ -244,6 +245,41 @@ class user_management:
 		else:
 			return {'msg':'session required','err':404}
 
+	@app.route("/api/user/rankings",methods=["POST","GET"]) # GE
+	def user_rankings_all():
+		ALL_USER = rapid_mysql.select("SELECT `id`, `name` , `rcu` FROM `users` WHERE `status`='active' ;")
+		data = {}
+		msg = "on process"
+		print("starting")
+		if(user_management.is_on_session()):
+			for user in ALL_USER:
+				user_id = user['id']
+				print(user['name'])
+				prof_a_e =rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `excel_import_form_a` WHERE `user_id` = '{}';".format(user_id))[0]['count']
+				prof_a =rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
+				data[user['name'] ] = {}
+				total_input_all = 0
+				total_input_all += int(prof_a_e) + int(prof_a)
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_b` WHERE `uploaded_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_c` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_bdsp_reg` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_capacity_building` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_enablers_activity` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_implementing_unit` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_matching_grant` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_negosyo_center` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_product_development` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_trade_promotion` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `webrep_articles` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `webrep_forum_comments` WHERE `comment_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `webrep_uploads` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
+				data[user['name']]= total_input_all
+			return data
+		else:
+			return {'msg':'session required','err':404}
+
 class security:
 	@app.route("/api/sec/gen_key",methods=["POST","GET"]) # GE
 	def gen_key():
@@ -275,3 +311,25 @@ class security:
 # 	reader = open(excel_f_a_heads,"r");excel_f_a_heads = json.loads(reader.read());reader.close()
 # 	return excel_f_a_heads
 
+
+
+
+
+
+
+# data[user['name'] ]['profiling_a'] = int(prof_a_e) + int(prof_a)
+# data[user['name'] ]['prof_b'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_b` WHERE `uploaded_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['prof_c'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_c` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_access_financing'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_bdsp_reg'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_bdsp_reg` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_capacity_building'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_capacity_building` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_enablers_activity'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_enablers_activity` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_implementing_unit'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_implementing_unit` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_matching_grant'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_matching_grant` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_negosyo_center'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_negosyo_center` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_prep_review_aprv_status'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_product_development'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_product_development` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['dcf_trade_promotion'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_trade_promotion` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['webrep_articles'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `webrep_articles` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['webrep_forum_comments'] = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `webrep_forum_comments` WHERE `comment_by` = '{}';".format(user_id))[0]['count']
+# data[user['name'] ]['webrep_uploads'] =

@@ -71,6 +71,7 @@ class outbound:
 				   excel_import_form_a.user_id in (SELECT users.id from users {} );
 			'''.format(self.position_data_filter_excel()))
 		DATA = EXCEL_UPLOADS
+		# print(DATA)
 		# dict_= json.loads(res)
 		# df2 = pd.DataFrame.from_dict(dict_, orient="index")
 		print(" *  Generating DATA FRAME ")
