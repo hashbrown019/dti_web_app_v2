@@ -39,14 +39,16 @@
 	<div class="container d-flex justify-content-between text-start mt-5">
 		<div class="">
 			<h5 class="display-5 texttheme" >Create Case Study</h5>
+			<input type="text" id="id" class="article_form form-control" value="" hidden style="border:0.1px">
+
 		</div>
+		
 
-
-		<div class="">
+		<div id="submit_btn_handler">
 			<button class="btn btn-outline-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate"  onclick="submit_article()">Submit</a>
 		</div>
 	</div>
-
+	
 
 <!-- Arcticle News -->
 	<div class="container shadow-sm p-3 bg-body rounded mb-5">
@@ -384,7 +386,6 @@
 
 
 
-					<input type="" id="id" class="article_form" hidden>
 				</form>
 				<div class="mt-5">
 					
@@ -473,6 +474,19 @@
 					var data = {}; var from_field = $CLASS('article_form')
 					for (var i = 0; i < from_field.length; i++) {
 						var _ID = from_field[i].id
+						if(_ID=="id"){
+							$ID('id').value = resp[_ID]
+						}
+
+						if(resp['USER_ID'] !="{{user_data['id']}}"){
+							println("true")
+							$ID('submit_btn_handler').innerHTML = "";
+							from_field[_ID].disabled = true;
+							// from_field[_ID].style.border = "0px";
+							from_field[_ID].style["background-color"] = "white";
+
+						}
+
 						try{
 							from_field[_ID].value = web_safe_decode(resp[_ID])
 						}catch(e){}

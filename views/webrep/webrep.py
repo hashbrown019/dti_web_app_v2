@@ -246,8 +246,6 @@ class _main:
 		data = dict(request.form)
 		key = [];val = [];args=""
 		data["USER_ID"] = session["USER_DATA"][0]['id']
-
-
 		# FILE_REQ = file_from_request(app)
 		# __f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
 		# data["file_name"] = __f["file_arr_str"]
@@ -259,13 +257,13 @@ class _main:
 				# print(datum)
 				key.append("`{}`".format(datum))
 				val.append("'{}'".format(data[datum]))
-			sql = ('''INSERT INTO `webrep_case_study` ({},`status`) VALUES ({},'pending')'''.format(", ".join(key),", ".join(val)))
+			sql = ('''INSERT INTO `webrep_case_study` ({},`status`) VALUES ({},'Submitted')'''.format(", ".join(key),", ".join(val)))
 		
 		else:
 			print(" >> Editing Articles")
 			for datum in data:
 				args += ",`{}`='{}'".format(datum,data[datum])
-			sql = "UPDATE `webrep_case_study` SET  {}, `status`='pending' WHERE `id`='{}';".format(args[1:],request.form['id'])
+			sql = "UPDATE `webrep_case_study` SET  {}, `status`='Submitted' WHERE `id`='{}';".format(args[1:],request.form['id'])
 			pass
 		
 		last_row_id = db.do(sql)
