@@ -74,6 +74,7 @@ def get_list_fo():
 	sql_form = '''
 	SELECT 
 		`id` as 'db_id',
+		`uploaded_by`,
 		`organization_registered_name`,
 		`office_business_adrress`,
 		`types_of_organization`,
