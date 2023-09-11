@@ -73,13 +73,15 @@ def save_form():
 def get_list_fo():
 	sql_form = '''
 	SELECT 
-		`id` as 'db_id',
-		`uploaded_by`,
-		`organization_registered_name`,
-		`office_business_adrress`,
-		`types_of_organization`,
-		`registering_agencies`
-	FROM `form_b` {} ;'''.format(Filter.position_data_filter())
+		`form_b`.`id` as 'db_id',
+		`form_b`.`organization_registered_name`,
+		`form_b`.`office_business_adrress`,
+		`form_b`.`types_of_organization`,
+		`form_b`.`registering_agencies`,
+		`users`.`name` as 'inputed_by',
+		`users`.`rcu` as 'rcu'
+	FROM `form_b` 
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 	resp = rapid_mysql.select(sql_form,False)
 	return jsonify(resp)
 
