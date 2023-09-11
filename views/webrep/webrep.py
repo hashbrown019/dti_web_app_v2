@@ -69,7 +69,8 @@ class _main:
 				# user_data=session["USER_DATA"][0],
 				upload_file_webrep=_main.get_uploads_docs(),
 				module_data = _main.get_module_data(),
-				articles = _main.get_uploads_article()
+				articles = _main.get_uploads_article(),
+				case_studies = _main.get_case_studies()
 				)
 		# if(page.lower()=="adminKnowledgecenter.html".lower() or
 		# 	page.lower()=="superadmin.html".lower()
@@ -90,6 +91,7 @@ class _main:
 			page.lower()=="document.html".lower() or 
 			page.lower()=="multimedia.html".lower() or 
 			page.lower()=="publication.html".lower()  or
+			page.lower()=="createCaseStudy.html".lower()  or
 			page.lower()=="createPost.html".lower()
 			):
 			if(_main.is_on_session()):
@@ -153,9 +155,20 @@ class _main:
 		return db.select("SELECT * from `webrep_articles` WHERE `id`='{}' ORDER BY `id` DESC;".format(ids))
 		# return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
 
+	@app.route("/webrep/case_study/get_post_ind",methods=["POST","GET"])
+	def case_study_get_post_ind():
+		ids = request.form['id']
+		SQL = "SELECT * from `webrep_case_study` WHERE `id`='{}' ORDER BY `id` DESC;".format(ids)
+		return db.select(SQL)
+		# return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
+	@app.route("/webrep/get_case_studies",methods=["POST","GET"])
+	def get_case_studies():
+		return db.select("SELECT * from `webrep_case_study`  WHERE `removed`='0' ORDER BY `id` DESC;")
+
 	@app.route("/webrep/uploads/docs",methods=["POST","GET"])
 	def get_uploads_docs():
 		return db.select("SELECT * from `webrep_uploads`  WHERE `removed`='0' ORDER BY `id` DESC;")
+
 
 	@app.route("/webrep/uploads/article",methods=["POST","GET"])
 	def get_uploads_article():
@@ -224,6 +237,40 @@ class _main:
 		
 		last_row_id = db.do(sql)
 		return jsonify({"last_row_id":last_row_id,"FILES":__f})
+
+	@app.route("/webrep/upload_case_study",methods=["POST","GET"])
+	def upload_case_study():
+		print("  * Article Module")
+		from datetime import date, datetime
+		from modules.Req_Brorn_util import file_from_request
+		data = dict(request.form)
+		key = [];val = [];args=""
+		data["USER_ID"] = session["USER_DATA"][0]['id']
+
+
+		# FILE_REQ = file_from_request(app)
+		# __f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
+		# data["file_name"] = __f["file_arr_str"]
+
+		is_exist = len(db.select("SELECT * FROM `webrep_case_study` WHERE `id` ='{}' ;".format(request.form['id'])))
+		if(is_exist==0):
+			print(" >> Adding Articles")
+			for datum in data:
+				# print(datum)
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(data[datum]))
+			sql = ('''INSERT INTO `webrep_case_study` ({},`status`) VALUES ({},'pending')'''.format(", ".join(key),", ".join(val)))
+		
+		else:
+			print(" >> Editing Articles")
+			for datum in data:
+				args += ",`{}`='{}'".format(datum,data[datum])
+			sql = "UPDATE `webrep_case_study` SET  {}, `status`='pending' WHERE `id`='{}';".format(args[1:],request.form['id'])
+			pass
+		
+		last_row_id = db.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+		# return jsonify({"last_row_id":last_row_id,"FILES":__f})
  
 	@app.route("/webrep/upload_file_webrep___",methods=["POST","GET"])
 	def upload_file_webrep___():
