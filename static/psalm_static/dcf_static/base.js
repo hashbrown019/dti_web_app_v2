@@ -635,12 +635,22 @@ $(document).ready(function(){
     renderChoiceLimit:4
   }); 
 });
+
 $(document).ready(function(){
   var multipleCancelButton = new Choices('#form_1_size_of_anchor', {
     removeItemButton: true,
-    maxItemCount:4,
-    searchResultLimit:4,
-    renderChoiceLimit:4
+    choices: ["Large","Medium","Small","Micro"],
+    // items: ["Large","Medium","Small","Micro"],
+    searchChoices: true,
+    // maxItemCount:4,
+    // searchResultLimit:4,
+    addItems: true,
+    uniqueItemText: 'Only unique values can be added',
+    customAddItemText: 'Only values matching specific conditions can be added',
+    addItemText: (value) => {
+      println(multipleCancelButton)
+      return `Press Enter to add <b>`+value+`</b>`;
+    },
   }); 
 });
 
