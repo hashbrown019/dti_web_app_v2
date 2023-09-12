@@ -232,7 +232,6 @@ def cform():
 	return render_template("formc.html",user_data=session["USER_DATA"][0])
 
 
-
 @app.route("/spreadsheet")
 def spreadsheet():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
@@ -278,7 +277,6 @@ def position_data_filter():
 	else:
 		session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
 		_filter = "WHERE  USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"]) 
-
 	return _filter
 
 def strct_dic(dict_):
