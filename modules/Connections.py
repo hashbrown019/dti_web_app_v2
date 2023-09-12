@@ -98,6 +98,9 @@ class mysql:
 			except Exception as e:
 				return {"response":"error","message":str(e), "sql":sql}
 
+
+
+
 	# ==========FUNCTION ON MULTIPLE SIMULTANEUS TRANSACTION==========================================
 	# function(sql, mysql.init_db(self) )
 	# returns a connection that has to be committed before closing transaction
@@ -120,6 +123,24 @@ class mysql:
 				return db_ready_func.conn # RETURNS a conn (connection) to close
 			except Exception as e:
 				return {"response":"error","message":str(e), "sql":sql}
+
+	def _select(self,db_ready_func,sql,dict_=True):
+		cur = db_ready_func['cur']
+		if(self.err_page==1):
+			cur.execute(sql)
+			rows = cur.fetchall()
+			print(rows)
+			return rows
+		else:
+			try:
+				# conn = mysql.init_db(self)
+				# cur = conn.cursor(dictionary=dict_)
+				cur.execute(sql)
+				rows = cur.fetchall()
+				return rows
+			except Exception as e:
+				return {"response":"error","message":str(e), "sql":sql}
+
 
 # ===============================================================================
 class Struct_obj:

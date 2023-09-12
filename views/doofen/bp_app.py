@@ -10,7 +10,10 @@ from controllers.inbound import inbound as inb
 from controllers.inbound import data_cleaning as  d_c
 from werkzeug.utils import secure_filename
 from controllers.engine_excel_to_sql import form_excel_a_handler
-
+import os, random, json
+import pandas as pd
+import openpyxl
+from datetime import datetime
 import pandas as pd
 from tqdm import tqdm
 
@@ -85,6 +88,50 @@ def get_list_fo():
 	resp = rapid_mysql.select(sql_form,False)
 	return jsonify(resp)
 
+
+@app.route("/formb/get_list_fo_full",methods=["POST","GET"])
+def get_list_fo_full():
+	sql_form = '''
+	SELECT 
+		`form_b`.`id` as 'db_id',
+		`form_b`.*,
+		`users`.`name` as 'inputed_by',
+		`users`.`rcu` as 'rcu'
+	FROM `form_b` 
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
+	resp = rapid_mysql.select(sql_form)
+	
+	file_name_exported = create_excel(resp,c.RECORDS+"objects/spreadsheets_b/exported/","formb")
+	return send_file(c.RECORDS+"objects/spreadsheets_b/exported/"+file_name_exported['file_name'], as_attachment=True,download_name=file_name_exported['file_name'])
+# ==============================================================
+# ==============================================================
+# ==============================================================
+# ==============================================================
+def create_excel(DATA,path,formname):
+	print(" Using Dynamic Function")
+	DATE_NOW = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
+	USER_ID = session["USER_DATA"][0]["id"]
+	# dict_= json.loads(res)
+	# df_nested_list = pd.DataFrame.from_dict(DATA, orient="index")
+	print(" *  Generating DATA FRAME ")
+	df_nested_list = pd.json_normalize(DATA)
+	# print(res[0])
+	# print(df_nested_list)
+	print(" *  Writing to spreadsheet ")
+	FILE_NAME_EXPORTED = '{}_{}_{}.xlsx'.format(USER_ID,formname,DATE_NOW)
+	__TO_DL_EXCEL = path + FILE_NAME_EXPORTED
+	print(f" *  Writing path [{__TO_DL_EXCEL}]")
+
+	writer = pd.ExcelWriter(__TO_DL_EXCEL) 
+	print(" *  Saving spreadsheet. . .  ")
+	df_nested_list.to_excel(writer, sheet_name='mobile_imports',index=False )
+	writer.save()
+	print(" *  Saving spreadsheet DOne ")
+	return {"Status":"done","file_name":FILE_NAME_EXPORTED}
+# ==============================================================
+# ==============================================================
+# ==============================================================
+# ==============================================================
 @app.route("/formb/get_ind_fo",methods=["POST","G ET"])
 def get_ind_fo():
 	ids = request.form['id']
@@ -257,6 +304,7 @@ def save_form_from_excel(data):
 	# return {"status":status,"msg":msg,"id":last_row_id}
 	print({"status":status,"msg":val,"id":last_row_id,"sql":sql})
 	return {"status":status,"msg":val,"id":last_row_id,"sql":sql}
+
 
 
 class Filter:
