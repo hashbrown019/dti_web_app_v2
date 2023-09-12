@@ -16,6 +16,8 @@
 <script type="text/javascript">
 	var form_a_page = 0
 	let form_page_holder = undefined
+	let func_to_use_as_filler = undefined
+	let DATA_SELECTED_FARMER = undefined
 
 	$onload(function(){
 		form_page_holder=$ID("form_a_forms_modal_container").innerHTML;
@@ -79,9 +81,10 @@
 				_table = ["form_a_farmer_profiles","form_a_farm_land","form_a_hh_profile","form_a_prod_cost","form_a_farm_workers_laborers","form_a_farm_post_harvest","form_a_farm_marketing_sales","form_a_access_financial","form_a_feedback"]
 			}
 		}else{
+			//RETURN IF PAGE ALREADY LOADED OR ALREADY SELECTED A FARMER IN LIST
+			func_to_use_as_filler(form_a_page)
 			return
 		}
-
 		$send({
 			action : "/form_a/get_ind_data_val",
 			method : POST,
@@ -90,10 +93,69 @@
 			func : function(r){
 				var res = JSON.parse(r)
 				println(res)
+				if('farmer_code' in res){
+					println("Mobile")
+					DATA_SELECTED_FARMER=res['data']
+					func_to_use_as_filler = mobile_filler
+				}else{
+					println("EXCEL")
+				}
 			}
 		})
 	}
 
+	function mobile_filler(page_index){
+		DICT_TO_INPUT(DATA_SELECTED_FARMER[page_index][0],'form_data_a')
+	}
+
+// ==========================================================================
+// ==========================================================================
+// ==========================================================================
+// ==========================================================================
+// ==========================================================================
+// ==========================================================================
+// ==========================================================================
+// ==========================================================================
+// ==========================================================================
+
+function trigger_event(element,trigger) {
+	let changeEvent = new Event(trigger);
+	element.dispatchEvent(changeEvent);
+}
+
+function DICT_TO_INPUT(DICT_,class_name) {
+	// println("==== DATA ======")
+	// println(DICT_)
+	// println("==== class_name ======")
+	// println(class_name)
+	var x_ins = $CLASS(class_name)
+	for (let index = 0; index < x_ins.length; index++) {
+		// disabled_ins(DICT_, x_ins, index)
+		if (x_ins[index].type == "checkbox") {
+			try{
+				if (DICT_[x_ins[index].id] === "true") {
+					x_ins[index].click()
+				}
+			}catch(err){
+				warnprintln(x_ins[index].id + " ||| " + err)
+			}
+		} else if (x_ins[index].type == "select-one") {
+			try{
+				x_ins[index].value = DICT_[x_ins[index].id]
+				trigger_event(x_ins[index],'change')
+			}catch(err){
+				warnprintln(x_ins[index].id + " ||| " + err)
+			}
+
+		} else {
+			try {
+				x_ins[index].value = DICT_[x_ins[index].id]
+			} catch (error) {
+				warnprintln(x_ins[index].id + " ||| " + error)
+			}
+		}
+	}
+}
 
 
 

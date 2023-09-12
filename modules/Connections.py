@@ -99,8 +99,6 @@ class mysql:
 				return {"response":"error","message":str(e), "sql":sql}
 
 
-
-
 	# ==========FUNCTION ON MULTIPLE SIMULTANEUS TRANSACTION==========================================
 	# function(sql, mysql.init_db(self) )
 	# returns a connection that has to be committed before closing transaction
