@@ -3,72 +3,81 @@
 <html>
 	{% include 'head.html' %}
 	<body class="">
-
-		<!-- Top container -->
-		<!-- Sidebar/menu -->
-		<nav class="x-sidebar x-collapse x-light-grey" style="width:200px;z-index: 3;" id="mySidebar"><br>
-			<div class="x-row">
-				<div class="x-container x-padding x-light-grey x-left"  onclick="x_open()" style="width:200px;">
-					<div class="x-center x-container">
-						<!-- <img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:100%"> -->
-						{% if(USER_DATA['profilepic']=="" or USER_DATA['profilepic']==" " ): %}
-						<img src="\static\psalm_static\menu\img\profilepic.png" style="width: 150px; height: 150px;">
-						{% else: %}
-						<img class="rounded-circle x-circle" src="\api\user_pic\{{USER_DATA['profilepic']}}" alt="{{USER_DATA['profilepic']}}" style="width: 150px; height: 150px;">
-						{%endif%}
+		<br>
+		<header class="x-header x-bar x-white x-top x-large " style="z-index:2;width: 100%;">
+			<div class="x-container" style="margin-left:200px;margin-right:200px;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
+				<div class="x-container x-left"  onclick="x_open()" style="width:100px;">
+					<img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:100%">
+				</div>
+				<div class="x-left x-text-teal" style="padding-top:20px">
+					<b>MIS |</b><i> Profiling Form A</i>
+				</div>
+				<div class="x-right x-right-align x-container x-padding">
+					<div class="x-container x-right-align" style="padding-top:6px">
+						{% include 'notification.html' %}
+						<span class="x-zoom x-text-grey x-padding x-margin-top x-round-xxlarge" onclick="goto('/menuv2')">
+							<span class="x-large x-text-teal fa fa-home"></span>
+							<span class="x-small"> Home</span>
+						</span>
+						<span class="x-zoom x-text-grey x-padding x-margin-top" onclick="logout()">
+							<span class="x-large x-text-red fa fa-power-off"></span>
+							<span class="x-small"> Logout</span>
+						</span>
 					</div>
 				</div>
-				<div class="x-container x-padding">
-					<br><br>
-
-					<span class="x-text-shrink ">
-						<b>{{USER_DATA['name']}}</b><br>
+			</div>
+			<div class="x-container x-text-grey" style="margin-left:200px;margin-right:200px;;margin-top:10px;">
+				<div class="x-left x-text-grey" style="padding-top: 5px;">
+					Showing figures for <b class="x-large">{{dash_data_['area_reg']}}</b>
+				</div>
+				<div class="x-right">
+					&nbsp;
+					{% if(USER_DATA['profilepic']=="" or USER_DATA['profilepic']==" " ): %}
+					<img src="\static\psalm_static\menu\img\profilepic.png" style="width: 40px; height: 40px;">
+					{% else: %}
+					<img class="rounded-circle x-circle" src="\api\user_pic\{{USER_DATA['profilepic']}}" alt="{{USER_DATA['profilepic']}}" style="width: 40px; height: 40px;">
+					{%endif%}
+				</div>
+				<div class="x-right x-text-teal">
+					<span class="x-right-align" style="border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey">
+						<b class="">{{USER_DATA['name']}}</b>
 						<span class="x-text-shrink x-tiny">{{USER_DATA['job']}}</span>
 					</span>
 				</div>
-				<div class="x-container">
-					<h5><b>Options</b></h5>
+			</div>
+			<div class="x-container x-text-grey" style="margin-left:200px;margin-right:200px;;margin-top:10px;;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
+				<div class="x-left">
+					<a class="x-zoom" onclick="show_view('dashboard','page_content')">
+						<i class="fa fa-users fa-fw x-text-teal"></i><b class="x-small">Overview</b>
+					</a>&nbsp;
+					<a class="x-zoom" onclick="show_view('lists','page_content');">
+						<i class="fa fa-eye fa-fw x-text-teal"></i><b class="x-small">lists</b>
+					</a>&nbsp;
+					<a class="x-zoom" onclick="show_view('data_cleaning','page_content');load_excel_cols()">
+						<i class="fa fa-history fa-fw x-text-teal"></i><b class="x-small">Data Cleaning</b>
+						<b class="w3-badge x-tiny x-text-red">On Dev</b>
+					</a>&nbsp;
+					<a class="x-zoom" onclick="form_a_forms()">
+						<i class="fa fa-user fa-fw x-text-teal"></i><b class="x-small">Add Profile</b>
+						<b class="w3-badge x-tiny x-text-red">On Dev</b>
+					</a>
 				</div>
-				<div class="x-bar-block">
-					<a href="#" class="x-zoom x-bar-item x-button x-padding-16 x-hide-large x-dark-grey x-hover-black" onclick="x_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
-					<a href="#dashboard" class="x-zoom x-bar-item x-button x-padding" onclick="show_view('dashboard','page_content')"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
-					<a href="#lists" class="x-zoom x-bar-item x-button x-padding" onclick="show_view('lists','page_content');"><i class="fa fa-eye fa-fw"></i>&nbsp; lists</a>
-					<a class="x-zoom x-bar-item x-button x-padding" onclick="show_view('data_cleaning','page_content');load_excel_cols()"><i class="fa fa-history fa-fw"></i>&nbsp; Data Cleaning <span class="w3-badge x-tiny x-red">On Dev</span></a>
-					<a class="x-zoom x-bar-item x-button x-padding" onclick="form_a_forms()"><i class="fa fa-users fa-fw"></i>&nbsp; Add Profile<span class="w3-badge x-tiny x-red">On Dev</span></a>
-					<!-- <a class="x-zoom x-bar-item x-button x-padding__" onclick="not_ready('settings','page_content')"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>				 -->
+				<div class="x-right x-small">
+					{% include 'excel_upload_download_btn.html' %}
 				</div>
 			</div>
-			<div class="x-row">
-				<br><br>
-				<div class="x-container x-row x-padding">
-					<button class="x-block x-btn x-border x-round-xxlarge x-border-orange" onclick="goto('/menuv2')"> <span class="x-text-orange x-hover-orange fa fa-home"></span> Home</button>
-				</div>
-				<div class="x-container x-row x-padding">
-					<button class="x-block x-btn x-round-xxlarge x-red" onclick="logout()"> <span class="x-text fa fa-power-off"></span> Logout</button>
-				</div>
-				<br><br><br><br>
-			</div>
-		</nav>
+		</header>
+		<!-- Top container -->
+		<!-- Sidebar/menu -->
+
 
 		<!-- Overlay effect when opening sidebar on small screens -->
 		<div class="x-overlay x-hide-large x-animate-opacity" onclick="x_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 		<div class="x-row" id="page_content">
-			<header class="x-header x-bar x-white x-top x-large " style="z-index:2;width: 100%;">
-				<div class="x-container x-padding x-light-grey x-left"  onclick="x_open()" style="width:200px;">
-					<div class="x-center x-container">
-						<img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:50%">
-					</div>
-				</div>
-				<div class="x-container x-padding x-left x-text-rapid-macha-light" style="width:200px;">
-					Showing figures for<br>
-					<b class="x-large">{{dash_data_['area_reg']}}</b>
-				</div>
-				<div class="x-zoom x-bar-item x-right x-small">
-					{% include 'notification.html' %}
-					{% include 'excel_upload_download_btn.html' %}
-				</div>
-			</header>
+			.<br><br><br><br><br>
+			
 			<div class="x-container x-padding">
+
 				<div id="dashboard" class="page_content x-animate-left">
 					<br>{% include 'dashboard.html' %}
 				</div>
