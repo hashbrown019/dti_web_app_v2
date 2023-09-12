@@ -1,4 +1,4 @@
-<div id="form_a_forms_modal_container" style="display">
+<!-- <div id="form_a_forms_modal_container" style="display">
 
 	<div class="x-container x-row">
 		<h3 class="x-text-teal"><b id="sub_form_title">Form Title Loading</b></h3>
@@ -10,175 +10,10 @@
 		<button id="prev_btn_form_a" class="x-btn x-blue x-round-large x-left" onclick="prev_form()"><span class="fa fa-arrow-left"></span> Prev</button>
 		<button id="next_btn_form_a" class="x-btn x-blue x-round-large x-right" onclick="next_form()">Next <span class="fa fa-arrow-right"></span></button>
 	</div>
-</div>
+</div> -->
 
 
 <script type="text/javascript">
-	var form_a_page = 0
-	let form_page_holder = undefined
-	let func_to_use_as_filler = undefined
-	let DATA_SELECTED_FARMER = undefined
-
-	$onload(function(){
-		form_page_holder=$ID("form_a_forms_modal_container").innerHTML;
-		$ID("form_a_forms_modal_container").innerHTML = "";
-	})
-
-	// $onload(form_a_forms)
-
-	function form_a_forms(RECORD_PROFILE_ID,REFNUM){
-		var form_a_dialog_container = $dialog({
-			title : "Farmer Profile Forms",
-			subtitle : "THe forms below are the sub-forms for Profiling Form A (Farmers Profile)",
-			content : form_page_holder,
-			footer_content : "sample footer",
-			buttons : ['Save','Cancel'],
-			buttons_actions :[save_form,function(){RECORD_PROFILE_ID = undefined;}]
-		})
-		// form_a_dialog_container.dialog.style.width = "80vw"
-		form_a_dialog_container.show()
-		load_form(form_a_page,RECORD_PROFILE_ID,REFNUM)
-	}
-
-	function load_form(s_form,RECORD_PROFILE_ID,REFNUM){
-		if(s_form==0){$ID('prev_btn_form_a').style.display="none"}
-		else{$ID('prev_btn_form_a').style.display="block"}
-		if(form_a_page==FORM_A_LS.length-1){$ID('next_btn_form_a').style.display="none"}
-		else{$ID('next_btn_form_a').style.display="block"}
-
-		$ID('sub_form_title').innerText = FORM_A_LS[s_form].label
-		$ID("form_holder").innerHTML = `<h3 class="x-text-teal"><b id="sub_form_title">Form Title Loading</b></h3>`
-		$send({
-			action : "/form_a/get_sub_form/"+FORM_A_LS[s_form].file,
-			func : function(res){
-				$ID("form_holder").innerHTML = res
-				$("#form_holder").animate({ scrollTop: 0 }, "fast");
-				get_record_data_farmer(RECORD_PROFILE_ID,REFNUM)
-			}
-		})
-	}
-
-	function save_form(){
-		RECORD_PROFILE_ID = undefined;
-	}
-
-	function next_form(){
-		if(form_a_page!=FORM_A_LS.length-1){form_a_page+=1}
-		load_form(form_a_page)
-	}
-
-	function prev_form(){
-		if(form_a_page!=0){form_a_page-=1}
-		load_form(form_a_page)
-	}
-
-	function get_record_data_farmer(RECORD_PROFILE_ID,REFNUM){
-		var _table = "";
-		if(REFNUM != undefined){
-			if(REFNUM.includes(".xl")){
-				_table = ["excel_import_form_a"]
-			}else{
-				_table = ["form_a_farmer_profiles","form_a_farm_land","form_a_hh_profile","form_a_prod_cost","form_a_farm_workers_laborers","form_a_farm_post_harvest","form_a_farm_marketing_sales","form_a_access_financial","form_a_feedback"]
-			}
-		}else{
-			//RETURN IF PAGE ALREADY LOADED OR ALREADY SELECTED A FARMER IN LIST
-			func_to_use_as_filler(form_a_page)
-			return
-		}
-		$send({
-			action : "/form_a/get_ind_data_val",
-			method : POST,
-			data : $DATA({"tables":_table,"record_id":RECORD_PROFILE_ID}),
-			err_dialog : true,
-			func : function(r){
-				var res = JSON.parse(r)
-				println(res)
-				if('farmer_code' in res){
-					println("Mobile")
-					DATA_SELECTED_FARMER=res['data']
-					func_to_use_as_filler = mobile_filler
-				}else{
-					println("EXCEL")
-				}
-			}
-		})
-	}
-
-	function mobile_filler(page_index){
-		DICT_TO_INPUT(DATA_SELECTED_FARMER[page_index][0],'form_data_a')
-	}
-
-// ==========================================================================
-// ==========================================================================
-// ==========================================================================
-// ==========================================================================
-// ==========================================================================
-// ==========================================================================
-// ==========================================================================
-// ==========================================================================
-// ==========================================================================
-
-function trigger_event(element,trigger) {
-	let changeEvent = new Event(trigger);
-	element.dispatchEvent(changeEvent);
-}
-
-function DICT_TO_INPUT(DICT_,class_name) {
-	// println("==== DATA ======")
-	// println(DICT_)
-	// println("==== class_name ======")
-	// println(class_name)
-	var x_ins = $CLASS(class_name)
-	for (let index = 0; index < x_ins.length; index++) {
-		// disabled_ins(DICT_, x_ins, index)
-		if (x_ins[index].type == "checkbox") {
-			try{
-				if (DICT_[x_ins[index].id] === "true") {
-					x_ins[index].click()
-				}
-			}catch(err){
-				warnprintln(x_ins[index].id + " ||| " + err)
-			}
-		} else if (x_ins[index].type == "select-one") {
-			try{
-				x_ins[index].value = DICT_[x_ins[index].id]
-				trigger_event(x_ins[index],'change')
-			}catch(err){
-				warnprintln(x_ins[index].id + " ||| " + err)
-			}
-
-		} else {
-			try {
-				x_ins[index].value = DICT_[x_ins[index].id]
-			} catch (error) {
-				warnprintln(x_ins[index].id + " ||| " + error)
-			}
-		}
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -195,26 +30,26 @@ function DICT_TO_INPUT(DICT_,class_name) {
 	// ================================================================================
 
 
-	function save_form_a1(){
-		if(url_args['farmer_id'] ==undefined || url_args['farmer_id'] ==""){
-			var Farmer_ID = gen_code(76)
-			alert("You Have Added a New Profile")
-			url_args['farmer_id'] = Farmer_ID
-		}else{
-			var ans = confirm("You are about to modify an existing profile.\nDoing so may change the status of the profile depending on the modification\nClick [ok] to continue, [cancel] otherwise")
-			if(!ans){
-				goto("../home_screen.html?tab_index=1&selected_farmer_="+undefined)
-			}
-		}
+	// function save_form_a1(){
+	// 	if(url_args['farmer_id'] ==undefined || url_args['farmer_id'] ==""){
+	// 		var Farmer_ID = gen_code(76)
+	// 		alert("You Have Added a New Profile")
+	// 		url_args['farmer_id'] = Farmer_ID
+	// 	}else{
+	// 		var ans = confirm("You are about to modify an existing profile.\nDoing so may change the status of the profile depending on the modification\nClick [ok] to continue, [cancel] otherwise")
+	// 		if(!ans){
+	// 			goto("../home_screen.html?tab_index=1&selected_farmer_="+undefined)
+	// 		}
+	// 	}
 
-		$ID('farmer_code').value = url_args['farmer_id']
-		$ID('datetime').value = $datetime()
+	// 	$ID('farmer_code').value = url_args['farmer_id']
+	// 	$ID('datetime').value = $datetime()
 
-		var FILE_NAME = url_args['farmer_id']+"@"+page+".txt"
-		create_formdata(FILE_NAME,function(){
-			redirectto("add_farm.html?user_id="+url_args['user_id']+"&farmer_id="+url_args['farmer_id'])
-		})
-	}
+	// 	var FILE_NAME = url_args['farmer_id']+"@"+page+".txt"
+	// 	create_formdata(FILE_NAME,function(){
+	// 		redirectto("add_farm.html?user_id="+url_args['user_id']+"&farmer_id="+url_args['farmer_id'])
+	// 	})
+	// }
 	
 	// ================================================================================
 	// ================================================================================
@@ -228,103 +63,103 @@ function DICT_TO_INPUT(DICT_,class_name) {
 	// ================================================================================
 	// ================================================================================
 
-	function marital_status(vals) {
-		if(vals=="Married"){ $ID("name_marital_field").style.display="block" }
-		else{ $ID("name_marital_field").style.display="none" }
-	}
+// 	function marital_status(vals) {
+// 		if(vals=="Married"){ $ID("name_marital_field").style.display="block" }
+// 		else{ $ID("name_marital_field").style.display="none" }
+// 	}
 
-	function cal_age(bday){
-		var parts2 = bday.split('-');
-		// var todate = new Date(parts[0], parts[1] - 1, parts[2]);
-		var todate = $date()
-		var sbday = new Date(parts2[0], parts2[1] - 1, parts2[2]); 
-		const diffTime = Math.abs(todate - sbday);
-		var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-		var age = diffDays/365
-		$ID("farmer-age").value = (""+age).split(".")[0];
-		if(age<=18.0){
-			alert("oops you are profiling a minor with the age of ["+(""+age).split(".")[0]+"]\nPlease select a legal age by selecting the correct birthday")
-		}
-		if(age <=30 && age >=18){$ID("farmer-is_youth").checked = true}
-		else{$ID("farmer-is_youth").checked = false}
+// 	function cal_age(bday){
+// 		var parts2 = bday.split('-');
+// 		// var todate = new Date(parts[0], parts[1] - 1, parts[2]);
+// 		var todate = $date()
+// 		var sbday = new Date(parts2[0], parts2[1] - 1, parts2[2]); 
+// 		const diffTime = Math.abs(todate - sbday);
+// 		var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+// 		var age = diffDays/365
+// 		$ID("farmer-age").value = (""+age).split(".")[0];
+// 		if(age<=18.0){
+// 			alert("oops you are profiling a minor with the age of ["+(""+age).split(".")[0]+"]\nPlease select a legal age by selecting the correct birthday")
+// 		}
+// 		if(age <=30 && age >=18){$ID("farmer-is_youth").checked = true}
+// 		else{$ID("farmer-is_youth").checked = false}
 
-	}
-	function foposition_change(val){
-		if(val=="Officer"){
-			$ID("farmer-fo_designation").disabled = false
-		}else{
-			$ID("farmer-fo_designation").disabled = true
-		}
-	}
-	function rsbsa_change(val){
-		if(val=="yes"){
-			$ID("farmer-rsbsa_no").disabled = false
-		}else{
-			$ID("farmer-rsbsa_no").disabled = true
-		}
-	}
+// 	}
+// 	function foposition_change(val){
+// 		if(val=="Officer"){
+// 			$ID("farmer-fo_designation").disabled = false
+// 		}else{
+// 			$ID("farmer-fo_designation").disabled = true
+// 		}
+// 	}
+// 	function rsbsa_change(val){
+// 		if(val=="yes"){
+// 			$ID("farmer-rsbsa_no").disabled = false
+// 		}else{
+// 			$ID("farmer-rsbsa_no").disabled = true
+// 		}
+// 	}
 
-	function farmer_name(tag){
-		$ID("farmer_name").value = $ID("f_name").value +" "+ $ID("m_name").value +" "+ $ID("l_name").value +" "+ $ID("ext_name").value 
-	}
+// 	function farmer_name(tag){
+// 		$ID("farmer_name").value = $ID("f_name").value +" "+ $ID("m_name").value +" "+ $ID("l_name").value +" "+ $ID("ext_name").value 
+// 	}
 
-	function ip_names(el){
-	_autocomplete(el,IP_NAMES)
-	// println(JSON.stringify(IP_NAMES))
-}
+// 	function ip_names(el){
+// 	_autocomplete(el,IP_NAMES)
+// 	// println(JSON.stringify(IP_NAMES))
+// }
 
-function get_dip_ls(el){
-	_autocomplete(el,DIP_LIST)
-	// println(JSON.stringify(IP_NAMES))
-}
+// function get_dip_ls(el){
+// 	_autocomplete(el,DIP_LIST)
+// 	// println(JSON.stringify(IP_NAMES))
+// }
 
-function get_fo_ls(el){
-	_autocomplete(el,FO_LIST)
-	// println(JSON.stringify(IP_NAMES))
-}
+// function get_fo_ls(el){
+// 	_autocomplete(el,FO_LIST)
+// 	// println(JSON.stringify(IP_NAMES))
+// }
 
-function region_sel(el){
-	var arrs = []
-	for (const [key, value] of Object.entries(ALL_LOCATION)) {
-		arrs.push(key)
-	}
-	_autocomplete(el,arrs)
-}
+// function region_sel(el){
+// 	var arrs = []
+// 	for (const [key, value] of Object.entries(ALL_LOCATION)) {
+// 		arrs.push(key)
+// 	}
+// 	_autocomplete(el,arrs)
+// }
 
-function ls_prov(el){
-	var selregion = $ID('addr_region').value.toUpperCase();
-	var arrs = []
-	for (const [key, value] of Object.entries(ALL_LOCATION[selregion]['province_list'])) {
-		arrs.push(key)
-	}
-	_autocomplete(el,arrs)
-}
-
-
-function ls_city(el){
-	var arrs = []
-	var region = $ID("addr_region").value.toUpperCase();
-	var prov = $ID("addr_prov").value.toUpperCase();
-	for (const [key, value] of Object.entries(ALL_LOCATION[region]['province_list'][prov]['municipality_list'])) {
-		arrs.push(key)
-	}
-	_autocomplete(el,arrs)
-}
+// function ls_prov(el){
+// 	var selregion = $ID('addr_region').value.toUpperCase();
+// 	var arrs = []
+// 	for (const [key, value] of Object.entries(ALL_LOCATION[selregion]['province_list'])) {
+// 		arrs.push(key)
+// 	}
+// 	_autocomplete(el,arrs)
+// }
 
 
-function ls_brgy(el){
-	var arrs = []
-	var region = $ID("addr_region").value.toUpperCase();
-	var prov = $ID("addr_prov").value.toUpperCase();
-	var municipality = $ID("addr_city").value.toUpperCase();
+// function ls_city(el){
+// 	var arrs = []
+// 	var region = $ID("addr_region").value.toUpperCase();
+// 	var prov = $ID("addr_prov").value.toUpperCase();
+// 	for (const [key, value] of Object.entries(ALL_LOCATION[region]['province_list'][prov]['municipality_list'])) {
+// 		arrs.push(key)
+// 	}
+// 	_autocomplete(el,arrs)
+// }
 
-	for (var i = 0; i < ALL_LOCATION[region]['province_list'][prov]['municipality_list'][municipality]['barangay_list'].length; i++) {
-		var key = ALL_LOCATION[region]['province_list'][prov]['municipality_list'][municipality]['barangay_list'][i]
-		arrs.push(key)
-	}
-	_autocomplete(el,arrs)
 
-}
+// function ls_brgy(el){
+// 	var arrs = []
+// 	var region = $ID("addr_region").value.toUpperCase();
+// 	var prov = $ID("addr_prov").value.toUpperCase();
+// 	var municipality = $ID("addr_city").value.toUpperCase();
+
+// 	for (var i = 0; i < ALL_LOCATION[region]['province_list'][prov]['municipality_list'][municipality]['barangay_list'].length; i++) {
+// 		var key = ALL_LOCATION[region]['province_list'][prov]['municipality_list'][municipality]['barangay_list'][i]
+// 		arrs.push(key)
+// 	}
+// 	_autocomplete(el,arrs)
+
+// }
 
 
 // ====================================================
@@ -337,80 +172,80 @@ function ls_brgy(el){
 // ====================================================
 // ====================================================
 // ====================================================
-function _autocomplete(inp, arr) {
-	var currentFocus;
-	inp.addEventListener("input", function(e) {
-			var a, b, i, val = this.value;
-			closeAllLists();
-			if (!val) { return false;}
-			currentFocus = -1;
-			a = document.createElement("DIV");
-			a.setAttribute("id", this.id + "autocomplete-list");
-			a.setAttribute("class", "autocomplete-items");
-			this.parentNode.appendChild(a);
-			for (i = 0; i < arr.length; i++) {
-				if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-					b = document.createElement("DIV");
-					b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-					b.innerHTML += arr[i].substr(val.length);
-					b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-					b.addEventListener("click", function(e) {
-							inp.value = this.getElementsByTagName("input")[0].value;
-							// closeAllLists();
-					});
-					a.appendChild(b);
-					// if(i >=5){
-					// 	break
-					// }
-				}
+// function _autocomplete(inp, arr) {
+// 	var currentFocus;
+// 	inp.addEventListener("input", function(e) {
+// 			var a, b, i, val = this.value;
+// 			closeAllLists();
+// 			if (!val) { return false;}
+// 			currentFocus = -1;
+// 			a = document.createElement("DIV");
+// 			a.setAttribute("id", this.id + "autocomplete-list");
+// 			a.setAttribute("class", "autocomplete-items");
+// 			this.parentNode.appendChild(a);
+// 			for (i = 0; i < arr.length; i++) {
+// 				if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+// 					b = document.createElement("DIV");
+// 					b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+// 					b.innerHTML += arr[i].substr(val.length);
+// 					b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+// 					b.addEventListener("click", function(e) {
+// 							inp.value = this.getElementsByTagName("input")[0].value;
+// 							// closeAllLists();
+// 					});
+// 					a.appendChild(b);
+// 					// if(i >=5){
+// 					// 	break
+// 					// }
+// 				}
 
-			}
-	});
+// 			}
+// 	});
 	
-	inp.addEventListener("keydown", function(e) {
-			var x = document.getElementById(this.id + "autocomplete-list");
-			if (x) x = x.getElementsByTagName("div");
-			if (e.keyCode == 40) {
-				currentFocus++;
-				addActive(x);
-			} else if (e.keyCode == 38) { //up
-				currentFocus--;
-				addActive(x);
-			} else if (e.keyCode == 13) {
-				e.preventDefault();
-				if (currentFocus > -1) {
-					if (x) x[currentFocus].click();
-				}
-			}
-	});
+// 	inp.addEventListener("keydown", function(e) {
+// 			var x = document.getElementById(this.id + "autocomplete-list");
+// 			if (x) x = x.getElementsByTagName("div");
+// 			if (e.keyCode == 40) {
+// 				currentFocus++;
+// 				addActive(x);
+// 			} else if (e.keyCode == 38) { //up
+// 				currentFocus--;
+// 				addActive(x);
+// 			} else if (e.keyCode == 13) {
+// 				e.preventDefault();
+// 				if (currentFocus > -1) {
+// 					if (x) x[currentFocus].click();
+// 				}
+// 			}
+// 	});
 
-	function addActive(x) {
-		if (!x) return false;
-		removeActive(x);
-		if (currentFocus >= x.length) currentFocus = 0;
-		if (currentFocus < 0) currentFocus = (x.length - 1);
-		x[currentFocus].classList.add("autocomplete-active");
-	}
+// 	function addActive(x) {
+// 		if (!x) return false;
+// 		removeActive(x);
+// 		if (currentFocus >= x.length) currentFocus = 0;
+// 		if (currentFocus < 0) currentFocus = (x.length - 1);
+// 		x[currentFocus].classList.add("autocomplete-active");
+// 	}
 
-	function removeActive(x) {
-		for (var i = 0; i < x.length; i++) {
-			x[i].classList.remove("autocomplete-active");
-		}
-	}
+// 	function removeActive(x) {
+// 		for (var i = 0; i < x.length; i++) {
+// 			x[i].classList.remove("autocomplete-active");
+// 		}
+// 	}
 
-	function closeAllLists(elmnt) {
-		var x = document.getElementsByClassName("autocomplete-items");
-		for (var i = 0; i < x.length; i++) {
-			if (elmnt != x[i] && elmnt != inp) {
-				x[i].parentNode.removeChild(x[i]);
-			}
-		}
-	}
+// 	function closeAllLists(elmnt) {
+// 		var x = document.getElementsByClassName("autocomplete-items");
+// 		for (var i = 0; i < x.length; i++) {
+// 			if (elmnt != x[i] && elmnt != inp) {
+// 				x[i].parentNode.removeChild(x[i]);
+// 			}
+// 		}
+// 	}
 
-	document.addEventListener("click", function (e) {
-			closeAllLists(e.target);
-	});
-}
+// 	document.addEventListener("click", function (e) {
+// 			closeAllLists(e.target);
+// 	});
+// }
 
 
 
@@ -424,68 +259,68 @@ function _autocomplete(inp, arr) {
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------
-var iii = 0;
-function duplicate_POST_harv() {
-	var original = $ID('post_harvest' + iii);
-	var clone = original.cloneNode(true); // "deep" clone
-	clone.id = "post_harvest" + ++ iii; // there can only be one element with an ID
-	// clone.onclick = duplicate; // event handlers are not cloned
-	var elemets_ = clone.querySelectorAll(".form_data");
+// var iii = 0;
+// function duplicate_POST_harv() {
+// 	var original = $ID('post_harvest' + iii);
+// 	var clone = original.cloneNode(true); // "deep" clone
+// 	clone.id = "post_harvest" + ++ iii; // there can only be one element with an ID
+// 	// clone.onclick = duplicate; // event handlers are not cloned
+// 	var elemets_ = clone.querySelectorAll(".form_data");
 
-	for (var i = 0; i < elemets_.length; i++) {
-		elemets_[i].id = elemets_[i].id + iii
-		// println(elemets_[i].id)
-	}
+// 	for (var i = 0; i < elemets_.length; i++) {
+// 		elemets_[i].id = elemets_[i].id + iii
+// 		// println(elemets_[i].id)
+// 	}
 
-	original.parentNode.appendChild(clone);
+// 	original.parentNode.appendChild(clone);
 
-	$ID('record_num').value = iii
-	for (var i = 0; i < $CLASS('post_num').length; i++) {
-		$CLASS('post_num')[i].innerHTML = i+1
-	}
-}
+// 	$ID('record_num').value = iii
+// 	for (var i = 0; i < $CLASS('post_num').length; i++) {
+// 		$CLASS('post_num')[i].innerHTML = i+1
+// 	}
+// }
 
-var www = 0;
+// var www = 0;
 
-function duplicate_Market_sales() {
-	var original = $ID('market_sales0' + www);
-	var clone = original.cloneNode(true); // "deep" clone
-	clone.id = "market_sales0" + ++ www; // there can only be one element with an ID
-	// clone.onclick = duplicate; // event handlers are not cloned
-	var elemets_ = clone.querySelectorAll(".form_data");
+// function duplicate_Market_sales() {
+// 	var original = $ID('market_sales0' + www);
+// 	var clone = original.cloneNode(true); // "deep" clone
+// 	clone.id = "market_sales0" + ++ www; // there can only be one element with an ID
+// 	// clone.onclick = duplicate; // event handlers are not cloned
+// 	var elemets_ = clone.querySelectorAll(".form_data");
 
-	for (var i = 0; i < elemets_.length; i++) {
-		elemets_[i].id = elemets_[i].id + www
-		// println(elemets_[i].id)
-	}
+// 	for (var i = 0; i < elemets_.length; i++) {
+// 		elemets_[i].id = elemets_[i].id + www
+// 		// println(elemets_[i].id)
+// 	}
 
-	original.parentNode.appendChild(clone);
+// 	original.parentNode.appendChild(clone);
 
-	$ID('record_num').value = www
-	for (var i = 0; i < $CLASS('post_num').length; i++) {
-		$CLASS('post_num')[i].innerHTML = i+1
-	}
-}
-
-
-function interc(inter){
-	println(inter.checked)
-	// $ID("farm-isfarm").disabled = inter.checked
-	// $ID("farm-isfarm").checked = !inter.checked
-	if(inter.checked){
-		$ID("sec_crop").style.display = "block"
-	}else{
-		$ID("sec_crop").style.display = "none"
-	}
-}
+// 	$ID('record_num').value = www
+// 	for (var i = 0; i < $CLASS('post_num').length; i++) {
+// 		$CLASS('post_num')[i].innerHTML = i+1
+// 	}
+// }
 
 
-function not_head_hh(sel){
-	if(!sel){
-		$ID("not_head_hh").style.display = "block"
-	}else{
-		$ID("not_head_hh").style.display = "none"
-	}
-}
+// function interc(inter){
+// 	println(inter.checked)
+// 	// $ID("farm-isfarm").disabled = inter.checked
+// 	// $ID("farm-isfarm").checked = !inter.checked
+// 	if(inter.checked){
+// 		$ID("sec_crop").style.display = "block"
+// 	}else{
+// 		$ID("sec_crop").style.display = "none"
+// 	}
+// }
+
+
+// function not_head_hh(sel){
+// 	if(!sel){
+// 		$ID("not_head_hh").style.display = "block"
+// 	}else{
+// 		$ID("not_head_hh").style.display = "none"
+// 	}
+// }
 
 </script>

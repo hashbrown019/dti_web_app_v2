@@ -1,3 +1,4 @@
+
 <table class="display" id="table_id" style="width:50vh%">
 	<thead class="x-rapid-teal-heavy">
 		<tr class="">
@@ -62,7 +63,17 @@
 	<tbody id="list_farmers" style="">
 	</tbody>
 </table>
-
+<!-- ########################################### -->
+<!-- ########################################### -->
+<!-- ####TEMPORARY FOR NEW FORM################# -->
+<!-- ########################################### -->
+{% include 'form_a_v2/__engine__.html' %}
+<!-- ########################################### -->
+<!-- ########################################### -->
+<!-- ########################################### -->
+<!-- ########################################### -->
+<!-- ########################################### -->
+<!-- ########################################### -->
 <script type="text/javascript">
 	var init_counter = 0
 	let TABLE
@@ -154,11 +165,11 @@
 				.column( $(this).data('index') )
 				.search( this.value )
 				.draw();
-			println($(this).data('index'))
+			// println($(this).data('index'))
 		} );
 		$('#table_id tbody').on('mousedown', 'tr', function () {
 			var data = TABLE.row(this).data();
-			println( data );
+			// println( data );
 			form_a_forms(data[0],data[13])
 		})
 

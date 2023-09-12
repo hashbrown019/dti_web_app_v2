@@ -172,13 +172,13 @@
 	function dash_get_form_a1(datum){
 		var male_res = datum["male"]
 		for(key in male_res ){
-			println(key)
+			// println(key)
 			try{$ID(key).innerHTML = Money(male_res[key])}
 			catch(e){warnprintln(e)}
 		}
 		var female_res = datum["female"]
 		for(key in female_res ){
-			println(key)
+			// println(key)
 			try{$ID(key).innerHTML =  Money(female_res[key])}
 			catch(e){warnprintln(e)}
 		}
@@ -193,11 +193,11 @@
 			func : function(r){
 				var res = JSON.parse(r)
 				dash_get_form_a1(res)
-				println(" Requesting Done")
+				// println(" Requesting Done")
 				$ID('fltr_load').style.display = "none"
 			}
 		})
-		println(" Requesting Data")
+		// println(" Requesting Data")
 	}
 
 	function filter() {
@@ -207,7 +207,7 @@
 		for (var i = 0; i < filter_field.length; i++) {
 			filter_field_vals[filter_field[i].id] = filter_field[i].value
 		}
-		warnprintln(filter_field_vals)
+		// warnprintln(filter_field_vals)
 		filter_field_dash(filter_field_vals['f_rcu'])
 	}
 </script>
