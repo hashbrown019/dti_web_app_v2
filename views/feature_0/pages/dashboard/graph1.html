@@ -1,0 +1,276 @@
+<style>
+	#graph1 {
+		width: 100%;
+		height: 500px;
+	}
+</style>
+
+<div id="graph1">
+	
+</div>
+
+
+<script type="text/javascript">
+	function g1_data_reconstruct(_data){
+		var PRIV_TYPE = ("{{USER_DATA['PRIV_TYPE']}}")
+		var temp_data1 = {}
+		var graph_data = []
+		var is_npco_view = false;
+		var area_key = ""
+		var crops_name = {}
+
+
+		if(PRIV_TYPE.includes('NPCO')){
+			is_npco_view = true;area_key = "addr_region";
+		}else{
+			is_npco_view = false;area_key = "addr_prov";
+		}
+
+		for (var i = 0; i < _data.length; i++) {
+			var area = _data[i][area_key]
+			var crop = _data[i]['farmer_primary_crop'].toUpperCase().replaceAll(" ","")
+			crops_name[crop] = crop
+
+			// if(area==""){continue}
+			if(area in temp_data1){
+				if(crop in temp_data1[area]){
+					temp_data1[area][crop] = temp_data1[area][crop] + 1
+				}else{
+					temp_data1[area][crop] = 1
+				}
+
+			}else{
+				temp_data1[area] = {'area' :area}
+				temp_data1[area][crop] = 1
+			}
+		}
+
+		for(key in temp_data1){
+			graph_data.push(temp_data1[key])
+			
+		}
+		set_graph1(graph_data,crops_name)
+
+	}
+
+	function set_graph1(graph_data,series) {
+		var root = am5.Root.new("graph1");
+		root.setThemes([
+			am5themes_Animated.new(root)
+		]);
+		var chart = root.container.children.push(am5xy.XYChart.new(root, {
+			panX: false,
+			panY: false,
+			wheelX: "panX",
+			wheelY: "zoomX",
+			layout: root.verticalLayout
+		}));
+
+		chart.set("scrollbarX", am5.Scrollbar.new(root, {
+			orientation: "horizontal"
+		}));
+
+		var data = graph_data
+
+		var xRenderer = am5xy.AxisRendererX.new(root, {
+		      "cellStartLocation": 0.2,
+		      "cellEndLocation": 0.8});
+		var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+			categoryField: "area",
+			renderer: xRenderer,
+			tooltip: am5.Tooltip.new(root, {})
+		}));
+
+		xRenderer.grid.template.setAll({
+			location: 1
+		})
+
+		xAxis.data.setAll(data);
+
+		var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+			min: 0,
+			max: 100,
+			numberFormat: "#'%'",
+			strictMinMax: true,
+			calculateTotals: true,
+			renderer: am5xy.AxisRendererY.new(root, {
+				strokeOpacity: 0.1
+			})
+		}));
+
+
+		// Add legend
+		// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+		var legend = chart.children.push(am5.Legend.new(root, {
+			centerX: am5.p50,
+			x: am5.p50
+		}));
+
+
+		// Add series
+		// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+		function makeSeries(name, fieldName) {
+			var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+				name: name,
+				stacked: true,
+				xAxis: xAxis,
+				yAxis: yAxis,
+				valueYField: fieldName,
+				valueYShow: "valueYTotalPercent",
+				categoryXField: "area"
+			}));
+
+			series.columns.template.setAll({
+				tooltipText: "Click this to reveal a chart for Region {categoryX} containng Head of Household and its Sex\n\n{name} :{valueYTotalPercent.formatNumber('#.#')}%",
+				tooltipY: am5.percent(10)
+			});
+			series.data.setAll(data);
+
+			// Make stuff animate on load
+			// https://www.amcharts.com/docs/v5/concepts/animations/
+			series.appear();
+
+			series.bullets.push(function() {
+				return am5.Bullet.new(root, {
+					sprite: am5.Label.new(root, {
+						// text: "{valueYTotalPercent.formatNumber('#.#')}%",
+						fill: root.interfaceColors.get("alternativeText"),
+						centerY: am5.p50,
+						centerX: am5.p50,
+						populateText: true
+					})
+				});
+			});
+
+			legend.data.push(series);
+	
+			series.columns.template.width = am5.percent(10)
+			series.columns.template.events.on("click", function(ev) {
+				set_graph2_data(ev.target._dataItem.dataContext);
+			}, this);
+			// series.columns.template.events.on("pointerover", function(ev) {
+			// 	set_graph2_data(ev.target._dataItem.dataContext);
+			// }, this);
+			// series.columns.template.events.on("pointerout", function(ev) {
+			// 	hide_graph2_data();
+			// }, this);
+			// series.columns.template.events.onAll(function(ev) {
+			// 	set_graph2_data(ev);
+			// }, this);
+		}
+
+		for(crop in series){
+			makeSeries(crop, crop);
+		}
+
+		// Make stuff animate on load
+		// https://www.amcharts.com/docs/v5/concepts/animations/
+		chart.appear(1000, 100);
+	}
+
+
+	// function set_graph1(graph_data,series) {
+	// 	var root = am5.Root.new("graph1");
+	// 	root.setThemes([
+	// 		am5themes_Animated.new(root)
+	// 	]);
+	// 	var chart = root.container.children.push(am5xy.XYChart.new(root, {
+	// 		panX: false,
+	// 		panY: false,
+	// 		wheelX: "panX",
+	// 		wheelY: "zoomX",
+	// 		layout: root.verticalLayout
+	// 	}));
+
+	// 	chart.set("scrollbarX", am5.Scrollbar.new(root, {
+	// 		orientation: "horizontal"
+	// 	}));
+
+	// 	var data = graph_data
+
+	// 	var xRenderer = am5xy.AxisRendererX.new(root, {
+	// 	      "cellStartLocation": 0.2,
+	// 	      "cellEndLocation": 0.8});
+	// 	var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+	// 		categoryField: "area",
+	// 		renderer: xRenderer,
+	// 		tooltip: am5.Tooltip.new(root, {})
+	// 	}));
+
+	// 	xRenderer.grid.template.setAll({
+	// 		location: 1
+	// 	})
+
+	// 	xAxis.data.setAll(data);
+
+	// 	var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+	// 		min: 0,
+	// 		// numberFormat: "#",
+	// 		strictMinMax: false,
+	// 		calculateTotals: true,
+	// 		renderer: am5xy.AxisRendererY.new(root, {
+	// 			strokeOpacity: 0.1
+	// 		})
+	// 	}));
+
+
+	// 	// Add legend
+	// 	// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+	// 	var legend = chart.children.push(am5.Legend.new(root, {
+	// 		centerX: am5.p50,
+	// 		x: am5.p50
+	// 	}));
+
+
+	// 	// Add series
+	// 	// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+	// 	function makeSeries(name, fieldName) {
+	// 		var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+	// 			name: name,
+	// 			stacked: true,
+	// 			xAxis: xAxis,
+	// 			yAxis: yAxis,
+	// 			valueYField: fieldName,
+	// 			valueYShow: "valueY",
+	// 			categoryXField: "area"
+	// 		}));
+
+	// 		series.columns.template.setAll({
+	// 			// tooltipText: "{name}, {categoryX}:{valueYTotalPercent.formatNumber('#.#')}%",
+	// 			tooltipText: "{name}",
+	// 			// tooltipY: am5.percent(10)
+	// 		});
+	// 		series.data.setAll(data);
+
+	// 		// Make stuff animate on load
+	// 		// https://www.amcharts.com/docs/v5/concepts/animations/
+	// 		series.appear();
+
+	// 		series.bullets.push(function() {
+	// 			return am5.Bullet.new(root, {
+	// 				sprite: am5.Label.new(root, {
+	// 					// text: "{valueYTotalPercent.formatNumber('#.#')}%",
+	// 					text: "{valueY}",
+	// 					fill: root.interfaceColors.get("alternativeText"),
+	// 					centerY: am5.p50,
+	// 					centerX: am5.p50,
+	// 					populateText: true
+	// 				})
+	// 			});
+	// 		});
+
+	// 		legend.data.push(series);
+	
+	// 		series.columns.template.width = am5.percent(10)
+	// 	}
+
+	// 	for(crop in series){
+	// 		makeSeries(crop, crop);
+	// 	}
+
+	// 	// Make stuff animate on load
+	// 	// https://www.amcharts.com/docs/v5/concepts/animations/
+	// 	chart.appear(1000, 100);
+
+	// }
+</script>

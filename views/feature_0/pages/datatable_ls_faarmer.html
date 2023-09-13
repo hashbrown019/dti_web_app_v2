@@ -1,5 +1,5 @@
 
-<table class="display" id="table_id" style="width:50vh%">
+<table class="display" id="table_id" style="width:50vh">
 	<thead class="x-rapid-teal-heavy">
 		<tr class="">
 			<td>
@@ -80,7 +80,7 @@
 
 	//TEMPORARY COMMENTED FOR DEVELOPMENT TO FAST LOAD DASH WITHOUT
 	//DATA FOR DATA TABLE
-	// $onload(showing_table_ls_farmer)
+	$onload(showing_table_ls_farmer)
 	//////////////////////////////////////////////////////////////
 
 
@@ -98,8 +98,10 @@
 				println(" -- Getting List Farmers Done")
 				res = JSON.parse(rest)['dash1']
 				res2 = JSON.parse(rest)['dash2']
+				res3 = JSON.parse(rest)['dash3']
 				create_table(res)
 				dash_get_form_a1(res2)
+				create_graphs(res3)
 				// window.setTimeout(dash_get_form_a1,1000)
 				SPINNER_LOADER.hide()
 				window.setInterval(get_notif_unseen,10000)
@@ -184,6 +186,7 @@
 			tds[i].style.width = "10px"
 		}
 		TABLE.columns.adjust().draw();
+		$ID('table_id_wrapper').style.width = '100%'
 
 	}
 	function show_t(){

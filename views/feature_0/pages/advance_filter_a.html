@@ -1,8 +1,4 @@
-<div class="x-container x-padding x-card x-white x-round" style="display: block;">
-	<div class="x-container">
-		<span class="x-xlarge">Advance Filter</span>
-		<span style="padding:5px;" class="x-red x-round-large">On-Dev</span>
-	</div>
+<div id="adv_f_holder" class="x-container x-padding x-card x-white x-round" style="display: none;">
 	<div class="x-row x-container x-padding">
 		<div class="">
 			<span class="x-text-grey">Area</span>
@@ -49,14 +45,8 @@
 	<div class="x-container  x-row">
 		<span class="w3-badge x-round-xlarge x-small x-red" style="padding:2px;">On Dev</span>
 	</div> -->
-</div>
-
-<div class="x-container x-padding x-card x-white x-round" style="display: block;">
 	<div class="x-container">
 		<b class="x-xlarge">Farmer Profile</b>
-	</div>
-	<div class="x-container">
-		Some profiles will not reflect in the dashboard filter, this data is either corrupt, untagged in a specific category or an orphan data (data that has no associated user creator). some of this data are subject in validation and data cleansing 
 	</div>
 	<div class="x-row x-container x-padding">
 		<!-- DASH FOR MALE -->
@@ -169,6 +159,7 @@
 	<!-- =========================== -->
 </div>
 <script type="text/javascript">
+	var adv_f_holder = "EMPTY"
 	function dash_get_form_a1(datum){
 		var male_res = datum["male"]
 		for(key in male_res ){
@@ -210,4 +201,18 @@
 		// warnprintln(filter_field_vals)
 		filter_field_dash(filter_field_vals['f_rcu'])
 	}
+	function show_adv_filter(){
+		var adv_filter = $dialog({
+			title : "Area Filter",
+			subtitle : (`
+				Some profiles will not reflect in the dashboard filter, this data is either corrupt, untagged in a specific category or an orphan data (data that has no associated user creator). some of this data are subject in validation and data cleansing `),
+			content : adv_f_holder
+		})
+		adv_filter.dialog.style.width = '70%';
+		adv_filter.show()
+	}
+	$onload(function(){
+		adv_f_holder = $ID('adv_f_holder').innerHTML;
+		$ID('adv_f_holder').innerHTML = ""
+	})
 </script>

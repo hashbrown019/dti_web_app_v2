@@ -1,0 +1,241 @@
+<style>
+#graph2 {
+	width: 100%;
+	height: 500px;
+}
+</style>
+
+<!-- Resources -->
+<div id="g2_holder" onmouseout="hide_graph2_data()" style="display:none">
+	<div id="graph2"></div>
+</div>
+<div id="g2_note_holder" style="display:block">
+	<span>
+		The Graph below shows the percentage farmers based of crop (Value Chain) and on Area.
+		The Area depends where you are assigned. Click on any bar on specific
+		area to reveal a chart containing information on the number of 
+		head of the household and its gender/sex based on what area does the bar
+		you've clicked belongs.
+
+	</span>
+</div>
+<!-- Chart code -->
+<script>
+	let GRAPH_2_DATA = undefined
+	let clear_chart2 = function(e){println("Nothing to be clear chart")}
+	var series_ = undefined
+
+
+
+	function g2_data_reconstruct(_data){
+		var PRIV_TYPE = ("{{USER_DATA['PRIV_TYPE']}}")
+		var temp_data2 = {}
+		var area_key = ""
+
+		if(PRIV_TYPE.includes('NPCO')){
+			is_npco_view = true;area_key = "addr_region";
+		}else{
+			is_npco_view = false;area_key = "addr_prov";
+		}
+		for (var i = 0; i < _data.length; i++) {
+			var area = _data[i][area_key]
+			var crop = _data[i]['farmer_primary_crop'].toUpperCase().replaceAll(" ","")
+			var sex = _data[i]['farmer_sex'].toLowerCase()
+			var is_hh = _data[i]['is_head_hh'].toLowerCase()
+			if(area in temp_data2){
+				if(crop in temp_data2[area]){
+					if(sex=='female'){
+						if(is_hh =='true' || is_hh =='yes'){
+							temp_data2[area][crop]['female_hh'] = temp_data2[area][crop]['female_hh'] + 1
+						}else{
+							temp_data2[area][crop]['female'] = temp_data2[area][crop]['female'] + 1
+						}
+					}else if(sex=='male'){
+						if(is_hh =='true' || is_hh =='yes'){
+							temp_data2[area][crop]['male_hh'] = temp_data2[area][crop]['male_hh'] + 1
+						}else{
+							temp_data2[area][crop]['male'] = temp_data2[area][crop]['male'] + 1
+						}
+					}
+				}else{
+					temp_data2[area][crop] = {
+						"male" :0,
+						"male_hh" :0,
+						"female" :0,
+						"female_hh" :0,
+					}
+				}
+			}else{
+				temp_data2[area] = {}
+			}
+		}
+		GRAPH_2_DATA = temp_data2
+		// set_graph2(_data)
+	}
+
+	function hide_graph2_data(){
+		$ID("g2_holder").style.display = "none"
+		$ID("g2_note_holder").style.display = "block"
+
+	}
+
+	function set_graph2_data(selected_area_from_g1){
+		var _data = []
+		println(selected_area_from_g1)
+		var sel_area = GRAPH_2_DATA[selected_area_from_g1['area']]
+		for(_crops in sel_area){
+			_data.push({
+				category : _crops,
+				negative2: parseInt(sel_area[_crops]["male"])*-1,
+				negative1: parseInt(sel_area[_crops]["female"])*-1,
+				positive1: parseInt(sel_area[_crops]["male_hh"])*1,
+				positive2: parseInt(sel_area[_crops]["female_hh"])*1
+			})
+		}
+		$ID("g2_holder").style.display = "block"
+		$ID("g2_note_holder").style.display = "none"
+		clear_chart2()
+		set_graph2(_data)
+	}
+
+	// $onload(set_graph2)
+
+	
+	var root = am5.Root.new("graph2");
+	function set_graph2(graph_data) {
+		
+		root.setThemes([
+			am5themes_Animated.new(root)
+		]);
+		root.numberFormatter.set("numberFormat", "#.#s'%");
+
+		var chart2 = root.container.children.push(
+			am5xy.XYChart.new(root, {
+				panX: false,
+				panY: false,
+				wheelX: "panX",
+				wheelY: "zoomX",
+				layout: root.horizontalLayout,
+				arrangeTooltips: false
+			})
+		);
+		var legend = chart2.children.push(
+			am5.Legend.new(root, {
+				centerX: am5.p50,
+				x: am5.p50
+			})
+		);
+
+		// Data
+		var data = graph_data
+
+		var yAxis = chart2.yAxes.push(
+			am5xy.CategoryAxis.new(root, {
+				categoryField: "category",
+				renderer: am5xy.AxisRendererY.new(root, {
+					inversed: true,
+					cellStartLocation: 0.1,
+					cellEndLocation: 0.9
+				})
+			})
+		);
+
+		yAxis.data.setAll(data);
+		// set_g2_data_global(data)
+
+		var xAxis = chart2.xAxes.push(
+			am5xy.ValueAxis.new(root, {
+				calculateTotals: true,
+				min: -100,
+				max: 100,
+				renderer: am5xy.AxisRendererX.new(root, {
+					minGridDistance: 50
+				})
+			})
+		);
+
+		var xRenderer = yAxis.get("renderer");
+		xRenderer.axisFills.template.setAll({
+			fill: am5.color(0x000000),
+			fillOpacity: 0.05,
+			visible: true
+		});
+
+		// Add series
+		// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+		function createSeries(field, name, color) {
+			var series = chart2.series.push(
+				am5xy.ColumnSeries.new(root, {
+					xAxis: xAxis,
+					yAxis: yAxis,
+					name: name,
+					valueXField: field,
+					valueXShow: "valueXTotalPercent",
+					categoryYField: "category",
+					sequencedInterpolation: true,
+					stacked: true,
+					fill: color,
+					stroke: color,
+					calculateAggregates: true
+				})
+			);
+
+			series_ = series
+
+			series.columns.template.setAll({
+				height: am5.p100
+			});
+
+			series.bullets.push(function(root, series) {
+				return am5.Bullet.new(root, {
+					locationX: 0.5,
+					locationY: 0.5,
+					sprite: am5.Label.new(root, {
+						fill: am5.color(0xffffff),
+						centerX: am5.p50,
+						centerY: am5.p50,
+						text: "{valueX}",
+						populateText: true,
+						oversizedBehavior: "hide"
+					})
+				});
+			});
+
+			series.data.processor = am5.DataProcessor.new(root, {});
+			series.data.setAll(data);
+			series.appear();
+			return series;
+		}
+
+
+		var positiveColor = root.interfaceColors.get("positive");
+		var negativeColor = root.interfaceColors.get("negative");
+
+		createSeries("negative2", "Male", am5.Color.lighten(negativeColor, 0.5));
+		createSeries("negative1", "Female", negativeColor);
+		createSeries("positive1", "Male Head of HH", am5.Color.lighten(positiveColor, 0.5));
+		createSeries("positive2", "female Head of HH", positiveColor);
+
+		// Add legend
+		// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+		var legend = chart2.children.push(
+			am5.Legend.new(root, {
+				centerY: am5.p50,
+				y: am5.p50,
+				layout: root.verticalLayout,
+				marginLeft: 50
+			})
+		);
+
+		legend.data.setAll(chart2.series.values);
+		chart2.appear(1000, 100);
+
+		clear_chart2 = function(){
+			chart2.dispose();
+			// while(chart2.series.length) {
+			// 	chart2.series.removeIndex(0).dispose();
+			// }
+		}
+
+	}// end am5.ready()
+</script>

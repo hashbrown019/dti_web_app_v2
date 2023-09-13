@@ -3,7 +3,7 @@
 <html>
 	{% include 'head.html' %}
 	<body class="">
-		<br>
+		<br id="top_br">
 		<header class="x-header x-bar x-white x-top x-large " style="z-index:2;width: 100%;">
 			<div class="x-container" style="margin-left:200px;margin-right:200px;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
 				<div class="x-container x-left"  onclick="x_open()" style="width:100px;">
@@ -73,7 +73,7 @@
 
 		<!-- Overlay effect when opening sidebar on small screens -->
 		<div class="x-overlay x-hide-large x-animate-opacity" onclick="x_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-		<div class="x-row" id="page_content">
+		<div class="x-row" id="page_content" style="">
 			.<br><br><br><br><br>
 			
 			<div class="x-container x-padding">
@@ -170,6 +170,10 @@
 				}, function (error) {
 				});
 			};
+
+			$onload(function(){
+				$ID('top_br').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+			})
 			// ====================================================
 		</script>
 	</body>
