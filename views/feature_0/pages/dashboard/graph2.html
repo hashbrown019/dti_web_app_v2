@@ -7,16 +7,20 @@
 
 <!-- Resources -->
 <div id="g2_holder" onmouseout="hide_graph2_data()" style="display:none">
+	<span>
+		The Graph below shows the percentage farmers based whether they are
+		the <span class="x-text=green">Head of Household</span> or <span class="x-text-red">not</span>.
+		Also group by their sex and what Primary Crop.
+	</span>
 	<div id="graph2"></div>
 </div>
 <div id="g2_note_holder" style="display:block">
 	<span>
-		The Graph below shows the percentage farmers based of crop (Value Chain) and on Area.
+		The Graph below shows the percentage farmers based of Primary Crop and on Area.
 		The Area depends where you are assigned. Click on any bar on specific
 		area to reveal a chart containing information on the number of 
 		head of the household and its gender/sex based on what area does the bar
 		you've clicked belongs.
-
 	</span>
 </div>
 <!-- Chart code -->
@@ -81,7 +85,6 @@
 
 	function set_graph2_data(selected_area_from_g1){
 		var _data = []
-		println(selected_area_from_g1)
 		var sel_area = GRAPH_2_DATA[selected_area_from_g1['area']]
 		for(_crops in sel_area){
 			_data.push({
