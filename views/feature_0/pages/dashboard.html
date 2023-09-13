@@ -9,7 +9,10 @@
 	<!-- ================================================== -->
 
 	<div class="x-row">
-		<div class="x-container x-col l3 x-padding">
+		<div class="x-container x-col l2 x-padding">
+			<h5 class="x-text-teal">
+				<b>Figures by Entries</b>
+			</h5>
 			<div class="x-container x-center x-padding x-round gr_body x-text-white">
 				<b id="total_num_farmer" class="_money_tag x-text-shrink x-xxlarge">{{dash_data_['all_farmer_count']}}</span></b><br>
 				<span class="x-small _money_tag">
@@ -18,9 +21,6 @@
 					<b>Mobile MIS</b>
 				</span>
 			</div>
-			<!-- TEMPORARY HIDDEN FOR DEV -->
-		</div>
-		<div class="x-container x-col l2 x-padding">
 			<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
 				<b id="total_num_farmer_with_dip" class="x-xxlarge _money_tag x-text-shrink">{{dash_data_['with_dip']}}</b><br>
 				<span class="x-small">
@@ -28,8 +28,6 @@
 					<b>With DIP's</b>
 				</span>
 			</div>
-		</div>
-		<div class="x-container x-col l2 x-padding">
 			<div class="x-container x-center x-padding x-round x-border-dashed x-border-blue">
 				<b id="total_num_farmer_with_fo" class="x-xxlarge _money_tag x-text-shrink">{{dash_data_['with_fo']}}</b><br>
 				<span class="x-small">
@@ -37,8 +35,6 @@
 					<b>With FO's</b>
 				</span>
 			</div>
-		</div>
-		<div class="x-container x-col l2 x-padding">
 			<div class="x-container x-center x-padding x-round x-border-dashed x-border-green">
 				<b id="total_num_farmer_geotagged" class="x-xxlarge _money_tag x-text-shrink">{{(dash_data_['mobile_geotag']|length)}}</b><br>
 				<span class="x-small">
@@ -46,28 +42,58 @@
 					<b class="x-tiny x-text-grey">That has Map Coordinates</b>
 				</span>
 			</div>
+			<div class="x-container x-center x-padding x-round x-border-dashed x-border-green" onclick="show_adv_filter()">
+				<b id="total_num_farmer_geotagged" class="x-xxlarge  x-text-shrink fa fa-eye"></b><br>
+				<span class="x-small">
+					<b class="x-small">Area Filter</b><br>
+					<b class="x-tiny x-text-grey">click to Show Area Filter</b>
+				</span>
+			</div>
 		</div>
-		<div class="x-container x-col l2 x-padding" style="display:none">
-			<div class="x-container x-center x-padding x-round x-border-dashed x-border-green">
-				<div class="x-round-large x-small" style="display:block"> 
-					<span class="x-text-grey">Male :<b class="x-text-black _money_tag" id="count_all_male">{{dash_data_['all_sex_male']}}</b></span><br>
-					<span class="x-text-grey">Female :<b class="x-text-black _money_tag" id="count_all_female">{{dash_data_['all_sex_female']}}</b></span><br>
-					<!-- <span class="x-text-grey">Untagged :<b class="x-text-black _money_tag" id="count_all_sex_untagged">{{dash_data_['all_sex_untag']}}</b></span><br> -->
+		<div class="x-container x-col l10 x-padding">
+			<h5 class="x-text-teal">
+				<b>Chart by Area</b>
+			</h5>
+			<div class="x-container x-row">
+				{% include 'dashboard/graph2.html' %}
+			</div>
+			<div class="x-container x-row">
+				{% include 'dashboard/graph1.html' %}
+			</div>
+<!-- 			<h5 class="x-text-teal">
+				<b>What's in the Basket</b>
+			</h5>
+			<div class="" style="overflow-y:scroll;height: 520px;">
+				{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
+					{% if comdty_name[1] != 0 :%}
+					<div style="padding-bottom: 5px;">
+						<div class="x-container x-card x-white x-padding x-round-large x-hover-green">
+							<span class="x-col x-left" style="width:70%">
+								<img src="../static/img/commodity/{{comdty_name[0]}}.png" style="width:10%">
+								<b>{{comdty_name[0]}}</b> 
+							</span>
+							<span class="x-col x-right x-right-align" style="width:30%">
+								<b class="x-large _money_tag">{{comdty_name[1]}}</b>
+							</span>
+
+						</div>
+					</div>
+					{% endif %}
+				{% endfor %}
+
+				<div class="x-padding">
+					<div class="x-container x-card x-white x-padding x-round-large x-hover-black x-border-black" onclick="view_all_commodity_count()">
+						<span class="x-col x-left" style="width:70%">
+							<img src="../static/img/commodity/others.png" style="width:10%">
+							<b>Others</b> 
+						</span>
+						<span class="x-col x-right x-right-align" style="width:30%">
+							<b class="x-tiny">View all commodity</b>
+						</span>
+
+					</div>
 				</div>
-				<span class="x-small">
-					<b class="x-small">Farmer Sex</b><br>
-					<b class="x-tiny x-text-grey">Untagged are unfilled fields</b>
-				</span>
-			</div>
-		</div>
-		<div class="x-container x-col l2 x-padding" style="display:none;">
-			<div class="x-container x-center x-padding x-round x-border-dashed x-border-green">
-				<b id="total_num_farmer_head" class="x-xxlarge _money_tag x-text-shrink">{{dash_data_['is_hh_head_num']}}</b><br>
-				<span class="x-small">
-					Number of Profiles <br>
-					<b>Head of the Houshold</b>
-				</span>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
@@ -78,107 +104,28 @@
 		<div class="x-row-padding" style="margin:0 -16px">
 			<div class="x-col l6">
 				<!-- <h5><b>Areas Covered</b></h5> -->
-				<div>
-					{% include 'advance_filter_a.html' %}
-					<!-- {% include 'maps/dash_map1.html' %} -->
-					<!-- <img src="../static/img/region.jpg" style="width:100%" alt="Google Regional Map"> -->
-				</div>
 			</div>
 			<div class="x-col l2">
-				<h5 class="x-text-green">
-					<b>What's in the Basket <span class="fa fa-shopping-basket"></span></b>
-				</h5>
-				<div class="" style="overflow-y:scroll;height: 520px;">
-					{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
-						{% if comdty_name[1] != 0 :%}
-						<div class="x-padding">
-							<div class="x-container x-card x-white x-padding x-round-large x-hover-green">
-								<span class="x-col x-left" style="width:70%">
-									<img src="../static/img/commodity/{{comdty_name[0]}}.png" style="width:10%">
-									<b>{{comdty_name[0]}}</b> 
-								</span>
-								<span class="x-col x-right x-right-align" style="width:30%">
-									<b class="x-large _money_tag">{{comdty_name[1]}}</b>
-								</span>
-
-							</div>
-						</div>
-						{% endif %}
-					{% endfor %}
-
-					<div class="x-padding">
-						<div class="x-container x-card x-white x-padding x-round-large x-hover-black x-border-black" onclick="view_all_commodity_count()">
-							<span class="x-col x-left" style="width:70%">
-								<img src="../static/img/commodity/others.png" style="width:10%">
-								<b>Others</b> 
-							</span>
-							<span class="x-col x-right x-right-align" style="width:30%">
-								<b class="x-tiny">View all commodity</b>
-							</span>
-
-						</div>
-					</div>
-				</div>
 			</div>
 			<div class="x-col l2" >
-				<h5><b>Enumerators</b></h5>
-				<div  style="overflow-y:scroll;height: 520px;">
-					<div class="x-bar x-rapid-teal-heavy">
-						<button class="x-bar-item x-button" onclick="show_view('mobile','Enumerators')">Mobile</button>
-						<button class="x-bar-item x-button" onclick="show_view('Excel','Enumerators')">Excel</button>
-					</div>
-
-					<div id="mobile" class="Enumerators x-animate-top" style="">
-						<div class="">
-							<table class="x-table x-border x-striped x-white">
-								<thead>
-									<tr class="x-rapid-teal-medium">
-										<th>Name <span class="x-tiny x-text-light-grey"><br>(Mobile)</span> </th>
-										<th># of inputs</th>
-									</tr>
-								</thead>
-								<tbody class="x-container">
-									{% for enum_name in dash_data_['enumerator']['mobile']%}
-									<tr>
-										<td><b>{{enum_name['key']}}</b></td>
-										<td class="_money_tag x-right">
-											{{enum_name['total']}}
-										</td>
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div id="Excel" class="Enumerators x-animate-top" style="display: none;">
-						<div class="">
-							<table class="x-table x-border x-striped x-white">
-								<thead>
-									<tr class="x-rapid-teal-medium">
-										<th>Name <span class="x-tiny x-text-light-grey"><br>(Excel)</span> </th>
-										<th># of inputs</th>
-									</tr>
-								</thead>
-								<tbody class="x-container">
-									{% for enum_name in dash_data_['enumerator']['excel']%}
-									<tr>
-										<td><b>{{enum_name['key']}}</b></td>
-										<td class="_money_tag x-right">
-											{{enum_name['total']}}
-										</td>
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
 	<hr>
 </div>
+{% include 'advance_filter_a.html' %}
 <script>
+
+
+	function create_graphs(_data){
+		g1_data_reconstruct(_data)//for Graph2
+		g2_data_reconstruct(_data)//for Graph2
+	}
+
+
+
+
 	function view_all_commodity_count(){
 		var allcomdity = $dialog({
 			title : "Commodities (Value Chain)",
@@ -227,4 +174,7 @@
 		allcomdity.dialog.style.width="40%"
 		allcomdity.show()
 	}
+
+
+
 </script>

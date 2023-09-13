@@ -51,9 +51,24 @@ class _main:
 		username = request.form['user_name']
 		password = request.form['password']
 		log_res = rapid_mysql.select("SELECT * from `users` WHERE `username` = '{}' AND `password`='{}';".format(username,password))
+		admin_type = ""
+		priv_type = ""
+		if(log_res[0]['job'] in ['Admin','Super Admin']):
+			admin_type = "_{}".format(log_res[0]['job'].upper().replace(" ","_"))
+
+		if(log_res[0]['pcu'].lower()=='none'):
+			if(log_res[0]['rcu'].lower()=='npco'):
+				priv_type = "NPCO{}".format(admin_type)
+			else:
+				priv_type = "RCU{}".format(admin_type)
+		else:
+			priv_type = "PCU{}".format(admin_type)
+		
+
 		if(len(log_res)!=0):
 			session["USER_DATA_ADMIN_"] = log_res
 			log_res[0]['password'] = "********";
+			log_res[0]["PRIV_TYPE"] = priv_type
 			session["USER_DATA"] = log_res
 			return jsonify({"success":True,"user":session["USER_DATA"]});
 		else:

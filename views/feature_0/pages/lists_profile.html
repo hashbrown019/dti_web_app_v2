@@ -1,6 +1,6 @@
-<div class="x-main" style="margin-left:200px;margin-top:43px">
+<div class="x-main" style="margin-left:200px;margin-right:200px;;margin-top:43px">
 	<header class="x-container" style="padding-top:22px">
-		<span class="x-text-blue x-xlarge"><b><i class="fa fa-dashboard"></i> Profiling Form A || Lists</b></span><br>
+		<span class="x-text-teal x-xxlarge"><b>Profile List</b></span><br><br>
 	</header>
 	<!-- <div class="x-container">
 		<div class="x-row">
@@ -101,8 +101,74 @@
 		List of encoded farmer profiles, click on of the rows to show full details of the farmers. In some cases, you'll need
 		a higher permission, authority or request access key to view, update or delete a records on the system
 	</div>
-	<div class="x-container x-padding">
-		{% include 'datatable_ls_faarmer.html' %}
+	<div class="x-row x-container x-padding">
+		<div class="x-container x-col l10 m10">
+			{% include 'datatable_ls_faarmer.html' %}
+		</div>
+		<div class="x-container x-col l2 m2">
+			<div class="x-row">
+				<h5><b>Enumerators</b></h5>
+				<div  style="overflow-y:scroll;height: 520px;">
+					<div class="x-bar x-rapid-teal-heavy">
+						<button class="x-bar-item x-button" onclick="show_view('mobile','Enumerators')">Mobile</button>
+						<button class="x-bar-item x-button" onclick="show_view('Excel','Enumerators')">Excel</button>
+					</div>
+					<style type="text/css">a:link { text-decoration: none; }</style>
+					<div id="mobile" class="Enumerators x-animate-top" style="">
+						<div class="">
+							<table class="x-table x-border x-striped x-white">
+								<thead>
+									<tr class="x-rapid-teal-medium">
+										<th>Name <span class="x-tiny x-text-light-grey"><br>(Mobile)</span> </th>
+										<th># of inputs</th>
+									</tr>
+								</thead>
+								<tbody class="x-container">
+									{% for enum_name in dash_data_['enumerator']['mobile']%}
+									<tr>
+										<td title="Click to see Profile">
+											<a style="cursor" href="/viewprofile?_id={{enum_name['id']}}" target="_blank">
+												<b>{{enum_name['key']}}</b>
+											</a>
+										</td>
+										<td class="_money_tag x-right">
+											{{enum_name['total']}}
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div id="Excel" class="Enumerators x-animate-top" style="display: none;">
+						<div class="">
+							<table class="x-table x-border x-striped x-white">
+								<thead>
+									<tr class="x-rapid-teal-medium">
+										<th>Name <span class="x-tiny x-text-light-grey"><br>(Excel)</span> </th>
+										<th># of inputs</th>
+									</tr>
+								</thead>
+								<tbody class="x-container">
+									{% for enum_name in dash_data_['enumerator']['excel']%}
+										<tr>
+											<td title="Click to see Profile">
+												<a style="cursor" href="/viewprofile?_id={{enum_name['id']}}" target="_blank">
+													<b>{{enum_name['key']}}</b>
+												</a>
+											</td>
+											<td class="_money_tag x-right">
+												{{enum_name['total']}}
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <script>

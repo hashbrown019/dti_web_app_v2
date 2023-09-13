@@ -261,6 +261,7 @@ class _main:
 				`form_a_farmer_profiles`.`addr_prov`,
 				`form_a_farmer_profiles`.`addr_city`,
 				`form_a_farmer_profiles`.`farmer_dip_ref`,
+				`form_a_farmer_profiles`.`farmer_head_of_house` as 'is_head_hh',
 				`form_a_farmer_profiles`.`farmer_code` as 'reference',
 				`form_a_farmer_profiles`.`farmer_name` as 'name_complete'
 
@@ -284,6 +285,7 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
+				`excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `is_head_hh`,
 				`excel_import_form_a`.`file_name` as 'reference'
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
