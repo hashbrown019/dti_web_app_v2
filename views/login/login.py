@@ -55,8 +55,9 @@ class _main:
 		priv_type = ""
 		if(log_res[0]['job'] in ['Admin','Super Admin']):
 			admin_type = "_{}".format(log_res[0]['job'].upper().replace(" ","_"))
-		if(log_res[0]['pcu']=='none'):
-			if(log_res[0]['rcu']=='NPCO'):
+
+		if(log_res[0]['pcu'].lower()=='none'):
+			if(log_res[0]['rcu'].lower()=='npco'):
 				priv_type = "NPCO{}".format(admin_type)
 			else:
 				priv_type = "RCU{}".format(admin_type)
