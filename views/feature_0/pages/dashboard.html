@@ -119,45 +119,8 @@
 
 
 	function create_graphs(_data){
-		var PRIV_TYPE = ("{{USER_DATA['PRIV_TYPE']}}")
-		var temp_data1 = {}
-		var graph_data = []
-		var is_npco_view = false;
-		var area_key = ""
-		var crops_name = {}
-
-
-		if(PRIV_TYPE.includes('NPCO')){
-			is_npco_view = true;area_key = "addr_region";
-		}else{
-			is_npco_view = false;area_key = "addr_prov";
-		}
-
-		for (var i = 0; i < _data.length; i++) {
-			var area = _data[i][area_key]
-			var crop = _data[i]['farmer_primary_crop'].toUpperCase().replaceAll(" ","")
-			crops_name[crop] = crop
-
-			// if(area==""){continue}
-			if(area in temp_data1){
-				if(crop in temp_data1[area]){
-					temp_data1[area][crop] = temp_data1[area][crop] + 1
-				}else{
-					temp_data1[area][crop] = 1
-				}
-
-			}else{
-				temp_data1[area] = {'area' :area}
-				temp_data1[area][crop] = 1
-			}
-		}
-
-		for(key in temp_data1){
-			graph_data.push(temp_data1[key])
-			
-		}
+		g1_data_reconstruct(_data)//for Graph2
 		g2_data_reconstruct(_data)//for Graph2
-		set_graph1(graph_data,crops_name)//for Graph2
 	}
 
 
