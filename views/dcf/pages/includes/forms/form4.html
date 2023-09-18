@@ -89,7 +89,7 @@
 				<div class="x-col l6 x-container x-padding">
 					<label class="">Types of Training:</label>
 					<select required class="form_data_b x-border x-select x-border" name="cbb_types_of_training"
-						id="cbb_types_of_training">
+						id="cbb_types_of_training" onchange="changecbb_types_of_training(this.value)">
 						<option value="" disabled selected>Choose your option</option>
 						<optgroup label="Farmer Organizations">
 							<option value="FO-Organization Entrepreneurial Competency">Organization Entrepreneurial
@@ -122,6 +122,12 @@
 								Networking and Linkage-Building (External Relation; Business Membership Organization)
 							</option>
 						</optgroup>
+						<optgroup label="Individual Farmer ">
+							<option value="Individual Farmer-Managing Natural Resources">Managing Natural Resources</option>
+							<option value="Individual Farmer-Managing Finances">Managing Finances</option>
+							<option value="Individual Farmer-Marketing">Marketing</option>
+
+						</optgroup>
 					</select>
 				</div>
 			</div>
@@ -130,8 +136,12 @@
 			<div class="x-row x-padding x-container">
 				<div class="x-col l4 x-container x-padding">
 					<label>Topic Of Training:</label>
-					<input class="form_data_b x-input x-border" name="cbb_topic_of_training" id="cbb_topic_of_training"
-						type="text" placeholder="">
+						<!-- <input type="text" id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple> -->
+						<select id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple>
+							<option >a</option>
+							<option >Medium</option>
+							<option >a</option>
+						</select>
 				</div>
 				<div class="x-col l4 x-container x-padding">
 					<label class="">DIP-approved alignment:</label>

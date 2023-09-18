@@ -9,12 +9,12 @@
                     <span class="text-white" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="modalbodyedit">
+            <div class="modal-body" id="modalbodyedit" style="justify-content: center; display: flex;">
 
 
 
 
-                <form style="margin-left: 2%; margin-right: 2%;" id="form1" action="/updateform1" method="POST">
+                <form style="max-width: 90%;" id="form1" action="/updateform1" method="POST">
                     {% include "includes/sweetalert.html" %}
                     <div class="x-col l2 ">
                         &nbsp;
@@ -61,7 +61,7 @@
                                         <input class=" x-input x-border" id="form_1_number_of_dips" value="{{ row['form_1_number_of_dips'] }}" type="Number" name="form_1_number_of_dips" placeholder="">
                                     </div> -->
                                     <div class="x-col l4 x-container x-padding">
-                                        <label>Name of DIP</label>
+                                        <label><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (ex. R8_SC Global)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  Name of DIP</label>
                                         <input class=" x-input x-border" id="form_1_name_dip"
                                             value="{{ row['form_1_name_dip'] }}" type="text" name="form_1_name_dip"
                                             placeholder="">
@@ -500,12 +500,12 @@
                             <div class="x-row">
                                 <div class="x-container x-padding ">
                                     <div class="x-col l6 x-container x-padding">
-                                        <label>FMI</label>
+                                        <label><span style="color: #007399;" class="tool" data-tip="Input FMR Name or type of Infra e.g Construction of Box, Culvert, Spilway etc." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> FMI</label>
                                         <input class=" x-input x-border" id="form_1_fmi" value="{{ row['form_1_fmi'] }}"
                                             name="form_1_fmi" type="text" placeholder="">
                                     </div>
                                     <div class="x-col l6 x-container x-padding">
-                                        <label>FMI Kms</label>
+                                        <label><span style="color: #007399;" class="tool" data-tip="Input length of FMR, for other infa indicate applicable unit e.g Linear Meter" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> FMI Kms</label>
                                         <input class=" x-input x-border" id="form_1_fmi_kms"
                                             value="{{ row['form_1_fmi_kms'] }}" name="form_1_fmi_kms" type="text"
                                             placeholder="">

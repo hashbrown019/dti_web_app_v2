@@ -77,11 +77,16 @@
             </div>
 
             <div class="x-row">
-                <div class="x-col l9 x-container x-padding">
-                    <label class=""><span style="color: #007399;" class="tool" data-tip='If Yes, type "Yes" and type the name of the Anchor Firm/DIP Name and if No type "No" for no DIP alignment' tabindex="1"><i class="fa-solid fa-circle-info"></i></span> DIP Alignment:
+                <div class="x-col l4 x-container x-padding">
+                    <label class=""><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (ex. R8_SC Global)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>   DIP Alignment:
                     </label>
-                    <input class=" x-input x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" type="text"
-                        autocomplete="on" placeholder="Write Here">
+                        <select class="x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
+                            <option value="">Choose your option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No DIP Alignment">No</option>
+                        </select>
+                        <input type="text" class="hidden-textboxdip x-input x-border" name="form_2_dip_alignment_yes"
+                            id="form_2_dip_alignment_yes" placeholder="Enter DIP name">
                 </div>
             </div>
         </div>
@@ -89,9 +94,9 @@
             <div class="x-col l6 x-container x-padding">
                 <label class="">Name of Owner or Manager of the anchor Firm/MSMEs:</label>
                 <input class=" x-input x-border" id="form_2_name_owner_manager" name="form_2_name_owner_manager"
-                    type="text" autocomplete="on" placeholder="Write Here">
+                    type="text" autocomplete="on" placeholder="Full Name: (ex. Juan Dela Cruz)">
             </div>
-            <div class="x-col l6 x-container x-padding">
+            <div class="x-col l5 x-container x-padding">
                 <label class="">Sex of the Owner or Manager of the anchor Firm/MSMEs:</label>
                 <select class="form_data_b x-border x-select x-border" id="form_2_sex_owner_manager"
                     name="form_2_sex_owner_manager"><br>
@@ -115,7 +120,7 @@
                 </select>
             </div>
             <div class="x-col l6 x-container x-padding">
-                <label class="">Business Address of Owner or manager of the anchor firm/MSMEs:</label>
+                <label class=""><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>   Business Address of Owner or manager of the anchor firm/MSMEs:</label>
                 <input class=" x-input x-border" id="form_2_business_owner_manager" name="form_2_business_owner_manager"
                     type="text" placeholder="">
             </div>
@@ -155,7 +160,7 @@
                 </select>
             </div>
             <div class="x-col l6 x-container x-padding">
-                <label class="">Office Address/ Province of FO:</label>
+                <label class=""><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Office Address of FO:</label>
                 <input class=" x-input x-border" id="form_2_office_address_province" type="text"
                     name="form_2_office_address_province" placeholder="">
             </div>
@@ -230,14 +235,14 @@
             <h2 class=" x-container text-white x-padding" style="background-color: #007399;">CPA Information</h2>
         </center>
         <div class="x-row x-container x-padding">
-            <div class="x-col l6 x-container x-padding">
+            <!-- <div class="x-col l6 x-container x-padding">
                 <label class="">Address of FO Member:</label>
                 <input class=" x-input x-border" id="form_2_address_of_fo_members" name="form_2_address_of_fo_members"
                     type="text" placeholder="">
-            </div>
+            </div> -->
             <div class="x-col l6 x-container x-padding">
-                <label class="">Hectares Covered:</label>
-                <input class=" x-input x-border" id="form_2_hectares_covered" name="form_2_hectares_covered" type="text"
+                <label class=""><span style="color: #007399;" class="tool"  data-tip="Input number of hectares with four decimal places. (example: 143.1433)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Hectares Covered:</label>
+                <input class=" x-input x-border" id="form_2_hectares_covered" name="form_2_hectares_covered"
                     placeholder="">
             </div>
             <div class="x-col l3 x-container x-padding">
@@ -265,6 +270,9 @@
                 <input class=" x-input x-border" id="form_2_notable_cpa_incentives" name="form_2_notable_cpa_incentives"
                     style="width: 100%;" type="text" placeholder="">
             </div>
+           
+        </div>
+        <div class="x-row x-container x-padding">
             <div class="x-col l5 x-container x-padding">
                 <label class="">Remarks/Status :</label>
                 <select class="form_data_b x-border x-select x-border" id="form_2_remarks_status"
@@ -277,8 +285,6 @@
                 <input type="text" class="hidden-textbox2 x-input x-border" name="form_2_remarks_status_why"
                     id="form_2_remarks_status_why" placeholder="Reason why">
             </div>
-        </div>
-        <div class="x-row x-container x-padding">
             <div class="x-col l7 x-container x-padding" style="width: 55%;">
                 <style>
                     table,
