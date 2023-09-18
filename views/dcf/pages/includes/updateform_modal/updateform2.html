@@ -9,9 +9,9 @@
                     <span class="text-white" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="modalbodyedit">
+            <div class="modal-body" style="justify-content: center; display: flex;" id="modalbodyedit">
 
-                <form style="margin-left: 2%; margin-right: 2%;" id="form2" action="/updateform2" method="POST">
+                <form style="max-width: 90%;" id="form2" action="/updateform2" method="POST">
                     {% include "includes/sweetalert.html" %}
 
                     <div class="x-col l1 ">
@@ -92,23 +92,12 @@
 
                             <div class="x-row">
                                 <div class="x-col l8 x-container x-padding">
-                                    <label class="">DIP Alignment: (If Yes, select Yes and type the name of the Anchor
-                                        Firm/DIP Name and Select No for no DIP alignment):
+                                    <label class=""><span style="color: #007399;" class="tool" data-tip='If Yes, type "Yes" and type the name of the Anchor Firm/DIP Name and if No type "No" for no DIP alignment' tabindex="1"><i class="fa-solid fa-circle-info"></i></span>DIP Alignment:
                                     </label>
-                                    <select class=" x-border x-select x-border" id="form_2_dip_alignment"
-                                        value="{{ row['form_2_dip_alignment'] }}" name="form_2_dip_alignment"
-                                        onChange="getDropDown(this)"><br>
-                                        <option selected>{{ row['form_2_dip_alignment'] }}</option>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
+                                    <input class=" x-input x-border" id="form_2_dip_alignment" value="{{ row['form_2_dip_alignment'] }}" name="form_2_dip_alignment" type="text"
+                                    autocomplete="on" placeholder="Write Here">
                                 </div>
-                                <div class="x-row x-container x-padding">
-                                    <div id="yes" style="display: none; width: 56%;">
-                                        <input class="x-row x-container x-padding x-input" id="form_2_yes" type="text"
-                                            autocomplete="on" name="form_2_yes" value="">
-                                    </div>
-                                </div>
+                    
                             </div>
                         </div>
                         <div class="x-row x-container x-padding">
@@ -288,19 +277,17 @@
                             </div>
                             <div class="x-col l3 x-container x-padding">
                                 <label for="form_2_cpa_date_signing">Date of CPA Signing:</label>
-                                <input class="x-input x-border" type="date" id="form_2_cpa_date_signing"
-                                    value="{{ row['form_2_cpa_date_signing'] }}" style="width: 100%;"
-                                    name="form_2_cpa_date_signinge" onchange="computeDaysRemaining()">
+                        
+                                    <input class="x-input x-border form-2-cpa-date-signing" type="date" value="{{ row['form_2_cpa_date_signing'] }}" style="width: 100%;" name="form_2_cpa_date_signing" onchange="computeDaysRemaining()">
                             </div>
                             <div class="x-col l3 x-container x-padding">
                                 <label for="form_2_cpa_date_expiration">CPA Expiration Date:</label>
-                                <input class="x-input x-border" type="date" id="form_2_cpa_date_expiration"
-                                    value="{{ row['form_2_cpa_date_expiration'] }}" style="width: 100%"
-                                    name="form_2_cpa_date_expiration" onchange="computeDaysRemaining()">
+                
+                                    <input class="x-input x-border form-2-cpa-date-expiration" value="{{ row['form_2_cpa_date_expiration'] }}" type="date" style="width: 100%;" name="form_2_cpa_date_expiration" onchange="computeDaysRemaining()">
                             </div>
                             <div class="x-col l3 x-container x-padding">
                                 <label for="form_2_days_remaining">Days Remaining:</label>
-                                <input class="x-input x-border" type="number" id="form_2_days_remaining"
+                                <input class="x-input x-border form-2-days-remaining" type="number" id="form_2_days_remaining"
                                     value="{{ row['form_2_days_remaining'] }}" style="width: 100%;"
                                     name="form_2_days_remaining" readonly>
                             </div>
@@ -429,12 +416,25 @@
                 }
 
                 function computeDaysRemaining() {
-                    const signingDate = new Date(document.getElementById("form_2_cpa_date_signing").value);
-                    const expirationDate = new Date(document.getElementById("form_2_cpa_date_expiration").value);
-                    const timeDiff = expirationDate.getTime() - signingDate.getTime();
-                    const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                    document.getElementById("form_2_days_remaining").value = daysRemaining;
-                }
+  // Get elements by class name
+  const signingDateElements = document.querySelectorAll(".form-2-cpa-date-signing");
+  const expirationDateElements = document.querySelectorAll(".form-2-cpa-date-expiration");
+  const daysRemainingElements = document.querySelectorAll(".form-2-days-remaining");
+
+  for (let i = 0; i < signingDateElements.length; i++) {
+    const signingDate = new Date(signingDateElements[i].value);
+    const expirationDate = new Date(expirationDateElements[i].value);
+
+    // Calculate the time difference in milliseconds
+    const timeDiff = expirationDate - signingDate;
+
+    // Calculate the days remaining
+    const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    // Update the "Days Remaining" input field
+    daysRemainingElements[i].value = daysRemaining;
+  }
+}
             </script>
 
         </div>
