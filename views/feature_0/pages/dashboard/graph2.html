@@ -48,7 +48,7 @@
 			var sex = _data[i]['farmer_sex'].toLowerCase()
 			var is_hh = _data[i]['is_head_hh'].toLowerCase()
 			if(area in temp_data2){
-				if(crop in temp_data2[area]){
+				if(crop   in temp_data2[area]){
 					if(sex=='female'){
 						if(is_hh =='true' || is_hh =='yes'){
 							temp_data2[area][crop]['female_hh'] = temp_data2[area][crop]['female_hh'] + 1
@@ -79,7 +79,7 @@
 	}
 
 	function hide_graph2_data(){
-		$ID("g2_holder").style.display = "none"
+		// $ID("g2_holder").style.display = "none"
 		$ID("g2_note_holder").style.display = "block"
 
 	}
@@ -111,7 +111,7 @@
 		root.setThemes([
 			am5themes_Animated.new(root)
 		]);
-		root.numberFormatter.set("numberFormat", "#.#s'%");
+		root.numberFormatter.set("numberFormat", "#.#s");
 
 		var chart2 = root.container.children.push(
 			am5xy.XYChart.new(root, {
@@ -150,8 +150,8 @@
 		var xAxis = chart2.xAxes.push(
 			am5xy.ValueAxis.new(root, {
 				calculateTotals: true,
-				min: -100,
-				max: 100,
+				// min: -100,
+				// max: 100,
 				renderer: am5xy.AxisRendererX.new(root, {
 					minGridDistance: 50
 				})
@@ -174,7 +174,7 @@
 					yAxis: yAxis,
 					name: name,
 					valueXField: field,
-					valueXShow: "valueXTotalPercent",
+					valueXShow: "valueX",
 					categoryYField: "category",
 					sequencedInterpolation: true,
 					stacked: true,

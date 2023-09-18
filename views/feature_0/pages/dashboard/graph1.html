@@ -1,7 +1,7 @@
 <style>
 	#graph1 {
 		width: 100%;
-		height: 500px;
+		height: 100vh;
 	}
 </style>
 <div id="g1_loading" class="x-center x-padding-large">
@@ -21,7 +21,6 @@
 		var area_key = ""
 		var crops_name = {}
 
-
 		if(PRIV_TYPE.includes('NPCO')){
 			is_npco_view = true;area_key = "addr_region";
 		}else{
@@ -33,7 +32,7 @@
 			var crop = _data[i]['farmer_primary_crop'].toUpperCase().replaceAll(" ","")
 			crops_name[crop] = crop
 
-			// if(area==""){continue}
+			if(area==""){continue}
 			if(area in temp_data1){
 				if(crop in temp_data1[area]){
 					temp_data1[area][crop] = temp_data1[area][crop] + 1
@@ -43,6 +42,7 @@
 
 			}else{
 				temp_data1[area] = {'area' :area}
+				// temp_data1[area] = {}
 				temp_data1[area][crop] = 1
 			}
 		}
@@ -51,62 +51,93 @@
 			graph_data.push(temp_data1[key])
 			
 		}
-		set_graph1(graph_data,crops_name)
+		// set_graph1(graph_data,crops_name)
 
+
+		// for(key in temp_data1){
+		// 	for(key2 in temp_data1[key]){
+		// 		graph_data.push({
+		// 			region: key,
+		// 			state: key2,
+		// 			sales: temp_data1[key][key2]
+		// 		})
+		// 	}
+		// }
+		println(graph_data)
+		set_graph1(graph_data,crops_name)
+		$ID('g1_loading').style.display = "none"
 	}
 
 	function set_graph1(graph_data,series) {
+
+
+		// Create root element
+		// https://www.amcharts.com/docs/v5/getting-started/#Root_element
 		var root = am5.Root.new("graph1");
+
+
+		var myTheme = am5.Theme.new(root);
+
+		myTheme.rule("Grid", ["base"]).setAll({
+			strokeOpacity: 0.1
+		});
+
+
+		// Set themes
+		// https://www.amcharts.com/docs/v5/concepts/themes/
 		root.setThemes([
-			am5themes_Animated.new(root)
+			am5themes_Animated.new(root),
+			myTheme
 		]);
+
+
+		// Create chart
+		// https://www.amcharts.com/docs/v5/charts/xy-chart/
 		var chart = root.container.children.push(am5xy.XYChart.new(root, {
 			panX: false,
 			panY: false,
-			wheelX: "panX",
-			wheelY: "zoomX",
+			wheelX: "panY",
+			wheelY: "zoomY",
 			layout: root.verticalLayout
 		}));
 
-		chart.set("scrollbarX", am5.Scrollbar.new(root, {
-			orientation: "horizontal"
+		// Add scrollbar
+		// https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+		chart.set("scrollbarY", am5.Scrollbar.new(root, {
+			orientation: "vertical"
 		}));
 
 		var data = graph_data
 
-		var xRenderer = am5xy.AxisRendererX.new(root, {
-		      "cellStartLocation": 0.2,
-		      "cellEndLocation": 0.8});
-		var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+
+		// Create axes
+		// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+		var yRenderer = am5xy.AxisRendererY.new(root, {});
+		var yAxis = chart.yAxes.push(am5xy.CategoryAxis.new(root, {
 			categoryField: "area",
-			renderer: xRenderer,
+			renderer: yRenderer,
 			tooltip: am5.Tooltip.new(root, {})
 		}));
 
-		xRenderer.grid.template.setAll({
+		yRenderer.grid.template.setAll({
 			location: 1
 		})
 
-		xAxis.data.setAll(data);
+		yAxis.data.setAll(data);
 
-		var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+		var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
 			min: 0,
-			max: 100,
-			numberFormat: "#'%'",
-			strictMinMax: true,
-			calculateTotals: true,
-			renderer: am5xy.AxisRendererY.new(root, {
+			renderer: am5xy.AxisRendererX.new(root, {
 				strokeOpacity: 0.1
 			})
 		}));
 
-
 		// Add legend
 		// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
-		var legend = chart.children.push(am5.Legend.new(root, {
-			centerX: am5.p50,
-			x: am5.p50
-		}));
+		// var legend = chart.children.push(am5.Legend.new(root, {
+		// 	centerX: am5.p50,
+		// 	x: am5.p50
+		// }));
 
 
 		// Add series
@@ -117,14 +148,14 @@
 				stacked: true,
 				xAxis: xAxis,
 				yAxis: yAxis,
-				valueYField: fieldName,
-				valueYShow: "valueYTotalPercent",
-				categoryXField: "area"
+				baseAxis: yAxis,
+				valueXField: fieldName,
+				categoryYField: "area"
 			}));
 
 			series.columns.template.setAll({
-				tooltipText: "Click this to reveal a chart for Area {categoryX} containng Head of Household and its Sex\n\n{name} :{valueYTotalPercent.formatNumber('#.#')}%",
-				tooltipY: am5.percent(10)
+				tooltipText: "{name}, {categoryY}: {valueX}",
+				tooltipY: am5.percent(90)
 			});
 			series.data.setAll(data);
 
@@ -135,7 +166,7 @@
 			series.bullets.push(function() {
 				return am5.Bullet.new(root, {
 					sprite: am5.Label.new(root, {
-						// text: "{valueYTotalPercent.formatNumber('#.#')}%",
+						text: "{valueX}",
 						fill: root.interfaceColors.get("alternativeText"),
 						centerY: am5.p50,
 						centerX: am5.p50,
@@ -144,33 +175,22 @@
 				});
 			});
 
-			legend.data.push(series);
-	
-			series.columns.template.width = am5.percent(10)
+			// legend.data.push(series);
 			series.columns.template.events.on("click", function(ev) {
 				set_graph2_data(ev.target._dataItem.dataContext);
 			}, this);
-			// series.columns.template.events.on("pointerover", function(ev) {
-			// 	set_graph2_data(ev.target._dataItem.dataContext);
-			// }, this);
-			// series.columns.template.events.on("pointerout", function(ev) {
-			// 	hide_graph2_data();
-			// }, this);
-			// series.columns.template.events.onAll(function(ev) {
-			// 	set_graph2_data(ev);
-			// }, this);
 		}
 
 		for(crop in series){
 			makeSeries(crop, crop);
 		}
 
+
 		// Make stuff animate on load
 		// https://www.amcharts.com/docs/v5/concepts/animations/
 		chart.appear(1000, 100);
-		$ID('g1_loading').style.display = "none"
-	}
 
+	}// end am5.ready()
 
 	// function set_graph1(graph_data,series) {
 	// 	var root = am5.Root.new("graph1");
@@ -208,8 +228,9 @@
 
 	// 	var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
 	// 		min: 0,
-	// 		// numberFormat: "#",
-	// 		strictMinMax: false,
+	// 		max: 100,
+	// 		numberFormat: "#'%'",
+	// 		strictMinMax: true,
 	// 		calculateTotals: true,
 	// 		renderer: am5xy.AxisRendererY.new(root, {
 	// 			strokeOpacity: 0.1
@@ -234,14 +255,13 @@
 	// 			xAxis: xAxis,
 	// 			yAxis: yAxis,
 	// 			valueYField: fieldName,
-	// 			valueYShow: "valueY",
+	// 			valueYShow: "valueYTotalPercent",
 	// 			categoryXField: "area"
 	// 		}));
 
 	// 		series.columns.template.setAll({
-	// 			// tooltipText: "{name}, {categoryX}:{valueYTotalPercent.formatNumber('#.#')}%",
-	// 			tooltipText: "{name}",
-	// 			// tooltipY: am5.percent(10)
+	// 			tooltipText: "Click this to reveal a chart for Area {categoryX} containng Head of Household and its Sex\n\n{name} :{valueYTotalPercent.formatNumber('#.#')}%",
+	// 			tooltipY: am5.percent(10)
 	// 		});
 	// 		series.data.setAll(data);
 
@@ -253,7 +273,6 @@
 	// 			return am5.Bullet.new(root, {
 	// 				sprite: am5.Label.new(root, {
 	// 					// text: "{valueYTotalPercent.formatNumber('#.#')}%",
-	// 					text: "{valueY}",
 	// 					fill: root.interfaceColors.get("alternativeText"),
 	// 					centerY: am5.p50,
 	// 					centerX: am5.p50,
@@ -265,6 +284,18 @@
 	// 		legend.data.push(series);
 	
 	// 		series.columns.template.width = am5.percent(10)
+	// 		series.columns.template.events.on("click", function(ev) {
+	// 			set_graph2_data(ev.target._dataItem.dataContext);
+	// 		}, this);
+	// 		// series.columns.template.events.on("pointerover", function(ev) {
+	// 		// 	set_graph2_data(ev.target._dataItem.dataContext);
+	// 		// }, this);
+	// 		// series.columns.template.events.on("pointerout", function(ev) {
+	// 		// 	hide_graph2_data();
+	// 		// }, this);
+	// 		// series.columns.template.events.onAll(function(ev) {
+	// 		// 	set_graph2_data(ev);
+	// 		// }, this);
 	// 	}
 
 	// 	for(crop in series){
@@ -274,6 +305,8 @@
 	// 	// Make stuff animate on load
 	// 	// https://www.amcharts.com/docs/v5/concepts/animations/
 	// 	chart.appear(1000, 100);
-
+	// 	$ID('g1_loading').style.display = "none"
 	// }
+
+
 </script>
