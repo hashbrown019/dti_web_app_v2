@@ -21,12 +21,7 @@ def updateform6(request):
         form_6_name_of_partner_organization_1 = ', '.join(request.form.getlist('form_6_name_of_partner_organization_1[]'))
         form_6_name_of_partner_organization_2 = ', '.join(request.form.getlist('form_6_name_of_partner_organization_2[]'))
         form_6_beneficiary_participant = ', '.join(request.form.getlist('form_6_beneficiary_participant[]'))
-        form_6_commodity = ', '.join(request.form.getlist('form_6_commodity[]',None))
-        form_6_commodity_others = ', '.join(request.form.getlist('form_6_commodity_others[]',None))
-        if form_6_commodity == 'PFN' and form_6_commodity_others:
-            chosen_commodity = form_6_commodity_others
-        else:
-            chosen_commodity = form_6_commodity
+        form_6_commodity = ', '.join(request.form.getlist('form_6_commodity[]'))
         form_6_type_of_beneficiary = ', '.join(request.form.getlist('form_6_type_of_beneficiary[]'))
         # form_6_male = request.form['form_6_male']
         # form_6_female = request.form['form_6_female']
@@ -65,7 +60,7 @@ def updateform6(request):
         sql = """UPDATE dcf_product_development
                SET form_6_implementing_unit='{}',form_6_type_of_assisstance='{}',form_6_type_of_activity='{}',form_6_dip_alignment='{}',form_6_activity_duration_start='{}',form_6_activity_duration_end='{}',form_6_venue='{}',form_6_resource_person='{}',form_6_rapid_actual_budget='{}',form_6_name_of_partner_organization_1='{}',form_6_name_of_partner_organization_2='{}',form_6_beneficiary_participant='{}',form_6_commodity='{}',form_6_type_of_beneficiary='{}',form_6_sex='{}',form_6_sector='{}',form_6_product_developed='{}',form_6_date_launched_to_market='{}',form_6_improved_product='{}',form_6_type_of_product_improvement='{}',form_6_name_of_product_developed='{}',form_6_='{}',form_6_commodity1='{}',form_6_commodity2='{}',form_6_date_issuance='{}',form_6_expiration_date='{}',form_6_product_certified='{}',form_6_rating='{}',form_6_comment_ares_of_improvement='{}',date_modified=CURRENT_TIMESTAMP
                WHERE id={}
-            """.format(form_6_implementing_unit,form_6_type_of_assisstance,form_6_type_of_activity,form_6_dip_alignment,form_6_activity_duration_start,form_6_activity_duration_end,form_6_venue,form_6_resource_person,form_6_rapid_actual_budget,form_6_name_of_partner_organization_1,form_6_name_of_partner_organization_2,form_6_beneficiary_participant,chosen_commodity,form_6_type_of_beneficiary,form_6_sex,form_6_sector,form_6_product_developed,form_6_date_launched_to_market,form_6_improved_product,form_6_type_of_product_improvement,form_6_name_of_product_developed,form_6_,chosen_form6other1,chosen_form6other2,form_6_date_issuance,form_6_expiration_date,form_6_product_certified,form_6_rating,form_6_comment_ares_of_improvement, id)
+            """.format(form_6_implementing_unit,form_6_type_of_assisstance,form_6_type_of_activity,form_6_dip_alignment,form_6_activity_duration_start,form_6_activity_duration_end,form_6_venue,form_6_resource_person,form_6_rapid_actual_budget,form_6_name_of_partner_organization_1,form_6_name_of_partner_organization_2,form_6_beneficiary_participant,form_6_commodity,form_6_type_of_beneficiary,form_6_sex,form_6_sector,form_6_product_developed,form_6_date_launched_to_market,form_6_improved_product,form_6_type_of_product_improvement,form_6_name_of_product_developed,form_6_,chosen_form6other1,chosen_form6other2,form_6_date_issuance,form_6_expiration_date,form_6_product_certified,form_6_rating,form_6_comment_ares_of_improvement, id)
         db.err_page = "asdasd"
         last_row_update_id = db.do(sql)
         if(last_row_update_id["response"]=="error"):

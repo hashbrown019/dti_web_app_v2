@@ -286,6 +286,7 @@ p {
 }
 
 </style>
+
 {% include "includes/menucards/profile.html" %}
 {% include "user_management.html" %}
 {% include "includes/menucards/editprofile.html" %}
@@ -321,7 +322,7 @@ p {
                 </div>
                 <div class="mb-3">
                 <center>
-                <button class="btn btn-secondary">Accomplishment Report</button>
+                <button class="btn btn-secondary" data-target="#wow" data-toggle="modal">Accomplishment Report</button>
                     {% if(user_data['job']=="Super Admin"): %}
                     <button class="btn btn-success" data-toggle="modal" data-target="#usermang" onclick="get_user_data()">User Management</button>
                    {% endif %}
