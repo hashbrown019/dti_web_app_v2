@@ -87,60 +87,69 @@
                                     <input class="form_data_b x-input x-border" value="{{ row['cbb_activity_title'] }}"
                                         name="cbb_activity_title" id="cbb_activity_title" type="text" placeholder="">
                                 </div>
-
                                 <div class="x-col l6 x-container x-padding">
-                                    <label class="">Types of Training</label>
-                                    <select required class="form_data_b x-border x-select x-border"
-                                        name="cbb_types_of_training" value="{{ row['cbb_types_of_training'] }}"
-                                        id="cbb_types_of_training">
+                                    <label class="">Types of Training:</label>
+                                    <select required class="form_data_b x-border x-select x-border " name="cbb_types_of_training"
+                                        id="cbb_types_of_training"  value="{{ row['cbb_types_of_training'] }}" onchange="changecbb_types_of_training2(this.value)">
                                         <option selected>{{ row['cbb_types_of_training'] }}</option>
                                         <optgroup label="Farmer Organizations">
-                                            <option value="FO-Organization Entrepreneurial Competency">Organization
-                                                Entrepreneurial Competency</option>
+                                            <option value="FO-Organization Entrepreneurial Competency">Organization Entrepreneurial
+                                                Competency</option>
                                             <option value="FO-Governance">Governance</option>
-                                            <option value="FO-Organizational Management">Organizational Management
-                                            </option>
+                                            <option value="FO-Organizational Management">Organizational Management</option>
                                             <option value="FO-Operations">Operations</option>
-                                            <option
-                                                value="FO-Technology and Product Development (Business Development)">
-                                                Technology and Product Development (Business Development)</option>
-                                            <option value="FO-Institutional Marketing Management">Institutional
-                                                Marketing Management</option>
-                                            <option value="FO-Human Resource Management">Human Resource Management
+                                            <option value="FO-Technology and Product Development (Business Development)">Technology and
+                                                Product Development (Business Development)</option>
+                                            <option value="FO-Institutional Marketing Management">Institutional Marketing Management
                                             </option>
+                                            <option value="FO-Human Resource Management">Human Resource Management</option>
                                             <option value="FO-Financial Management">Financial Management</option>
                                             <option
                                                 value="FO-Networking and Linkage-Building (External Relation; Business Membership Organization)">
-                                                Networking and Linkage-Building (External Relation; Business Membership
-                                                Organization)</option>
+                                                Networking and Linkage-Building (External Relation; Business Membership Organization)
+                                            </option>
+                                            <option value="FO-GESI">GESI</option>
+                                            <option value="FO-Social Environment & Climate">Social Environment & Climate</option>
+                                            <option value="FO-Managing Natural Resources">Managing Natural Resources</option>
                                         </optgroup>
                                         <optgroup label="MSME">
-                                            <option value="MSME-Entrepreneurial Competency">Entrepreneurial Competency
-                                            </option>
+                                            <option value="MSME-Entrepreneurial Competency">Entrepreneurial Competency</option>
                                             <option value="MSME-Operations">Operations</option>
                                             <option value="MSME-Management">Management</option>
-                                            <option value="MSME-Technology and Product Development">Technology and
-                                                Product Development</option>
-                                            <option value="MSME-Marketing Management">Marketing Management</option>
-                                            <option value="MSME-Human Resource Management">Human Resource Management
+                                            <option value="MSME-Technology and Product Development">Technology and Product Development
                                             </option>
+                                            <option value="MSME-Marketing Management">Marketing Management</option>
+                                            <option value="MSME-Human Resource Management">Human Resource Management</option>
                                             <option value="MSME-Financial Management">Financial Management</option>
                                             <option
                                                 value="MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)">
-                                                Networking and Linkage-Building (External Relation; Business Membership
-                                                Organization)</option>
+                                                Networking and Linkage-Building (External Relation; Business Membership Organization)
+                                            </option>
+                                            <option value="MSME-GESI">GESI</option>
+                                            <option value="MSME-Social Environment & Climate">Social Environment & Climate</option>
+                                            <option value="MSME-Managing Natural Resources">Managing Natural Resources</option>
+                                        </optgroup>
+                                        <optgroup label="Individual Farmer ">
+                                            <option value="Individual Farmer-Managing Natural Resources">Managing Natural Resources</option>
+                                            <option value="Individual Farmer-Managing Finances">Managing Finances</option>
+                                            <option value="Individual Farmer-Marketing">Marketing</option>
+                                            <option value="Individual Farmer-Innovation">Innovation</option>
+                                            <option value="Individual Farmer-Teamwork">Teamwork</option>
+                                            <option value="Individual Farmer-GESI">GESI</option>
+                                            <option value="Individual Farmer-Social Environment & Climate">Social Environment & Climate</option>
                                         </optgroup>
                                     </select>
                                 </div>
                             </div>
-
+                
                             <!---2--->
                             <div class="x-row x-padding x-container">
                                 <div class="x-col l4 x-container x-padding">
-                                    <label>Topic Of Training</label>
-                                    <input class="form_data_b x-input x-border"
-                                        value="{{ row['cbb_topic_of_training'] }}" name="cbb_topic_of_training"
-                                        id="cbb_topic_of_training" type="text" placeholder="">
+                                    <label>Topic Of Training:</label>
+                                        <!-- <input type="text" id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple> -->
+                                        <select id="cbb_topic_of_training" name="cbb_topic_of_training[]" value="{{ row['cbb_topic_of_training'] }}" multiple>
+                                            <option selected>{{ row['cbb_topic_of_training'] }}</option>
+                                        </select>
                                 </div>
                                 <div class="x-col l4 x-container x-padding">
                                     <label class="">DIP-approved alignment</label>

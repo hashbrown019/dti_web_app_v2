@@ -12,7 +12,7 @@ def updateform4(request):
         cbb_implementing_unit = request.form['cbb_implementing_unit']
         cbb_activity_title = request.form['cbb_activity_title']
         cbb_types_of_training = request.form.get('cbb_types_of_training')
-        cbb_topic_of_training = request.form['cbb_topic_of_training']
+        cbb_topic_of_training =', '.join(request.form.getlist('cbb_topic_of_training[]') )
         cbb_dip_approved_alignment = request.form['cbb_dip_approved_alignment']
         cbb_name_of_dip = request.form['cbb_name_of_dip']
         cbb_date_start = request.form.get('cbb_date_start')
