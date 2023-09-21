@@ -122,7 +122,7 @@ class form_excel_a_handler:
 				else:
 					msg = "Corrupt File"
 					status = "failed"
-					println(e)
+					print(e)
 			# if(counter >= 3):
 			# 	break
 		print(" * Done excel process")
