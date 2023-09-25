@@ -16,7 +16,7 @@
 								<!-- {{shared_user}} -->
 								
 
-								{% if(cs_entry['status']=='posted' or user_data['job']=="Admin" or user_data['job']=="Super Admin") or user_data['id']|int== cs_entry['uploaded_by']|int %}
+								{% if(cs_entry['status']=='posted' or user_data['job']=="Admin" or user_data['job']=="Super Admin") or user_data['id']|int== cs_entry['USER_ID']|int %}
 									<div class=" __FILESDOCS__ col-sm-6 col-lg-4 mb-3" title="{{cs_entry['csIntro']}}">
 											{% if cs_entry["status"]=='pending' %}
 												{% set color_ = "warning" %}
