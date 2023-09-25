@@ -291,6 +291,7 @@ p {
 {% include "user_management.html" %}
 {% include "includes/menucards/editprofile.html" %}
 <center>
+
 <div class="w-50">
     <img src="../../static/webrepstatic/img/mis_2023_v2.svg" style="height: 150px;">
 </div>	
@@ -299,15 +300,21 @@ p {
     <div class="row justify-content-center ">
         <div class="col-md-8 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
             <div class="card border-0 shadow"><br>
-                <div class="d-flex flex-column align-items-center text-center">
-                {% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
-                <img src="\static\psalm_static\menu\img\profilepic.png" style="height: 200px; width: 200px; border: 5px solid #1F4F5A ;">
-                {% else: %}
-                  <img src="\api\user_pic\{{user_data['profilepic']}}" class="rounded-circle" style="height: 200px; width: 200px;  border: 5px solid #1F4F5A ;">
-                {%endif%}
+                <div class="d-flex flex-column align-items-center text-center" onmouseenter="hover_img(this)" onmouseleave="unhover_img(this)">
+                  <div class="qrs fadeIn" id="qrcode" style="display: none;"></div>
+                  
+                  {% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
+                    <img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn" style="height: 200px; width: 200px; border: 5px solid #1F4F5A ;">
+                    <span class="mb-0 texttheme" style="font-size: medium;">MIS{{user_data['id']}}</span>
+                    
+                  {% else: %}
+                    <img id="prof_imgs" src="\api\user_pic\{{user_data['profilepic']}}" class="fadeIn rounded-circle" style="height: 200px; width: 200px;  border: 5px solid #1F4F5A ;">
+                    <span class="mb-0 texttheme"style="font-size: medium;">MIS{{user_data['id']}}</span>
+
+                  {%endif%}
                 </div>
                 <div class="card-body p-1-9 p-xl-5">
-                    <div class="mb-4">
+                    <div class="mb-4" >
                         <h3 class="h4 mb-0 texttheme font-weight-bold">{{user_data['name']}}</h3>
                         <span class="text-primaryx">{{user_data['job']}} | {{user_data['rcu']}}</span>
                     </div>
@@ -525,10 +532,11 @@ p {
 
 <script>
 
-    {% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
+  {% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
 	$onload(profileconfirmation())
 	{% endif %}
 
+  
 
 </script>
       
@@ -556,5 +564,25 @@ p {
       </div>
     </div>
   </div>
+  
+  <script type="text/javascript">
+    var imgs = $ID('prof_imgs')
+    var qrs = $ID('qrcode')
+    var qr1 = new QRCode($ID("qrcode"), "MIS{{user_data['id']}}");
 
+    function hover_img(elem){
+      println(elem)
+    }
+    
+    function hover_img(elem){
+      imgs.style.display = 'none'
+      qrs.style.display = 'block'  
+    }
+    function unhover_img(elem){
+        imgs.style.display = 'block'
+        qrs.style.display = 'none'
+    }
+
+
+  </script>
 {% endblock %}
