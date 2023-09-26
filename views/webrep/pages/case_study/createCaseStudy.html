@@ -37,14 +37,18 @@
 
 <!-- Title -->
 	<div class="container d-flex justify-content-between text-start mt-5">
-		<div class="">
+		<div class="container">
 			<h5 class="display-5 texttheme" >Create Case Study</h5>
 			<input type="text" id="id" class="article_form form-control" value="" hidden style="border:0.1px">
 
 		</div>
-		
-		<div class="">
-			<button class="btn btn-outline-warning rounded-5" type="submit" id="donePrint"  onclick="print_cs()">View and Print</button>
+		<div class="container">
+			<span class="btn float-end" type="submit" id="donePrint"  onclick="print_cs()">
+				<span class="fa fa-print"></span>&nbsp;View and Print
+			</span>
+			<span class="btn float-end" type="submit" id="doneDocx"  onclick="docx_cs()">
+				<span class="fa fa-file"></span>&nbsp;Download Document
+			</span>
 		</div>
 		<div id="submit_btn_handler">
 			<button class="btn btn-outline-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate"  onclick="submit_article()">Submit</button>
@@ -141,7 +145,7 @@
 							</div>
 						</div>
 						<div class="col-3">
-							<input class="article_form form-control" id="csProductProducedDate" placeholder="Date Produce/Publish" rows="3"></input>
+							<input type="date" class="article_form form-control" id="csProductProducedDate" placeholder="Date Produce/Publish" rows="3"></input>
 							<div class="invalid-feedback">
 								Please provide a text content.
 							</div>
@@ -421,16 +425,10 @@
 
 	<script type="text/javascript">
 		function print_cs(){
-			// var ins = $CLASS('article_form')
-			// for (var i = ins.length - 1; i >= 0; i--) {
-			// 	ins[i].style["borderBottom"]="0px;"
-			// 	ins[i].style["borderTop"]="0px;"
-			// 	ins[i].style["borderLeft"]="0px;"
-			// 	ins[i].style["borderRight"]="0px;"
-			// 	ins[i].style["background-color"]="white"
-			// }
-			// print_page("print_docx")
-			goto('/rapid/case_study/printcs.html?ids='+URL_ARGS['ids'])
+			goto('/rapid/case_study/printcs.html?exec=print&ids='+URL_ARGS['ids'])
+		}
+		function docx_cs(){
+			goto('/rapid/case_study/printcs.html?exec=docx&ids='+URL_ARGS['ids'])
 		}
 
 		function submit_article(){
