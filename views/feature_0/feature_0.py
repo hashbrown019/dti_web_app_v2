@@ -67,19 +67,6 @@ class _main:
 				session["USER_DATA"][0]["rcu"] = setngs['chrcu'].replace("_"," ").upper()
 		pass
 
-	@app.route("/temp_",methods=["POST","GET"])
-	def temp_():
-		rapid_mysql.do('''
-			SET SESSION innodb_strict_mode=OFF;
-			ALTER TABLE `excel_import_form_a` ADD `v2_access_crop_insur_name_fsp_access` text NOT NULL AFTER `v2_workers_total_nonfam_male`;
-			ALTER TABLE `excel_import_form_a` ADD `v2_interv_capbuild` text NOT NULL AFTER `v2_access_crop_insur_name_fsp_access`;
-			ALTER TABLE `excel_import_form_a` ADD `v2_interv_expansion` text NOT NULL AFTER `v2_interv_capbuild`;
-			ALTER TABLE `excel_import_form_a` ADD `v2_interv_rehab` text NOT NULL AFTER `v2_interv_expansion`;
-			ALTER TABLE `excel_import_form_a` ADD `v2_interv_prod_inv` text NOT NULL AFTER `v2_interv_rehab`;
-			ALTER TABLE `excel_import_form_a` ADD `v2_interv_fmi` text NOT NULL AFTER `v2_interv_prod_inv`;
-		''')
-		return "ok"
-
 	@app.route("/settings/getsesh",methods=["POST","GET"])
 	def getsesh():
 		return session["USER_DATA"][0]

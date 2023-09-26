@@ -97,6 +97,7 @@ class _main:
 			page.lower()=="multimedia.html".lower() or 
 			page.lower()=="publication.html".lower()  or
 			page.lower()=="createCaseStudy.html".lower()  or
+			page.lower()=="printcs.html".lower()  or
 			page.lower()=="createPost.html".lower()
 			):
 			if(_main.is_on_session()):
