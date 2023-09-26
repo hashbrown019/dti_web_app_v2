@@ -312,6 +312,8 @@
 					println(resp)
 					var data = {}; var from_field = $CLASS('article_form')
 					for (var i = 0; i < from_field.length; i++) {
+						var _ID = from_field[i].id
+
 						try{
 							from_field[_ID].innerHTML = web_safe_decode(resp[_ID])
 						}catch(e){}
