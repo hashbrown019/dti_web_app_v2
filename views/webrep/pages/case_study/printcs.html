@@ -312,20 +312,6 @@
 					println(resp)
 					var data = {}; var from_field = $CLASS('article_form')
 					for (var i = 0; i < from_field.length; i++) {
-						var _ID = from_field[i].id
-						if(_ID=="id"){
-							$ID('id').value = resp[_ID]
-						}
-
-						if(resp['USER_ID'] !="{{user_data['id']}}"){
-							println("true")
-							$ID('submit_btn_handler').innerHTML = "";
-							from_field[_ID].disabled = true;
-							// from_field[_ID].style.border = "0px";
-							from_field[_ID].style["background-color"] = "white";
-
-						}
-
 						try{
 							from_field[_ID].innerHTML = web_safe_decode(resp[_ID])
 						}catch(e){}
