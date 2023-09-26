@@ -70,7 +70,7 @@ class form_excel_a_handler:
 						elif("Unsupported format, or corrupt file" in str(e)):
 							print("  --- ERROR in XLRD Parser (ignoring file [{}]) || {}".format(path,e))
 							self.move_to_failed_files(path)
-							msg = "Corrupt File"
+							msg = "Corrupt File \n {e}"
 							status = "failed"
 						else:
 							raise e
@@ -117,12 +117,13 @@ class form_excel_a_handler:
 				elif("Unsupported format, or corrupt file" in str(e)):
 					print("  --- ERROR in XLRD Parser (ignoring file [{}]) || {}".format(_NAME_,e))
 					self.move_to_failed_files(_NAME_)
-					msg = "Corrupt File"
+					msg = f"Corrupt File \n {e}"
 					status = "failed"
 				else:
-					msg = "Corrupt File"
+					msg = f"Corrupt File \n {e}"
 					status = "failed"
 					print(e)
+				# raise e
 			# if(counter >= 3):
 			# 	break
 		print(" * Done excel process")
