@@ -18,6 +18,8 @@ class _main:
 		super(_main, self).__init__()
 		self.arg = arg
 
+	def is_on_session(): return ('USER_DATA' in session)
+
 	@app.route("/login",methods=["POST","GET"])
 	def login():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
@@ -33,7 +35,10 @@ class _main:
 	def login_v2023():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		# return render_template("login_v2.html")
-		return _main.nlog()
+		if(_main.is_on_session()):
+			return redirect("/menuv2")
+		else:
+			return _main.nlog()
 
 	@app.route("/newlogin",methods=["POST","GET"])
 	def newlogin():
