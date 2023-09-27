@@ -35,6 +35,7 @@ from modules.Connections import mysql
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form1
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form2
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form3
+from views.dcf.spreadsheet import dcf_import_excel as importcsv_form4
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -383,6 +384,11 @@ def importcsvform2():
 def importcsvform3():
 	importcsv_form3.importcsvform3(request)
 	return redirect("/form3_dashboard")
+
+@app.route('/importcsvform4',methods = ['GET','POST'])
+def importcsvform4():
+	importcsv_form4.importcsvform4(request)
+	return redirect("/form4_dashboard")
 #-------------------------------------------------------------------------------
 
 
