@@ -32,6 +32,23 @@ def insert_form1(request):
         # form_1_date_of_uploading_to_ifad = request.form.get('form_1_date_of_uploading_to_ifad')
         # form_1_date_of_approval_to_ifad = request.form.get('form_1_date_of_approval_to_ifad')
         form_1_date_of_ifad_no_inssuance = request.form.get('form_1_date_of_ifad_no_inssuance')
+        total_large_enterprise = request.form.get('total_large_enterprise')
+        total_medium_enterprise = request.form.get('total_medium_enterprise')
+        total_small_enterprise = request.form.get('total_small_enterprise')
+        total_micro_enterprise = request.form.get('total_micro_enterprise')
+        form_1_totalmale= request.form.get('form_1_totalmale')
+        form_1_maleyouth = request.form.get('form_1_maleyouth')
+        form_1_maleip= request.form.get('form_1_maleip')
+        form_1_malepwd= request.form.get('form_1_malepwd')
+        form_1_totalfemale= request.form.get('form_1_totalfemale')
+        form_1_femaleyouth = request.form.get('form_1_femaleyouth')
+        form_1_femaleip= request.form.get('form_1_femaleip')
+        form_1_femalepwd= request.form.get('form_1_femalepwd')
+        form_1_totalyouth = request.form.get('form_1_totalyouth')
+        form_1_totalip = request.form.get('form_1_totalip')
+        form_1_totalpwd = request.form.get('form_1_totalpwd')
+        form_1_totalcooperatives = request.form.get('form_1_totalcooperatives')
+        form_1_totalassociations = request.form.get('form_1_totalassociations')
         form_1_totalmsme = request.form.get('form_1_totalmsme')
         form_1_total_farmerbene = request.form.get('form_1_total_farmerbene')
         form_1_totalfo = request.form.get('form_1_totalfo')
@@ -63,8 +80,8 @@ def insert_form1(request):
         form_1_fmi_kms = request.form.get('form_1_fmi_kms')
         # mov = file_from_request(None)
         # file_NAME_mov = mov._save_file_from_request(request,"mov",c.RECORDS+"objects/dcf_mov/",True,True)['file_arr_str']
-        form1_data = db.do("INSERT INTO dcf_prep_review_aprv_status  (upload_by,form_1_rcus,form_1_name_dip,form_1_anchor_firm,form_1_size_of_anchor,form_1_msmes,form_1_commodity,form_1_scope_provinces,form_1_for_development,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_totalhectarage_cov,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_euqipment,form_1_Facilities_warehouse,form_1_totalcost_prodinvest,form_1_total_rehab,form_1_total_exp,form_1_totalcost_prodinvest2,form_1_total_matching_grant,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_total_capbuild,form_1_supply_chain_manager,form_1_y,form_1_ac,form_1_ad,form_1_ae,form_1_totalproject_cost,form_1_fmi,form_1_fmi_kms) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')". 
-        format(upload_by,form_1_rcus,form_1_name_dip,form_1_anchor_firm,form_1_size_of_anchor,form_1_msmes,chosen_commodity,form_1_scope_provinces,form_1_for_development,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_totalhectarage_cov,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_euqipment,form_1_Facilities_warehouse,form_1_totalcost_prodinvest,form_1_total_rehab,form_1_total_exp,form_1_totalcost_prodinvest2,form_1_total_matching_grant,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_total_capbuild,form_1_supply_chain_manager,form_1_y,form_1_ac,form_1_ad,form_1_ae,form_1_totalproject_cost,form_1_fmi,form_1_fmi_kms))
+        form1_data = db.do("INSERT INTO dcf_prep_review_aprv_status  (upload_by,form_1_rcus,form_1_name_dip,form_1_anchor_firm,form_1_size_of_anchor,form_1_msmes,form_1_commodity,form_1_scope_provinces,form_1_for_development,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,total_large_enterprise,total_medium_enterprise,total_small_enterprise,total_micro_enterprise,form_1_totalmale,form_1_maleyouth,form_1_maleip,form_1_malepwd,form_1_totalfemale,form_1_femaleyouth,form_1_femaleip,form_1_femalepwd,form_1_totalyouth,form_1_totalip,form_1_totalpwd,form_1_totalcooperatives,form_1_totalassociations,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_totalhectarage_cov,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_euqipment,form_1_Facilities_warehouse,form_1_totalcost_prodinvest,form_1_total_rehab,form_1_total_exp,form_1_totalcost_prodinvest2,form_1_total_matching_grant,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_total_capbuild,form_1_supply_chain_manager,form_1_y,form_1_ac,form_1_ad,form_1_ae,form_1_totalproject_cost,form_1_fmi,form_1_fmi_kms) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')". 
+        format(upload_by,form_1_rcus,form_1_name_dip,form_1_anchor_firm,form_1_size_of_anchor,form_1_msmes,chosen_commodity,form_1_scope_provinces,form_1_for_development,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,total_large_enterprise,total_medium_enterprise,total_small_enterprise,total_micro_enterprise,form_1_totalmale,form_1_maleyouth,form_1_maleip,form_1_malepwd,form_1_totalfemale,form_1_femaleyouth,form_1_femaleip,form_1_femalepwd,form_1_totalyouth,form_1_totalip,form_1_totalpwd,form_1_totalcooperatives,form_1_totalassociations,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_totalhectarage_cov,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_euqipment,form_1_Facilities_warehouse,form_1_totalcost_prodinvest,form_1_total_rehab,form_1_total_exp,form_1_totalcost_prodinvest2,form_1_total_matching_grant,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_total_capbuild,form_1_supply_chain_manager,form_1_y,form_1_ac,form_1_ad,form_1_ae,form_1_totalproject_cost,form_1_fmi,form_1_fmi_kms))
         #return str(form5_data)
         # skkkrt = {}
         # for key in request.form:

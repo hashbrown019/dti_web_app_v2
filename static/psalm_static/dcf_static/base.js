@@ -102,6 +102,43 @@ $(document).ready(function() {
 	}
 });
 
+    function calculateTotaltable() {
+        const largeEnterprise = parseInt($('#total_large_enterprise').val()) || 0;
+        const mediumEnterprise = parseInt($('#total_medium_enterprise').val()) || 0;
+        const smallEnterprise = parseInt($('#total_small_enterprise').val()) || 0;
+        const microEnterprise = parseInt($('#total_micro_enterprise').val()) || 0;
+		const totalMale = parseInt($('#form_1_totalmale').val()) || 0;
+        const totalFemale = parseInt($('#form_1_totalfemale').val()) || 0;
+        const maleYouth = parseInt($('#form_1_maleyouth').val()) || 0;
+        const femaleYouth = parseInt($('#form_1_femaleyouth').val()) || 0;
+		const maleIp = parseInt($('#form_1_maleip').val()) || 0;
+        const femaleIp = parseInt($('#form_1_femaleip').val()) || 0;
+		const malePwd = parseInt($('#form_1_malepwd').val()) || 0;
+        const femalePwd = parseInt($('#form_1_femalepwd').val()) || 0;
+		const totalcoop = parseInt($('#form_1_totalcooperatives').val()) || 0;
+        const totalassoc = parseInt($('#form_1_totalassociations').val()) || 0;
+
+        const total = largeEnterprise + mediumEnterprise + smallEnterprise + microEnterprise;
+        const totalFarmerBene = totalMale + totalFemale;
+		const totalYouth = maleYouth + femaleYouth;
+		const totalIp = maleIp + femaleIp;
+		const totalPwd = malePwd + femalePwd;
+		const totalfo = totalcoop + totalassoc;
+
+        $('#form_1_totalmsme').val(total);
+        $('#form_1_total_farmerbene').val(totalFarmerBene);
+		$('#form_1_totalyouth').val(totalYouth);
+        $('#form_1_totalip').val(totalIp);
+        $('#form_1_totalpwd').val(totalPwd);
+        $('#form_1_totalfo').val(totalfo);
+
+
+    }
+
+    $('#total_large_enterprise, #total_medium_enterprise, #total_small_enterprise, #total_micro_enterprise,#form_1_totalmale, #form_1_totalfemale,#form_1_maleyouth, #form_1_femaleyouth,#form_1_maleip, #form_1_femaleip,#form_1_malepwd, #form_1_femalepwd,#form_1_totalcooperatives,#form_1_totalassociations').on('input', calculateTotaltable);
+
+    calculateTotaltable();
+
 
 
 $(document).ready(function() {
