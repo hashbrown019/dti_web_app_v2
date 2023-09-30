@@ -192,6 +192,15 @@ class _main:
 		_res['data'] = data
 		return _res
 
+	@app.route("/form_a/del_profile",methods=["POST","GET"])
+	def del_profile():
+		if(_main.is_on_session()):
+			ids = request.form["id"]
+			delid = rapid_mysql.do("DELETE FROM `excel_import_form_a` WHERE `id`='{}'; ".format(ids))
+			return {"id":delid}
+		else:
+			return redirect("/login?force_url=1")
+
 def _filter(area):
 	_filter =""
 	if(area.lower() == "all"):

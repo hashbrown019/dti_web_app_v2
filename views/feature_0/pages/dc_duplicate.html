@@ -28,7 +28,9 @@
 
 		<script type="text/javascript">
 			var duplicate_modal = undefined
-			function start_scan_dup(){
+			var DUPLICATE_DATA = undefined
+
+			function start_scan_dup(last_name_del){
 				$ID("dup_loading").innerHTML = "Loading please wait"
 				$ID("dup_res").innerHTML = ""
 				$ID('dup_excess').innerHTML =""
@@ -38,6 +40,7 @@
 					method : POST,
 					func : function(_r){
 						var res = JSON.parse(_r)
+						DUPLICATE_DATA = res
 						var total_excess = 0
 						for (var i = 0; i < res.length; i++) {
 							total_excess+=res[i]['length']
@@ -60,7 +63,7 @@
 								View Duplicate Results
 							</button>
 						`)
-						create_modal_duplicates(res)
+						create_modal_duplicates(res,last_name_del)
 					},
 					progress : function(e){
 						// var response_length = parseFloat(headerMap(e)['total'])
@@ -82,13 +85,14 @@
 				})
 			}
 
-			function create_modal_duplicates(res_){
+			function create_modal_duplicates(res_,last_name_del){
 				var out_dup = ""
 				for (var i = 0; i < res_.length; i++) {
 					var in_dup = ""
 					for (var x = 0; x < res_[i].length; x++) {
+						var LAST_NAME_SEL_DEL = res_[i][x]['name'].replaceAll(" ","").toLowerCase().replaceAll(/[^a-zA-Z0-9 ]/g,"")
 						in_dup +=(`
-							<div class="x-row x-leftbar x-hover-border-red x-hover-pale-red">
+							<div id="record_`+res_[i][x]['db_id']+`" class="x-row x-leftbar x-hover-border-red x-hover-pale-red">
 								<div class='x-col m10 l10'>
 									&nbsp;
 									<b>`+res_[i][x]['name']+`</b> |
@@ -101,7 +105,7 @@
 									<i class='x-tiny'>`+res_[i][x]['ref_code']+`</i></span>
 								</div>
 								<div class='x-col m2 l2'>
-									<button class='x-right x-btn x-red x-hover-black x-round-large' onclick="del_dup_entry('`+res_[i][x]['db_id']+`','`+res_[i][x]['ref_code']+`')">
+									<button class='x-right x-btn x-red x-hover-black x-round-large' onclick="del_dup_entry('`+LAST_NAME_SEL_DEL+`','`+res_[i][x]['name']+`','`+res_[i][x]['db_id']+`','`+res_[i][x]['ref_code']+`')">
 										<span class='fa fa-trash'></span>
 									</button>
 									<button class='x-right x-btn x-blue x-hover-black x-round-large' onclick="form_a_forms('`+res_[i][x]['db_id']+`','`+res_[i][x]['ref_code']+`')">
@@ -112,7 +116,7 @@
 						`)
 					}
 					out_dup +=(`
-						<div class="x-container x-padding" style='padding-bottom:10px;'>
+						<div id="gr_`+LAST_NAME_SEL_DEL+`" class="x-container x-padding" style='padding-bottom:10px;'>
 							<div class="x-container">`+in_dup+`</div>
 						</div>
 					`)
@@ -123,19 +127,56 @@
 					subtitle : "Below are the list of records having a duplicates of two ore more",
 					content : $ID('dup_modal').innerHTML
 				})
+				view_duplicates()
+				try{
+					// window.find("last_name_del")
+					$ID("gr_"+last_name_del).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+					println(last_name_del)
+				}catch(e){
+					warnprintln(e)
+				}
 			}
 
 			function view_duplicates(){
+				println("view_duplicates")
 				duplicate_modal.dialog.style.width = "75vw";
 				duplicate_modal.show()
 			}
 
-			function del_dup_entry(ids,ref_num){
-				$dialog({
-					title : "Delete Duplicated Entry",
+			var del_diag ;
+			function del_dup_entry(last_name_del,name,ids,ref_num){
+				del_diag = $dialog({
+					title : "Delete Duplicated Entry ID ; "+ids,
 					type : 'warning',
 					subtitle : "You are about to delete one of the duplicate of an entry. Proceed with precautions",
-					content : (`<h3>This feature is under development and will available Soon, Stay tuned</h3>`)
-				}).show()
+					content : (`
+						Name : <b>`+name+`</b><br>
+						DatabaseID : <b>`+ids+`</b><br>
+						Ref Code/ File : <b>`+ref_num+`</b><br>
+					`),
+					buttons : ["Delete Record  <span class='fa fa-trash'></span>"],
+					buttons_actions: [function(){
+						confirm_del(ids,last_name_del)
+					}]
+				})
+				del_diag.elem_buttons()[0].classList.remove("x-green")
+				del_diag.elem_buttons()[0].classList.add("x-red")
+				println(del_diag.elem_buttons()[0])
+				del_diag.show()
+				println("last_name_del = "+last_name_del)
+			}
+
+			function confirm_del(ids,last_name_del){
+				$send({
+					action :"/form_a/del_profile",
+					data : $DATA({"id":ids}),
+					method : POST,
+					func : function(res){
+						println(res)
+						del_diag.destroy()
+						duplicate_modal.destroy()
+						start_scan_dup(last_name_del)
+					}
+				})
 			}
 		</script>
