@@ -645,6 +645,8 @@
 					</table>
 				</div>
 
+				
+
 				<div class="x-row x-container x-padding">
 					<style>
 						table,
@@ -686,7 +688,7 @@
 									placeholder="" readonly></td>
 							<td><input class="x-input x-border form1_sup" id="form_1_ad" name="form_1_ad" type="number"
 									placeholder="" readonly></td>
-									<td><input class="x-input x-border form1_sup" id="form1_total_fmi" name="form1_total_fmi" type="number"
+									<td><input class="x-input x-border" id="form1_total_fmi" name="form1_total_fmi" type="number"
 										placeholder=""></td>
 							<td><input class="x-input x-border form-1-totalproject_cost" id="form_1_totalproject_cost"
 									name="form_1_totalproject_cost" placeholder="" readonly></td>
@@ -694,6 +696,93 @@
 					</table>
 				</div>
 
+				<div class="x-container x-padding ">
+		
+					<table class="x-table x-container x-table-border">
+						<tr>
+							<th colspan="5">
+								<center>Total Partner Counterpart</center>
+							</th>
+						</tr>
+
+						<tr>
+							<td>
+								<center>Matching Grants</center>
+							</td>
+							<td>
+								<center>Capacity Building</center>
+							</td>
+							<td>
+								<center>Supply Chain Manager</center>
+							</td>
+							<td>
+								<center>FMI</center>
+							</td>
+							<td>
+								<center>Total</center>
+							</td>
+						</tr>
+
+						<tr>
+							<td><input class="x-input x-border" id="partner_counterpart_MG" name="partner_counterpart_MG" type="number"
+									placeholder=""></td>
+							<td><input class="x-input x-border" id="partner_counterpart_CB" name="partner_counterpart_CB" type="number"
+									placeholder=""></td>
+							<td><input class="x-input x-border" id="partner_counterpart_SCM" name="partner_counterpart_SCM" type="number"
+									placeholder=""></td>
+									<td><input class="x-input x-border" id="partner_counterpart_FMI" name="partner_counterpart_FMI" type="number"
+										placeholder=""></td>
+										<td><input class="x-input x-border" id="partner_counterpart_total" name="partner_counterpart_total" type="number"
+											placeholder="" readonly></td>
+										
+							
+						</tr>
+					</table>
+				</div>
+
+				<div class="x-container x-padding ">
+		
+					<table class="x-table x-container x-table-border">
+						<tr>
+							<th colspan="5">
+								<center>Total DIP Cost (Project + Partner Counterpart)</center>
+							</th>
+						</tr>
+
+						<tr>
+							<td>
+								<center>Matching Grants</center>
+							</td>
+							<td>
+								<center>Capacity Building</center>
+							</td>
+							<td>
+								<center>Supply Chain Manager</center>
+							</td>
+							<td>
+								<center>FMI</center>
+							</td>
+							<td>
+								<center>Total</center>
+							</td>
+						</tr>
+
+						<tr>
+							<td><input readonly class="x-input x-border" id="total_dip_cost_MG" name="total_dip_cost_MG" type="number"
+									placeholder=""></td>
+							<td><input readonly class="x-input x-border" id="total_dip_cost_CB" name="total_dip_cost_CB" type="number"
+									placeholder=""></td>
+							<td><input readonly class="x-input x-border" id="total_dip_cost_SCM" name="total_dip_cost_CM" type="number"
+									placeholder=""></td>
+									<td><input readonly class="x-input x-border" id="total_dip_cost_FMI" name="total_dip_cost_FMI" type="number"
+										placeholder=""></td>
+										<td><input readonly class="x-input x-border" id="total_dip_cost_total" name="total_dip_cost_total" type="number"
+											placeholder=""></td>
+										
+							
+						</tr>
+					</table>
+				</div>
 
 				
 			
@@ -728,12 +817,15 @@
 	for (let index = 0; index < x_inputs_.length; index++) {
 		if (x_inputs_[index].id != 'form_1_totalproject_cost') {
 			x_inputs_[index].addEventListener('keyup', function (ee) {
-				var num1 = parseFloat($ID("form_1_y").value); var num2 = parseFloat($ID("form_1_ac").value); var num3 = parseFloat($ID("form_1_ad").value)
+				var num1 = parseFloat($ID("form_1_y").value); 
+				var num2 = parseFloat($ID("form_1_ac").value); 
+				var num3 = parseFloat($ID("form_1_ad").value); 
+				var num4 = parseFloat($ID("form1_total_fmi").value)
 				if (isNaN(num1)) { num1 = 0 }
 				if (isNaN(num2)) { num2 = 0 }
 				if (isNaN(num3)) { num3 = 0 }
-				println(num3)
-				$ID('form_1_totalproject_cost').value = num1 + num2 + num3
+				if (isNaN(num4)) { num4 = 0 }
+				$ID('form_1_totalproject_cost').value = num1 + num2 + num3 + num4
 
 			})
 		}
