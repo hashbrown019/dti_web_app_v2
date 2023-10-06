@@ -211,13 +211,13 @@
                                     </table>
                                 </div>
 
-                                <div class="x-col l4 x-container x-padding">
+                                <!-- <div class="x-col l4 x-container x-padding">
                                     <label>Total Number of Participants</label>
                                     <input class="form_data_b x-input x-border"
                                         value="{{ row['cbb_total_number_of_participants'] }}"
                                         name="cbb_total_number_of_participants" id="cbb_total_number_of_participants"
                                         type="Number" placeholder="Input Number">
-                                </div>
+                                </div> -->
 
                                 <div class="x-col l3 x-container x-padding">
                                     <label class="">Commodity</label>
@@ -286,7 +286,7 @@
                                     <table class="x-table x-container x-table-border">
                                         <tr>
                                             <th>
-                                                <center>RAPID Actual Budget</center>
+                                                <center><span style="color: #007399;" class="tool" data-tip="Enter amount utilized for the conduct of activities without comma (ex. 500000)." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> RAPID Actual Budget</center>
                                             </th>
                                             <th colspan="2">
                                                 <center>DIP Capbuild Activities fully & partially funded by partners
@@ -294,7 +294,7 @@
                                             </th>
                                         </tr>
                                         <td>
-                                            <center>Actual (CY 2022 Onwards e.g., 34,000.00)</center>
+                                            <center>Actual</center>
                                         </td>
                                         <td>
                                             <center>Name of Partner/Organization</center>
@@ -419,6 +419,91 @@
                                                     id="cbb_total_number_per_sector_total"
                                                     value="{{ row['cbb_total_number_per_sector_total'] }}" type="text"
                                                     name="cbb_total_number_per_sector_total"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="x-container x-padding">
+                                    <style>
+                                        table,
+                                        th,
+                                        td {
+                                            border: 1px solid black;
+                                            border-collapse: collapse;
+                                        }
+                                    </style>
+                                    <table class="x-table x-container x-table-border">
+                                        <tr>
+                
+                                            <th colspan="6">
+                                                <center>PArticipants by sex per sector</center>
+                                            </th>
+                
+                
+                                        </tr>
+                
+                                        <tr>
+                
+                                            <td>
+                                                <center>Sex</center>
+                                            </td>
+                                            <td>
+                                                <center>IP</center>
+                                            </td>
+                
+                                            <td>
+                                                <center>Youth</center>
+                                            </td>
+                                            <td>
+                                                <center>PWD</center>
+                                            </td>
+                                            <td>
+                                                <center>SC</center>
+                                            </td>
+                                            <td>
+                                                <center>Total</center>
+                                            </td>
+                
+                
+                
+                                        </tr>
+                
+                                        <tr>
+                                            <td><center>Male</center></td>
+                                            <td><input class="form_data_b x-light-grey x-input" id="cbb_male_ip"
+                                                    type="text" value="{{ row['cbb_male_ip'] }}" name="cbb_male_ip"></td>
+                
+                                            <td><input class="form_data_b x-light-grey x-input" id="cbb_male_youth"
+                                                    type="text" value="{{ row['cbb_male_youth'] }}" name="cbb_male_youth"></td>
+                                            <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_male_pwd'] }}"
+                                                    id="cbb_male_pwd" type="text"
+                                                    name="cbb_male_pwd"></td>
+                                                    <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_male_sc'] }}"
+                                                        id="cbb_male_sc" type="text"
+                                                        name="cbb_male_sc"></td>
+                                                        <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_male_total'] }}"
+                                                            id="cbb_male_total" type="text"
+                                                            name="cbb_male_total"></td>
+                
+                
+                                        </tr>
+                                        <tr>
+                                            <td><center>Female</center></td>
+                                            <td><input class="form_data_b x-light-grey x-input" id="cbb_female_ip" value="{{ row['cbb_female_ip'] }}"
+                                                    type="text" name="cbb_female_ip"></td>
+                
+                                            <td><input class="form_data_b x-light-grey x-input" id="cbb_female_youth" value="{{ row['cbb_female_youth'] }}"
+                                                    type="text" name="cbb_female_youth"></td>
+                                            <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_female_pwd'] }}"
+                                                    id="cbb_female_pwd" type="text"
+                                                    name="cbb_female_pwd"></td>
+                                                    <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_female_sc'] }}"
+                                                        id="cbb_female_sc" type="text"
+                                                        name="cbb_female_sc"></td>
+                                                        <td><input class="form_data_b x-light-grey x-input" value="{{ row['cbb_female_total'] }}"
+                                                            id="cbb_female_total" type="text"
+                                                            name="cbb_female_total"></td>
+                
+                
                                         </tr>
                                     </table>
                                 </div>

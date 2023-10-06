@@ -90,6 +90,23 @@ $(document).ready(function(){
 		});  
 });
 
+$(document).ready(function(){
+	$(".hidden-textbox3").hide();
+	
+	$("select#form_3_types_of_bdsp").change(function(){
+			var currentVal = $(this).val();
+			var hiddenTextbox = $(".hidden-textbox3");
+			
+			if (currentVal == "Organization/Firm") {
+					hiddenTextbox.show();
+					hiddenTextbox.prop("required", true); 
+			} else {
+					hiddenTextbox.hide();
+					hiddenTextbox.prop("required", false);
+			}
+	});  
+});
+
 $(document).ready(function() {
 	$(".form1_mg, .form1_cap, .form1_sup").on("input", updateTotalProjectCost);
 
@@ -117,6 +134,11 @@ $(document).ready(function() {
         const femalePwd = parseInt($('#form_1_femalepwd').val()) || 0;
 		const totalcoop = parseInt($('#form_1_totalcooperatives').val()) || 0;
         const totalassoc = parseInt($('#form_1_totalassociations').val()) || 0;
+		const hectrehab = parseInt($('#form_1_hect_rehab').val()) || 0;
+		const hectexp = parseInt($('#form_1_hect_exp').val()) || 0;
+		const partcounter = parseInt($('#form_1_partners_counterpart').val()) || 0;
+		const totalproj = parseInt($('#form_1_total_matching_grant').val()) || 0;
+
 
         const total = largeEnterprise + mediumEnterprise + smallEnterprise + microEnterprise;
         const totalFarmerBene = totalMale + totalFemale;
@@ -124,6 +146,10 @@ $(document).ready(function() {
 		const totalIp = maleIp + femaleIp;
 		const totalPwd = malePwd + femalePwd;
 		const totalfo = totalcoop + totalassoc;
+		const hectcovered = hectrehab + hectexp;
+		const mgcost = partcounter + totalproj;
+
+
 
         $('#form_1_totalmsme').val(total);
         $('#form_1_total_farmerbene').val(totalFarmerBene);
@@ -131,11 +157,15 @@ $(document).ready(function() {
         $('#form_1_totalip').val(totalIp);
         $('#form_1_totalpwd').val(totalPwd);
         $('#form_1_totalfo').val(totalfo);
+        $('#form_1_totalhectarage_cov').val(hectcovered);
+        $('#form1_total_mg_cost').val(mgcost);
+
+
 
 
     }
 
-    $('#total_large_enterprise, #total_medium_enterprise, #total_small_enterprise, #total_micro_enterprise,#form_1_totalmale, #form_1_totalfemale,#form_1_maleyouth, #form_1_femaleyouth,#form_1_maleip, #form_1_femaleip,#form_1_malepwd, #form_1_femalepwd,#form_1_totalcooperatives,#form_1_totalassociations').on('input', calculateTotaltable);
+    $('#total_large_enterprise, #total_medium_enterprise, #total_small_enterprise, #total_micro_enterprise,#form_1_totalmale, #form_1_totalfemale,#form_1_maleyouth, #form_1_femaleyouth,#form_1_maleip, #form_1_femaleip,#form_1_malepwd, #form_1_femalepwd,#form_1_totalcooperatives,#form_1_totalassociations,#form_1_hect_rehab,#form_1_hect_exp,#form_1_partners_counterpart,#form_1_total_matching_grant').on('input', calculateTotaltable);
 
     calculateTotaltable();
 
