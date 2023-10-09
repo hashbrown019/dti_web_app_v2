@@ -82,10 +82,9 @@
                                     </select>
                                 </div>
 
-                                <div class="x-col l3 x-container x-padding">
-                                    <label>Activity Title</label>
-                                    <input class="form_data_b x-input x-border" value="{{ row['cbb_activity_title'] }}"
-                                        name="cbb_activity_title" id="cbb_activity_title" type="text" placeholder="">
+                                <div class="x-col l3 x-padding x-container">
+                                    <label><span style="color: #007399;" class="tool" data-tip="Provide full activity title based on approved activity proposal." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Activity Title:</label>
+                                    <input class="form_data_b x-input x-border" name="cbb_activity_title" id="cbb_activity_title" value="{{ row['cbb_activity_title'] }}" type="text" placeholder="">
                                 </div>
                                 <div class="x-col l6 x-container x-padding">
                                     <label class="">Types of Training:</label>
@@ -145,11 +144,9 @@
                             <!---2--->
                             <div class="x-row x-padding x-container">
                                 <div class="x-col l4 x-container x-padding">
-                                    <label>Topic Of Training:</label>
+                                    <label>Topic Of Training: <span style="color: #007399;" class="tool" data-tip="Choose topic of training in options (you can select multiple). If you select 'GESI,' 'Social Environment & Climate,' or 'Managing Natural Resources' in Types of Training, you can type the topic of training and press 'Enter' ." tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  </label>
                                         <!-- <input type="text" id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple> -->
-                                        <select id="cbb_topic_of_training" name="cbb_topic_of_training[]" value="{{ row['cbb_topic_of_training'] }}" multiple>
-                                            <option selected>{{ row['cbb_topic_of_training'] }}</option>
-                                        </select>
+                                    <select id="cbb_topic_of_training" value="{{ row['cbb_topic_of_training'] }}" name="cbb_topic_of_training[]" multiple></select>
                                 </div>
                                 <div class="x-col l4 x-container x-padding">
                                     <label class="">DIP-approved alignment</label>
@@ -163,11 +160,8 @@
                                     </select>
                                 </div>
                                 <div class="x-col l4 x-container x-padding">
-                                    <label class="">Name of DIPs</label>
-                                    <input class="form_data_b x-input x-border" name="cbb_name_of_dip"
-                                        value="{{ row['cbb_name_of_dip'] }}" id="cbb_name_of_dip" type="text"
-                                        placeholder="">
-
+                                    <label> <span style="color: #007399;" class="tool" data-tip="DIP name format: Region<space>DIP Name (ex. R8 SC Global)." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Name of DIPs:</label>
+                                    <input class="form_data_b x-input x-border" name="cbb_name_of_dip" id="cbb_name_of_dip" value="{{ row['cbb_name_of_dip'] }}" type="text" placeholder="">
                                 </div>
                             </div>
 

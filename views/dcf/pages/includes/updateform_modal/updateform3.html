@@ -45,20 +45,16 @@
                                     <option>Organization/Firm</option>
                                     <option>Individual</option>
                                 </select>
-                                <input type="text" class="hidden-textbox3 x-input x-border" name="form_3_orgfirm"
-                    id="form_3_orgfirm" placeholder="Full Name of Organization/Firm (based on official business registration)">
+                                <input type="text" class="hidden-textbox3 x-input x-border" name="form_3_orgfirm" id="form_3_orgfirm" placeholder="Full Name of Organization/Firm (based on official business registration)">
                             </div>
 
-                            <div class="x-col l4 x-padding x-container">
-                                <label>Contact Person</label>
-                                <input class=" x-input x-border" value="{{ row['form_3_contact_person'] }}"
-                                    id="form_3_contact_person" name="form_3_contact_person" type="text" placeholder="">
+                            <div class="x-col l4 x-container x-padding">
+                                <label><span style="color: #007399;" class="tool" data-tip="Provide Full name. (example: Juan C. Dela Cruz)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>   Contact Person:</label>
+                                <input class=" x-input x-border" id="form_3_contact_person" value="{{ row['form_3_contact_person'] }}" name="form_3_contact_person" type="text" placeholder="">
                             </div>
-
                             <div class="x-col l3 x-container x-padding">
                                 <label class="">Sex</label>
-                                <select class=" x-border x-select x-border" id="form_3_sex"
-                                    value="{{ row['form_3_sex'] }}" name="form_3_sex"><br>
+                                <select class=" x-border x-select x-border" id="form_3_sex" value="{{ row['form_3_sex'] }}" name="form_3_sex"><br>
                                     <option>{{ row['form_3_sex'] }}</option>
                                     <option>Male</option>
                                     <option>Female</option>
@@ -68,23 +64,19 @@
 
                         <!---row2--->
                         <div class="x-row x-container x-padding">
-                            <div class="x-col l6 x-container x-padding">
-                                <label>Office/Main Address:</label>
-                                <input class=" x-input x-border" id="form_3_office_addr"
-                                    value="{{ row['form_3_office_addr'] }}" name="form_3_office_addr" type="text"
-                                    placeholder="">
+                            <div class="x-col l5 x-container x-padding">
+                                <label><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  Office/Main Address:</label>
+                                <input class=" x-input x-border" id="form_3_office_addr" value="{{ row['form_3_office_addr'] }}" name="form_3_office_addr" type="text" placeholder="">
                             </div>
-                            <div class="x-col l6 x-container x-padding">
-                                <label for="email">Email Address:</label><br>
-                                <input class="x-email x-border x-padding" size="33" id="form_3_email"
-                                    value="{{ row['form_3_email'] }}" name="form_3_email" autocomplete="on">
+
+                            <div class="x-col l5 x-container x-padding">
+                                <label for="email"><span style="color: #007399;" class="tool" data-tip="Provide valid Email Address" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  Email Address:</label><br>
+                                <input class="x-email x-border x-padding" size="33" id="form_3_email" value="{{ row['form_3_email'] }}" name="form_3_email" autocomplete="on">
                             </div>
+
                             <div class="x-col l9 x-container x-padding">
-                                <label class="">Brief Description of Company, Institution and/or Consultant
-                                    Background</label>
-                                <textarea class="comment x-border" id="form_3_breif_description"
-                                    name="form_3_breif_description" placeholder="Write here" type="text"
-                                    style="resize: both; height: 100px; width: 550px;"> {{ row['form_3_breif_description'] }}</textarea>
+                                <label class=""><span style="color: #007399;" class="tool" data-tip="Provide brief description" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  Brief Description of Company, Institution and/or Consultant Background:</label>
+                                <textarea class="comment x-border" id="form_3_breif_description" value="{{ row['form_3_breif_description'] }}" name="form_3_breif_description" placeholder="Write here" type="text" style="resize: both; height: 100px; width: 550px;"></textarea>
                             </div>
 
                             <div class="x-col l4 x-container x-padding">
@@ -154,60 +146,47 @@
                             </div>
 
                             <div class="x-row x-container x-padding">
-                                <style>
-                                    table,
-                                    th,
-                                    td {
+                                    <style>
+                                        table,
+                                        th,
+                                        td {
                                         border: 1px solid black;
                                         border-collapse: collapse;
-                                    }
-                                </style>
-                                <table id="form3_table_org_comp_update{{row['id']}}"
-                                    class="x-table x-container x-table-border">
-                                    <thead>
-                                        <tr>
-                                            <th collabel="2">
-                                                <center>BDSP Team Composition</center>
-                                            </th>
-                                            <th>
-                                                <center>
-                                                    <button type="button" class="btn btn-primary"
-                                                        onclick='add_row("{{row.id}}")'><i
-                                                            class="fa-solid fa-circle-plus"></i>&nbsp; Add</button>
-                                                </center>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <center>Name</center>
-                                            </td>
-                                            <td>
-                                                <center>Education</center>
-                                            </td>
-                                            <td>
-                                                <center>Expertise</center>
-                                            </td>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody id="update_table_">
-                                        {% set list1 = row['form_3_name'].split(',') %}
-                                        {% for index in range(list1|length) %}
-                                        <tr>
-                                            <td><input class="  x-input"
-                                                    value="{{ row['form_3_name'].split(',')[index] }}" type="text"
-                                                    name="form_3_name[]"></td>
-                                            <td><input class="  x-input"
-                                                    value="{{ row['form_3_education'].split(',')[index] }}" type="text"
-                                                    name="form_3_education[]"></td>
-                                            <td><input class="  x-input"
-                                                    value="{{ row['form_3_expertise'].split(',')[index] }}" type="text"
-                                                    name="form_3_expertise[]"></td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-
-                                </table>
+                                        }
+                                    </style>
+                                    <table id="form3_table_org_comp" class="x-table x-container x-table-border">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">
+                                                    <center>BDSP Team Composition</center>
+                                                </th>
+                                                <th colspan>
+                                                    <center>
+                                                    <button type="button" class="btn btn-primary" onclick="add_row()"><i
+                                                    class="fa-solid fa-circle-plus"></i>&nbsp; Add</button>
+                                                    </center>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <center>Name</center>
+                                                </td>
+                                                <td>
+                                                    <center>Education</center>
+                                                </td>
+                                                <td>
+                                                    <center>Expertise</center>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                            <tbody id="main_">
+                                                <tr id="main_row">
+                                                    <td><input class=" x-light-grey x-input" value="{{ row['form_3_preferred_province'] }}" type="text" name="form_3_name[]"></td>
+                                                    <td><input class=" x-light-grey x-input" value="{{ row['form_3_preferred_province'] }}" type="text" name="form_3_education[]"></td>
+                                                    <td><input class=" x-light-grey x-input" value="{{ row['form_3_preferred_province'] }}" type="text" name="form_3_expertise[]"></td>
+                                                </tr>
+                                            </tbody>
+                                    </table>
                             </div>
                         </div>
 
@@ -244,10 +223,8 @@
                             <input class=" x-input x-border" id="form_3_date_registered" value="{{ row['form_3_date_registered'] }}" name="form_3_date_registered" type="date" placeholder="">
                         </div> -->
                             <div class="x-col l4 x-container x-padding">
-                                <label>RAPID Implementing Unit</label>
-                                <input class=" x-input x-border" id="form_3_rapid_implementing_unit"
-                                    value="{{ row['form_3_rapid_implementing_unit'] }}"
-                                    name="form_3_rapid_implementing_unit" type="text" placeholder="">
+                                <label><span style="color: #007399;" class="tool" data-tip="Provide name of RCU/PCU. (example: For Region: RCU 8 , For Province: PCU leyte)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> RAPID Implementing Unit:</label>
+                                <input class=" x-input x-border" id="form_3_rapid_implementing_unit" value="{{ row['form_3_rapid_implementing_unit'] }}" name="form_3_rapid_implementing_unit" type="text" placeholder="">
                             </div>
                             <div class="x-col l3 x-container x-padding">
                                 <label class="">Type/Nature of Engagements</label>
@@ -264,17 +241,12 @@
                         </div>
                         <div class="x-row x-container x-padding">
                             <div class="x-col l7 x-container x-padding">
-                                <label class="">Suppliers' Evaluation (Refer to ISO/Procurement ratings)</label>
-                                <textarea class=" x-border x-input" id="form_3_suppliers_evaluation"
-                                    value="{{ row['form_3_suppliers_evaluation'] }}" placeholder="Write here"
-                                    type="text" name="form_3_suppliers_evaluation"></textarea>
+                                <label class=""><span style="color: #007399;" class="tool" data-tip="Refer to ISO Procurement ratings" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Suppliers' Evaluation (Refer to ISO/Procurement ratings):</label>
+                                <textarea class=" x-border x-input" id="form_3_suppliers_evaluation" value="{{ row['form_3_suppliers_evaluation'] }}" placeholder="Write here" type="text" name="form_3_suppliers_evaluation"></textarea>
                             </div>
                             <div class="x-col l7 x-container x-padding">
-                                <label class="">other engagement outside RAPID</label>
-                                <textarea class=" x-border x-input" id="form_3_other_engagement_outside_rapid"
-                                    value="{{ row['form_3_other_engagement_outside_rapid'] }}"
-                                    name="form_3_other_engagement_outside_rapid" placeholder="Write here"
-                                    type="text"></textarea>
+                                <label class=""><span style="color: #007399;" class="tool" data-tip="Format: Agency, Title of Activity, Date and Venue (example: Dept. of Agriculture, Cacao Planting Techniques, January 10-12,2023, Davao City) For multiple entries put numbering." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Other engagement outside RAPID:</label>
+                                <textarea class=" x-border x-input" id="form_3_other_engagement_outside_rapid" value="{{ row['form_3_other_engagement_outside_rapid'] }}" name="form_3_other_engagement_outside_rapid" placeholder="Write here" type="text"></textarea>
                             </div>
                         </div>
 
