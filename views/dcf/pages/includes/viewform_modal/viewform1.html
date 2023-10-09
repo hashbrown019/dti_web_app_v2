@@ -42,10 +42,10 @@
                                 <div class="x-padding">
 
                                     <div class="x-col l4 x-container x-padding">
-                                        <input type="hidden" name="id" value="{{ row['id'] }}">
+                                        <input type="hidden" name="id" disabled value="{{ row['id'] }}">
                                         <label class="">RCUs</label>
                                         <select class="form_data_b x-border x-select x-border" id="form_1_rcus"
-                                            name="form_1_rcus" disabled><br>
+                                            name="form_1_rcus" ><br>
                                             <option>{{ row['form_1_rcus'] }}</option>
                                             <option value="8">Region Vlll - Eastern Visayas</option>
                                             <option value="9">Region lX - Zamboanga Peninsula</option>
@@ -58,19 +58,19 @@
                                     </div>
                                     <!--  <div class="x-col l4 x-container x-padding">
                                         <label>Number Of DIPs</label>
-                                        <input class=" x-input x-border" id="form_1_number_of_dips" value="{{ row['form_1_number_of_dips'] }}" type="Number" name="form_1_number_of_dips" placeholder="" disabled>
+                                        <input class=" x-input x-border" id="form_1_number_of_dips" disabled value="{{ row['form_1_number_of_dips'] }}" type="Number" name="form_1_number_of_dips" placeholder="" >
                                     </div> -->
                                     <div class="x-col l4 x-container x-padding">
                                         <label>Name of DIP</label>
                                         <input class=" x-input x-border" id="form_1_name_dip"
-                                            value="{{ row['form_1_name_dip'] }}" type="text" name="form_1_name_dip"
-                                            placeholder="" disabled>
+                                            disabled value="{{ row['form_1_name_dip'] }}" type="text" name="form_1_name_dip"
+                                            placeholder="" >
                                     </div>
                                     <div class="x-col l4 x-container x-padding">
                                         <label>Anchor Firm</label>
                                         <input class=" x-input x-border" id="form_1_anchor_firm"
-                                            value="{{ row['form_1_anchor_firm'] }}" type="text"
-                                            name="form_1_anchor_firm" placeholder="" disabled>
+                                            disabled value="{{ row['form_1_anchor_firm'] }}" type="text"
+                                            name="form_1_anchor_firm" placeholder="" >
                                     </div>
 
                                 </div>
@@ -80,7 +80,7 @@
                                     <div class="x-col l4 x-container x-padding">
                                         <label class="">Size Of Anchor Firm:</label>
                                         <select id="form_1_size_of_anchor" name="form_1_size_of_anchor[]"
-                                            value="{{ row['form_1_size_of_anchor'] }}" disabled multiple>
+                                            disabled value="{{ row['form_1_size_of_anchor'] }}"  multiple>
                                             <option selected>{{ row['form_1_size_of_anchor'] }}</option>
                                             <option value="Large">Large</option>
                                             <option value="Medium">Medium</option>
@@ -93,7 +93,7 @@
                                     <div class="x-col l4 x-container x-padding">
                                         <label class="">MSMEs:</label>
                                         <select id="form_1_msmes" name="form_1_msmes[]"
-                                            value="{{ row['form_1_msmes'] }}" disabled multiple>
+                                            disabled value="{{ row['form_1_msmes'] }}"  multiple>
                                             <option selected>{{ row['form_1_msmes'] }}</option>
                                             <option value="Large">Large</option>
                                             <option value="Medium">Medium</option>
@@ -104,8 +104,8 @@
 
                                     <div class="x-col l4 x-container x-padding">
                                         <label class="">Scope/Provinces:</label>
-                                        <select id="form_1_scope_provinces" value="{{ row['form_1_scope_provinces'] }}"
-                                            name="form_1_scope_provinces[]" disabled multiple>
+                                        <select id="form_1_scope_provinces" disabled value="{{ row['form_1_scope_provinces'] }}"
+                                            name="form_1_scope_provinces[]"  multiple>
                                             <option selected>{{ row['form_1_scope_provinces'] }}</option>
                                             <option value="Northern Samar">Northern Samar</option>
                                             <option value="Leyte">Leyte</option>
@@ -139,7 +139,7 @@
                                     <div class="x-col l4 x-container x-padding">
                                         <label class="">Commodity</label>
                                         <select class=" x-border x-select x-border" id="form_1_commodity"
-                                            name="form_1_commodity" value="{{ row['form_1_commodity'] }}" disabled><br>
+                                            name="form_1_commodity" disabled value="{{ row['form_1_commodity'] }}" ><br>
                                             <option>{{ row['form_1_commodity'] }}</option>
                                             <option>Conducted before DIP approval</option>
                                             <option>Conducted after DIP approval</option>
@@ -149,158 +149,338 @@
 
                                     <div class="x-col l5 x-container x-padding" style="width: 30%;">
                                         <label>Start date of DIP development:</label>
-                                        <input class=" x-input x-border" id="form_1_for_development" disabled
-                                            value="{{ row['form_1_for_development'] }}" name="form_1_for_development"
+                                        <input class=" x-input x-border" id="form_1_for_development" 
+                                            disabled value="{{ row['form_1_for_development'] }}" name="form_1_for_development"
                                             type="date" placeholder="">
                                     </div>
                                     <!-- <div class="x-col l3 x-container x-padding" style="width: 30%;">	
                                     <label>Date: CN Approved</label>
-                                    <input class=" x-input x-border" disabled id="form_1_cn_approved" type="date" value="{{ row['form_1_cn_approved'] }}" name="form_1_cn_approved" placeholder="">
+                                    <input class=" x-input x-border"  id="form_1_cn_approved" type="date" disabled value="{{ row['form_1_cn_approved'] }}" name="form_1_cn_approved" placeholder="">
                                 </div> -->
                                     <div class="x-col l3 x-container x-padding" style="width: 50%;">
                                         <label>Date: Full BPs and DIPs Finalized/Approved by RCUs and endorsed to NPCO
                                             for Review</label>
-                                        <input class=" x-input x-border" disabled id="form_1_finalized_approved"
-                                            value="{{ row['form_1_finalized_approved'] }}"
+                                        <input class=" x-input x-border"  id="form_1_finalized_approved"
+                                            disabled value="{{ row['form_1_finalized_approved'] }}"
                                             name="form_1_finalized_approved" type="date" placeholder="">
                                     </div>
                                     <div class="x-col l3 x-container x-padding" style="width: 50%;">
                                         <label>DIP Technical/Parallel Review Date (with NPCO/RGMS/IFAD Consultant/RTWG)</label>
-                                        <input class=" x-input x-border" disabled id="form_1_date_of_parallel_review"
-                                            value="{{ row['form_1_date_of_parallel_review'] }}"
+                                        <input class=" x-input x-border"  id="form_1_date_of_parallel_review"
+                                            disabled value="{{ row['form_1_date_of_parallel_review'] }}"
                                             name="form_1_date_of_parallel_review" type="date" placeholder="">
                                     </div>
                                     <div class="x-col l3 x-container x-padding" style="width: 70%;">
                                         <label>Submission Date of revised DIPs (based on comments during the Technical/Parallel Review) to RTWG for approval</label>
-                                        <input class=" x-input x-border" disabled id="form_1_date_of_submission"
-                                            value="{{ row['form_1_date_of_submission'] }}"
+                                        <input class=" x-input x-border"  id="form_1_date_of_submission"
+                                            disabled value="{{ row['form_1_date_of_submission'] }}"
                                             name="form_1_date_of_submission" type="date" placeholder="">
                                     </div>
                                     <div class="x-col l3 x-container x-padding" style="width: 30%;">
                                         <label>Date of RTWG Approval</label>
-                                        <input class=" x-input x-border" disabled id="form_1_date_of_rtwg"
-                                            value="{{ row['form_1_date_of_rtwg'] }}" name="form_1_date_of_rtwg"
+                                        <input class=" x-input x-border"  id="form_1_date_of_rtwg"
+                                            disabled value="{{ row['form_1_date_of_rtwg'] }}" name="form_1_date_of_rtwg"
                                             type="date" placeholder="">
                                     </div>
                                     <div class="x-col l3 x-container x-padding" style="width: 40%;">
                                         <label>DIP Submission Date to IFAD/NPCO for Final Approval</label>
-                                        <input class=" x-input x-border" disabled id="form_1_date_of_npco_cursory"
-                                            value="{{ row['form_1_date_of_npco_cursory'] }}"
+                                        <input class=" x-input x-border"  id="form_1_date_of_npco_cursory"
+                                            disabled value="{{ row['form_1_date_of_npco_cursory'] }}"
                                             name="form_1_date_of_npco_cursory" type="date" placeholder="">
                                     </div>
                                     <!-- <div class="x-col l3 x-container x-padding" style="width: 50%;">
                                         <label>Date: Uploading to IFAD NOTUS c/o NPCO</label>
-                                        <input class=" x-input x-border" disabled id="form_1_date_of_uploading_to_ifad"
-                                            value="{{ row['form_1_date_of_uploading_to_ifad'] }}"
+                                        <input class=" x-input x-border"  id="form_1_date_of_uploading_to_ifad"
+                                            disabled value="{{ row['form_1_date_of_uploading_to_ifad'] }}"
                                             name="form_1_date_of_uploading_to_ifad" type="date" placeholder="">
                                     </div>
                                     <div class="x-col l3 x-container x-padding" style="width: 50%;">
                                         <label>Date: IFAD Approval/No Objection Issuance</label>
-                                        <input class=" x-input x-border" disabled id="form_1_date_of_approval_to_ifad"
-                                            value="{{ row['form_1_date_of_approval_to_ifad'] }}"
+                                        <input class=" x-input x-border"  id="form_1_date_of_approval_to_ifad"
+                                            disabled value="{{ row['form_1_date_of_approval_to_ifad'] }}"
                                             name="form_1_date_of_approval_to_ifad" type="date" placeholder=""> 
                                     </div>-->
                                     <div class="x-col l3 x-container x-padding" style="width: 50%;">
                                         <label>NPCO/IFAD (No Objection Issuance) Date:</label>
-                                        <input class=" x-input x-border" disabled id="form_1_date_of_ifad_no_inssuance"
-                                            value="{{ row['form_1_date_of_ifad_no_inssuance'] }}"
+                                        <input class=" x-input x-border"  id="form_1_date_of_ifad_no_inssuance"
+                                            disabled value="{{ row['form_1_date_of_ifad_no_inssuance'] }}"
                                             name="form_1_date_of_ifad_no_inssuance" type="date" placeholder="">
                                     </div>
                                 </div>
 
                             </div>
                         </div>
-                        <div class=" x-container" style="margin-top: 10px; margin-bottom: 20px;">
+                           <div class=" x-container" style="margin-top: 10px; margin-bottom: 20px;">
                             <center>
-                                <h2 class=" text-white x-container" style="background-color: #007399;">DIP Details </h2>
+                                <h2 class=" text-white x-container" style="background-color: #007399;">DIP Details</h2>
                             </center>
 
-                            <div class="x-row x-padding x-container">
-                                <div class="x-col l4 x-container x-padding">
-                                    <label class="">Total # of MSMEs</label>
-                                    <select class=" x-border x-select x-border" value="{{ row['form_1_totalmsme'] }}"
-                                        id="form_1_totalmsme" name="form_1_totalmsme" disabled><br>
-                                        <option>{{ row['form_1_totalmsme'] }}</option>
-                                        <option>Large</option>
-                                        <option>Medium</option>
-                                        <option>Small</option>
-                                        <option>Micro</option>
-                                    </select>
-                                </div>
-                                <div class="x-col l4 x-container x-padding">
-                                    <label class="">Total # of Smallholder Farming Households</label>
-                                    <select class=" x-border x-select x-border" id="form_1_total_farmerbene"
-                                        value="{{ row['form_1_total_farmerbene'] }}" name="form_1_total_farmerbene"
-                                        disabled><br>
-                                        <option>{{ row['form_1_total_farmerbene'] }}</option>
-                                        <option>Conducted before DIP approval</option>
-                                        <option>Conducted after DIP approval</option>
-                                        <option>N/A</option>
-                                    </select>
-                                </div>
-                                <div class="x-col l4 x-container x-padding">
-                                    <label class="">Total # of FOs </label>
-                                    <select class=" x-border x-select x-border" id="form_1_totalfo"
-                                        value="{{ row['form_1_totalfo'] }}" name="form_1_totalfo" disabled><br>
-                                        <option>{{ row['form_1_totalfo'] }}</option>
-                                        <option>Conducted before DIP approval</option>
-                                        <option>Conducted after DIP approval</option>
-                                        <option>N/A</option>
-                                    </select>
-                                </div>
+                            <br><br>
+
+                           
+                            <div class="x-row x-container x-padding">
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <td>
+                                            <center># of Large Enterprises</center>
+                                        </td>
+                                        <td>
+                                            <center># of Medium Enterprises</center>
+                                        </td>
+                                        <td>
+                                            <center># of Small Enterprises</center>
+                                        </td>
+                                        <td>
+                                            <center># of Micro Enterprises</center>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input class="x-input x-border" id="total_large_enterprise" disabled value="{{ row['total_large_enterprise'] }}" name="total_large_enterprise" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="total_medium_enterprise" disabled value="{{ row['total_medium_enterprise'] }}" name="total_medium_enterprise" type="number"placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="total_small_enterprise" disabled value="{{ row['total_small_enterprise'] }}" name="total_small_enterprise" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="total_micro_enterprise" disabled value="{{ row['total_micro_enterprise'] }}" name="total_micro_enterprise" type="number" placeholder="">
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
+                            <br>
+                            <br>
+                            <div class="x-row x-container x-padding">
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <td>
+                                            <center>Total  # of Male </center>
+                                        </td>
+                                        <td>
+                                            <center> # of Male-Youth</center>
+                                        </td>
+                                        <td>
+                                            <center> # of Male - IP</center>
+                                        </td>
+                                        <td>
+                                            <center> # of Male - PWD</center>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input class="x-input x-border" id="form_1_totalmale" disabled value="{{ row['form_1_totalmale'] }}"  name="form_1_totalmale" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_maleyouth" disabled value="{{ row['form_1_maleyouth'] }}"  name="form_1_maleyouth" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_maleip" disabled value="{{ row['form_1_maleip'] }}"  name="form_1_maleip" type="number" placeholder="" >
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_malepwd" disabled value="{{ row['form_1_malepwd'] }}" name="form_1_malepwd" type="number" placeholder="" ></td>
+                                        </tr>
+                                 </table>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="x-row x-container x-padding">
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <td>
+                                            <center>Total  # of Female </center>
+                                        </td>
+                                        <td>
+                                            <center> # of Female-Youth</center>
+                                        </td>
+                                        <td>
+                                            <center> # of Female - IP</center>
+                                        </td>
+                                        <td>
+                                            <center> # of Female - PWD</center>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input class="x-input x-border" id="form_1_totalfemale" disabled value="{{ row['form_1_totalfemale'] }}" name="form_1_totalfemale" type="number" placeholder="">
+                                        </td>
+
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_femaleyouth" disabled value="{{ row['form_1_femaleyouth'] }}" name="form_1_femaleyouth" type="number" placeholder="" >
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_femaleip" disabled value="{{ row['form_1_femaleip'] }}" name="form_1_femaleip" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_femalepwd" disabled value="{{ row['form_1_femalepwd'] }}" name="form_1_femalepwd" type="number" placeholder="" >
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="x-row x-container x-padding">
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <td>
+                                            <center>Total # of Youth</center>
+                                        </td>
+                                        <td>
+                                            <center>Total # of IP</center>
+                                        </td>
+                                        <td>
+                                            <center>Total # of PWD</center>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input class="x-input x-border" id="form_1_totalyouth" disabled value="{{ row['form_1_totalyouth'] }}" name="form_1_totalyouth" type="number" placeholder="" readonly>
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_totalip" disabled value="{{ row['form_1_totalip'] }}" name="form_1_totalip" type="number" placeholder=""readonly >
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_totalpwd" disabled value="{{ row['form_1_totalpwd'] }}" name="form_1_totalpwd" type="number" placeholder=""readonly >
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="x-row x-container x-padding">
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <td>
+                                            <center>Total # of Cooperatives</center>
+                                        </td>
+                                        <td>
+                                            <center>Total # of Associations</center>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input class="x-input x-border" id="form_1_totalcooperatives" disabled value="{{ row['form_1_totalcooperatives'] }}" name="form_1_totalcooperatives" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_totalassociations" disabled value="{{ row['form_1_totalassociations'] }}" name="form_1_totalassociations" type="number" placeholder="" >
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="x-row x-container x-padding">
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <th colspan="3">
+                                            <center>Projected Reach</center>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <center>Total # of MSMEs</center>
+                                        </td>
+                                        <td>
+                                            <center>Total # of Smallholder Farming Households</center>
+                                        </td>
+                                        <td>
+                                            <center>Total # of FOs</center>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input class="x-input x-border" id="form_1_totalmsme" disabled value="{{ row['form_1_totalmsme'] }}"  name="form_1_totalmsme" type="number" placeholder="" readonly>
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border" id="form_1_total_farmerbene" disabled value="{{ row['form_1_total_farmerbene'] }}" name="form_1_total_farmerbene" type="number" placeholder="" readonly>
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border" id="form_1_totalfo" disabled value="{{ row['form_1_totalfo'] }}" name="form_1_totalfo" type="number" placeholder="" readonly>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+
+
                             <div class="x-row">
                                 <div class="x-container x-padding ">
                                     <!-- <div class="x-col l8 x-container x-padding">
                                     <label>Input Name of FO</label>
-                                    <input class=" x-input x-border" id="form_1_namefo" type="text" value="{{ row['form_1_namefo'] }}" name="form_1_namefo" placeholder="" disabled>
-                                </div> -->
-                                    <div class="x-col l4 x-container x-padding">
-                                        <label>Total Hectarage Covered</label>
-                                        <input class=" x-input x-border" id="form_1_totalhectarage_cov"
-                                            value="{{ row['form_1_totalhectarage_cov'] }}" disabled
-                                            name="form_1_totalhectarage_cov" type="Number" placeholder="">
-                                    </div>
-                                    <div class="x-col l4 x-container x-padding">
-                                        <label>Hectares for Rehab</label>
-                                        <input class=" x-input x-border" id="form_1_hect_rehab" name="form_1_hect_rehab"
-                                            value="{{ row['form_1_hect_rehab'] }}" type="Number" placeholder=""
-                                            disabled>
-                                    </div>
-                                    <div class="x-col l4 x-container x-padding">
-                                        <label>Total Cost of Rehab </label>
-                                        <input class=" x-input x-border" id="form_1_total_cost_rehab" disabled
-                                            name="form_1_total_cost_rehab" value="{{ row['form_1_total_cost_rehab'] }}"
-                                            type="Number" placeholder="">
-                                    </div>
-                                    <div class="x-col l4 x-container x-padding">
-                                        <label>Hectares for Expansion</label>
-                                        <input class=" x-input x-border" id="form_1_hect_exp" name="form_1_hect_exp"
-                                            value="{{ row['form_1_hect_exp'] }}" type="Number" placeholder="" disabled>
-                                    </div>
-                                    <div class="x-col l4 x-container x-padding">
-                                        <label>Total Cost of Expansion</label>
-                                        <input class=" x-input x-border" id="form_1_cost_exp" name="form_1_cost_exp"
-                                            value="{{ row['form_1_cost_exp'] }}" type="Number" placeholder="" disabled>
-                                    </div>
-                                </div>
-                            </div>
+                                    <input class=" x-input x-border" id="form_1_namefo" type="text" disabled value="{{ row['form_1_namefo'] }}" name="form_1_namefo" placeholder="">
+                                     </div> -->
+                                 </div>
+                                    <div class="x-row x-container x-padding">
+                                        <table class="x-table x-container x-table-border">
+                                            <tr>
+                                                <th colspan="5">
+                                                    <center>MG Support for Farm Rehabilitation & Expansion</center>
+                                                </th>
+                                            </tr>
 
+                                            <tr>
+                                                <td>
+                                                    <center>Hectares for Rehab</center>
+                                                </td>
+                                                <td>
+                                                    <center>Total Cost of Rehab</center>
+                                                </td>
+                                                <td>
+                                                    <center>Hectares for Expansion</center>
+                                                </td>
+                                                <td>
+                                                    <center>Total Cost of Expansion</center>
+                                                </td>
+                                                <td>
+                                                    <center>Total Hectarage Covered</center>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <input class=" x-input x-border" id="form_1_hect_rehab" disabled value="{{ row['form_1_hect_rehab'] }}" name="form_1_hect_rehab" type="number" placeholder="">
+                                                </td>
+                                                    <td>
+                                                        <input class=" x-input x-border" id="form_1_total_cost_rehab" disabled value="{{ row['form_1_total_cost_rehab'] }}" name="form_1_total_cost_rehab" type="number"
+                                                    placeholder="">
+                                                </td>
+                                                    <td>
+                                                        <input class=" x-input x-border " id="form_1_hect_exp" disabled value="{{ row['form_1_hect_exp'] }}" name="form_1_hect_exp" type="number" placeholder="">
+                                                </td>
+                                                    <td>
+                                                        <input class=" x-input x-border " id="form_1_cost_exp" disabled value="{{ row['form_1_cost_exp'] }}" name="form_1_cost_exp" type="number" placeholder="">
+                                                </td>
+                                                    <td>
+                                                        <input class=" x-input x-border " id="form_1_totalhectarage_cov" disabled value="{{ row['form_1_totalhectarage_cov'] }}" name="form_1_totalhectarage_cov" type="number" placeholder="" readonly>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                     </div>
+                                </div>
                             <div class="x-row x-container x-padding">
-                                <style>
-                                    table,
-                                    th,
-                                    td {
-                                        border: 1px solid black;
-                                        border-collapse: collapse;
-                                    }
-                                </style>
+                                        <style>
+                                            table,
+                                            th,
+                                            td {
+                                            border: 1px solid black;
+                                            border-collapse: collapse;
+                                            }
+                                        </style>
+
                                 <table class="x-table x-container x-table-border">
                                     <tr>
                                         <th colspan="3">
-                                            <center>Total Cost of Productive Investments</center>
+                                            <center>Total Cost of Productive Investments
+                                               <span style="color: #007399;" class="tool" data-tip="Please enter the total peso amount without commas." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> 
+                                            </center>
                                         </th>
-
                                     </tr>
 
                                     <tr>
@@ -316,24 +496,18 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input class=" x-input x-border form_1_euqipments" id="form_1_euqipment"
-                                                value="{{ row['form_1_euqipment'] }}" name="form_1_euqipment"
-                                                type="number" placeholder="" disabled></td>
-                                        <td><input class=" x-input x-border form_1_Facilities_warehouses"
-                                                id="form_1_Facilities_warehouse"
-                                                value="{{ row['form_1_Facilities_warehouse'] }}"
-                                                name="form_1_Facilities_warehouse" type="number" placeholder=""
-                                                disabled></td>
-                                        <td><input class=" x-input x-border form_1_total_prod_invs"
-                                                id="form_1_totalcost_prodinvest"
-                                                value="{{ row['form_1_totalcost_prodinvest'] }}"
-                                                name="form_1_totalcost_prodinvest" type="number" placeholder=""
-                                                readonly></td>
+                                        <td>
+                                            <input class=" x-input x-border form_1_euqipments" id="form_1_euqipment" disabled value="{{ row['form_1_euqipment'] }}" name="form_1_euqipment" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border form_1_Facilities_warehouses" id="form_1_Facilities_warehouse" disabled value="{{ row['form_1_Facilities_warehouse'] }}" name="form_1_Facilities_warehouse" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border form_1_total_prod_invs" id="form_1_totalcost_prodinvest" disabled value="{{ row['form_1_totalcost_prodinvest'] }}" name="form_1_totalcost_prodinvest" type="number" placeholder="" readonly>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
-
-
                             <div class="x-row x-container x-padding">
                                 <style>
                                     table,
@@ -346,7 +520,7 @@
                                 <table class="x-table x-container x-table-border">
                                     <tr>
                                         <th colspan="4">
-                                            <center>Total Matching Grant</center>
+                                            <center>Total Matching Grant <span style="color: #007399;" class="tool" data-tip="Please enter the total peso amount without commas." tabindex="1"><i class="fa-solid fa-circle-info"></i></span></center>
                                         </th>
                                     </tr>
 
@@ -366,23 +540,22 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input class="x-input x-border form-1-aa" id="form_1_total_rehab"
-                                                name="form_1_total_rehab" value="{{ row['form_1_total_rehab'] }}"
-                                                type="number" placeholder="" disabled></td>
-                                        <td><input class="x-input x-border form-1-ab" id="form_1_total_exp"
-                                                name="form_1_total_exp" value="{{ row['form_1_total_exp'] }}"
-                                                type="number" placeholder="" disabled></td>
-                                        <td><input class="x-input x-border form_1_total_prod_invs"
-                                                id="form_1_totalcost_prodinvest4" name="form_1_totalcost_prodinvest2"
-                                                value="{{ row['form_1_totalcost_prodinvest2'] }}" type="number"
-                                                placeholder="" disabled></td>
-                                        <td><input class="x-input x-border form-1-total-matching-grant-update"
-                                                id="form_1_total_matching_grant"
-                                                value="{{ row['form_1_total_matching_grant'] }}"
-                                                name="form_1_total_matching_grant" placeholder="" readonly></td>
+                                        <td>
+                                            <input class="x-input x-border form-1-aa2" id="form_1_total_rehab" name="form_1_total_rehab" disabled value="{{ row['form_1_total_rehab'] }}" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border form-1-ab2" id="form_1_total_exp" name="form_1_total_exp" disabled value="{{ row['form_1_total_exp'] }}" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border form_1_totalcost_prodinvest3" id="form_1_totalcost_prodinvest2" name="form_1_totalcost_prodinvest2" disabled value="{{ row['form_1_totalcost_prodinvest'] }}" type="number" placeholder="" readonly>
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border form-1-total-matching-grant-update2" id="form_1_total_matching_grant" disabled value="{{ row['form_1_total_matching_grant'] }}" name="form_1_total_matching_grant" placeholder="" readonly>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
+
                             <div class="x-row x-container x-padding">
                                 <style>
                                     table,
@@ -395,7 +568,7 @@
                                 <table class="x-table x-container x-table-border">
                                     <tr>
                                         <th colspan="5">
-                                            <center>Capacity Building</center>
+                                            <center>Capacity Building <span style="color: #007399;" class="tool" data-tip="Please enter the total peso amount without commas." tabindex="1"><i class="fa-solid fa-circle-info"></i></span></center>
                                         </th>
 
                                     </tr>
@@ -419,58 +592,139 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input class=" x-input x-border" disabled id="form_1_organizational"
-                                                value="{{ row['form_1_organizational'] }}" name="form_1_organizational"
-                                                type="text" placeholder=""></td>
-                                        <td><input class=" x-input x-border" disabled id="form_1_technical_trainings"
-                                                value="{{ row['form_1_technical_trainings'] }}"
-                                                name="form_1_technical_trainings" type="text" placeholder=""></td>
-                                        <td><input class=" x-input x-border" disabled id="form_1_post_production"
-                                                value="{{ row['form_1_post_production'] }}"
-                                                name="form_1_post_production" type="text" placeholder=""></td>
-                                        <td><input class=" x-input x-border" disabled id="form_1_others" type="text"
-                                                value="{{ row['form_1_others'] }}" name="form_1_others" placeholder="">
+                                        <td>
+                                            <input class=" x-input x-border form1_org" disabled value="{{ row['form_1_organizational'] }}" id="form_1_organizational" name="form_1_organizational" type="number" placeholder="">
                                         </td>
-                                        <td><input class=" x-input x-border" readonly id="form_1_total_capbuild"
-                                                value="{{ row['form_1_total_capbuild'] }}" type="text"
-                                                name="form_1_total_capbuild" placeholder=""></td>
+                                        <td>
+                                            <input class=" x-input x-border form1_tech" disabled value="{{ row['form_1_technical_trainings'] }}" id="form_1_technical_trainings" name="form_1_technical_trainings" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border form1_postprod" disabled value="{{ row['form_1_post_production'] }}" id="form_1_post_production" name="form_1_post_production" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border form1_otherz" disabled value="{{ row['form_1_others'] }}" id="form_1_others" type="number" name="form_1_others" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class=" x-input x-border form1_total_caps" disabled value="{{ row['form_1_total_capbuild'] }}" id="form_1_total_capbuild" type="text" name="form_1_total_capbuild" placeholder="" readonly>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
+
                             <div class="x-row">
                                 <div class="x-col l6 x-container x-padding">
-                                    <label>Supply Chain Manager</label>
-                                    <input class=" x-input x-border" disabled id="form_1_supply_chain_manager"
-                                        value="{{ row['form_1_supply_chain_manager'] }}"
-                                        name="form_1_supply_chain_manager" type="text" placeholder="">
+                                    <label><span style="color: #007399;" class="tool" data-tip="Please enter the total peso amount without commas." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Supply Chain Manager</label>
+                                    <input class=" x-input x-border" id="form_1_supply_chain_manager" disabled value="{{ row['form_1_supply_chain_manager'] }}" name="form_1_supply_chain_manager" type="text" placeholder="">
                                 </div>
-
                             </div>
-                            <div class="x-row x-container x-padding">
-                                <style>
-                                    table,
-                                    th,
-                                    td {
-                                        border: 1px solid black;
-                                        border-collapse: collapse;
-                                    }
-                                </style>
+                            <div class="x-container x-padding ">
                                 <table class="x-table x-container x-table-border">
                                     <tr>
                                         <th colspan="4">
-                                            <center>Total Project Cost</center>
+                                        <center>FMI</center>
                                         </th>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                            <center>Total Matching Grant</center>
+                                             <center><span style="color: #007399;" class="tool" data-tip="Refers to the total cost of FMI funded by the project. Enter peso amount without comma." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> FMI Project Cost</center>
                                         </td>
                                         <td>
-                                            <center>Total Capacity Building</center>
+                                              <center><span style="color: #007399;" class="tool" data-tip="Input total FMI length in kilometer." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> FMI KMS</center>
+                                        </td>
+                                        <td>
+                                             <center><span style="color: #007399;" class="tool" data-tip="Refers to the total cost of Partner's FMI counterpart. Enter peso amount without comma." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> FMI Partner Counterpart</center>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input class="x-input x-border" id="form_1_fmi" disabled value="{{ row['form_1_fmi'] }}" name="form_1_fmi" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border" id="form_1_fmi_kms" disabled value="{{ row['form_1_fmi_kms'] }}" name="form_1_fmi_kms" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border" id="fmi_part_counter" disabled value="{{ row['fmi_part_counter'] }}" name="fmi_part_counter" type="number" placeholder="">
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="x-row x-container x-padding">
+                                    <style>
+                                            table,
+                                            th,
+                                            td {
+                                            border: 1px solid black;
+                                            border-collapse: collapse;
+                                        }
+                                    </style>
+                                    <table class="x-table x-container x-table-border">
+                                        <tr>
+                                            <th colspan="5">
+                                              <center>Total Project Cost (Project funds)</center>
+                                            </th>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <center>Total Matching Grant</center>
+                                            </td>
+                                            <td>
+                                                <center>Total Capacity Building</center>
+                                            </td>
+                                            <td>
+                                                <center>Supply Chain Manager</center>
+                                            </td>
+                                            <td>
+                                                <center>FMI</center>
+                                            </td>
+                                            <td>
+                                                <center>Total</center>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                        <td>
+                                            <input class="x-input x-border form1_mg" id="form_1_y" disabled value="{{ row['form_1_y'] }}" name="form_1_y" type="number" placeholder="" readonly>
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border form1_cap" id="form_1_ac" disabled value="{{ row['form_1_ac'] }}" name="form_1_ac" type="number" placeholder="" readonly>
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border form1_sup" id="form_1_ad" disabled value="{{ row['form_1_ad'] }}" name="form_1_ad" type="number" placeholder="" readonly>
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border" id="form1_total_fmi" disabled value="{{ row['form1_total_fmi'] }}" name="form1_total_fmi" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border form-1-totalproject_cost" disabled value="{{ row['totalproject_cost'] }}" id="form_1_totalproject_cost" name="form_1_totalproject_cost" placeholder="" readonly>
+                                        </td>
+                                        </tr>
+                                    </table>
+                            </div>
+
+                            <div class="x-container x-padding ">
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <th colspan="5">
+                                            <center>Total Partner Counterpart</center>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <center>Matching Grants</center>
+                                        </td>
+                                        <td>
+                                            <center>Capacity Building</center>
                                         </td>
                                         <td>
                                             <center>Supply Chain Manager</center>
+                                        </td>
+                                        <td>
+                                            <center>FMI</center>
                                         </td>
                                         <td>
                                             <center>Total</center>
@@ -478,36 +732,69 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input class="x-input x-border form1_mg" id="form_1_y"
-                                                value="{{ row['form_1_y'] }}" name="form_1_y" type="number"
-                                                placeholder="" disabled></td>
-                                        <td><input class="x-input x-border form1_cap" id="form_1_ac"
-                                                value="{{ row['form_1_ac'] }}" name="form_1_ac" type="number"
-                                                placeholder="" disabled></td>
-                                        <td><input class="x-input x-border form1_sup" id="form_1_ad"
-                                                value="{{ row['form_1_ad'] }}" name="form_1_ad" type="number"
-                                                placeholder="" disabled></td>
-                                        <td><input class="x-input x-border form-1-totalproject_cost"
-                                                value="{{ row['form_1_totalproject_cost'] }}"
-                                                id="form_1_totalproject_cost" name="form_1_totalproject_cost"
-                                                placeholder="" disabled></td>
+                                        <td>
+                                            <input class="x-input x-border" id="partner_counterpart_MG" disabled value="{{ row['partner_counterpart_MG'] }}" name="partner_counterpart_MG" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border" id="partner_counterpart_CB" disabled value="{{ row['partner_counterpart_CB'] }}" name="partner_counterpart_CB" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border" id="partner_counterpart_SCM" disabled value="{{ row['partner_counterpart_SCM'] }}" name="partner_counterpart_SCM" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border" id="partner_counterpart_FMI" disabled value="{{ row['partner_counterpart_FMI'] }}" name="partner_counterpart_FMI" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input class="x-input x-border" id="partner_counterpart_total" disabled value="{{ row['partner_counterpart_total'] }}" name="partner_counterpart_total" type="number" placeholder="" readonly>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
-                            <div class="x-row">
-                                <div class="x-container x-padding ">
-                                    <div class="x-col l6 x-container x-padding">
-                                        <label>FMI</label>
-                                        <input class=" x-input x-border" id="form_1_fmi" value="{{ row['form_1_fmi'] }}"
-                                            name="form_1_fmi" type="text" placeholder="" disabled>
-                                    </div>
-                                    <div class="x-col l6 x-container x-padding">
-                                        <label>FMI Kms</label>
-                                        <input class=" x-input x-border" id="form_1_fmi_kms"
-                                            value="{{ row['form_1_fmi_kms'] }}" name="form_1_fmi_kms" type="text"
-                                            placeholder="" disabled>
-                                    </div>
-                                </div>
+
+                            <div class="x-container x-padding ">
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <th colspan="5">
+                                        <center>Total DIP Cost (Project + Partner Counterpart)</center>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <center>Matching Grants</center>
+                                        </td>
+                                        <td>
+                                            <center>Capacity Building</center>
+                                        </td>
+                                        <td>
+                                            <center>Supply Chain Manager</center>
+                                        </td>
+                                        <td>
+                                            <center>FMI</center>
+                                        </td>
+                                        <td>
+                                            <center>Total</center>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input readonly class="x-input x-border" id="total_dip_cost_MG" disabled value="{{ row['total_dip_cost_MG'] }}" name="total_dip_cost_MG" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input readonly class="x-input x-border" id="total_dip_cost_CB" disabled value="{{ row['total_dip_cost_CB'] }}" name="total_dip_cost_CB" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input readonly class="x-input x-border" id="total_dip_cost_SCM" disabled value="{{ row['total_dip_cost_SCM'] }}" name="total_dip_cost_CM" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input readonly class="x-input x-border" id="total_dip_cost_FMI" disabled value="{{ row['total_dip_cost_FMI'] }}" name="total_dip_cost_FMI" type="number" placeholder="">
+                                        </td>
+                                        <td>
+                                            <input readonly class="x-input x-border" id="total_dip_cost_total" disabled value="{{ row['total_dip_cost_total'] }}" name="total_dip_cost_total" type="number" placeholder="">
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                             <div class="x-row x-container x-padding">
 
