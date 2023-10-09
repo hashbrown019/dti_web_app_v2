@@ -36,7 +36,7 @@
                             </style>
 
                             <!---row1--->
-                            <div class="x-col l3 x-container x-padding">
+                            <div class="x-col l5 x-container x-padding">
                                 <input type="hidden" name="id" value="{{ row['id'] }}">
                                 <label class="">Types of BDSP</label>
                                 <select class=" x-border x-select x-border" id="form_3_types_of_bdsp"
@@ -46,7 +46,7 @@
                                     <option>Individual</option>
                                 </select>
                             </div>
-                            <div class="x-col l3 x-container x-padding">
+                            <div class="x-col l4 x-container x-padding">
                                 <label class="">Contact Person</label>
                                 <select class=" x-border x-select x-border" value="{{ row['form_3_contact_person'] }}"
                                     id="form_3_contact_person" name="form_3_contact_person" disabled><br>
@@ -54,12 +54,6 @@
                                     <option>Organization/Firm</option>
                                     <option>Individual</option>
                                 </select>
-                            </div>
-                            <div class="x-col l3 x-container x-padding">
-                                <label>Training Number</label>
-                                <input class=" x-input x-border" id="form_3_training_number" disabled
-                                    value="{{ row['form_3_training_number'] }}" name="form_3_training_number"
-                                    type="text" placeholder="">
                             </div>
                             <div class="x-col l3 x-container x-padding">
                                 <label class="">Sex</label>
@@ -93,11 +87,10 @@
                                     style="resize: both; height: 100px; width: 550px;"> {{ row['form_3_breif_description'] }}</textarea>
                             </div>
                             <div class="x-col l4 x-container x-padding">
-                                <label for="phone">Phone/Tel number:</label><br>
-                                <input disabled class="x-border x-input " value="{{ row['phone'] }}" id="phone"
-                                    name="phone">
+                                <label for="phone">Tel/Cellphone number:</label><br>
+                                <input class="x-border x-input " disabled value="{{ row['phone'] }}" id="phone" name="phone">
                             </div>
-                            <div class="x-col l9 x-container x-padding">
+                            <div class="x-col l6 x-container x-padding">
                                 <label class="">Field of Expertise</label>
                                 <select id="form_3_choices_multiple_remove_button" disabled
                                     value="{{ row['form_3_choices'] }}" name="form_3_choices[]"
@@ -159,51 +152,53 @@
                             </div>
 
                             <div class="x-row x-container x-padding">
-                                <style>
-                                    table,
-                                    th,
-                                    td {
-                                        border: 1px solid black;
-                                        border-collapse: collapse;
-                                    }
-                                </style>
-                                <table class="x-table x-container x-table-border">
-                                    <tr>
-                                        <th colspan="3">
-                                            <center>BDSP Team Composition</center>
-                                        </th>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <center>Name</center>
-                                        </td>
-                                        <td>
-                                            <center>Education</center>
-                                        </td>
-                                        <td>
-                                            <center>Expertise</center>
-                                        </td>
-                                    </tr>
-
-
-                                    <tbody id="update_table_">
-                                        {% set list1 = row['form_3_name'].split(',') %}
-                                        {% for index in range(list1|length) %}
-                                        <tr>
-                                            <td><input class=" x-input"
-                                                    value="{{ row['form_3_name'].split(',')[index] }}" type="text"
-                                                    name="form_3_name[]" disabled></td>
-                                            <td><input class=" x-input"
-                                                    value="{{ row['form_3_education'].split(',')[index] }}" type="text"
-                                                    name="form_3_education[]" disabled></td>
-                                            <td><input class=" x-input"
-                                                    value="{{ row['form_3_expertise'].split(',')[index] }}" type="text"
-                                                    name="form_3_expertise[]" disabled></td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                        <style>
+                                            table,
+                                            th,
+                                            td {
+                                            border: 1px solid black;
+                                            border-collapse: collapse;
+                                            }
+                                        </style>
+                                    <table id="form3_table_org_comp" class="x-table x-container x-table-border">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">
+                                                    <center>BDSP Team Composition</center>
+                                                </th>
+                                                <th colspan>
+                                                    <center>
+                                                    <button type="button" class="btn btn-primary" onclick="add_row()"><i
+                                                    class="fa-solid fa-circle-plus"></i>&nbsp; Add</button>
+                                                    </center>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <center>Name</center>
+                                                </td>
+                                                <td>
+                                                    <center>Education</center>
+                                                </td>
+                                                <td>
+                                                    <center>Expertise</center>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="main_">
+                                            <tr id="main_row">
+                                            <td>
+                                                <input class=" x-light-grey x-input"disabled value="{{ row['form_3_preferred_province'] }}" type="text" name="form_3_name[]">
+                                            </td>
+                                            <td>
+                                                <input class=" x-light-grey x-input"disabled value="{{ row['form_3_preferred_province'] }}" type="text" name="form_3_education[]">
+                                            </td>
+                                            <td>
+                                                <input class=" x-light-grey x-input"disabled value="{{ row['form_3_preferred_province'] }}" type="text" name="form_3_expertise[]">
+                                            </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                             </div>
                         </div>
 
