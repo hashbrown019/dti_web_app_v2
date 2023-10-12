@@ -138,14 +138,13 @@ $(document).ready(function() {
 		const hectexp = parseInt($('#form_1_hect_exp').val()) || 0;
 		const partcounter = parseInt($('#form_1_partners_counterpart').val()) || 0;
 		const totalproj = parseInt($('#form_1_total_matching_grant').val()) || 0;
-		const partcounterMG = parseInt($('#partner_counterpart_MG').val()) || 0;
-		const partcounterCB = parseInt($('#partner_counterpart_CB').val()) || 0;
-		const partcounterSCM = parseInt($('#partner_counterpart_SCM').val()) || 0;
-		const partcounterFMI = parseInt($('#partner_counterpart_FMI').val()) || 0;
+		const partcounterMG = parseInt($('#form_1_partners_counterpart').val()) || 0;
+		const partcounterCB = parseInt($('#form_1_total_capbuild_counterpart').val()) || 0;
+		const partcounterFMI = parseInt($('#fmi_part_counter').val()) || 0;
 		const projcostMG = parseInt($('#form_1_y').val()) || 0;
 		const projcostCB = parseInt($('#form_1_ac').val()) || 0;
 		const projcostSCM = parseInt($('#form_1_ad').val()) || 0;
-		const projcostFMI = parseInt($('#form1_total_fmi').val()) || 0;
+		const projcostFMI = parseInt($('#form_1_fmi').val()) || 0;
 		const cbbmaleyouth = parseInt($('#cbb_male_youth').val()) || 0;
 		const cbb_male_pwd = parseInt($('#cbb_male_pwd').val()) || 0;
 		const cbb_male_sc = parseInt($('#cbb_male_sc').val()) || 0;
@@ -154,6 +153,9 @@ $(document).ready(function() {
 		const cbb_female_pwd = parseInt($('#cbb_female_pwd').val()) || 0;
 		const cbb_female_sc = parseInt($('#cbb_female_sc').val()) || 0;
 		const cbb_female_ip = parseInt($('#cbb_female_ip').val()) || 0;
+		const counterpartscm = parseInt($('#supply_chain_manager_counterpart').val()) || 0;
+		
+
 
 
 
@@ -167,14 +169,20 @@ $(document).ready(function() {
 		const totalfo = totalcoop + totalassoc;
 		const hectcovered = hectrehab + hectexp;
 		const mgcost = partcounter + totalproj;
-		const partcounterTotal = partcounterMG + partcounterCB + partcounterSCM + partcounterFMI;
+		const partcounterTotal = partcounterMG + partcounterCB + counterpartscm + partcounterFMI;
 		const dipcostMG = partcounterMG + projcostMG;
 		const dipcostCB = partcounterCB + projcostCB;
-		const dipcostSCM = partcounterSCM + projcostSCM;
+		const dipcostSCM = counterpartscm + projcostSCM;
 		const dipcostFMI = partcounterFMI + projcostFMI;
 		const totaldip = dipcostMG + dipcostCB + dipcostSCM + dipcostFMI;
 		const totalcbbmale = cbbmaleyouth + cbb_male_pwd + cbb_male_sc + cbb_male_ip;
 		const totalcbbfemale = cbbfemaleyouth + cbb_female_pwd + cbb_female_sc + cbb_female_ip;
+		const totalcounterpartcb = partcounterCB;
+		const totalcounterpartmg = partcounterMG;
+		const totalcounterpartscm =counterpartscm;
+		const totalprojcostfmi = projcostFMI;
+		const totalcounterpartfmi=partcounterFMI;
+
 
 
 
@@ -196,6 +204,19 @@ $(document).ready(function() {
 
         $('#cbb_male_total').val(totalcbbmale);
         $('#cbb_female_total').val(totalcbbfemale);
+		$('#partner_counterpart_CB').val(totalcounterpartcb);
+		$('#partner_counterpart_MG').val(totalcounterpartmg);
+		$('#partner_counterpart_SCM').val(totalcounterpartscm);
+		$('#form1_total_fmi').val(totalprojcostfmi);
+		$('#partner_counterpart_FMI').val(totalcounterpartfmi);
+
+
+
+
+
+
+   
+
 
 
 
@@ -206,7 +227,7 @@ $(document).ready(function() {
 
     }
 
-    $('#total_large_enterprise, #total_medium_enterprise, #total_small_enterprise, #total_micro_enterprise,#form_1_totalmale, #form_1_totalfemale,#form_1_maleyouth, #form_1_femaleyouth,#form_1_maleip, #form_1_femaleip,#form_1_malepwd, #form_1_femalepwd,#form_1_totalcooperatives,#form_1_totalassociations,#form_1_hect_rehab,#form_1_hect_exp,#form_1_partners_counterpart,#form_1_total_matching_grant,#partner_counterpart_MG,#partner_counterpart_CB,#partner_counterpart_SCM,#partner_counterpart_FMI,#form_1_y,#form_1_ac,#form_1_ad,#form1_total_fmi,#cbb_male_youth,#cbb_male_pwd,#cbb_male_sc,#cbb_male_ip,#cbb_female_youth,#cbb_female_pwd,#cbb_female_sc,#cbb_female_ip').on('input', calculateTotaltable);
+    $('#total_large_enterprise, #total_medium_enterprise, #total_small_enterprise, #total_micro_enterprise,#form_1_totalmale, #form_1_totalfemale,#form_1_maleyouth, #form_1_femaleyouth,#form_1_maleip, #form_1_femaleip,#form_1_malepwd, #form_1_femalepwd,#form_1_totalcooperatives,#form_1_totalassociations,#form_1_hect_rehab,#form_1_hect_exp,#form_1_partners_counterpart,#form_1_total_matching_grant,#partner_counterpart_MG,#partner_counterpart_CB,#partner_counterpart_SCM,#partner_counterpart_FMI,#form_1_y,#form_1_ac,#form_1_ad,#form1_total_fmi,#cbb_male_youth,#cbb_male_pwd,#cbb_male_sc,#cbb_male_ip,#cbb_female_youth,#cbb_female_pwd,#cbb_female_sc,#cbb_female_ip,#form_1_total_capbuild_counterpart,#supply_chain_manager_counterpart,#form_1_fmi,#fmi_part_counter').on('input', calculateTotaltable);
 
     calculateTotaltable();
 
