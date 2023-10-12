@@ -64,9 +64,13 @@
                         href="/updateform1/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span>
                         View</a>&nbsp;&nbsp;&nbsp; &nbsp;
                       {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
-                      <a style="color: #00cc66;" data-toggle="modal" data-target="#form1edit{{row['id']}}"
+                      <!-- <a style="color: #00cc66;" data-toggle="modal" data-target="#form1edit{{row['id']}}"
                         href="/updateform1/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square"></i></span>
-                        Edit</a>&nbsp;&nbsp;&nbsp; &nbsp;
+                        Edit</a>&nbsp;&nbsp;&nbsp; &nbsp; -->
+                        
+                        <a style="color: #00cc66;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
+                          <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                        </a> &nbsp;&nbsp;&nbsp;&nbsp;
                       <a style="color: #ff4d4d;" href="/delete_form1/{{row['id']}}" onclick="confirmation(event)">
                         <span><i class="fa-solid fa-trash"></i></span> Delete</a>
                       {% endif %}

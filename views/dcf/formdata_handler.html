@@ -36,25 +36,25 @@ function submit_form(class_name,table,url_){
     form_data[x_ins[index].id] =  x_ins[index].value
   }
   $send({
-    action : "/set_data/"+table,
-    data : $DATA(form_data),
-    method : POST,
-    func : function(r){
-      var res = JSON.parse(r)
-      if(res.status=="success"){
-        $dialog({
-          type : "success",
-          title : "Success",
-          subtitle : "your action is now on process",
-          content : (`dasdaad d asd ssaadad sad`),
-          buttons : ["Continue"],
-          buttons_actions : [function(){
-            goto('/'+url_+'_dashboard')
-          }]
-        }).show()
-      }
-    }
-  })
+			action: "/set_data/" + table,
+			data: $DATA(form_data),
+			method: POST,
+			func: function (r) {
+				var res = JSON.parse(r)
+			
+				if (res.status == "success") {
+					Swal.fire(
+						'Success!',
+						'Record Saved!',
+						'success'
+					).then((result) => {
+						if (result.isConfirmed) {
+							window.location.href = url;
+						}
+					});
+				}
+			}
+		})
   println(form_data)
 }
 </script>

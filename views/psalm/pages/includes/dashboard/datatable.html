@@ -79,10 +79,8 @@
                   },
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    // If the user confirms, navigate to the delete URL
                     window.location.href = `/delete_record/form_c/${id}`;
                   } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    // If the user cancels, show the cancellation message
                     swalWithCustomButtons.fire(
                       'Cancelled',
                       'Your record is safe',

@@ -984,7 +984,8 @@ $(document).ready(function(){
 		removeItemButton: true,
 		maxItemCount:21,
 		searchResultLimit:21,
-		renderChoiceLimit:21
+		renderChoiceLimit:21,
+		delimeter : ","
 	}); 
 });
 

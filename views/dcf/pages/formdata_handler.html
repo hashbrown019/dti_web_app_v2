@@ -1,59 +1,108 @@
 <script>
-    
+		
 
 function edit_form(class_name,table){
-  for (let index = 0; index < $CLASS('class_name').length; index++) {
-    const element = $CLASS('class_name')[index].disabled = false
-  }
+	for (let index = 0; index < $CLASS('class_name').length; index++) {
+		const element = $CLASS('class_name')[index].disabled = false
+	}
 }
 
 function load_data(record_id,table,class_name){
-  // http://127.0.0.1:5000/dcf/form8?id=1&table=form8
-  $send({
-    action : "/get_data/"+record_id+"/"+table,
-    method : POST,
-    func : function(r){
-      var res = JSON.parse(r)[0]
-      var x_ins = $CLASS(class_name)
-      for (let index = 0; index < x_ins.length; index++) {
-        x_ins[index].value = res[x_ins[index].id]
-        var USER_ID = JSON.parse('{{user_data}}'.replaceAll('&#39;','"'))['id']
-        if(USER_ID==parseInt(res['upload_by'])){
-          x_ins[index].disabled = false
-        }else{
-          x_ins[index].disabled = true
-          $ID('submit_btn_holder').innerHTML = "<br><i class='x-text-red'>This Record is not yours</i>"
-        }
-      }
-    }
-  })
+	// http://127.0.0.1:5000/dcf/form8?id=1&table=form8
+	$send({
+		action : "/get_data/"+record_id+"/"+table,
+		method : POST,
+		func : function(r){
+			println("kamo]wn")
+			var res = JSON.parse(r)[0]
+			var x_ins = $CLASS(class_name)
+			for (let index = 0; index < x_ins.length; index++) {
+				x_ins[index].value = res[x_ins[index].id]
+				if (x_ins[index].type == "checkbox") {
+					try{
+						if (res[x_ins[index].id] === "true") {
+							x_ins[index].click()
+						}
+					}catch(err){
+						warnprintln(x_ins[index].id + " ||| " + err)
+					}
+				} else if (x_ins[index].type == "select-one" || x_ins[index].type == "select-multiple") {
+					try{
+						choices.setValue(['Set value 1', 'Set value 2']);
+						x_ins[index].value = res[x_ins[index].id]
+						triggerChange(x_ins[index])
+					}catch(err){
+						warnprintln(x_ins[index].id + " ||| " + err)
+					}
+
+				} else {
+					try {
+						x_ins[index].value = res[x_ins[index].id]
+					} catch (error) {
+						warnprintln(x_ins[index].id + " ||| " + error)
+					}
+				}
+				var USER_ID = JSON.parse('{{user_data}}'.replaceAll('&#39;','"'))['id']
+				if(USER_ID==parseInt(res['upload_by'])){
+					x_ins[index].disabled = false
+				}else{
+					x_ins[index].disabled = true
+					try{
+						$ID('submit_btn_holder').innerHTML = "<br><i style='font-size: medium; font-weight: bolder; 'class='x-text-red'><i class='fa-solid fa-circle-exclamation'></i> This record is not yours </i>"
+					}catch(e){
+						warnprintln(e)
+					}
+				}
+			}
+			dom_refresh();
+		}
+	})
 }
 
-function submit_form(class_name,table){
-  var x_ins = $CLASS(class_name);var form_data = {}
-  for (let index = 0; index < x_ins.length; index++) {
-    form_data[x_ins[index].id] =  x_ins[index].value
-  }
-  $send({
-    action : "/set_data/"+table,
-    data : $DATA(form_data),
-    method : POST,
-    func : function(r){
-      var res = JSON.parse(r)
-      if(res.status=="success"){
-        $dialog({
-          type : "success",
-          title : "Success",
-          subtitle : "your action is now on process",
-          content : (`dasdaad d asd ssaadad sad`),
-          buttons : ["Continue"],
-          buttons_actions : [function(){
-            goto('/form8_dashboard')
-          }]
-        }).show()
-      }
-    }
-  })
-  println(form_data)
+
+function triggerChange(element) {
+	let changeEvent = new Event('change');
+	element.dispatchEvent(changeEvent);
+	
+}
+
+function submit_form(class_name,table, url){
+	var x_ins = $CLASS(class_name);var form_data = {}
+	for (let index = 0; index < x_ins.length; index++) {
+		var VAL = ""
+		if(x_ins[index].classList.contains("choices__input")){
+			var temp = x_ins[index]
+			var element = []
+			for (let xxx = 0; xxx < temp.length; xxx++) {
+				element.push(temp[xxx].innerHTML);
+			}
+			VAL = element.toString()
+		}
+		else{
+			VAL = x_ins[index].value
+		}
+		form_data[x_ins[index].id] =  VAL
+	}
+	$send({
+			action: "/set_data/" + table,
+			data: $DATA(form_data),
+			method: POST,
+			func: function (r) {
+				var res = JSON.parse(r)
+			
+				if (res.status == "success") {
+					Swal.fire(
+						'Success!',
+						'Record Saved!',
+						'success'
+					).then((result) => {
+						if (result.isConfirmed) {
+							window.location.href = url;
+						}
+					});
+				}
+			}
+		})
+	println(form_data)
 }
 </script>
