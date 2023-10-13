@@ -1,16 +1,6 @@
+let CHOICES_SELECT = {}
 
 
-$(document).ready(function(){
-$(".hidden-textbox").hide();
-$("select#form_1_commodity,select#form_2_commodity,select#cbb_commodity,select#mgit_commodity,select#form_6_commodity,select#form_7_commodity,select#form_11_industry_cluster").change(function(){
-var currentVal = $(this).val();
-if(currentVal == "PFN"){
-$(".hidden-textbox").show();
-}
-else
-$(".hidden-textbox").hide();
-});  
-});
 
 $(document).ready(function(){
 	$(".hidden-textboxdip").hide();
@@ -777,23 +767,7 @@ $(document).ready(function(){
 	}); 
 });
 
-$(document).ready(function(){
-	var multipleCancelButton = new Choices('#form_1_size_of_anchor', {
-		removeItemButton: true,
-		choices: ["Large","Medium","Small","Micro"],
-		// items: ["Large","Medium","Small","Micro"],
-		searchChoices: true,
-		// maxItemCount:4,
-		// searchResultLimit:4,
-		addItems: true,
-		uniqueItemText: 'Only unique values can be added',
-		customAddItemText: 'Only values matching specific conditions can be added',
-		addItemText: (value) => {
-			println(multipleCancelButton)
-			return `Press Enter to add <b>`+value+`</b>`;
-		},
-	}); 
-});
+
 
 $(document).ready(function(){
 	var multipleCancelButton = new Choices('#form_3_preferred_province', {
@@ -991,24 +965,6 @@ $(document).ready(function(){
 	});
 });
 
-$(document).ready(function(){
-	var multipleCancelButton = new Choices('#form_1_msmes', {
-		removeItemButton: true,
-		maxItemCount:4,
-		searchResultLimit:4,
-		renderChoiceLimit:4
-	}); 
-});
-
-$(document).ready(function(){
-	var multipleCancelButton = new Choices('#form_1_scope_provinces', {
-		removeItemButton: true,
-		maxItemCount:21,
-		searchResultLimit:21,
-		renderChoiceLimit:21,
-		delimeter : ","
-	}); 
-});
 
 
 

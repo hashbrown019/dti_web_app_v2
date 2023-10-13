@@ -13,11 +13,11 @@
 	<div class="x-col l1 ">
 		&nbsp;
 	</div>
-	<span class="badge badge-pill" style="margin-left: 50px; background-color: #334257; color: #ffb366;" id="top_note"></span>
 	<div class=" x-col l10 x-container x-card x-padding x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
 		<center>
 			<h2 class=" text-white x-container x-padding" style="background-color: #007399;">FORM 1 - PREPARATION,
 				REVIEW AND APPROVAL STATUS</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
 		</center>
 
 		<div class="x-container x-padding">
@@ -108,7 +108,7 @@
 
 					<div class="x-col l4 x-container x-padding">
 						<label class=""><span style="color: #007399;" class="tool" data-tip="You can select multiple options from the provided list; text input won't be recorded." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Scope/Provinces:</label>
-						<select class="FORM1_FIELD" id="form_1_scope_provinces" name="form_1_scope_provinces[]" multiple>
+						<select class="FORM1_FIELD choicesjs" id="form_1_scope_provinces" name="form_1_scope_provinces[]" multiple>
 							<option value="Northern Samar">Northern Samar</option>
 							<option value="Leyte">Leyte</option>
 							<option value="Southern Leyte">Southern Leyte</option>
@@ -143,7 +143,7 @@
 
 					<div class="x-col l4 x-container x-padding">
 						<label class="">Commodity:</label>
-						<select class="FORM1_FIELD x-border x-select x-border" id="form_1_commodity" name="form_1_commodity"
+						<select class="FORM1_FIELD withother x-border x-select x-border" id="form_1_commodity" name="form_1_commodity"
 							required>
 							<option selected disabled value="none">Choose your option</option>
 							<option value="Coffee">Coffee</option>
@@ -152,7 +152,7 @@
 							<option value="PFN">PFN</option>
 						</select>
 						<input type="text" class="FORM1_FIELD hidden-textbox x-input x-border" name="form_1_commodity_others"
-							id="form_1_commodity_others" placeholder="Please specify">
+							id="form_1_commodity_others" show-base="form_1_commodity" show-trigger="PFN"  placeholder="Please specify">
 					</div>
 
 					<div class="x-col l5 x-container x-padding" style="width: 30%;">
@@ -897,34 +897,45 @@
 		}
 	}
 
+	// ===============================================================================
 
+	$(document).ready(function(){
+	// var multipleCancelButton = new Choices('#form_1_msmes', {
+		CHOICES_SELECT['form_1_msmes'] = new Choices('#form_1_msmes', {
+		removeItemButton: true,
+		maxItemCount:4,
+		searchResultLimit:4,
+		renderChoiceLimit:4
+		}); 
+	});
 
-	// function search_profile() {
-	// 	var search_key = $ID('name_partc').value
-	// 	alert('Click to continue searching [' + search_key + ']')
-	// 	$send({
-	// 		action: "/formb/search_farmer_profile",
-	// 		method: POST,
-	// 		err_dialog: true,
-	// 		data: $DATA({ 'search_item': search_key }),
-	// 		func: function (rest) {
-	// 			var res_ = JSON.parse(rest)
-	// 			// println(res_)
-	// 			generate_modal(res_)
-	// 		},
-	// 		err: function (res) { println(res) },
-	// 		progress: function (e) {
-	// 			// var response_length = parseFloat(headerMap(e)['total'])
-	// 			var response_length = parseFloat(e.total)
-	// 			var response_loaded = parseFloat(e.loaded)
-	// 			var percent_ = (response_loaded / response_length) * 100;
-	// 			var percent_rounded = Math.round(percent_ * 100) / 100
-	// 		}
-	// 	})
+	$(document).ready(function(){
+		CHOICES_SELECT['form_1_scope_provinces'] = new Choices('#form_1_scope_provinces', {
+			removeItemButton: true,
+			maxItemCount:21,
+			searchResultLimit:21,
+			renderChoiceLimit:21,
+			delimeter : ","
+		}); 
+	});
 
-	// 	// TABLE.ajax.url('/feature_0/filter_list_farmers')
-	// 	// TABLE.ajax.reload()
-	// }
+	$(document).ready(function(){
+		CHOICES_SELECT['form_1_size_of_anchor'] = new Choices('#form_1_size_of_anchor', {
+			removeItemButton: true,
+			choices: ["Large","Medium","Small","Micro"],
+			// items: ["Large","Medium","Small","Micro"],
+			searchChoices: true,
+			// maxItemCount:4,
+			// searchResultLimit:4,
+			addItems: true,
+			uniqueItemText: 'Only unique values can be added',
+			customAddItemText: 'Only values matching specific conditions can be added',
+			addItemText: (value) => {
+				// println(multipleCancelButton)
+				return `Press Enter to add <b>`+value+`</b>`;
+			},
+		}); 
+	});
 
 </script>
 

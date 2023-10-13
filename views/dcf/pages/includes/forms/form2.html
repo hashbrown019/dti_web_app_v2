@@ -8,7 +8,6 @@
 
 {% block content %}
 <title>Form 2</title>
-<form action="/insert_form2" method="POST">
     {% include "includes/sweetalert.html" %}
     <div class="x-col l1 ">
         &nbsp;
@@ -21,10 +20,11 @@
 
         <!---text--->
         <div class="x-row x-container x-padding">
+            <input class="FORM2_FIELD x-input" type="hidden"  id="id">
 
             <div class="x-col l4 x-container x-padding">
                 <label class="">RCUs:</label>
-                <select class="form_data_b x-border x-select x-border" id="form_2_rcus" name="form_2_rcus" required><br>
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_rcus" name="form_2_rcus" required><br>
                     <option value="">Choose your option</option>
                     <option value="8">Region Vlll - Eastern Visayas</option>
                     <option value="9">Region lX - Zamboanga Peninsula</option>
@@ -37,42 +37,42 @@
             </div>
             <div class="x-col l4 x-container x-padding">
                 <label class="">PCU:</label>
-                <select class="form_data_b x-border x-select x-border" id="form_2_pcu" name="form_2_pcu" required><br>
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_pcu" name="form_2_pcu" required><br>
                     <option value="">Choose your option</option>
-                    <option>Northern Samar</option>
-                    <option>Leyte</option>
-                    <option>Southern Leyte</option>
-                    <option>Zamboanga del Norte</option>
-                    <option>Zamboanga Sibugay</option>
-                    <option>Zamboanga del Sur</option>
-                    <option>Misamis Oriental</option>
-                    <option>Bukidnon</option>
-                    <option>Lanao del Norte</option>
-                    <option>Davao de Oro</option>
-                    <option>Davao Oriental</option>
-                    <option>Davao del Norte</option>
-                    <option>Davao del Sur</option>
-                    <option>Davao Occidental</option>
-                    <option>North Cotabato</option>
-                    <option>Sultan Kudarat</option>
-                    <option>Sarangani</option>
-                    <option>Agusan del Norte</option>
-                    <option>Agusan del Sur</option>
-                    <option>Surigao del Sur</option>
-                    <option>Maguindanao</option>
+                    <option value="Northern Samar">Northern Samar</option>
+                    <option value="Leyte">Leyte</option>
+                    <option value="Southern Leyte">Southern Leyte</option>
+                    <option value="Zamboanga del Norte">Zamboanga del Norte</option>
+                    <option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+                    <option value="Zamboanga del Sur">Zamboanga del Sur</option>
+                    <option value="Misamis Oriental">Misamis Oriental</option>
+                    <option value="Bukidnon">Bukidnon</option>
+                    <option value="Lanao del Norte">Lanao del Norte</option>
+                    <option value="Davao de Oro">Davao de Oro</option>
+                    <option value="Davao Oriental">Davao Oriental</option>
+                    <option value="Davao del Norte">Davao del Norte</option>
+                    <option value="Davao del Sur">Davao del Sur</option>
+                    <option value="Davao Occidental">Davao Occidental</option>
+                    <option value="North Cotabato">North Cotabato</option>
+                    <option value="Sultan Kudarat">Sultan Kudarat</option>
+                    <option value="Sarangani">Sarangani</option>
+                    <option value="Agusan del Norte">Agusan del Norte</option>
+                    <option value="Agusan del Su">Agusan del Sur</option>
+                    <option value="Surigao del Sur">Surigao del Sur</option>
+                    <option value="Maguindanao">Maguindanao</option>
                 </select>
             </div>
 
             <div class="x-col l4 x-container x-padding">
                 <label class="">Commodity:</label>
-                <select class="x-border x-select x-border" id="form_2_commodity" name="form_2_commodity" required>
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_commodity" name="form_2_commodity" required>
                     <option value="">Choose your option</option>
-                    <option>Coffee</option>
-                    <option>Cacao</option>
-                    <option>Coconut</option>
-                    <option>PFN</option>
+                    <option value="Coffee">Coffee</option>
+                    <option value="Cacao">Cacao</option>
+                    <option value="Coconut">Coconut</option>
+                    <option value="PFN">PFN</option>
                 </select>
-                <input type="text" class="hidden-textbox x-input x-border" name="form_2_commodity_others"
+                <input type="text" class="FORM2_FIELD hidden-textbox x-input x-border" name="form_2_commodity_others"
                     id="form_2_commodity_others" placeholder="Please specify">
             </div>
 
@@ -80,12 +80,12 @@
                 <div class="x-col l4 x-container x-padding">
                     <label class=""><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (ex. R8_SC Global)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>   DIP Alignment:
                     </label>
-                        <select class="x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
+                        <select class="FORM2_FIELD x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
                             <option value="">Choose your option</option>
                             <option value="Yes">Yes</option>
                             <option value="No DIP Alignment">No</option>
                         </select>
-                        <input type="text" class="hidden-textboxdip x-input x-border" name="form_2_dip_alignment_yes"
+                        <input type="text" class="FORM2_FIELD hidden-textboxdip x-input x-border" name="form_2_dip_alignment_yes"
                             id="form_2_dip_alignment_yes" placeholder="Enter DIP name">
                 </div>
             </div>
@@ -93,12 +93,12 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l6 x-container x-padding">
                 <label class="">Name of Owner or Manager of the anchor Firm/MSMEs:</label>
-                <input class=" x-input x-border" id="form_2_name_owner_manager" name="form_2_name_owner_manager"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_name_owner_manager" name="form_2_name_owner_manager"
                     type="text" autocomplete="on" placeholder="Full Name: (ex. Juan Dela Cruz)">
             </div>
             <div class="x-col l5 x-container x-padding">
                 <label class="">Sex of the Owner or Manager of the anchor Firm/MSMEs:</label>
-                <select class="form_data_b x-border x-select x-border" id="form_2_sex_owner_manager"
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sex_owner_manager"
                     name="form_2_sex_owner_manager"><br>
                     <option value="">Choose Sex</option>
                     <option>Male</option>
@@ -109,7 +109,7 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l5 x-container x-padding">
                 <label class="">Sector of Owner or manager of the anchor firm/MSMEs:</label>
-                    <select class="form_data_b x-border x-select x-border" id="form_2_sector_owner_manager"
+                    <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sector_owner_manager"
                     name="form_2_sector_owner_manager"><br>
                     <option value="">Choose Sector</option>
                     <option>PWD</option>
@@ -121,7 +121,7 @@
             </div>
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Indicate full  Business name of Anchor Firm/MSMEs based on official registration." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Business Name:</label>
-                <input class=" x-input x-border" id="form_2_businessname" name="form_2_businessname"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_businessname" name="form_2_businessname"
                     type="text" autocomplete="on" placeholder="">
             </div>
            
@@ -129,22 +129,22 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>   Business Address of Owner or manager of the anchor firm/MSMEs:</label>
-                <input class=" x-input x-border" id="form_2_business_owner_manager" name="form_2_business_owner_manager"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_business_owner_manager" name="form_2_business_owner_manager"
                     type="text" placeholder="">
             </div>
             <div class="x-col l6  x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Indicate full name of FO based on official regisration." tabindex="1"><i class="fa-solid fa-circle-info"></i></span>Name of Partner FOs Engaged:</label>
-                <input class=" x-input x-border" id="form_2_partner_fo_engaged" name="form_2_partner_fo_engaged"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_partner_fo_engaged" name="form_2_partner_fo_engaged"
                     type="text" placeholder="">
             </div>
             <div class="x-col l6 x-container x-padding">
                 <label class="">Chairperson or Manager of Partner FO:</label>
-                <input class=" x-input x-border" id="form_2_chairperson_manager" name="form_2_chairperson_manager"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_chairperson_manager" name="form_2_chairperson_manager"
                     type="text" placeholder="">
             </div>
             <div class="x-col l6 x-container x-padding">
                 <label class="">Sex of the Chairperson or Manager of Partner FO:</label>
-                <select class="form_data_b x-border x-select x-border" id="form_2_sex_chairperson_manager"
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sex_chairperson_manager"
                     name="form_2_sex_chairperson_manager"><br>
                     <option value="">Choose Sex</option>
                     <option>Male</option>
@@ -155,7 +155,7 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l6 x-container x-padding">
                 <label class="">Sector of Chairperson or Manager of Partner FO:</label>
-                <select class="form_data_b x-border x-select x-border" id="form_2_sector_chairperson_manager"
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sector_chairperson_manager"
                     name="form_2_sector_chairperson_manager"><br>
                     <option value="">Choose Sector</option>
                     <option>PWD</option>
@@ -167,7 +167,7 @@
             </div>
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Office Address of FO:</label>
-                <input class=" x-input x-border" id="form_2_office_address_province" type="text"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_office_address_province" type="text"
                     name="form_2_office_address_province" placeholder="">
             </div>
         </div>
@@ -175,7 +175,7 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l4 x-container x-padding">
                 <label class="">Total number of FO members:</label>
-                <input class=" x-input x-border" id="form_2_total_number_fo" name="form_2_total_number_fo" type="number"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_total_number_fo" name="form_2_total_number_fo" type="number"
                     placeholder="">
             </div>
             <div class="x-container x-padding">
@@ -223,16 +223,16 @@
 
                     <tr>
                         <!---gender--->
-                        <td><input class=" x-light-grey x-input" id="form_2_male" type="number" name="form_2_male"></td>
-                        <td><input class=" x-light-grey x-input" id="form_2_female" type="number" name="form_2_female">
+                        <td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_male" type="number" name="form_2_male"></td>
+                        <td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_female" type="number" name="form_2_female">
                         </td>
 
                         <!--sectorG--->
-                        <td><input class=" x-light-grey x-input" id="form_2_pwde" type="number" name="form_2_pwde"></td>
-                        <td><input class=" x-light-grey x-input" id="form_2_youth" type="number" name="form_2_youth">
+                        <td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_pwde" type="number" name="form_2_pwde"></td>
+                        <td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_youth" type="number" name="form_2_youth">
                         </td>
-                        <td><input class=" x-light-grey x-input" id="form_2_ip" type="number" name="form_2_ip"></td>
-                        <td><input class=" x-light-grey x-input" id="form_2_sc" type="number" name="form_2_sc"></td>
+                        <td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_ip" type="number" name="form_2_ip"></td>
+                        <td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_sc" type="number" name="form_2_sc"></td>
                     </tr>
                 </table>
             </div>
@@ -243,37 +243,37 @@
         <div class="x-row x-container x-padding">
             <!-- <div class="x-col l6 x-container x-padding">
                 <label class="">Address of FO Member:</label>
-                <input class=" x-input x-border" id="form_2_address_of_fo_members" name="form_2_address_of_fo_members"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_address_of_fo_members" name="form_2_address_of_fo_members"
                     type="text" placeholder="">
             </div> -->
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool"  data-tip="Input number of hectares with four decimal places. (example: 143.1433)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Hectares Covered:</label>
-                <input class=" x-input x-border" id="form_2_hectares_covered" name="form_2_hectares_covered"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_hectares_covered" name="form_2_hectares_covered"
                     placeholder="">
             </div>
             <div class="x-col l3 x-container x-padding">
                 <label for="form_2_cpa_date_signing">Date of CPA Signing:</label>
-                <input class="x-input x-border" type="date" id="form_2_cpa_date_signing" style="width: 100%;"
+                <input class="FORM2_FIELD x-input x-border" type="date" id="form_2_cpa_date_signing" style="width: 100%;"
                     name="form_2_cpa_date_signing" onchange="computeDaysRemaining()">
             </div>
             <div class="x-col l3 x-container x-padding">
                 <label for="form_2_cpa_date_expiration">CPA Expiration Date:</label>
-                <input class="x-input x-border" type="date" id="form_2_cpa_date_expiration" style="width: 100%"
+                <input class="FORM2_FIELD x-input x-border" type="date" id="form_2_cpa_date_expiration" style="width: 100%"
                     name="form_2_cpa_date_expiration" onchange="computeDaysRemaining()">
             </div>
             <div class="x-col l3 x-container x-padding">
                 <label for="form_2_days_remaining">Days Remaining:</label>
-                <input class="x-input x-border" type="number" id="form_2_days_remaining" style="width: 100%;"
+                <input class="FORM2_FIELD x-input x-border" type="number" id="form_2_days_remaining" style="width: 100%;"
                     name="form_2_days_remaining" readonly>
             </div>
             <div class="x-col l3 x-container x-padding">
                 <label class="">Date Renewed:</label>
-                <input class=" x-input x-border" id="form_2_date_renewed" name="form_2_date_renewed" type="date"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_date_renewed" name="form_2_date_renewed" type="date"
                     placeholder="">
             </div>
             <div class="x-col l6 x-container x-padding">
                 <label class="">Notable CPA incentives(Optional entry):</label>
-                <input class=" x-input x-border" id="form_2_notable_cpa_incentives" name="form_2_notable_cpa_incentives"
+                <input class="FORM2_FIELD x-input x-border" id="form_2_notable_cpa_incentives" name="form_2_notable_cpa_incentives"
                     style="width: 100%;" type="text" placeholder="">
             </div>
            
@@ -281,14 +281,14 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l5 x-container x-padding">
                 <label class="">Remarks/Status :</label>
-                <select class="form_data_b x-border x-select x-border" id="form_2_remarks_status"
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_remarks_status"
                     name="form_2_remarks_status"><br>
                     <option value="">Choose Option</option>
                     <option>Non-renewal</option>
                     <option>Cancelled</option>
                     <option>On-going</option>
                 </select>
-                <input type="text" class="hidden-textbox2 x-input x-border" name="form_2_remarks_status_why"
+                <input type="text" class="FORM2_FIELD FORM2_FIELD hidden-textbox2 x-input x-border" name="form_2_remarks_status_why"
                     id="form_2_remarks_status_why" placeholder="Reason why">
             </div>
             <div class="x-col l7 x-container x-padding" style="width: 55%;">
@@ -319,9 +319,9 @@
                     </tr>
 
                     <tr>
-                        <td><input class=" x-light-grey x-input" id="form_2_activity_agreements" type="text"
+                        <td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_activity_agreements_kapown_0" type="text"
                                 name="form_2_activity_agreements[]"></td>
-                        <td><input class=" x-light-grey x-input" id="form_2_date_conducted" type="date"
+                        <td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_date_conducted_kapown_0" type="date"
                                 name="form_2_date_conducted[]"></td>
                     </tr>
                 </table>
@@ -329,7 +329,7 @@
             <div class="x-col l5">
 
                 <div class="x-col l3 x-container x-padding" style="width: 10px">
-                    <input class="x-padding" type="file" id="form_2_image_uploads" name="image_uploads"
+                    <input class=" x-padding" type="file" id="form_2_image_uploads" name="image_uploads"
                         accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx" multiple />
                 </div>
 
@@ -341,32 +341,41 @@
         </div>
 
         <script>
-
+            var k_counter = 1
             function add_row() {
                 // $ID('main_').innerHTML += og_row
                 // Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
                 var row = form2_table.insertRow(3);
                 // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-                row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_2_activity_agreements" type="text" name="form_2_activity_agreements[]"></td>`
-                row.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" id="form_2_date_conducted" type="date" name="form_2_date_conducted[]"></td>`
-
+                row.insertCell(0).innerHTML = `<td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_activity_agreements_kapown_`+k_counter+`" type="text" name="form_2_activity_agreements[]"></td>`
+                row.insertCell(1).innerHTML = `<td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_date_conducted_kapown_`+k_counter+`"" type="date" name="form_2_date_conducted[]"></td>`
+                k_counter += 1
                 // Add some text to the new cells:
             }
         </script>
 
         <div class="x-right" style="margin-bottom: 20px;">
-            <input class="x-blue btn " id="form2_sub" type="submit">
+            <button class="btn btn-primary" type="button" onclick="submit_form('FORM2_FIELD','dcf_implementing_unit','/form2_dashboard')">Submit</button>
         </div>
     </div>
 
-</form>
 
 
+    {% include 'formdata_handler.html' %}
 
 
 
 
 <script type="text/javascript">
+    	$onload(function () {
+		var record_id = URL_ARGS["id"]
+		var table = URL_ARGS["table"]
+		load_data(record_id, table, "FORM2_FIELD")
+		
+		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+	})
+
+
     function getDropDown(sel) {
         hideAll();
         document.getElementById(sel.options[sel.selectedIndex].value).style.display
