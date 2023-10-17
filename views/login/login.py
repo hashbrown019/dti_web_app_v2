@@ -58,6 +58,7 @@ class _main:
 		log_res = rapid_mysql.select("SELECT * from `users` WHERE `username` = '{}' AND `password`='{}';".format(username,password))
 		admin_type = ""
 		priv_type = ""
+		print(log_res[0])
 		if(log_res[0]['job'] in ['Admin','Super Admin']):
 			admin_type = "_{}".format(log_res[0]['job'].upper().replace(" ","_"))
 			
