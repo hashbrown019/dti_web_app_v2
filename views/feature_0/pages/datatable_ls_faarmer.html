@@ -99,6 +99,50 @@
 				res = JSON.parse(rest)['dash1']
 				res2 = JSON.parse(rest)['dash2']
 				res3 = JSON.parse(rest)['dash3']
+				// create_table(res) // FOR DATA TABLES
+				dash_get_form_a1(res2) // FOR ADVANCE FILTER NUMBER INIT
+				create_graphs(res3) // FOR ADVANCE FILTER NUMBER INIT
+				// window.setTimeout(dash_get_form_a1,1000)
+				SPINNER_LOADER.hide()
+				window.setInterval(get_notif_unseen,10000)
+			},
+			err : function(res){println(res)},
+			progress : function(e){
+				// var response_length = parseFloat(headerMap(e)['total'])
+				var response_length = parseFloat(e.total)
+				var response_loaded = parseFloat(e.loaded)
+				var percent_  = (response_loaded / response_length) * 100;
+				var percent_rounded = Math.round(percent_ * 100) / 100
+				SPINNER_LOADER.loading(Math.round(percent_))
+				SPINNER_LOADER.message(`
+					<span>
+						Gathering 
+						<b>`+Math.round(percent_)+`%</b><br>
+						<span class="x-small">
+							[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+							<i>`+(response_length-response_loaded)+` bytes remaining</i>
+						</span>
+					</span>
+				`);
+			}
+		})
+		// TABLE.ajax.url('/feature_0/filter_list_farmers')
+		// TABLE.ajax.reload()
+	}
+
+	function showing_table_ls_farmer____(){
+		println(" -- Getting List Farmers")
+		SPINNER_LOADER.show()
+		$send({
+			action : "/feature_0/filter_list_farmers",
+			method : POST,
+			err_dialog:true,
+			// a_sync : false,
+			func : function (rest){
+				println(" -- Getting List Farmers Done")
+				res = JSON.parse(rest)['dash1']
+				res2 = JSON.parse(rest)['dash2']
+				res3 = JSON.parse(rest)['dash3']
 				create_table(res)
 				dash_get_form_a1(res2)
 				create_graphs(res3)
