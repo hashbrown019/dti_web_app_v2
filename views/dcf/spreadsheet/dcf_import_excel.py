@@ -34,7 +34,7 @@ def excel_upload_open(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	if(sheet.name !='Form1DIPdetails'):
+	if(sheet.name !='form1'):
 		flash(f"Invalid file template!", "error")
 		return "done:Sheet Error"
 	for row in data[5:]:
@@ -110,7 +110,7 @@ def excel_upload_open2(path):
 	header = data[3]
 	print("tafdagfefgrhgragharghahu")
 	print(sheet.name)
-	if(sheet.name !='CPAs_Details_edited'):
+	if(sheet.name !='form2'):
 		flash(f"Invalid file template!", "error")
 		return "done:Sheet Error"
 	for row in data[3:]:
