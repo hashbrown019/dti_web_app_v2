@@ -52,17 +52,17 @@ def displayform():
         return redirect("/login?force_url=1")
         
     USER_INFO = session["USER_DATA"]
-    form1_datatable=db.select("SELECT * FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
-    form2_datatable=db.select("SELECT * FROM dcf_implementing_unit {};".format(position_data_filter()))
-    form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg {};".format(position_data_filter()))
-    form4_datatable=db.select("SELECT * FROM dcf_capacity_building {};".format(position_data_filter()))
-    form5_datatable=db.select("SELECT * FROM dcf_matching_grant {};".format(position_data_filter()))
-    form6_datatable=db.select("SELECT * FROM dcf_product_development {};".format(position_data_filter()))
-    form7_datatable=db.select("SELECT * FROM dcf_trade_promotion {};".format(position_data_filter()))
-    form8_datatable=db.select("SELECT * FROM form8 {};".format(position_data_filter()))
-    form9_datatable=db.select("SELECT * FROM dcf_enablers_activity {};".format(position_data_filter()))
-    form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {};".format(position_data_filter()))
-    form11_datatable=db.select("SELECT * FROM dcf_access_financing {};".format(position_data_filter()))
+    form1_datatable=db.select("SELECT * FROM dcf_prep_review_aprv_status {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form2_datatable=db.select("SELECT * FROM dcf_implementing_unit {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form4_datatable=db.select("SELECT * FROM dcf_capacity_building {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form5_datatable=db.select("SELECT * FROM dcf_matching_grant {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form6_datatable=db.select("SELECT * FROM dcf_product_development {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form7_datatable=db.select("SELECT * FROM dcf_trade_promotion {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form8_datatable=db.select("SELECT * FROM form8 {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form9_datatable=db.select("SELECT * FROM dcf_enablers_activity {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form11_datatable=db.select("SELECT * FROM dcf_access_financing {} ORDER BY `id` DESC;".format(position_data_filter()))
     return{
         'form1_datatable':  form1_datatable,
         'form2_datatable':  form2_datatable,

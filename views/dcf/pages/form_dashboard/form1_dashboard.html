@@ -122,46 +122,7 @@
     </div>
   </div>
 </div>
-<script>
-  
-  function showDeleteConfirmation(id) {
-                swalWithCustomButtons.fire({
-                  title: 'Are you sure?',
-                  text: "You won't be able to revert this!",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Yes, delete it!',
-                  cancelButtonText: 'No, cancel',
-                  reverseButtons: true,
-                  customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger',
-                  },
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    window.location.href = `/delete_record/dcf_prep_review_aprv_status/${id}`;
-                  } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithCustomButtons.fire(
-                      'Cancelled',
-                      'Your record is safe',
-                      'error'
-                    );
-                  }
-                });
 
-                // Prevent the default link behavior
-                return false;
-              }
-
-              const swalWithCustomButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-              });
-
-</script>
 
 
 {% endblock content %}

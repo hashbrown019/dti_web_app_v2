@@ -16,6 +16,7 @@
     <div class=" x-col l10 x-container x-padding x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
         <center>
             <h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 2 - CPA TRACKER</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
         </center>
 
         <!---text--->
@@ -65,7 +66,7 @@
 
             <div class="x-col l4 x-container x-padding">
                 <label class="">Commodity:</label>
-                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_commodity" name="form_2_commodity" required>
+                <select class="FORM2_FIELD withother x-border x-select x-border" id="form_2_commodity" name="form_2_commodity" required>
                     <option value="">Choose your option</option>
                     <option value="Coffee">Coffee</option>
                     <option value="Cacao">Cacao</option>
@@ -73,20 +74,20 @@
                     <option value="PFN">PFN</option>
                 </select>
                 <input type="text" class="FORM2_FIELD hidden-textbox x-input x-border" name="form_2_commodity_others"
-                    id="form_2_commodity_others" placeholder="Please specify">
+                    id="form_2_commodity_others" show-base="form_2_commodity" show-trigger="PFN"  placeholder="Please specify">
             </div>
 
             <div class="x-row">
                 <div class="x-col l4 x-container x-padding">
                     <label class=""><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (ex. R8_SC Global)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>   DIP Alignment:
                     </label>
-                        <select class="FORM2_FIELD x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
-                            <option value="">Choose your option</option>
+                        <select class="FORM2_FIELD withother x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
+                            <option value="none">Choose your option</option>
                             <option value="Yes">Yes</option>
                             <option value="No DIP Alignment">No</option>
                         </select>
                         <input type="text" class="FORM2_FIELD hidden-textboxdip x-input x-border" name="form_2_dip_alignment_yes"
-                            id="form_2_dip_alignment_yes" placeholder="Enter DIP name">
+                            id="form_2_dip_alignment_yes" show-base="form_2_dip_alignment" show-trigger="Yes" placeholder="Enter DIP name">
                 </div>
             </div>
         </div>
@@ -281,15 +282,14 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l5 x-container x-padding">
                 <label class="">Remarks/Status :</label>
-                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_remarks_status"
-                    name="form_2_remarks_status"><br>
-                    <option value="">Choose Option</option>
-                    <option>Non-renewal</option>
-                    <option>Cancelled</option>
-                    <option>On-going</option>
+                <select class="FORM2_FIELD withother x-border x-select x-border" id="form_2_remarks_status" name="form_2_remarks_status" required>
+                    <option value="none">Choose Option</option>
+                    <option value="Non-renewal">Non-renewal</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="On-going">On-going</option>
                 </select>
-                <input type="text" class="FORM2_FIELD FORM2_FIELD hidden-textbox2 x-input x-border" name="form_2_remarks_status_why"
-                    id="form_2_remarks_status_why" placeholder="Reason why">
+                <input type="text" class="FORM2_FIELD hidden-textbox2 x-input x-border" name="form_2_remarks_status_why"
+                    id="form_2_remarks_status_why" show-base="form_2_remarks_status" show-trigger="Cancelled||Non-renewal"  placeholder="Reason why">
             </div>
             <div class="x-col l7 x-container x-padding" style="width: 55%;">
                 <style>
@@ -354,10 +354,10 @@
             }
         </script>
 
-        <div class="x-right" style="margin-bottom: 20px;">
+<p class="x-right" id="submit_btn_holder">
             <button class="btn btn-primary" type="button" onclick="submit_form('FORM2_FIELD','dcf_implementing_unit','/form2_dashboard')">Submit</button>
+</p>
         </div>
-    </div>
 
 
 
