@@ -2,27 +2,17 @@ let CHOICES_SELECT = {}
 
 
 
-$(document).ready(function(){
-	$(".hidden-textboxdip").hide();
-	$("select#form_2_dip_alignment").change(function(){
-	var currentVal = $(this).val();
-	if(currentVal == "Yes"){
-	$(".hidden-textboxdip").show();
-	}
-	else
-	$(".hidden-textboxdip").hide();
-	});  
-	});
+
 
 $(document).ready(function(){
-	$(".hidden-textbox2").hide();
+	$(".hidden-form11").hide();
 	$("select#form_11_dip_alignment").change(function(){
 	var currentVal = $(this).val();
 	if(currentVal == "Yes"){
-	$(".hidden-textbox2").show();
+	$(".hidden-form11").show();
 	}
 	else
-	$(".hidden-textbox2").hide();
+	$(".hidden-form11").hide();
 	});  
 	});
 
@@ -63,39 +53,8 @@ $(document).ready(function(){
 				});
 	
 
-	$(document).ready(function(){
-		$(".hidden-textbox2").hide();
-		
-		$("select#form_2_remarks_status").change(function(){
-				var currentVal = $(this).val();
-				var hiddenTextbox = $(".hidden-textbox2");
-				
-				if (currentVal == "Cancelled" || currentVal == "Non-renewal") {
-						hiddenTextbox.show();
-						hiddenTextbox.prop("required", true); 
-				} else {
-						hiddenTextbox.hide();
-						hiddenTextbox.prop("required", false);
-				}
-		});  
-});
 
-$(document).ready(function(){
-	$(".hidden-textbox3").hide();
-	
-	$("select#form_3_types_of_bdsp").change(function(){
-			var currentVal = $(this).val();
-			var hiddenTextbox = $(".hidden-textbox3");
-			
-			if (currentVal == "Organization/Firm") {
-					hiddenTextbox.show();
-					hiddenTextbox.prop("required", true); 
-			} else {
-					hiddenTextbox.hide();
-					hiddenTextbox.prop("required", false);
-			}
-	});  
-});
+
 
 $(document).ready(function() {
 	$(".form1_mg, .form1_cap, .form1_sup").on("input", updateTotalProjectCost);
@@ -296,17 +255,6 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function(){
-$(".hidden-textbox2").hide();
-$("select#industry_cluster").change(function(){
-var currentVal = $(this).val();
-if(currentVal == ""){
-$(".hidden-textbox2").show();
-}
-else
-$(".hidden-textbox2").hide();
-});  
-});
 
 $(document).ready(function(){
 $(".hidden-column_18_21").hide();
@@ -359,17 +307,7 @@ $(".hidden-column_22_28").hide();
 
 
 
-$(document).ready(function(){
-$(".hidden-textbox3").hide();
-$("select#no_indigenous_group").change(function(){
-var currentVal = $(this).val();
-if(currentVal == "Yes"){
-$(".hidden-textbox3").show();
-}
-else
-$(".hidden-textbox3").hide();
-});  
-});
+
 
 $(document).ready(function(){
 $(".hidden-textbox4").hide();
@@ -756,27 +694,6 @@ function myFunction3() {
 			},300)
 
 })();
-
-
-$(document).ready(function(){
-	var multipleCancelButton = new Choices('#form_3_choices_multiple_remove_button', {
-		removeItemButton: true,
-		maxItemCount:4,
-		searchResultLimit:4,
-		renderChoiceLimit:4
-	}); 
-});
-
-
-
-$(document).ready(function(){
-	var multipleCancelButton = new Choices('#form_3_preferred_province', {
-		removeItemButton: true,
-		maxItemCount:21,
-		searchResultLimit:21,
-		renderChoiceLimit:21
-	}); 
-});
 
 
 function changecbb_types_of_training(val_){

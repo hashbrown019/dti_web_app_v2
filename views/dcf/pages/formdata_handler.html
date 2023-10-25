@@ -1,15 +1,58 @@
 <script>
 $(document).ready(function(){
-$(".hidden-textbox").hide();
-$("select#form_1_commodity,select#form_2_commodity,select#cbb_commodity,select#mgit_commodity,select#form_6_commodity,select#form_7_commodity,select#form_11_industry_cluster").change(function(){
-var currentVal = $(this).val();
-if(currentVal == "PFN"){
-$(".hidden-textbox").show();
-}
-else
-$(".hidden-textbox").hide();
-});  
+	$(".hidden-textbox").hide();
+	$("select#form_1_commodity,select#form_2_commodity,select#cbb_commodity,select#mgit_commodity,select#form_6_commodity,select#form_7_commodity,select#form_11_industry_cluster").change(function(){
+		var currentVal = $(this).val();
+		if(currentVal == "PFN"){
+			$(".hidden-textbox").show();
+		}
+		else{
+			$(".hidden-textbox").hide();
+		}
+	});  
 });
+$(document).ready(function(){
+	$(".hidden-textbox2").hide();
+	$("select#form_2_remarks_status").change(function(){
+			var currentVal = $(this).val();
+			var hiddenTextbox = $(".hidden-textbox2");
+			if (currentVal == "Cancelled" || currentVal == "Non-renewal") {
+					hiddenTextbox.show();
+			} else {
+					hiddenTextbox.hide();
+			}
+	});  
+});
+
+$(document).ready(function(){
+	$(".hidden-textbox3").hide();
+	
+	$("select#form_3_types_of_bdsp").change(function(){
+			var currentVal = $(this).val();
+			var hiddenTextbox = $(".hidden-textbox3");
+			
+			if (currentVal == "Organization/Firm") {
+					hiddenTextbox.show();
+					hiddenTextbox.prop("required", true); 
+			} else {
+					hiddenTextbox.hide();
+					hiddenTextbox.prop("required", false);
+			}
+	});  
+});
+
+
+$(document).ready(function(){
+	$(".hidden-textboxdip").hide();
+	$("select#form_2_dip_alignment").change(function(){
+	var currentVal = $(this).val();
+	if(currentVal == "Yes"){
+	$(".hidden-textboxdip").show();
+	}
+	else
+	$(".hidden-textboxdip").hide();
+	});  
+	});
 
 // function edit_form(class_name,table){
 // 	for (let index = 0; index < $CLASS('class_name').length; index++) {
@@ -17,6 +60,35 @@ $(".hidden-textbox").hide();
 // 	}
 // }
 
+let multi_table_value = {
+	"form_2_activity_agreements":"",
+	"form_2_date_conducted":"",
+	"form_3_name":"",
+	"form_3_education":"",
+	"form_3_expertise":""
+}
+
+
+var button_to_click = undefined
+var value_to_add = {}
+
+function set_multi_table_row(){
+	// println(button_to_click)
+	var _len_iter = (value_to_add[Object.keys(value_to_add)[0]])
+	for (let index = 0; index < _len_iter.length-1; index++) {
+		button_to_click.click()
+		// println(index)
+	} 
+	
+
+	for(key in value_to_add){
+		var _val = (value_to_add[key])
+		for (let index = 0; index < _val.length; index++) {
+			const data_value = _val[index];
+			$ID(key+"_kapown_"+index).value = data_value
+		}
+	}
+}
 
 function load_data(record_id,table,class_name){
 	// http://127.0.0.1:5000/dcf/form8?id=1&table=form8
@@ -27,7 +99,22 @@ function load_data(record_id,table,class_name){
 			var res = JSON.parse(r)[0]
 			var x_ins = $CLASS(class_name)
 			for (let index = 0; index < x_ins.length; index++) {
-				// x_ins[index].value = res[x_ins[index].id]
+
+				/////////////////
+				var multi_id = x_ins[index].id.split("_kapown")[0]
+				if(multi_table_value[multi_id] != undefined){
+					const add_btn = x_ins[index].parentNode.parentNode.parentNode.querySelectorAll("button")[0]
+					var multi_val = res[multi_id].split(",")
+					println(x_ins[index].parentNode.parentNode.parentNode)
+					for (let index = 0; index < multi_val.length; index++) {
+						value_to_add[multi_id] = multi_val
+						button_to_click = add_btn
+					}
+					continue;
+				}
+				/////////////////
+
+
 				if (x_ins[index].type == "checkbox") {
 					try{
 						if (res[x_ins[index].id] === "true") {
@@ -44,7 +131,6 @@ function load_data(record_id,table,class_name){
 						if(CHOICES_SELECT[x_ins[index].id] != undefined){
 							// alert("kamown")
 							var _val = res[x_ins[index].id].split(",")
-							println(_val)
 							CHOICES_SELECT[x_ins[index].id].setValue(_val);
 							x_ins[index].value = res[x_ins[index].id]
 
@@ -82,11 +168,15 @@ function load_data(record_id,table,class_name){
 				// x_ins[index].value = res[x_ins[index].id]
 				if(x_ins[index].getAttributeNames().includes("show-base") && x_ins[index].getAttributeNames().includes("show-trigger")){
 					var base_id = x_ins[index].getAttribute("show-base")
-					var child_id_value = x_ins[index].getAttribute("show-trigger")
+					var child_id_value = x_ins[index].getAttribute("show-trigger").split("||");
 					var base_id_value = $ID(base_id).value
-					println(base_id_value + " = " + child_id_value)
-					if(base_id_value == child_id_value){
-						println(x_ins[index])
+					println(base_id_value + " ====== " + child_id_value)
+					// println(child_id_value.includes(base_id_value))
+					// if(base_id_value == child_id_value){
+					if(child_id_value.includes(base_id_value)){
+						println('match')
+						println(x_ins[index].id)
+						triggerChange(x_ins[index])
 						x_ins[index].style.display = "block";
 						dom_refresh();
 					}
@@ -98,7 +188,10 @@ function load_data(record_id,table,class_name){
 			// 	choices__list[index].disabled = true;
 				
 			// }
+
+			set_multi_table_row() // init multi table row with multiple value
 			dom_refresh();
+			
 		}
 	})
 }
@@ -106,6 +199,11 @@ function load_data(record_id,table,class_name){
 
 function triggerChange(element) {
 	let changeEvent = new Event('change');
+	element.dispatchEvent(changeEvent);
+}
+
+function trigger(element,t) {
+	let changeEvent = new Event(t);
 	element.dispatchEvent(changeEvent);
 }
 
@@ -138,7 +236,7 @@ function submit_form(class_name,table, url){
 			temp_data.push(form_data[key])
 			if(temp_form_data[orig_id]==undefined){temp_form_data[orig_id] = []}
 			temp_form_data[orig_id].push(form_data[key])
-			println(orig_id)
+			// println(orig_id)
 			delete form_data[key]
 
 		}
@@ -147,7 +245,7 @@ function submit_form(class_name,table, url){
 		temp_form_data[_temp] = temp_form_data[_temp].join(',')
 	}
 	form_data = Object.assign({}, temp_form_data, form_data);
-	println(form_data)
+	// println(form_data)
 
 	$send({
 			action: "/set_data/" + table,
@@ -156,7 +254,7 @@ function submit_form(class_name,table, url){
 			func: function (r) {
 				var res = JSON.parse(r)
 				println(res)
-				if (res.status == "success") {
+				if (res.id.response == "done") {
 					Swal.fire(
 						'Success!',
 						'Record Saved!',
@@ -167,8 +265,18 @@ function submit_form(class_name,table, url){
 						}
 					});
 				}
+				else {
+					Swal.fire(
+						'Error!',
+						res.id.message,
+						'error'
+					);
+				}
 			}
 		})
-	println(form_data)
+	// println(form_data)
 }
+
+
+
 </script>

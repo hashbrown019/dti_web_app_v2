@@ -7,7 +7,6 @@
 
 {% block content %}
 <title>Form 3</title>
-<form action="/insert_form3" method="POST">
 	{% include "includes/sweetalert.html" %}
 	<div class="x-col l1 ">
 		&nbsp;
@@ -16,6 +15,8 @@
 	<div class=" x-col l10 x-padding x-container x-card x-light-grey" style="margin-top: 10px; margin-bottom: 20px;">
 		<center>
 			<h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 3 - BDSP REGISTRY</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
+
 		</center>
 
 		<div class="x-container x-padding">
@@ -30,28 +31,30 @@
 
 			<!---row1--->
 			<div class="x-col l5 x-container x-padding">
+				<input class="FORM3_FIELD x-input" type="hidden"  id="id">
+
 				<label class="">Types of BDSP:</label>
-				<select class=" x-border x-select x-border" id="form_3_types_of_bdsp" name="form_3_types_of_bdsp"
+				<select class="FORM3_FIELD withother  x-border x-select x-border" id="form_3_types_of_bdsp" name="form_3_types_of_bdsp"
 					required><br>
 					<option value="" selected>Choose your option</option>
 					<option value="Organization/Firm">Organization/Firm</option>
 					<option value="Individual">Individual</option>
 				</select>
-				<input type="text" class="hidden-textbox3 x-input x-border" name="form_3_orgfirm"
-                    id="form_3_orgfirm" placeholder="Full Name of Organization/Firm (based on official business registration)">
+				<input type="text" class="FORM3_FIELD hidden-textbox3 x-input x-border" name="form_3_orgfirm"
+                    id="form_3_orgfirm" show-base="form_3_types_of_bdsp" show-trigger="Organization/Firm" placeholder="Full Name of Organization/Firm (based on official business registration)">
 			</div>
 			<div class="x-col l4 x-container x-padding">
 				<label><span style="color: #007399;" class="tool" data-tip="Provide Full name. (example: Juan C. Dela Cruz)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>   Contact Person:</label>
-				<input class=" x-input x-border" id="form_3_contact_person" name="form_3_contact_person" type="text"
+				<input class="FORM3_FIELD  x-input x-border" id="form_3_contact_person" name="form_3_contact_person" type="text"
 					placeholder="">
 			</div>
 			<!-- <div class="x-col l3 x-container ">
 				<label>Training Number</label>
-				<input class=" x-input x-border" id="form_3_training_number" name="form_3_training_number" type="text" placeholder="">
+				<input class="FORM3_FIELD  x-input x-border" id="form_3_training_number" name="form_3_training_number" type="text" placeholder="">
 			</div> -->
 			<div class="x-col l2 x-container x-padding">
 				<label class="">Sex:</label>
-				<select class=" x-border x-select x-border" id="form_3_sex" name="form_3_sex"><br>
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_sex" name="form_3_sex"><br>
 					<option selected value="">Choose Sex</option>
 					<option>Male</option>
 					<option>Female</option>
@@ -66,29 +69,29 @@
 		<div class="x-row x-container x-padding">
 			<div class="x-col l5 x-container x-padding">
 				<label><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  Office/Main Address:</label>
-				<input class=" x-input x-border" id="form_3_office_addr" name="form_3_office_addr" type="text"
+				<input class="FORM3_FIELD  x-input x-border" id="form_3_office_addr" name="form_3_office_addr" type="text"
 					placeholder="">
 			</div>
 
 			<div class="x-col l5 x-container x-padding">
 				<label for="email"><span style="color: #007399;" class="tool" data-tip="Provide valid Email Address" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  Email Address:</label><br>
-				<input class="x-email x-border x-padding" size="33" id="form_3_email" name="form_3_email"
+				<input class="FORM3_FIELD x-email x-border x-padding" size="33" id="form_3_email" name="form_3_email"
 					autocomplete="on">
 			</div>
 
 			<div class="x-col l9 x-container x-padding">
 				<label class=""><span style="color: #007399;" class="tool" data-tip="Provide brief description" tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  Brief Description of Company, Institution and/or Consultant Background:</label>
-				<textarea class="comment x-border" id="form_3_breif_description" name="form_3_breif_description"
+				<textarea class="FORM3_FIELD comment x-border" id="form_3_breif_description" name="form_3_breif_description"
 					placeholder="Write here" type="text" style="resize: both; height: 100px; width: 550px;"></textarea>
 			</div>
 			<div class="x-col l4 x-container x-padding">
 				<label for="phone">Tel/Cellphone number:</label><br>
-				<input class="x-border x-input " id="phone" name="phone">
+				<input class="FORM3_FIELD x-border x-input " id="phone" name="phone">
 			</div>
 
 			<div class="x-col l6 x-container x-padding">
 				<label class="">Field of Expertise:</label>
-				<select id="form_3_choices_multiple_remove_button" name="form_3_choices[]"
+				<select class="FORM3_FIELD" id="form_3_choices" name="form_3_choices[]"
 					placeholder="Select upto 4 tags" multiple>
 					<option value="Entrepreneurial">Entrepreneurial</option>
 					<option value="Agri-technical">Agri-technical</option>
@@ -103,7 +106,7 @@
 		<div class="x-row x-container x-padding">
 			<div class="x-col l6 x-container x-padding">
 				<label class="">Preferred Region to work in for RAPID:</label>
-				<select class=" x-border x-select x-border" id="form_3_preferred_region" name="form_3_preferred_region"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_preferred_region" name="form_3_preferred_region"
 					required><br>
 					<option selected value="">Choose Region</option>
 					<option>Region Vlll - Eastern Visayas</option>
@@ -121,7 +124,7 @@
 
 			<div class="x-col l6 x-container x-padding">
 				<label class="">Preferred Province to work in for RAPID:</label>
-				<select id="form_3_preferred_province" name="form_3_preferred_province[]" placeholder="Choose Province" multiple>
+				<select class="FORM3_FIELD" id="form_3_preferred_province" name="form_3_preferred_province[]" placeholder="Choose Province" multiple>
 					<option>Northern Samar</option>
 					<option>Leyte</option>
 					<option>Southern Leyte</option>
@@ -156,16 +159,11 @@
 					}
 				</style>
 				<table id="form3_table_org_comp" class="x-table x-container x-table-border">
-					<thead>
 						<tr>
-							<th colspan="2">
-								<center>BDSP Team Composition</center>
-							</th>
-							<th colspan>
-								<center>
-									<button type="button" class="btn btn-primary" onclick="add_row()"><i
-											class="fa-solid fa-circle-plus"></i>&nbsp; Add</button>
-								</center>
+							<th colspan="3">
+								<center><button type="button" style="float: left;" class="btn btn-primary"
+                                    onclick="add_row()"><i class="fa-solid fa-circle-plus"></i></button>BDSP Team Composition</center>
+								
 							</th>
 						</tr>
 						<tr>
@@ -179,15 +177,12 @@
 								<center>Expertise</center>
 							</td>
 						</tr>
-					</thead>
-					<tbody id="main_">
 						<tr id="main_row">
-							<td><input class=" x-light-grey x-input" type="text" name="form_3_name[]"></td>
-							<td><input class=" x-light-grey x-input" type="text" name="form_3_education[]"></td>
-							<td><input class=" x-light-grey x-input" type="text" name="form_3_expertise[]"></td>
+							<td><input class="FORM3_FIELD  x-light-grey x-input" type="text" id="form_3_name_kapown_0" name="form_3_name[]"></td>
+							<td><input class="FORM3_FIELD  x-light-grey x-input" type="text" id="form_3_education_kapown_0" name="form_3_education[]"></td>
+							<td><input class="FORM3_FIELD  x-light-grey x-input" type="text" id="form_3_expertise_kapown_0" name="form_3_expertise[]"></td>
 						</tr>
 
-					</tbody>
 				</table>
 			</div>
 		</div>
@@ -195,16 +190,16 @@
 			let og_row = $ID('main_row').parentNode.innerHTML
 			// Find a <table> element with id="myTable":
 			var form3_table_org_comp = document.getElementById("form3_table_org_comp");
-
+			var k_counter = 1
 			function add_row() {
 				// $ID('main_').innerHTML += og_row
 				// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 				var row = form3_table_org_comp.insertRow(2);
 				// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-				row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" type="text" name="form_3_name[]"></td>`
-				row.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" type="text" name="form_3_education[]"></td>`
-				row.insertCell(2).innerHTML = `<td><input class=" x-light-grey x-input" type="text" name="form_3_expertise[]"></td>`
-
+				row.insertCell(0).innerHTML = `<td><input class="FORM3_FIELD  x-light-grey x-input" type="text" id="form_3_name_kapown_`+k_counter+`" name="form_3_name[]"></td>`
+				row.insertCell(1).innerHTML = `<td><input class="FORM3_FIELD  x-light-grey x-input" type="text" id="form_3_education_kapown_`+k_counter+`" name="form_3_education[]"></td>`
+				row.insertCell(2).innerHTML = `<td><input class="FORM3_FIELD  x-light-grey x-input" type="text" id="form_3_expertise_kapown_`+k_counter+`" name="form_3_expertise[]"></td>`
+				k_counter += 1
 				// Add some text to the new cells:
 			}
 		</script>
@@ -228,7 +223,7 @@
 		<div class="x-row x-container x-padding">
 			<div class="x-col l4 x-container x-padding">
 				<label class="">Prior RAPID Engagements? </label>
-				<select class=" x-border x-select x-border" id="form_3_prior_rapid_engagements"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_prior_rapid_engagements"
 					name="form_3_prior_rapid_engagements"><br>
 					<option selected disabled>Choose Your Option</option>
 					<option>YES</option>
@@ -237,16 +232,16 @@
 			</div>
 			<!-- <div class="x-col l3 x-container x-padding">	
 				<label>Date Registered:</label>
-				<input class=" x-input x-border" id="form_3_date_registered" name="form_3_date_registered" type="date" placeholder="">
+				<input class="FORM3_FIELD  x-input x-border" id="form_3_date_registered" name="form_3_date_registered" type="date" placeholder="">
 			</div> -->
 			<div class="x-col l4 x-container x-padding">
 				<label><span style="color: #007399;" class="tool" data-tip="Provide name of RCU/PCU. (example: For Region: RCU 8 , For Province: PCU leyte)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> RAPID Implementing Unit:</label>
-				<input class=" x-input x-border" id="form_3_rapid_implementing_unit"
+				<input class="FORM3_FIELD  x-input x-border" id="form_3_rapid_implementing_unit"
 					name="form_3_rapid_implementing_unit" type="text" placeholder="">
 			</div>
 			<div class="x-col l3 x-container x-padding">
 				<label class="">Type/Nature of Engagements:</label>
-				<select class=" x-border x-select x-border" id="form_3_nature_engagements"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_nature_engagements"
 					name="form_3_nature_engagements"><br>
 					<option selected disabled>Choose Your Option</option>
 					<option>Resource person</option>
@@ -260,12 +255,12 @@
 		<div class="x-row x-container x-padding">
 			<div class="x-col l7 x-container x-padding">
 				<label class=""><span style="color: #007399;" class="tool" data-tip="Refer to ISO Procurement ratings" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Suppliers' Evaluation (Refer to ISO/Procurement ratings):</label>
-				<textarea class=" x-border x-input" id="form_3_suppliers_evaluation" placeholder="Write here"
+				<textarea class="FORM3_FIELD x-border x-input" id="form_3_suppliers_evaluation" placeholder="Write here"
 					type="text" name="form_3_suppliers_evaluation"></textarea>
 			</div>
 			<div class="x-col l7 x-container x-padding">
 				<label class=""><span style="color: #007399;" class="tool" data-tip="Format: Agency, Title of Activity, Date and Venue (example: Dept. of Agriculture, Cacao Planting Techniques, January 10-12,2023, Davao City) For multiple entries put numbering." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Other engagement outside RAPID:</label>
-				<textarea class=" x-border x-input" id="form_3_other_engagement_outside_rapid"
+				<textarea class="FORM3_FIELD x-border x-input" id="form_3_other_engagement_outside_rapid"
 					name="form_3_other_engagement_outside_rapid" placeholder="Write here" type="text"></textarea>
 			</div>
 		</div>
@@ -288,7 +283,7 @@
 		<div class="x-row x-container x-padding">
 			<div class="x-col l8 x-container x-padding">
 				<label class="">Willing to conduct on-line lecture/training/seminar?</label>
-				<select class=" x-border x-select x-border" id="form_3_lecture_training_seminar"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_lecture_training_seminar"
 					name="form_3_lecture_training_seminar" required><br>
 					<option selected disabled>Choose Your Option</option>
 					<option>YES</option>
@@ -297,7 +292,7 @@
 			</div>
 			<div class="x-col l8 x-container x-padding">
 				<label class="">Willing to develop modular video training materials?</label>
-				<select class=" x-border x-select x-border" id="form_3_training_materials"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_training_materials"
 					name="form_3_training_materials" required><br>
 					<option selected disabled>Choose Your Option</option>
 					<option>YES</option>
@@ -306,7 +301,7 @@
 			</div>
 			<div class="x-col l8 x-container x-padding">
 				<label class="">Willing to join other providers as organize pool of service providers?</label>
-				<select class=" x-border x-select x-border" id="form_3_organize_pool" name="form_3_organize_pool"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_organize_pool" name="form_3_organize_pool"
 					required><br>
 					<option selected disabled>Choose Your Option</option>
 					<option>YES</option>
@@ -315,7 +310,7 @@
 			</div>
 			<div class="x-col l8 x-container x-padding">
 				<label class="">Willing to be a mentor/coach on demand basis?</label>
-				<select class=" x-border x-select x-border" id="form_3_demand_basis" name="form_3_demand_basis"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_demand_basis" name="form_3_demand_basis"
 					required><br>
 					<option selected disabled>Choose Your Option</option>
 					<option>YES</option>
@@ -324,7 +319,7 @@
 			</div>
 			<div class="x-col l8 x-container x-padding">
 				<label class="">Willing to be part of long-term engagement for extension service facilitation?</label>
-				<select class=" x-border x-select x-border" id="form_3_extension_service_facilitation"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_extension_service_facilitation"
 					name="form_3_extension_service_facilitation" required><br>
 					<option selected disabled>Choose Your Option</option>
 					<option>YES</option>
@@ -335,7 +330,7 @@
 
 			<div class="x-col l8 x-container x-padding">
 				<label class="">Philgeps Registered</label>
-				<select class=" x-border x-select x-border" id="form_3_philgeps_registered"
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_philgeps_registered"
 					name="form_3_philgeps_registered"><br>
 					<option selected disabled>Choose Your Option</option>
 					<option>RED</option>
@@ -354,17 +349,63 @@
 			<!-- <div class="x-col l4 x-container x-padding">	
 				<button data-toggle="modal" data-target="#form3_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
 			</div> -->
-			<div class="x-right">
-				<input class="x-blue btn" id="form3_sub" type="submit">
-			</div>
+			<p class="x-right" id="submit_btn_holder">
+
+				<button class="btn btn-primary" type="button" onclick="submit_form('FORM3_FIELD','dcf_bdsp_reg','/form3_dashboard')">Submit</button>
+
+			</p>
 
 		</div>
 
 	</div>
+    {% include 'formdata_handler.html' %}
 
-</form>
 
 <script>
+	 	$onload(function () {
+		var record_id = URL_ARGS["id"]
+		var table = URL_ARGS["table"]
+		load_data(record_id, table, "FORM3_FIELD")
+		
+		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+	})
+	
+
+	$(document).ready(function(){
+		CHOICES_SELECT['form_3_choices'] = new Choices('#form_3_choices', {
+			removeItemButton: true,
+			choices: ["Entrepreneurial","Agri-technical","Organizational","Extension Service"],
+			searchChoices: true,
+			// maxItemCount:4,
+			// searchResultLimit:4,
+			addItems: true,
+			uniqueItemText: 'Only unique values can be added',
+			customAddItemText: 'Only values matching specific conditions can be added',
+			addItemText: (value) => {
+				// println(multipleCancelButton)
+				return `Press Enter to add <b>`+value+`</b>`;
+			},
+		}); 
+	});
+
+	$(document).ready(function(){
+		CHOICES_SELECT['form_3_preferred_province'] = new Choices('#form_3_preferred_province', {
+			removeItemButton: true,
+			choices: ["Northern Samar","Leyte","Southern Leyte","Zamboanga del Norte","Zamboanga Sibugay","Zamboanga del Sur","Misamis Oriental","Bukidnon","Lanao del Norte","Davao de Oro","Davao Oriental","Davao del Norte","Davao del Sur","Davao Occidental","North Cotabato","Sultan Kudarat","Sarangani","Agusan del Norte","Agusan del Sur","Surigao del Sur","Maguindanao"],
+			searchChoices: true,
+			// maxItemCount:4,
+			// searchResultLimit:4,
+			addItems: true,
+			uniqueItemText: 'Only unique values can be added',
+			customAddItemText: 'Only values matching specific conditions can be added',
+			addItemText: (value) => {
+				// println(multipleCancelButton)
+				return `Press Enter to add <b>`+value+`</b>`;
+			},
+		}); 
+	});
+
+
 	
 	const regionSelect = document.getElementById('form_3_preferred_region');
 	const provinceSelect = document.getElementById('form_3_preferred_province');
