@@ -11,7 +11,6 @@
 
 {% block content %}
 <title>Form 4</title>
-<form action="/insert_form4" method="POST">
 	{% include "includes/sweetalert.html" %}
 	<div class="x-col l1 ">
 		&nbsp;
@@ -21,6 +20,8 @@
 		<center>
 			<h2 class=" x-container x-padding text-white" style="background-color: #007399;">FORM 4 - CAPACITY BUILDING
 				FOR BENEFICIARIES</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
+
 		</center>
 
 		<div class="x-container x-padding">
@@ -32,13 +33,14 @@
 					border-collapse: collapse;
 				}
 			</style>
+				<input class="FORM4_FIELD x-input" type="hidden"  id="id">
 
 
 			<!---1--->
 			<div class="x-row x-container x-padding">
 				<div class="x-col l3 x-container x-padding">
 					<label class="">Implementing Unit:</label>
-					<select class="form_data_b x-border x-select x-border" id="cbb_implementing_unit"
+					<select class="FORM4_FIELD x-border x-select x-border" id="cbb_implementing_unit"
 						name="cbb_implementing_unit" required><br>
 						<option value="">Choose your option</option>
 						<optgroup label="RCU">
@@ -80,16 +82,16 @@
 
 				<!-- <div class="x-col l3 x-container">
 					<label>Training Number</label>
-					<input class="form_data_b x-input x-border" name="cbb_training_number" id="cbb_training_number" type="text" placeholder="">
+					<input class="FORM4_FIELD x-input x-border" name="cbb_training_number" id="cbb_training_number" type="text" placeholder="">
 				</div> -->
 				<div class="x-col l3 x-padding x-container">
 					<label><span style="color: #007399;" class="tool" data-tip="Provide full activity title based on approved activity proposal." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Activity Title:</label>
-					<input class="form_data_b x-input x-border" name="cbb_activity_title" id="cbb_activity_title"
+					<input class="FORM4_FIELD x-input x-border" name="cbb_activity_title" id="cbb_activity_title"
 						type="text" placeholder="">
 				</div>
 				<div class="x-col l6 x-container x-padding">
 					<label class="">Types of Training:</label>
-					<select required class="form_data_b x-border x-select x-border" name="cbb_types_of_training"
+					<select required class="FORM4_FIELD x-border x-select x-border" name="cbb_types_of_training"
 						id="cbb_types_of_training" onchange="changecbb_types_of_training(this.value)">
 						<option value="" disabled selected>Choose your option</option>
 						<optgroup label="Farmer Organizations">
@@ -147,12 +149,12 @@
 				<div class="x-col l4 x-container x-padding">
 					<label>Topic Of Training: <span style="color: #007399;" class="tool" data-tip="Choose topic of training in options (you can select multiple). If you select 'GESI,' 'Social Environment & Climate,' or 'Managing Natural Resources' in Types of Training, you can type the topic of training and press 'Enter' ." tabindex="1"><i class="fa-solid fa-circle-info"></i></span>  </label>
 						<!-- <input type="text" id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple> -->
-						<select id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple>
+						<select class="FORM4_FIELD" id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple>
 						</select>
 				</div>
 				<div class="x-col l4 x-container x-padding">
 					<label class="">DIP-approved alignment:</label>
-					<select class="form_data_b x-border x-select x-border" name="cbb_dip_approved_alignment"
+					<select class="FORM4_FIELD x-border x-select x-border" name="cbb_dip_approved_alignment"
 						id="cbb_dip_approved_alignment"><br>
 						<option value="">Choose your option</option>
 						<option>Conducted before DIP approval</option>
@@ -163,7 +165,7 @@
 
 				<div class="x-col l4 x-container x-padding">
 					<label> <span style="color: #007399;" class="tool" data-tip="DIP name format: Region<space>DIP Name (ex. R8 SC Global)." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> Name of DIPs:</label>
-					<input class="form_data_b x-input x-border" name="cbb_name_of_dip" id="cbb_name_of_dip" type="text"
+					<input class="FORM4_FIELD x-input x-border" name="cbb_name_of_dip" id="cbb_name_of_dip" type="text"
 						placeholder="">
 				</div>
 			</div>
@@ -197,29 +199,29 @@
 						</tr>
 
 						<tr>
-							<td><input class="form_data_b x-input x-border" name="cbb_date_start" id="cbb_date_start" type="date" placeholder=""></td>
-							<td><input class="form_data_b x-input x-border" name="cbb_date_end" id="cbb_date_end" type="date" placeholder=""></td>
+							<td><input class="FORM4_FIELD x-input x-border" name="cbb_date_start" id="cbb_date_start" type="date" placeholder=""></td>
+							<td><input class="FORM4_FIELD x-input x-border" name="cbb_date_end" id="cbb_date_end" type="date" placeholder=""></td>
 						</tr>
 					</table>
 				</div>
 
 				<!-- <div class="x-col l4 x-container x-padding">
 					<label>Total Number of Participants:</label>
-					<input class="form_data_b x-input x-border" name="cbb_total_number_of_participants"
+					<input class="FORM4_FIELD x-input x-border" name="cbb_total_number_of_participants"
 						id="cbb_total_number_of_participants" type="Number" placeholder="Input Number">
 				</div> -->
 
 				<div class="x-col l3 x-container x-padding">
 					<label class="">Commodity:</label>
-					<select class="x-border x-select x-border" id="cbb_commodity" name="cbb_commodity" required>
+					<select class="FORM4_FIELD withother x-border x-select x-border" id="cbb_commodity" name="cbb_commodity" required>
 						<option value="">Choose your option</option>
 						<option>Coffee</option>
 						<option>Cacao</option>
 						<option>Coconut</option>
 						<option>PFN</option>
 					</select>
-					<input type="text" class="hidden-textbox x-input x-border" name="cbb_commodity_others"
-						id="cbb_commodity_others" placeholder="Please specify">
+					<input type="text" class="FORM4_FIELD hidden-textbox x-input x-border" name="cbb_commodity_others"
+						id="cbb_commodity_others" show-base="cbb_commodity" show-trigger="PFN" placeholder="Please specify">
 				</div>
 
 				<div class="x-row x-container x-padding">
@@ -232,7 +234,7 @@
 						}
 					</style>
 					<table id="form4_table" class="x-table x-container x-table-border">
-						<thead>
+					
 							<tr>
 								<th>
 									<center><button type="button" style="float: left;" class="btn btn-primary"
@@ -245,26 +247,31 @@
 										Name)</center>
 								</th>
 							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text"
+						
+						
+							<tr id="main_row">
+								<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_venue_kapown_0" type="text"
 										name="cbb_venue[]"></td>
-								<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person"
+								<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_name_of_resource_person_kapown_0"
 										type="text" name="cbb_name_of_resource_person[]"></td>
 							</tr>
-						</tbody>
+						
 					</table>
 				</div>
 				<script>
-
+			let og_row = $ID('main_row').parentNode.innerHTML
+			var form4_table = document.getElementById("form4_table");
+			var k_counter = 1
 					function add_row() {
 						// $ID('main_').innerHTML += og_row
 						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 						var row = form4_table.insertRow(1);
+						
+
 						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-						row.insertCell(0).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="cbb_venue" type="text" name="cbb_venue[]"></td>`
-						row.insertCell(1).innerHTML = `<td><input class="form_data_b x-light-grey x-input" id="cbb_name_of_resource_person" type="text" name="cbb_name_of_resource_person[]"></td>`
+						row.insertCell(0).innerHTML = `<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_venue_kapown_`+k_counter+`" type="text" name="cbb_venue[]"></td>`
+						row.insertCell(1).innerHTML = `<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_name_of_resource_person_kapown_`+k_counter+`" type="text" name="cbb_name_of_resource_person[]"></td>`
+						k_counter += 1
 
 						// Add some text to the new cells:
 					}
@@ -300,11 +307,11 @@
 						</td>
 
 						<tr>
-							<td><input class="form_data_b x-light-grey x-input" name="cbb_rapid_actual_budget"
+							<td><input class="FORM4_FIELD x-light-grey x-input" name="cbb_rapid_actual_budget"
 									id="cbb_rapid_actual_budget" type="text"></td>
-							<td><input class="form_data_b x-light-grey x-input" name="cbb_dip_capbuild_activities_NPO"
+							<td><input class="FORM4_FIELD x-light-grey x-input" name="cbb_dip_capbuild_activities_NPO"
 									id="cbb_dip_capbuild_activities_NPO" type="text"></td>
-							<td><input class="form_data_b x-light-grey x-input" name="cbb_dip_capbuild_activities_CA"
+							<td><input class="FORM4_FIELD x-light-grey x-input" name="cbb_dip_capbuild_activities_CA"
 									id="cbb_dip_capbuild_activities_CA" type="text"></td>
 						</tr>
 					</table>
@@ -312,7 +319,7 @@
 
 				<!-- <div class="x-col l5 x-container x-padding">
 					<label class="">Type of Beneficiaries</label>
-					<select class="form_data_b x-border x-select x-border" id="cbb_total_number_of_beneficiaries_per_type" name="cbb_total_number_of_beneficiaries_per_type"><br>
+					<select class="FORM4_FIELD x-border x-select x-border" id="cbb_total_number_of_beneficiaries_per_type" name="cbb_total_number_of_beneficiaries_per_type"><br>
 						<option value="">Choose your option</option>
 						<option>MSME</option>
 						<option>FO</option>
@@ -376,23 +383,23 @@
 
 						<tr>
 							<!---gender--->
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_male"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_male"
 									type="text" name="cbb_total_number_per_gender_male"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_female"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_female"
 									type="text" name="cbb_total_number_per_gender_female"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_gender_total"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_total"
 									type="text" name="cbb_total_number_per_gender_total"></td>
 
 							<!--sector--->
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_pwd"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_pwd"
 									type="text" name="cbb_total_number_per_sector_pwd"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_youth"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_youth"
 									type="text" name="cbb_total_number_per_sector_youth"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_ip"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_ip"
 									type="text" name="cbb_total_number_per_sector_ip"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_sc"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_sc"
 									type="text" name="cbb_total_number_per_sector_sc"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_total_number_per_sector_total"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_total"
 									type="text" name="cbb_total_number_per_sector_total"></td>
 						</tr>
 					</table>
@@ -445,18 +452,18 @@
 
 						<tr>
 							<td><center>Male</center></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_male_ip"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_male_ip"
 									type="text" name="cbb_male_ip"></td>
 
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_male_youth"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_male_youth"
 									type="text" name="cbb_male_youth"></td>
-							<td><input class="form_data_b x-light-grey x-input"
+							<td><input class="FORM4_FIELD x-light-grey x-input"
 									id="cbb_male_pwd" type="text"
 									name="cbb_male_pwd"></td>
-									<td><input class="form_data_b x-light-grey x-input"
+									<td><input class="FORM4_FIELD x-light-grey x-input"
 										id="cbb_male_sc" type="text"
 										name="cbb_male_sc"></td>
-										<td><input readonly class="form_data_b x-input"
+										<td><input readonly class="FORM4_FIELD x-input"
 											id="cbb_male_total" type="text"
 											name="cbb_male_total"></td>
 
@@ -464,18 +471,18 @@
 						</tr>
 						<tr>
 							<td><center>Female</center></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_female_ip"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_female_ip"
 									type="text" name="cbb_female_ip"></td>
 
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_female_youth"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_female_youth"
 									type="text" name="cbb_female_youth"></td>
-							<td><input class="form_data_b x-light-grey x-input"
+							<td><input class="FORM4_FIELD x-light-grey x-input"
 									id="cbb_female_pwd" type="text"
 									name="cbb_female_pwd"></td>
-									<td><input class="form_data_b x-light-grey x-input"
+									<td><input class="FORM4_FIELD x-light-grey x-input"
 										id="cbb_female_sc" type="text"
 										name="cbb_female_sc"></td>
-										<td><input readonly class="form_data_b  x-input"
+										<td><input readonly class="FORM4_FIELD  x-input"
 											id="cbb_female_total" type="text"
 											name="cbb_female_total"></td>
 
@@ -527,14 +534,14 @@
 						</tr>
 
 						<tr>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_results_of_activity_pre_test"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_results_of_activity_pre_test"
 									type="text" name="cbb_results_of_activity_pre_test"></td>
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_results_of_activity_post_test"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_results_of_activity_post_test"
 									type="text" name="cbb_results_of_activity_post_test"></td>
 
-							<td><input class="form_data_b x-light-grey x-input" id="cbb_client_feedback_survey_rating"
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_client_feedback_survey_rating"
 									type="text" name="cbb_client_feedback_survey_rating"></td>
-							<td><input class="form_data_b x-light-grey x-input"
+							<td><input class="FORM4_FIELD x-light-grey x-input"
 									id="cbb_client_feedback_survey_comments_AOI" type="text"
 									name="cbb_client_feedback_survey_comments_AOI"></td>
 
@@ -558,19 +565,228 @@
 				</div>
 
 
-				<p class="x-right">
-					<input class="x-blue btn " id="form4sub" type="submit">
+				<p class="x-right" id="submit_btn_holder">
+
+					<button class="btn btn-primary" type="button" onclick="submit_form('FORM4_FIELD','dcf_capacity_building','/form4_dashboard')">Submit</button>
+	
 				</p>
 
 			</div>
+			{% include 'formdata_handler.html' %}
+
 			{% include "includes/forms/form4_participants.html" %}
-</form>
+		
+			<script>
+				$onload(function () {
+			   var record_id = URL_ARGS["id"]
+			   var table = URL_ARGS["table"]
+			   load_data(record_id, table, "FORM4_FIELD")
+			   
+			   // submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+		   })
+
+		   function changecbb_types_of_training(val_){
+	
+	var dyn_choices ={
+		"FO-Organization Entrepreneurial Competency" : [
+			{ value: 'Formulating strategies', label: 'Formulating strategies', },
+			{ value: 'Identifying business opportunities', label: 'Identifying business opportunities', },
+			{ value: 'Business networking', label: 'Business networking' },
+			{ value: 'Innovation', label: 'Innovation' },
+		],
+		"FO-Governance" : [
+			{ value: 'Democratic elections', label: 'Democratic elections', },
+			{ value: 'Group decision-making', label: 'Group decision-making', },
+			{ value: 'Formulating internal policies', label: 'Formulating internal policies' },
+			{ value: 'Establishing organizational structure', label: 'Establishing organizational structure' },
+
+		],
+		"FO-Organizational Management" : [
+			{ value: 'Identifying competitive advantage', label: 'Identifying competitive advantage', },
+			{ value: 'Recording transactions', label: 'Recording transactions', },
+			{ value: 'Complying with government regulations', label: 'Complying with government regulations' },
+		],
+		"FO-Operations" : [
+			{ value: 'Meeting quality specifications', label: 'Meeting quality specifications', },
+			{ value: 'Meeting volume requirements', label: 'Meeting volume requirements', },
+			{ value: 'Meeting delivery commitments', label: 'Meeting delivery commitments' },
+			{ value: 'Consolidating products', label: 'Consolidating products' },
+			{ value: 'Forecasting', label: 'Forecasting' },
+			{ value: 'Business planning', label: 'Business planning' },
+			{ value: 'Making a Business Plan', label: 'Making a Business Plan' },
+		],
+		"FO-Technology and Product Development (Business Development)" : [
+			{ value: 'Strategy formulation', label: 'Strategy formulation', },
+			{ value: 'Product development', label: 'Product development', },
+			{ value: 'Quality control measures', label: 'Quality control measures' },
+		],
+		"FO-Institutional Marketing Management" : [
+			{ value: 'Market development', label: 'Market development', },
+			{ value: 'Formulating value proposition', label: 'Formulating value proposition', },
+			{ value: 'Identifying institutional buyers', label: 'Identifying institutional buyers' },
+			{ value: 'Securing supply agreements', label: 'Securing supply agreements' },
+			{ value: 'Digital marketing', label: 'Digital marketing' },
+		],
+		"FO-Human Resource Management" : [
+			{ value: 'Staff hiring', label: 'Staff hiring', },
+			{ value: 'Staff training', label: 'Staff training', },
+			{ value: 'Providing technical assistance to members', label: 'Providing technical assistance to members' },
+			{ value: 'Continuous education', label: 'Continuous education' },
+			{ value: 'Selecting members', label: 'Selecting members' },
+			{ value: 'Handling grievances', label: 'Handling grievances' },
+
+		],
+		"FO-Financial Management" : [
+			{ value: 'Meeting working capital requirements', label: 'Meeting working capital requirements', },
+			{ value: 'Knowledge of financial services', label: 'Knowledge of financial services', },
+			{ value: 'Availing financial services', label: 'Availing financial services' },
+			{ value: 'Recording financial transactions', label: 'Recording financial transactions' },
+		],
+		"FO-Networking and Linkage-Building (External Relation; Business Membership Organization)" : [
+			{ value: 'Working with stakeholders', label: 'Working with stakeholders', },
+			{ value: 'Coordinating with institutions for assistance', label: 'Coordinating with institutions for assistance', },
+			{ value: 'Working with other organizations', label: 'Working with other organizations' },
+			{ value: 'Complying with commitments', label: 'Complying with commitments' },
+		],
+		"MSME-Entrepreneurial Competency" : [
+			{ value: 'Strategic planning', label: 'Strategic planning', },
+			{ value: 'Commitment', label: 'Commitment', },
+			{ value: 'Decision making', label: 'Decision making' },
+			{ value: 'Identifying business opportunities', label: 'Identifying business opportunities' },
+			{ value: 'Business networking', label: 'Business networking' },
+			{ value: 'Innovation', label: 'Innovation' },
+
+		],
+		"MSME-Operations" : [
+			{ value: 'Meeting quality specifications', label: 'Meeting quality specifications', },
+			{ value: 'Meeting volume requirements', label: 'Meeting volume requirements', },
+			{ value: 'Meeting delivery commitments', label: 'Meeting delivery commitments' },
+			{ value: 'Forecasting', label: 'Forecasting' },
+			{ value: 'Business planning', label: 'Business planning' },
+			{ value: 'Making a Business Plan', label: 'Making a Business Plan' },
+
+		],
+		"MSME-Management" : [
+			{ value: 'Identifying competitive advantage', label: 'Identifying competitive advantage', },
+			{ value: 'Recording transactions', label: 'Recording transactions', },
+			{ value: 'Complying with government regulations', label: 'Complying with government regulations' },
+		],
+		"MSME-Technology and Product Development" : [
+			{ value: 'Strategy formulation', label: 'Strategy formulation', },
+			{ value: 'Product development', label: 'Product development', },
+			{ value: 'Transaction automation', label: 'Transaction automation' },
+			{ value: 'Quality control measures', label: 'Quality control measures' },
+		],
+		"MSME-Marketing Management" : [
+			{ value: 'Market development', label: 'Market development', },
+			{ value: 'Formulating value proposition', label: 'Formulating value proposition', },
+			{ value: 'Securing supply agreements', label: 'Securing supply agreements' },
+			{ value: 'Digital marketing', label: 'Digital marketing' },
+		],
+		"MSME-Human Resource Management" : [
+			{ value: 'Staff hiring', label: 'Staff hiring', },
+			{ value: 'Staff training', label: 'Staff training', },
+		],
+		"MSME-Financial Management" : [
+			{ value: 'Meeting working capital requirements', label: 'Meeting working capital requirements', },
+			{ value: 'Knowledge of financial services', label: 'Knowledge of financial services', },
+			{ value: 'Availing financial services', label: 'Availing financial services' },
+			{ value: 'Recording financial transactions', label: 'Recording financial transactions' },
+		],
+		"MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)" : [
+			{ value: 'Working with stakeholders', label: 'Working with stakeholders', },
+			{ value: 'Coordinating with institutions for assistance', label: 'Coordinating with institutions for assistance', },
+			{ value: 'Working with other organizations', label: 'Working with other organizations' },
+			{ value: 'Complying with commitments', label: 'Complying with commitments' },
+		],
+		"Individual Farmer-Managing Natural Resources" : [
+			{ value: 'Production skills', label: 'Production skills', },
+			{ value: 'Soil management', label: 'Soil management', },
+			{ value: 'Water management', label: 'Water management' },
+			{ value: 'Composting and use of fertilizers and chemicals', label: 'Composting and use of fertilizers and chemicals' },
+			{ value: 'Mechanical skills', label: 'Mechanical skills' },
+		],
+		"Individual Farmer-Managing Finances" : [
+			{ value: 'Keeping financial records', label: 'Keeping financial records', },
+			{ value: 'Managing personal and business budgets', label: 'Managing personal and business budgets', },
+			{ value: 'Effective use of debts and loans', label: 'Effective use of debts and loans' },
+			{ value: 'Risk management skills', label: 'Risk management skills' },
+		],
+		"Individual Farmer-Marketing" : [
+			{ value: 'Farming as a business', label: 'Farming as a business', },
+			{ value: 'Business plan', label: 'Business plan', },
+			{ value: 'Procurement and selling skills', label: 'Procurement and selling skills' },
+			{ value: 'Collective marketing', label: 'Collective marketing' },
+		],
+		"Individual Farmer-Innovation" : [
+			{ value: 'Product development', label: 'Product development', },
+			{ value: 'Crop and product diversification', label: 'Crop and product diversification', },
+			{ value: 'Technological advancements', label: 'Technological advancements' },
+			{ value: 'Adaptability and problem-solving', label: 'Adaptability and problem-solving' },
+			{ value: 'Data collection and analysis', label: 'Data collection and analysis' },
+		],
+		"Individual Farmer-Teamwork" : [
+			{ value: 'Leadership skills', label: 'Leadership skills', },
+			{ value: 'Personnel management skills', label: 'Personnel management skills', },
+			{ value: 'Communication skills', label: 'Communication skills' },
+			{ value: 'Effective team player', label: 'Effective team player' },
+		],
+	}
+	CHOICES_SELECT['cbb_topic_of_training'].clearChoices()
+	CHOICES_SELECT['cbb_topic_of_training'].setChoices(dyn_choices[val_],
+		'value',
+		'label',
+		false,
+	);
+
+	$ID("cbb_topic_of_training").parentNode.querySelectorAll(".choices__input")[1].addEventListener("keyup",function(e){
+		var cg_len = 0
+		var req_cust_item = ["FO-GESI","FO-Social Environment & Climate","FO-Managing Natural Resources","MSME-GESI","MSME-Social Environment & Climate","MSME-Managing Natural Resources","Individual Farmer-GESI","Individual Farmer-Social Environment & Climate"]
+		try {cg_len = dyn_choices[val_].length} 
+		catch (error) {}
+		println(req_cust_item.includes(val_))
+		if(cg_len>=0){
+			if(req_cust_item.includes(val_)){
+				if(e.code == "Enter"){
+					if(e.srcElement.value.length>=1){
+						CHOICES_SELECT['cbb_topic_of_training'].setValue([e.srcElement.value]);
+						e.srcElement.value = "";
+					}
+				}
+			}
+		}
+	})
+}
+
+		   
+	$(document).ready(function(){
+		CHOICES_SELECT['cbb_topic_of_training'] = new Choices('#cbb_topic_of_training', {
+			removeItemButton: true,
+			searchChoices: true,
+			// maxItemCount:4,
+			// searchResultLimit:4,
+			addItems: true,
+			uniqueItemText: 'Only unique values can be added',
+			customAddItemText: 'Only values matching specific conditions can be added',
+			maxItemCount:21,
+			searchResultLimit:21,
+			addItems: true,
+			searchEnabled: true,
+			renderChoiceLimit:21,
+			addItemText: (value) => {
+				// println(CHOICES_SELECT['cbb_topic_of_training'])
+				return `Press Enter to add <b>`+value+`</b>`;
+			},
+		}); 
+	});
+		   
+	   </script>
+
 
 {% endblock content %}
 
 <!-- Specific JS goes HERE -->
-<script>
-</script>
+
 {% block javascripts %}
 
 {% endblock javascripts %}
