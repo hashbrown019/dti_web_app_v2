@@ -1,10 +1,14 @@
-from flask import Blueprint, flash, render_template, request, session, redirect, jsonify, send_file
+from flask import Blueprint, flash, render_template, request, session, redirect, jsonify, send_file, Response
 from flask_session import Session
 from modules.Connections import mysql
 from modules.Req_Brorn_util import string_websafe as STRS
 import Configurations as c
 from werkzeug.utils import secure_filename
 import os
+
+from PIL import Image
+from io import BytesIO
+import base64
 
 from datetime import date, datetime
 from modules.Req_Brorn_util import file_from_request
@@ -305,10 +309,23 @@ class _main:
 			pass
 		last_row_id = db.do(sql)
 		return jsonify({"last_row_id":last_row_id,"FILES":__f})
+
  
 	@app.route("/webrep/article/get_img/<img>",methods=["POST","GET"])
 	def get_img(img):
 		img = img.replace('C:fakepath', '').replace(" ","_").replace(")","").replace("(","")
+		# im = Image.open(c.RECORDS+"/objects/webrep/"+img)
+
+		# buff = BytesIO()
+		# im.save(buff, format="JPEG")
+		# img_str = base64.b64encode(buff.getvalue())
+		# string = ''.join(map(chr, img_str)) ###### CONVERT BYTES to STRING
+
+		# fff=open("__temp__/_.txt","w")
+		# fff.write("data:image/png;base64,{}".format(string))
+		# fff.close()
+		# return send_file("__temp__/_.txt".format(string))
+
 		return send_file(c.RECORDS+"/objects/webrep/"+img)
 
 
