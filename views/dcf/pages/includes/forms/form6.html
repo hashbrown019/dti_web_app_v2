@@ -8,7 +8,6 @@
 
 {% block content %}
 <title>Form 6</title>
-<form action="/insert_form6" method="POST">
 	{% include "includes/sweetalert.html" %}
 	<div class="x-col l1 ">
 		&nbsp;
@@ -19,6 +18,8 @@
 		<center>
 			<h2 class=" text-white x-container x-padding" style="background-color: #007399;">FORM 6 - PRODUCT
 				DEVELOPMENT/ ENHANCEMENT ASSISTANCE PROVIDED/ CONSULTANCY SERVICES</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
+
 		</center>
 
 
@@ -33,11 +34,12 @@
 
 
 		<div class="x-row x-container x-padding">
+            <input class="FORM6_FIELD x-input" type="hidden"  id="id">
 
 			<div class="x-row x-container x-padding">
 				<div class="x-col l3 x-container x-padding">
 					<label class="">Implementing Unit:</label>
-					<select required class="form_data_b x-border x-select x-border" id="form_6_implementing_unit"
+					<select required class="FORM6_FIELD x-border x-select x-border" id="form_6_implementing_unit"
 						name="form_6_implementing_unit"><br>
 						<option value="">Choose your option</option>
 						<optgroup label="RCU">
@@ -79,47 +81,47 @@
 				</div>
 				<div class="x-col l3 x-container x-padding">
 					<label>Type of Assistance:</label>
-					<input required class=" x-input x-border" id="form_6_type_of_assisstance"
+					<input required class="FORM6_FIELD x-input x-border" id="form_6_type_of_assisstance"
 						name="form_6_type_of_assisstance" type="text" autocomplete="on" placeholder="Write Here">
 				</div>
 				<div class="x-col l3 x-container x-padding">
 					<label>Type of Activity:</label>
-					<input required class=" x-input x-border" id="form_6_type_of_activity"
+					<input required class="FORM6_FIELD x-input x-border" id="form_6_type_of_activity"
 						name="form_6_type_of_activity" type="text" autocomplete="on" placeholder="Write Here">
 				</div>
 
 				<div class="x-col l3 x-container x-padding">
 					<label><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (example: R8_SC Global)" tabindex="1"><i class="fa-solid fa-circle-info"></i></span> DIP Alignment:</label>
-					<input class=" x-input x-border" id="form_6_dip_alignment" name="form_6_dip_alignment" type="text"
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_dip_alignment" name="form_6_dip_alignment" type="text"
 						autocomplete="on" placeholder="Write Here">
 				</div>
 			</div>
 			<div class="x-row x-container x-padding">
 				<div class="x-col l4 x-container x-padding">
 					<label>Activity Duration Start Date:</label>
-					<input class=" x-input x-border" id="form_6_activity_duration_start"
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_activity_duration_start"
 						name="form_6_activity_duration_start" type="date" autocomplete="on" placeholder="Write Here">
 				</div>
 				<div class="x-col l4 x-container x-padding">
 					<label>Activity Duration End Date:</label>
-					<input class=" x-input x-border" id="form_6_activity_duration_end"
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_activity_duration_end"
 						name="form_6_activity_duration_end" type="date" autocomplete="on" placeholder="Write Here">
 				</div>
 			</div>
 			<div class="x-row x-container x-padding">
 				<div class="x-col l4 x-container x-padding">
 					<label>Venue:</label>
-					<input class=" x-input x-border" id="form_6_venue" name="form_6_venue" type="text" autocomplete="on"
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_venue" name="form_6_venue" type="text" autocomplete="on"
 						placeholder="Write Here">
 				</div>
 				<div class="x-col l4 x-container x-padding" style="width: 45%;">
 					<label>Name of Resource Person/Facilitator/BDSP:</label>
-					<input class=" x-input x-border" id="form_6_resource_person" name="form_6_resource_person"
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_resource_person" name="form_6_resource_person"
 						type="text" autocomplete="on" placeholder="Write Here">
 				</div>
 				<div class="x-col l4 x-container x-padding">
 					<label>RAPID Actual Budget:</label>
-					<input class=" x-input x-border" id="form_6_rapid_actual_budget" name="form_6_rapid_actual_budget"
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_rapid_actual_budget" name="form_6_rapid_actual_budget"
 						type="text" autocomplete="on" placeholder="Write Here">
 				</div>
 			</div>
@@ -135,14 +137,16 @@
 				<table id="form6table" class="x-table x-container x-table-border" style="border-color: transparent;">
 					<tr>
 						<th colspan="2">
-							<center>Fully & partially funded by partners outside RAPID </center>
+							<center>Fully & partially funded by partners outside RAPID
+								<button type="button" style="float: left;" class="btn btn-primary"
+								onclick="add_row()"><i
+									class="fa-solid fa-circle-plus"></i>&nbsp;&nbsp;Add</button> </center>
 						</th>
 					</tr>
 
 					<tr>
 						<td>
-							<center><button type="button" style="float: left;" class="btn btn-primary"
-									onclick="add_row()"><i class="fa-solid fa-circle-plus"></i>&nbsp;&nbsp;Add</button>
+							
 								<center>Name of Partner/Organization</center>
 						</td>
 						<td>
@@ -151,22 +155,23 @@
 					</tr>
 
 					<tr>
-						<td><input class=" x-light-grey x-input" id="form_6_name_of_partner_organization_1" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_partner_organization_1_kapown_0" type="text"
 								name="form_6_name_of_partner_organization_1[]"></td>
-						<td><input class=" x-light-grey x-input" id="form_6_name_of_partner_organization_2" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_partner_organization_2_kapown_0" type="text"
 								name="form_6_name_of_partner_organization_2[]"></td>
 					</tr>
 				</table>
 				<script>
+           			 var k_counter = 1
 
 					function add_row() {
 						// $ID('main_').innerHTML += og_row
 						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 						var row = form6table.insertRow(2);
 						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-						row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_name_of_partner_organization_1" type="text" name="form_6_name_of_partner_organization_1[]"></td>`
-						row.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_name_of_partner_organization_2" type="text" name="form_6_name_of_partner_organization_2[]"></td>`
-
+						row.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_partner_organization_1_kapown_`+k_counter+`" type="text" name="form_6_name_of_partner_organization_1[]"></td>`
+						row.insertCell(1).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_partner_organization_2_kapown_`+k_counter+`" type="text" name="form_6_name_of_partner_organization_2[]"></td>`
+						k_counter += 1
 						// Add some text to the new cells:
 					}
 				</script>
@@ -207,21 +212,21 @@
 					</tr>
 
 					<tr>
-						<td><input class=" x-light-grey x-input" id="form_6_beneficiary_participant" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_beneficiary_participant_kapown_0" type="text"
 								name="form_6_beneficiary_participant[]"></td>
 						<td>
-								<input class=" x-light-grey x-input" id="form_6_commodity" type="text"
+								<input class="FORM6_FIELD  x-light-grey x-input" id="form_6_commodity_kapown_0" type="text"
 								name="form_6_commodity[]">
 						</td>
-						<td><input class=" x-light-grey x-input" id="form_6_type_of_beneficiary" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_type_of_beneficiary_kapown_0" type="text"
 								name="form_6_type_of_beneficiary[]"></td>
-						<td><select class="form_data_b x-border x-select x-border" id="form_6_sex"
+						<td><select class="FORM6_FIELD x-border x-select x-border" id="form_6_sex_kapown_0"
 								name="form_6_sex[]"><br>
 								<option value="">Choose your option</option>
 								<option>Male</option>
 								<option>Female</option>
 							</select></td>
-						<td><select class="form_data_b x-border x-select x-border" id="form_6_sector"
+						<td><select class="FORM6_FIELD x-border x-select x-border" id="form_6_sector_kapown_0"
 								name="form_6_sector[]"><br>
 								<option value="">Choose your option</option>
 								<option>PWD</option>
@@ -235,24 +240,25 @@
 					</tr>
 				</table>
 				<script>
+            	var k_counter2 = 1
 
 					function add_row3() {
 						// $ID('main_').innerHTML += og_row
 						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 						var row = form6tablepartcic.insertRow(2);
 						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-						row.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_beneficiary_participant" type="text" name="form_6_beneficiary_participant[]"></td>`
+						row.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_beneficiary_participant_kapown_`+k_counter2+`" type="text" name="form_6_beneficiary_participant[]"></td>`
 						row.insertCell(1).innerHTML = `<td>
-							<input class=" x-light-grey x-input" id="form_6_commodity" type="text"
+							<input class="FORM6_FIELD  x-light-grey x-input" id="form_6_commodity_kapown_`+k_counter2+`" type="text"
 								name="form_6_commodity[]">
 					</td>`
-						row.insertCell(2).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_type_of_beneficiary" type="text" name="form_6_type_of_beneficiary[]"></td>`
-						row.insertCell(3).innerHTML = `<td><select class="form_data_b x-border x-select x-border" id="form_6_sex" name="form_6_sex[]"><br>
+						row.insertCell(2).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_type_of_beneficiary_kapown_`+k_counter2+`" type="text" name="form_6_type_of_beneficiary[]"></td>`
+						row.insertCell(3).innerHTML = `<td><select class="FORM6_FIELD x-border x-select x-border" id="form_6_sex_kapown_`+k_counter2+`" name="form_6_sex[]"><br>
 						<option value="">Choose your option</option>
 							<option>Male</option>
 							<option>Female</option>
 					</select></td>`
-						row.insertCell(4).innerHTML = `<td><select class="form_data_b x-border x-select x-border" id="form_6_sector" name="form_6_sector[]"><br>
+						row.insertCell(4).innerHTML = `<td><select class="FORM6_FIELD x-border x-select x-border" id="form_6_sector_kapown_`+k_counter2+`" name="form_6_sector[]"><br>
 						<option value="">Choose your option</option>
 							<option>PWD</option>
 							<option>Youth</option>
@@ -263,7 +269,7 @@
 
 
 
-
+					k_counter2 += 1
 						// Add some text to the new cells:
 					}
 				</script>
@@ -296,15 +302,15 @@
 				</tr>
 
 				<tr>
-					<td><input class=" x-light-grey x-input" id="form_6_male" type="text" name="form_6_male"></td>
-					<td><input class=" x-light-grey x-input" id="form_6_female" type="text" name="form_6_female"></td>
-					<td><input class=" x-light-grey x-input" id="form_6_total_1" type="text" name="form_6_total_1"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_male" type="text" name="form_6_male"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_female" type="text" name="form_6_female"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_total_1" type="text" name="form_6_total_1"></td>
 
-					<td><input class=" x-light-grey x-input" id="form_6_pwd" type="text" name="form_6_pwd"></td>
-					<td><input class=" x-light-grey x-input" id="form_6_youth" type="text" name="form_6_youth"></td>
-					<td><input class=" x-light-grey x-input" id="form_6_ip" type="text" name="form_6_ip"></td>
-					<td><input class=" x-light-grey x-input" id="form_6_sc" type="text" name="form_6_sc"></td>
-					<td><input class=" x-light-grey x-input" id="form_6_total_2" type="text" name="form_6_total_2"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_pwd" type="text" name="form_6_pwd"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_youth" type="text" name="form_6_youth"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_ip" type="text" name="form_6_ip"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_sc" type="text" name="form_6_sc"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_total_2" type="text" name="form_6_total_2"></td>
 				</tr>
 			</table>
 		</div> -->
@@ -356,15 +362,15 @@
 					</tr>
 
 					<tr>
-						<td><input class=" x-light-grey x-input" id="form_6_product_developed" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_developed_kapown_0" type="text"
 								name="form_6_product_developed[]"></td>
-						<td><input class=" x-light-grey x-input" id="form_6_date_launched_to_market" type="date"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_launched_to_market_kapown_0" type="date"
 								name="form_6_date_launched_to_market[]"></td>
 
-						<td><input class=" x-light-grey x-input" id="form_6_improved_product" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_improved_product_kapown_0" type="text"
 								name="form_6_improved_product[]"></td>
 						<td>
-							<select id="form_6_choices_multiple_remove_button_0"
+							<select class="FORM6_FIELD" id="form_6_type_of_product_improvement_kapown_0"
 								name="form_6_type_of_product_improvement[]" placeholder="Select upto 4 tags" multiple>
 								<option value="Product Quality">Product Quality</option>
 								<option value="Packaging">Packaging</option>
@@ -376,39 +382,28 @@
 				</table>
 			</div>
 			<script>
-				var form_6_choices_counter = 1
+			
 				function add_row2() {
 					// $ID('main_').innerHTML += og_row
 					// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 					var row2 = form6table2.insertRow(3);
 					// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-					row2.insertCell(0).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_product_developed" type="text" name="form_6_product_developed[]"></td>`
-					row2.insertCell(1).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_date_launched_to_market" type="date" name="form_6_date_launched_to_market[]"></td>`
-					row2.insertCell(2).innerHTML = `<td><input class=" x-light-grey x-input" id="form_6_improved_product" type="text" name="form_6_improved_product[]"></td>`
+					row2.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_developed_kapown_`+k_counter+`" type="text" name="form_6_product_developed[]"></td>`
+					row2.insertCell(1).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_launched_to_market_kapown_`+k_counter+`" type="date" name="form_6_date_launched_to_market[]"></td>`
+					row2.insertCell(2).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_improved_product_kapown_`+k_counter+`" type="text" name="form_6_improved_product[]"></td>`
 					row2.insertCell(3).innerHTML = `<td>
-							<select id="form_6_choices_multiple_remove_button_${form_6_choices_counter}" name="form_6_type_of_product_improvement[]" placeholder="Select upto 4 tags" multiple>
+							<select class="FORM6_FIELD" id="form_6_type_of_product_improvement_kapown_`+k_counter+`" name="form_6_type_of_product_improvement[]" placeholder="Select upto 3 tags" multiple>
 								<option value="Product Quality">Product Quality</option>
 								<option value="Packaging">Packaging</option>
 								<option value="Labels">Labels</option>   
 							</select>
 						
 					</td>`
-					asdasd(form_6_choices_counter)
+					
 					// Add some text to the new cells:
-					form_6_choices_counter += 1
+					k_counter += 1
 				}
-				$onload(function () { asdasd(0) })
-				function asdasd(ccc) {
-					var multipleCancelButton = new Choices('#form_6_choices_multiple_remove_button_' + ccc, {
-						removeItemButton: true,
-						maxItemCount: 4,
-						searchResultLimit: 4,
-						renderChoiceLimit: 4,
-						delimiter: '|'
-					});
-					// multipleCancelButton.config.delimiter = "||"
-					// println(multipleCancelButton)
-				}
+				
 			</script>
 
 			<!----outputs---->
@@ -470,15 +465,15 @@
 					<tr>
 
 						<!---1--->
-						<td><input class=" x-light-grey x-input" id="form_6_name_of_product_developed" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_product_developed" type="text"
 								name="form_6_name_of_product_developed"></td>
-						<td><input class=" x-light-grey x-input" id="form_6_" type="date" name="form_6_"></td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_" type="date" name="form_6_"></td>
 
 						<!---2--->
 						<td>
 							<div class="x-row x-container x-padding">
-								<select class=" x-border x-select x-border" id="form_6_commodity1"
-									name="form_6_commodity1"><br>
+								<select class="FORM6_FIELD x-border x-select x-border" id="form_6_certification"
+									name="form_6_certification"><br>
 									<option value="" selected>Choose your option</option>
 									<option>GMP</option>
 									<option>HACCP</option>
@@ -488,8 +483,8 @@
 									<option>FDA-CPR</option>
 									<option value="other">Others</option>
 								</select>
-								<input type="text" class="hidden-textboxform6 x-input x-border" name="form6_otherss1"
-									id="form6_otherss1" placeholder="Please specify">
+								<input type="text" class="FORM6_FIELD hidden-textboxform6 x-input x-border" name="form6_otherss1"
+									id="form6_otherss1" show-base="form_6_certification" show-trigger="other" placeholder="Please specify">
 
 							</div>
 						</td>
@@ -497,8 +492,8 @@
 						<!---3--->
 						<td>
 							<div class="x-row x-container x-padding">
-								<select class=" x-border x-select x-border" id="form_6_commodity2"
-									name="form_6_commodity2"><br>
+								<select class=" x-border x-select x-border" id="form_6_certification2"
+									name="form_6_certification2"><br>
 									<option value="" selected>Choose your option</option>
 									<option>GMP</option>
 									<option>HACCP</option>
@@ -508,16 +503,16 @@
 									<option>FDA-CPR</option>
 									<option value="other">Others</option>
 								</select>
-								<input type="text" class="hidden-textboxform62 x-input x-border" name="form6_otherss2"
-									id="form6_otherss2" placeholder="Please specify">
+								<input type="text" class="FORM6_FIELD hidden-textboxform62 x-input x-border" name="form6_otherss2"
+									id="form6_otherss2" show-base="form_6_certification2" show-trigger="other" placeholder="Please specify">
 
 							</div>
 						</td>
-						<td><input class=" x-light-grey x-input" id="form_6_date_issuance" type="date"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_issuance" type="date"
 								name="form_6_date_issuance"></td>
-						<td><input class=" x-light-grey x-input" id="form_6_expiration_date" type="date"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_expiration_date" type="date"
 								name="form_6_expiration_date"></td>
-						<td><input class=" x-light-grey x-input" id="form_6_product_certified" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_certified" type="text"
 								name="form_6_product_certified"></td>
 					</tr>
 				</table>
@@ -548,9 +543,9 @@
 					</tr>
 
 					<tr>
-						<td><input class=" x-light-grey x-input" id="form_6_rating" type="text" name="form_6_rating">
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_rating" type="text" name="form_6_rating">
 						</td>
-						<td><input class=" x-light-grey x-input" id="form_6_comment_ares_of_improvement" type="text"
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_comment_ares_of_improvement" type="text"
 								name="form_6_comment_ares_of_improvement"></td>
 					</tr>
 				</table>
@@ -558,7 +553,7 @@
 			<div class="x-col l5">
 				<div method="post" enctype="multipart/form-data">
 					<div class="x-col l3 x-container x-padding">
-						<input class="x-padding" type="file" name="form_2_image_uploads" id="form_2_image_uploads"
+						<input class=" x-padding" type="file" name="form_2_image_uploads" id="form_2_image_uploads"
 							name="image_uploads" accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx"
 							multiple />
 					</div>
@@ -569,22 +564,46 @@
 			<!-- <div class="x-col l4 x-container x-padding">	
             <button data-toggle="modal" data-target="#form6_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
         </div> -->
-			<div class="x-right" style="margin-bottom: 10%;">
-				<input class="x-blue btn " id="form6_submit" type="submit">
-			</div>
+		<p class="x-right" id="submit_btn_holder">
+            <button class="btn btn-primary" type="button" onclick="submit_form('FORM6_FIELD','dcf_product_development','/form6_dashboard')">Submit</button>
+</p>
 
 
 
 		</div>
+		{% include 'formdata_handler.html' %}
 		{% include "includes/forms/form6_participants.html" %}
-</form>
 
 <script>
+	$onload(function () {
+		var record_id = URL_ARGS["id"]
+		var table = URL_ARGS["table"]
+		load_data(record_id, table, "FORM6_FIELD")
+		
+		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+	})
 	const elementsWithName = document.querySelectorAll('[name]');
 
 
 	elementsWithName.forEach(element => {
 		console.log(element.getAttribute('name'));
+	});
+
+	$(document).ready(function(){
+		CHOICES_SELECT['form_6_type_of_product_improvement_kapown_0'] = new Choices('#form_6_type_of_product_improvement_kapown_0', {
+			removeItemButton: true,
+			choices: ["Product Quality","Packaging","Labels"],
+			searchChoices: true,
+			// maxItemCount:4,
+			// searchResultLimit:4,
+			addItems: true,
+			uniqueItemText: 'Only unique values can be added',
+			customAddItemText: 'Only values matching specific conditions can be added',
+			addItemText: (value) => {
+				// println(multipleCancelButton)
+				return `Press Enter to add <b>`+value+`</b>`;
+			},
+		}); 
 	});
 </script>
 {% endblock content %}
