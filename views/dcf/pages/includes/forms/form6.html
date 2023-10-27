@@ -364,44 +364,34 @@
 					<tr>
 						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_developed_kapown_0" type="text"
 								name="form_6_product_developed[]"></td>
+								
 						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_launched_to_market_kapown_0" type="date"
 								name="form_6_date_launched_to_market[]"></td>
 
 						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_improved_product_kapown_0" type="text"
 								name="form_6_improved_product[]"></td>
-						<td>
-							<select class="FORM6_FIELD" id="form_6_type_of_product_improvement_kapown_0"
-								name="form_6_type_of_product_improvement[]" placeholder="Select upto 4 tags" multiple>
-								<option value="Product Quality">Product Quality</option>
-								<option value="Packaging">Packaging</option>
-								<option value="Labels">Labels</option>
-							</select>
 
-						</td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_type_of_product_improvement_kapown_0" type="text"
+								name="form_6_type_of_product_improvement[]"></td>
 					</tr>
 				</table>
 			</div>
 			<script>
+            	var k_counter3 = 1
+
 			
 				function add_row2() {
 					// $ID('main_').innerHTML += og_row
 					// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 					var row2 = form6table2.insertRow(3);
 					// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-					row2.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_developed_kapown_`+k_counter+`" type="text" name="form_6_product_developed[]"></td>`
-					row2.insertCell(1).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_launched_to_market_kapown_`+k_counter+`" type="date" name="form_6_date_launched_to_market[]"></td>`
-					row2.insertCell(2).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_improved_product_kapown_`+k_counter+`" type="text" name="form_6_improved_product[]"></td>`
-					row2.insertCell(3).innerHTML = `<td>
-							<select class="FORM6_FIELD" id="form_6_type_of_product_improvement_kapown_`+k_counter+`" name="form_6_type_of_product_improvement[]" placeholder="Select upto 3 tags" multiple>
-								<option value="Product Quality">Product Quality</option>
-								<option value="Packaging">Packaging</option>
-								<option value="Labels">Labels</option>   
-							</select>
-						
-					</td>`
+					row2.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_developed_kapown_`+k_counter3+`" type="text" name="form_6_product_developed[]"></td>`
+					row2.insertCell(1).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_launched_to_market_kapown_`+k_counter3+`" type="date" name="form_6_date_launched_to_market[]"></td>`
+					row2.insertCell(2).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_improved_product_kapown_`+k_counter3+`" type="text" name="form_6_improved_product[]"></td>`
+					row2.insertCell(3).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_type_of_product_improvement_kapown_`+k_counter3+`" type="text" name="form_6_type_of_product_improvement[]"></td>`
 					
 					// Add some text to the new cells:
-					k_counter += 1
+					k_counter3 += 1
 				}
 				
 			</script>
@@ -586,25 +576,25 @@
 
 
 	elementsWithName.forEach(element => {
-		console.log(element.getAttribute('name'));
+		// console.log(element.getAttribute('name'));
 	});
 
-	$(document).ready(function(){
-		CHOICES_SELECT['form_6_type_of_product_improvement_kapown_0'] = new Choices('#form_6_type_of_product_improvement_kapown_0', {
-			removeItemButton: true,
-			choices: ["Product Quality","Packaging","Labels"],
-			searchChoices: true,
-			// maxItemCount:4,
-			// searchResultLimit:4,
-			addItems: true,
-			uniqueItemText: 'Only unique values can be added',
-			customAddItemText: 'Only values matching specific conditions can be added',
-			addItemText: (value) => {
-				// println(multipleCancelButton)
-				return `Press Enter to add <b>`+value+`</b>`;
-			},
-		}); 
-	});
+	// $(document).ready(function(){
+	// 	CHOICES_SELECT['form_6_type_of_product_improvement_kapown_0'] = new Choices('#form_6_type_of_product_improvement_kapown_0', {
+	// 		removeItemButton: true,
+	// 		choices: ["Product Quality","Packaging","Labels"],
+	// 		searchChoices: true,
+	// 		// maxItemCount:4,
+	// 		// searchResultLimit:4,
+	// 		addItems: true,
+	// 		uniqueItemText: 'Only unique values can be added',
+	// 		customAddItemText: 'Only values matching specific conditions can be added',
+	// 		addItemText: (value) => {
+	// 			// println(multipleCancelButton)
+	// 			return `Press Enter to add <b>`+value+`</b>`;
+	// 		},
+	// 	}); 
+	// });
 </script>
 {% endblock content %}
 

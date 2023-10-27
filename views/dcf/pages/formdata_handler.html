@@ -85,24 +85,24 @@ $(document).ready(function(){
 // }
 
 let multi_table_value = {
-	"form_2_activity_agreements":"",
-	"form_2_date_conducted":"",
-	"form_3_name":"",
-	"form_3_education":"",
-	"form_3_expertise":"",
-	"cbb_venue":"",
-	"cbb_name_of_resource_person":"",
-	"form_6_name_of_partner_organization_1":"",
-	"form_6_name_of_partner_organization_2":"",
-	"form_6_beneficiary_participant":"",
-	"form_6_commodity":"",
-	"form_6_type_of_beneficiary":"",
-	"form_6_sex":"",
-	"form_6_sector":"",
-	"form_6_product_developed":"",
-	"form_6_date_launched_to_market":"",
-	"form_6_improved_product":"",
-	"form_6_type_of_product_improvement":""
+	"form_2_activity_agreements" : "non_multi",
+	"form_2_date_conducted" : "non_multi",
+	"form_3_name" : "non_multi",
+	"form_3_education" : "non_multi",
+	"form_3_expertise" : "non_multi",
+	"cbb_venue" : "non_multi",
+	"cbb_name_of_resource_person" : "non_multi",
+	"form_6_name_of_partner_organization_1" : "kapown_g1",
+	"form_6_name_of_partner_organization_2" : "kapown_g1",
+	"form_6_beneficiary_participant" : "kapown_g2",
+	"form_6_commodity" : "kapown_g2",
+	"form_6_type_of_beneficiary" : "kapown_g2",
+	"form_6_sex" : "kapown_g2",
+	"form_6_sector" : "kapown_g2",
+	"form_6_product_developed" : "kapown_g3",
+	"form_6_date_launched_to_market" : "kapown_g3",
+	"form_6_improved_product" : "kapown_g3",
+	"form_6_type_of_product_improvement" : "kapown_g3"
 	
 }
 
@@ -111,12 +111,23 @@ var button_to_click = undefined
 var value_to_add = {}
 
 function set_multi_table_row(){
-	// println(button_to_click)
+	println(Object.keys(button_to_click).length)
+	println("button_to_click.length")
 	var _len_iter = (value_to_add[Object.keys(value_to_add)[0]])
-	for (let index = 0; index < _len_iter.length-1; index++) {
-		button_to_click.click()
-		// println(index)
-	} 
+	if(Object.keys(button_to_click).length==0){
+		for (let index = 0; index < _len_iter.length-1; index++) {
+			button_to_click.click()
+			// println(index)
+		} 
+	}else{
+		for(keys in button_to_click){
+			for (let index = 0; index < _len_iter.length-1; index++) {
+				button_to_click[keys].click()
+				// println(index)
+			} 
+		}
+	}
+
 	
 
 	for(key in value_to_add){
@@ -143,13 +154,37 @@ function load_data(record_id,table,class_name){
 				if(multi_table_value[multi_id] != undefined){
 					const add_btn = x_ins[index].parentNode.parentNode.parentNode.querySelectorAll("button")[0]
 					var multi_val = res[multi_id].split(",")
-					println(x_ins[index].parentNode.parentNode.parentNode)
-					for (let index = 0; index < multi_val.length; index++) {
-						value_to_add[multi_id] = multi_val
-						button_to_click = add_btn
+
+					// println(x_ins[index].parentNode.parentNode.parentNode)
+					if(multi_table_value[multi_id] == "non_multi"){
+						for (let index = 0; index < multi_val.length; index++) {
+							value_to_add[multi_id] = multi_val
+							button_to_click = add_btn
+						}
+					}
+					// else if(multi_table_value[multi_id] == "multi"){
+					else{
+						println(multi_id)
+						if(button_to_click==undefined){button_to_click = {}}
+						for (let index = 0; index < multi_val.length; index++) {
+							value_to_add[multi_id] = multi_val
+							button_to_click[multi_table_value[multi_id]] = add_btn
+						}
 					}
 					continue;
+
 				}
+				// if(multi_table_value[multi_id] != undefined){
+				// 	const add_btn = x_ins[index].parentNode.parentNode.parentNode.querySelectorAll("button")[0]
+				// 	var multi_val = res[multi_id].split(",")
+				// 	// println(x_ins[index].parentNode.parentNode.parentNode)
+				// 	for (let index = 0; index < multi_val.length; index++) {
+				// 		println(add_btn)
+				// 		value_to_add[multi_id] = multi_val
+				// 		button_to_click = add_btn
+				// 	}
+				// 	continue;
+				// }
 				/////////////////
 
 
