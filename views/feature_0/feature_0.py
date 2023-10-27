@@ -468,8 +468,11 @@ class _main:
 
 	@app.route("/feature_0/link_data_dcf_form_a",methods=["POST","GET"])
 	def feature_0_link_data_dcf_form_a():
-		return render_template("link_data/link_data_dcf_form_a.html",USER_DATA = session["USER_DATA"][0])
-
+		if(_main.is_on_session()):
+			_main.settings(request.args)
+			return render_template("link_data/link_data_dcf_form_a.html",USER_DATA = session["USER_DATA"][0])
+		else:
+			return redirect("/login?force_url=1")
 	# ====================================================================
 	# ===================LINK_DATA_END_===================================
 	# ====================================================================
