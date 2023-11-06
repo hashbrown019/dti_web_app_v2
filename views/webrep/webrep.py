@@ -6,7 +6,7 @@ import Configurations as c
 from werkzeug.utils import secure_filename
 import os
 
-from PIL import Image
+# from PIL import Image
 from io import BytesIO
 import base64
 
