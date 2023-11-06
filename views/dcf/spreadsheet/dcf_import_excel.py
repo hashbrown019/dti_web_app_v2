@@ -218,6 +218,7 @@ def importcsvform3(request):
 				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
 				excel_upload_open3(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
 		except IndexError:
+			print("Invalid file template on import!")
 			flash(f"Invalid file template!", "error")
 			
 	return redirect("/dcfspreadsheet")
@@ -229,7 +230,9 @@ def excel_upload_open3(path):
 	header = data[4]
 	print("tafdagfefgrhgragharghahu")
 	print(sheet.name)
-	if(sheet.name !='form3'):
+	print(str(sheet.name) !='form3')
+	if(str(sheet.name) !='form3'):
+		print("Invalid file template!")
 		flash(f"Invalid file template!", "error")
 		return "done:Sheet Error"
 	for row in data[4:]:
@@ -255,10 +258,10 @@ def excel_upload_open3(path):
 		form_3_other_engagement_outside_rapid = row[23]
 		form_3_lecture_training_seminar = row[24]
 		form_3_training_materials = row[25]
-		form_3_organize_pool = row[26]
-		form_3_demand_basis = row[27]
-		form_3_extension_service_facilitation = row[28]
-		form_3_philgeps_registered = row[29]                                                                                                          
+		form_3_organize_pool = "row[26]"
+		form_3_demand_basis = "row[27]"
+		form_3_extension_service_facilitation = "row[28]"
+		form_3_philgeps_registered = "row[29]"                                                                                                          
 		filename = UPLOAD_NAME
 
 		querycsv = ("INSERT INTO dcf_bdsp_reg ( upload_by,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
