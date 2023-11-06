@@ -274,11 +274,13 @@
 	<script type="text/javascript">
 
 		function create_photo_album(da){
-			for (var i = 0; i < da.length; i++) {
-				const para = document.createElement("img");
-				para.style["max-width"] = "500px"
-				para.src = "/webrep/article/get_img/"+da[i]
-				$ID("imgs_holder").appendChild(para)
+			if(da[0]!=""){
+				for (var i = 0; i < da.length; i++) {
+					const para = document.createElement("img");
+					para.style["max-width"] = "500px"
+					para.src = "/webrep/article/get_img/"+da[i]
+					$ID("imgs_holder").appendChild(para)
+				}
 			}
 		}
 

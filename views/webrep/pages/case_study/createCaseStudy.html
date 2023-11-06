@@ -394,7 +394,7 @@
 							<label for="photos" class="form-label small fw-bolder">Photos</label><br>
 							<span class="text-warning">
 								<span class="text-warning fa fa-warning"></span>
-								If you're editing this entry, you are required to re upload the pictures before saving
+								If you're editing this entry, you are required to re-upload the pictures before saving
 							</span>
 							<input id="photos" type="file" class="article_form form-control" multiple style="height:50px" onchange="display_img(this)">
 							<div class="invalid-feedback">
@@ -402,6 +402,13 @@
 							</div>
 						</div>
 						<div id="imgs_holder" class="col-md-12 center">
+						</div>
+						<br>
+						<hr>
+						<div id="imgs_holder" class="col-md-12 center">
+							Source:<br>
+							<i>INTRAC. “Case Studies and Stories of Change - INTRAC.”<br><i>
+							<i>INTRAC, 14 May 2019, www.intrac.org/resources/case-studies-stories-change.<br><i>
 						</div>
 					</div>
 
@@ -427,8 +434,10 @@
 					<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
 					Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
 					<hr>
-					<h3>Your Upload Process is</h3>
-					<h2 id="upload_process"></h2>
+					<div>
+						<h5>Your Upload Process is</h5>
+						<span id="upload_process"></span>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
@@ -440,11 +449,13 @@
 
 	<script type="text/javascript">
 		function create_photo_album(da){
-			for (var i = 0; i < da.length; i++) {
-				const para = document.createElement("img");
-				para.style["max-width"] = "500px"
-				para.src = "/webrep/article/get_img/"+da[i]
-				$ID("imgs_holder").appendChild(para)
+			if(da[0]!=""){
+				for (var i = 0; i < da.length; i++) {
+					const para = document.createElement("img");
+					para.style["max-width"] = "500px"
+					para.src = "/webrep/article/get_img/"+da[i]
+					$ID("imgs_holder").appendChild(para)
+				}
 			}
 		}
 
@@ -498,10 +509,10 @@
 					var percent_rounded = Math.round(percent_ * 100) / 100
 					$ID("upload_process").innerHTML=(`
 						<span>
-							Gathering 
+							Processing  
 							<b>`+Math.round(percent_)+`%</b><br>
-							<span class="x-small">
-								[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+							<span class="x-small" style="display:none;">
+								[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ] | 
 								<i>`+(response_length-response_loaded)+` bytes remaining</i>
 							</span>
 						</span>
