@@ -212,17 +212,17 @@ figure {
 		{% for dip in dips_list %}
 		<div class="row" style="margin-bottom:-20%;">
 			<h6>RCU&nbsp;{{dip}}</h6>
-			<div class="chart" data-toggle="modal" data-target="#commoditymodal">
-				<span class="block" title="Number of Not yet started DIPs: {{dips_list[dip]['not_started']}}">
-					<span class="value">{{((dips_list[dip]['not_started']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span>
+			<div class="chart">
+				<span class="block" title="Not started DIPs: {{dips_list[dip]['not_started']}}">
+					<span data-toggle="modal" data-target="#commoditymodal" class="value">{{((dips_list[dip]['not_started']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span>
 				</span>
-				<span class="block" title="Number of ongoing DIPs: {{dips_list[dip]['ongoing']}}">
+				<span class="block" title="Ongoing DIPs: {{dips_list[dip]['ongoing']}}">
 					<span class="value">{{((dips_list[dip]['ongoing']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span>
 				</span>
-				<span class="block" title="Number of in the pipeline DIPs: {{dips_list[dip]['pipeline']}}">
+				<span class="block" title="In the Pipeline DIPs: {{dips_list[dip]['pipeline']}}">
 					<span class="value">{{((dips_list[dip]['pipeline']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span>
 				</span>
-				<span class="block" title="Number of approved DIPs: {{dips_list[dip]['approve']}}">
+				<span class="block" title="Approved DIPs: {{dips_list[dip]['approve']}}">
 					<span class="value">{{((dips_list[dip]['approve']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span>
 				</span>
 			</div>
@@ -275,28 +275,24 @@ figure {
 				</tr>
 				<tr>
 					<td>
-						<center># of Large Enterprises</center>
+						<center style="color: black;"># of Large Enterprises</center>
 					</td>
 					<td>
-						<center># of Medium Enterprises</center>
+						<center style="color: black;"># of Medium Enterprises</center>
 					</td>
 					<td>
-						<center># of Small Enterprises</center>
+						<center style="color: black;"># of Small Enterprises</center>
 					</td>
 					<td>
-						<center># of Micro Enterprises</center>
+						<center style="color: black;"># of Micro Enterprises</center>
 					</td>
 				</tr>
 
 				<tr>
-					<td> <input class="FORM1_FIELD x-input x-border" id="total_large_enterprise" name="total_large_enterprise" type="number" placeholder=""></td>
-					<td><input class="FORM1_FIELD  x-input x-border"
-							id="total_medium_enterprise" name="total_medium_enterprise" type="number"
-							placeholder=""></td>
-					<td><input class="FORM1_FIELD  x-input x-border" id="total_small_enterprise"
-							name="total_small_enterprise" type="number" placeholder=""></td>
-							<td><input class="FORM1_FIELD  x-input x-border" id="total_micro_enterprise"
-								name="total_micro_enterprise" type="number" placeholder=""></td>
+					<td style="font-size:larger; color: black; font-weight: bolder;"><center>0</center></td>
+					<td style="font-size:larger; color: black; font-weight: bolder;"><center>0</center></td>
+					<td style="font-size:larger; color: black; font-weight: bolder;"><center>0</center></td>
+					<td style="font-size:larger; color: black; font-weight: bolder;"><center>0</center></td>
 				</tr>
 			</table></div>
 			<br>
