@@ -73,6 +73,11 @@ def displayform():
     dcf_form3female=len(selectdcf_form3female)
     dcf_form4male=db.select("SELECT SUM(cbb_total_number_per_gender_male) AS total_male4 FROM dcf_capacity_building {};".format(position_data_filter()))
     dcf_form4female=db.select("SELECT SUM(cbb_total_number_per_gender_female) AS total_female4 FROM dcf_capacity_building {};".format(position_data_filter()))
+
+    dcf_form1msme=db.select("SELECT SUM(total_large_enterprise) as total_large_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
+    dcf_form1msme2=db.select("SELECT SUM(total_medium_enterprise) as total_medium_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
+    dcf_form1msme3=db.select("SELECT SUM(total_small_enterprise ) as total_small_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
+    dcf_form1msme4=db.select("SELECT SUM(total_micro_enterprise ) as total_micro_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
     
 
     selectapprovedform1=db.select("SELECT form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance != '' AND form_1_date_of_npco_cursory != '' OR ' ' ".format(position_data_filter()))
@@ -153,7 +158,11 @@ def displayform():
         'dcf_form4male':  dcf_form4male,
         'dcf_form4female':  dcf_form4female,
         'dips_list':  dio_group,
-        'total_dip_nat':alltotal
+        'total_dip_nat':alltotal,
+        'dcf_form1msme':dcf_form1msme,
+        'dcf_form1msme2':dcf_form1msme2,
+        'dcf_form1msme3':dcf_form1msme3,
+        'dcf_form1msme4':dcf_form1msme4
 
     }
 
