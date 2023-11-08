@@ -43,6 +43,11 @@ app = Blueprint("dcf",__name__,template_folder="pages")
 
 def is_on_session(): return ('USER_DATA' in session)
 
+
+@app.route('/sample')
+def sample():
+	return display_dataform.displayform()['dips_list']
+
 @app.route('/dcf_dashboard')
 def dcf_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")

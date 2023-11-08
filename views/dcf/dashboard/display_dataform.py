@@ -73,9 +73,61 @@ def displayform():
     dcf_form3female=len(selectdcf_form3female)
     dcf_form4male=db.select("SELECT SUM(cbb_total_number_per_gender_male) AS total_male4 FROM dcf_capacity_building {};".format(position_data_filter()))
     dcf_form4female=db.select("SELECT SUM(cbb_total_number_per_gender_female) AS total_female4 FROM dcf_capacity_building {};".format(position_data_filter()))
+    
+
+    selectapprovedform1=db.select("SELECT form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance != '' AND form_1_date_of_npco_cursory != '' OR ' ' ".format(position_data_filter()))
+    print(selectapprovedform1)
+    rcu8approvedform1 = len(selectapprovedform1)
 
 
 
+    # selectpipelineform1=db.select("SELECT form_1_for_development,form_1_finalized_approved,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_finalized_approved != '' AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
+    # print(selectpipelineform1)
+    # pipelineform1 = len(selectpipelineform1)
+
+    # selectongoingform1=db.select("SELECT form_1_for_development,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
+    # print(selectongoingform1)
+    # ongoingform1 = len(selectongoingform1)
+    dio_group={}
+    dips_list=db.select('''
+        SELECT 
+            form_1_for_development, #PIPELINE # ONGOING
+            form_1_finalized_approved, #PIPELINE
+            form_1_date_of_ifad_no_inssuance, #APPROVE
+            form_1_date_of_npco_cursory,  #APPROVE
+            form_1_rcus 
+        FROM dcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+
+    for index in range(len(dips_list)):
+        DIP = dips_list[index]
+        if(DIP['form_1_rcus'] not in dio_group):
+            dio_group[DIP['form_1_rcus']] = {'max':0, "total":0,"approve":0, "pipeline":0, "ongoing":0, "not_started":0 }
+            # dio_group[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
+
+        if(DIP["form_1_date_of_npco_cursory"] != "" and DIP["form_1_date_of_ifad_no_inssuance"] != ""):
+            dio_group[DIP['form_1_rcus']]["total"] += 1
+            dio_group[DIP['form_1_rcus']]["approve"]+= 1
+            # dio_group[DIP['form_1_rcus']]["approve"].append(DIP)
+
+        elif(DIP["form_1_for_development"] != "" and DIP["form_1_for_development"] != ""):
+            dio_group[DIP['form_1_rcus']]["total"] += 1
+            dio_group[DIP['form_1_rcus']]["pipeline"]+= 1
+            # dio_group[DIP['form_1_rcus']]["pipeline"].append(DIP)
+
+        elif(DIP["form_1_for_development"] != ""):
+            dio_group[DIP['form_1_rcus']]["total"]+= 1
+            dio_group[DIP['form_1_rcus']]["ongoing"]+= 1
+            # dio_group[DIP['form_1_rcus']]["ongoing"].append(DIP)
+
+        else:
+            dio_group[DIP['form_1_rcus']]["total"] += 1
+            dio_group[DIP['form_1_rcus']]["not_started"]+= 1
+            # dio_group[DIP['form_1_rcus']]["not_started"].append(DIP)
+        # dio_group[DIP['form_1_rcus']].append(DIP)
+    alltotal = 0
+    for xxx in dio_group:
+        alltotal += dio_group[xxx]['total']
+    print(alltotal)
 
 
 
@@ -99,7 +151,9 @@ def displayform():
         'dcf_form3male':  dcf_form3male,
         'dcf_form3female':  dcf_form3female,
         'dcf_form4male':  dcf_form4male,
-        'dcf_form4female':  dcf_form4female
+        'dcf_form4female':  dcf_form4female,
+        'dips_list':  dio_group,
+        'total_dip_nat':alltotal
 
     }
 
