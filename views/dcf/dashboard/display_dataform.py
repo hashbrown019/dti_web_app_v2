@@ -92,7 +92,7 @@ def displayform():
     
 
     selectapprovedform1=db.select("SELECT form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance != '' AND form_1_date_of_npco_cursory != '' OR ' ' ".format(position_data_filter()))
-    print(selectapprovedform1)
+    # print(selectapprovedform1)
     rcu8approvedform1 = len(selectapprovedform1)
 
 
@@ -104,47 +104,84 @@ def displayform():
     # selectongoingform1=db.select("SELECT form_1_for_development,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
     # print(selectongoingform1)
     # ongoingform1 = len(selectongoingform1)
-    dio_group={}
     dips_list=db.select('''
         SELECT 
             form_1_for_development, #PIPELINE # ONGOING
             form_1_finalized_approved, #PIPELINE
             form_1_date_of_ifad_no_inssuance, #APPROVE
             form_1_date_of_npco_cursory,  #APPROVE
-            form_1_rcus 
+            form_1_rcus,
+            form_1_commodity
         FROM dcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
 
+    dip_status_group_per_region={}
+    over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
+    commodities_per_status_per_region= {}
     for index in range(len(dips_list)):
         DIP = dips_list[index]
-        if(DIP['form_1_rcus'] not in dio_group):
-            dio_group[DIP['form_1_rcus']] = {'max':0, "total":0,"approve":0, "pipeline":0, "ongoing":0, "not_started":0 }
-            # dio_group[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
+        if(DIP['form_1_rcus'] not in dip_status_group_per_region):
+            dip_status_group_per_region[DIP['form_1_rcus']] = {'max':0, "total":0,"approve":0, "pipeline":0, "ongoing":0, "not_started":0 }
+            commodities_per_status_per_region[DIP['form_1_rcus']] = {"total":{},"approve":{}, "pipeline":{}, "ongoing":{}, "not_started":{} }
+            # dip_status_group_per_region[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
+        else:pass
+        if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["total"]):
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] = 0
 
         if(DIP["form_1_date_of_npco_cursory"] != "" and DIP["form_1_date_of_ifad_no_inssuance"] != ""):
-            dio_group[DIP['form_1_rcus']]["total"] += 1
-            dio_group[DIP['form_1_rcus']]["approve"]+= 1
-            # dio_group[DIP['form_1_rcus']]["approve"].append(DIP)
+            dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
+            over_all["over_all_total"] +=1
+            dip_status_group_per_region[DIP['form_1_rcus']]["approve"]+= 1
+            over_all["approve"] += 1
+            
+            if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["approve"]):
+                commodities_per_status_per_region[DIP['form_1_rcus']]["approve"][DIP['form_1_commodity']] = 0
+            commodities_per_status_per_region[DIP['form_1_rcus']]["approve"][DIP['form_1_commodity']] += 1
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
+            # dip_status_group_per_region[DIP['form_1_rcus']]["approve"].append(DIP)
 
         elif(DIP["form_1_for_development"] != "" and DIP["form_1_for_development"] != ""):
-            dio_group[DIP['form_1_rcus']]["total"] += 1
-            dio_group[DIP['form_1_rcus']]["pipeline"]+= 1
-            # dio_group[DIP['form_1_rcus']]["pipeline"].append(DIP)
+            dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
+            over_all["over_all_total"] +=1
+            dip_status_group_per_region[DIP['form_1_rcus']]["pipeline"]+= 1
+            over_all["pipeline"] += 1
+            
+            if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["pipeline"]):
+                commodities_per_status_per_region[DIP['form_1_rcus']]["pipeline"][DIP['form_1_commodity']] = 0
+            commodities_per_status_per_region[DIP['form_1_rcus']]["pipeline"][DIP['form_1_commodity']] += 1
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
+            # dip_status_group_per_region[DIP['form_1_rcus']]["pipeline"].append(DIP)
 
         elif(DIP["form_1_for_development"] != ""):
-            dio_group[DIP['form_1_rcus']]["total"]+= 1
-            dio_group[DIP['form_1_rcus']]["ongoing"]+= 1
-            # dio_group[DIP['form_1_rcus']]["ongoing"].append(DIP)
+            dip_status_group_per_region[DIP['form_1_rcus']]["total"]+= 1
+            over_all["over_all_total"] +=1
+            dip_status_group_per_region[DIP['form_1_rcus']]["ongoing"]+= 1
+            over_all["ongoing"] += 1
+            
+            if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["ongoing"]):
+                commodities_per_status_per_region[DIP['form_1_rcus']]["ongoing"][DIP['form_1_commodity']] = 0
+            commodities_per_status_per_region[DIP['form_1_rcus']]["ongoing"][DIP['form_1_commodity']] += 1
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
+            # dip_status_group_per_region[DIP['form_1_rcus']]["ongoing"].append(DIP)
 
         else:
-            dio_group[DIP['form_1_rcus']]["total"] += 1
-            dio_group[DIP['form_1_rcus']]["not_started"]+= 1
-            # dio_group[DIP['form_1_rcus']]["not_started"].append(DIP)
-        # dio_group[DIP['form_1_rcus']].append(DIP)
+            dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
+            over_all["over_all_total"] +=1
+            dip_status_group_per_region[DIP['form_1_rcus']]["not_started"]+= 1
+            over_all["not_started"] += 1
+            print(commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"])
+            
+            if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"]):
+                commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"][DIP['form_1_commodity']] = 0
+            commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"][DIP['form_1_commodity']] += 1
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
+            # dip_status_group_per_region[DIP['form_1_rcus']]["not_started"].append(DIP)
+        # dip_status_group_per_region[DIP['form_1_rcus']].append(DIP)
     alltotal = 0
-    for xxx in dio_group:
-        alltotal += dio_group[xxx]['total']
-    print(alltotal)
 
+    for xxx in dip_status_group_per_region:
+        alltotal += dip_status_group_per_region[xxx]['total']
+    # print(alltotal)
+    # dip_status_group_per_region["_over_all"] = over_all
 
 
 
@@ -174,8 +211,10 @@ def displayform():
         'dcf_form3female':  dcf_form3female,
         'dcf_form4male':  dcf_form4male,
         'dcf_form4female':  dcf_form4female,
-        'dips_list':  dio_group,
+        'dips_list':  dip_status_group_per_region,
+        'over_all_dips_list':  over_all,
         'total_dip_nat':alltotal,
+        "commodities_per_status_per_region" : commodities_per_status_per_region,
         'dcf_form1msme':dcf_form1msme,
         'dcf_form1msme2':dcf_form1msme2,
         'dcf_form1msme3':dcf_form1msme3,
