@@ -63,8 +63,19 @@ def displayform():
     form9_datatable=db.select("SELECT * FROM dcf_enablers_activity {} ORDER BY `id` DESC;".format(position_data_filter()))
     form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {} ORDER BY `id` DESC;".format(position_data_filter()))
     form11_datatable=db.select("SELECT * FROM dcf_access_financing {} ORDER BY `id` DESC;".format(position_data_filter()))
+
     dcf_form1male=db.select("SELECT SUM(form_1_totalmale) AS total_male FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form1maleyouth=db.select("SELECT SUM(form_1_maleyouth) AS total_maleyouth FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form1maleip=db.select("SELECT SUM(form_1_maleip) AS total_maleip FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form1malepwd=db.select("SELECT SUM(form_1_malepwd) AS total_malepwd FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+
+
     dcf_form1female=db.select("SELECT SUM(form_1_totalfemale) AS total_female FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form1femaleyouth=db.select("SELECT SUM(form_1_femaleyouth) AS total_femaleyouth FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form1femaleip=db.select("SELECT SUM(form_1_femaleip) AS total_femaleip FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form1femalepwd=db.select("SELECT SUM(form_1_femalepwd) AS total_femalepwd FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+
+
     dcf_form2FOmale=db.select("SELECT SUM(form_2_male) AS total_male2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form2FOfemale=db.select("SELECT SUM(form_2_female) AS total_female2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     selectdcf_form3male=db.select("SELECT form_3_sex AS total_male3 FROM dcf_bdsp_reg {} AND form_3_sex = 'male';".format(position_data_filter()))
@@ -150,7 +161,13 @@ def displayform():
         'form10_datatable':  form10_datatable,
         'form11_datatable':  form11_datatable,
         'dcf_form1male':  dcf_form1male,
+        'dcf_form1maleyouth': dcf_form1maleyouth,
+        'dcf_form1maleip':dcf_form1maleip,
+        'dcf_form1malepwd':dcf_form1malepwd,
         'dcf_form1female':  dcf_form1female,
+        'dcf_form1femaleyouth': dcf_form1femaleyouth,
+        'dcf_form1femaleip':dcf_form1femaleip,
+        'dcf_form1femalepwd':dcf_form1femalepwd,
         'dcf_form2FOmale':  dcf_form2FOmale,
         'dcf_form2FOfemale':  dcf_form2FOfemale,
         'dcf_form3male':  dcf_form3male,

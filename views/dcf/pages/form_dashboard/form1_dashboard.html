@@ -166,7 +166,7 @@ figure {
 			<div class="card bg-secondary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 			
 				<!-- Card header -->
-				<div class="card-header" style="background-color: #009999;">
+				<div class="card-header" style="background-color: #204060;">
 						
 				
 		
@@ -200,7 +200,7 @@ figure {
 						
 				 <div class="x-axis">
 				 	
-		<ul class="legend">
+		<ul class="legend text-default">
 			<li>Not Started</li>
 			<li>Ongoing Development DIPs</li>
 			<li>In the Pipeline DIPs</li>
@@ -212,10 +212,10 @@ figure {
 		<div class="graphic">
 		{% for dip in dips_list %}
 		<div class="row" style="margin-bottom:-20%;">
-			<h6>RCU&nbsp;{{dip}}</h6>
+			<h6 class="text-default">RCU&nbsp;{{dip}}</h6>
 			<div class="chart">
 				<span class="block" title="Not started DIPs: {{dips_list[dip]['not_started']}}">
-					<span data-toggle="modal" data-target="#commoditymodal" class="value">{{((dips_list[dip]['not_started']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span>
+					<span data-toggle="modal" data-target="#commoditymodal" class="value">{{((dips_list[dip]['not_started']/dips_list[dip]["total"])*100)|round(1, 'floor')}}% </span>
 				</span>
 				<span class="block" title="Ongoing DIPs: {{dips_list[dip]['ongoing']}}">
 					<span class="value">{{((dips_list[dip]['ongoing']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span>
@@ -267,7 +267,7 @@ figure {
 			<div class="card bg-secondary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 			
 				<!-- Card header -->
-				<div class="card-header" style="background-color: #009999;">
+				<div class="card-header" style="background-color: #204060;">
 						
 				
 		
@@ -309,7 +309,14 @@ figure {
 					<div class="row">
 						<div class="col">
 							<h5 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total # of Large Enterprises</b><br></h5>
-							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1msme[0]['total_large_entep'] | int}}</span>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1msme[0]['total_large_entep']}}</span>
+						</div>
+
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/large_enterprise.png"
+									style="width: 250%; height: 250%;">
+							</div>
 						</div>
 						
 					</div>
@@ -322,13 +329,20 @@ figure {
 </div>
  <div class="col-xl-3 col-md-6">
 			<div class="card card-stats h-80"
-				style="height: 130px; background-color: #52527a	; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				style="height: 130px; background-color: #264d73	; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 				<!-- Card body -->
 				<div class="card-body">
 					<div class="row">
 						<div class="col">
 							<h5 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total # of Medium Enterprises</b><br></h5>
-							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1msme2[0]['total_medium_entep'] | int}}</span>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1msme2[0]['total_medium_entep']}}</span>
+						</div>
+
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/medium_enterprise.png"
+									style="width: 250%; height: 250%;">
+							</div>
 						</div>
 						
 					</div>
@@ -348,7 +362,14 @@ figure {
 					<div class="row">
 						<div class="col">
 							<h5 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total # of Small Enterprises</b><br></h5>
-							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1msme3[0]['total_small_entep'] | int}}</span>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1msme3[0]['total_small_entep']}}</span>
+						</div>
+
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/small_enterprise.png"
+									style="width: 250%; height: 250%;">
+							</div>
 						</div>
 						
 					</div>
@@ -368,10 +389,20 @@ figure {
 					<div class="row">
 						<div class="col">
 							<h5 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total # of Micro Enterprises</b><br></h5>
-							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1msme4[0]['total_micro_entep'] | int}}</span>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1msme4[0]['total_micro_entep']}}</span>
+						</div>
+
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/micro_enterprise.png"
+									style="width: 250%; height: 250%;">
+							</div>
 						</div>
 						
 					</div>
+
+						
+
 					<p class="mt mb-0 text-sm">
 						<br>
 					</p>
@@ -398,15 +429,55 @@ figure {
 
 
 
+
+<div class="col-xl-12 col-md-6">
+			<div class="card bg-secondary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			
+				<!-- Card header -->
+				<div class="card-header" style="background-color: #204060;">
+						
+				
+		
+		
+		
+		<!-- Title -->
+		
+		
+		<h3 class="h1 mb-0 text-white"><center>Smallholder Farming Households by Sector based on approved DIPs</center></h3>
+		
+		
+		
+		
+		
+		
+		
+		
+				</div><br>
+			
+				
+			<div class="bg-transparent">
+				<div class="row align-items-center">
+			
+				
+				</div>
+			
+				</div>
+				
+				<!-- Card body -->
+				<div class="card-body">
+						
+			
+
+
 <div class="row">
 	<div class="col-xl-3 col-md-6">
 			<div class="card card-stats h-80"
-				style="height: 130px; background-color: #004466; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				style="height: 130px; background-color: #2d5986; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 				<!-- Card body -->
 				<div class="card-body">
 					<div class="row">
 						<div class="col">
-							<h2 class="card-title text-uppercase text-white mb-0"><b class="formtext text-light">Total no. by Sex</b><br> Male</h2>
+							<h1 class=" card-title text-uppercase text-white mb-0"><b class="formtext">Total no. of Male</b></h1>
 							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1male[0]['total_male']}}</span>
 						</div>
 						<div class="col-auto">
@@ -423,14 +494,92 @@ figure {
 
 	</div>
 </div>
- <div class="col-xl-3 col-md-6">
+
+<div class="col-xl-3 col-md-6">
 			<div class="card card-stats h-80"
-				style="height: 130px; background-color: #cc0066; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				style="height: 130px; background-color: #2d5986; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 				<!-- Card body -->
 				<div class="card-body">
 					<div class="row">
 						<div class="col">
-							<h2 class="card-title text-uppercase text-white mb-0"><b class="formtext text-light">Total no. by Sex</b><br> Female</h2>
+							<h3 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total no. of Male</b><br>Youth</h3>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1maleyouth[0]['total_maleyouth']}}</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/youth.png"
+									style="width: 250%; height: 250%;">
+							</div>
+						</div>
+					</div>
+					<p class="mt mb-0 text-sm">
+						<br>
+					</p>
+				</div>
+
+	</div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+			<div class="card card-stats h-80"
+				style="height: 130px; background-color: #2d5986; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				<!-- Card body -->
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h3 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total no. of Male</b><br>IP</h3>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1maleip[0]['total_maleip']}}</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/male_ip.png"
+									style="width: 250%; height: 250%;">
+							</div>
+						</div>
+					</div>
+					<p class="mt mb-0 text-sm">
+						<br>
+					</p>
+				</div>
+
+	</div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+			<div class="card card-stats h-80"
+				style="height: 130px; background-color: #2d5986; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				<!-- Card body -->
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h3 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total no. of Male</b><br>PWD</h3>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1malepwd[0]['total_malepwd']}}</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/pwd.png"
+									style="width: 250%; height: 250%;">
+							</div>
+						</div>
+					</div>
+					<p class="mt mb-0 text-sm">
+						<br>
+					</p>
+				</div>
+
+	</div>
+</div>
+
+</div><hr>
+<div class="row">
+	 <div class="col-xl-3 col-md-6">
+			<div class="card card-stats h-80"
+				style="height: 130px; background-color: #800055; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				<!-- Card body -->
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h1 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total no. of Female</b></h1>
 							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1female[0]['total_female']}}</span>
 						</div>
 						<div class="col-auto">
@@ -447,7 +596,99 @@ figure {
 
 	</div>
 </div>
+
+<div class="col-xl-3 col-md-6">
+			<div class="card card-stats h-80"
+				style="height: 130px; background-color: #800055; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				<!-- Card body -->
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h3 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total no. of female</b><br>Youth</h3>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1femaleyouth[0]['total_femaleyouth']}}</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/youth2.png"
+									style="width: 250%; height: 250%;">
+							</div>
+						</div>
+					</div>
+					<p class="mt mb-0 text-sm">
+						<br>
+					</p>
+				</div>
+
+	</div>
 </div>
+
+
+<div class="col-xl-3 col-md-6">
+			<div class="card card-stats h-80"
+				style="height: 130px; background-color: #800055; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				<!-- Card body -->
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h3 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total no. of Female</b><br>IP</h3>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1femaleip[0]['total_femaleip']}}</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/female_ip.png"
+									style="width: 250%; height: 250%;">
+							</div>
+						</div>
+					</div>
+					<p class="mt mb-0 text-sm">
+						<br>
+					</p>
+				</div>
+
+	</div>
+</div>
+
+
+<div class="col-xl-3 col-md-6">
+			<div class="card card-stats h-80"
+				style="height: 130px; background-color: #800055; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				<!-- Card body -->
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<h3 class="card-title text-uppercase text-white mb-0"><b class="formtext">Total no. of Female</b><br>PWD</h3>
+							<span class="h1 text-white font-weight-bold mb-0">{{dcf_form1femalepwd[0]['total_femalepwd']}}</span>
+						</div>
+						<div class="col-auto">
+							<div class="icon icon-shape">
+								<img src="../static/psalm_static/dcf_static/assets/img/icons/pwd.png"
+									style="width: 250%; height: 250%;">
+							</div>
+						</div>
+					</div>
+					<p class="mt mb-0 text-sm">
+						<br>
+					</p>
+				</div>
+
+	</div>
+</div>
+
+
+
+</div>
+
+
+
+		
+		
+				</div>
+			</div>
+				
+		
+				
+		</div>
+
 
  
 
