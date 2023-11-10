@@ -26,6 +26,9 @@ app = Blueprint("form_c",__name__,template_folder="pages")
 
 def is_on_session(): return ('USER_DATA' in session)
 
+
+
+	
 @app.route('/formc')
 def index():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
@@ -141,11 +144,17 @@ def viewprofile():
 		user_rank_=user_management.user_rankings(sesh['id'])
 		prof_a_inputed_data = user_rank_['profiling_a']['inputed']
 		prof_a_total_data = user_rank_['profiling_a']['total']
-		prof_a_percentage = (prof_a_inputed_data / prof_a_total_data) * 100
+		try:
+			prof_a_percentage = (prof_a_inputed_data / prof_a_total_data) * 100
+		except Exception as e:
+			prof_a_percentage = 0
 
 		prof_c_inputed_data = user_rank_['prof_c']['inputed']
 		prof_c_total_data = user_rank_['prof_c']['total']
-		prof_c_percentage = (prof_c_inputed_data / prof_c_total_data) * 100
+		try:
+			prof_c_percentage = (prof_c_inputed_data / prof_c_total_data) * 100
+		except Exception as e:
+			prof_c_percentage=0
 
 		return render_template("viewprofile.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),user_rank=user_rank_)
 	else:
@@ -160,11 +169,17 @@ def menuv2():
 		user_rank=user_management.user_rankings(sesh['id'])
 		prof_a_inputed_data = user_rank['profiling_a']['inputed']
 		prof_a_total_data = user_rank['profiling_a']['total']
-		prof_a_percentage = (prof_a_inputed_data / prof_a_total_data) * 100
+		try:
+			prof_a_percentage = (prof_a_inputed_data / prof_a_total_data) * 100
+		except Exception as e:
+			prof_a_percentage = 0
 
 		prof_c_inputed_data = user_rank['prof_c']['inputed']
 		prof_c_total_data = user_rank['prof_c']['total']
-		prof_c_percentage = (prof_c_inputed_data / prof_c_total_data) * 100
+		try:
+			prof_c_percentage = (prof_c_inputed_data / prof_c_total_data) * 100
+		except Exception as e:
+			prof_c_percentage = 0
 
 		return render_template("menuv2.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),user_rank=user_management.user_rankings(sesh['id']))
 	else:

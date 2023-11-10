@@ -334,24 +334,24 @@
 					<div class=row>
 						<div class="col-12">
 							<br><br>
-							<span class="form-label h2 fw-bolder">Others</span>
+							<span class="form-label h2 fw-bolder">Related Stories</span>
 						</div>
 						<div class="col-md-12">
-							<label for="cs_photo_act" class="form-label small fw-bolder">Photographs that could help show the activities carried out or changes realized</label>
+							<label for="cs_photo_act" class="form-label small fw-bolder">URL Photographs that could help show the activities carried out or changes realized</label>
 							<input class="article_form form-control" id="cs_photo_act" rows="3" placeholder="Input"></input>
 							<div class="invalid-feedback">
 								Please provide Input.
 							</div>
 						</div>
 						<div class="col-md-12">
-							<label for="cs_vid_media_links" class="form-label small fw-bolder">Video or other media links that could be embedded into the case study</label>
+							<label for="cs_vid_media_links" class="form-label small fw-bolder">URL of other media links that could be embedded into the case study</label>
 							<input class="article_form form-control" id="cs_vid_media_links" rows="3" placeholder="Input"></input>
 							<div class="invalid-feedback">
 								Please provide Input.
 							</div>
 						</div>
 						<div class="col-md-12">
-							<label for="cs_quotes" class="form-label small fw-bolder">Direct quotes or testimonials that could help add emotional context or bring the case study/story of change to life</label>
+							<label for="cs_quotes" class="form-label small fw-bolder">URL Online/Social Media articles, post and</label>
 							<input class="article_form form-control" id="cs_quotes" rows="3" placeholder="Input"></input>
 							<div class="invalid-feedback">
 								Please provide Input.
@@ -362,7 +362,7 @@
 								<label for="cs_quotes_ref" class="form-label small fw-bolder">Person in reference</label>
 								<input class="article_form form-control" id="cs_quotes_ref" rows="3" placeholder="Input"></input>
 								<div class="invalid-feedback">
-									Please provide Input.
+									Please provide Input. publications related to the story
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -386,6 +386,28 @@
 									Please provide Input.
 								</div>
 							</div>
+						</div>
+						<br>
+						<hr>
+						<div class="col-md-12">
+							<label for="photos" class="form-label small fw-bolder">Photos</label><br>
+							<span class="text-warning">
+								<span class="text-warning fa fa-warning"></span>
+								If you're editing this entry, you are required to re-upload the pictures before saving
+							</span>
+							<input id="photos" type="file" class="article_form form-control" multiple style="height:50px" onchange="display_img(this)">
+							<div class="invalid-feedback">
+								Please provide Input.
+							</div>
+						</div>
+						<div id="imgs_holder" class="col-md-12 center">
+						</div>
+						<br>
+						<hr>
+						<div id="imgs_holder" class="col-md-12 center">
+							Source:<br>
+							<i>INTRAC. “Case Studies and Stories of Change - INTRAC.”<br><i>
+							<i>INTRAC, 14 May 2019, www.intrac.org/resources/case-studies-stories-change.<br><i>
 						</div>
 					</div>
 
@@ -411,8 +433,10 @@
 					<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
 					Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
 					<hr>
-					<h3>Your Upload Process is</h3>
-					<h2 id="upload_process"></h2>
+					<div>
+						<h5>Your Upload Process is</h5>
+						<span id="upload_process"></span>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
@@ -423,6 +447,28 @@
 	</div>
 
 	<script type="text/javascript">
+		function create_photo_album(da){
+			if(da[0]!=""){
+				for (var i = 0; i < da.length; i++) {
+					const para = document.createElement("img");
+					para.style["max-width"] = "500px"
+					para.src = "/webrep/article/get_img/"+da[i]
+					$ID("imgs_holder").appendChild(para)
+				}
+			}
+		}
+
+		function display_img(elem){
+			var __files = elem.files
+			for (var i = 0; i < __files.length; i++) {
+				// println(window.URL.createObjectURL(__files[i]))
+				const para = document.createElement("img");
+				para.style["max-width"] = "500px"
+				$ID("imgs_holder").appendChild(para)
+				para.src = window.URL.createObjectURL(__files[i])
+			}
+		}
+
 		function print_cs(){
 			goto('/rapid/case_study/printcs.html?exec=print&ids='+URL_ARGS['ids'])
 		}
@@ -445,7 +491,7 @@
 			$send({
 				action : "/webrep/upload_case_study",
 				method : POST,
-				data : $DATA(data),
+				data : $DATA(data).appendFileArr($ID("photos")),
 				// data : $DATA(data).appendFileArr($ID("file_name")),
 				func : function(res){
 					resp = JSON.parse(res)
@@ -462,10 +508,10 @@
 					var percent_rounded = Math.round(percent_ * 100) / 100
 					$ID("upload_process").innerHTML=(`
 						<span>
-							Gathering 
+							Processing  
 							<b>`+Math.round(percent_)+`%</b><br>
-							<span class="x-small">
-								[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+							<span class="x-small" style="display:none;">
+								[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ] | 
 								<i>`+(response_length-response_loaded)+` bytes remaining</i>
 							</span>
 						</span>
@@ -503,6 +549,7 @@
 							from_field[_ID].value = web_safe_decode(resp[_ID])
 						}catch(e){}
 					}
+					create_photo_album(resp["photos"].split("||"))
 				}
 			})
 		})
@@ -516,6 +563,18 @@
 				}catch(e){}
 			}
 		}
+
+        var k_counter = 1
+        function add_row() {
+            // $ID('main_').innerHTML += og_row
+            // Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+            var row = form2_table.insertRow(2);
+            // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+            row.insertCell(0).innerHTML = `<td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_activity_agreements_kapown_`+k_counter+`" type="text" name="form_2_activity_agreements[]"></td>`
+            row.insertCell(1).innerHTML = `<td><input class="FORM2_FIELD x-light-grey x-input" id="form_2_date_conducted_kapown_`+k_counter+`"" type="date" name="form_2_date_conducted[]"></td>`
+            k_counter += 1
+            // Add some text to the new cells:
+        }
 
 	</script>
 	{% include 'main/footer.html' %}

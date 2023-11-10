@@ -256,7 +256,9 @@
 							</div>
 						</div>
 
-
+						<h2>Photos</h2>
+						<div id="imgs_holder" class="col-md-12 center">
+						</div>
 
 					</form>
 					<div class="mt-5">
@@ -271,6 +273,16 @@
 
 	<script type="text/javascript">
 
+		function create_photo_album(da){
+			if(da[0]!=""){
+				for (var i = 0; i < da.length; i++) {
+					const para = document.createElement("img");
+					para.style["max-width"] = "500px"
+					para.src = "/webrep/article/get_img/"+da[i]
+					$ID("imgs_holder").appendChild(para)
+				}
+			}
+		}
 
 		$onload(function(){
 			$send({
@@ -295,6 +307,8 @@
 					}else{
 						print_page("print_docx")
 					}
+					create_photo_album(resp["photos"].split("||"))
+
 					// goto('/rapid/case_study/createCaseStudy.html?ids='+URL_ARGS['ids'])
 				}
 			})

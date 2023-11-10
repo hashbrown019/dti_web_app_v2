@@ -63,6 +63,80 @@ def displayform():
     form9_datatable=db.select("SELECT * FROM dcf_enablers_activity {} ORDER BY `id` DESC;".format(position_data_filter()))
     form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {} ORDER BY `id` DESC;".format(position_data_filter()))
     form11_datatable=db.select("SELECT * FROM dcf_access_financing {} ORDER BY `id` DESC;".format(position_data_filter()))
+    dcf_form1male=db.select("SELECT SUM(form_1_totalmale) AS total_male FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form1female=db.select("SELECT SUM(form_1_totalfemale) AS total_female FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form2FOmale=db.select("SELECT SUM(form_2_male) AS total_male2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    dcf_form2FOfemale=db.select("SELECT SUM(form_2_female) AS total_female2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    selectdcf_form3male=db.select("SELECT form_3_sex AS total_male3 FROM dcf_bdsp_reg {} AND form_3_sex = 'male';".format(position_data_filter()))
+    selectdcf_form3female=db.select("SELECT form_3_sex AS total_female3 FROM dcf_bdsp_reg {} AND form_3_sex = 'female';".format(position_data_filter()))
+    dcf_form3male=len(selectdcf_form3male)
+    dcf_form3female=len(selectdcf_form3female)
+    dcf_form4male=db.select("SELECT SUM(cbb_total_number_per_gender_male) AS total_male4 FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf_form4female=db.select("SELECT SUM(cbb_total_number_per_gender_female) AS total_female4 FROM dcf_capacity_building {};".format(position_data_filter()))
+
+    dcf_form1msme=db.select("SELECT SUM(total_large_enterprise) as total_large_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
+    dcf_form1msme2=db.select("SELECT SUM(total_medium_enterprise) as total_medium_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
+    dcf_form1msme3=db.select("SELECT SUM(total_small_enterprise ) as total_small_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
+    dcf_form1msme4=db.select("SELECT SUM(total_micro_enterprise ) as total_micro_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
+    
+
+    selectapprovedform1=db.select("SELECT form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance != '' AND form_1_date_of_npco_cursory != '' OR ' ' ".format(position_data_filter()))
+    print(selectapprovedform1)
+    rcu8approvedform1 = len(selectapprovedform1)
+
+
+
+    # selectpipelineform1=db.select("SELECT form_1_for_development,form_1_finalized_approved,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_finalized_approved != '' AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
+    # print(selectpipelineform1)
+    # pipelineform1 = len(selectpipelineform1)
+
+    # selectongoingform1=db.select("SELECT form_1_for_development,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
+    # print(selectongoingform1)
+    # ongoingform1 = len(selectongoingform1)
+    dio_group={}
+    dips_list=db.select('''
+        SELECT 
+            form_1_for_development, #PIPELINE # ONGOING
+            form_1_finalized_approved, #PIPELINE
+            form_1_date_of_ifad_no_inssuance, #APPROVE
+            form_1_date_of_npco_cursory,  #APPROVE
+            form_1_rcus 
+        FROM dcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+
+    for index in range(len(dips_list)):
+        DIP = dips_list[index]
+        if(DIP['form_1_rcus'] not in dio_group):
+            dio_group[DIP['form_1_rcus']] = {'max':0, "total":0,"approve":0, "pipeline":0, "ongoing":0, "not_started":0 }
+            # dio_group[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
+
+        if(DIP["form_1_date_of_npco_cursory"] != "" and DIP["form_1_date_of_ifad_no_inssuance"] != ""):
+            dio_group[DIP['form_1_rcus']]["total"] += 1
+            dio_group[DIP['form_1_rcus']]["approve"]+= 1
+            # dio_group[DIP['form_1_rcus']]["approve"].append(DIP)
+
+        elif(DIP["form_1_for_development"] != "" and DIP["form_1_for_development"] != ""):
+            dio_group[DIP['form_1_rcus']]["total"] += 1
+            dio_group[DIP['form_1_rcus']]["pipeline"]+= 1
+            # dio_group[DIP['form_1_rcus']]["pipeline"].append(DIP)
+
+        elif(DIP["form_1_for_development"] != ""):
+            dio_group[DIP['form_1_rcus']]["total"]+= 1
+            dio_group[DIP['form_1_rcus']]["ongoing"]+= 1
+            # dio_group[DIP['form_1_rcus']]["ongoing"].append(DIP)
+
+        else:
+            dio_group[DIP['form_1_rcus']]["total"] += 1
+            dio_group[DIP['form_1_rcus']]["not_started"]+= 1
+            # dio_group[DIP['form_1_rcus']]["not_started"].append(DIP)
+        # dio_group[DIP['form_1_rcus']].append(DIP)
+    alltotal = 0
+    for xxx in dio_group:
+        alltotal += dio_group[xxx]['total']
+    print(alltotal)
+
+
+
+
     return{
         'form1_datatable':  form1_datatable,
         'form2_datatable':  form2_datatable,
@@ -74,7 +148,21 @@ def displayform():
         'form8_datatable':  form8_datatable,
         'form9_datatable':  form9_datatable,
         'form10_datatable':  form10_datatable,
-        'form11_datatable':  form11_datatable
+        'form11_datatable':  form11_datatable,
+        'dcf_form1male':  dcf_form1male,
+        'dcf_form1female':  dcf_form1female,
+        'dcf_form2FOmale':  dcf_form2FOmale,
+        'dcf_form2FOfemale':  dcf_form2FOfemale,
+        'dcf_form3male':  dcf_form3male,
+        'dcf_form3female':  dcf_form3female,
+        'dcf_form4male':  dcf_form4male,
+        'dcf_form4female':  dcf_form4female,
+        'dips_list':  dio_group,
+        'total_dip_nat':alltotal,
+        'dcf_form1msme':dcf_form1msme,
+        'dcf_form1msme2':dcf_form1msme2,
+        'dcf_form1msme3':dcf_form1msme3,
+        'dcf_form1msme4':dcf_form1msme4
 
     }
 

@@ -5,8 +5,9 @@ from modules.Req_Brorn_util import string_websafe as STRS
 import Configurations as c
 from werkzeug.utils import secure_filename
 import os
+from modules.Req_Brorn_util import file_from_request
 
-from PIL import Image
+# from PIL import Image
 from io import BytesIO
 import base64
 
@@ -257,9 +258,10 @@ class _main:
 		data = dict(request.form)
 		key = [];val = [];args=""
 		data["USER_ID"] = session["USER_DATA"][0]['id']
-		# FILE_REQ = file_from_request(app)
-		# __f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
-		# data["file_name"] = __f["file_arr_str"]
+
+		FILE_REQ = file_from_request(app)
+		__f = FILE_REQ.save_file_from_request(request,"photos",c.RECORDS+"/objects/webrep/",False,True)
+		data["photos"] = __f["file_arr_str"]
 
 		is_exist = len(db.select("SELECT * FROM `webrep_case_study` WHERE `id` ='{}' ;".format(request.form['id'])))
 		if(is_exist==0):
