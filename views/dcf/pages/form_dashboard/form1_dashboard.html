@@ -7,7 +7,8 @@
 
 {% block content %}
 <title>Form 1 Dasboard</title>
-
+<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
 <div class="header bg-primary pb-6">
 	<div class="container-fluid">
 		<div class="header-body">
@@ -689,6 +690,77 @@ figure {
 
 </div>
 
+<canvas id="myChart" style="max-width:800px"></canvas>
+
+<script >
+
+var xValues = ["Male: " + {{dcf_form1male[0]['total_male']}}, "Female: " + {{dcf_form1female[0]['total_female']}}];
+var yValues = [{{dcf_form1male[0]['total_male']}}, {{dcf_form1female[0]['total_female']}}];
+var barColors = ["#2d5986", "#800055"];
+
+var total = yValues.reduce((a, b) => a + b, 0);
+
+var percentageValues = yValues.map(value => ((value / total) * 100).toFixed(2));
+
+Chart.plugins.register({
+  afterDatasetsDraw: function(chart, easing) {
+    // To only draw at the end of animation, check for easing === 1
+    var ctx = chart.ctx;
+
+    chart.data.datasets.forEach(function(dataset, i) {
+      var meta = chart.getDatasetMeta(i);
+      if (!meta.hidden) {
+        meta.data.forEach(function(element, index) {
+          // Draw the text in white, with the specified font
+          ctx.fillStyle = 'white';
+
+          var fontSize = 20;
+          var fontStyle = 'bold';
+          var fontFamily = 'sans-serif';
+          ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+          // Just naively convert to string for now
+          var dataString = percentageValues[index] + '%';
+
+          // Make sure alignment settings are correct
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          var padding = 5;
+          var position = element.tooltipPosition();
+          ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+        });
+      }
+    });
+  }
+});
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Overall Total: {{dcf_form1sextotal[0]['total_sex'] | int}}",
+      fontSize: 30,
+      fontColor: 'black'
+    },
+    plugins: {
+      datalabels: {
+        display: false // Hide the default labels, we're replacing them with custom labels
+      }
+    }
+  }
+});
+
+</script>
+
 
 
 		
@@ -799,130 +871,11 @@ figure {
 
 
 
-<div class="modal fade" id="commoditymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #E27A3F;">
-                <h5 class="modal-title text-white" id="exampleModalLabel">Not Started</h5>
-                <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
-                    <span class="text-white" aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="max-height:200px; 
-    overflow-y: auto;" id="modalbodyedit">
-
-             
-<div class="row">
-	<div class="col-xl-3 col-md-6">
-			<div class="card card-stats h-80"
-				style="height: 130px; background-color: #8a8a5c; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-				<!-- Card body -->
-				<div class="card-body">
-					<div class="row">
-						<div class="col">
-							<h2 class="card-title text-uppercase text-white mb-0"><b class="formtext "># of DIPs by Commodity</b><br> Coffee</h2>
-							<span class="h1 text-white font-weight-bold mb-0">0</span>
-						</div>
-						<div class="col-auto">
-							<div class="icon icon-shape">
-								<img src="../static/psalm_static/dcf_static/assets/img/icons/coffee.png"
-									style="width: 250%; height: 250%;">
-							</div>
-						</div>
-					</div>
-					<p class="mt mb-0 text-sm">
-						<br>
-					</p>
-				</div>
-
-	</div>
-</div>
- <div class="col-xl-3 col-md-6">
-			<div class="card card-stats h-80"
-				style="height: 130px; background-color: #b35900; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-				<!-- Card body -->
-				<div class="card-body">
-					<div class="row">
-						<div class="col">
-							<h2 class="card-title text-uppercase text-white mb-0"><b class="formtext"># of DIPs by Commodity</b><br> Cacao</h2>
-							<span class="h1 text-white font-weight-bold mb-0">0</span>
-						</div>
-						<div class="col-auto">
-							<div class="icon icon-shape">
-								<img src="../static/psalm_static/dcf_static/assets/img/icons/cacao.png"
-									style="width: 250%; height: 250%;">
-							</div>
-						</div>
-					</div>
-					<p class="mt mb-0 text-sm">
-						<br>
-					</p>
-				</div>
-
-	</div>
-</div>
- <div class="col-xl-3 col-md-6">
-			<div class="card card-stats h-80"
-				style="height: 130px; background-color: #3d5c5c; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-				<!-- Card body -->
-				<div class="card-body">
-					<div class="row">
-						<div class="col">
-							<h2 class="card-title text-uppercase text-white mb-0"><b class="formtext"># of DIPs by Commodity</b><br> Coconut</h2>
-							<span class="h1 text-white font-weight-bold mb-0">0</span>
-						</div>
-						<div class="col-auto">
-							<div class="icon icon-shape">
-								<img src="../static/psalm_static/dcf_static/assets/img/icons/coconut.png"
-									style="width: 250%; height: 250%;">
-							</div>
-						</div>
-					</div>
-					<p class="mt mb-0 text-sm">
-						<br>
-					</p>
-				</div>
-
-	</div>
-</div>
- <div class="col-xl-3 col-md-6">
-			<div class="card card-stats h-80"
-				style="height: 130px; background-color: #339966; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-				<!-- Card body -->
-				<div class="card-body">
-					<div class="row">
-						<div class="col">
-							<h2 class="card-title text-uppercase text-white mb-0"><b class="formtext"># of DIPs by Commodity</b><br> PFN</h2>
-							<span class="h1 text-white font-weight-bold mb-0">0</span>
-						</div>
-						<div class="col-auto">
-							<div class="icon icon-shape">
-								<img src="../static/psalm_static/dcf_static/assets/img/icons/pfn.png"
-									style="width: 250%; height: 250%;">
-							</div>
-						</div>
-					</div>
-					<p class="mt mb-0 text-sm">
-						<br>
-					</p>
-				</div>
-
-	</div>
-</div>
-</div>
-
-        </div>
-
-    </div>
-</div>
-
-
-
 
 
 
 <script>
+
 	$('.value').each(function() {
 	var text = $(this).text();
 	$(this).parent().css('width', text);
@@ -976,11 +929,7 @@ $('.block').tooltip();
 <!-- Specific JS goes HERE -->
 
 {% block javascripts %}
-<script>
 
-</script>
-<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
-<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
 
 
 {% endblock javascripts %}
