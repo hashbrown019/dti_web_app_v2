@@ -13,11 +13,14 @@
 	<div class="container-fluid">
 		<div class="header-body">
 
-			<div class="d-flex align-items-center">
+		<br>
+		<br>
 				<!-- Search form -->
-				<div class="h1 fw-bolder text-gray mb-2">FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS</div>
+		<h1 class="mb-5 text-default" style="font-size:2.2em; font-weight: bold;"><center>FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS DASHBOARD</center></h1>
+				
 				<!-- / Search form -->
-			</div><br>
+			<br>
+		</div>
 			<style>
 				.icon-button__badge {
 					position: absolute;
@@ -690,75 +693,92 @@ figure {
 
 </div>
 
-<canvas id="myChart" style="max-width:800px"></canvas>
+<canvas id="myChart" style="max-width:80%;"></canvas>
 
 <script >
+  var xValues = [
+    'Male: ' + {{dcf_form1male[0]['total_male']}},
+    'Female: ' + {{dcf_form1female[0]['total_female']}},
+  ];
+  var yValues = [
+    {{dcf_form1male[0]['total_male']}},
+    {{dcf_form1female[0]['total_female']}},
+  ];
+  var barColors = ['#2d5986', '#800055'];
 
-var xValues = ["Male: " + {{dcf_form1male[0]['total_male']}}, "Female: " + {{dcf_form1female[0]['total_female']}}];
-var yValues = [{{dcf_form1male[0]['total_male']}}, {{dcf_form1female[0]['total_female']}}];
-var barColors = ["#2d5986", "#800055"];
+  var total = yValues.reduce((a, b) => a + b, 0);
 
-var total = yValues.reduce((a, b) => a + b, 0);
+  var percentageValues = yValues.map((value) => ((value / total) * 100).toFixed(2));
 
-var percentageValues = yValues.map(value => ((value / total) * 100).toFixed(2));
+  Chart.plugins.register({
+    afterDatasetsDraw: function (chart, easing) {
+      var ctx = chart.ctx;
 
-Chart.plugins.register({
-  afterDatasetsDraw: function(chart, easing) {
-    // To only draw at the end of animation, check for easing === 1
-    var ctx = chart.ctx;
+      chart.data.datasets.forEach(function (dataset, i) {
+        var meta = chart.getDatasetMeta(i);
+        if (!meta.hidden) {
+          meta.data.forEach(function (element, index) {
+            ctx.fillStyle = 'white';
 
-    chart.data.datasets.forEach(function(dataset, i) {
-      var meta = chart.getDatasetMeta(i);
-      if (!meta.hidden) {
-        meta.data.forEach(function(element, index) {
-          // Draw the text in white, with the specified font
-          ctx.fillStyle = 'white';
+            var fontSize = 20; // Change this to your desired font size
+            var fontStyle = 'bold';
+            var fontFamily = 'sans-serif';
+            ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
-          var fontSize = 20;
-          var fontStyle = 'bold';
-          var fontFamily = 'sans-serif';
-          ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+            // Display only the percentage value without .00
+            var dataString = Number(percentageValues[index]) + '%';
 
-          // Just naively convert to string for now
-          var dataString = percentageValues[index] + '%';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
 
-          // Make sure alignment settings are correct
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-
-          var padding = 5;
-          var position = element.tooltipPosition();
-          ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
-        });
-      }
-    });
-  }
-});
-
-new Chart("myChart", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    title: {
-      display: true,
-      text: "Overall Total: {{dcf_form1sextotal[0]['total_sex'] | int}}",
-      fontSize: 30,
-      fontColor: 'black'
+            var padding = 5;
+            var position = element.tooltipPosition();
+            ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+          });
+        }
+      });
     },
-    plugins: {
-      datalabels: {
-        display: false // Hide the default labels, we're replacing them with custom labels
-      }
-    }
-  }
-});
+  });
 
+  new Chart('myChart', {
+    type: 'pie',
+    data: {
+      labels: xValues,
+      datasets: [
+        {
+          backgroundColor: barColors,
+          data: yValues,
+        },
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Overall Total: {{dcf_form1sextotal[0]['total_sex'] | int}}',
+        fontSize: 30,
+        fontColor: 'black',
+      },
+      plugins: {
+        datalabels: {
+          display: false,
+        },
+      },
+      legend: {
+        labels: {
+          fontColor: 'black', // Customize the legend label color
+          fontSize: 20, // Customize the legend label font size
+        },
+      },
+      tooltips: {
+        callbacks: {
+          label: function (tooltipItem, data) {
+            // Display only the percentage value without .00 in the tooltip
+            return data.labels[tooltipItem.index] + ': ' + Number(percentageValues[tooltipItem.index]) + '%';
+          },
+        },
+      },
+    },
+  });
 </script>
 
 
