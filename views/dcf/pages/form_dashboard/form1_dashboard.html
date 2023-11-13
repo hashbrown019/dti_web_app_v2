@@ -10,8 +10,8 @@
 <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
 <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
 <div class="header bg-primary pb-6">
-	<div class="container-fluid">
-		<div class="header-body" style="background-color: #007399;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+	<div class="container-fluid"><center>
+		<div class="header-body" style=" max-width: 95%; background-color: #007399;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
 		<br>
 				<!-- Search form -->
@@ -20,7 +20,7 @@
 				
 				<!-- / Search form -->
 			<br>
-		</div><br><br>
+		</div></center><br><br>
 			<style>
 				.icon-button__badge {
 					position: absolute;
@@ -44,6 +44,9 @@ table,
 				td {
 					border: 1px solid black;
 					border-collapse: collapse;
+				}
+				span{
+					font-size:1.5em;
 				}
 
 h6 {
@@ -79,6 +82,9 @@ figure {
 }
 .row + .row + .row .chart {
 	animation-delay: .4s;
+}
+.center{
+	text-align: center;
 }
 .block {
 	display: block;
@@ -136,7 +142,6 @@ figure {
 .legend {
 		margin: 0 auto;
 		padding: 0;
-	font-size: .9em;
 }
 .legend li {
 		display: inline-block;
@@ -181,7 +186,7 @@ figure {
 		<!-- Title -->
 		
 		
-		<h3 class="h1 mb-0 text-white"><center>DIPs by Region</center></h3>
+		<h3 class="h1 mb-0 text-white" title="{{dips_list}}"><center>DIPs by Region</center></h3>
 		
 		
 		
@@ -694,34 +699,67 @@ figure {
 </div>
 
 <div class="row">
-  <div class="col-xl-6 col-md-6">
-    <!-- Chart -->
-    <canvas id="myChart" style="max-width: 800px; height: 700px;"></canvas>
+  <div class="col-xl-5 col-md-6 mx-auto">
+    <!-- Chart 1 -->
+    <canvas id="myChart" style="max-width: 700px; height: 700px;"></canvas>
   </div>
+  <div class="col-xl-5 col-md-6 mx-auto">
+    <!-- Chart 2 -->
+    <canvas id="myChart2" style="max-width: 700px; height: 700px;"></canvas>
+  </div>
+</div>
+<div class="col-xl-12 col-md-6">
+        <div class="row justify-content-center" style="margin-top:50px;">
+		{% for dip in dip_sex_group_per_region %}
 
-  <div class="col-xl-6 col-md-6">
-    <div class="container">
-      <div class="form-group">
-        <div class="row" style="margin-top:50px;"	>
-		{% for dip in dips_list %}
 
-          <div class="col-md-3" style="margin-bottom:30px;">
-            <h4>Male :</h4> 
-            <h4>Female :</h4>
-            <h4>Youth :</h4> 
-            <h4>IP :</h4>
-            <h4>PWD :</h4>
-            <h4>Total :</h4>
+<table class="table table-bordered table-dark center" style="max-width:80px; margin: 10px;">
+	  <thead style="background-color: #0086b3;">
+    <tr>
+      <th style="font-size:1em;" colspan="2">RCU&nbsp;{{dip}}</th>
 
-            <h2>RCU &nbsp;{{dip}} </h2>
-          </div>
 
+    </tr>
+</thead>
+  <thead>
+    <tr>
+      <th style="font-size:1em;" scope="col"><span class="text-success">{{dip_sex_group_per_region[dip]['male']['total']}}</span><br>Male</th>
+      <th style="font-size:1em;" scope="col"><span class="text-success">{{dip_sex_group_per_region[dip]['female']['total']}}</span><br>Female</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="font-size:1em;"><span class="text-muted">{{dip_sex_group_per_region[dip]['male']['youth']}}</span><br>Youth</td>
+      <td style="font-size:1em;"><span class="text-muted">{{dip_sex_group_per_region[dip]['female']['youth']}}</span><br>Youth</td>
+
+
+
+    </tr>
+    <tr>
+      <td style="font-size:1em;"><span class="text-muted">{{dip_sex_group_per_region[dip]['male']['ip']}}</span><br>IP</td>
+      <td style="font-size:1em;"><span class="text-muted">{{dip_sex_group_per_region[dip]['female']['ip']}}</span><br>IP</td>
+
+    </tr>
+
+        <tr>
+      <td style="font-size:1em;"><span class="text-muted">{{dip_sex_group_per_region[dip]['male']['pwd']}}</span><br>PWD</td>
+      <td style="font-size:1em;"><span class="text-muted">{{dip_sex_group_per_region[dip]['female']['pwd']}}</span><br>PWD</td>
+
+    </tr>
+
+        <tr>
+      <td style="font-size:1em;"  colspan="2"><span class="text-success">{{dip_sex_group_per_region[dip]['overall_sex']['total']}}</span><br>Smallholder <br>Farming Households</td>
+
+    </tr>
+
+  </tbody>
+</table>
 {% endfor %}
 
-        </div>
-      </div>
+
     </div>
-  </div>
 </div>
 <script >
   var xValues = [
@@ -807,6 +845,39 @@ figure {
       },
     },
   });
+
+
+
+var xValuesbar = [];
+var yValuesbar = [];
+var barColorsbar = ["red", "green","blue","orange","brown","yellow","violet","black"];
+{% for dip in dip_sex_group_per_region %}
+
+xValuesbar.push('RCU: ' + '{{dip}}')
+yValuesbar.push('{{dip_sex_group_per_region[dip]['overall_sex']['total']}}')
+
+
+{% endfor %}
+
+new Chart("myChart2", {
+  type: "bar",
+  data: {
+    labels: xValuesbar,
+    datasets: [{
+      backgroundColor: barColorsbar,
+      data: yValuesbar
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Total By Region",
+      fontSize: 30,
+      fontColor: 'black',
+    }
+  }
+});
 </script>
 
 
@@ -929,7 +1000,6 @@ figure {
 	$(this).parent().css('width', text);
 });
 
-$('.block').tooltip();
 
 	function showDeleteConfirmation(id) {
 								swalWithCustomButtons.fire({

@@ -107,16 +107,17 @@ def displayform():
     # selectongoingform1=db.select("SELECT form_1_for_development,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
     # print(selectongoingform1)
     # ongoingform1 = len(selectongoingform1)
-    dips_list=db.select('''
-        SELECT 
-            form_1_for_development, #PIPELINE # ONGOING
-            form_1_finalized_approved, #PIPELINE
-            form_1_date_of_ifad_no_inssuance, #APPROVE
-            form_1_date_of_npco_cursory,  #APPROVE
-            form_1_rcus,
-            form_1_commodity
-        FROM dcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
 
+    # dips_list=db.select('''
+    #     SELECT 
+    #         form_1_for_development, #PIPELINE # ONGOING
+    #         form_1_finalized_approved, #PIPELINE
+    #         form_1_date_of_ifad_no_inssuance, #APPROVE
+    #         form_1_date_of_npco_cursory,  #APPROVE
+    #         form_1_rcus,
+    #         form_1_commodity
+    #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+    dips_list = form1_datatable 
 
 
     
@@ -146,7 +147,7 @@ def displayform():
             commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
             # dip_status_group_per_region[DIP['form_1_rcus']]["approve"].append(DIP)
 
-        elif(DIP["form_1_for_development"] != "" and DIP["form_1_for_development"] != ""):
+        elif(DIP["form_1_for_development"] != "" and DIP["form_1_finalized_approved"] != ""):
             dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
             over_all["over_all_total"] +=1
             dip_status_group_per_region[DIP['form_1_rcus']]["pipeline"]+= 1
@@ -175,7 +176,6 @@ def displayform():
             over_all["over_all_total"] +=1
             dip_status_group_per_region[DIP['form_1_rcus']]["not_started"]+= 1
             over_all["not_started"] += 1
-            print(commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"])
             
             if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"]):
                 commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"][DIP['form_1_commodity']] = 0
@@ -190,7 +190,26 @@ def displayform():
     # print(alltotal)
     # dip_status_group_per_region["_over_all"] = over_all
 
+    dip_sex_group_per_region = {}
+    for index in range(len(dips_list)):
+        DIP = dips_list[index]
+        if(DIP['form_1_rcus'] not in dip_sex_group_per_region):
+            dip_sex_group_per_region[DIP['form_1_rcus']] = {'male':{"youth":0,"ip":0,"pwd":0,"total":0}, "female":{"youth":0,"ip":0,"pwd":0,"total":0},"overall_sex":{"total":0}}
+            # dip_sex_group_per_region[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
+        else:pass
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['youth'] += DIP['form_1_maleyouth']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['ip'] += DIP['form_1_maleip']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['pwd'] += DIP['form_1_malepwd']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['total'] += DIP['form_1_totalmale']
 
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['youth'] += DIP['form_1_femaleyouth']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['ip'] += DIP['form_1_femaleip']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['pwd'] += DIP['form_1_femalepwd']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['total'] += DIP['form_1_totalfemale']
+
+        dip_sex_group_per_region[DIP['form_1_rcus']]['overall_sex']['total'] += DIP['form_1_totalmale'] + DIP['form_1_totalfemale']
+
+        
 
     return{
         'form1_datatable':  form1_datatable,
@@ -222,6 +241,7 @@ def displayform():
         'dips_list':  dip_status_group_per_region,
         'over_all_dips_list':  over_all,
         'total_dip_nat':alltotal,
+        'dip_sex_group_per_region' : dip_sex_group_per_region,
         "commodities_per_status_per_region" : commodities_per_status_per_region,
         'dcf_form1msme':dcf_form1msme,
         'dcf_form1msme2':dcf_form1msme2,
@@ -239,6 +259,6 @@ def position_data_filter():
         _filter = "WHERE 1 "
     else:
         session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-        _filter = "WHERE  upload_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
+        _filter = "WHERE `upload_by` in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
 
     return _filter
