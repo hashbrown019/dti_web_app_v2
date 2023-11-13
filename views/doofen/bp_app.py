@@ -33,7 +33,7 @@ def index():
 	
 @app.route("/formb/dashboard")
 def dashboard():
-	return render_template('index.html',USER_DATA=session["USER_DATA"][0])
+	return render_template('index.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
 
 
 @app.route("/formb/save_form",methods=["POST","GET"])
@@ -86,7 +86,28 @@ def get_list_fo():
 	FROM `form_b` 
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 	resp = rapid_mysql.select(sql_form,False)
-	return jsonify(resp)
+	return resp
+
+@app.route("/formb/get_num_fo_sex",methods=["POST","GET"])
+def get_num_fo_sex():
+	sql_form_male = '''
+	SELECT 
+		COUNT(`form_b`.`respondents_gender_male`) as 'male'
+	FROM `form_b` 
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
+	AND `form_b`.`respondents_gender_male`='true'
+	 ;'''.format(Filter.position_data_filter())
+	male = rapid_mysql.select(sql_form_male,True)[0]['male']
+
+	sql_form_female = '''
+	SELECT 
+		COUNT(`form_b`.`respondents_gender_female`) as 'female'
+	FROM `form_b` 
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
+	AND `form_b`.`respondents_gender_female`='true'
+	 ;'''.format(Filter.position_data_filter())
+	female = rapid_mysql.select(sql_form_female,True)[0]['female']
+	return {"male":male,"female":female}
 
 
 @app.route("/formb/get_list_fo_full",methods=["POST","GET"])
