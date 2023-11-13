@@ -236,7 +236,7 @@ def position_data_filter():
     _filter = "WHERE 1 "
     JOB = session["USER_DATA"][0]["job"].lower()
 
-    if(JOB in "admin" or JOB in "super admin"):
+    if(JOB in "Admin" or JOB in "Super Admin"):
         session["USER_DATA"][0]["office"] = "NPCO"
         _filter = "WHERE 1 "
     else:
