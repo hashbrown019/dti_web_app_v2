@@ -191,7 +191,7 @@ def displayform():
     # dip_status_group_per_region["_over_all"] = over_all
 
 
-
+    
     return{
         'form1_datatable':  form1_datatable,
         'form2_datatable':  form2_datatable,

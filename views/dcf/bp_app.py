@@ -44,18 +44,10 @@ app = Blueprint("dcf",__name__,template_folder="pages")
 def is_on_session(): return ('USER_DATA' in session)
 
 
-@app.route('/sample')
-def sample():
-	return display_dataform.displayform()['dips_list']
+@app.route('/sample/<item>')
+def sample(item):
+	return display_dataform.displayform()[item]
 
-
-@app.route('/sample2')
-def sample2():
-	return display_dataform.displayform()['commodities_per_status_per_region']
-
-@app.route('/sample3')
-def sample3():
-	return display_dataform.displayform()['over_all_dips_list']
 
 @app.route('/dcf_dashboard')
 def dcf_dashboard():
