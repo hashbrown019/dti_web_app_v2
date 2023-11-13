@@ -62,7 +62,20 @@ def get_table_data():
 
 @app.route("/fundtracker/get_entries_main",methods = ["POST","GET"])
 def get_entries_main():
-	resps = rapid_mysql.select("SELECT `id`,`particulars`,`payee_supplier`,`exp_acc`,`output_desc`,`ifad_app_ref` FROM `ft_main`;",False)
+	resps = rapid_mysql.select('''
+			SELECT `ft_main`.`id`,
+					`ft_main`.`particulars`,
+					`ft_main`.`payee_supplier`,
+					`ft_per_output`.`component`,
+					`ft_object`.`objectclass`,
+					`ft_main`.`ifad_app_ref`,
+					`users`.`rcu`,
+					`users`.`pcu`
+			FROM `ft_main` 
+			INNER JOIN `ft_per_output` ON `ft_main`.`output_desc` = `ft_per_output`.`id` 
+			INNER JOIN `ft_object` ON `ft_main`.`exp_acc` = `ft_object`.`id` 
+			INNER JOIN `users` ON `ft_main`.`input_by` = `users`.`id` 
+			{};'''.format(Filter.position_data_filter()),False)
 	return resps
 
 
@@ -79,7 +92,39 @@ def dashboard_data():
 	return resps
 
 
+class Filter:
+	def position_data_filter():
+		_filter = "WHERE 1 "
+		JOB = session["USER_DATA"][0]["job"].lower()
 
+		if(JOB in "admin" or JOB in "super admin"):
+			session["USER_DATA"][0]["office"] = "NPCO"
+			_filter = "WHERE 1 "
+		else:
+			session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
+			_filter = "WHERE  input_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
+
+		return _filter
+
+	def strct_dic(dict_):
+		new_dict_ = {};
+		for data in dict_:new_dict_[data['key']] = data['total']
+		return json.loads(json.dumps(new_dict_))
+
+	def strct_clean(dict_):
+		new_dict_ = {};
+		for data in dict_:new_dict_[data['key']] = data['total']
+		return Filter.clean(json.loads(json.dumps(new_dict_)))
+
+	def clean(dict_):
+		new_dict_ = {};
+		for key in dict_:
+			KEY = key.lower().replace(" ","").replace(".","").replace("/","").replace("\\","").replace("-","").replace("*","").replace(",","").replace("(","").replace(")","").replace("&","")
+			if(KEY not in new_dict_):
+				new_dict_[KEY] = 0
+			new_dict_[KEY] = new_dict_[KEY]+dict_[key]
+			
+		return json.loads(json.dumps(new_dict_))
 # if __name__ == "__main__":	
 # 		app.run(debug=True)
 
