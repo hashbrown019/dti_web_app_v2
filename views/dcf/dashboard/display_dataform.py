@@ -107,16 +107,17 @@ def displayform():
     # selectongoingform1=db.select("SELECT form_1_for_development,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
     # print(selectongoingform1)
     # ongoingform1 = len(selectongoingform1)
-    dips_list=db.select('''
-        SELECT 
-            form_1_for_development, #PIPELINE # ONGOING
-            form_1_finalized_approved, #PIPELINE
-            form_1_date_of_ifad_no_inssuance, #APPROVE
-            form_1_date_of_npco_cursory,  #APPROVE
-            form_1_rcus,
-            form_1_commodity
-        FROM dcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
 
+    # dips_list=db.select('''
+    #     SELECT 
+    #         form_1_for_development, #PIPELINE # ONGOING
+    #         form_1_finalized_approved, #PIPELINE
+    #         form_1_date_of_ifad_no_inssuance, #APPROVE
+    #         form_1_date_of_npco_cursory,  #APPROVE
+    #         form_1_rcus,
+    #         form_1_commodity
+    #     FROM dcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+    dips_list = form1_datatable
 
 
     
