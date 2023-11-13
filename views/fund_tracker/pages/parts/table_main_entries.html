@@ -1,30 +1,38 @@
 <table class="display" id="table_id" style="width:100%">
 	<thead class="x-rapid-teal-heavy" style="width:100%">
 		<tr class="">
-			<th>
+			<td>
 				Item ID<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
-			</th>
-			<th>
+				<input style="border:0px" type="text" placeholder="Search" data-index="0" hid/>
+			</td>
+			<td>
 				Particulars<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
-			</th>
-			<th>
-				Name of the Payee/ Contractor, Supplier, Service Provider<br>
+			</td>
+			<td>
+				Name of tde Payee/ Contractor, Supplier, Service Provider<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="2" />
-			</th>
-			<th>
+			</td>
+			<td>
 				Output Description<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index=3 />
-			</th>
-			<th>
+				<input style="border:0px" type="text" placeholder="Search" data-index="3" />
+			</td>
+			<td>
 				Expense Account (Object)<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index=3 />
-			</th>
-			<th>
-				IFAD Fund Source<br>
 				<input style="border:0px" type="text" placeholder="Search" data-index="4" />
-			</th>
+			</td>
+			<td>
+				IFAD Fund Source<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="5" />
+			</td>
+			<td>
+				RCU/Implementing Unit<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="6" />
+			</td>
+			<td>
+				PCU<br>
+				<input style="border:0px" type="text" placeholder="Search" data-index="7" />
+			</td>
 		</tr>
 	</thead>
 	<tbody id="list_farmers" style="">
@@ -81,7 +89,14 @@
 		TABLE = new DataTable('#table_id', {
 			"scrollY":'60vh',
 			"scrollX":true,
-			"data" : data_
+			"data" : data_,
+			"columnDefs":[
+				{
+					"target": 0,
+					"visible": false,
+					"searchable": false,
+				}
+			]
 		});
 		set_search_field()
 		// generate_dashboard() // FOR CHARTS
