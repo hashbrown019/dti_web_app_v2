@@ -101,6 +101,7 @@ def get_num_fo_sex():
 	FROM `form_b` 
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	AND `form_b`.`respondents_gender_male`='true'
+	AND `respondents_designation_in_the_organization` in ('Chairperson','Chairwoman','Coop Chairperson','General Manager','Manager','President/Chairman')
 	 ;'''.format(Filter.position_data_filter())
 	male = rapid_mysql.select(sql_form_male,True)[0]['male']
 
@@ -110,9 +111,47 @@ def get_num_fo_sex():
 	FROM `form_b` 
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	AND `form_b`.`respondents_gender_female`='true'
+	AND `respondents_designation_in_the_organization` in ('Chairperson','Chairwoman','Coop Chairperson','General Manager','Manager','President/Chairman')
 	 ;'''.format(Filter.position_data_filter())
 	female = rapid_mysql.select(sql_form_female,True)[0]['female']
-	return {"male":male,"female":female}
+
+	sql_form_female_board = '''
+	SELECT SUM(`fo_board_female`) as 'total_female_board'
+	FROM `form_b` 
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
+	 ;'''.format(Filter.position_data_filter())
+	board_female = rapid_mysql.select(sql_form_female_board,True)[0]['total_female_board']
+
+	sql_form_male_board = '''
+	SELECT SUM(`fo_board_male`) as 'total_male_board'
+	FROM `form_b` 
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
+	 ;'''.format(Filter.position_data_filter())
+	board_male = rapid_mysql.select(sql_form_male_board,True)[0]['total_male_board']
+
+	sql_form_female_mngmnt = '''
+	SELECT SUM(`fo_management_female_checkbox`) as 'total_female_mngmnt'
+	FROM `form_b` 
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
+	 ;'''.format(Filter.position_data_filter())
+	mngmt_female = rapid_mysql.select(sql_form_female_mngmnt,True)[0]['total_female_mngmnt']
+
+
+	sql_form_male_mngmnt = '''
+	SELECT SUM(`fo_management_male_checkbox`) as 'total_male_mngmnt'
+	FROM `form_b` 
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
+	 ;'''.format(Filter.position_data_filter())
+	mngmt_male = rapid_mysql.select(sql_form_male_mngmnt,True)[0]['total_male_mngmnt']
+
+	return {
+		"male":male,
+		"female":female,
+		'total_female_board':int(str(board_female).split(".")[0]),
+		'total_male_board':int(str(board_male).split(".")[0]),
+		'mngmt_male':int(str(mngmt_male).split(".")[0]),
+		'mngmt_female':int(str(mngmt_female).split(".")[0])
+	}
 
 
 @app.route("/formb/get_list_fo_full",methods=["POST","GET"])
