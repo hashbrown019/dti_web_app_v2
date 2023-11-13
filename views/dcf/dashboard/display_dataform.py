@@ -116,8 +116,8 @@ def displayform():
     #         form_1_date_of_npco_cursory,  #APPROVE
     #         form_1_rcus,
     #         form_1_commodity
-    #     FROM dcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
-    dips_list = form1_datatable
+    #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+    dips_list = form1_datatable 
 
 
     
@@ -125,11 +125,8 @@ def displayform():
     dip_status_group_per_region={}
     over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
     commodities_per_status_per_region= {}
-    print(" * Looping dcf f 1")
-    print(position_data_filter())
     for index in range(len(dips_list)):
         DIP = dips_list[index]
-        print(DIP['form_1_rcus'])
         if(DIP['form_1_rcus'] not in dip_status_group_per_region):
             dip_status_group_per_region[DIP['form_1_rcus']] = {'max':0, "total":0,"approve":0, "pipeline":0, "ongoing":0, "not_started":0 }
             commodities_per_status_per_region[DIP['form_1_rcus']] = {"total":{},"approve":{}, "pipeline":{}, "ongoing":{}, "not_started":{} }
@@ -179,7 +176,6 @@ def displayform():
             over_all["over_all_total"] +=1
             dip_status_group_per_region[DIP['form_1_rcus']]["not_started"]+= 1
             over_all["not_started"] += 1
-            print(commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"])
             
             if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"]):
                 commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"][DIP['form_1_commodity']] = 0
@@ -194,7 +190,26 @@ def displayform():
     # print(alltotal)
     # dip_status_group_per_region["_over_all"] = over_all
 
+    dip_sex_group_per_region = {}
+    for index in range(len(dips_list)):
+        DIP = dips_list[index]
+        if(DIP['form_1_rcus'] not in dip_sex_group_per_region):
+            dip_sex_group_per_region[DIP['form_1_rcus']] = {'male':{"youth":0,"ip":0,"pwd":0,"total":0}, "female":{"youth":0,"ip":0,"pwd":0,"total":0},"overall_sex":{"total":0}}
+            # dip_sex_group_per_region[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
+        else:pass
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['youth'] += DIP['form_1_maleyouth']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['ip'] += DIP['form_1_maleip']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['pwd'] += DIP['form_1_malepwd']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['total'] += DIP['form_1_totalmale']
 
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['youth'] += DIP['form_1_femaleyouth']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['ip'] += DIP['form_1_femaleip']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['pwd'] += DIP['form_1_femalepwd']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['total'] += DIP['form_1_totalfemale']
+
+        dip_sex_group_per_region[DIP['form_1_rcus']]['overall_sex']['total'] += DIP['form_1_totalmale'] + DIP['form_1_totalfemale']
+
+        
 
     return{
         'form1_datatable':  form1_datatable,
@@ -226,6 +241,7 @@ def displayform():
         'dips_list':  dip_status_group_per_region,
         'over_all_dips_list':  over_all,
         'total_dip_nat':alltotal,
+        'dip_sex_group_per_region' : dip_sex_group_per_region,
         "commodities_per_status_per_region" : commodities_per_status_per_region,
         'dcf_form1msme':dcf_form1msme,
         'dcf_form1msme2':dcf_form1msme2,
