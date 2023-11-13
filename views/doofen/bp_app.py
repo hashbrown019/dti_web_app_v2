@@ -33,7 +33,12 @@ def index():
 	
 @app.route("/formb/dashboard")
 def dashboard():
-	return render_template('index.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
+	return dashboardv2()
+	# return render_template('index.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
+
+@app.route("/formb/dashboardv2")
+def dashboardv2():
+	return render_template('dashboard_main.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
 
 
 @app.route("/formb/save_form",methods=["POST","GET"])

@@ -14,14 +14,20 @@
 </style>
 
 <input class="form_data_b" id="id" name="first" type="text" hidden required>
-
+<h2 class="x-text-teal"><b>Farmers' Organization Profile Form</b></h2>
 <div id="form_header" class="main-title">
-	<div class="x-left">
-		<p class="font-weight-bold " >FORM B</p>
+	<div class="x-right x-text-grey">
+		Some fields aren't required to be filled up when there is no available data. You can come back and fill the fields and always check the <strong>Correct Spelling</strong> and <strong>observe the usage of special characters</strong> such as punctuation and numbers. contact the developers is you encountered an error or the input entry doesn't reflect to the dashboard or/and on the lists of entries. 
 	</div>
 	<div class="x-right">
-		<p class="font-weight-bold x-btn x-text-blue x-round-large" onclick="show_mem_modal()">Farmer Members</p>
-		<p class="font-weight-bold x-btn x-green" onclick="save_form()" >Save</p>
+		<b class="font-weight-bold x-btn x-round-large x-border x-border-blue" onclick="show_mem_modal()">
+			<span class="x-text-blue fa fa-users"></span>
+			<span class="x-text-grey">Farmer Members</span>
+		</b>
+		<b class="font-weight-bold x-btn x-round-large x-border x-border-green" onclick="save_form()">
+			<span class="x-text-green fa fa-save"></span>
+			<span class="x-text-grey">Save</span>
+		</b>
 	</div>
 </div>
 
@@ -53,4 +59,63 @@
 </div>
 {% include "modal_add_member.html" %}
 {% include "modal_table_member.html" %}
+
+<script>
+	function save_form(){
+		var FORM_DATA = {}
+		var form_data_b = $CLASS("form_data_b")
+		for (var i = 0; i < form_data_b.length; i++) {
+			var input_type = form_data_b[i].type
+			if(form_data_b[i].id==""){
+				continue
+			}
+			if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
+				FORM_DATA[form_data_b[i].id] = form_data_b[i].value
+			}
+			if( (["checkbox","radio"]).includes(input_type) ){
+				FORM_DATA[form_data_b[i].id] = form_data_b[i].checked
+			}
+		}
+		$send({
+			action : "/formb/save_form",
+			method : POST,
+			data : $DATA(FORM_DATA),
+			func : function(r){
+				SPINNER_LOADER.hide()
+// println(r)
+				var res = JSON.parse(r)
+// println(res)
+				var diadata = {} 
+				if(res['status']=="failed"){
+					diadata = {
+						type :"error",
+						title : "Data insertion Failed",
+						content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+						buttons : ['Finished Transaction'],
+						buttons_actions : [done_transac_excel]
+					}
+					SPINNER_LOADER.hide()
+					var dialog = $dialog(diadata)
+					dialog.show()
+				}
+				else if(res['status']=="success"){
+					diadata = {
+						title : "Data insertion Success",
+						type :"success",
+						content : "Your Data insertion had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+						buttons : ['Finished Transaction'],
+						buttons_actions : [done_transac_excel]
+					}
+					SPINNER_LOADER.hide()
+					var dialog = $dialog(diadata)
+					dialog.show()
+				}
+				SPINNER_LOADER.hide()
+			}
+		})
+	}
+	function done_transac_excel(){
+		location.reload()
+	}
+</script>
 <!-- ==================================================================================================== -->
