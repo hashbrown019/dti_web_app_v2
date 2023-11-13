@@ -13,49 +13,64 @@
 	}
 </style>
 
-<input class="form_data_b" id="id" name="first" type="text" hidden required>
-<h2 class="x-text-teal"><b>Farmers' Organization Profile Form</b></h2>
-<div id="form_header" class="main-title">
-	<div class="x-right x-text-grey">
-		Some fields aren't required to be filled up when there is no available data. You can come back and fill the fields and always check the <strong>Correct Spelling</strong> and <strong>observe the usage of special characters</strong> such as punctuation and numbers. contact the developers is you encountered an error or the input entry doesn't reflect to the dashboard or/and on the lists of entries. 
-	</div>
-	<div class="x-right">
-		<b class="font-weight-bold x-btn x-round-large x-border x-border-blue" onclick="show_mem_modal()">
-			<span class="x-text-blue fa fa-users"></span>
-			<span class="x-text-grey">Farmer Members</span>
-		</b>
-		<b class="font-weight-bold x-btn x-round-large x-border x-border-green" onclick="save_form()">
-			<span class="x-text-green fa fa-save"></span>
-			<span class="x-text-grey">Save</span>
-		</b>
+<div class="x-row">
+	<h2 class="x-text-teal"><b>Farmers' Organization Profile Form</b></h2>
+	<div id="form_header" class="main-title">
+		<div class="x-right x-text-grey">
+			Some fields aren't required to be filled up when there is no available data. You can come back and fill the fields and always check the <strong>Correct Spelling</strong> and <strong>observe the usage of special characters</strong> such as punctuation and numbers. contact the developers is you encountered an error or the input entry doesn't reflect to the dashboard or/and on the lists of entries. 
+		</div>
+		<div class="x-right">
+			<b class="font-weight-bold x-btn x-round-large x-border x-border-blue" onclick="show_mem_modal()">
+				<span class="x-text-blue fa fa-users"></span>
+				<span class="x-text-grey">Farmer Members</span>
+			</b>
+			<b class="font-weight-bold x-btn x-round-large x-border x-border-green" onclick="save_form()">
+				<span class="x-text-green fa fa-save"></span>
+				<span class="x-text-grey">Save</span>
+			</b>
+		</div>
 	</div>
 </div>
 
-<div id="respondents" class="form_container x-container" style="display:block;">
-	{% include "B1-Respondents.html" %}
-</div>
-<div id="organizational" class="form_container x-container" style="display:block;">
-	{% include "B2-Organizational.html" %}
-</div>
-<div id="operational" class="form_container x-container" style="display:block;">
-	{% include "B3-Operational.html" %}
-</div>
-<div id="fogcp" class="form_container x-container" style="display:block;">
-	{% include "B4-FoGovernance.html" %}
-</div>
-<div id="admin" class="form_container x-container" style="display:block;">
-	{% include "B5-Administrative.html" %}
-</div>
-<div id="capacity" class="form_container x-container" style="display:block;">
-	{% include "B6-Capacity.html" %}
-</div>
-<div id="partnership" class="form_container x-container" style="display:block;">
-	{% include "B7-Partnership.html" %}
-</div>
+<div class="x-container x-row">
+	<div class="x-col m2 l2">
+		<div onclick="scroll_to_id('b1');scroll_to_id('b1')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Respondent Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b2')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Organizational Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b3')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Operational Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b4')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">FO Governance, Communication, and Planning</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b5')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Administrative and financial management and human resources management</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b6')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Capacity and Needs Assessment</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b7')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Partnership</div><br>
+	</div>
+	<div class="x-col m10 l10" style="overflow-y:scroll;height: 60vh;">
+		<input class="form_data_b" id="id" name="first" type="text" hidden required>
+		<div id="respondents" class="form_container x-container" style="display:block;">
+			{% include "B1-Respondents.html" %}
+		</div>
+		<div id="organizational" class="form_container x-container" style="display:block;">
+			{% include "B2-Organizational.html" %}
+		</div>
+		<div id="operational" class="form_container x-container" style="display:block;">
+			{% include "B3-Operational.html" %}
+		</div>
+		<div id="fogcp" class="form_container x-container" style="display:block;">
+			{% include "B4-FoGovernance.html" %}
+		</div>
+		<div id="admin" class="form_container x-container" style="display:block;">
+			{% include "B5-Administrative.html" %}
+		</div>
+		<div id="capacity" class="form_container x-container" style="display:block;">
+			{% include "B6-Capacity.html" %}
+		</div>
+		<div id="partnership" class="form_container x-container" style="display:block;">
+			{% include "B7-Partnership.html" %}
+		</div>
 
-<div id="form_header" class="main-title">
-	<p class="font-weight-bold x-left" >FORM B</p>
-	<p class="font-weight-bold x-btn x-right x-green" onclick="save_form()" >Save</p>
+		<div id="form_header" class="main-title">
+			<p class="font-weight-bold x-left" >FORM B</p>
+			<p class="font-weight-bold x-btn x-right x-green" onclick="save_form()" >Save</p>
+		</div>
+	</div>
 </div>
 {% include "modal_add_member.html" %}
 {% include "modal_table_member.html" %}

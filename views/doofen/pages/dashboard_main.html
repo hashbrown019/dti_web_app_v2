@@ -3,7 +3,7 @@
 {% include 'head.html' %}
 	<body>
 		<br id="top_br">
-		<header class="x-header x-bar x-white x-top x-large " style="z-index:2;width: 100%;">
+		<header class="x-header x-bar x-light-grey x-topbar x-border-teal x-top x-large " style="z-index:2;width: 100%;">
 			<div class="x-container" style="margin-left:200px;margin-right:200px;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
 				<div class="x-container x-left"  onclick="x_open()" style="width:100px;">
 					<img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:100%">
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 			<div class="x-container x-text-grey" style="margin-left:200px;margin-right:200px;;margin-top:10px;;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
-				<div class="x-left">
+				<div class="x-zoom x-left">
 					<a class="x-zoom" onclick="show_view('dashboard','page_content')">
 						<i class="fa fa-users fa-fw x-text-blue"></i><b class="x-small">Overview/Dashboard</b>
 					</a>&nbsp;
@@ -40,11 +40,11 @@
 						<i class="fa fa-history fa-fw x-text-blue"></i><b class="x-small">Data Cleaning</b>
 						<b class="w3-badge x-tiny x-text-red">On Dev</b>
 					</a>&nbsp; -->
+					<span class="x-zoom x-text-grey x-round-xxlarge" onclick="goto('/formb/get_list_fo_full')" style="margin-left:20px">
+						<span class="x-text-orange fa fa-download"></span>
+						<span class="x-small">Export Data</span>
+					</span>
 				</div>
-				<span class="x-zoom x-text-grey x-round-xxlarge" onclick="goto('/formb/get_list_fo_full')" style="margin-left:20px">
-					<span class="x-text-orange fa fa-download"></span>
-					<span class="x-small">Export Data</span>
-				</span>
 				<div class="x-right">
 					&nbsp;
 					{% if(USER_DATA['profilepic']=="" or USER_DATA['profilepic']==" " ): %}
@@ -111,7 +111,7 @@
 				"Others"
 				]
 
-
+			document.title = "DTI RAPID | Form B"
 		</script>
 	</body>
 	
@@ -128,5 +128,4 @@
 			</div>
 		</div>
 	</footer>
-
 </html>

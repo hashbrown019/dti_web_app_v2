@@ -89,7 +89,8 @@ def get_list_fo():
 		`users`.`name` as 'inputed_by',
 		`users`.`rcu` as 'rcu'
 	FROM `form_b` 
-	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
+	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
+	ORDER BY `form_b`.`id` DESC;'''.format(Filter.position_data_filter())
 	resp = rapid_mysql.select(sql_form,False)
 	return resp
 
