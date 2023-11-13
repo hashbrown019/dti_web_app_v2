@@ -117,6 +117,10 @@ def displayform():
             form_1_commodity
         FROM dcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
 
+
+
+    
+
     dip_status_group_per_region={}
     over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
     commodities_per_status_per_region= {}

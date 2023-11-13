@@ -11,16 +11,16 @@
 <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
 <div class="header bg-primary pb-6">
 	<div class="container-fluid">
-		<div class="header-body">
+		<div class="header-body " style="background-color: #007399;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
 		<br>
-		<br>
 				<!-- Search form -->
-		<h1 class="mb-5 text-default" style="font-size:2.2em; font-weight: bold;"><center>FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS DASHBOARD</center></h1>
+
+		<h1 class=" text-white" style="font-size:1.8em; font-weight: bold; text-align: center; margin: 2px;">FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS DASHBOARD</h1>
 				
 				<!-- / Search form -->
 			<br>
-		</div>
+		</div><br><br>
 			<style>
 				.icon-button__badge {
 					position: absolute;
@@ -215,7 +215,7 @@ figure {
 
 
 		</ul><br>
-		<h1 style="font-family: sans-serif;">Total DIPs:&nbsp; <b>{{over_all_dips_list['over_all_total']}}</b></h1>
+		<h1 style="font-family: sans-serif;">TOTAL DIPs:&nbsp; <b>{{over_all_dips_list['over_all_total']}}</b></h1>
 	</div>
 	<figure>
 		<div class="graphic">
@@ -693,8 +693,36 @@ figure {
 
 </div>
 
-<canvas id="myChart" style="max-width:80%;"></canvas>
+<div class="row">
+  <div class="col-xl-6 col-md-6">
+    <!-- Chart -->
+    <canvas id="myChart" style="max-width: 800px; height: 700px;"></canvas>
+  </div>
 
+  <div class="col-xl-6 col-md-6">
+    <div class="container">
+      <div class="form-group">
+        <div class="row" style="margin-top:50px;"	>
+		{% for dip in dips_list %}
+
+          <div class="col-md-3" style="margin-bottom:30px;">
+            <h4>Male :</h4> 
+            <h4>Female :</h4>
+            <h4>Youth :</h4> 
+            <h4>IP :</h4>
+            <h4>PWD :</h4>
+            <h4>Total :</h4>
+
+            <h2>RCU &nbsp;{{dip}} </h2>
+          </div>
+
+{% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script >
   var xValues = [
     'Male: ' + {{dcf_form1male[0]['total_male']}},
