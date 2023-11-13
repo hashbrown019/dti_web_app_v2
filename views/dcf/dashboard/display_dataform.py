@@ -126,6 +126,7 @@ def displayform():
     commodities_per_status_per_region= {}
     for index in range(len(dips_list)):
         DIP = dips_list[index]
+        print(DIP['form_1_rcus'])
         if(DIP['form_1_rcus'] not in dip_status_group_per_region):
             dip_status_group_per_region[DIP['form_1_rcus']] = {'max':0, "total":0,"approve":0, "pipeline":0, "ongoing":0, "not_started":0 }
             commodities_per_status_per_region[DIP['form_1_rcus']] = {"total":{},"approve":{}, "pipeline":{}, "ongoing":{}, "not_started":{} }
@@ -191,7 +192,7 @@ def displayform():
     # dip_status_group_per_region["_over_all"] = over_all
 
 
-    
+
     return{
         'form1_datatable':  form1_datatable,
         'form2_datatable':  form2_datatable,
