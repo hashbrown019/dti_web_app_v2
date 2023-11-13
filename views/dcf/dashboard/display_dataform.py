@@ -124,6 +124,7 @@ def displayform():
     dip_status_group_per_region={}
     over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
     commodities_per_status_per_region= {}
+    print(" * Looping dcf f 1")
     for index in range(len(dips_list)):
         DIP = dips_list[index]
         print(DIP['form_1_rcus'])
