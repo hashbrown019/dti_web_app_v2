@@ -241,6 +241,6 @@ def position_data_filter():
         _filter = "WHERE 1 "
     else:
         session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-        _filter = "WHERE  upload_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
+        _filter = "WHERE  `upload_by` in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
 
     return _filter
