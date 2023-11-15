@@ -1,5 +1,5 @@
 
-<table class="display" id="table_id" style="width:50vh">
+<table class="display" id="table_id" style="width:50vh;" >
 	<thead class="x-rapid-teal-heavy">
 		<tr class="">
 			<td>
@@ -80,7 +80,7 @@
 
 	//TEMPORARY COMMENTED FOR DEVELOPMENT TO FAST LOAD DASH WITHOUT
 	//DATA FOR DATA TABLE
-	$onload(showing_table_ls_farmer)
+	// $onload(showing_table_ls_farmer) /// COMMENT
 	//////////////////////////////////////////////////////////////
 
 
@@ -97,14 +97,16 @@
 			func : function (rest){
 				println(" -- Getting List Farmers Done")
 				res = JSON.parse(rest)['dash1']
-				res2 = JSON.parse(rest)['dash2']
-				res3 = JSON.parse(rest)['dash3']
+				// res2 = JSON.parse(rest)['dash2']
+				// res3 = JSON.parse(rest)['dash3']
 				create_table(res)
-				dash_get_form_a1(res2) // FOR ADVANCE FILTER NUMBER INIT
-				create_graphs(res3) // FOR ADVANCE FILTER NUMBER INIT
+				// dash_get_form_a1(res2) // FOR ADVANCE FILTER NUMBER INIT
+				// create_graphs(res3) // FOR ADVANCE FILTER NUMBER INIT
 				// window.setTimeout(dash_get_form_a1,1000)
 				SPINNER_LOADER.hide()
-				window.setInterval(get_notif_unseen,10000)
+				$ID("show_list_btn").style.display = "none"
+				$ID("list_containers").style.display = "block"
+				// window.setInterval(get_notif_unseen,10000)
 			},
 			err : function(res){println(res)},
 			progress : function(e){

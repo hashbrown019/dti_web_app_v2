@@ -1,6 +1,6 @@
-<div class="x-main" style="margin-left:200px;margin-right:200px;;margin-top:43px">
+<div class="x-main" style="margin-left:200px;margin-right:200px;;margin-top:50px">
 	<header class="x-container" style="padding-top:22px">
-		<span class="x-text-teal x-xxlarge"><b>Profile List</b></span><br><br>
+		<span class="x-text-teal x-xxlarge"><b>Profile List</b></span>
 	</header>
 	<!-- <div class="x-container">
 		<div class="x-row">
@@ -101,7 +101,17 @@
 		List of encoded farmer profiles, click on of the rows to show full details of the farmers. In some cases, you'll need
 		a higher permission, authority or request access key to view, update or delete a records on the system
 	</div>
-	<div class="x-row x-container x-padding">
+	<div id="show_list_btn" class="x-container x-padding x-center">
+		<button class="x-btn x-card x-round-xxlarge x-hover-teal" onclick="showing_table_ls_farmer()">
+			<h1>Click here to display farmer lists</h1>
+			<span class="x-text-grey">
+				To improve user experience and to save data. lists are hidden.<br>
+				You can click this to display the profiles encoded
+			</span><br>
+			<span class="x-jumbo fa fa-eye"></span>
+		</button>
+	</div>
+	<div id="list_containers" class="x-row x-container x-padding" style="display:none">
 		<div class="x-container x-col l10 m10">
 			{% include 'datatable_ls_faarmer.html' %}
 		</div>

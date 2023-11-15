@@ -58,19 +58,20 @@ class _main:
 		log_res = rapid_mysql.select("SELECT * from `users` WHERE `username` = '{}' AND `password`='{}';".format(username,password))
 		admin_type = ""
 		priv_type = ""
-		if(log_res[0]['job'] in ['Admin','Super Admin']):
-			admin_type = "_{}".format(log_res[0]['job'].upper().replace(" ","_"))
-			
-		if(log_res[0]['pcu']=='none'):
-			if(log_res[0]['rcu']=='NPCO'):
-				priv_type = "NPCO{}".format(admin_type)
-			else:
-				priv_type = "RCU{}".format(admin_type)
-		else:
-			priv_type = "PCU{}".format(admin_type)
 		
 
 		if(len(log_res)!=0):
+			if(log_res[0]['job'] in ['Admin','Super Admin']):
+				admin_type = "_{}".format(log_res[0]['job'].upper().replace(" ","_"))
+				
+			if(log_res[0]['pcu']=='none'):
+				if(log_res[0]['rcu']=='NPCO'):
+					priv_type = "NPCO{}".format(admin_type)
+				else:
+					priv_type = "RCU{}".format(admin_type)
+			else:
+				priv_type = "PCU{}".format(admin_type)
+				
 			session["USER_DATA_ADMIN_"] = log_res
 			log_res[0]['password'] = "********";
 			log_res[0]["PRIV_TYPE"] = priv_type
