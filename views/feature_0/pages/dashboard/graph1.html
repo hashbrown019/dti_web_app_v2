@@ -13,61 +13,60 @@
 
 
 <script type="text/javascript">
-	function g1_data_reconstruct(_data){
-		var PRIV_TYPE = ("{{USER_DATA['PRIV_TYPE']}}")
-		var temp_data1 = {}
-		var graph_data = []
-		var is_npco_view = false;
-		var area_key = ""
-		var crops_name = {}
+	// function g1_data_reconstruct(_data){
+	// 	var PRIV_TYPE = ("{{USER_DATA['PRIV_TYPE']}}")
+	// 	var temp_data1 = {}
+	// 	var graph_data = []
+	// 	var is_npco_view = false;
+	// 	var area_key = ""
+	// 	var crops_name = {}
 
-		if(PRIV_TYPE.includes('NPCO')){
-			is_npco_view = true;area_key = "addr_region";
-		}else{
-			is_npco_view = false;area_key = "addr_prov";
-		}
+	// 	if(PRIV_TYPE.includes('NPCO')){
+	// 		is_npco_view = true;area_key = "addr_region";
+	// 	}else{
+	// 		is_npco_view = false;area_key = "addr_prov";
+	// 	}
 
-		for (var i = 0; i < _data.length; i++) {
-			var area = _data[i][area_key]
-			var crop = _data[i]['farmer_primary_crop'].toUpperCase().replaceAll(" ","")
-			crops_name[crop] = crop
+	// 	for (var i = 0; i < _data.length; i++) {
+	// 		var area = _data[i][area_key]
+	// 		var crop = _data[i]['farmer_primary_crop'].toUpperCase().replaceAll(" ","")
+	// 		crops_name[crop] = crop
 
-			if(area==""){continue}
-			if(area in temp_data1){
-				if(crop in temp_data1[area]){
-					temp_data1[area][crop] = temp_data1[area][crop] + 1
-				}else{
-					temp_data1[area][crop] = 1
-				}
+	// 		if(area==""){continue}
+	// 		if(area in temp_data1){
+	// 			if(crop in temp_data1[area]){
+	// 				temp_data1[area][crop] = temp_data1[area][crop] + 1
+	// 			}else{
+	// 				temp_data1[area][crop] = 1
+	// 			}
 
-			}else{
-				temp_data1[area] = {'area' :area}
-				// temp_data1[area] = {}
-				temp_data1[area][crop] = 1
-			}
-		}
+	// 		}else{
+	// 			temp_data1[area] = {'area' :area}
+	// 			// temp_data1[area] = {}
+	// 			temp_data1[area][crop] = 1
+	// 		}
+	// 	}
 
-		for(key in temp_data1){
-			graph_data.push(temp_data1[key])
+	// 	for(key in temp_data1){
+	// 		graph_data.push(temp_data1[key])
 			
-		}
-		// set_graph1(graph_data,crops_name)
+	// 	}
+	// 	// set_graph1(graph_data,crops_name)
 
-		// for(key in temp_data1){
-		// 	for(key2 in temp_data1[key]){
-		// 		graph_data.push({
-		// 			region: key,
-		// 			state: key2,
-		// 			sales: temp_data1[key][key2]
-		// 		})
-		// 	}
-		// }
-		println(graph_data)
-		set_graph1(graph_data,crops_name)
-		$ID('g1_loading').style.display = "none"
-	}
+	// 	// for(key in temp_data1){
+	// 	// 	for(key2 in temp_data1[key]){
+	// 	// 		graph_data.push({
+	// 	// 			region: key,
+	// 	// 			state: key2,
+	// 	// 			sales: temp_data1[key][key2]
+	// 	// 		})
+	// 	// 	}
+	// 	// }
+	// 	set_graph1(graph_data,crops_name)
+	// }
 
 	function set_graph1(graph_data,series) {
+		$ID('g1_loading').style.display = "none"
 
 
 		// Create root element

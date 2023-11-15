@@ -179,14 +179,92 @@ class _main:
 	# ==============================================================================
 	# ==============================================================================
 	# ==============================================================================
+	@app.route("/feature_0/dashgraph1",methods=["POST","GET"])
+	def feature_0_dashboard1():
+		_data = _main.feature_0_get_farmer_data_a1_for_dash()
+		g2_data = _main.feature_0_dashboard2(_data)
+		PRIV_TYPE = session["USER_DATA"][0]['PRIV_TYPE']
+		temp_data1 = {}
+		graph_data = []
+		is_npco_view = False;
+		area_key = ""
+		crops_name = {}
+
+		if('NPCO' in PRIV_TYPE):
+			is_npco_view = True;area_key = "addr_region";
+		else:
+			is_npco_view = False;area_key = "addr_prov";
+
+		for i in range(len(_data)):
+			area = _data[i][area_key]
+			crop = _data[i]['farmer_primary_crop'].lower().replace(" ","")
+			crops_name[crop] = crop
+			if(area==""):continue
+			if(area in temp_data1):
+				if(crop in temp_data1[area]):
+					temp_data1[area][crop] = temp_data1[area][crop] + 1
+				else:
+					temp_data1[area][crop] = 1
+			else:
+				temp_data1[area] = {'area' :area}
+				# temp_data1[area] = {}
+				temp_data1[area][crop] = 1
+		for key in temp_data1:
+			graph_data.append(temp_data1[key])
+		return [graph_data,crops_name,g2_data]
+
+
+	@app.route("/feature_0/dashgraph2",methods=["POST","GET"])
+	def feature_0_dashboard2(_data):
+		PRIV_TYPE = session["USER_DATA"][0]['PRIV_TYPE']
+		temp_data2 = {}
+		area_key = ""
+		is_npco_view = False;
+
+		if('NPCO' in PRIV_TYPE):
+			is_npco_view = True;area_key = "addr_region";
+		else:
+			is_npco_view = False;area_key = "addr_prov";
+		
+		
+		for i in range(len(_data)):
+			area = _data[i][area_key]
+			crop = _data[i]['farmer_primary_crop'].lower().replace(" ","")
+			sex = _data[i]['farmer_sex'].lower()
+			is_hh = _data[i]['is_head_hh'].lower()
+			if(area in temp_data2):
+				if(crop in temp_data2[area]):
+					if(sex == 'male'):
+						if(is_hh in ['true','yes']):
+							temp_data2[area][crop]['male_hh'] = temp_data2[area][crop]['male_hh'] + 1
+						else:
+							temp_data2[area][crop]['male'] = temp_data2[area][crop]['male'] + 1
+					elif(sex == 'female'):
+						if(is_hh in ['true','yes']):
+							temp_data2[area][crop]['female_hh'] = temp_data2[area][crop]['female_hh'] + 1
+						else:
+							temp_data2[area][crop]['female'] = temp_data2[area][crop]['female'] + 1
+						
+				else:
+					temp_data2[area][crop] = {
+						"male" :0,
+						"male_hh" :0,
+						"female" :0,
+						"female_hh" :0,
+					}
+				
+			else:
+				temp_data2[area] = {}
+		return temp_data2
+
 	@app.route("/feature_0/filter_list_farmers",methods=["POST","GET"])
 	def feature_0_filter_list_farmers():
 		return jsonify({
 			"dash1":_main.feature_0_get_farmer_data_a1(),
-			"dash2":sub_main_module.dash_get_form_a1("all"),
-			"dash3":_main.feature_0_get_farmer_data_a1_for_dash()}
+			# "dash2":sub_main_module.dash_get_form_a1("all"),
+			# "dash3":_main.feature_0_get_farmer_data_a1_for_dash()
+			}
 		)
-
 
 	@app.route("/feature_0/get_uploaded_excel",methods=["POST","GET"])
 	def feature_0_get_uploaded_excel():

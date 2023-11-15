@@ -20,30 +20,42 @@
 			Some fields aren't required to be filled up when there is no available data. You can come back and fill the fields and always check the <strong>Correct Spelling</strong> and <strong>observe the usage of special characters</strong> such as punctuation and numbers. contact the developers is you encountered an error or the input entry doesn't reflect to the dashboard or/and on the lists of entries. 
 		</div>
 		<div class="x-right">
-			<b class="font-weight-bold x-btn x-round-large x-border x-border-blue" onclick="show_mem_modal()">
-				<span class="x-text-blue fa fa-users"></span>
-				<span class="x-text-grey">Farmer Members</span>
-			</b>
-			<b class="font-weight-bold x-btn x-round-large x-border x-border-green" onclick="save_form()">
-				<span class="x-text-green fa fa-save"></span>
-				<span class="x-text-grey">Save</span>
-			</b>
+			-
 		</div>
 	</div>
 </div>
-
+<div class="x-row x-container x-right">
+	<b class="x-btn x-round-large x-border x-border-blue" style="margin-top:5px" onclick="show_mem_modal()">
+		<span class="x-text-blue fa fa-users"></span>
+		<span class="x-text-grey">Farmer Members</span>
+	</b>
+	<b class="x-btn x-round-large x-border x-border-green" style="margin-top:5px" onclick="save_form()">
+		<span class="x-text-green fa fa-save"></span>
+		<span class="x-text-grey">Save</span>
+	</b>
+</div>
+<br>
 <div class="x-container x-row">
 	<div class="x-col m2 l2">
-		<div onclick="scroll_to_id('b1');scroll_to_id('b1')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Respondent Profile</div><br>
-		<div onclick="scroll_to_id('b1');scroll_to_id('b2')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Organizational Profile</div><br>
-		<div onclick="scroll_to_id('b1');scroll_to_id('b3')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Operational Profile</div><br>
-		<div onclick="scroll_to_id('b1');scroll_to_id('b4')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">FO Governance, Communication, and Planning</div><br>
-		<div onclick="scroll_to_id('b1');scroll_to_id('b5')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Administrative and financial management and human resources management</div><br>
-		<div onclick="scroll_to_id('b1');scroll_to_id('b6')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Capacity and Needs Assessment</div><br>
-		<div onclick="scroll_to_id('b1');scroll_to_id('b7')" class="x-zoom x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:2px">Partnership</div><br>
+		<!-- <div id="qrs_holder" class="x-row">
+			<div class="qrs fadeIn" id="qrcode" style="max-width: 10%;"></div>
+		</div>
+		<hr> -->
+		<div onclick="scroll_to_id('b1');scroll_to_id('b1')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Respondent Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b2')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Organizational Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b3')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Operational Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b4')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">FO Governance, Communication, and Planning</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b5')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Administrative and financial management and human resources management</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b6')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Capacity and Needs Assessment</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b7')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Partnership</div><br>
+		<br>
+		<hr>
 	</div>
 	<div class="x-col m10 l10" style="overflow-y:scroll;height: 70vh;">
 		<input class="form_data_b" id="id" name="first" type="text" hidden required>
+		<div class="x-row">
+			
+		</div>
 		<div id="respondents" class="form_container x-container" style="display:block;">
 			{% include "B1-Respondents.html" %}
 		</div>
@@ -67,15 +79,32 @@
 		</div>
 
 		<div id="form_header" class="main-title">
-			<p class="font-weight-bold x-left" >FORM B</p>
-			<p class="font-weight-bold x-btn x-right x-green" onclick="save_form()" >Save</p>
+			<p class="x-left" >FORM B</p>
+			<p class="x-btn x-right x-green" onclick="save_form()" >Save</p>
 		</div>
 	</div>
 </div>
 {% include "modal_add_member.html" %}
 {% include "modal_table_member.html" %}
+<script src="../static/js/qr/qrcode.min.js"></script>
 
 <script>
+
+    // var imgs = $ID('prof_imgs')
+    // var qrs = $ID('qrcode')
+    // // var qr1 = new QRCode($ID("qrcode"), "MISFORMB"+$ID("id").value,{width:"1px"});
+    // var qrcode = new QRCode("qrcode", {
+	//     text: "MISFORMB"+$ID("id").value,
+	//     width: 59,
+	//     height: 59,
+	//     colorDark : "#000000",
+	//     colorLight : "#ffffff",
+	//     correctLevel : QRCode.CorrectLevel.H
+	// });
+    // println(qrcode)
+    // println($ID('qrs_holder').clientWidth)
+    // qrs.querySelectorAll("canvas").width = "20px"
+
 	function save_form(){
 		var FORM_DATA = {}
 		var form_data_b = $CLASS("form_data_b")
