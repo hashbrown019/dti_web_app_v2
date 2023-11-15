@@ -42,17 +42,14 @@
 	<!-- <body class="gr_body_teal"> -->
 	<body id="container_b" class="x-text-white prevent-select">
 		<div class="x-display-container" style="height:100vh;padding: 0px;">
-			<div class="x-col l9 x-padding">
-				{% include 'tabs.html' %}
-			</div>
-			<div class="x-col l3 x-padding container__layer">
+			<div class="x-col l3 x-padding x-white">
 				<br><br><br>
 				<div class="x-container x-padding-large x-round-large " style="height: 90vh;" >
 					<div class="x-container">
 						<div class="x-row x-container x-padding x-center" id="username_welcome">
 							<div class="x-round x-text-teal x-white x-center x-fade" style="height:20vh">
 								<div class="x-container x-center">
-									<img class="x-img" src="../static/img/mis_2023_v2.svg" style="width: 50%;">
+									<img class="x-img" src="../static/img/mis_2023_v2.svg" style="width: 100%;">
 								</div>
 							</div>
 						</div>
@@ -62,34 +59,34 @@
 					<br>
 					<div class="x-container x-padding">
 						<div class=" x-animate-opacity" id="username_cont">
-							<b class="x-small x-text-white x-large">Username</b>
+							<b class="x-small x-text-black x-large">Username</b>
 							<div class="x-row">
 								<div class="x-row">
 									<input class="login_field x-input x-border" type="username" name="" placeholder="@username"
-									style="border-radius: 20px 20px 0px 0px;border:0px" required>
+									style="border-radius: 10px 10px 0px 0px;border:0px" required>
 								</div>
 								<div class="x-row">
 									<button class="x-button x-input x-teal x-block"
-										style="border-radius: 0px 0px 20px 20px;border:0px"
+										style="border-radius: 0px 0px 10px 10px;border:0px"
 										onclick="check_user_name()">
-										<span class="x-zoom">Next &#10148; </span>
+										<span class="x-zoom_">Next &#10148; </span>
 									</button>
 								</div>
 							</div>
 						</div>
 						<div class="x-animate-opacity" id="password_cont" style="display:none">
-							<b class="x-small x-text-white x-large">Password</b>
+							<b class="x-small x-text-black x-large">Password</b>
 							<div class="x-row">
 								<div class="x-row password-container">
 									<input class="login_field x-input x-border" type="password" name="" placeholder="password: ********..."
-										style="border-radius: 20px 20px 0px 0px; border: 0px" required>
+										style="border-radius: 10px 10px 0px 0px; border: 0px" required>
 									<span class="password-toggle"><i style="color: #262626; font-weight: 800;" class="fa fa-eye"></i></span>
 								</div>
 								<div class="x-row">
-									<button class="x-zoom x-button x-input x-green x-block"
-										style="border-radius: 0px 0px 20px 20px; border: 0px"
+									<button class="x-zoom_ x-button x-input x-green x-block"
+										style="border-radius: 0px 0px 10px 10px; border: 0px"
 										onclick="login()">
-										<span class="x-zoom">Login &#10148; </span>
+										<span class="x-zoom_">Login &#10148; </span>
 									</button>
 								</div>
 							</div>
@@ -101,9 +98,9 @@
 					<!-- <hr> -->
 					<div class="x-row x-padding x-tiny">
 						<div class="x-row">
-							<span class="fa fa-eye x-xxlarge x-text-white" onclick="see_eula()"></span>/<br>
+							<span class="fa fa-eye x-xxlarge x-text-red" onclick="see_eula()"></span>/<br>
 							While using the RAPID Growth Project MIS . you agree to have read and accepted our
-							<span class="x-hover-white" onclick="see_eula()">
+							<span class="x-hover-red" onclick="see_eula()">
 								<strong>Terms of Use</strong>
 							</span>
 						</div>
@@ -143,6 +140,9 @@
 				</div>
 			</div>
 
+			<div class="x-col l9 x-padding">
+				{% include 'tabs.html' %}
+			</div>
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -162,6 +162,21 @@
 			});
 		});
 
+		function back_username(){
+			var login_field = $CLASS('login_field')
+			for (var i = 0; i < login_field.length; i++) {
+				login_field[i].value = ""
+			}
+			$ID('username_cont').style.display= "block"
+			$ID('password_cont').style.display= "none"
+			$ID('username_welcome').innerHTML = (`
+				<div class="x-round x-text-teal x-white x-center x-fade" style="height:20vh">
+					<div class="x-container x-center">
+						<img class="x-img" src="../static/img/mis_2023_v2.svg" style="width: 100%;">
+					</div>
+				</div>`)
+		}
+
 		function check_user_name(){
 			var fields = $CLASS('login_field')
 			var cred = {"user_name" :fields[0].value}
@@ -178,10 +193,10 @@
 							img_src = "/static/psalm_static/menu/img/profilepic.png"
 						}
 						$ID('username_welcome').innerHTML = (`
-							<div class="x-container x-center">
-								<img class="x-img x-circle" src="`+img_src+`" alt="`+res.data+`" style="width:120px;height:120px">
+							<div class="x-container x-center" onclick='back_username()'>
+								<img class="x-img " src="`+img_src+`" alt="`+res.data+`" style="width:100%;">
 								<br>
-								<b class='x-text-white x-xlarge'>`+res.data+`</b>
+								<b class='x-text-teal x-xlarge'>`+res.data+`</b>
 							</div
 						`);
 						$ID('username_cont').style.display= "none"
