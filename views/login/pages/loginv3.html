@@ -6,8 +6,8 @@
 			/*background-image: url('../static/img/login_bg_dark.jpg');*/
 			/*background-image: url('../static/img/bg.webp');*/
 			background: 
-				linear-gradient(rgba(0, 0, 0, 0.5),
-				rgba(0, 0, 0, 0.5)),
+				linear-gradient(rgba(200, 200, 200, 2),
+				rgba(255, 255, 255, 0.85)),
 				url('../static/img/bg.jpg');
 			background-position: center;
 			background-size: cover;
@@ -15,7 +15,7 @@
 		.container__layer{
 			/*background-image: url('../static/img/login_bg_dark.jpg');*/
 			/*background-image: url('../static/img/bg.webp');*/
-			background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5));
+			background: linear-gradient(rgba(255, 255, 255, 0.5),rgba(255, 255, 255, 0.5));
 			background-position: center;
 			background-size: cover;
 		}
@@ -40,16 +40,42 @@
 
 
 	<!-- <body class="gr_body_teal"> -->
-	<body id="container_b" class="x-text-white prevent-select">
-		<div class="x-display-container" style="height:100vh;padding: 0px;">
-			<div class="x-col l5 x-padding x-white">
-				<br><br><br>
-				<div class="x-container x-padding-large x-round-large " style="height: 90vh;" >
+	<body id="container_b" class="x-text prevent-select">
+		<header class="x-header x-container x-padding-large">
+			<div class="x-navbar x-right x-container x-padding">
+				<b class="x-border x-border-black x-hover-black x-round-large x-padding x-margin x-text-" onclick="goto('/')">
+					KM-MIS Portal
+					<span class="fa fa-cloud"></span>
+				</b>
+				<b class="x-border x-border-orange x-hover-orange x-round-large x-padding x-margin_ x-dropdown-hover">
+					<span class="" onclick="scroll_to_id('Announcements_')">
+						Announcements and Updates
+						<i class="fa fa-bell-o"></i>
+					</span> 
+				</b>
+				<b class="x-border x-border-teal x-hover-teal x-round-large x-padding x-margin_ x-dropdown-hover">
+					<span class="">
+						Downloadable
+						<i class="fa fa-download"></i>
+					</span> 
+					<div class="x-dropdown-content x-white  x-padding">
+						<div style="cursor: pointer;" class="x-hover-teal" onclick="download_login_start('VC_FORM_A_v2_0.xls')">Farmer's Profile Form</div><hr>
+						<div style="cursor: pointer;" class="x-hover-teal" onclick="download_login_start('VC_FORM_B.xls')">Farmer's Organization Profile Form</div><hr>
+						<div style="cursor: pointer;" class="x-hover-teal" onclick="download_login_start('VC_FORM_C.xls')">MSMEs Profile Forms</div><hr>
+						<div style="cursor: pointer;" class="x-hover-teal" onclick="download_login_start('Data_Capture_Forms.zip')">Data Capture Forms</div>
+						
+					</div>
+				</b>
+			</div>
+		</header>
+		<div class="x-display-container" style="height:99vh;padding: 0px;">
+			<div class="x-col l3 x-display-middle x-padding x-white_ x-round-large" style="top:350px">
+				<div class="x-container x-padding-large x-round-large " style="" >
 					<div class="x-container">
 						<div class="x-row x-container x-padding x-center" id="username_welcome">
-							<div id="def_img" class="x-round x-text-teal x-white x-center x-fade" style="height:20vh">
+							<div id="def_img" class="x-round x-text-teal x-white_ x-center x-fade" style="height:20vh">
 								<div class="x-container x-center">
-									<img class="x-img" src="../static/img/mis_2023_v2.svg" style="width: 50%;">
+									<img class="x-img" src="../static/img/mis_2023_v2.svg" style="width: 80%;">
 								</div>
 							</div>
 						</div>
@@ -59,15 +85,15 @@
 					<br>
 					<div class="x-container x-padding">
 						<div class=" x-animate-opacity" id="username_cont">
-							<b class="x-small x-text-black x-large">Username</b>
-							<div class="x-row">
-								<div class="x-row">
+							<!-- <b class="x-small x-text-black x-large">Username</b> -->
+							<div class="x-row x-center">
+								<div class="x-col l8">
 									<input class="login_field x-input x-border" type="username" name="" placeholder="@username"
-									style="border-radius: 10px 10px 0px 0px;border:0px" required>
+									style="height: 50px;border-radius: 10px 0px 0px 10px;border:0px" required>
 								</div>
-								<div class="x-row">
+								<div class="x-col l4">
 									<button class="x-button x-input x-teal x-block"
-										style="border-radius: 0px 0px 10px 10px;border:0px"
+										style="height: 50px;border-radius: 0px 10px 10px 0px;border:0px"
 										onclick="check_user_name()">
 										<span class="x-zoom_">Next &#10148; </span>
 									</button>
@@ -75,16 +101,16 @@
 							</div>
 						</div>
 						<div class="x-animate-opacity" id="password_cont" style="display:none">
-							<b class="x-small x-text-black x-large">Password</b>
-							<div class="x-row">
-								<div class="x-row password-container">
+							<!-- <b class="x-small x-text-black x-large">Password</b> -->
+							<div class="x-row x-center">
+								<div class="x-col l8 password-container">
 									<input class="login_field x-input x-border" type="password" name="" placeholder="password: ********..."
-										style="border-radius: 10px 10px 0px 0px; border: 0px" required>
+										style="height: 50px;border-radius: 10px 0px 0px 10px;border:0px"  required>
 									<span class="password-toggle"><i style="color: #262626; font-weight: 800;" class="fa fa-eye"></i></span>
 								</div>
-								<div class="x-row">
+								<div class="x-col l4">
 									<button class="x-zoom_ x-button x-input x-green x-block"
-										style="border-radius: 0px 0px 10px 10px; border: 0px"
+										style="height: 50px;border-radius: 0px 10px 10px 0px;border:0px"
 										onclick="login()">
 										<span class="x-zoom_">Login &#10148; </span>
 									</button>
@@ -92,58 +118,24 @@
 							</div>
 						</div>
 						
-					</div><br>
-					<div id="err_log" class=" x-animate-opacity x-container x-card x-round-large x-padding x-leftbar x-border-red x-pale-red" style="display:none;background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5));">
 					</div>
+					<div class="x-container x-padding x-center">
+						<span class="x-text-teal x-hover-teal x-padding x-round-large" onclick="goto('https://docs.google.com/forms/d/1NpWOVZYlAvfBNQSNVIzlMXtzufR0KykGWI6Bkwn30GM/edit')">
+							Request an account
+						</span>
+						<div id="err_log" class=" x-animate-opacity x-container x-card x-round-large x-padding x-leftbar x-border-red x-pale-red" style="display:none;background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5));"></div>
+					</div>
+					<br>
+					
 					<!-- <hr> -->
-					<div class="x-row x-padding x-tiny">
-						<div class="x-row">
-							<span class="fa fa-eye x-xxlarge x-text-red" onclick="see_eula()"></span>/<br>
-							While using the RAPID Growth Project MIS . you agree to have read and accepted our
-							<span class="x-hover-red" onclick="see_eula()">
-								<strong>Terms of Use</strong>
-							</span>
-						</div>
-						<br>
-						<span class="x-row x-text-light-green">
-							<span class="fa fa-users x-xxlarge"></span>/<br>
-							Don't have an account? You may request one by reaching or contact the administrator
-						</span>
-						<br>
-						<span class="x-row x-text-orange">
-							<span class="fa fa-user-secret x-xxlarge"></span>/<br>
-							Please be aware that we are tracking visitors activity and we are getting your IP address for tracing
-						</span>
-						<br>
-						<span class="x-row x-text-blue">
-							<span class="fa fa-user-circle x-xxlarge"></span>/<br>
-							Please protect your password or any credential. this the key to your MIS 
-							and unauthorized used of this credential are prohibited
-						</span>
-						<br>
-						<span class="x-row x-text-yellow">
-							<span class="fa fa-heartbeat x-xxlarge"></span>/<br>
-							We hope that you share your MIS experience to us. 
-							We are still continuing the enhancements and updates 
-							for your convenience. MIS is not fully develop. With that, 
-							we hope for your patience 
-						</span>
-					</div>
-
-					<div class="x-display-bottomleft x-hide">
-						<div class="x-container x-padding">
-							<img src="../static/img/ifad.jpg" class="x-img x-round" style="width:3%">
-							<img src="../static/img/dti.png" class="x-img x-round" style="width:3%">
-							<img src="../static/img/icon.png" class="x-img x-round" style="width:3%">
-						</div>
-					</div>
 				</div>
-			</div>
-
-			<div class="x-col l7 x-padding">
-				{% include 'tabs.html' %}
+				
 			</div>
 		</div>
+		<div class="x-container" id="Announcements_">
+			{% include 'tabs.html' %}
+		</div>
+		<br><br><br><br>
 	</body>
 	<script type="text/javascript">
 
@@ -261,6 +253,14 @@
 			})
 			_eula.show()
 		}
+
+		function download_login_start(fff){
+			let a= document.createElement('a');
+			a.target= '_blank';
+			a.href= '/login/download_file/'+fff;
+			a.click();
+		}
+
 		{%include 'eula.js'%}
 
 
