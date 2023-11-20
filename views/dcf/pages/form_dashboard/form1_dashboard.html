@@ -36,134 +36,9 @@
 					align-items: center;
 					border-radius: 50%;
 				}
-				h3, h6 {
-	margin: 0;
-	line-height: 1em;
-}
 
-
-h6 {
-	font-size: 1em;
-	padding: 0 0 .5em;
-	color: #919191;
-}
-figure {
-	margin: 0 auto;
-	max-width: 800px;
-	}
-
-
-
-@keyframes expand {
-	from {width: 0%;}
-	to {width: 100%;}
-}
-@media screen and (min-width: 768px) {
-	@keyframes expand {
-		from {width: 0%;}
-		to {width: calc(100% - 75px);}
-	}
-}
-.chart {
-	overflow: hidden;
-	width: 0%;
-	animation: expand 1.5s ease forwards;
-}
-.row + .row .chart {
-	animation-delay: .2s;
-}
-.row + .row + .row .chart {
-	animation-delay: .4s;
-}
-.center{
-	text-align: center;
-}
-.block {
-	display: block;
-	height: 90px;
-	color: #fff;
-	font-size: .75em;
-	float: left;
-	background-color: #E27A3F;
-	position: relative;
-	overflow: hidden;
-	opacity: 1;
-	transition: opacity, .3s ease;
-	cursor: pointer;
-}
-.block:nth-of-type(2),
-.legend li:nth-of-type(2):before {
-	background-color: #145252;
-
-}
-.block:nth-of-type(3),
-.legend li:nth-of-type(3):before {
-	background-color: #538cc6;
-
-}
-.block:nth-of-type(4),
-.legend li:nth-of-type(4):before {
-	
-	background-color: #2db9b9;
-
-}
-.block:nth-of-type(5),
-.legend li:nth-of-type(5):before {
-	background-color: #DF5A49;
-}
-.block:nth-of-type(6),
-.legend li:nth-of-type(6):before {
-	background-color: #962D3E;
-}
-.block:hover {
-	opacity: .65;
-}
-.value {
-	display: block;
-	line-height: 1em;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%);
-}
-.x-axis {
-		text-align: center;
-	padding: .5em 0 2em;
-}
-
-.legend {
-		margin: 0 auto;
-		padding: 0;
-}
-.legend li {
-		display: inline-block;
-		padding: .25em 1em;
-		line-height: 1em;
-}
-.legend li:before {
-		content: "";
-		margin-right: .5em;
-		display: inline-block;
-		width: 15px;
-		height: 15px;
-		background-color: #E27A3F	;
-
-}
-@media screen and (min-width: 768px) {
-	h6 {
-		padding: 0;
-		width: 75px;
-		float: left;
-		line-height: 100px;
-	}
-	.block {
-		font-size: 1em;
-	}
-	.legend {
-		width: 70%;
-	}
-}
-			</style>
+				
+	</style>
 
 <div class="col-xl-12 col-md-6">
 			<div class="card bg-secondary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -200,70 +75,12 @@ figure {
 				
 				<!-- Card body -->
 				<div class="card-body">
+
+					 <div style="width:80%; margin: auto;">
+    <canvas id="myStackedBarChart"></canvas>
+  </div>
 						
-				 <div class="x-axis">
-				 	
-		<ul class="legend text-default" style="font-size: 1.2em;">
-			<li>Not Started: <b>{{over_all_dips_list['not_started']}}</b> </li>
-			<li>Ongoing Development DIPs: <b>{{over_all_dips_list['ongoing']}}</b> </li>
-			<li>In the Pipeline DIPs: <b>{{over_all_dips_list['pipeline']}}</b> </li>
-			<li>Approved DIPs: <b>{{over_all_dips_list['approve']}}</b> </li>
-		
 
-
-		</ul><br>
-		<h1 style="font-family: sans-serif;">TOTAL DIPs:&nbsp; <b>{{over_all_dips_list['over_all_total']}}</b></h1>
-	</div>
-	<figure>
-		<div class="graphic">
-		{% for dip in dips_list %}
-		<div class="row" style="margin-bottom:-15%;">
-			<h6 class="text-default">RCU&nbsp;{{dip}}</h6>
-			<div class="chart">
-				<span class="block" title="Not started DIPs: {{dips_list[dip]['not_started']}}">
-					<span data-toggle="modal" data-target="#commoditymodal" class="value">{{((dips_list[dip]['not_started']/dips_list[dip]["total"])*100)|round(1, 'floor')}}% </span><br>
-					<center>{{dips_list[dip]['not_started']}}</center>
-				</span>
-				<span class="block" title="Ongoing DIPs: {{dips_list[dip]['ongoing']}}">
-					<span class="value">{{((dips_list[dip]['ongoing']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span><br>
-					<center>{{dips_list[dip]['ongoing']}}</center>
-				</span>
-				<span class="block" title="In the Pipeline DIPs: {{dips_list[dip]['pipeline']}}">
-					<span class="value">{{((dips_list[dip]['pipeline']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span><br>
-					<center>{{dips_list[dip]['pipeline']}}</center>
-
-				</span>
-				<span class="block" title="Approved DIPs: {{dips_list[dip]['approve']}}">
-					<span class="value">{{((dips_list[dip]['approve']/dips_list[dip]["total"])*100)|round(1, 'floor')}}%</span><br>
-					<center>{{dips_list[dip]['approve']}}</center>
-
-				</span><center><span class="badge bg-secondary" style="font-size:1em; font-weight: bold;">{{ dips_list[dip]["total"] }} DIPs</span></center>
-			</div>
-		</div>
-		{% endfor %}
-
-<!-- 		{% for dip in dips_list %}
-		<div class="row" style="margin-bottom:-20%;">
-			<h6>RCU&nbsp;{{dip}}</h6>
-			<div class="chart">
-				<span class="block" >
-					<span class="value">{{((dips_list[dip]['not_started']/total_dip_nat)*100)|round(1, 'floor')}}%</span>
-				</span>
-				<span class="block" >
-					<span class="value">{{((dips_list[dip]['ongoing']/total_dip_nat)*100)|round(1, 'floor')}}%</span>
-				</span>
-				<span class="block">
-					<span class="value">{{((dips_list[dip]['pipeline']/total_dip_nat)*100)|round(1, 'floor')}}%</span>
-				</span>
-				<span class="block">
-					<span class="value">{{((dips_list[dip]['approve']/total_dip_nat)*100)|round(1, 'floor')}}%</span>
-				</span>
-			</div>
-		</div>
-		{% endfor %} -->
-
-	</div>
-</figure>
 		
 		
 				</div>
@@ -701,6 +518,7 @@ figure {
   </div>
 </div>
 
+
 <script >
   var xValues = [
     'Male: ' + {{dcf_form1male[0]['total_male']}},
@@ -927,6 +745,81 @@ new Chart("myChart2", {
 		},
 
     },
+});
+
+
+
+
+
+var xValues = [];
+var approvedDips = [];
+var pipelineDips = [];
+var ongoingDips = [];
+var notstartedDips = [];
+
+
+
+
+
+{% for dip in dips_list %}
+    xValues.push('RCU: ' + '{{dip}}');
+    approvedDips.push('{{dips_list[dip]["approve"]}}');
+    pipelineDips.push('{{dips_list[dip]["pipeline"]}}');
+    ongoingDips.push('{{dips_list[dip]["ongoing"]}}');
+    notstartedDips.push('{{dips_list[dip]["not_started"]}}');
+    console.log(xValues);
+{% endfor %}
+
+
+var data = {
+  labels: xValues,
+  datasets: [
+    {
+      label: 'Approved DIPs',
+      backgroundColor: '#99d6ff',
+      data: approvedDips
+    },
+    {
+      label: 'In the Pipeline DIPs',
+      backgroundColor: '#4db8ff',
+      data: pipelineDips
+    },
+    {
+      label: 'Ongoing Development DIPs',
+      backgroundColor: '#0099ff',
+      data: ongoingDips
+    },
+    {
+      label: 'Not Started',
+      backgroundColor: '#ff704d',
+      data: notstartedDips
+    }
+  ]
+};
+
+// Set the minimum value as suggestedMin for the y-axis
+var options = {
+  scales: {
+    x: {
+      stacked: true
+    },
+    y: {
+      stacked: true,
+      ticks: {
+        beginAtZero: true
+      }
+    }
+  }
+};
+
+// Get the context of the canvas element
+var ctx = document.getElementById('myStackedBarChart').getContext('2d');
+
+// Create the stacked bar chart
+var myStackedBarChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: options
 });
 </script>
 
