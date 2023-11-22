@@ -121,10 +121,11 @@ def displayform():
 
 
     
-
     dip_status_group_per_region={}
     over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
     commodities_per_status_per_region= {}
+    over_all_commodity_count = {}
+
     for index in range(len(dips_list)):
         DIP = dips_list[index]
         if(DIP['form_1_rcus'] not in dip_status_group_per_region):
@@ -132,8 +133,19 @@ def displayform():
             commodities_per_status_per_region[DIP['form_1_rcus']] = {"total":{},"approve":{}, "pipeline":{}, "ongoing":{}, "not_started":{} }
             # dip_status_group_per_region[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
         else:pass
+
+        # COMMODITY COUNT PER REGION total
         if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["total"]):
             commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] = 0
+
+        # FOR OVER ALL COMMODITY COUNT
+        _comm_rule = ["cacao","coconut","coffee","pfn"]
+        _com = DIP['form_1_commodity']
+        if(_com.lower() not in _comm_rule):
+            _com = "Others"
+        if(_com not in over_all_commodity_count):
+            over_all_commodity_count[_com ] = 0
+        over_all_commodity_count[_com ] += 1
 
         if(DIP["form_1_date_of_npco_cursory"] != "" and DIP["form_1_date_of_ifad_no_inssuance"] != ""):
             dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
@@ -258,7 +270,8 @@ def displayform():
         'dcf_form1msme2':dcf_form1msme2,
         'dcf_form1msme3':dcf_form1msme3,
         'dcf_form1msme4':dcf_form1msme4,
-        'total_untagged' : total_untagged
+        'total_untagged' : total_untagged,
+        'over_all_commodity_count':over_all_commodity_count
 
     }
 

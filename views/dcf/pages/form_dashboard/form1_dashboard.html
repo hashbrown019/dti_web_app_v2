@@ -52,7 +52,7 @@
 		<!-- Title -->
 		
 		
-		<h3 class="h1 mb-0 text-white" title="{{dips_list}}"><center>DIPs by Region</center></h3>
+		<h3 class="h1 mb-0 text-white"><center>DIPs</center></h3>
 		
 		
 		
@@ -78,12 +78,12 @@
 
 <div class="row">
   <div class="col-xl-5 col-md-6 mx-auto">
-    <!-- Chart 1 -->
-    <canvas id="myStackedBarChart" style="max-width: 500px; height: 500px;"></canvas>
+    <canvas id="myStackedBarChart" style="max-width: 600px; height: 500px;"></canvas>
   </div>
   <div class="col-xl-5 col-md-6 mx-auto">
-    <!-- Chart 2 -->
-    <canvas id="myPieChart" style="max-width: 500px; height: 500px;"></canvas>
+
+    <canvas id="myPieChart" style="max-width: 500px;"></canvas>
+
   </div>
 </div>	
 
@@ -671,7 +671,7 @@ Chart.plugins.register({
         var meta = chart.getDatasetMeta(i);
         if (!meta.hidden) {
           meta.data.forEach(function (element, index) {
-            ctx.fillStyle = 'black';
+            ctx.fillStyle = 'gray';
 
             var fontSize = 14; // Change this to your desired font size
             var fontStyle = 'bold';
@@ -811,7 +811,13 @@ var options = {
         beginAtZero: true
       }
     }
-  }
+  },
+     title: {
+        display: true,
+        text: `DIPs by Region`,
+        fontSize: 15,
+        fontColor: '#204060',
+      }
 };
 
 // Get the context of the canvas element
@@ -829,27 +835,87 @@ var myStackedBarChart = new Chart(ctx, {
 
 
 
+var _labels = [];
+var _data = [];
 
 // Sample data
+{% for key in over_all_commodity_count %}
+  _labels.push('{{key}}');
+  _data.push('{{over_all_commodity_count[key]}}');
+{% endfor %}
+
+// Calculate total for _data
+var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+
+// Normalize _data to make its total equivalent to totalData
+var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
+
 var data = {
-  labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+  labels: _labels,
   datasets: [{
-    data: [30, 20, 25, 25], // Values for each category
-    backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
-    label: 'Sample Pie Chart'
+    data: normalizedData, // Values for each category
+    backgroundColor: ['#5c5c3d', '#994d00', '#1a0d00', '#a6a6a6', '#006666'],
   }]
 };
 
 var options = {
   responsive: true,
-  maintainAspectRatio: false
+  maintainAspectRatio: false,
+  tooltips: {
+    callbacks: {
+      label: function (tooltipItem, data) {
+        var label = data.labels[tooltipItem.index];
+        var value = _data[tooltipItem.index];
+        return label + ': ' + value;
+      },
+    },
+  },
+   title: {
+        display: true,
+        text: `DIPs by Commodity`,
+        fontSize: 15,
+        fontColor: '#204060',
+      }
 };
 
 var ctx = document.getElementById('myPieChart').getContext('2d');
 var myPieChart = new Chart(ctx, {
   type: 'pie',
   data: data,
-  options: options
+  options: options,
+  title: 'Commodity'
+});
+
+// Display total percentage values on the pie chart
+Chart.plugins.register({
+  afterDatasetsDraw: function (chart, easing) {
+    if (chart.canvas.id === 'myPieChart') {
+      var ctx = chart.ctx;
+
+      chart.data.datasets.forEach(function (dataset, i) {
+        var meta = chart.getDatasetMeta(i);
+        if (!meta.hidden) {
+          meta.data.forEach(function (element, index) {
+            ctx.fillStyle = 'white';
+
+            var fontSize = 12;
+            var fontStyle = 'bold';
+            var fontFamily = 'sans-serif';
+            ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+            var dataString = normalizedData[index] + '%';
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            var padding = 5;
+            var position = element.tooltipPosition();
+            ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+          });
+        }
+      });
+    }
+  },
 });
 </script>
 
