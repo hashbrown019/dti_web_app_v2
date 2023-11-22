@@ -75,10 +75,17 @@
 				<!-- Card body -->
 				<div class="card-body">
 
-					 <div style="width:50%; margin: auto;">
-    <canvas id="myStackedBarChart"></canvas>
+
+<div class="row">
+  <div class="col-xl-5 col-md-6 mx-auto">
+    <!-- Chart 1 -->
+    <canvas id="myStackedBarChart" style="max-width: 500px; height: 500px;"></canvas>
   </div>
-						
+  <div class="col-xl-5 col-md-6 mx-auto">
+    <!-- Chart 2 -->
+    <canvas id="myPieChart" style="max-width: 500px; height: 500px;"></canvas>
+  </div>
+</div>	
 
 		
 		
@@ -816,6 +823,31 @@ var myStackedBarChart = new Chart(ctx, {
 
 // Custom label drawing after datasets are drawn
 
+
+
+
+
+// Sample data
+var data = {
+  labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+  datasets: [{
+    data: [30, 20, 25, 25], // Values for each category
+    backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
+    label: 'Sample Pie Chart'
+  }]
+};
+
+var options = {
+  responsive: true,
+  maintainAspectRatio: false
+};
+
+var ctx = document.getElementById('myPieChart').getContext('2d');
+var myPieChart = new Chart(ctx, {
+  type: 'pie',
+  data: data,
+  options: options
+});
 </script>
 
 
