@@ -64,6 +64,12 @@ def form1_dashboard():
 	form_disp = display_dataform.displayform()
 	return render_template("form_dashboard/form1_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
+@app.route('/form1_fulldashboard')
+def form1_fulldashboard():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	form_disp = display_dataform.displayform()
+	return render_template("form_dashboard/form1_fulldashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+
 @app.route('/form2_dashboard')
 def form2_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")

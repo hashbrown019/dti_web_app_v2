@@ -17,7 +17,7 @@
 		<br>
 				<!-- Search form -->
 
-		<h1 class=" text-white" style="font-size:1.8em; font-weight: bold; text-align: center; margin: 2px;">FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS DASHBOARD</h1>
+		<h1 class=" text-white" style="font-size:1.8em; font-weight: bold; text-align: center; margin: 2px;">FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS FULL DASHBOARD</h1>
 				
 				<!-- / Search form -->
 			<br>
@@ -36,7 +36,6 @@
 					align-items: center;
 					border-radius: 50%;
 				}
-
 	</style>
 
 <div class="col-xl-12 col-md-6">
@@ -75,7 +74,7 @@
 				<!-- Card body -->
 				<div class="card-body">
 
-					 <div style="width:50%; margin: auto;">
+					 <div style="width:80%; margin: auto;">
     <canvas id="myStackedBarChart"></canvas>
   </div>
 						
@@ -748,20 +747,26 @@ new Chart("myChart2", {
 
 
 
+
 var xValues = [];
 var approvedDips = [];
 var pipelineDips = [];
 var ongoingDips = [];
 var notstartedDips = [];
 
-// Assuming dips_list is a dictionary with keys as dip names
+
+
+
+
 {% for dip in dips_list %}
     xValues.push('RCU: ' + '{{dip}}');
     approvedDips.push('{{dips_list[dip]["approve"]}}');
     pipelineDips.push('{{dips_list[dip]["pipeline"]}}');
     ongoingDips.push('{{dips_list[dip]["ongoing"]}}');
     notstartedDips.push('{{dips_list[dip]["not_started"]}}');
+    console.log(xValues);
 {% endfor %}
+
 
 var data = {
   labels: xValues,
@@ -813,9 +818,6 @@ var myStackedBarChart = new Chart(ctx, {
   data: data,
   options: options
 });
-
-// Custom label drawing after datasets are drawn
-
 </script>
 
 
