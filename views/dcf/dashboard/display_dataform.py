@@ -189,12 +189,12 @@ def displayform():
         alltotal += dip_status_group_per_region[xxx]['total']
     # print(alltotal)
     # dip_status_group_per_region["_over_all"] = over_all
-
+    total_untagged = 0
     dip_sex_group_per_region = {}
     for index in range(len(dips_list)):
         DIP = dips_list[index]
         if(DIP['form_1_rcus'] not in dip_sex_group_per_region):
-            dip_sex_group_per_region[DIP['form_1_rcus']] = {'total_bene':0, 'male':{"youth":0,"ip":0,"pwd":0,"total":0}, "female":{"youth":0,"ip":0,"pwd":0,"total":0},"all_total":{"total_youth":0,"total_ip":0,"total_pwd":0,"total_sex":0}}
+            dip_sex_group_per_region[DIP['form_1_rcus']] = {'total_bene':0, 'male':{ "youth":0,"ip":0,"pwd":0,"total":0}, "female":{ "youth":0,"ip":0,"pwd":0,"total":0},"all_total":{'untagged':0, "total_youth":0,"total_ip":0,"total_pwd":0,"total_sex":0}}
             # dip_sex_group_per_region[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
         else:pass
         dip_sex_group_per_region[DIP['form_1_rcus']]['male']['youth'] += DIP['form_1_maleyouth']
@@ -214,6 +214,8 @@ def displayform():
 
         try:
             dip_sex_group_per_region[DIP['form_1_rcus']]['total_bene'] += float(DIP['form_1_total_farmerbene'])
+            dip_sex_group_per_region[DIP['form_1_rcus']]['all_total']['untagged'] += float(DIP['form_1_total_farmerbene'])- (DIP['form_1_totalmale'] + DIP['form_1_totalfemale'])
+            total_untagged += float(DIP['form_1_total_farmerbene'])- (DIP['form_1_totalmale'] + DIP['form_1_totalfemale'])
         except Exception as e:
             # raise e
             pass
@@ -255,7 +257,8 @@ def displayform():
         'dcf_form1msme':dcf_form1msme,
         'dcf_form1msme2':dcf_form1msme2,
         'dcf_form1msme3':dcf_form1msme3,
-        'dcf_form1msme4':dcf_form1msme4
+        'dcf_form1msme4':dcf_form1msme4,
+        'total_untagged' : total_untagged
 
     }
 
