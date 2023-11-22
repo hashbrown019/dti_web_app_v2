@@ -194,7 +194,7 @@ def displayform():
     for index in range(len(dips_list)):
         DIP = dips_list[index]
         if(DIP['form_1_rcus'] not in dip_sex_group_per_region):
-            dip_sex_group_per_region[DIP['form_1_rcus']] = {'male':{"youth":0,"ip":0,"pwd":0,"total":0}, "female":{"youth":0,"ip":0,"pwd":0,"total":0},"all_total":{"total_youth":0,"total_ip":0,"total_pwd":0,"total_sex":0}}
+            dip_sex_group_per_region[DIP['form_1_rcus']] = {'total_bene':0, 'male':{"youth":0,"ip":0,"pwd":0,"total":0}, "female":{"youth":0,"ip":0,"pwd":0,"total":0},"all_total":{"total_youth":0,"total_ip":0,"total_pwd":0,"total_sex":0}}
             # dip_sex_group_per_region[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
         else:pass
         dip_sex_group_per_region[DIP['form_1_rcus']]['male']['youth'] += DIP['form_1_maleyouth']
@@ -212,7 +212,13 @@ def displayform():
         dip_sex_group_per_region[DIP['form_1_rcus']]['all_total']['total_pwd'] += DIP['form_1_malepwd'] + DIP['form_1_femalepwd']
         dip_sex_group_per_region[DIP['form_1_rcus']]['all_total']['total_sex'] += DIP['form_1_totalmale'] + DIP['form_1_totalfemale']
 
-        
+        try:
+            dip_sex_group_per_region[DIP['form_1_rcus']]['total_bene'] += float(DIP['form_1_total_farmerbene'])
+        except Exception as e:
+            # raise e
+            pass
+        # if(DIP['form_1_total_farmerbene'].isnumeric()):
+        #     dip_sex_group_per_region[DIP['form_1_rcus']]['total_bene'] += int(DIP['form_1_total_farmerbene'])
 
     return{
         'form1_datatable':  form1_datatable,

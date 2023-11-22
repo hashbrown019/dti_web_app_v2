@@ -617,7 +617,8 @@ var barColorsbar = ["red", "green", "blue", "orange", "brown", "yellow", "violet
 var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}')
 {% for dip in dip_sex_group_per_region %}
     xValuesbar.push('RCU: ' + '{{dip}}');
-    var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
+    var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["total_bene"]}}')
+    // var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
     var perc = ((rcu_total / over_all) * 100).toFixed(2)
     // yValuesbar.push(perc);
     all_perc.push(perc);
@@ -625,7 +626,8 @@ var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}')
     label_.push(rcu_total)
 
     tooltips.push([
-    	'Total: ' +'{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}',
+    	'Total with sex/tagged: ' +'{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}',
+    	'Total: ' +money('{{dip_sex_group_per_region[dip]["total_bene"]|int}}'),
     	' ',
     	'Male: ' + '{{dip_sex_group_per_region[dip]["male"]["total"]}}',
     	'Youth: ' + '{{dip_sex_group_per_region[dip]["male"]["youth"]}}',
@@ -637,14 +639,12 @@ var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}')
     	'IP: ' + '{{dip_sex_group_per_region[dip]["female"]["ip"]}}',
     	'PWD: ' + '{{dip_sex_group_per_region[dip]["female"]["pwd"]}}',
     	'--------------',
+    	'Untagged: ' + '{{(dip_sex_group_per_region[dip]["total_bene"]-dip_sex_group_per_region[dip]["female"]["total"]+dip_sex_group_per_region[dip]["male"]["total"])|int}}',
+    	'--------------',
     	'Overall Total',
     	'Youth: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_youth"]}}',
     	'IP: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_ip"]}}',
     	'PWD: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_pwd"]}}',
-
-
-
-    	
     ])
 {% endfor %}
 
