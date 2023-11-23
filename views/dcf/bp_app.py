@@ -36,6 +36,12 @@ from views.dcf.spreadsheet import dcf_import_excel as importcsv_form1
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form2
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form3
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form4
+from views.dcf.spreadsheet import dcf_import_excel as importcsv_form6
+from views.dcf.spreadsheet import dcf_import_excel as importcsv_form7
+from views.dcf.spreadsheet import dcf_import_excel as importcsv_form9
+
+
+
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -401,6 +407,21 @@ def importcsvform3():
 def importcsvform4():
 	importcsv_form4.importcsvform4(request)
 	return redirect("/form4_dashboard")
+
+@app.route('/importcsvform6',methods = ['GET','POST'])
+def importcsvform6():
+	importcsv_form6.importcsvform6(request)
+	return redirect("/form6_dashboard")
+
+@app.route('/importcsvform7',methods = ['GET','POST'])
+def importcsvform7():
+	importcsv_form7.importcsvform7(request)
+	return redirect("/form7_dashboard")
+
+@app.route('/importcsvform9',methods = ['GET','POST'])
+def importcsvform9():
+	importcsv_form9.importcsvform9(request)
+	return redirect("/form9_dashboard")
 #-------------------------------------------------------------------------------
 
 
@@ -511,13 +532,13 @@ def dcfexport_data():
 		elif export_type == 'form5export':
 			def form5export():
 				if request.method == "POST":
-					query= db.select("SELECT id,mgit_implementing_unit_rcu,mgit_implementing_unit_pcu,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools FROM dcf_matching_grant")
+					query= db.select("SELECT id,CONCAT(mgit_implementing_unit, ' ', mgit_implementing_unit_rcu, ',' ,mgit_implementing_unit_pcu) AS Implementing_unit,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools FROM dcf_matching_grant")
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
 					writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form5_exported_file.xlsx') 
 					df.to_excel(writer, sheet_name='dcf_form5_exported_file', index=False)
-					new_column_names = 'ID,Implementing Unit RCU,Implementing Unit PCU, Name Of DIP,Name of FO/MSME RECIPIENT(type name of FO / MSME), total # of FO Member Recipients, Commodity,Total number of FO members by Gender Male, Total number of FO members by Gender Female,Total number of FO members by sectoral group PWD,Total number of FO members by sectoral group Youth, Total number of FO members by sectoral group IP,Total number of FO members by sectoral group SC,Type of Investment,TOTAL OF MGAs based on approved DIP,Total of MGAs Signed,Total of MGAs not yet signed,TOTAL MATCHING GRANT BASED ON APPROVED BUSINESS PLAN (IN PHP),PREVIOUS MATCHING GRANT AVAILMENT (IN PHP) - FIRST AVAILMENT,MATCHING GRANT AVAILMENT AS OF THIS REPORTING PERIOD(in PHP) and date,REMAINING MATCHING GRANT BALANCE (in PHP), INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA) Start,INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA) End,Time elapse,Total budget as approved in the DIP,actual cost of procurement,summary of actual tools procured,Inclusive timeline of implementation (based on MGA) Start,Inclusive timeline of implementation (based on MGA) End,time elapse,DATE of distribution/training,Remarks delivered tools'
+					new_column_names = 'ID,Implementing Unit, Name Of DIP,Name of FO/MSME RECIPIENT(type name of FO / MSME), total # of FO Member Recipients, Commodity,Total number of FO members by Gender Male, Total number of FO members by Gender Female,Total number of FO members by sectoral group PWD,Total number of FO members by sectoral group Youth, Total number of FO members by sectoral group IP,Total number of FO members by sectoral group SC,Type of Investment,TOTAL OF MGAs based on approved DIP,Total of MGAs Signed,Total of MGAs not yet signed,TOTAL MATCHING GRANT BASED ON APPROVED BUSINESS PLAN (IN PHP),PREVIOUS MATCHING GRANT AVAILMENT (IN PHP) - FIRST AVAILMENT,MATCHING GRANT AVAILMENT AS OF THIS REPORTING PERIOD(in PHP) and date,REMAINING MATCHING GRANT BALANCE (in PHP), INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA) Start,INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA) End,Time elapse,Total budget as approved in the DIP,actual cost of procurement,summary of actual tools procured,Inclusive timeline of implementation (based on MGA) Start,Inclusive timeline of implementation (based on MGA) End,time elapse,DATE of distribution/training,Remarks delivered tools'
 					new_column_names_list = new_column_names.split(',')
 					df.columns = new_column_names_list
 
@@ -536,13 +557,13 @@ def dcfexport_data():
 		elif export_type == 'form6export':
 			def form6export():
 				if request.method == "POST":
-					query = db.select("SELECT id,form_6_implementing_unit,form_6_type_of_assisstance,form_6_type_of_activity,form_6_dip_alignment,form_6_activity_duration_start,form_6_activity_duration_end,form_6_venue,form_6_resource_person,form_6_rapid_actual_budget,form_6_name_of_partner_organization_1,form_6_name_of_partner_organization_2,form_6_beneficiary_participant,form_6_commodity,form_6_type_of_beneficiary,form_6_male,form_6_female,form_6_total_1,form_6_pwd,form_6_youth,form_6_ip,form_6_sc,form_6_total_2,form_6_product_developed,form_6_date_launched_to_market,form_6_improved_product,form_6_type_of_product_improvement,form_6_name_of_product_developed,form_6_,form_6_commodity1,form_6_commodity2,form_6_date_issuance,form_6_expiration_date,form_6_product_certified,form_6_rating,form_6_comment_ares_of_improvement FROM dcf_product_development")
+					query = db.select("SELECT id,form_6_implementing_unit,form_6_type_of_assisstance,form_6_type_of_activity,form_6_dip_alignment,form_6_activity_duration_start,form_6_activity_duration_end,form_6_venue,form_6_resource_person,form_6_rapid_actual_budget,form_6_name_of_partner_organization_1,form_6_name_of_partner_organization_2,form_6_beneficiary_participant,form_6_commodity,form_6_type_of_beneficiary,form_6_sex,form_6_sector,form_6_product_developed,form_6_date_launched_to_market,form_6_improved_product,form_6_type_of_product_improvement,form_6_name_of_product_developed,form_6_,CONCAT(form_6_certification, ' ', form6_otherss1) AS certification1,CONCAT(form_6_certification2, ' ', form6_otherss2) AS certification2,form_6_date_issuance,form_6_expiration_date,form_6_product_certified,form_6_rating,form_6_comment_ares_of_improvement FROM dcf_product_development")
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
 					writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form6_exported_file.xlsx') 
 					df.to_excel(writer, sheet_name='dcf_form6_exported_file', index=False)
-					new_column_names = 'ID,Implementing Unit,Type of Assistance,Type of Activity,DIP Alignment,Activity Duration Start Date,Activity Duration End Date,Venue,Name of Resource Person/Facilitator/BDSP,RAPID Actual Budget,Name of Partner/Organization,Name of Partner/Organization, Name of Beneficiary/Participant,Commodity,Type of Beneficiary,Male,Female ,Total,PWD,Youth,IP,SC,Total,Name of Product Developed,Date Launched to Market,Name of Improved Product,Type of Product Improvement,Name the System/Process Established/Improved,Date of Establishment/ Adoption,Name/Title of Certifications Facilitated,Name/Title of Certifications Acquired,Date of Issuance,Expiration Date,Product Certified,Rating,Comments/Areas of Improvement'
+					new_column_names = 'ID,Implementing Unit,Type of Assistance,Type of Activity,DIP Alignment,Activity Duration Start Date,Activity Duration End Date,Venue,Name of Resource Person/Facilitator/BDSP,RAPID Actual Budget,Name of Partner/Organization,Name of Partner/Organization,Name of Beneficiary/Participant,Commodity,Type of Beneficiary,Sex,Sector,Name of Product Developed,Date Launched to Market,Name of Improved Product,Type of Product Improvement,Name the System/Process Established/Improved,Date of Establishment/ Adoption,Name/Title of Certifications Facilitated,Name/Title of Certifications Acquired,Date of Issuance,Expiration Date,Product Certified,Rating,Comments/Areas of Improvement'
 					new_column_names_list = new_column_names.split(',')
 					df.columns = new_column_names_list
 
@@ -563,13 +584,13 @@ def dcfexport_data():
 		elif export_type == 'form7export':
 			def form7export():
 				if request.method == "POST":
-					query = db.select("SELECT id,form_7_implementing_unit,form_7_title_trade_promotion,form_7_type_of_trade_promotion,form_7_dip_indicate,form_7_start_date,form_7_end_date,form_7_name_of_po,form_7_amount,form_7_venue,form_7_rapid_actual_budget,form_7_name_of_beneficiary,form_7_commodity,form_7_msme,form_7_fo,form_7_farmer,form_7_male,form_7_female,form_7_pwd,form_7_youth,form_7_ip,form_7_sc,form_7_type_of_products,form_7_name_of_buyer,form_7_cash_sales,form_7_booked_sales,form_7_under_negotiations,form_7_total_autosum FROM dcf_trade_promotion")
+					query = db.select("SELECT id,form_7_implementing_unit,form_7_title_trade_promotion,form_7_type_of_trade_promotion,form_7_dip_indicate,form_7_start_date,form_7_end_date,form_7_name_of_po,form_7_amount,form_7_venue,form_7_rapid_actual_budget,form_7_name_of_beneficiary,CONCAT(form_7_commodity, ' ',form_7_commodity_others) AS Commodity,form_7_beneficiary,form_7_sex,form_7_sector,form_7_type_of_products,form_7_name_of_buyer,form_7_cash_sales,form_7_booked_sales,form_7_under_negotiations,form_7_total_autosum FROM dcf_trade_promotion")
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
 					writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form7_exported_file.xlsx') 
 					df.to_excel(writer, sheet_name='dcf_form7_exported_file', index=False)
-					new_column_names = 'ID,Implementing Unit,Title of Trade Promotion Services Provided,Type of Trade Promotion Services organized/participated,DIP (indicate NO if none),Start Date,End Date,Name of Partner/Organization,Amount,Venue,RAPID Actual Budget,Name of Beneficiary (Name of farmer Registered business/FO name),Commodity,MSME,FO,Farmer,Male,Female,PWD,Youth,IP,SC,Type of Product(s),Name of Buyer/Company Matched with Assisted MSMEs/FOs,Cash Sales,Booked Sales,Under Negotiations,Total'
+					new_column_names = 'ID,Implementing Unit,Title of Trade Promotion Services Provided,Type of Trade Promotion Services organized/participated,DIP (indicate NO if none),Start Date,End Date,Name of Partner/Organization,Amount,Venue,RAPID Actual Budget,Name of Beneficiary,Commodity,Type of Beneficiary,Sex,Sector,Type of Product(s),Name of Buyer/Company Matched with Assisted MSMEs/FOs,Cash Sales,Booked Sales,Under Negotiations,Total'
 					new_column_names_list = new_column_names.split(',')
 					df.columns = new_column_names_list
 
@@ -590,13 +611,13 @@ def dcfexport_data():
 		elif export_type == 'form9export':
 			def form9export():
 				if request.method == "POST":
-					query = db.select("SELECT id,form_9_implementing_unit,form_9_title_trade_promotion,form_9_type_of_training,form_9_start_date,form_9_end_date,form_9_venue,form_9_rapid_actual_budget,form_9_name_of_resource_person,form_9_name_of_participant_org,form_9_counterpart_amount,form_9_name_of_participant,form_9_organization,form_9_designation,form_9_male,form_9_female,form_9_pwd,form_9_youth,form_9_ip,form_9_sc,form_9_pre_test1,form_9_post_test1,form_9_activity_output,form_9_pre_test2,form_9_post_test2,form_9_rating,form_9_comments FROM dcf_enablers_activity")
+					query = db.select("SELECT id,form_9_implementing_unit,form_9_title_trade_promotion,CONCAT(form_9_type_of_training, ' ',form_9_othertypetraining ) AS type_of_training,form_9_start_date,form_9_end_date,form_9_venue,form_9_rapid_actual_budget,form_9_name_of_resource_person,form_9_name_of_participant_org,form_9_counterpart_amount,form_9_name_of_participant,form_9_sex,form_9_sector,form_9_organization,form_9_designation,form_9_pre_test1,form_9_post_test1,form_9_activity_output,form_9_pre_test2,form_9_post_test2,form_9_rating,form_9_comments FROM dcf_enablers_activity")
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
 					writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form9_exported_file.xlsx') 
 					df.to_excel(writer, sheet_name='dcf_form9_exported_file', index=False)
-					new_column_names = 'ID,Implementing Unit,Activity Title,Type of Training/Activity,Start Date,End Date,Venue,RAPID actual budget,Name of Resource Person/Facilitator/BDSP,Name of Partner/Organization,Counterpart Amount,Name of Participant,Organization,Designation,Male,Female,PWD,Youth,IP,SC,Pre-test,Post-test,Activity Output,Pre-test,Post-test,Rating,Comments/Areas of Improvement'
+					new_column_names = 'ID,Implementing Unit,Activity Title,Type of Training/Activity,Start Date,End Date,Venue,RAPID actual budget,Name of Resource Person/Facilitator/BDSP,Name of Partner/Organization,Counterpart Amount,Name of Participant,Sex,Sector,Organization,Designation,Results of activity Pre-test,Results of activity Post-test,Activity Output,Results of activity (Average if applicable/ indicate NA option) Pre-test,Results of activity (Average if applicable/ indicate NA option) Post-test,Rating,Comments/Areas of Improvement'
 					new_column_names_list = new_column_names.split(',')
 					df.columns = new_column_names_list
 

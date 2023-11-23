@@ -60,18 +60,24 @@
                     <td>{{ row['form_9_type_of_training'] }}</td>
                     <td>{{ row['form_9_name_of_resource_person'] }}</td>
                     <td>
-                      <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form9view{{row['id']}}"
-                        href="/updateform9/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span>
-                        View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                      {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
-                      <a style="color: #00cc66;" data-toggle="modal" data-target="#form9edit{{row['id']}}"
-                        href="/updateform9/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square"
-                            aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <a style="color: #ff4d4d;" href="/delete_form9/{{row['id']}}" onclick="confirmation(event)">
-                        <span><i class="fa-solid fa-trash"></i></span> Delete</a>
-                      {%endif%}
-
-
+                       {% if row['upload_by']|string == user_data['id']|string %}
+                      <a style="color: #00FFAB;" href="/dcf/form9?id={{ row['id'] }}&table=dcf_enablers_activity">
+                        <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                      </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                      <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+                        href="/delete_record/dcf_enablers_activity/{{ row['id'] }}">
+                        <span><i class="fa-solid fa-trash"></i></span> Delete
+                      </a>
+                      {% elif user_data['job'] == "Super Admin" %}
+                      <a style="color: #1ac6ff;" href="/dcf/form9?id={{ row['id'] }}&table=dcf_enablers_activity">
+                        <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                      </a>
+                      {% else %}
+                      <a style="color: #1ac6ff;" href="/dcf/form9?id={{ row['id'] }}&table=dcf_enablers_activity">
+                        <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                      </a>
+                      {% endif %}
+  
                     </td>
                     <td class="date-cell"> {{ row['date_created'] }}<br>
                       {% if row['date_modified'] %}
@@ -95,8 +101,6 @@
         </div>
 
       </div>
-      {% include "includes/viewform_modal/viewform9.html" %}
-      {% include "includes/updateform_modal/updateform9.html" %}
 
       <div class="py-4">
         <div class="dropdown">
@@ -113,6 +117,46 @@
     </div>
   </div>
 </div>
+<script>
+  
+   function showDeleteConfirmation(id) {
+                swalWithCustomButtons.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, delete it!',
+                  cancelButtonText: 'No, cancel',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = `/delete_record/dcf_enablers_activity/${id}`;
+                  } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithCustomButtons.fire(
+                      'Cancelled',
+                      'Your record is safe',
+                      'error'
+                    );
+                  }
+                });
+
+                // Prevent the default link behavior
+                return false;
+              }
+
+              const swalWithCustomButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              });
+
+</script>
 
 
 

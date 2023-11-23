@@ -349,3 +349,284 @@ def excel_upload_open4(path):
 		flash(f"The file was imported successfully!", "success")
 	return "done"
 
+
+# def importcsvform5(request):
+# 	from datetime import date, datetime
+# 	today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
+# 	uploader = session["USER_DATA"][0]["id"]
+# 	if request.method == "POST":
+# 		try:
+# 			files = request.files
+# 			for file in files:
+# 				f = files[file]
+# 				global UPLOAD_NAME
+# 				UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
+# 				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+# 				importcsvform5(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+# 		except IndexError:
+# 			flash(f"Invalid file template!", "error")
+			
+# 	return redirect("/dcfspreadsheet")
+
+# def excel_upload_open5(path):  
+# 	book = xlrd.open_workbook(path)
+# 	sheet = book.sheet_by_index(0)
+# 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+# 	header = data[4]
+# 	print("tafdagfefgrhgragharghahu")
+# 	print(sheet.name)
+# 	if(sheet.name !='form4'):
+# 		flash(f"Invalid file template!", "error")
+# 		return "done:Sheet Error"
+# 	for row in data[4:]:
+# 		upload_by = session["USER_DATA"][0]['id']
+# 		cbb_implementing_unit = row[0]
+# 		cbb_activity_title = row[1]
+# 		cbb_types_of_training = row[2]
+# 		cbb_topic_of_training = row[3]
+# 		cbb_dip_approved_alignment = row[4]
+# 		cbb_name_of_dip = row[5]
+# 		cbb_date_start = row[6]
+# 		cbb_total_number_of_participants = row[7]
+# 		cbb_commodity = row[8]
+# 		cbb_venue = row[9]
+# 		cbb_name_of_resource_person = row[10]
+# 		cbb_rapid_actual_budget = row[11]
+# 		cbb_dip_capbuild_activities_NPO = row[12]
+# 		cbb_dip_capbuild_activities_CA = row[13]
+# 		cbb_total_number_per_gender_male = row[14]
+# 		cbb_total_number_per_gender_female = row[15]
+# 		cbb_total_number_per_gender_total = row[16]
+# 		cbb_total_number_per_sector_pwd = row[17]
+# 		cbb_total_number_per_sector_youth = row[18]
+# 		cbb_total_number_per_sector_ip = row[19]
+# 		cbb_total_number_per_sector_sc = row[20]
+# 		cbb_total_number_per_sector_total = row[21]
+# 		cbb_results_of_activity_pre_test = row[22]
+# 		cbb_results_of_activity_post_test = row[23]
+# 		cbb_client_feedback_survey_rating = row[24]
+# 		cbb_client_feedback_survey_comments_AOI = row[25]                                                                                                        
+# 		filename = UPLOAD_NAME
+
+# 		querycsv = ("INSERT INTO dcf_matching_grant ( upload_by,mgit_implementing_unit,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+# 		format(upload_by,mgit_implementing_unit,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools,filename))
+# 		insert=db.do(querycsv)
+# 		print(insert)
+# 		print("===============================================")
+
+# 	if(insert["response"]=="error"):
+# 		flash(f"An error occured!", "error")
+# 		print(str(insert))
+# 	else:
+# 		flash(f"The file was imported successfully!", "success")
+# 	return "done"
+
+
+def importcsvform6(request):
+	from datetime import date, datetime
+	today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
+	uploader = session["USER_DATA"][0]["id"]
+	if request.method == "POST":
+		try:
+			files = request.files
+			for file in files:
+				f = files[file]
+				global UPLOAD_NAME
+				UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
+				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+				excel_upload_open6(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+		except IndexError:
+			flash(f"Invalid file template!", "error")
+			
+	return redirect("/dcfspreadsheet")
+
+def excel_upload_open6(path):  
+	book = xlrd.open_workbook(path)
+	sheet = book.sheet_by_index(0)
+	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	header = data[4]
+	print("tafdagfefgrhgragharghahu")
+	print(sheet.name)
+	if(sheet.name !='form6'):
+		flash(f"Invalid file template!", "error")
+		return "done:Sheet Error"
+	for row in data[5:]:
+		upload_by = session["USER_DATA"][0]['id']
+		form_6_implementing_unit = row [0]
+		form_6_type_of_assisstance = row [1]
+		form_6_type_of_activity = row [2]
+		form_6_dip_alignment = row [3]
+		form_6_activity_duration_start = row [4]
+		form_6_activity_duration_end = row [5]
+		form_6_venue = row [6]
+		form_6_resource_person = row [7]
+		form_6_rapid_actual_budget = row [8]
+		form_6_name_of_partner_organization_1 = row [9]
+		form_6_name_of_partner_organization_2 = row [10]
+		form_6_beneficiary_participant = row [11]
+		form_6_commodity = row [12]
+		form_6_type_of_beneficiary = row [13]
+		form_6_sex = row [14]
+		form_6_sector = row [15]
+		form_6_product_developed = row [16]
+		form_6_date_launched_to_market = row [17]
+		form_6_improved_product = row [18]
+		form_6_type_of_product_improvement = row [19]
+		form_6_name_of_product_developed = row [20]
+		form_6_ = row [21]
+		form_6_certification = row [22]
+		form_6_certification2 = row [23]
+		form_6_date_issuance = row [24]
+		form_6_expiration_date = row [25]
+		form_6_product_certified = row [26]
+		form_6_rating = row [27]
+		form_6_comment_ares_of_improvement = row [28]                                                                                                     
+		filename = UPLOAD_NAME
+
+		querycsv = ("INSERT INTO dcf_product_development ( upload_by, form_6_implementing_unit,form_6_type_of_assisstance,form_6_type_of_activity,form_6_dip_alignment,form_6_activity_duration_start,form_6_activity_duration_end,form_6_venue,form_6_resource_person,form_6_rapid_actual_budget,form_6_name_of_partner_organization_1,form_6_name_of_partner_organization_2,form_6_beneficiary_participant,form_6_commodity,form_6_type_of_beneficiary,form_6_sex,form_6_sector,form_6_product_developed,form_6_date_launched_to_market,form_6_improved_product,form_6_type_of_product_improvement,form_6_name_of_product_developed,form_6_,form_6_certification,form_6_certification2,form_6_date_issuance,form_6_expiration_date,form_6_product_certified,form_6_rating,form_6_comment_ares_of_improvement,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by, form_6_implementing_unit,form_6_type_of_assisstance,form_6_type_of_activity,form_6_dip_alignment,form_6_activity_duration_start,form_6_activity_duration_end,form_6_venue,form_6_resource_person,form_6_rapid_actual_budget,form_6_name_of_partner_organization_1,form_6_name_of_partner_organization_2,form_6_beneficiary_participant,form_6_commodity,form_6_type_of_beneficiary,form_6_sex,form_6_sector,form_6_product_developed,form_6_date_launched_to_market,form_6_improved_product,form_6_type_of_product_improvement,form_6_name_of_product_developed,form_6_,form_6_certification,form_6_certification2,form_6_date_issuance,form_6_expiration_date,form_6_product_certified,form_6_rating,form_6_comment_ares_of_improvement,filename))
+		insert=db.do(querycsv)
+		print(insert)
+		print("===============================================")
+
+	if(insert["response"]=="error"):
+		flash(f"An error occured!", "error")
+		print(str(insert))
+	else:
+		flash(f"The file was imported successfully!", "success")
+	return "done"
+
+
+def importcsvform7(request):
+	from datetime import date, datetime
+	today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
+	uploader = session["USER_DATA"][0]["id"]
+	if request.method == "POST":
+		try:
+			files = request.files
+			for file in files:
+				f = files[file]
+				global UPLOAD_NAME
+				UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
+				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+				excel_upload_open7(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+		except IndexError:
+			flash(f"Invalid file template!", "error")
+			
+	return redirect("/dcfspreadsheet")
+
+def excel_upload_open7(path):  
+	book = xlrd.open_workbook(path)
+	sheet = book.sheet_by_index(0)
+	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	header = data[4]
+	print("tafdagfefgrhgragharghahu")
+	print(sheet.name)
+	if(sheet.name !='form7'):
+		flash(f"Invalid file template!", "error")
+		return "done:Sheet Error"
+	for row in data[5:]:
+		upload_by = session["USER_DATA"][0]['id']
+		form_7_implementing_unit = row [0]
+		form_7_title_trade_promotion = row [1]
+		form_7_type_of_trade_promotion = row [2]
+		form_7_dip_indicate = row [3]
+		form_7_start_date = row [4]
+		form_7_end_date = row [5]
+		form_7_name_of_po = row [6]
+		form_7_amount = row [7]
+		form_7_venue = row [8]
+		form_7_rapid_actual_budget = row [9]
+		form_7_name_of_beneficiary = row [10]
+		form_7_commodity = row [11]
+		form_7_beneficiary = row [12]
+		form_7_sex = row [13]
+		form_7_sector = row [14]
+		form_7_type_of_products = row [15]
+		form_7_name_of_buyer = row [16]
+		form_7_cash_sales = row [17]
+		form_7_booked_sales = row [18]
+		form_7_under_negotiations = row [19]
+		form_7_total_autosum = row [20]                                                                                                 
+		filename = UPLOAD_NAME
+
+		querycsv = ("INSERT INTO dcf_trade_promotion ( upload_by, form_7_implementing_unit,form_7_title_trade_promotion,form_7_type_of_trade_promotion,form_7_dip_indicate,form_7_start_date,form_7_end_date,form_7_name_of_po,form_7_amount,form_7_venue,form_7_rapid_actual_budget,form_7_name_of_beneficiary,form_7_commodity,form_7_beneficiary,form_7_sex,form_7_sector,form_7_type_of_products,form_7_name_of_buyer,form_7_cash_sales,form_7_booked_sales,form_7_under_negotiations,form_7_total_autosum,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by, form_7_implementing_unit,form_7_title_trade_promotion,form_7_type_of_trade_promotion,form_7_dip_indicate,form_7_start_date,form_7_end_date,form_7_name_of_po,form_7_amount,form_7_venue,form_7_rapid_actual_budget,form_7_name_of_beneficiary,form_7_commodity,form_7_beneficiary,form_7_sex,form_7_sector,form_7_type_of_products,form_7_name_of_buyer,form_7_cash_sales,form_7_booked_sales,form_7_under_negotiations,form_7_total_autosum,filename))
+		insert=db.do(querycsv)
+		print(insert)
+		print("===============================================")
+
+	if(insert["response"]=="error"):
+		flash(f"An error occured!", "error")
+		print(str(insert))
+	else:
+		flash(f"The file was imported successfully!", "success")
+	return "done"
+
+
+def importcsvform9(request):
+	from datetime import date, datetime
+	today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
+	uploader = session["USER_DATA"][0]["id"]
+	if request.method == "POST":
+		try:
+			files = request.files
+			for file in files:
+				f = files[file]
+				global UPLOAD_NAME
+				UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
+				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+				excel_upload_open9(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+		except IndexError:
+			flash(f"Invalid file template!", "error")
+			
+	return redirect("/dcfspreadsheet")
+
+def excel_upload_open9(path):  
+	book = xlrd.open_workbook(path)
+	sheet = book.sheet_by_index(0)
+	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	header = data[4]
+	print("tafdagfefgrhgragharghahu")
+	print(sheet.name)
+	if(sheet.name !='form9'):
+		flash(f"Invalid file template!", "error")
+		return "done:Sheet Error"
+	for row in data[5:]:
+		upload_by = session["USER_DATA"][0]['id']
+		form_9_implementing_unit = row[0]
+		form_9_title_trade_promotion = row[1]
+		form_9_type_of_training = row[2]
+		form_9_start_date = row[3]
+		form_9_end_date = row[4]
+		form_9_venue = row[5]
+		form_9_rapid_actual_budget = row[6]
+		form_9_name_of_resource_person = row[7]
+		form_9_name_of_participant_org = row[8]
+		form_9_counterpart_amount = row[9]
+		form_9_name_of_participant = row[10]
+		form_9_sex = row[11]
+		form_9_sector = row[12]
+		form_9_organization = row[13]
+		form_9_designation = row[14]
+		form_9_pre_test1 = row[15]
+		form_9_post_test1 = row[16]
+		form_9_activity_output = row[17]
+		form_9_pre_test2 = row[18]
+		form_9_post_test2 = row[19]
+		form_9_rating = row[20]
+		form_9_comments = row[21]                                                                                              
+		filename = UPLOAD_NAME
+
+		querycsv = ("INSERT INTO dcf_enablers_activity ( upload_by, form_9_implementing_unit,form_9_title_trade_promotion,form_9_type_of_training,form_9_start_date,form_9_end_date,form_9_venue,form_9_rapid_actual_budget,form_9_name_of_resource_person,form_9_name_of_participant_org,form_9_counterpart_amount,form_9_name_of_participant,form_9_sex,form_9_sector,form_9_organization,form_9_designation,form_9_pre_test1,form_9_post_test1,form_9_activity_output,form_9_pre_test2,form_9_post_test2,form_9_rating,form_9_comments,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by, form_9_implementing_unit,form_9_title_trade_promotion,form_9_type_of_training,form_9_start_date,form_9_end_date,form_9_venue,form_9_rapid_actual_budget,form_9_name_of_resource_person,form_9_name_of_participant_org,form_9_counterpart_amount,form_9_name_of_participant,form_9_sex,form_9_sector,form_9_organization,form_9_designation,form_9_pre_test1,form_9_post_test1,form_9_activity_output,form_9_pre_test2,form_9_post_test2,form_9_rating,form_9_comments,filename))
+		insert=db.do(querycsv)
+		print(insert)
+		print("===============================================")
+
+	if(insert["response"]=="error"):
+		flash(f"An error occured!", "error")
+		print(str(insert))
+	else:
+		flash(f"The file was imported successfully!", "success")
+	return "done"
