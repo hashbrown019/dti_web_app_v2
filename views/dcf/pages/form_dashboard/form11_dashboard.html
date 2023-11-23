@@ -62,25 +62,31 @@
                     <td>{{ row['form_11_msme_regional'] }}</td>
                     <td>{{ row['form_11_msme_province'] }}</td>
                     <td>
-                      <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form11view{{row['id']}}"
-                        href="/updateform11/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span>
-                        View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                      {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
-                      <a style="color: #00cc66;" data-toggle="modal" data-target="#form11edit{{row['id']}}"
-                        href="/updateform11/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square"
-                            aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <a style="color: #ff4d4d;" href="/delete_form11/{{row['id']}}" onclick="confirmation(event)">
-                        <span><i class="fa-solid fa-trash"></i></span> Delete</a>
-                      {%endif%}
+                    
+                    {% if row['upload_by']|string == user_data['id']|string %}
+                    <a style="color: #00FFAB;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
+                      <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+                      href="/delete_record/dcf_access_financing/{{ row['id'] }}">
+                      <span><i class="fa-solid fa-trash"></i></span> Delete
+                    </a>
+                    {% elif user_data['job'] == "Super Admin" %}
+                    <a style="color: #1ac6ff;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
+                      <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                    </a>
+                    {% else %}
+                    <a style="color: #1ac6ff;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
+                      <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                    </a>
+                    {% endif %}
 
-
-                    </td>
-
-                    <td class="date-cell"> {{ row['date_created'] }}<br>
-                      {% if row['date_modified'] %}
-                      <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
-                        }}</i>
-                      {% endif %}</i>
+                  </td>
+                  <td class="date-cell"> {{ row['date_created'] }}<br>
+                    {% if row['date_modified'] %}
+                    <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
+                      }}</i>
+                    {% endif %}</i>
                     </td>
 
 
@@ -97,8 +103,6 @@
         </div>
 
       </div>
-      {% include "includes/viewform_modal/viewform11.html" %}
-      {% include "includes/updateform_modal/updateform11.html" %}
 
       <div class="py-4">
         <div class="dropdown">
@@ -116,7 +120,45 @@
   </div>
 </div>
 
+<script>
+    
+  function showDeleteConfirmation(id) {
+                swalWithCustomButtons.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, delete it!',
+                  cancelButtonText: 'No, cancel',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = `/delete_record/dcf_access_financing/${id}`;
+                  } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithCustomButtons.fire(
+                      'Cancelled',
+                      'Your record is safe',
+                      'error'
+                    );
+                  }
+                });
 
+                // Prevent the default link behavior
+                return false;
+              }
+
+              const swalWithCustomButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              });
+</script>
 
 {% endblock content %}
 

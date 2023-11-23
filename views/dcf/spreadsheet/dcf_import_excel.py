@@ -630,3 +630,60 @@ def excel_upload_open9(path):
 	else:
 		flash(f"The file was imported successfully!", "success")
 	return "done"
+
+
+def importcsvform10(request):
+	from datetime import date, datetime
+	today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
+	uploader = session["USER_DATA"][0]["id"]
+	if request.method == "POST":
+		try:
+			files = request.files
+			for file in files:
+				f = files[file]
+				global UPLOAD_NAME
+				UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
+				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+				excel_upload_open10(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+		except IndexError:
+			flash(f"Invalid file template!", "error")
+			
+	return redirect("/dcfspreadsheet")
+
+def excel_upload_open10(path):  
+	book = xlrd.open_workbook(path)
+	sheet = book.sheet_by_index(0)
+	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	header = data[4]
+	print("tafdagfefgrhgragharghahu")
+	print(sheet.name)
+	if(sheet.name !='form10'):
+		flash(f"Invalid file template!", "error")
+		return "done:Sheet Error"
+	for row in data[6:]:
+		upload_by = session["USER_DATA"][0]['id']
+		form_10_nc_location = row [0]
+		form_10_name_of_nc = row [1]
+		form_10_title_of_rapid_activity = row [2]
+		form_10_type_of_assistance = row [3]
+		form_10_date = row [4]
+		form_10_type_of_beneficiary = row [5]
+		form_10_sex_male = row [6]
+		form_10_sex_female = row [7]
+		form_10_commodity = row [8]                                                                                           
+		filename = UPLOAD_NAME
+
+		querycsv = ("INSERT INTO dcf_negosyo_center ( upload_by, form_10_nc_location,form_10_name_of_nc,form_10_title_of_rapid_activity,form_10_type_of_assistance,form_10_date,form_10_type_of_beneficiary,form_10_sex_male,form_10_sex_female,form_10_commodity,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by, form_10_nc_location,form_10_name_of_nc,form_10_title_of_rapid_activity,form_10_type_of_assistance,form_10_date,form_10_type_of_beneficiary,form_10_sex_male,form_10_sex_female,form_10_commodity,filename))
+		insert=db.do(querycsv)
+		print(insert)
+		print("===============================================")
+
+	if(insert["response"]=="error"):
+		flash(f"An error occured!", "error")
+		print(str(insert))
+	else:
+		flash(f"The file was imported successfully!", "success")
+	return "done"
+
+	

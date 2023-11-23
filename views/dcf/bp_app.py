@@ -39,6 +39,8 @@ from views.dcf.spreadsheet import dcf_import_excel as importcsv_form4
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form6
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form7
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form9
+from views.dcf.spreadsheet import dcf_import_excel as importcsv_form10
+
 
 
 
@@ -422,6 +424,11 @@ def importcsvform7():
 def importcsvform9():
 	importcsv_form9.importcsvform9(request)
 	return redirect("/form9_dashboard")
+
+@app.route('/importcsvform10',methods = ['GET','POST'])
+def importcsvform10():
+	importcsv_form10.importcsvform10(request)
+	return redirect("/form10_dashboard")
 #-------------------------------------------------------------------------------
 
 
