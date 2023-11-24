@@ -100,7 +100,7 @@ def get_list_fo():
 	return resp
 
 @app.route("/formb/get_num_fo_sex",methods=["POST","GET"])
-@c.login_auth_web()
+# @c.login_auth_web()
 def get_num_fo_sex():
 	sql_form_male = '''
 	SELECT 
