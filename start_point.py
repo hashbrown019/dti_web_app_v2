@@ -1,6 +1,12 @@
 import Configurations as c
 
-from flask import Flask, session, jsonify, request, redirect
+from flask import Flask, session, jsonify, request, redirect, Blueprint
+
+# ======FOR_LIGIN_AUTH==============
+from modules.Req_Brorn_util import authenication
+_auth = authenication(redirect,session,"USER_DATA","/login?force_url=1")
+c.login_auth_web = _auth.login_auth_web
+
 from flask_cors import CORS,cross_origin
 from flask_minify import Minify
 from datetime import datetime, timedelta
@@ -31,6 +37,7 @@ app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 app.secret_key=c.SECRET_KEY
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 app.register_blueprint(login.app);
 app.register_blueprint(home.app);

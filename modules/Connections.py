@@ -2,8 +2,6 @@ import mysql.connector as connects # TEMPORARY DISABLED
 import sqlite3
 import socket
 
-
-
 class sqlite:
 	def __init__(self, database):
 		super(sqlite, self).__init__()
@@ -144,3 +142,5 @@ class mysql:
 class Struct_obj:
     def __init__(self, entries):
         self.__dict__.update(**entries)
+
+# =======================================================================

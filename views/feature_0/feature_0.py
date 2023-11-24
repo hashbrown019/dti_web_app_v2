@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from flask import Blueprint, render_template, request, session, redirect, jsonify, Response,send_file
+from flask import Blueprint, render_template, request, session, redirect, jsonify, Response,send_file, url_for
 from flask_session import Session
 from modules.Connections import mysql,sqlite
 import Configurations as c
@@ -25,6 +25,7 @@ outbound = outb(app,rapid_mysql,session)
 inbound = inb(app,rapid_mysql,session)
 data_clean = d_c(app,rapid_mysql,session)
 
+# app['sample_decorator'] = sample_decorator
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 
 class _main:
@@ -36,11 +37,13 @@ class _main:
 
 	def is_on_session(): return ('USER_DATA' in session)
 	# ===========================V1==========================================
-	@app.route("/test",methods=["POST","GET"])
-	def test():
+	@app.route("/test/<sample_args>",methods=["POST","GET"])
+	@c.login_auth_web()
+	def test(sample_args):
 		# outbound.app = app
 		# outbound.db = rapid_mysql
 		# outbound.session = session
+		print(f"print from main blueprint : {sample_args}")
 		return render_template("test/test.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
 
 	# ===========================V1==========================================
@@ -52,6 +55,7 @@ class _main:
 		return redirect("/feature_home#dashboard")
 
 	@app.route("/feature_home",methods=["POST","GET"])
+	# @sample_decorator
 	def feature_0page():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		Filter.position_data_filter() # initialize restrictions
