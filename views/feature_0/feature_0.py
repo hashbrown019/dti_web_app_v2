@@ -459,32 +459,32 @@ class _main:
 		''').format(FILTER_SUFFIX) ))
 
 
-		if('untagged' not in mobile_dip):mobile_dip['untagged'] = 0
-		if('untagged' not in mobile_fo):mobile_fo['untagged'] = 0
-		if("" not in mobile_dip):mobile_dip[""] = 0
-		if("" not in mobile_fo):mobile_fo[""] = 0
+		if('untagged' not in mobile_dip):mobile_dip['untagged'] = 0;
+		if('untagged' not in mobile_fo):mobile_fo['untagged'] = 0;
+		if("" not in mobile_dip):mobile_dip[""] = 0;
+		if("" not in mobile_fo):mobile_fo[""] = 0;
 
-		if('untagged' not in excl_dip):excl_dip['untagged'] = 0
-		if('untagged' not in excl_fo):excl_fo['untagged'] = 0
-		if("" not in excl_dip):excl_dip[""] = 0
-		if("" not in excl_fo):excl_fo[""] = 0
+		if('untagged' not in excl_dip):excl_dip['untagged'] = 0;
+		if('untagged' not in excl_fo):excl_fo['untagged'] = 0;
+		if("" not in excl_dip):excl_dip[""] = 0;
+		if("" not in excl_fo):excl_fo[""] = 0;
 
-		if("male" not in mobile_sex):mobile_sex["male"] = 0
-		if("female" not in mobile_sex):mobile_sex["female"] = 0
-		if("male" not in excl_sex):excl_sex["male"] = 0
-		if("female" not in excl_sex):excl_sex["female"] = 0
-		if("false" not in mobile_ip):mobile_ip["false"] = 0
-		if("true" not in mobile_ip):mobile_ip["true"] = 0
-		if("" not in mobile_ip):mobile_ip[""] = 0
-		if("false" not in excl_ip):excl_ip["false"] = 0
-		if("true" not in excl_ip):excl_ip["true"] = 0
-		if("" not in excl_ip):excl_ip[""] = 0
-		if("false" not in mobile_head_hh):mobile_head_hh["false"] = 0
-		if("false" not in mobile_head_hh):mobile_head_hh["false"] = 0
-		if("" not in mobile_head_hh):mobile_head_hh[""] = 0
-		if("false" not in excl_head_hh):excl_head_hh["false"] = 0
-		if("false" not in excl_head_hh):excl_head_hh["false"] = 0
-		if("" not in excl_head_hh):excl_head_hh[""] = 0
+		if("male" not in mobile_sex):mobile_sex["male"] = 0;
+		if("female" not in mobile_sex):mobile_sex["female"] = 0;
+		if("male" not in excl_sex):excl_sex["male"] = 0;
+		if("female" not in excl_sex):excl_sex["female"] = 0;
+		if("false" not in mobile_ip):mobile_ip["false"] = 0;
+		if("true" not in mobile_ip):mobile_ip["true"] = 0;
+		if("" not in mobile_ip):mobile_ip[""] = 0;
+		if("false" not in excl_ip):excl_ip["false"] = 0;
+		if("true" not in excl_ip):excl_ip["true"] = 0;
+		if("" not in excl_ip):excl_ip[""] = 0;
+		if("false" not in mobile_head_hh):mobile_head_hh["false"] = 0;
+		if("false" not in mobile_head_hh):mobile_head_hh["false"] = 0;
+		if("" not in mobile_head_hh):mobile_head_hh[""] = 0;
+		if("false" not in excl_head_hh):excl_head_hh["false"] = 0;
+		if("false" not in excl_head_hh):excl_head_hh["false"] = 0;
+		if("" not in excl_head_hh):excl_head_hh[""] = 0;
 
 
 		with_dip = all_farmer_count - (mobile_dip['untagged']+excl_dip[""])

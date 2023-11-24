@@ -4,13 +4,13 @@
 
 	<body>
 		<br id="top_br">
-		<header class="x-header x-bar x-white x-top x-large " style="z-index:2;width: 100%;">
+		<header class="x-header x-bar x-white x-top x-large x-light-grey x-topbar x-border-orange" style="z-index:2;width: 100%;padding-bottom: 10px;">
 			<div class="x-container" style="margin-left:200px;margin-right:200px;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
 				<div class="x-container x-left"  onclick="x_open()" style="width:100px;">
 					<img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:100%">
 				</div>
 				<div class="x-left x-text-teal" style="padding-top:20px">
-					<b>MIS |</b><i> Data Capture Form Data Link</i>
+					<b>MIS |</b><i> Entry Data Links</i>
 				</div>
 				<div class="x-right x-right-align x-container x-padding">
 					<div class="x-container x-right-align" style="padding-top:6px">
@@ -63,9 +63,9 @@
 								<input id="fname" class="search_profile f_profile x-round-large main_input x-input x-border" type="text" placeholder="Input farmers name or search from inputed profiles to auto fill-up the fields"
 									style="" required>
 								<span class="x-right">
-									<span class="password-toggle">
+									<span class="password-toggle x-hover-text-blue" onclick="search_profile()">
 										Search 
-										<i style="color: #262626; font-weight: 800;" class="fa fa-search x-hover-text-blue" onclick="search_profile()"></i>
+										<i style="font-weight: 800;" class="fa fa-search"></i>
 									</span>
 								</span>
 							</div>
@@ -157,6 +157,7 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+			document.title = document.title + " | Entry Data Links"
 			var farmer_ls_modal
 
 			function clear_form_field(){
@@ -278,7 +279,7 @@
 				$ID('l1').innerHTML = FORM_NAME[URL_ARGS["i"]]
 				$ID('link_from_id').value = URL_ARGS["h"]
 
-				$ID('l2').innerHTML = "Farmer's Profile/ Participants/ Beneficiaries"
+				$ID('l2').innerHTML = "Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's"
 			})
 			var FORM_NAME={
 				'dcf_prep_review_aprv_status' : 'FORM 1 - PREPARATION, REVIEW AND APPROVAL STATUS',
