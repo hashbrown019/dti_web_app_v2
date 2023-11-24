@@ -65,6 +65,12 @@ _USER = "not initialized";
 _PASSWORD = "not initialized";
 _DATABASE = "not initialized";
 
+
+# =======for login auth===================================
+login_auth_web = None
+
+
+
 # =====Data CLEANING===========================================================
 DATA_CLEAN_FORM_A_REF = {
 	"frmer_prof_@_Farming_Basic_Info_@_DIP_name":{
