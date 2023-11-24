@@ -28,20 +28,24 @@ data_clean = d_c(app,rapid_mysql,session)
 # app = Flask(__name__)
 	
 @app.route("/formb")
+@c.login_auth_web()
 def index():
 	return redirect("/formb/dashboard")
 	
 @app.route("/formb/dashboard")
+@c.login_auth_web()
 def dashboard():
 	return dashboardv2()
 	# return render_template('index.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
 
 @app.route("/formb/dashboardv2")
+@c.login_auth_web()
 def dashboardv2():
 	return render_template('dashboard_main.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
 
 
 @app.route("/formb/save_form",methods=["POST","GET"])
+@c.login_auth_web()
 def save_form():
 	form_data = request.form
 	col = "";val = "";args = ""
@@ -78,6 +82,7 @@ def save_form():
 
 
 @app.route("/formb/get_list_fo",methods=["POST","GET"])
+@c.login_auth_web()
 def get_list_fo():
 	sql_form = '''
 	SELECT 
@@ -95,6 +100,7 @@ def get_list_fo():
 	return resp
 
 @app.route("/formb/get_num_fo_sex",methods=["POST","GET"])
+@c.login_auth_web()
 def get_num_fo_sex():
 	sql_form_male = '''
 	SELECT 
@@ -156,6 +162,7 @@ def get_num_fo_sex():
 
 
 @app.route("/formb/get_list_fo_full",methods=["POST","GET"])
+@c.login_auth_web()
 def get_list_fo_full():
 	sql_form = '''
 	SELECT 
@@ -199,6 +206,7 @@ def create_excel(DATA,path,formname):
 # ==============================================================
 # ==============================================================
 @app.route("/formb/get_ind_fo",methods=["POST","G ET"])
+@c.login_auth_web()
 def get_ind_fo():
 	ids = request.form['id']
 	sql_form = "SELECT * FROM `form_b` WHERE `id`={};".format(ids)
@@ -206,6 +214,7 @@ def get_ind_fo():
 	return jsonify(ind)
 
 @app.route("/formb/delete_item",methods=["POST","G ET"])
+@c.login_auth_web()
 def delete_item():
 	ids = request.form['id']
 	sql_form = "DELETE FROM `form_b` WHERE `id`={};".format(ids)
@@ -213,6 +222,7 @@ def delete_item():
 	return jsonify(ind)
 
 @app.route("/formb/search_farmer_profile",methods=["POST","G ET"])
+@c.login_auth_web()
 def search_farmer_profile():
 	search_item = request.form['search_item']
 	data_m = '''
@@ -264,6 +274,7 @@ def search_farmer_profile():
 
 
 @app.route("/formb/excel_upload",methods=["POST","GET"])
+@c.login_auth_web()
 def excel_upload():
 	today = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
 	uploader = request.form['uploader']

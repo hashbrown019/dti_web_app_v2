@@ -34,10 +34,12 @@ class _main:
 	def is_on_session(): return ('USER_DATA' in session)
 	# ===========================V1==========================================
 	@app.route("/feature_0_sub",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0_sub():
 		return {"status":"ok"}
 
 	@app.route("/web_cast",methods=["POST","GET"])
+	@c.login_auth_web()
 	def web_cast():
 		return render_template('web_cast.html')
 
@@ -169,6 +171,7 @@ class _main:
 
 
 	@app.route("/form_a/get_ind_data_val",methods=["POST","GET"])
+	@c.login_auth_web()
 	def get_ind_data_val():
 		data = [];
 		identifier_ = "" 
