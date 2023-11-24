@@ -151,16 +151,17 @@ def get_num_fo_sex():
 	 ;'''.format(Filter.position_data_filter())
 	mngmt_male = rapid_mysql.select(sql_form_male_mngmnt,True)[0]['total_male_mngmnt']
 
-
-
-	return {
+	res = {
 		"male":male,
 		"female":female,
-		'total_female_board':(str(board_female).split(".")[0]),
-		'total_male_board':(str(board_male).split(".")[0]),
-		'mngmt_male':(str(mngmt_male).split(".")[0]),
-		'mngmt_female':(str(mngmt_female).split(".")[0])
+		'total_female_board':board_female,
+		'total_male_board':board_male,
+		'mngmt_male':mngmt_male,
+		'mngmt_female':mngmt_female
 	}
+
+
+	return res
 
 
 @app.route("/formb/get_list_fo_full",methods=["POST","GET"])
