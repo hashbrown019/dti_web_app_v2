@@ -22,9 +22,13 @@ class _main:
 
 	@app.route("/login",methods=["POST","GET"])
 	def login():
+		_attemp =""
+		if("urlvisit" in request.args):
+			_attemp = "&urlvisit="+request.args['urlvisit']
+			
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
-		return redirect("/login_v2023?ver=dti_rapidgrowth_"+c.DB_CRED[3])
+		return redirect("/login_v2023?ver=dti_rapidgrowth_"+c.DB_CRED[3]+_attemp)
 
 	@app.route("/login_dev_test",methods=["POST","GET"])
 	@app.route("/dev_test",methods=["POST","GET"])

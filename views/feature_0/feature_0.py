@@ -48,6 +48,7 @@ class _main:
 
 	# ===========================V1==========================================
 	@app.route("/feature_0",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0():
 		# outbound.app = app
 		# outbound.db = rapid_mysql
@@ -55,7 +56,7 @@ class _main:
 		return redirect("/feature_home#dashboard")
 
 	@app.route("/feature_home",methods=["POST","GET"])
-	# @sample_decorator
+	@c.login_auth_web()
 	def feature_0page():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		Filter.position_data_filter() # initialize restrictions
@@ -80,26 +81,32 @@ class _main:
 		pass
 
 	@app.route("/settings/getsesh",methods=["POST","GET"])
+	@c.login_auth_web()
 	def getsesh():
 		return session["USER_DATA"][0]
 
 	@app.route("/notification/web_safe_encode/<strs>",methods=["POST","GET"])
+	@c.login_auth_web()
 	def web_safe_encode(strs):
 		return inbound.web_safe_encode(strs)
 
 	@app.route("/notification/web_safe_decode/<strs>",methods=["POST","GET"])
+	@c.login_auth_web()
 	def web_safe_decode(strs):
 		return inbound.web_safe_decode(strs)
 
 	@app.route("/notification/get_notif",methods=["POST","GET"])
+	@c.login_auth_web()
 	def get_notif():
 		return inbound.get_notif()
 
 	@app.route("/notification/get_notif_unseen",methods=["POST","GET"])
+	@c.login_auth_web()
 	def get_notif_unseen():
 		return inbound.get_notif_unseen()
 
 	@app.route("/notification/set_notif_seen",methods=["POST","GET"])
+	@c.login_auth_web()
 	def set_notif_seen():
 		notif_id = request.form['notif_id']
 		return inbound.set_notif_seen(notif_id)
@@ -132,17 +139,20 @@ class _main:
 	
 	# ========================================================================
 	@app.route("/migrations/export_excel_mobile",methods=["POST","GET"])
+	@c.login_auth_web()
 	def export_excel_mobile():
 		mobile_export_selection = request.form['form']
 		print(" *  Getting Data ")
 		return outbound.export_excel_mobile(mobile_export_selection)
 
 	@app.route("/migrations/export_excel_excel",methods=["POST","GET"])
+	@c.login_auth_web()
 	def export_excel_excel():
 		print(" *  Getting Data ")
 		return outbound.export_excel_excel()
 
 	@app.route("/excel_upload",methods=["POST","GET"])
+	@c.login_auth_web()
 	def excel_upload():
 		today = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
 		uploader = request.form['uploader']
@@ -161,6 +171,7 @@ class _main:
 		return uploadstate
 
 	@app.route("/download_excel/<excel_file>",methods=["POST","GET"])
+	@c.login_auth_web()
 	def download_excel(excel_file):
 		# excel_file = request.form['file']
 		# print(excel_file)
@@ -169,10 +180,12 @@ class _main:
 		return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
 
 	@app.route("/download_excel_from_notif/<excel_file>",methods=["POST","GET"])
+	@c.login_auth_web()
 	def download_excel_from_notif(excel_file):
 		return send_file(c.RECORDS+"/objects/spreadsheets/exports/"+excel_file, as_attachment=True,download_name=excel_file)
 	
 	@app.route("/delete_excel/",methods=["POST","GET"])
+	@c.login_auth_web()
 	def delete_excel():
 		excel_file = request.form['file']
 		# print(excel_file)
@@ -192,6 +205,7 @@ class _main:
 	# ==============================================================================
 	# ==============================================================================
 	@app.route("/feature_0/dashgraph1",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0_dashboard1():
 		_data = _main.feature_0_get_farmer_data_a1_for_dash()
 		g2_data = _main.feature_0_dashboard2(_data)
@@ -227,6 +241,7 @@ class _main:
 
 
 	@app.route("/feature_0/dashgraph2",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0_dashboard2(_data):
 		PRIV_TYPE = session["USER_DATA"][0]['PRIV_TYPE']
 		temp_data2 = {}
@@ -270,6 +285,7 @@ class _main:
 		return temp_data2
 
 	@app.route("/feature_0/filter_list_farmers",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0_filter_list_farmers():
 		return jsonify({
 			"dash1":_main.feature_0_get_farmer_data_a1(),
@@ -279,12 +295,14 @@ class _main:
 		)
 
 	@app.route("/feature_0/get_uploaded_excel",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0_get_uploaded_excel():
 		_sql = ("SELECT `file_name` as `key`, count(file_name) as `total` FROM `excel_import_form_a` WHERE `user_id`={} GROUP by `file_name`;".format(session["USER_DATA"][0]['id']))
 		upld_excel = rapid_mysql.select(_sql)
 		return upld_excel
 
 	@app.route("/feature_0/get_farmer_data_a1",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0_get_farmer_data_a1():
 		sql_mobile = '''
 			SELECT 
