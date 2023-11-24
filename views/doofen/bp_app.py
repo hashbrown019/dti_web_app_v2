@@ -130,7 +130,7 @@ def get_num_fo_sex():
 	board_female = rapid_mysql.select(sql_form_female_board)[0]['total_female_board']
 
 	print("board_female")
-	print(board_female)
+	print(rapid_mysql.select(sql_form_female_board))
 
 	sql_form_male_board = '''
 	SELECT SUM(`fo_board_male`) as 'total_male_board'
