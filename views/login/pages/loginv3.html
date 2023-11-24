@@ -221,7 +221,11 @@
 							redirectto("/acct_dis") 
 						}else{
 							// println(JSON.parse(__)['user'])
-							redirectto("/menuv2") // NEW VERSION
+							    if("urlvisit" in URL_ARGS){
+							        redirectto(URL_ARGS['urlvisit'])
+							    }else{
+									redirectto("/menuv2") // NEW VERSION
+							    }
 
 						}
 						timeout(function(){

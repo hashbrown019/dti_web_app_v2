@@ -566,6 +566,11 @@ p {
   </div>
   
   <script type="text/javascript">
+    println(URL_ARGS)
+    if("urlvisit" in URL_ARGS){
+        goto(URL_ARGS['urlvisit'])
+    }
+
     var imgs = $ID('prof_imgs')
     var qrs = $ID('qrcode')
     var qr1 = new QRCode($ID("qrcode"), "MIS{{user_data['id']}}");

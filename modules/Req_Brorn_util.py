@@ -145,8 +145,16 @@ class authenication:
 	"""docstring for file_from_request"""
 	# _auth = authenication(app,session)
 
-	def __init__(self,web_app_redirect_func,session,find_in_session,url_if_not_found):
+	def __init__(
+			self, # SELF
+			web_app_request_func, # 
+			web_app_redirect_func, #
+			session, #
+			find_in_session, #
+			url_if_not_found #
+		):
 		super(authenication, self).__init__()
+		self.web_app_request_func = web_app_request_func
 		self.web_app_redirect_func = web_app_redirect_func
 		self.session = session
 		self.find_in_session = find_in_session
@@ -156,8 +164,10 @@ class authenication:
 		def decorator_argument_holder(caller_func):
 			@wraps(caller_func)
 			def exec_caller_func(*arg1,**arg2):
+				# print(caller_func)
+				print(self.web_app_request_func.url)
 				if(self.find_in_session not in self.session):
-					return self.web_app_redirect_func(self.url_if_not_found )
+					return self.web_app_redirect_func("{}?urlvisit={}".format(self.url_if_not_found,self.web_app_request_func.url))
 				else:
 					return caller_func(*arg1,**arg2)
 			return exec_caller_func
