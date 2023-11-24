@@ -36,10 +36,13 @@ from views.dcf.spreadsheet import dcf_import_excel as importcsv_form1
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form2
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form3
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form4
+from views.dcf.spreadsheet import dcf_import_excel as importcsv_form5
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form6
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form7
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form9
 from views.dcf.spreadsheet import dcf_import_excel as importcsv_form10
+from views.dcf.spreadsheet import dcf_import_excel as importcsv_form11
+
 
 
 
@@ -410,6 +413,11 @@ def importcsvform4():
 	importcsv_form4.importcsvform4(request)
 	return redirect("/form4_dashboard")
 
+@app.route('/importcsvform5',methods = ['GET','POST'])
+def importcsvform5():
+	importcsv_form5.importcsvform5(request)
+	return redirect("/form5_dashboard")
+
 @app.route('/importcsvform6',methods = ['GET','POST'])
 def importcsvform6():
 	importcsv_form6.importcsvform6(request)
@@ -429,6 +437,12 @@ def importcsvform9():
 def importcsvform10():
 	importcsv_form10.importcsvform10(request)
 	return redirect("/form10_dashboard")
+
+@app.route('/importcsvform11',methods = ['GET','POST'])
+def importcsvform11():
+	importcsv_form11.importcsvform11(request)
+	return redirect("/form11_dashboard")
+
 #-------------------------------------------------------------------------------
 
 
@@ -672,7 +686,7 @@ def dcfexport_data():
 		elif export_type == 'form11export':
 			def form11export():
 				if request.method == "POST":
-					query = db.select("SELECT id,form_11_dip_alignment,form_11_activity_title,form_11_name_of_beneficiary,form_11_industry_cluster,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released FROM dcf_access_financing")
+					query = db.select("SELECT id,CONCAT(form_11_dip_alignment, ' ', form_11_dip_alignment_yes) AS form11_dip,form_11_activity_title,form_11_name_of_beneficiary,CONCAT(form_11_industry_cluster, ' ', form_11_industry_pfn) AS industry_cluster,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released FROM dcf_access_financing")
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
