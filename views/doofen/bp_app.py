@@ -160,10 +160,10 @@ def get_num_fo_sex():
 	res = {
 		"male":male,
 		"female":female,
-		'total_female_board':board_female,
-		'total_male_board':board_male,
-		'mngmt_male':mngmt_male,
-		'mngmt_female':mngmt_female
+		'total_female_board':int(str(board_female).split(".")[0]),
+		'total_male_board':int(str(board_male).split(".")[0]),
+		'mngmt_male':int(str(mngmt_male).split(".")[0]),
+		'mngmt_female':int(str(mngmt_female).split(".")[0]),
 	}
 
 
