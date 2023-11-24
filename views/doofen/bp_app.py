@@ -129,6 +129,9 @@ def get_num_fo_sex():
 	 ;'''.format(Filter.position_data_filter())
 	board_female = rapid_mysql.select(sql_form_female_board,True)[0]['total_female_board']
 
+	print("board_female")
+	print(board_female)
+
 	sql_form_male_board = '''
 	SELECT SUM(`fo_board_male`) as 'total_male_board'
 	FROM `form_b` 
