@@ -36,6 +36,14 @@ class _main:
 
 	def is_on_session(): return ('USER_DATA' in session)
 	# ===========================V1==========================================
+	@app.route("/test",methods=["POST","GET"])
+	def test():
+		# outbound.app = app
+		# outbound.db = rapid_mysql
+		# outbound.session = session
+		return render_template("test/test.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
+
+	# ===========================V1==========================================
 	@app.route("/feature_0",methods=["POST","GET"])
 	def feature_0():
 		# outbound.app = app
