@@ -111,8 +111,7 @@ def get_num_fo_sex():
 	AND `respondents_designation_in_the_organization` in ('Chairperson','Chairwoman','Coop Chairperson','General Manager','Manager','President/Chairman')
 	 ;'''.format(Filter.position_data_filter())
 	male = rapid_mysql.select(sql_form_male,True)[0]['male']
-	male = male if male != "null" else 0
-
+	male = male if male not in ["null",None,"None"] else 0
 
 	sql_form_female = '''
 	SELECT 
@@ -123,7 +122,7 @@ def get_num_fo_sex():
 	AND `respondents_designation_in_the_organization` in ('Chairperson','Chairwoman','Coop Chairperson','General Manager','Manager','President/Chairman')
 	 ;'''.format(Filter.position_data_filter())
 	female = rapid_mysql.select(sql_form_female,True)[0]['female']
-	female = female if female != "null" else 0
+	female = female if female not in ["null",None,"None"] else 0
 
 	sql_form_female_board = '''
 	SELECT SUM(`fo_board_female`) as 'total_female_board'
@@ -131,7 +130,7 @@ def get_num_fo_sex():
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
 	board_female = rapid_mysql.select(sql_form_female_board,True)[0]['total_female_board']
-	board_female = board_female if board_female != "null" else 0
+	board_female = board_female if board_female not in ["null",None,"None"] else 0
 
 	sql_form_male_board = '''
 	SELECT SUM(`fo_board_male`) as 'total_male_board'
@@ -139,7 +138,7 @@ def get_num_fo_sex():
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
 	board_male = rapid_mysql.select(sql_form_male_board,True)[0]['total_male_board']
-	board_male = board_male if board_male != "null" else 0
+	board_male = board_male if board_male not in ["null",None,"None"] else 0
 
 	sql_form_female_mngmnt = '''
 	SELECT SUM(`fo_management_female_checkbox`) as 'total_female_mngmnt'
@@ -147,7 +146,7 @@ def get_num_fo_sex():
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
 	mngmt_female = rapid_mysql.select(sql_form_female_mngmnt,True)[0]['total_female_mngmnt']
-	mngmt_female = mngmt_female if mngmt_female != "null" else 0
+	mngmt_female = mngmt_female if mngmt_female not in ["null",None,"None"] else 0
 
 
 	sql_form_male_mngmnt = '''
@@ -156,7 +155,7 @@ def get_num_fo_sex():
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
 	mngmt_male = rapid_mysql.select(sql_form_male_mngmnt,True)[0]['total_male_mngmnt']
-	mngmt_male = mngmt_male if mngmt_male != "null" else 0
+	mngmt_male = mngmt_male if mngmt_male not in ["null",None,"None"] else 0
 
 	res = {
 		"male":male,
