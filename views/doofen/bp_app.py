@@ -100,7 +100,7 @@ def get_list_fo():
 	return resp
 
 @app.route("/formb/get_num_fo_sex",methods=["POST","GET"])
-# @c.login_auth_web()
+@c.login_auth_web()
 def get_num_fo_sex():
 	sql_form_male = '''
 	SELECT 
@@ -110,7 +110,7 @@ def get_num_fo_sex():
 	AND `form_b`.`respondents_gender_male`='true'
 	AND `respondents_designation_in_the_organization` in ('Chairperson','Chairwoman','Coop Chairperson','General Manager','Manager','President/Chairman')
 	 ;'''.format(Filter.position_data_filter())
-	male = rapid_mysql.select(sql_form_male)[0]['male']
+	male = rapid_mysql.select(sql_form_male,True)[0]['male']
 
 	sql_form_female = '''
 	SELECT 
@@ -120,32 +120,28 @@ def get_num_fo_sex():
 	AND `form_b`.`respondents_gender_female`='true'
 	AND `respondents_designation_in_the_organization` in ('Chairperson','Chairwoman','Coop Chairperson','General Manager','Manager','President/Chairman')
 	 ;'''.format(Filter.position_data_filter())
-	female = rapid_mysql.select(sql_form_female)[0]['female']
+	female = rapid_mysql.select(sql_form_female,True)[0]['female']
 
 	sql_form_female_board = '''
 	SELECT SUM(`fo_board_female`) as 'total_female_board'
 	FROM `form_b` 
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
-	board_female = rapid_mysql.select(sql_form_female_board)[0]['total_female_board']
-
-	print("board_female")
-	print(sql_form_female_board)
-	print(rapid_mysql.select(sql_form_female_board))
+	board_female = rapid_mysql.select(sql_form_female_board,True)[0]['total_female_board']
 
 	sql_form_male_board = '''
 	SELECT SUM(`fo_board_male`) as 'total_male_board'
 	FROM `form_b` 
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
-	board_male = rapid_mysql.select(sql_form_male_board)[0]['total_male_board']
+	board_male = rapid_mysql.select(sql_form_male_board,True)[0]['total_male_board']
 
 	sql_form_female_mngmnt = '''
 	SELECT SUM(`fo_management_female_checkbox`) as 'total_female_mngmnt'
 	FROM `form_b` 
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
-	mngmt_female = rapid_mysql.select(sql_form_female_mngmnt)[0]['total_female_mngmnt']
+	mngmt_female = rapid_mysql.select(sql_form_female_mngmnt,True)[0]['total_female_mngmnt']
 
 
 	sql_form_male_mngmnt = '''
@@ -153,7 +149,7 @@ def get_num_fo_sex():
 	FROM `form_b` 
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
-	mngmt_male = rapid_mysql.select(sql_form_male_mngmnt)[0]['total_male_mngmnt']
+	mngmt_male = rapid_mysql.select(sql_form_male_mngmnt,True)[0]['total_male_mngmnt']
 
 	res = {
 		"male":male,
