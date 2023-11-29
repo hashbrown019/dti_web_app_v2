@@ -3,6 +3,7 @@ import Configurations as c
 from flask import Flask, session, jsonify, request, redirect, Blueprint
 
 # ======FOR_LIGIN_AUTH==============
+# @c.login_auth_web()
 from modules.Req_Brorn_util import authenication
 _auth = authenication(request,redirect,session,"USER_DATA","/login")
 c.login_auth_web = _auth.login_auth_web

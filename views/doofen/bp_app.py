@@ -28,20 +28,24 @@ data_clean = d_c(app,rapid_mysql,session)
 # app = Flask(__name__)
 	
 @app.route("/formb")
+@c.login_auth_web()
 def index():
 	return redirect("/formb/dashboard")
 	
 @app.route("/formb/dashboard")
+@c.login_auth_web()
 def dashboard():
 	return dashboardv2()
 	# return render_template('index.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
 
 @app.route("/formb/dashboardv2")
+@c.login_auth_web()
 def dashboardv2():
 	return render_template('dashboard_main.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
 
 
 @app.route("/formb/save_form",methods=["POST","GET"])
+@c.login_auth_web()
 def save_form():
 	form_data = request.form
 	col = "";val = "";args = ""
@@ -78,6 +82,7 @@ def save_form():
 
 
 @app.route("/formb/get_list_fo",methods=["POST","GET"])
+@c.login_auth_web()
 def get_list_fo():
 	sql_form = '''
 	SELECT 
@@ -95,6 +100,7 @@ def get_list_fo():
 	return resp
 
 @app.route("/formb/get_num_fo_sex",methods=["POST","GET"])
+@c.login_auth_web()
 def get_num_fo_sex():
 	sql_form_male = '''
 	SELECT 
@@ -105,6 +111,7 @@ def get_num_fo_sex():
 	AND `respondents_designation_in_the_organization` in ('Chairperson','Chairwoman','Coop Chairperson','General Manager','Manager','President/Chairman')
 	 ;'''.format(Filter.position_data_filter())
 	male = rapid_mysql.select(sql_form_male,True)[0]['male']
+	male = male if male not in ["null",None,"None"] else 0
 
 	sql_form_female = '''
 	SELECT 
@@ -115,6 +122,7 @@ def get_num_fo_sex():
 	AND `respondents_designation_in_the_organization` in ('Chairperson','Chairwoman','Coop Chairperson','General Manager','Manager','President/Chairman')
 	 ;'''.format(Filter.position_data_filter())
 	female = rapid_mysql.select(sql_form_female,True)[0]['female']
+	female = female if female not in ["null",None,"None"] else 0
 
 	sql_form_female_board = '''
 	SELECT SUM(`fo_board_female`) as 'total_female_board'
@@ -122,6 +130,7 @@ def get_num_fo_sex():
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
 	board_female = rapid_mysql.select(sql_form_female_board,True)[0]['total_female_board']
+	board_female = board_female if board_female not in ["null",None,"None"] else 0
 
 	sql_form_male_board = '''
 	SELECT SUM(`fo_board_male`) as 'total_male_board'
@@ -129,6 +138,7 @@ def get_num_fo_sex():
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
 	board_male = rapid_mysql.select(sql_form_male_board,True)[0]['total_male_board']
+	board_male = board_male if board_male not in ["null",None,"None"] else 0
 
 	sql_form_female_mngmnt = '''
 	SELECT SUM(`fo_management_female_checkbox`) as 'total_female_mngmnt'
@@ -136,6 +146,7 @@ def get_num_fo_sex():
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
 	mngmt_female = rapid_mysql.select(sql_form_female_mngmnt,True)[0]['total_female_mngmnt']
+	mngmt_female = mngmt_female if mngmt_female not in ["null",None,"None"] else 0
 
 
 	sql_form_male_mngmnt = '''
@@ -144,18 +155,23 @@ def get_num_fo_sex():
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	 ;'''.format(Filter.position_data_filter())
 	mngmt_male = rapid_mysql.select(sql_form_male_mngmnt,True)[0]['total_male_mngmnt']
+	mngmt_male = mngmt_male if mngmt_male not in ["null",None,"None"] else 0
 
-	return {
+	res = {
 		"male":male,
 		"female":female,
 		'total_female_board':int(str(board_female).split(".")[0]),
 		'total_male_board':int(str(board_male).split(".")[0]),
 		'mngmt_male':int(str(mngmt_male).split(".")[0]),
-		'mngmt_female':int(str(mngmt_female).split(".")[0])
+		'mngmt_female':int(str(mngmt_female).split(".")[0]),
 	}
 
 
+	return res
+
+
 @app.route("/formb/get_list_fo_full",methods=["POST","GET"])
+@c.login_auth_web()
 def get_list_fo_full():
 	sql_form = '''
 	SELECT 
@@ -199,6 +215,7 @@ def create_excel(DATA,path,formname):
 # ==============================================================
 # ==============================================================
 @app.route("/formb/get_ind_fo",methods=["POST","G ET"])
+@c.login_auth_web()
 def get_ind_fo():
 	ids = request.form['id']
 	sql_form = "SELECT * FROM `form_b` WHERE `id`={};".format(ids)
@@ -206,6 +223,7 @@ def get_ind_fo():
 	return jsonify(ind)
 
 @app.route("/formb/delete_item",methods=["POST","G ET"])
+@c.login_auth_web()
 def delete_item():
 	ids = request.form['id']
 	sql_form = "DELETE FROM `form_b` WHERE `id`={};".format(ids)
@@ -213,6 +231,7 @@ def delete_item():
 	return jsonify(ind)
 
 @app.route("/formb/search_farmer_profile",methods=["POST","G ET"])
+@c.login_auth_web()
 def search_farmer_profile():
 	search_item = request.form['search_item']
 	data_m = '''
@@ -264,6 +283,7 @@ def search_farmer_profile():
 
 
 @app.route("/formb/excel_upload",methods=["POST","GET"])
+@c.login_auth_web()
 def excel_upload():
 	today = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
 	uploader = request.form['uploader']

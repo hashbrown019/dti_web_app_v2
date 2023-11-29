@@ -60,11 +60,8 @@ class _main:
 	def feature_0page():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		Filter.position_data_filter() # initialize restrictions
-		if(_main.is_on_session()):
-			_main.settings(request.args)
-			return render_template("feature_0_home.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
-		else:
-			return redirect("/login?force_url=1")
+		return render_template("feature_0_home.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
+
 
 
 	def settings(setngs):
@@ -115,6 +112,7 @@ class _main:
 	# ========================================================================
 
 	@app.route("/data_cleaning_excel/get_table_col",methods=["POST","GET"])
+	@c.login_auth_web()
 	def get_table_col_excel():
 		table = "excel_import_form_a"
 		print("===== GEtting SQL")
@@ -123,6 +121,7 @@ class _main:
 		return cols
 
 	@app.route("/data_cleaning/get_table_col",methods=["POST","GET"])
+	@c.login_auth_web()
 	def get_table_col():
 		table = request.form['table']
 		print("===== GEtting SQL")
@@ -131,6 +130,7 @@ class _main:
 		return cols
 
 	@app.route("/data_cleaning/get_table_col_val",methods=["POST","GET"])
+	@c.login_auth_web()
 	def get_table_col_val():
 		table = request.form['table']
 		col = request.form['col']
@@ -353,6 +353,7 @@ class _main:
 
 
 	@app.route("/feature_0/get_farmer_data_a1_for_dash",methods=["POST","GET"])  ## FOR CREATING NEW DAsh charts
+	@c.login_auth_web()
 	def feature_0_get_farmer_data_a1_for_dash():
 		sql_mobile = '''
 			SELECT 
@@ -404,6 +405,7 @@ class _main:
 		return RES
 
 	@app.route("/feature_0/dashboard_home_",methods=["POST","GET"])
+	@c.login_auth_web()
 	def dashboard_home_sql_driven_():
 		return {
 			"query_suffix" : "",
@@ -426,6 +428,7 @@ class _main:
 			}
 		}
 	@app.route("/feature_0/dashboard_home",methods=["POST","GET"])
+	@c.login_auth_web()
 	def dashboard_home_sql_driven():
 		FILTER_SUFFIX = Filter.position_data_filter()
 		count_excel = rapid_mysql.select("SELECT COUNT(`frmer_prof_@_basic_Info_@_First_name`) as `ex` FROM excel_import_form_a {};".format(FILTER_SUFFIX))
@@ -538,6 +541,7 @@ class _main:
 		# return [all_mob_female[0]['f'],all_mob_male[0]['m']]
 
 	@app.route("/feature_0/data_clean_duplicates",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0_data_clean_duplicates():
 		_data = _main.feature_0_get_farmer_data_a1()
 		unique_name_arr = {}
@@ -575,12 +579,10 @@ class _main:
 	# ===================================================================
 
 	@app.route("/feature_0/link_data_dcf_form_a",methods=["POST","GET"])
+	@c.login_auth_web()
 	def feature_0_link_data_dcf_form_a():
-		if(_main.is_on_session()):
-			_main.settings(request.args)
-			return render_template("link_data/link_data_dcf_form_a.html",USER_DATA = session["USER_DATA"][0])
-		else:
-			return redirect("/login?force_url=1")
+		return render_template("link_data/link_data_dcf_form_a.html",USER_DATA = session["USER_DATA"][0])
+
 	# ====================================================================
 	# ===================LINK_DATA_END_===================================
 	# ====================================================================
