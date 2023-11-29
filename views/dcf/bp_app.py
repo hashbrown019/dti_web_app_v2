@@ -58,6 +58,7 @@ def is_on_session(): return ('USER_DATA' in session)
 
 
 @app.route('/sample/<item>')
+@c.login_auth_web()
 def sample(item):
 	return display_dataform.displayform()[item]
 
