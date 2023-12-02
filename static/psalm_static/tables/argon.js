@@ -1195,7 +1195,7 @@ var SalesChart = (function() {
 				}
 			},
 			data: {
-				labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct'],
+				labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov'],
 				datasets: [{
 					label: 'Entries'
 				}]
