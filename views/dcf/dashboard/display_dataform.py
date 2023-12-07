@@ -71,6 +71,7 @@ def displayform():
 
 
     dcf_form1sextotal=db.select("SELECT SUM(form_1_total_farmerbene) AS total_sex FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
+    dcf_form2sextotal=db.select("SELECT  SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
 
 
     dcf_form1female=db.select("SELECT SUM(form_1_totalfemale) AS total_female FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
@@ -117,9 +118,19 @@ def displayform():
     #         form_1_rcus,
     #         form_1_commodity
     #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
-    dips_list = form1_datatable 
+    dips_list = form1_datatable
 
-
+    dips_list2 = form2_datatable
+    over_all_commodity_count2 = {}
+    for index in range(len(dips_list2)):
+        DIP2 = dips_list2[index]
+        _comm_rule2 = ["cacao","coconut","coffee","pfn"]
+        _com2 = DIP2['form_2_commodity']
+        if(_com2.lower() not in _comm_rule2):
+            _com2 = "Others"
+        if(_com2 not in over_all_commodity_count2):
+            over_all_commodity_count2[_com2 ] = 0
+        over_all_commodity_count2[_com2 ] += 1
     
     dip_status_group_per_region={}
     over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
@@ -251,6 +262,7 @@ def displayform():
         'dcf_form1maleip':dcf_form1maleip,
         'dcf_form1malepwd':dcf_form1malepwd,
         'dcf_form1sextotal':dcf_form1sextotal,
+        'dcf_form2sextotal':dcf_form2sextotal,
         'dcf_form1female':  dcf_form1female,
         'dcf_form1femaleyouth': dcf_form1femaleyouth,
         'dcf_form1femaleip':dcf_form1femaleip,
@@ -271,7 +283,9 @@ def displayform():
         'dcf_form1msme3':dcf_form1msme3,
         'dcf_form1msme4':dcf_form1msme4,
         'total_untagged' : total_untagged,
-        'over_all_commodity_count':over_all_commodity_count
+        'over_all_commodity_count':over_all_commodity_count,
+        'over_all_commodity_count2':over_all_commodity_count2,
+
 
     }
 
