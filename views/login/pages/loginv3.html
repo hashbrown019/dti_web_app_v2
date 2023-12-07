@@ -118,6 +118,10 @@
 						
 					</div>
 					<div class="x-container x-padding x-center">
+						<div id="pls_wait" class="x-container" style="display:none;">
+							<b>Please wait for a moment <span class="fa fa-circle-o-notch fa-spin"></span></b>
+							<hr>
+						</div>
 						<span class="x-text-teal x-hover-teal x-padding x-round-large" onclick="goto('https://docs.google.com/forms/d/1NpWOVZYlAvfBNQSNVIzlMXtzufR0KykGWI6Bkwn30GM/edit')">
 							Request an account
 						</span>
@@ -164,6 +168,7 @@
 		}
 
 		function check_user_name(){
+			$ID('pls_wait').style.display = "block"
 			var fields = $CLASS('login_field')
 			var cred = {"user_name" :fields[0].value}
 			$send({
@@ -173,6 +178,7 @@
 				func : function (__) {
 					var res = JSON.parse(__)
 					println(res)
+					$ID('pls_wait').style.display = "none"
 					if(res.success){
 						var img_src = "/api/user_pic/"+res.profilepic
 						if(res.profilepic==""|| res.profilepic==" " || res.profilepic==undefined){
@@ -200,6 +206,7 @@
 		}
 
 		function login(){
+			$ID('pls_wait').style.display = "block"
 			var fields = $CLASS('login_field')
 			var cred = {
 				"user_name" :fields[0].value,
@@ -211,6 +218,7 @@
 				data : $DATA(cred),
 				func : function (__) {
 					var login = JSON.parse(__).success
+					$ID('pls_wait').style.display = "none"
 					if(login){
 						// $ID('good_log').style.display = 'block'
 						// $ID('fname').innerHTML = JSON.parse(__).user[0].name
