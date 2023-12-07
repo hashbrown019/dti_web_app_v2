@@ -118,8 +118,7 @@ def displayform():
     #         form_1_rcus,
     #         form_1_commodity
     #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
-    dips_list = form1_datatable
-
+##################################FORM2#########################################
     dips_list2 = form2_datatable
     over_all_commodity_count2 = {}
     for index in range(len(dips_list2)):
@@ -131,6 +130,9 @@ def displayform():
         if(_com2 not in over_all_commodity_count2):
             over_all_commodity_count2[_com2 ] = 0
         over_all_commodity_count2[_com2 ] += 1
+
+######################FORM1########################################
+    dips_list = form1_datatable
     
     dip_status_group_per_region={}
     over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
