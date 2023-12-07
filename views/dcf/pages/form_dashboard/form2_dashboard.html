@@ -179,8 +179,8 @@
 <script>
 
   var xValues = [
-    'Male: ' + {{dcf_form2FOmale[0]['total_male2']}},
-    'Female: ' + {{dcf_form2FOfemale[0]['total_female2']}},
+    'Male: ' + money({{dcf_form2FOmale[0]['total_male2']}}),
+    'Female: ' + money({{dcf_form2FOfemale[0]['total_female2']}}),
   ];
 
   var yValues = [
@@ -206,7 +206,7 @@ Chart.plugins.register({
           meta.data.forEach(function (element, index) {
             ctx.fillStyle = 'white';
 
-            var fontSize = 20; // Change this to your desired font size
+            var fontSize = 13; // Change this to your desired font size
             var fontStyle = 'bold';
             var fontFamily = 'sans-serif';
             ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
@@ -241,7 +241,7 @@ Chart.plugins.register({
     options: {
       title: {
         display: true,
-        text: `Total Number of FO Members: {{dcf_form2sextotal[0]['total_sex2'] | int}}`,
+        text: `Total Number of FO Members: `+money({{dcf_form2sextotal[0]['total_sex2'] | int}}),
         fontSize: 15,
         fontColor: '#204060',
       },
