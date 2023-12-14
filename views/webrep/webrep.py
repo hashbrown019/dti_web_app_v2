@@ -498,6 +498,7 @@ class _main:
 		return render_template("error/maintenance.html")
 
 	def moderator(segment,page):
+		print("moderator init")
 		pass;
 	#sample EDIT
 
