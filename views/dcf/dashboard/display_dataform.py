@@ -72,6 +72,7 @@ def displayform():
 
     dcf_form1sextotal=db.select("SELECT SUM(form_1_total_farmerbene) AS total_sex FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form2sextotal=db.select("SELECT  SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    dcf_form3sextotal=db.select("SELECT  SUM(dcf_form3male + dcf_form3female)AS total_sex3 FROM dcf_bdsp_reg {}; ".format(position_data_filter()))
 
 
     dcf_form1female=db.select("SELECT SUM(form_1_totalfemale) AS total_female FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
@@ -265,6 +266,7 @@ def displayform():
         'dcf_form1malepwd':dcf_form1malepwd,
         'dcf_form1sextotal':dcf_form1sextotal,
         'dcf_form2sextotal':dcf_form2sextotal,
+        'dcf_form3sextotal':dcf_form3sextotal,
         'dcf_form1female':  dcf_form1female,
         'dcf_form1femaleyouth': dcf_form1femaleyouth,
         'dcf_form1femaleip':dcf_form1femaleip,
