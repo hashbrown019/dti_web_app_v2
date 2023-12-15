@@ -69,7 +69,48 @@
     <canvas id="myPieChart2" style="max-width: 700px;"></canvas>
 
   </div>
+
 </div>  
+
+
+<a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Show data</a>
+<div class="row">
+{% for dip in dips_list %}
+
+
+<div class="col">
+   <div class=" collapse multi-collapse" id="multiCollapseExample1">
+    <br>
+      <div class="card card-stats"
+        style="width: 200px; border: 2px solid #006080; ">
+        <!-- Card body -->
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <p class="card-title text-default mb-0"><b class="text-default font-weight-bold mb-0">RCU: {{dip}}</b></p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">PWD: {{dips_list[dip]["approve"]}}</p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">Youth: {{dips_list[dip]["pipeline"]}}</p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">IP: {{dips_list[dip]["ongoing"]}}</p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">SC: {{dips_list[dip]["not_started"]}}</p>
+            </div>
+
+          
+            
+          </div>
+          <p class="mt mb-0 text-sm">
+            <br>
+          </p>
+        </div>
+
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+
+
+</div>
 <br>
 
 </div>

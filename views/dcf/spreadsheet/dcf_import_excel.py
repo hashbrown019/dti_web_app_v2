@@ -151,7 +151,7 @@ def excel_upload_open2(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[3]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	if(sheet.name !='form2'):
 		flash(f"Invalid file template!", "error")
@@ -228,7 +228,7 @@ def excel_upload_open3(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	print(str(sheet.name) !='form3')
 	if(str(sheet.name) !='form3'):
@@ -301,7 +301,7 @@ def excel_upload_open4(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	if(sheet.name !='form4'):
 		flash(f"Invalid file template!", "error")
@@ -373,7 +373,7 @@ def excel_upload_open5(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	if(sheet.name !='form5'):
 		flash(f"Invalid file template!", "error")
@@ -449,7 +449,7 @@ def excel_upload_open6(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	if(sheet.name !='form6'):
 		flash(f"Invalid file template!", "error")
@@ -524,7 +524,7 @@ def excel_upload_open7(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	if(sheet.name !='form7'):
 		flash(f"Invalid file template!", "error")
@@ -591,7 +591,7 @@ def excel_upload_open9(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	if(sheet.name !='form9'):
 		flash(f"Invalid file template!", "error")
@@ -659,7 +659,7 @@ def excel_upload_open10(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	if(sheet.name !='form10'):
 		flash(f"Invalid file template!", "error")
@@ -715,7 +715,7 @@ def excel_upload_open11(path):
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 	header = data[4]
-	print("tafdagfefgrhgragharghahu")
+	
 	print(sheet.name)
 	if(sheet.name !='form11'):
 		flash(f"Invalid file template!", "error")
