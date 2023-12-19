@@ -114,9 +114,6 @@
 									<input id="farmer_bday" class="f_profile f_clear x-round-large main_input x-input x-border" type="date" name="">
 									<b>Civil Status</b>
 									<input id="civil_status" class="f_profile f_clear x-round-large main_input x-input x-border" type="text" name="">
-									<select id="type" class="f_profile f_clear x-round-large x-input x-border">
-										
-									</select>
 									<div class="x-container">
 										<input id="id" class="f_profile f_clear x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%;text-align:right;font-weight:bold" disabled>
 										<input id="reference" class="f_profile f_clear x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%" disabled>
@@ -142,19 +139,8 @@
 
 				<div class="x-container x-row">
 
-					<div class="x-container">
-						<div class="x-container x-card x-round x-white">
-							<div class="x-col l6 m6">
-								<b>Juan Dela Cruz</b> | Male | Single | Oct 19 1994
-								<br>
-								<b>Cacao</b> | tungao, Butuan, Agusan del Norte, 13
-							</div>
-							<div class="x-col l6 m6 x-text-red">
-								<div class="x-padding x-right">
-									<span class="fa fa-trash x-text-red"></span> Remove
-								</div>
-							</div>
-						</div>
+					<div id="list_benef_holder" class="x-container">
+						------
 					</div>
 
 				</div>
@@ -278,7 +264,8 @@
 				profile_added['link_from_id'] = URL_ARGS["h"]
 				profile_added['type'] = $ID('type').value
 				profile_added['db_table'] = URL_ARGS["i"]
-				println(profile_added)
+				delete profile_added['id']
+				add_entry_benef(profile_added)
 			}
 
 
@@ -291,12 +278,70 @@
 				}
 			}
 
+			function add_entry_benef(form_){
+				$send({
+					action : "/feature_0/link_data_dcf_form_a_add",
+					method : POST,
+					data : $DATA(form_),
+					func : function(res){
+						get_list_benef()
+					}
+				})
+			}
+			function del_entry_benef(ids){
+				$send({
+					action : "/feature_0/link_data_dcf_form_a_del",
+					method : POST,
+					data : $DATA({"id":ids}),
+					func : function(res){
+						get_list_benef()
+					}
+				})
+			}
+
+
+			function get_list_benef(){
+				$send({
+					action : "/feature_0/link_data_dcf_form_a_view/"+URL_ARGS["i"]+"/"+URL_ARGS["h"],
+					method : POST,
+					err_dialog : true,
+					func : function (r){
+						$ID('list_benef_holder').innerHTML = "";
+						var holder = ""
+						var lists_benef = JSON.parse(r)
+						for (var i = 0; i < lists_benef.length; i++) {
+							var benef = lists_benef[i]
+							holder += (`
+								<div class="x-container x-card x-round x-white">
+									<div class="x-col l6 m6">
+										<b>`+benef['fname']+`</b> | `+benef['gender']+` | `+benef['civil_status']+` | `+benef['farmer_bday']+`
+										<br>
+										<b>`+benef['farmer_primary_crop']+`</b> | 
+											`+benef['addr_brgy']+`, 
+											`+benef['addr_city']+`, 
+											`+benef['addr_prov']+`, 
+											Region `+benef['addr_region']+`, 
+									</div>
+									<div class="x-col l6 m6 x-text-red">
+										<div class="x-padding x-right" onclick="del_entry_benef('`+benef['id']+`')">
+											<span class="fa fa-trash x-text-red"></span> Remove
+										</div>
+									</div>
+								</div>
+							`)
+						}
+						$ID('list_benef_holder').innerHTML = holder
+					}
+				})
+			}
+
 			$onload(function(){
 				$ID('l1').innerHTML = FORM_NAME[URL_ARGS["i"]]
 				$ID('link_from_id').value = URL_ARGS["h"]
-
 				$ID('l2').innerHTML = "Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's"
+				get_list_benef()
 			})
+
 			var FORM_NAME={
 				'dcf_prep_review_aprv_status' : 'FORM 1 - PREPARATION, REVIEW AND APPROVAL STATUS',
 				'dcf_implementing_unit' : 'FORM 2 - CPA TRACKER',

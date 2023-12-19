@@ -583,12 +583,39 @@ class _main:
 	def feature_0_link_data_dcf_form_a():
 		return render_template("link_data/link_data_dcf_form_a.html",USER_DATA = session["USER_DATA"][0])
 
+	@app.route("/feature_0/link_data_dcf_form_a_del",methods=["POST","GET"])
+	@c.login_auth_web()
+	def feature_0_link_data_dcf_form_a_del():
+		ids = request.form['id']
+		res = rapid_mysql.do("DELETE FROM `__data_link_1` WHERE `id`='{}' ;".format(ids))
+		return jsonify(res)
+
+	@app.route("/feature_0/link_data_dcf_form_a_view/<table>/<data_entry>",methods=["POST","GET"])
+	@c.login_auth_web()
+	def feature_0_link_data_dcf_form_a_view(table,data_entry):
+		res = "--"
+		res_ = rapid_mysql.select("SELECT * FROM `__data_link_1` WHERE `link_from_id`='{}' AND `db_table`='{}'; ".format(data_entry,table))
+		print(res_)
+		return jsonify(res_)
+
+
+	@app.route("/feature_0/link_data_dcf_form_a_add",methods=["POST","GET"])
+	@c.login_auth_web()
+	def feature_0_link_data_dcf_form_a_add():
+		data = dict(request.form); key = [];val = [];args=""
+
+		for datum in data:
+			key.append("`{}`".format(datum))
+			val.append("'{}'".format(data[datum]))
+		sql = ('''INSERT INTO `__data_link_1` ({},`remarks`) VALUES ({},'from_form')'''.format(", ".join(key),", ".join(val)))
+
+		last_row_id = rapid_mysql.do(sql)
+		return jsonify({"last_row_id":last_row_id})
+
 	# ====================================================================
 	# ===================LINK_DATA_END_===================================
 	# ====================================================================
 	# ====================================================================
-
-
 
 class Populate:
 	def primary_crop(mobi,excl):
