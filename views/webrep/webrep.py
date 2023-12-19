@@ -402,7 +402,7 @@ class _main:
 				'forum/forum_discussion.html',
 				USER_DATA = session['USER_DATA'][0],
 				forum = forum[0]
-				)
+			)
 		else:
 			return redirect("/login?force_url=1")
 
