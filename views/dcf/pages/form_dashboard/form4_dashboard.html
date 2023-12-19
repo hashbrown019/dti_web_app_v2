@@ -118,8 +118,12 @@
                     <td>
                       {% if row['upload_by']|string == user_data['id']|string %}
                       <!-- /dcf/form4?id={{ row['id'] }}&table=dcf_capacity_building" -->
-                    <a style="color: #00FFAB;" href="/feature_0/link_data_dcf_form_a?i='+URL_ARGS['table']+'&h='+URL_ARGS['id'] }}&table=dcf_capacity_building">
-                      <span><i class="fa-solid fa-pen-to-square"></i></span> Edit/ Add Participants
+                    <a style="color: #00FFAB;" href="/dcf/form4?id={{ row['id'] }}&table=dcf_capacity_building">
+                      <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                    </a>&nbsp;&nbsp;&nbsp;
+                     <a style="color: #00FFAB;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+                    +{{ row["id"] }}+"&i=dcf_capacity_building")'>
+                      <span><i class="fa-solid fa-pen-to-square"></i></span> Add Participants
                     </a> &nbsp;&nbsp;&nbsp;&nbsp;
                     <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
                       href="/delete_record/dcf_capacity_building/{{ row['id'] }}">
