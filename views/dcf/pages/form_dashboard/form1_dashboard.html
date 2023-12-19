@@ -1008,9 +1008,13 @@ Chart.plugins.register({
 								
 
 											{% if row['upload_by']|string == user_data['id']|string %}
-											<a style="color: #00FFAB;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
-												<span><i class="fa-solid fa-pen-to-square"></i></span> Edit
-											</a> &nbsp;&nbsp;&nbsp;&nbsp;
+											    <a style="color: #00FFAB;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
+                      <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                    </a>&nbsp;&nbsp;&nbsp;
+                     <a style="color: #e6b800; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+                    +{{ row["id"] }}+"&i=dcf_prep_review_aprv_status")'>
+                      <span><i class="fa-solid fa-user-plus"></i></span> Add Participants
+                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
 											<a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
 												href="/delete_record/dcf_prep_review_aprv_status/{{ row['id'] }}">
 												<span><i class="fa-solid fa-trash"></i></span> Delete

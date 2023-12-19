@@ -42,7 +42,6 @@
                 <tr role="row">
                   <th>ID</th>
                   <th>Activity Title</th>
-                  <th>Name of Beneficiary</th>
                   <th>Industry Cluster</th>
                   <th>Region</th>
                   <th>Province</th>
@@ -57,7 +56,6 @@
                     {% for row in form11_datatable %}
                     <td>{{ row['id'] }}</td>
                     <td>{{ row['form_11_activity_title'] }}</td>
-                    <td>{{ row['form_11_name_of_beneficiary'] }}</td>
                     <td>{{ row['form_11_industry_cluster'] }} {{ row['form_11_industry_pfn'] }}</td>
                     <td>{{ row['form_11_msme_regional'] }}</td>
                     <td>{{ row['form_11_msme_province'] }}</td>
@@ -66,6 +64,10 @@
                     {% if row['upload_by']|string == user_data['id']|string %}
                     <a style="color: #00FFAB;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
                       <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a style="color: #e6b800; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+                    +{{ row["id"] }}+"&i=dcf_access_financing")'>
+                      <span><i class="fa-solid fa-user-plus"></i></span> Add Participants
                     </a> &nbsp;&nbsp;&nbsp;&nbsp;
                     <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
                       href="/delete_record/dcf_access_financing/{{ row['id'] }}">
