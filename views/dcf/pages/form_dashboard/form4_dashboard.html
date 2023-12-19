@@ -11,11 +11,19 @@
   <div class="container-fluid">
     <div class="header-body">
 
-      <div class="d-flex align-items-center">
+     <div class="header bg-primary pb-6">
+  <div class="container-fluid"><center>
+    <div class="header-body" style=" max-width: 95%; background-color: #007399;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+    <br>
         <!-- Search form -->
-        <div class="h1 fw-bolder text-gray mb-2">FORM 4 Capacity Building for Beneficiaries Form</div>
+
+    <h1 class=" text-white" style="font-size:1.8em; font-weight: bold; text-align: center; margin: 2px;">FORM 4 CAPACITY BUILDING FOR BENEFICIARIES</h1>
+        
         <!-- / Search form -->
-      </div>
+      <br>
+    </div></center><br><br>
+
       <style>
         .icon-button__badge {
           position: absolute;
@@ -101,6 +109,7 @@
 
               <tbody>
                 <tr>
+                  
                   <div>
                     {% for row in form4_datatable %}
                     <td>{{ row['id'] }}</td>
@@ -108,8 +117,9 @@
                     <td>{{ row['cbb_types_of_training'] }}</td>
                     <td>
                       {% if row['upload_by']|string == user_data['id']|string %}
-                    <a style="color: #00FFAB;" href="/dcf/form4?id={{ row['id'] }}&table=dcf_capacity_building">
-                      <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                      <!-- /dcf/form4?id={{ row['id'] }}&table=dcf_capacity_building" -->
+                    <a style="color: #00FFAB;" href="/feature_0/link_data_dcf_form_a?i='+URL_ARGS['table']+'&h='+URL_ARGS['id'] }}&table=dcf_capacity_building">
+                      <span><i class="fa-solid fa-pen-to-square"></i></span> Edit/ Add Participants
                     </a> &nbsp;&nbsp;&nbsp;&nbsp;
                     <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
                       href="/delete_record/dcf_capacity_building/{{ row['id'] }}">

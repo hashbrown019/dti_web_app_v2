@@ -119,6 +119,22 @@ def displayform():
     #         form_1_rcus,
     #         form_1_commodity
     #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+
+##################################FORM3#########################################
+
+
+    dips_list3 = form3_datatable
+    typebdsp = {}
+    for index in range(len(dips_list3)):
+        DIP3 = dips_list3[index]
+        _comm_rule3 = ["individual","organization/firm"]
+        _com3 = DIP3['form_3_types_of_bdsp']
+        if(_com3.lower() not in _comm_rule3):
+            _com3 = "Others"
+        if(_com3 not in typebdsp):
+            typebdsp[_com3 ] = 0
+        typebdsp[_com3 ] += 1
+
 ##################################FORM2#########################################
     dips_list2 = form2_datatable
     over_all_commodity_count2 = {}
@@ -289,6 +305,7 @@ def displayform():
         'total_untagged' : total_untagged,
         'over_all_commodity_count':over_all_commodity_count,
         'over_all_commodity_count2':over_all_commodity_count2,
+        'typebdsp':typebdsp
 
 
     }
