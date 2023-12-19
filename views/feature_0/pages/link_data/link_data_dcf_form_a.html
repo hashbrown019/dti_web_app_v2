@@ -55,61 +55,72 @@
 				<div id="accordion_form" class="x-container">
 					<h3>Input Form</h3>
 					<div class="x-row x-container">
-						<div class="x-row x-container x-padding">
-							<b>Farmer's Name</b>
-							<input id="link_from_id" class="f_profile" name="" hidden>
-							<input id="link_to_id" class="f_profile main_input" name="" hidden>
-							<div class="x-row password-container">
-								<input id="fname" class="search_profile f_profile x-round-large main_input x-input x-border" type="text" placeholder="Input farmers name or search from inputed profiles to auto fill-up the fields"
-									style="" required>
-								<span class="x-right">
-									<span class="password-toggle x-hover-text-blue" onclick="search_profile()">
-										Search 
-										<i style="font-weight: 800;" class="fa fa-search"></i>
+						<div class="x-row x-container">
+							<b>Type of Beneficiary/participants</b>
+							<select id="type" class="f_profile main_input x-input x-border" onchange="">
+								<option value="none">None/Guest</option>
+								<option value="farmer">Farmer</option>
+								<option value="fo">Farmer's Organization</option>
+								<option value="msme">MSME</option>
+							</select>
+						</div>					
+						<div id="f_filed" class="x-row" class="">						
+							<div class="x-row x-container x-padding">
+								<b>Farmer's Name</b>
+								<input id="link_from_id" class="f_profile f_clear" name="" hidden>
+								<input id="link_to_id" class="f_profile f_clear main_input" name="" hidden>
+								<div class="x-row password-container">
+									<input id="fname" class="search_profile f_profile f_clear x-round-large main_input x-input x-border" type="text" placeholder="Input farmers name or search from inputed profiles to auto fill-up the fields"
+										style="" required>
+									<span class="x-right">
+										<span class="password-toggle x-hover-text-blue" onclick="search_profile()">
+											Search 
+											<i style="font-weight: 800;" class="fa fa-search"></i>
+										</span>
 									</span>
-								</span>
-							</div>
-						</div>
-						<div class="x-row">
-							<div class="x-col l6 m6 x-container x-padding">
-								<b>Address</b>
-								<div class="x-row">
-									<div class="x-col l3">
-										<span>Region</span>
-										<input id="addr_region" class="f_profile x-round-large main_input x-input x-border" type="" name="">
-									</div>
-									<div class="x-col l3">
-										<span>Province</span>
-										<input id="addr_prov" class="f_profile x-round-large main_input x-input x-border" type="" name="">
-									</div>
-									<div class="x-col l3">
-										<span>City</span>
-										<input id="addr_city" class="f_profile x-round-large main_input x-input x-border" type="" name="">
-									</div>
-									<div class="x-col l3">
-										<span>Brgy</span>
-										<input id="addr_brgy" class="f_profile x-round-large main_input x-input x-border" type="" name="">
-									</div>
 								</div>
-								<b>Primary Crop/Commodity</b>
-								<input id="farmer_primary_crop" class="f_profile x-round-large main_input x-input x-border" type="" name="">
 							</div>
-							<div class="x-col l6 m6 x-container x-padding">
-								<b>Sex</b>
-								<select id="sex" class="f_profile x-round-large main_input x-input x-select x-border">
-									<option value="Male">Male</option>
-									<option value="Female">Female</option>
-								</select>
-								<b>Birthday</b>
-								<input id="farmer_bday" class="f_profile x-round-large main_input x-input x-border" type="date" name="">
-								<b>Civil Status</b>
-								<input id="civil_status" class="f_profile x-round-large main_input x-input x-border" type="text" name="">
-								<select id="type" class="f_profile x-round-large x-input x-border">
-									
-								</select>
-								<div class="x-container">
-									<input id="id" class="f_profile x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%;text-align:right;font-weight:bold" disabled>
-									<input id="reference" class="f_profile x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%" disabled>
+							<div class="x-row">
+								<div class="x-col l6 m6 x-container x-padding">
+									<b>Address</b>
+									<div class="x-row">
+										<div class="x-col l3">
+											<span>Region</span>
+											<input id="addr_region" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										</div>
+										<div class="x-col l3">
+											<span>Province</span>
+											<input id="addr_prov" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										</div>
+										<div class="x-col l3">
+											<span>City</span>
+											<input id="addr_city" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										</div>
+										<div class="x-col l3">
+											<span>Brgy</span>
+											<input id="addr_brgy" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										</div>
+									</div>
+									<b>Primary Crop/Commodity</b>
+									<input id="farmer_primary_crop" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+								</div>
+								<div class="x-col l6 m6 x-container x-padding">
+									<b>Sex</b>
+									<select id="sex" class="f_profile f_clear x-round-large main_input x-input x-select x-border">
+										<option value="Male">Male</option>
+										<option value="Female">Female</option>
+									</select>
+									<b>Birthday</b>
+									<input id="farmer_bday" class="f_profile f_clear x-round-large main_input x-input x-border" type="date" name="">
+									<b>Civil Status</b>
+									<input id="civil_status" class="f_profile f_clear x-round-large main_input x-input x-border" type="text" name="">
+									<select id="type" class="f_profile f_clear x-round-large x-input x-border">
+										
+									</select>
+									<div class="x-container">
+										<input id="id" class="f_profile f_clear x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%;text-align:right;font-weight:bold" disabled>
+										<input id="reference" class="f_profile f_clear x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%" disabled>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -149,7 +160,6 @@
 				</div>
 			</div>
 		</div>
-
 
 		<div id="ls_modal" style="display: none;">
 			<div id="ls_farmer" class="x-container" style="overflow-y:scroll;height: 60vh;">
@@ -238,12 +248,14 @@
 					}
 				})
 				// TABLE.ajax.url('/feature_0/filter_list_farmers')
-				// TABLE.ajax.reload()
+				// TABLE.ajax.reload() f_clear
 			}
 
 			function fill_selected_profile(profile_){
+				var _type = $ID('type').value
 				profile_ = JSON.parse(profile_.replaceAll("^",'"'))
 				profile_['link_to_id'] = profile_['id']
+				// profile_['link_to_id'] = profile_['id']
 				profile_["not_recorded"] = {}
 				profile_['link_from_id'] = URL_ARGS["h"]
 				json_to_input("f_profile",profile_)
@@ -253,6 +265,8 @@
 				for (var i = 0; i < main_input.length; i++) {
 					main_input[i].disabled = true
 				}
+				profile_["type"] = _type
+				$ID('type').value = _type
 				println(profile_)
 			}
 
@@ -262,6 +276,8 @@
 					profile_added["not_recorded"] = input_to_json('f_profile')
 				}
 				profile_added['link_from_id'] = URL_ARGS["h"]
+				profile_added['type'] = $ID('type').value
+				profile_added['db_table'] = URL_ARGS["i"]
 				println(profile_added)
 			}
 
