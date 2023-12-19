@@ -72,7 +72,7 @@ def displayform():
 
     dcf_form1sextotal=db.select("SELECT SUM(form_1_total_farmerbene) AS total_sex FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form2sextotal=db.select("SELECT  SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
-    dcf_form3sextotal=db.select("SELECT  SUM(dcf_form3male + dcf_form3female)AS total_sex3 FROM dcf_bdsp_reg {}; ".format(position_data_filter()))
+    dcf_form3sextotal=db.select("SELECT COUNT(CASE WHEN form_3_sex = 'male' OR form_3_sex = 'female' THEN 1 END) AS total_sex3 FROM dcf_bdsp_reg {}; ".format(position_data_filter()))
 
 
     dcf_form1female=db.select("SELECT SUM(form_1_totalfemale) AS total_female FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
@@ -130,7 +130,7 @@ def displayform():
         _comm_rule3 = ["individual","organization/firm"]
         _com3 = DIP3['form_3_types_of_bdsp']
         if(_com3.lower() not in _comm_rule3):
-            _com3 = "Others"
+            _com3 = "Untagged"
         if(_com3 not in typebdsp):
             typebdsp[_com3 ] = 0
         typebdsp[_com3 ] += 1

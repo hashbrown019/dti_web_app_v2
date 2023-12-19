@@ -89,8 +89,8 @@
           <div class="row">
             <div class="col">
               <p class="card-title text-default mb-0"><b class="text-default font-weight-bold mb-0">RCU: {{dip}}</b></p>
-              <p class=" text-mute textdesc font-weight-bold mb-0">PWD: {{dips_list[dip]["approve"]}}</p>
-              <p class=" text-mute textdesc font-weight-bold mb-0">Youth: {{dips_list[dip]["pipeline"]}}</p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">Male: {{dips_list[dip]["approve"]}}</p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">Female: {{dips_list[dip]["pipeline"]}}</p>
               <p class=" text-mute textdesc font-weight-bold mb-0">IP: {{dips_list[dip]["ongoing"]}}</p>
               <p class=" text-mute textdesc font-weight-bold mb-0">SC: {{dips_list[dip]["not_started"]}}</p>
             </div>
@@ -270,7 +270,7 @@ Chart.plugins.register({
     options: {
       title: {
         display: true,
-        text: `Total: `+money({{dcf_form3sextotal | int}}),
+        text: `Total: `+money({{dcf_form3sextotal[0]['total_sex3'] | int}}),
         fontSize: 15,
         fontColor: '#204060',
       },
@@ -317,7 +317,7 @@ var data = {
   labels: _labels,
   datasets: [{
     data: normalizedData, // Values for each category
-    backgroundColor: ['#994d00', '#1a0d00', '#5c5c3d', '#a6a6a6', '#006666'],
+    backgroundColor: ['#009999', '#595959', '#339966', '#a6a6a6', '#006666'],
   }]
 };
 
