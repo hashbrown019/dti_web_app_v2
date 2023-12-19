@@ -90,7 +90,7 @@
 					icon: "warning",
 					html: `
 						Our MIS server will have a Downtime on<br>
-						<b>December 18 at 6:00 PM (PhST) onwards</b><br> 
+						<b><span id="dates">----- -- ------</span> (PhST) onwards</b><br> 
 						At exactly <br>
 						<a type="button" class="btn btn-outline rounded-2 border border-dark">
 							<b id="rem_days" class="fs-1">00</b><br>
@@ -123,6 +123,7 @@
 					confirmButtonAriaLabel: "Thumbs up, great!"
 				});
 				window.setInterval(function(){
+					$ID('dates').innerHTML=sched_dt_date
 					$ID("rem_days").innerHTML = date_diff_mod2(sched_dt_date,"",true)[0]
 					$ID("rem_hrs").innerHTML = date_diff_mod2(sched_dt_date,"",true)[1]
 					$ID("rem_min").innerHTML = date_diff_mod2(sched_dt_date,"",true)[2]
@@ -131,7 +132,7 @@
 			})
 
 			// var sched_dt_date = 'Mon Dec 18 2023 18:00:00 GMT+0800 (Philippine Standard Time)'
-			var sched_dt_date = 'Dec 18 2023 18:00:00'
+			var sched_dt_date = 'Dec 19 2023 18:00:00'
 
 
 		</script>
