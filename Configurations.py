@@ -50,7 +50,6 @@ SERVER_DATABASE = "mis_2023s";
 MOCK_DATABASE_TEST = "mis_2023_test";
 
 # LOCAL_DATABASE = "dti_rapidxi";
-ss
 IS_ON_SERVER = False;
 
 # SERVER_PORT=3306;
