@@ -280,6 +280,25 @@ def search_farmer_profile():
 	ind = rapid_mysql.select(data_m) + rapid_mysql.select(data_ex)
 	return jsonify(ind)
 
+@app.route("/formb/search_farmer_org",methods=["POST","G ET"])
+@c.login_auth_web()
+def search_farmer_org():
+	search_item = request.form['search_item']
+	data_ex = '''
+		SELECT 
+			`id`,
+			`organization_registered_name` as 'fname',
+			`file_name` as 'reference',
+			`office_business_adrress` as 'addr_brgy',
+		FROM 
+			`form_b` 
+		WHERE 
+			`organization_registered_name` LIKE '{}' ;
+	'''.format(search_item)
+
+	ind = rapid_mysql.select(data_ex)
+	return jsonify(ind)
+
 
 @app.route("/formb/excel_upload",methods=["POST","GET"])
 @c.login_auth_web()

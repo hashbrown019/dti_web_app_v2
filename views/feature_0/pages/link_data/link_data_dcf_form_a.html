@@ -107,6 +107,7 @@
 								<div class="x-col l6 m6 x-container x-padding">
 									<b>Sex</b>
 									<select id="sex" class="f_profile f_clear x-round-large main_input x-input x-select x-border">
+										<option value="">none</option>
 										<option value="Male">Male</option>
 										<option value="Female">Female</option>
 									</select>
@@ -129,8 +130,18 @@
 						</div>
 					</div> 
 				</div>
+				<hr>
+				<div id="accordion_form_" class="x-container">
+					<h3>Import from Excel <span class="x-padding x-tiny x-round-large x-red">On-Dev</span></h3>
+					<div class="x-row x-container">
+						<div class="x-row x-container">
+							<b>Upload excel file (.xls)</b>
+							<input class="x-input x-btn x-round-xxlarge" name="" type="file">
+						</div>
+					</div>
+				</div>
 			</div>
-
+			<!-- ================================= -->
 			<div class="x-col l6 m6">
 				<div class="x-container x-row">
 					<br><br><br>
@@ -170,11 +181,15 @@
 
 
 			function search_profile(){
+				var type_ = $ID('type').value
+				var API_ = ""
+				if(type_== 'farmer'){API_ = "search_farmer_profile"}
+				else if(type_== 'fo'){API_ = "search_farmer_org"}
+					
 				var search_key = $ID('fname').value
-				alert('Click to continue searching ['+search_key+']')
 				SPINNER_LOADER.show()
 				$send({
-					action : "/formb/search_farmer_profile",
+					action : "/formb/"+API_,
 					method : POST,
 					err_dialog:true,
 					data : $DATA({'search_item':search_key}),

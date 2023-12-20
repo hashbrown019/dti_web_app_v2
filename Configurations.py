@@ -40,10 +40,12 @@ LOCAL_PASSWORD = "";
 LOCAL_DATABASE = "mis_2023";
 
 SERVER_PORT=3306;
-SERVER_HOST = "database-1.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
+SERVER_HOST = "database-1.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com"; # OLD ENDPOINTT
+# SERVER_HOST = "new-dti-rapid-db.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
 SERVER_USER = "admin";
 SERVER_PASSWORD = "password123";
-SERVER_DATABASE = "mis_2023";
+# SERVER_PASSWORD = "password123"; # OLD PASSWORD
+SERVER_DATABASE = "dti-db-passkey";
 
 MOCK_DATABASE_TEST = "mis_2023_test";
 
