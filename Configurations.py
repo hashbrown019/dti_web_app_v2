@@ -41,7 +41,7 @@ LOCAL_DATABASE = "mis_2023";
 
 SERVER_PORT=3306;
 # SERVER_HOST = "database-1.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com"; # OLD ENDPOINTT
-SERVER_HOST = "new-dti-rapid-db.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
+SERVER_HOST = "dti-rapid-database.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
 SERVER_USER = "admin";
 SERVER_PASSWORD = "NRGlBUhehOvi0Yt4fDE5";
 # SERVER_PASSWORD = "password123"; # OLD PASSWORD
