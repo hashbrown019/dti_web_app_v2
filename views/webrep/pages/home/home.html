@@ -84,37 +84,25 @@
 		{% include 'main/footer.html' %}
 		<script type="text/javascript" src="../../static/webrepstatic/js/index.js"></script>\
 		<script type="text/javascript">
+
+
+
+			// FOR ANOUNCEMENTS
 			$onload(function(){
 				Swal.fire({
-					title: "<strong>MIS Server Downtime schedule</strong>",
+					title: "<strong>MIS Server Database Back-up on progress</strong>",
 					icon: "warning",
-					html: `
-						Our MIS server will have a Downtime on<br>
-						<b><span id="dates">----- -- ------</span> (PhST) onwards</b><br> 
-						At exactly <br>
-						<a type="button" class="btn btn-outline rounded-2 border border-dark">
-							<b id="rem_days" class="fs-1">00</b><br>
-							<span>Days</span>
-						</a>
-						<a type="button" class="btn btn-outline rounded-2 border border-dark">
-							<b id="rem_hrs" class="fs-1">00</b><br>
-							<span>Hours</span>
-						</a>
-						<a type="button" class="btn btn-outline rounded-2 border border-dark">
-							<b id="rem_min" class="fs-1">00</b><br>
-							<span>Minutes</span>
-						</a>
-						<a type="button" class="btn btn-outline rounded-2 border border-dark">
-							<b id="rem_sec" class="fs-1">00</b><br>
-							<span>Seconds</span>
-						</a>
-						<br><br>
-						All transaction past this date
-						will not be process/recorded as <b>all module will not be available</b> at the said date
-						<b>due to changes of our specification on our Server Service Provider</b> (Cloud Server).<br><br> 
-						We will assure you that MIS will be back as soon as the migration and changes is done.<br>
-						Thank you for your understanding <i>XOXO</i> 
-					`,
+					html: (`
+							Our MIS server is now in the <b>process of backing up and migrating the database</b> after 
+							reconfiguration of new specs of our server by our Server Service Provider. <br><br>
+
+							MIS is <b>temporarily available only for viewing</b>. updating and input of data may be available
+							but there's possibility of data loss. <br><br>
+
+							The process of this may take 1 to 2 days. We will let you inform when this process is finished.<br>
+							<b>Thank you and Happy Holidays :)</b>
+							
+					`),
 					showCloseButton: true,
 					focusConfirm: false,
 					confirmButtonText: `
