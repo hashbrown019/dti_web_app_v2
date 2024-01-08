@@ -139,6 +139,12 @@
 							<input class="x-input x-btn x-round-xxlarge" name="" type="file">
 						</div>
 					</div>
+					<div class="x-row x-container">
+						<br>
+						<div class="x-row x-container">
+							<b class="x-text-blue" onclick="download_login_start('MIS ATTENDANCE SHEET.xlsx')">Download Excel template</b>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!-- ================================= -->
@@ -177,6 +183,13 @@
 				for (var i = 0; i < f_profile.length; i++) {
 					f_profile[i].value = ""
 				}
+			}
+
+			function download_login_start(fff){
+				let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= '/login/download_file/'+fff;
+				a.click();
 			}
 
 
@@ -280,6 +293,7 @@
 				profile_added['type'] = $ID('type').value
 				profile_added['db_table'] = URL_ARGS["i"]
 				delete profile_added['id']
+				println(profile_added)
 				add_entry_benef(profile_added)
 			}
 

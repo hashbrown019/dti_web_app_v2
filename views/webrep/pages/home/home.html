@@ -48,7 +48,6 @@
 					<div class="collapse navbar-collapse" id="navbarNavDropdown">
 						<ul class="navbar-nav mt-5 ms-5">
 								<li class="nav-item ">
-													
 									{% if is_session :%}
 									<div class="">
 							              <!-- <a type="button" class="btn btn-outline-light rounded-2 btn-lg"  href="/logout">Logout</a> -->
@@ -86,41 +85,40 @@
 		<script type="text/javascript">
 
 
-
 			// FOR ANOUNCEMENTS
-			$onload(function(){
-				Swal.fire({
-					title: "<strong>MIS Server Database Back-up on progress</strong>",
-					icon: "warning",
-					html: (`
-							Our MIS server is now in the <b>process of backing up and migrating the database</b> after 
-							reconfiguration of new specs of our server by our Server Service Provider. <br><br>
+			// $onload(function(){
+			// 	Swal.fire({
+			// 		title: "<strong>MIS Server Database Back-up on progress</strong>",
+			// 		icon: "warning",
+			// 		html: (`
+			// 				Our MIS server is now in the <b>process of backing up and migrating the database</b> after 
+			// 				reconfiguration of new specs of our server by our Server Service Provider. <br><br>
 
-							MIS is <b>temporarily available only for viewing</b>. updating and input of data may be available
-							but there's possibility of data loss. <br><br>
+			// 				MIS is <b>temporarily available only for viewing</b>. updating and input of data may be available
+			// 				but there's possibility of data loss. <br><br>
 
-							The process of this may take 1 to 2 days. We will let you inform when this process is finished.<br>
-							<b>Thank you and Happy Holidays :)</b>
+			// 				The process of this may take 1 to 2 days. We will let you inform when this process is finished.<br>
+			// 				<b>Thank you and Happy Holidays :)</b>
 							
-					`),
-					showCloseButton: true,
-					focusConfirm: false,
-					confirmButtonText: `
-						<i class="fa fa-thumbs-up"></i> Okay got it :)
-					`,
-					confirmButtonAriaLabel: "Thumbs up, great!"
-				});
-				window.setInterval(function(){
-					$ID('dates').innerHTML=sched_dt_date
-					$ID("rem_days").innerHTML = date_diff_mod2(sched_dt_date,"",true)[0]
-					$ID("rem_hrs").innerHTML = date_diff_mod2(sched_dt_date,"",true)[1]
-					$ID("rem_min").innerHTML = date_diff_mod2(sched_dt_date,"",true)[2]
-					$ID("rem_sec").innerHTML = date_diff_mod2(sched_dt_date,"",true)[3]
-				},1000)
-			})
+			// 		`),
+			// 		showCloseButton: true,
+			// 		focusConfirm: false,
+			// 		confirmButtonText: `
+			// 			<i class="fa fa-thumbs-up"></i> Okay got it :)
+			// 		`,
+			// 		confirmButtonAriaLabel: "Thumbs up, great!"
+			// 	});
+			// 	// window.setInterval(function(){
+			// 	// 	$ID('dates').innerHTML=sched_dt_date
+			// 	// 	$ID("rem_days").innerHTML = date_diff_mod2(sched_dt_date,"",true)[0]
+			// 	// 	$ID("rem_hrs").innerHTML = date_diff_mod2(sched_dt_date,"",true)[1]
+			// 	// 	$ID("rem_min").innerHTML = date_diff_mod2(sched_dt_date,"",true)[2]
+			// 	// 	$ID("rem_sec").innerHTML = date_diff_mod2(sched_dt_date,"",true)[3]
+			// 	// },1000)
+			// })
 
-			// var sched_dt_date = 'Mon Dec 18 2023 18:00:00 GMT+0800 (Philippine Standard Time)'
-			var sched_dt_date = 'Dec 19 2023 18:00:00'
+			// // var sched_dt_date = 'Mon Dec 18 2023 18:00:00 GMT+0800 (Philippine Standard Time)'
+			// var sched_dt_date = 'Dec 19 2023 18:00:00'
 
 
 		</script>

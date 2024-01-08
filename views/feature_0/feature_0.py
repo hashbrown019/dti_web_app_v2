@@ -28,6 +28,7 @@ data_clean = d_c(app,rapid_mysql,session)
 # app['sample_decorator'] = sample_decorator
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 
+
 class _main:
 	def __init__(self, arg):
 		print(" * main loading done")
@@ -61,8 +62,6 @@ class _main:
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		Filter.position_data_filter() # initialize restrictions
 		return render_template("feature_0_home.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
-
-
 
 	def settings(setngs):
 		session["USER_DATA"][0]["office"] = "On Dev"
@@ -107,7 +106,6 @@ class _main:
 	def set_notif_seen():
 		notif_id = request.form['notif_id']
 		return inbound.set_notif_seen(notif_id)
-
 
 	# ========================================================================
 
@@ -199,6 +197,9 @@ class _main:
 		rapid_mysql.do("DELETE FROM `excel_import_form_a` WHERE `file_name`='{}' ;".format(excel_file))
 		return jsonify({"status":"done"})
 
+	# ==============================================================================
+	# ==============================================================================
+	# ==============================================================================
 	# ==============================================================================
 	# ==============================================================================
 	# ==============================================================================
