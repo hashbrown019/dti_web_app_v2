@@ -23,6 +23,8 @@ from views.fund_tracker  import bp_app as fund_tracker
 from views.dcf  import bp_app as dcf
 from views.fmi  import bp_app as fmi
 
+from views._tests_  import bp_app as test
+
 from modules.public_vars import public_vars
 from controllers.inbound import inbound
 from apis import api
@@ -51,6 +53,7 @@ app.register_blueprint(doofen.app);
 app.register_blueprint(fund_tracker.app);
 app.register_blueprint(dcf.app);
 app.register_blueprint(fmi.app);
+app.register_blueprint(test.app);
 
 print(" * MIS Stat")
 
