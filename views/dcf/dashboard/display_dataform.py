@@ -64,6 +64,17 @@ def displayform():
     form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {} ORDER BY `id` DESC;".format(position_data_filter()))
     form11_datatable=db.select("SELECT * FROM dcf_access_financing {} ORDER BY `id` DESC;".format(position_data_filter()))
 
+
+    form2status_nonrenewal=db.select("SELECT form_2_remarks_status AS totalnonrenewal FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Non-renewal';".format(position_data_filter()))
+    dcf_form2nonrenewal=len(form2status_nonrenewal)
+    form2status_cancelled=db.select("SELECT form_2_remarks_status AS totalcancelled FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Cancelled';".format(position_data_filter()))
+    dcf_form2cancelled=len(form2status_cancelled)
+    form2status_og=db.select("SELECT form_2_remarks_status AS totalog FROM dcf_implementing_unit {} AND form_2_remarks_status = 'On-going';".format(position_data_filter()))
+    dcf_form2og=len(form2status_og)
+    totalstatus = dcf_form2cancelled+dcf_form2nonrenewal+dcf_form2og
+
+
+
     dcf_form1male=db.select("SELECT SUM(form_1_totalmale) AS total_male FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1maleyouth=db.select("SELECT SUM(form_1_maleyouth) AS total_maleyouth FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1maleip=db.select("SELECT SUM(form_1_maleip) AS total_maleip FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
@@ -294,6 +305,10 @@ def displayform():
         'dcf_form4male':  dcf_form4male,
         'dcf_form4female':  dcf_form4female,
         'dips_list':  dip_status_group_per_region,
+        'dcf_form2nonrenewal': dcf_form2nonrenewal,
+        'dcf_form2cancelled': dcf_form2cancelled,
+        'dcf_form2og': dcf_form2og,
+        'totalstatus': totalstatus,
         'over_all_dips_list':  over_all,
         'total_dip_nat':alltotal,
         'dip_sex_group_per_region' : dip_sex_group_per_region,

@@ -237,19 +237,19 @@ var chart = new Chart(
     data: {
         labels: ["Remarks/Status"],
         datasets: [{
-            data: [35],
+            data: [{{dcf_form2nonrenewal}}],
             label:"Non-renewal",
             stack: "Remarks/Status",
             backgroundColor: "#808080",
             hoverBackgroundColor: "rgba(50,90,100,1)"
         },{
-            data: [5],
+            data: [{{dcf_form2cancelled}}],
             label: "Cancelled",
             stack: "Remarks/Status",
             backgroundColor: "#ff8566",
             hoverBackgroundColor: "rgba(140,85,100,1)"
         },{
-            data: [60],
+            data: [{{dcf_form2og}}],
             label:"On-going",
             stack: "Remarks/Status",
             backgroundColor: "#80aaff",
@@ -264,7 +264,13 @@ var chart = new Chart(
             yAxes: [{
                 stacked: true
             }]
-        }
+        },
+        title: {
+        display: true,
+        text: `Total remarks/status: {{totalstatus}}`,
+        fontSize: 15,
+        fontColor: '#204060',
+      }
     }
 });
 
