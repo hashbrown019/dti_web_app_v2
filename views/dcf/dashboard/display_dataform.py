@@ -84,6 +84,8 @@ def displayform():
     dcf_form1sextotal=db.select("SELECT SUM(form_1_total_farmerbene) AS total_sex FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form2sextotal=db.select("SELECT  SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form3sextotal=db.select("SELECT COUNT(CASE WHEN form_3_sex = 'male' OR form_3_sex = 'female' THEN 1 END) AS total_sex3 FROM dcf_bdsp_reg {}; ".format(position_data_filter()))
+    dcf_form4sextotal=db.select("SELECT  SUM(cbb_total_number_per_gender_male + cbb_total_number_per_gender_female)AS total_sex4 FROM dcf_capacity_building {}; ".format(position_data_filter()))
+
 
 
     dcf_form1female=db.select("SELECT SUM(form_1_totalfemale) AS total_female FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
@@ -130,6 +132,24 @@ def displayform():
     #         form_1_rcus,
     #         form_1_commodity
     #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+
+
+###########################FORM4##################################################
+    dips_list4 = form4_datatable
+    over_all_commodity_count4 = {}
+    for index in range(len(dips_list4)):
+        DIP4 = dips_list4[index]
+        _comm_rule4 = ["cacao","coconut","coffee","pfn"]
+        _com4 = DIP4['cbb_commodity']
+        if(_com4.lower() not in _comm_rule4):
+            _com4 = "Others"
+        if(_com4 not in over_all_commodity_count4):
+            over_all_commodity_count4[_com4 ] = 0
+        over_all_commodity_count4[_com4 ] += 1
+
+
+
+
 
 ##################################FORM3#########################################
 
@@ -294,6 +314,7 @@ def displayform():
         'dcf_form1sextotal':dcf_form1sextotal,
         'dcf_form2sextotal':dcf_form2sextotal,
         'dcf_form3sextotal':dcf_form3sextotal,
+        'dcf_form4sextotal':dcf_form4sextotal,
         'dcf_form1female':  dcf_form1female,
         'dcf_form1femaleyouth': dcf_form1femaleyouth,
         'dcf_form1femaleip':dcf_form1femaleip,
@@ -320,6 +341,7 @@ def displayform():
         'total_untagged' : total_untagged,
         'over_all_commodity_count':over_all_commodity_count,
         'over_all_commodity_count2':over_all_commodity_count2,
+        'over_all_commodity_count4':over_all_commodity_count4,
         'typebdsp':typebdsp
 
 
