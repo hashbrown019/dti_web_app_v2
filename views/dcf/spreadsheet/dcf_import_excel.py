@@ -156,7 +156,7 @@ def excel_upload_open2(path):
 	if(sheet.name !='form2'):
 		flash(f"Invalid file template!", "error")
 		return "done:Sheet Error"
-	for row in data[3:]:
+	for row in data[5:]:
 		upload_by = session["USER_DATA"][0]['id']
 		form_2_rcus = row[0]                                                                       
 		form_2_pcu = row[1]                                                                                                     
@@ -306,7 +306,7 @@ def excel_upload_open4(path):
 	if(sheet.name !='form4'):
 		flash(f"Invalid file template!", "error")
 		return "done:Sheet Error"
-	for row in data[4:]:
+	for row in data[5:]:
 		upload_by = session["USER_DATA"][0]['id']
 		cbb_implementing_unit = row[0]
 		cbb_activity_title = row[1]
