@@ -1,302 +1,272 @@
 <script>
-$(document).ready(function(){
-	$(".hidden-textbox").hide();
-	$("select#form_1_commodity,select#form_2_commodity,select#cbb_commodity,select#mgit_commodity,select#form_6_commodity,select#form_7_commodity,select#form_11_industry_cluster").change(function(){
-		var currentVal = $(this).val();
-		if(currentVal == "PFN"){
-			$(".hidden-textbox").show();
-		}
-		else{
-			$(".hidden-textbox").hide();
-		}
-	});  
-});
-
-
-$(document).ready(function(){
-	$(".hidden-form11").hide();
-	$("select#form_11_dip_alignment").change(function(){
-	var currentVal = $(this).val();
-	if(currentVal == "Yes"){
-	$(".hidden-form11").show();
-	}
-	else
-	$(".hidden-form11").hide();
-	});  
+	$(document).ready(function(){
+		$(".hidden-textbox").hide();
+		$("select#form_1_commodity,select#form_2_commodity,select#cbb_commodity,select#mgit_commodity,select#form_6_commodity,select#form_7_commodity,select#form_11_industry_cluster").change(function(){
+			var currentVal = $(this).val();
+			if(currentVal == "PFN"){
+				$(".hidden-textbox").show();
+			}
+			else{
+				$(".hidden-textbox").hide();
+			}
+		});  
 	});
 
-$(document).ready(function(){
-	$(".hidden-textbox2").hide();
-	$("select#form_2_remarks_status").change(function(){
+
+	$(document).ready(function(){
+		$(".hidden-form11").hide();
+		$("select#form_11_dip_alignment").change(function(){
+			var currentVal = $(this).val();
+			if(currentVal == "Yes"){
+				$(".hidden-form11").show();
+			}
+			else
+				$(".hidden-form11").hide();
+		});  
+	});
+
+	$(document).ready(function(){
+		$(".hidden-textbox2").hide();
+		$("select#form_2_remarks_status").change(function(){
 			var currentVal = $(this).val();
 			var hiddenTextbox = $(".hidden-textbox2");
 			if (currentVal == "Cancelled" || currentVal == "Non-renewal") {
-					hiddenTextbox.show();
+				hiddenTextbox.show();
 			} else {
-					hiddenTextbox.hide();
+				hiddenTextbox.hide();
 			}
-	});  
-});
+		});  
+	});
 
-$(document).ready(function(){
-	$(".hidden-textbox3").hide();
-	
-	$("select#form_3_types_of_bdsp").change(function(){
+	$(document).ready(function(){
+		$(".hidden-textbox3").hide();
+
+		$("select#form_3_types_of_bdsp").change(function(){
 			var currentVal = $(this).val();
 			var hiddenTextbox = $(".hidden-textbox3");
 			
 			if (currentVal == "Organization/Firm") {
-					hiddenTextbox.show();
-					hiddenTextbox.prop("required", true); 
+				hiddenTextbox.show();
+				hiddenTextbox.prop("required", true); 
 			} else {
-					hiddenTextbox.hide();
-					hiddenTextbox.prop("required", false);
+				hiddenTextbox.hide();
+				hiddenTextbox.prop("required", false);
 			}
-	});  
-});
-
-$(document).ready(function(){
-	$(".hidden-textboxdip11").hide();
-	$("select#form_11_dip_alignment").change(function(){
-	var currentVal = $(this).val();
-	if(currentVal == "Yes"){
-	$(".hidden-textboxdip11").show();
-	}
-	else
-	$(".hidden-textboxdip11").hide();
-	});  
+		});  
 	});
 
-$(document).ready(function(){
-	$(".hidden-textboxdip").hide();
-	$("select#form_2_dip_alignment").change(function(){
-	var currentVal = $(this).val();
-	if(currentVal == "Yes"){
-	$(".hidden-textboxdip").show();
-	}
-	else
-	$(".hidden-textboxdip").hide();
-	});  
+	$(document).ready(function(){
+		$(".hidden-textboxdip11").hide();
+		$("select#form_11_dip_alignment").change(function(){
+			var currentVal = $(this).val();
+			if(currentVal == "Yes"){
+				$(".hidden-textboxdip11").show();
+			}
+			else
+				$(".hidden-textboxdip11").hide();
+		});  
+	});
+
+	$(document).ready(function(){
+		$(".hidden-textboxdip").hide();
+		$("select#form_2_dip_alignment").change(function(){
+			var currentVal = $(this).val();
+			if(currentVal == "Yes"){
+				$(".hidden-textboxdip").show();
+			}
+			else
+				$(".hidden-textboxdip").hide();
+		});  
 	});
 
 
 
 
 	$(document).ready(function(){
-			$(".hidden-textboxform6").hide();
-			$("select#form_6_certification").change(function(){
+		$(".hidden-textboxform6").hide();
+		$("select#form_6_certification").change(function(){
 			var currentVal = $(this).val();
 			if(currentVal == "other"){
-			$(".hidden-textboxform6").show();
+				$(".hidden-textboxform6").show();
 			}
 			else
-			$(".hidden-textboxform6").hide();
-			});  
-			});
+				$(".hidden-textboxform6").hide();
+		});  
+	});
 
-			$(document).ready(function(){
-				$(".hidden-textboxform62").hide();
-				$("select#form_6_certification2").change(function(){
-				var currentVal = $(this).val();
-				if(currentVal == "other"){
+	$(document).ready(function(){
+		$(".hidden-textboxform62").hide();
+		$("select#form_6_certification2").change(function(){
+			var currentVal = $(this).val();
+			if(currentVal == "other"){
 				$(".hidden-textboxform62").show();
-				}
-				else
+			}
+			else
 				$(".hidden-textboxform62").hide();
-				});  
-				});
+		});  
+	});
 
-// function edit_form(class_name,table){
-// 	for (let index = 0; index < $CLASS('class_name').length; index++) {
-// 		const element = $CLASS('class_name')[index].disabled = false
-// 	}
-// }
+	// function edit_form(class_name,table){
+	// 	for (let index = 0; index < $CLASS('class_name').length; index++) {
+	// 		const element = $CLASS('class_name')[index].disabled = false
+	// 	}
+	// }
 
-let multi_table_value = {
-	"form_2_activity_agreements" : "non_multi",
-	"form_2_date_conducted" : "non_multi",
-	"form_3_name" : "non_multi",
-	"form_3_education" : "non_multi",
-	"form_3_expertise" : "non_multi",
-	"cbb_venue" : "non_multi",
-	"cbb_name_of_resource_person" : "non_multi",
-	"form_6_name_of_partner_organization_1" : "kapown_g1",
-	"form_6_name_of_partner_organization_2" : "kapown_g1",
-	"form_6_beneficiary_participant" : "kapown_g2",
-	"form_6_commodity" : "kapown_g2",
-	"form_6_type_of_beneficiary" : "kapown_g2",
-	"form_6_sex" : "kapown_g2",
-	"form_6_sector" : "kapown_g2",
-	"form_6_product_developed" : "kapown_g3",
-	"form_6_date_launched_to_market" : "kapown_g3",
-	"form_6_improved_product" : "kapown_g3",
-	"form_6_type_of_product_improvement" : "kapown_g3",
-	"form_9_name_of_participant_org" : "kapown_g4",
-	"form_9_counterpart_amount" : "kapown_g4",
-	"form_9_name_of_participant" : "kapown_g5",
-	"form_9_sex" : "kapown_g5",
-	"form_9_sector" : "kapown_g5",
-	"form_9_organization" : "kapown_g5",
-	"form_9_designation" : "kapown_g5"
-	
-	
-}
+	let multi_table_value = {
+		"form_2_activity_agreements" : "non_multi",
+		"form_2_date_conducted" : "non_multi",
+		"form_3_name" : "non_multi",
+		"form_3_education" : "non_multi",
+		"form_3_expertise" : "non_multi",
+		"cbb_venue" : "non_multi",
+		"cbb_name_of_resource_person" : "non_multi",
+		"form_6_name_of_partner_organization_1" : "kapown_g1",
+		"form_6_name_of_partner_organization_2" : "kapown_g1",
+		"form_6_beneficiary_participant" : "kapown_g2",
+		"form_6_commodity" : "kapown_g2",
+		"form_6_type_of_beneficiary" : "kapown_g2",
+		"form_6_sex" : "kapown_g2",
+		"form_6_sector" : "kapown_g2",
+		"form_6_product_developed" : "kapown_g3",
+		"form_6_date_launched_to_market" : "kapown_g3",
+		"form_6_improved_product" : "kapown_g3",
+		"form_6_type_of_product_improvement" : "kapown_g3",
+		"form_9_name_of_participant_org" : "kapown_g4",
+		"form_9_counterpart_amount" : "kapown_g4",
+		"form_9_name_of_participant" : "kapown_g5",
+		"form_9_sex" : "kapown_g5",
+		"form_9_sector" : "kapown_g5",
+		"form_9_organization" : "kapown_g5",
+		"form_9_designation" : "kapown_g5"
+	}
 
 
-var button_to_click = undefined
-var value_to_add = {}
+	var button_to_click = undefined
+	var value_to_add = {}
 
-function set_multi_table_row(){
-	println(Object.keys(button_to_click).length)
-	println("button_to_click.length")
-	var _len_iter = (value_to_add[Object.keys(value_to_add)[0]])
-	if(Object.keys(button_to_click).length==0){
-		for (let index = 0; index < _len_iter.length-1; index++) {
-			button_to_click.click()
-			// println(index)
-		} 
-	}else{
-		for(keys in button_to_click){
+	function set_multi_table_row(){
+		println(Object.keys(button_to_click).length)
+		println("button_to_click.length")
+		var _len_iter = (value_to_add[Object.keys(value_to_add)[0]])
+		if(Object.keys(button_to_click).length==0){
 			for (let index = 0; index < _len_iter.length-1; index++) {
-				button_to_click[keys].click()
-				// println(index)
+				button_to_click.click()
+			// println(index)
 			} 
+		}else{
+			for(keys in button_to_click){
+				for (let index = 0; index < _len_iter.length-1; index++) {
+					button_to_click[keys].click()
+				// println(index)
+				} 
+			}
+		}
+
+
+
+		for(key in value_to_add){
+			var _val = (value_to_add[key])
+			for (let index = 0; index < _val.length; index++) {
+				const data_value = _val[index];
+				$ID(key+"_kapown_"+index).value = data_value
+			}
 		}
 	}
 
-	
+	function load_data(record_id,table,class_name){
+		// http://127.0.0.1:5000/dcf/form8?id=1&table=form8
+		$send({
+			action : "/get_data/"+record_id+"/"+table,
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)[0]
+				var x_ins = $CLASS(class_name)
+				for (let index = 0; index < x_ins.length; index++) {
+					var multi_id = x_ins[index].id.split("_kapown")[0]
+					if(multi_table_value[multi_id] != undefined){
+						const add_btn = x_ins[index].parentNode.parentNode.parentNode.querySelectorAll("button")[0]
+						var multi_val = res[multi_id].split(",")
 
-	for(key in value_to_add){
-		var _val = (value_to_add[key])
-		for (let index = 0; index < _val.length; index++) {
-			const data_value = _val[index];
-			$ID(key+"_kapown_"+index).value = data_value
-		}
-	}
-}
-
-function load_data(record_id,table,class_name){
-	// http://127.0.0.1:5000/dcf/form8?id=1&table=form8
-	$send({
-		action : "/get_data/"+record_id+"/"+table,
-		method : POST,
-		func : function(r){
-			var res = JSON.parse(r)[0]
-			var x_ins = $CLASS(class_name)
-			for (let index = 0; index < x_ins.length; index++) {
-
-				/////////////////
-				var multi_id = x_ins[index].id.split("_kapown")[0]
-				if(multi_table_value[multi_id] != undefined){
-					const add_btn = x_ins[index].parentNode.parentNode.parentNode.querySelectorAll("button")[0]
-					var multi_val = res[multi_id].split(",")
-
-					// println(x_ins[index].parentNode.parentNode.parentNode)
-					if(multi_table_value[multi_id] == "non_multi"){
-						for (let index = 0; index < multi_val.length; index++) {
-							value_to_add[multi_id] = multi_val
-							button_to_click = add_btn
+						// println(x_ins[index].parentNode.parentNode.parentNode)
+						if(multi_table_value[multi_id] == "non_multi"){
+							for (let index = 0; index < multi_val.length; index++) {
+								value_to_add[multi_id] = multi_val
+								button_to_click = add_btn
+							}
 						}
-					}
-					// else if(multi_table_value[multi_id] == "multi"){
-					else{
-						println(multi_id)
-						if(button_to_click==undefined){button_to_click = {}}
-						for (let index = 0; index < multi_val.length; index++) {
-							value_to_add[multi_id] = multi_val
-							button_to_click[multi_table_value[multi_id]] = add_btn
+						// else if(multi_table_value[multi_id] == "multi"){
+						else{
+							println(multi_id)
+							if(button_to_click==undefined){button_to_click = {}}
+								for (let index = 0; index < multi_val.length; index++) {
+									value_to_add[multi_id] = multi_val
+									button_to_click[multi_table_value[multi_id]] = add_btn
+								}
+							}
+							continue;
+
 						}
-					}
-					continue;
+						if (x_ins[index].type == "checkbox") {
+							try{
+								if (res[x_ins[index].id] === "true") {
+									x_ins[index].click()
+								}
+							}catch(err){
+								warnprintln(x_ins[index].id + " ||| " + err)
+							}
+						} else if (x_ins[index].type == "select-one" || x_ins[index].type == "select-multiple") {
+							try{
+								if(CHOICES_SELECT[x_ins[index].id] != undefined){
+									// alert("kamown")
+									var _val = res[x_ins[index].id].split(",")
+									CHOICES_SELECT[x_ins[index].id].setValue(_val);
+									x_ins[index].value = res[x_ins[index].id]
 
-				}
-				// if(multi_table_value[multi_id] != undefined){
-				// 	const add_btn = x_ins[index].parentNode.parentNode.parentNode.querySelectorAll("button")[0]
-				// 	var multi_val = res[multi_id].split(",")
-				// 	// println(x_ins[index].parentNode.parentNode.parentNode)
-				// 	for (let index = 0; index < multi_val.length; index++) {
-				// 		println(add_btn)
-				// 		value_to_add[multi_id] = multi_val
-				// 		button_to_click = add_btn
-				// 	}
-				// 	continue;
-				// }
-				/////////////////
+								}else{
+									// println(x_ins[index].classList)
+									x_ins[index].value = res[x_ins[index].id]
+								}
+							}catch(err){
+								warnprintln(x_ins[index].id + " ||| " + err)
+							}
 
-
-				if (x_ins[index].type == "checkbox") {
-					try{
-						if (res[x_ins[index].id] === "true") {
-							x_ins[index].click()
+						} else {
+							try {
+								x_ins[index].value = res[x_ins[index].id]
+							} catch (error) {
+								warnprintln(x_ins[index].id + " ||| " + error)
+							}
 						}
-					}catch(err){
-						warnprintln(x_ins[index].id + " ||| " + err)
-					}
-				} else if (x_ins[index].type == "select-one" || x_ins[index].type == "select-multiple") {
-					// println(res[x_ins[index].id].split(","))
-					// println(CHOICES_SELECT)
-					// println(CHOICES_SELECT[x_ins[index].id])
-					try{
-						if(CHOICES_SELECT[x_ins[index].id] != undefined){
-							// alert("kamown")
-							var _val = res[x_ins[index].id].split(",")
-							CHOICES_SELECT[x_ins[index].id].setValue(_val);
-							x_ins[index].value = res[x_ins[index].id]
+						var USER_ID = JSON.parse('{{user_data}}'.replaceAll('&#39;','"'))['id']
+						if(USER_ID==parseInt(res['upload_by'])){
+							x_ins[index].disabled = false;try{CHOICES_SELECT[x_ins[index].id].enable()}catch(e){warnprintln(e)}
 
 						}else{
-							// println(x_ins[index].classList)
-							x_ins[index].value = res[x_ins[index].id]
+							x_ins[index].disabled = true;try{CHOICES_SELECT[x_ins[index].id].disable()}catch(e){warnprintln(e)}
+							try{
+								$ID('submit_btn_holder').innerHTML = "<br><i style='font-size: medium; font-weight: bolder; 'class='x-text-red'><i class='fa-solid fa-circle-exclamation'></i> This record is not yours </i>"
+								$ID('head_note').innerHTML = "<i style='font-size: small; color:#ffb366; font-weight: bold; 'class='x-text'><i class='fa-solid fa-circle-exclamation'></i> This record is not yours <br> Editing is Disabled.</i>"
+							}catch(e){
+								warnprintln(e)
+							}
 						}
-					}catch(err){
-						warnprintln(x_ins[index].id + " ||| " + err)
 					}
-
-				} else {
-					try {
-						x_ins[index].value = res[x_ins[index].id]
-					} catch (error) {
-						warnprintln(x_ins[index].id + " ||| " + error)
+					dom_refresh();
+					for (let index = 0; index < x_ins.length; index++) {
+						if(x_ins[index].getAttributeNames().includes("show-base") && x_ins[index].getAttributeNames().includes("show-trigger")){
+							var base_id = x_ins[index].getAttribute("show-base")
+							var child_id_value = x_ins[index].getAttribute("show-trigger").split("||");
+							var base_id_value = $ID(base_id).value
+							println(base_id_value + " ====== " + child_id_value)
+							if(child_id_value.includes(base_id_value)){
+								println('match')
+								println(x_ins[index].id)
+								triggerChange(x_ins[index])
+								x_ins[index].style.display = "block";
+								dom_refresh();
+							}
+						}
 					}
-				}
-				var USER_ID = JSON.parse('{{user_data}}'.replaceAll('&#39;','"'))['id']
-				if(USER_ID==parseInt(res['upload_by'])){
-					x_ins[index].disabled = false;try{CHOICES_SELECT[x_ins[index].id].enable()}catch(e){warnprintln(e)}
-					
-				}else{
-					x_ins[index].disabled = true;try{CHOICES_SELECT[x_ins[index].id].disable()}catch(e){warnprintln(e)}
-					try{
-						$ID('submit_btn_holder').innerHTML = "<br><i style='font-size: medium; font-weight: bolder; 'class='x-text-red'><i class='fa-solid fa-circle-exclamation'></i> This record is not yours </i>"
-						$ID('head_note').innerHTML = "<i style='font-size: small; color:#ffb366; font-weight: bold; 'class='x-text'><i class='fa-solid fa-circle-exclamation'></i> This record is not yours <br> Editing is Disabled.</i>"
-					}catch(e){
-						warnprintln(e)
-					}
-				}
-			}
-			dom_refresh();
-			for (let index = 0; index < x_ins.length; index++) {
-				// x_ins[index].value = res[x_ins[index].id]
-				if(x_ins[index].getAttributeNames().includes("show-base") && x_ins[index].getAttributeNames().includes("show-trigger")){
-					var base_id = x_ins[index].getAttribute("show-base")
-					var child_id_value = x_ins[index].getAttribute("show-trigger").split("||");
-					var base_id_value = $ID(base_id).value
-					println(base_id_value + " ====== " + child_id_value)
-					// println(child_id_value.includes(base_id_value))
-					// if(base_id_value == child_id_value){
-					if(child_id_value.includes(base_id_value)){
-						println('match')
-						println(x_ins[index].id)
-						triggerChange(x_ins[index])
-						x_ins[index].style.display = "block";
-						dom_refresh();
-					}
-				}
-			}
-			// "choices__button"
-			// var choices__list =$CLASS("choices__input")
-			// for (let index = 0; index < choices__list.length; index++) {
-			// 	choices__list[index].disabled = true;
-				
-			// }
 
 			set_multi_table_row() // init multi table row with multiple value
 			dom_refresh();
@@ -344,7 +314,7 @@ function submit_form(class_name,table, url){
 			var orig_id = key.split("_kapown_")[0]
 			temp_data.push(form_data[key])
 			if(temp_form_data[orig_id]==undefined){temp_form_data[orig_id] = []}
-			temp_form_data[orig_id].push(form_data[key])
+				temp_form_data[orig_id].push(form_data[key])
 			// println(orig_id)
 			delete form_data[key]
 
@@ -357,17 +327,17 @@ function submit_form(class_name,table, url){
 	// println(form_data)
 
 	$send({
-			action: "/set_data/" + table,
-			data: $DATA(form_data),
-			method: POST,
-			func: function (r) {
-				var res = JSON.parse(r)
-				println(res)
-				if (res.id.response == "done") {
-					Swal.fire(
-						'Success!',
-						'Record Saved!',
-						'success'
+		action: "/set_data/" + table,
+		data: $DATA(form_data),
+		method: POST,
+		func: function (r) {
+			var res = JSON.parse(r)
+			println(res)
+			if (res.id.response == "done") {
+				Swal.fire(
+					'Success!',
+					'Record Saved!',
+					'success'
 					).then((result) => {
 						if (result.isConfirmed) {
 							window.location.href = url;
@@ -379,7 +349,7 @@ function submit_form(class_name,table, url){
 						'Error!',
 						res.id.message,
 						'error'
-					);
+						);
 				}
 			}
 		})
