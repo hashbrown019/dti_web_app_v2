@@ -288,14 +288,14 @@ def search_farmer_org():
 		SELECT 
 			`id`,
 			`organization_registered_name` as 'fname',
-			`file_name` as 'reference',
-			`office_business_adrress` as 'addr_brgy',
+			`id` as 'reference',
+			`office_business_adrress` as 'addr_brgy'
 		FROM 
 			`form_b` 
 		WHERE 
-			`organization_registered_name` LIKE '{}' ;
+			`organization_registered_name` LIKE "%{}%" ;
 	'''.format(search_item)
-
+	print(data_ex)
 	ind = rapid_mysql.select(data_ex)
 	return jsonify(ind)
 
