@@ -203,11 +203,12 @@
 				var API_ = ""
 				if(type_== 'farmer'){API_ = "search_farmer_profile"}
 				else if(type_== 'fo'){API_ = "search_farmer_org"}
+				else {return}
 					
 				var search_key = $ID('fname').value
 				SPINNER_LOADER.show()
 				$send({
-					action : "/formb/"+API_,
+					action : "/data_link/"+API_,
 					method : POST,
 					err_dialog:true,
 					data : $DATA({'search_item':search_key}),

@@ -203,6 +203,76 @@ class _main:
 			return {"id":delid}
 		else:
 			return redirect("/login?force_url=1")
+			
+	@app.route("/data_link/search_farmer_profile",methods=["POST","G ET"])
+	@c.login_auth_web()
+	def search_farmer_profile():
+		search_item = request.form['search_item']
+		data_m = '''
+			SELECT 
+				`id`,
+				CONCAT(`f_name`,' ',`m_name`,' ',`l_name`) as 'fname',
+			    `farmer_name` as 'complete_name',
+				`farmer_code` as 'reference',
+				`farmer_bday`,
+				`addr_region`,
+				`addr_prov`,
+				`addr_city`,
+				`addr_brgy`,
+				`farmer_primary_crop`,
+				`farmer_sex` as 'sex',
+				`farmer_civil_status` as 'civil_status'
+			FROM 
+				`form_a_farmer_profiles` 
+			WHERE 
+				`f_name` LIKE '{}' OR
+				`m_name` LIKE '{}' OR
+				`l_name` LIKE '{}' OR
+				`farmer_name` LIKE '{}';
+		'''.format(search_item,search_item,search_item,search_item)
+
+		data_ex = '''
+			SELECT 
+				`id`,
+				 CONCAT(`frmer_prof_@_basic_Info_@_First_name`,' ',`frmer_prof_@_basic_Info_@_Middle_name`,' ',`frmer_prof_@_basic_Info_@_Last_name`) as 'fname',
+				`file_name` as 'reference',
+				`frmer_prof_@_basic_Info_@_birthday` as 'farmer_bday',
+				`frmer_prof_@_frmer_addr_@_region` as 'addr_region',
+				`frmer_prof_@_frmer_addr_@_province` as 'addr_prov',
+				`frmer_prof_@_frmer_addr_@_city_municipality` as 'addr_city',
+				`frmer_prof_@_frmer_addr_@_brgy` as 'addr_brgy',
+				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'farmer_primary_crop',
+				`frmer_prof_@_basic_Info_@_Sex` as 'sex',
+				`frmer_prof_@_basic_Info_@_civil_status` as 'civil_status'
+			FROM 
+				`excel_import_form_a` 
+			WHERE 
+				`frmer_prof_@_basic_Info_@_First_name` LIKE '{}' OR
+				`frmer_prof_@_basic_Info_@_Middle_name` LIKE '{}' OR
+				`frmer_prof_@_basic_Info_@_Last_name` LIKE '{}';
+		'''.format(search_item,search_item,search_item)
+
+		ind = rapid_mysql.select(data_m) + rapid_mysql.select(data_ex)
+		return jsonify(ind)
+
+	@app.route("/data_link/search_farmer_org",methods=["POST","G ET"])
+	@c.login_auth_web()
+	def search_farmer_org():
+		search_item = request.form['search_item']
+		data_ex = '''
+			SELECT 
+				`id`,
+				`organization_registered_name` as 'fname',
+				`id` as 'reference',
+				`office_business_adrress` as 'addr_brgy'
+			FROM 
+				`form_b` 
+			WHERE 
+				`organization_registered_name` LIKE "%{}%" ;
+		'''.format(search_item)
+		print(data_ex)
+		ind = rapid_mysql.select(data_ex)
+		return jsonify(ind)
 
 def _filter(area):
 	_filter =""
