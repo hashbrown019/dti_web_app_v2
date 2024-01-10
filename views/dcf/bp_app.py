@@ -458,7 +458,7 @@ def dcfexport_data():
 		if export_type == 'form1export':
 			def form1export():
 				if request.method == "POST":
-					query= db.select("SELECT id,form_1_rcus,form_1_name_dip,form_1_anchor_firm,form_1_size_of_anchor,form_1_msmes,form_1_scope_provinces,CONCAT(form_1_commodity, ' ', form_1_commodity_others) AS Commodity,form_1_for_development,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,total_large_enterprise,total_medium_enterprise,total_small_enterprise,total_micro_enterprise,form_1_totalmale,form_1_maleyouth,form_1_maleip,form_1_malepwd,form_1_totalfemale,form_1_femaleyouth,form_1_femaleip,form_1_femalepwd,form_1_totalyouth,form_1_totalip,form_1_totalpwd,form_1_totalcooperatives,form_1_totalassociations,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_totalhectarage_cov,form_1_euqipment,form_1_Facilities_warehouse,form_1_totalcost_prodinvest,form_1_total_rehab,form_1_total_exp,form_1_totalcost_prodinvest2,form_1_partners_counterpart,form_1_total_matching_grant,form1_total_mg_cost,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_total_capbuild,form_1_total_capbuild_counterpart,form_1_supply_chain_manager,supply_chain_manager_counterpart,form_1_fmi,form_1_fmi_kms,fmi_part_counter,form_1_y,form_1_ac,form_1_ad,form1_total_fmi,form_1_totalproject_cost,partner_counterpart_MG,partner_counterpart_CB,partner_counterpart_SCM,partner_counterpart_FMI,partner_counterpart_total,total_dip_cost_MG,total_dip_cost_CB,total_dip_cost_SCM,total_dip_cost_FMI,total_dip_cost_total FROM dcf_prep_review_aprv_status")
+					query= db.select("SELECT id,form_1_rcus,form_1_name_dip,form_1_anchor_firm,form_1_size_of_anchor,form_1_msmes,form_1_scope_provinces,CONCAT(form_1_commodity, ' ', form_1_commodity_others) AS Commodity,form_1_for_development,form_1_finalized_approved,form_1_date_of_parallel_review,form_1_date_of_submission,form_1_date_of_rtwg,form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,total_large_enterprise,total_medium_enterprise,total_small_enterprise,total_micro_enterprise,form_1_totalmale,form_1_maleyouth,form_1_maleip,form_1_malepwd,form_1_totalfemale,form_1_femaleyouth,form_1_femaleip,form_1_femalepwd,form_1_totalyouth,form_1_totalip,form_1_totalpwd,form_1_totalcooperatives,form_1_totalassociations,form_1_totalmsme,form_1_total_farmerbene,form_1_totalfo,form_1_hect_rehab,form_1_total_cost_rehab,form_1_hect_exp,form_1_cost_exp,form_1_totalhectarage_cov,form_1_euqipment,form_1_Facilities_warehouse,form_1_totalcost_prodinvest,form_1_total_rehab,form_1_total_exp,form_1_totalcost_prodinvest2,form_1_partners_counterpart,form_1_total_matching_grant,form1_total_mg_cost,form_1_organizational,form_1_technical_trainings,form_1_post_production,form_1_others,form_1_total_capbuild,form_1_total_capbuild_counterpart,form_1_supply_chain_manager,supply_chain_manager_counterpart,form_1_fmi,form_1_fmi_kms,fmi_part_counter,form_1_y,form_1_ac,form_1_ad,form1_total_fmi,form_1_totalproject_cost,partner_counterpart_MG,partner_counterpart_CB,partner_counterpart_SCM,partner_counterpart_FMI,partner_counterpart_total,total_dip_cost_MG,total_dip_cost_CB,total_dip_cost_SCM,total_dip_cost_FMI,total_dip_cost_total FROM dcf_prep_review_aprv_status {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -482,7 +482,7 @@ def dcfexport_data():
 		elif export_type == 'form2export':
 			def form2export():
 				if request.method == "POST":
-					query= db.select("SELECT id,form_2_rcus,form_2_pcu,CONCAT(form_2_commodity, ' ', form_2_commodity_others) AS Commodity,CONCAT(form_2_dip_alignment, ' ', form_2_dip_alignment_yes) AS dip_alignment,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_businessname,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,CONCAT(form_2_remarks_status, ' ', form_2_remarks_status_why) AS remark_status,form_2_activity_agreements,form_2_date_conducted FROM dcf_implementing_unit")
+					query= db.select("SELECT id,form_2_rcus,form_2_pcu,CONCAT(form_2_commodity, ' ', form_2_commodity_others) AS Commodity,CONCAT(form_2_dip_alignment, ' ', form_2_dip_alignment_yes) AS dip_alignment,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_businessname,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,CONCAT(form_2_remarks_status, ' ', form_2_remarks_status_why) AS remark_status,form_2_activity_agreements,form_2_date_conducted FROM dcf_implementing_unit {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -506,7 +506,7 @@ def dcfexport_data():
 		elif export_type == 'form3export':
 			def form3export():
 				if request.method == "POST":
-					query= db.select("SELECT id,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered FROM dcf_bdsp_reg")
+					query= db.select("SELECT id,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered FROM dcf_bdsp_reg {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -531,7 +531,7 @@ def dcfexport_data():
 		elif export_type == 'form4export':
 			def form4export():
 				if request.method == "POST":
-					query= db.select("SELECT id,cbb_implementing_unit,cbb_activity_title,cbb_types_of_training,cbb_topic_of_training,cbb_dip_approved_alignment,cbb_name_of_dip,cbb_date_start,cbb_date_end,cbb_total_number_of_participants,CONCAT(cbb_commodity, ' ', cbb_commodity_others) AS Commodity,cbb_venue,cbb_name_of_resource_person,cbb_rapid_actual_budget,cbb_dip_capbuild_activities_NPO,cbb_dip_capbuild_activities_CA,cbb_total_number_per_gender_male,cbb_total_number_per_gender_female,cbb_total_number_per_gender_total,cbb_total_number_per_sector_pwd,cbb_total_number_per_sector_youth,cbb_total_number_per_sector_ip,cbb_total_number_per_sector_sc,cbb_total_number_per_sector_total,cbb_results_of_activity_pre_test,cbb_results_of_activity_post_test,cbb_client_feedback_survey_rating,cbb_client_feedback_survey_comments_AOI FROM dcf_capacity_building")
+					query= db.select("SELECT id,cbb_implementing_unit,cbb_activity_title,cbb_types_of_training,cbb_topic_of_training,cbb_dip_approved_alignment,cbb_name_of_dip,cbb_date_start,cbb_date_end,cbb_total_number_of_participants,CONCAT(cbb_commodity, ' ', cbb_commodity_others) AS Commodity,cbb_venue,cbb_name_of_resource_person,cbb_rapid_actual_budget,cbb_dip_capbuild_activities_NPO,cbb_dip_capbuild_activities_CA,cbb_total_number_per_gender_male,cbb_total_number_per_gender_female,cbb_total_number_per_gender_total,cbb_total_number_per_sector_pwd,cbb_total_number_per_sector_youth,cbb_total_number_per_sector_ip,cbb_total_number_per_sector_sc,cbb_total_number_per_sector_total,cbb_results_of_activity_pre_test,cbb_results_of_activity_post_test,cbb_client_feedback_survey_rating,cbb_client_feedback_survey_comments_AOI FROM dcf_capacity_building {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -556,7 +556,7 @@ def dcfexport_data():
 		elif export_type == 'form5export':
 			def form5export():
 				if request.method == "POST":
-					query= db.select("SELECT id,CONCAT(mgit_implementing_unit, ' ', mgit_implementing_unit_rcu, ',' ,mgit_implementing_unit_pcu) AS Implementing_unit,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools FROM dcf_matching_grant")
+					query= db.select("SELECT id,CONCAT(mgit_implementing_unit, ' ', mgit_implementing_unit_rcu, ',' ,mgit_implementing_unit_pcu) AS Implementing_unit,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools FROM dcf_matching_grant {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -581,7 +581,7 @@ def dcfexport_data():
 		elif export_type == 'form6export':
 			def form6export():
 				if request.method == "POST":
-					query = db.select("SELECT id,form_6_implementing_unit,form_6_type_of_assisstance,form_6_type_of_activity,form_6_dip_alignment,form_6_activity_duration_start,form_6_activity_duration_end,form_6_venue,form_6_resource_person,form_6_rapid_actual_budget,form_6_name_of_partner_organization_1,form_6_name_of_partner_organization_2,form_6_beneficiary_participant,form_6_commodity,form_6_type_of_beneficiary,form_6_sex,form_6_sector,form_6_product_developed,form_6_date_launched_to_market,form_6_improved_product,form_6_type_of_product_improvement,form_6_name_of_product_developed,form_6_,CONCAT(form_6_certification, ' ', form6_otherss1) AS certification1,CONCAT(form_6_certification2, ' ', form6_otherss2) AS certification2,form_6_date_issuance,form_6_expiration_date,form_6_product_certified,form_6_rating,form_6_comment_ares_of_improvement FROM dcf_product_development")
+					query = db.select("SELECT id,form_6_implementing_unit,form_6_type_of_assisstance,form_6_type_of_activity,form_6_dip_alignment,form_6_activity_duration_start,form_6_activity_duration_end,form_6_venue,form_6_resource_person,form_6_rapid_actual_budget,form_6_name_of_partner_organization_1,form_6_name_of_partner_organization_2,form_6_beneficiary_participant,form_6_commodity,form_6_type_of_beneficiary,form_6_sex,form_6_sector,form_6_product_developed,form_6_date_launched_to_market,form_6_improved_product,form_6_type_of_product_improvement,form_6_name_of_product_developed,form_6_,CONCAT(form_6_certification, ' ', form6_otherss1) AS certification1,CONCAT(form_6_certification2, ' ', form6_otherss2) AS certification2,form_6_date_issuance,form_6_expiration_date,form_6_product_certified,form_6_rating,form_6_comment_ares_of_improvement FROM dcf_product_development {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -608,7 +608,7 @@ def dcfexport_data():
 		elif export_type == 'form7export':
 			def form7export():
 				if request.method == "POST":
-					query = db.select("SELECT id,form_7_implementing_unit,form_7_title_trade_promotion,form_7_type_of_trade_promotion,form_7_dip_indicate,form_7_start_date,form_7_end_date,form_7_name_of_po,form_7_amount,form_7_venue,form_7_rapid_actual_budget,form_7_name_of_beneficiary,CONCAT(form_7_commodity, ' ',form_7_commodity_others) AS Commodity,form_7_beneficiary,form_7_sex,form_7_sector,form_7_type_of_products,form_7_name_of_buyer,form_7_cash_sales,form_7_booked_sales,form_7_under_negotiations,form_7_total_autosum FROM dcf_trade_promotion")
+					query = db.select("SELECT id,form_7_implementing_unit,form_7_title_trade_promotion,form_7_type_of_trade_promotion,form_7_dip_indicate,form_7_start_date,form_7_end_date,form_7_name_of_po,form_7_amount,form_7_venue,form_7_rapid_actual_budget,form_7_name_of_beneficiary,CONCAT(form_7_commodity, ' ',form_7_commodity_others) AS Commodity,form_7_beneficiary,form_7_sex,form_7_sector,form_7_type_of_products,form_7_name_of_buyer,form_7_cash_sales,form_7_booked_sales,form_7_under_negotiations,form_7_total_autosum FROM dcf_trade_promotion {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -635,7 +635,7 @@ def dcfexport_data():
 		elif export_type == 'form9export':
 			def form9export():
 				if request.method == "POST":
-					query = db.select("SELECT id,form_9_implementing_unit,form_9_title_trade_promotion,CONCAT(form_9_type_of_training, ' ',form_9_othertypetraining ) AS type_of_training,form_9_start_date,form_9_end_date,form_9_venue,form_9_rapid_actual_budget,form_9_name_of_resource_person,form_9_name_of_participant_org,form_9_counterpart_amount,form_9_name_of_participant,form_9_sex,form_9_sector,form_9_organization,form_9_designation,form_9_pre_test1,form_9_post_test1,form_9_activity_output,form_9_pre_test2,form_9_post_test2,form_9_rating,form_9_comments FROM dcf_enablers_activity")
+					query = db.select("SELECT id,form_9_implementing_unit,form_9_title_trade_promotion,CONCAT(form_9_type_of_training, ' ',form_9_othertypetraining ) AS type_of_training,form_9_start_date,form_9_end_date,form_9_venue,form_9_rapid_actual_budget,form_9_name_of_resource_person,form_9_name_of_participant_org,form_9_counterpart_amount,form_9_name_of_participant,form_9_sex,form_9_sector,form_9_organization,form_9_designation,form_9_pre_test1,form_9_post_test1,form_9_activity_output,form_9_pre_test2,form_9_post_test2,form_9_rating,form_9_comments FROM dcf_enablers_activity {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -662,7 +662,7 @@ def dcfexport_data():
 		elif export_type == 'form10export':
 			def form10export():
 				if request.method == "POST":
-					query = db.select("SELECT id,form_10_nc_location,form_10_name_of_nc,form_10_title_of_rapid_activity,form_10_type_of_assistance,form_10_date,form_10_type_of_beneficiary,form_10_sex_male,form_10_sex_female,form_10_commodity FROM dcf_negosyo_center")
+					query = db.select("SELECT id,form_10_nc_location,form_10_name_of_nc,form_10_title_of_rapid_activity,form_10_type_of_assistance,form_10_date,form_10_type_of_beneficiary,form_10_sex_male,form_10_sex_female,form_10_commodity FROM dcf_negosyo_center {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -689,7 +689,7 @@ def dcfexport_data():
 		elif export_type == 'form11export':
 			def form11export():
 				if request.method == "POST":
-					query = db.select("SELECT id,CONCAT(form_11_dip_alignment, ' ', form_11_dip_alignment_yes) AS form11_dip,form_11_activity_title,form_11_name_of_beneficiary,CONCAT(form_11_industry_cluster, ' ', form_11_industry_pfn) AS industry_cluster,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released FROM dcf_access_financing")
+					query = db.select("SELECT id,CONCAT(form_11_dip_alignment, ' ', form_11_dip_alignment_yes) AS form11_dip,form_11_activity_title,form_11_name_of_beneficiary,CONCAT(form_11_industry_cluster, ' ', form_11_industry_pfn) AS industry_cluster,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released FROM dcf_access_financing {}".format(position_data_filter()))
 					df_nested_list = pd.json_normalize(query)
 					df = pd.DataFrame(df_nested_list)
 					df = df.astype(str)
@@ -785,3 +785,35 @@ FORM_NAME={
 }
 # if __name__ == "__main__":
 #     app.run(debug=True)
+
+def position_data_filter():
+	_filter = "WHERE 1 "
+	JOB = session["USER_DATA"][0]["job"].lower()
+
+	if(JOB in "admin" or JOB in "super admin"):
+		session["USER_DATA"][0]["office"] = "NPCO"
+		_filter = "WHERE 1 "
+	else:
+		session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
+		_filter = "WHERE  upload_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"]) 
+	return _filter
+
+def strct_dic(dict_):
+	new_dict_ = {};
+	for data in dict_:new_dict_[data['key']] = data['total']
+	return json.loads(json.dumps(new_dict_))
+
+def strct_clean(dict_):
+	new_dict_ = {};
+	for data in dict_:new_dict_[data['key']] = data['total']
+	return Filter.clean(json.loads(json.dumps(new_dict_)))
+
+def clean(dict_):
+	new_dict_ = {};
+	for key in dict_:
+		KEY = key.lower().replace(" ","").replace(".","").replace("/","").replace("\\","").replace("-","").replace("*","").replace(",","").replace("(","").replace(")","").replace("&","")
+		if(KEY not in new_dict_):
+			new_dict_[KEY] = 0
+		new_dict_[KEY] = new_dict_[KEY]+dict_[key]
+		
+	return json.loads(json.dumps(new_dict_))

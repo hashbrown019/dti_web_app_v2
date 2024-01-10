@@ -40,6 +40,11 @@
           align-items: center;
           border-radius: 50%;
         }
+        .chartjs-wrapper {
+  margin:0 auto;
+  width: 32vw;
+  height: auto;
+}
       </style>
 
       <div class="col-xl-12 col-md-6">
@@ -71,6 +76,11 @@
   </div>
 
 </div>  
+<br>
+<br>
+<div class="chartjs-wrapper">
+  <canvas class="chartjs-stacked-bar"></canvas>
+</div>
 
 
 <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Show data</a>
@@ -218,6 +228,51 @@
   </div>
 </div>
 <script>
+
+
+var chart = new Chart(
+    document.getElementsByClassName('chartjs-stacked-bar'),
+    {
+    type: 'horizontalBar',
+    data: {
+        labels: ["Remarks/Status"],
+        datasets: [{
+            data: [{{dcf_form2nonrenewal}}],
+            label:"Non-renewal",
+            stack: "Remarks/Status",
+            backgroundColor: "#808080",
+            hoverBackgroundColor: "rgba(50,90,100,1)"
+        },{
+            data: [{{dcf_form2cancelled}}],
+            label: "Cancelled",
+            stack: "Remarks/Status",
+            backgroundColor: "#ff8566",
+            hoverBackgroundColor: "rgba(140,85,100,1)"
+        },{
+            data: [{{dcf_form2og}}],
+            label:"On-going",
+            stack: "Remarks/Status",
+            backgroundColor: "#80aaff",
+            hoverBackgroundColor: "rgba(46,185,235,1)"
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                stacked: true
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        },
+        title: {
+        display: true,
+        text: `Total remarks/status: {{totalstatus}}`,
+        fontSize: 15,
+        fontColor: '#204060',
+      }
+    }
+});
 
   var xValues = [
     'Male: ' + money({{dcf_form2FOmale[0]['total_male2']}}),

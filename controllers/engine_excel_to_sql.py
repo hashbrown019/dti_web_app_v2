@@ -27,7 +27,7 @@ class form_excel_a_handler:
 
 	def get_all_uploaded_excel_data_f_a(self):
 		return self.excel_popu_a()
-
+ 
 	def excel_popu_a(self):
 		msg = "Unfinished"
 		status = "Unfinished"

@@ -64,6 +64,17 @@ def displayform():
     form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {} ORDER BY `id` DESC;".format(position_data_filter()))
     form11_datatable=db.select("SELECT * FROM dcf_access_financing {} ORDER BY `id` DESC;".format(position_data_filter()))
 
+
+    form2status_nonrenewal=db.select("SELECT form_2_remarks_status AS totalnonrenewal FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Non-renewal';".format(position_data_filter()))
+    dcf_form2nonrenewal=len(form2status_nonrenewal)
+    form2status_cancelled=db.select("SELECT form_2_remarks_status AS totalcancelled FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Cancelled';".format(position_data_filter()))
+    dcf_form2cancelled=len(form2status_cancelled)
+    form2status_og=db.select("SELECT form_2_remarks_status AS totalog FROM dcf_implementing_unit {} AND form_2_remarks_status = 'On-going';".format(position_data_filter()))
+    dcf_form2og=len(form2status_og)
+    totalstatus = dcf_form2cancelled+dcf_form2nonrenewal+dcf_form2og
+
+
+
     dcf_form1male=db.select("SELECT SUM(form_1_totalmale) AS total_male FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1maleyouth=db.select("SELECT SUM(form_1_maleyouth) AS total_maleyouth FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1maleip=db.select("SELECT SUM(form_1_maleip) AS total_maleip FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
@@ -73,6 +84,8 @@ def displayform():
     dcf_form1sextotal=db.select("SELECT SUM(form_1_total_farmerbene) AS total_sex FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form2sextotal=db.select("SELECT  SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form3sextotal=db.select("SELECT COUNT(CASE WHEN form_3_sex = 'male' OR form_3_sex = 'female' THEN 1 END) AS total_sex3 FROM dcf_bdsp_reg {}; ".format(position_data_filter()))
+    dcf_form4sextotal=db.select("SELECT  SUM(cbb_total_number_per_gender_male + cbb_total_number_per_gender_female)AS total_sex4 FROM dcf_capacity_building {}; ".format(position_data_filter()))
+
 
 
     dcf_form1female=db.select("SELECT SUM(form_1_totalfemale) AS total_female FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
@@ -119,6 +132,24 @@ def displayform():
     #         form_1_rcus,
     #         form_1_commodity
     #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+
+
+###########################FORM4##################################################
+    dips_list4 = form4_datatable
+    over_all_commodity_count4 = {}
+    for index in range(len(dips_list4)):
+        DIP4 = dips_list4[index]
+        _comm_rule4 = ["cacao","coconut","coffee","pfn"]
+        _com4 = DIP4['cbb_commodity']
+        if(_com4.lower() not in _comm_rule4):
+            _com4 = "Others"
+        if(_com4 not in over_all_commodity_count4):
+            over_all_commodity_count4[_com4 ] = 0
+        over_all_commodity_count4[_com4 ] += 1
+
+
+
+
 
 ##################################FORM3#########################################
 
@@ -283,6 +314,7 @@ def displayform():
         'dcf_form1sextotal':dcf_form1sextotal,
         'dcf_form2sextotal':dcf_form2sextotal,
         'dcf_form3sextotal':dcf_form3sextotal,
+        'dcf_form4sextotal':dcf_form4sextotal,
         'dcf_form1female':  dcf_form1female,
         'dcf_form1femaleyouth': dcf_form1femaleyouth,
         'dcf_form1femaleip':dcf_form1femaleip,
@@ -294,6 +326,10 @@ def displayform():
         'dcf_form4male':  dcf_form4male,
         'dcf_form4female':  dcf_form4female,
         'dips_list':  dip_status_group_per_region,
+        'dcf_form2nonrenewal': dcf_form2nonrenewal,
+        'dcf_form2cancelled': dcf_form2cancelled,
+        'dcf_form2og': dcf_form2og,
+        'totalstatus': totalstatus,
         'over_all_dips_list':  over_all,
         'total_dip_nat':alltotal,
         'dip_sex_group_per_region' : dip_sex_group_per_region,
@@ -305,6 +341,7 @@ def displayform():
         'total_untagged' : total_untagged,
         'over_all_commodity_count':over_all_commodity_count,
         'over_all_commodity_count2':over_all_commodity_count2,
+        'over_all_commodity_count4':over_all_commodity_count4,
         'typebdsp':typebdsp
 
 
