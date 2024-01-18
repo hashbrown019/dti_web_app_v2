@@ -521,6 +521,7 @@ class _main:
 
 		primary_crop = Populate.primary_crop(mobile_primary_c,excl_primary_c)
 		data = {
+			# "hectareage" : _main.get_hectareage(),
 			"query_suffix" : str(FILTER_SUFFIX),
 			"area_reg" : session["USER_DATA"][0]["office"],
 			"all_farmer_count" : all_farmer_count,
@@ -543,6 +544,82 @@ class _main:
 		}
 		return data
 		# return [all_mob_female[0]['f'],all_mob_male[0]['m']]
+
+
+	@app.route("/feature_0/get_hectareage",methods=["POST","GET"])
+	@c.login_auth_web()
+	def get_hectareage():
+		segre ={
+			"male":{
+				"below_to_0_5": 0,
+				"0_5_to_1": 0,
+				"1_to_1_5": 0,
+				"1_5_to_2": 0,
+				"2_to_2_5": 0,
+				"2_5_to_3": 0,
+				"3_to_3_5": 0,
+				"3_to_above": 0,
+				"untagged": 0,
+			},
+			"female":{
+				"below_to_0_5": 0,
+				"0_5_to_1": 0,
+				"1_to_1_5": 0,
+				"1_5_to_2": 0,
+				"2_to_2_5": 0,
+				"2_5_to_3": 0,
+				"3_to_3_5": 0,
+				"3_to_above": 0,
+				"untagged": 0,
+			},
+
+		}
+		actual = {}
+		FILTER_SUFFIX = Filter.position_data_filter()
+		query = rapid_mysql.select
+		dic = Filter.strct_clean
+		hectareage = query("SELECT `farm_info@_Farm_Basic_Info_@_declared_area_Ha` as 'ha', `frmer_prof_@_basic_Info_@_Sex` as 'sex' FROM `excel_import_form_a`  {} ;".format(FILTER_SUFFIX))
+		for details in hectareage:
+			ha__ = (re.sub(r"[a-zA-Z]", '', details['ha']))
+
+			try:
+				ha = float(ha__)
+				if(ha not in actual):
+					actual[ha] = 0
+				actual[ha]+=1
+
+				if(ha <= 0.5):
+					segre[details["sex"]]["below_to_0_5"] +=1
+				elif(ha > 0.5 and ha <= 1.0):
+					segre[details["sex"]]["0_5_to_1"] +=1
+				elif(ha > 1.0 and ha <= 1.5):
+					segre[details["sex"]]["1_to_1_5"] +=1
+				elif(ha > 1.5 and ha <= 2.0):
+					segre[details["sex"]]["1_5_to_2"] +=1
+				elif(ha > 2.0 and ha <= 2.5):
+					segre[details["sex"]]["2_to_2_5"] +=1
+				elif(ha > 2.5 and ha <= 3.0):
+					segre[details["sex"]]["2_5_to_3"] +=1
+				elif(ha > 3.0 and ha <= 3.5):
+					segre[details["sex"]]["3_to_3_5"] +=1
+				elif(ha > 3.5):
+					segre[details["sex"]]["3_to_3_5"] +=1
+				else:
+					segre[details["sex"]]["untagged"] +=1
+
+
+				print(float(details))
+			except Exception as e:
+				# raise e
+				# print(f"{e} == {ha__}")
+				pass
+		myKeys = list(actual.keys())
+		myKeys.sort()
+		sorted_dict = {i: actual[i] for i in myKeys}
+
+		print(sorted_dict)
+		return sorted_dict.update(segre)
+		# return segre
 
 	@app.route("/feature_0/data_clean_duplicates",methods=["POST","GET"])
 	@c.login_auth_web()
