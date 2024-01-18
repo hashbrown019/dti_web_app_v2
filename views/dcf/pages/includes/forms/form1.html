@@ -559,9 +559,9 @@
 
 							<tr>
 								<td><input class="FORM1_FIELD x-input x-border form-1-aa" id="form_1_total_rehab"
-										name="form_1_total_rehab" type="number" placeholder=""></td>
+										name="form_1_total_rehab" type="number" placeholder="" readonly></td>
 								<td><input class="FORM1_FIELD x-input x-border form-1-ab" id="form_1_total_exp" name="form_1_total_exp"
-										type="number" placeholder=""></td>
+										type="number" placeholder="" readonly></td>
 								<td><input class="FORM1_FIELD x-input x-border form_1_totalcost_prodinvest2"
 										id="form_1_totalcost_prodinvest2" name="form_1_totalcost_prodinvest2" type="number"
 										placeholder="" readonly></td>
@@ -899,6 +899,41 @@
 	}
 
 	// ===============================================================================
+
+	    $(document).ready(function () {
+        // Attach input event listener to form_1_total_cost_rehab
+        $('#form_1_total_cost_rehab').on('input', function () {
+            // Get the value and update form_1_total_rehab
+            var value = $(this).val();
+            $('#form_1_total_rehab').val(value);
+        });
+
+        // Attach input event listener to form_1_cost_exp
+        $('#form_1_cost_exp').on('input', function () {
+            // Get the value and update form_1_total_exp
+            var value = $(this).val();
+            $('#form_1_total_exp').val(value);
+        });
+    });
+
+
+	    var x_inputss_ = $CLASS('x-input')
+	for (let index = 0; index < x_inputss_.length; index++) {
+		if (x_inputss_[index].id != 'form_1_total_matching_grant') {
+			x_inputss_[index].addEventListener('keyup', function (ee) {
+				var nums1 = parseFloat($ID("form_1_total_rehab").value); 
+				var nums2 = parseFloat($ID("form_1_total_exp").value); 
+				var nums3 = parseFloat($ID("form_1_totalcost_prodinvest2").value); 
+
+				if (isNaN(nums1)) { nums1 = 0 }
+				if (isNaN(nums2)) { nums2 = 0 }
+				if (isNaN(nums3)) { nums3 = 0 }
+
+				$ID('form_1_total_matching_grant').value = nums1 + nums2 + nums3
+
+			})
+		}
+	}
 
 	$(document).ready(function(){
 	// var multipleCancelButton = new Choices('#form_1_msmes', {
