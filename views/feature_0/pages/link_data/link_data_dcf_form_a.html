@@ -3,6 +3,11 @@
 {% include 'head.html' %}
 
 	<body>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+
 		<br id="top_br">
 		<header class="x-header x-bar x-white x-top x-large x-light-grey x-topbar x-border-orange" style="z-index:2;width: 100%;padding-bottom: 10px;">
 			<div class="x-container" style="margin-left:200px;margin-right:200px;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
@@ -117,9 +122,19 @@
 										<input id="farmer_bday" class="f_profile f_clear x-round-large main_input x-input x-border" type="date" name="">
 										<b>Civil Status</b>
 										<input id="civil_status" class="f_profile f_clear x-round-large main_input x-input x-border" type="text" name="">
+
+										<label class=""><span style="color: #007399;" class="tool" data-tip="You can select multiple options from the provided list; text input won't be recorded." tabindex="1"><i class="fa-solid fa-circle-info"></i></span> MSMEs:</label>
+										<select class="f_profile f_clear x-btn x-block" id="sectoral" name="sectoral[]" multiple>
+											<option value="Abled" selected>Abled</option>
+											<option value="PWD">PWD</option>
+											<option value="Youth">Youth</option>
+											<option value="Senior Citizen">Senior Citizen</option>
+											<option value="OFW">OFW</option>
+										</select>
+
 										<div class="x-container">
-											<input id="id" class="f_profile f_clear x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%;text-align:right;font-weight:bold" disabled>
-											<input id="reference" class="f_profile f_clear x-round-large x-tiny x-white x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%" disabled>
+											<input id="id" class="f_profile f_clear x-round-large x-tiny x-pale-green x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%;text-align:right;font-weight:bold" disabled>
+											<input id="reference" class="f_profile f_clear x-round-large x-tiny x-pale-green x-text-grey x-col l6 m6 s6" type="" name="" style="border:0px;width:50%" disabled>
 										</div>
 									</div>
 
@@ -177,6 +192,26 @@
 		<script type="text/javascript">
 			document.title = document.title + " | Entry Data Links"
 			var farmer_ls_modal
+
+			$onload(function(){
+				$(document).ready(function(){
+					var sectoral= new Choices('#sectoral', {
+						removeItemButton: true,
+						choices: ["Large","Medium","Small","Micro"],
+						// items: ["Large","Medium","Small","Micro"],
+						searchChoices: true,
+						// maxItemCount:4,
+						// searchResultLimit:4,
+						addItems: true,
+						uniqueItemText: 'Only unique values can be added',
+						customAddItemText: 'Only values matching specific conditions can be added',
+						addItemText: (value) => {
+							// println(multipleCancelButton)
+							return `Press Enter to add <b>`+value+`</b>`;
+						},
+					}); 
+				});
+			})
 
 			function clear_form_field(){
 				var main_input = $CLASS('main_input')
@@ -290,7 +325,16 @@
 				println(profile_)
 			}
 
+
+			function multiple_ch(TAG){
+				var selected_arr =[]; selected = TAG.querySelectorAll("option")
+				for(var i = 0; i < selected.length; i++) {selected_arr.push(selected[i].innerText)}
+				return selected_arr.join(",")
+			}
+
+
 			function add_profile(){
+				var sectoral = multiple_ch($ID("sectoral"))
 				var profile_added=input_to_json('f_profile')
 				if(profile_added["link_to_id"]=='' || profile_added["link_to_id"]==' ' || profile_added["link_to_id"]== undefined){
 					profile_added["not_recorded"] = input_to_json('f_profile')
@@ -298,6 +342,7 @@
 				profile_added['link_from_id'] = URL_ARGS["h"]
 				profile_added['type'] = $ID('type').value
 				profile_added['db_table'] = URL_ARGS["i"]
+				profile_added['sectoral'] = sectoral
 				delete profile_added['id']
 				println(profile_added)
 				add_entry_benef(profile_added)
@@ -306,11 +351,8 @@
 
 			function myFunction(id) {
 				var x = document.getElementById(id);
-				if (x.className.indexOf("x-show") == -1) {
-					x.className += " x-show";
-				} else { 
-					x.className = x.className.replace(" x-show", "");
-				}
+				if (x.className.indexOf("x-show") == -1){x.className += " x-show";} 
+				else {x.className = x.className.replace(" x-show", "");}
 			}
 
 			function add_entry_benef(form_){

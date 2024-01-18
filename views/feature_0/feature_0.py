@@ -81,6 +81,8 @@ class _main:
 	def getsesh():
 		return session["USER_DATA"][0]
 
+	# =============================================================================
+	
 	@app.route("/notification/web_safe_encode/<strs>",methods=["POST","GET"])
 	@c.login_auth_web()
 	def web_safe_encode(strs):
@@ -274,7 +276,6 @@ class _main:
 							temp_data2[area][crop]['female_hh'] = temp_data2[area][crop]['female_hh'] + 1
 						else:
 							temp_data2[area][crop]['female'] = temp_data2[area][crop]['female'] + 1
-						
 				else:
 					temp_data2[area][crop] = {
 						"male" :0,
