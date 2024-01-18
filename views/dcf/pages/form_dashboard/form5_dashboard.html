@@ -41,8 +41,7 @@
               <thead class="thead">
                 <tr role="row">
                   <th>ID</th>
-                  <th>RCU</th>
-                  <th>PCU</th>
+                  <th>Implementing Unit</th>
                   <th>Commodity</th>
                   <th>Action</th>
                   <th>Timestamp</th>
@@ -53,8 +52,7 @@
                   <div>
                     {% for row in form5_datatable %}
                     <td>{{ row['id'] }}</td>
-                    <td>{{ row['mgit_implementing_unit_rcu'] }}</td>
-                    <td>{{ row['mgit_implementing_unit_pcu'] }}</td>
+                    <td>{{ row['mgit_implementing_unit_rcu'] }} {{row['mgit_implementing_unit_pcu'] }} {{row['mgit_implementing_unit'] }}</td>
                     <td>{{ row['mgit_commodity'] }} {{ row['mgit_commodity_others'] }}</td>
                     <td>
                       {% if row['upload_by']|string == user_data['id']|string %}
