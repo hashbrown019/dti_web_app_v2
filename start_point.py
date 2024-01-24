@@ -41,7 +41,6 @@ app.secret_key=c.SECRET_KEY
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-
 app.register_blueprint(login.app);
 app.register_blueprint(home.app);
 app.register_blueprint(api.app);
@@ -79,6 +78,12 @@ def test_server():#NOT FOR LOCAL USE
 def before_request():
 	# print("databse = "+c.DB_CRED[3])
 	# ip_addr = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
+	pass
+
+
+# 	return redirect("/we_will_be_back_later")
+@app.after_request
+def after_request_func(response):
 	ip_addr = request.access_route[0]
 	agent = request.headers.get('User-Agent')
 	# ss = open("l_header.txt","a")
@@ -91,12 +96,6 @@ def before_request():
 			# print(" MAC ADDRESS")
 			# print(updated_mac)
 			# print(request.headers)
-	pass
-
-
-# 	return redirect("/we_will_be_back_later")
-@app.after_request
-def after_request_func(response):
 	# if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	# print(response.get_json())
 	return response

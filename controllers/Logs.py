@@ -14,6 +14,11 @@ def ACCESS_LOGS(addr, endpoint, session, agent):
 		user_name = session["USER_DATA"][0]['username']
 		uname = session["USER_DATA"][0]['name']
 		in_session = True
+	else:
+		user_id = "NONE"
+		user_name = "NONE"
+		uname = "none"
+		in_session = False
 
 	date_ar = str(datetime.today()).split(" ")[0].split("-")
 	date_file_name = "{}_{}".format(date_ar[0],date_ar[1])
