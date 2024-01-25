@@ -1,0 +1,171 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "dcf_dashboard" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<title>Form 7 Dasboard</title>
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+
+      <div class="d-flex align-items-center">
+        <!-- Search form -->
+        <div class="h1 fw-bolder text-gray mb-2">FORM 7 Trade Promotion Services Tracker</div>
+        <!-- / Search form -->
+      </div>
+
+      <style>
+        .icon-button__badge {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          width: 25px;
+          height: 25px;
+          background: #ff4d4d;
+          color: #ffffff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+        }
+      </style>
+      <!-- Card header -->
+      <div class="d-flex justify-content-center">
+        <div class="table-responsive table py-4 mx-auto" style="max-width: 100%;">
+          <div id="datatable-buttons_wrapper" class=" text-dark dataTables_wrapper dt-bootstrap4">
+            <table class="table table-dark table-flush dataTable " id="datatable-buttons7" role="grid"
+              aria-describedby="datatable-buttons_info" style="width:100% !important">
+              <thead class="thead">
+                <tr role="row">
+                  <th>ID</th>
+                  <th>Implementing Unit</th>
+                  <th>Title of Trade Promotion Services Provided</th>
+                  <th>Name of Beneficiary</th>
+                  <th>Commodity</th>
+                  <th>Action</th>
+                  <th>Timestamp</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <div>
+                    {% for row in form7_datatable %}
+                    <td>{{ row['id'] }}</td>
+                    <td>{{ row['form_7_implementing_unit'] }}</td>
+                    <td>{{ row['form_7_title_trade_promotion'] }}</td>
+                    <td>{{ row['form_7_name_of_beneficiary'] }}</td>
+                    <td>{{ row['form_7_commodity'] }} {{ row['form_7_commodity_others'] }}</td>
+                    <td>
+
+                      {% if row['upload_by']|string == user_data['id']|string %}
+                    <a style="color: #00FFAB;" href="/dcf/form7?id={{ row['id'] }}&table=dcf_trade_promotion">
+                      <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+                      href="/delete_record/dcf_trade_promotion/{{ row['id'] }}">
+                      <span><i class="fa-solid fa-trash"></i></span> Delete
+                    </a>
+                    {% elif user_data['job'] == "Super Admin" %}
+                    <a style="color: #1ac6ff;" href="/dcf/form7?id={{ row['id'] }}&table=dcf_trade_promotion">
+                      <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                    </a>
+                    {% else %}
+                    <a style="color: #1ac6ff;" href="/dcf/form7?id={{ row['id'] }}&table=dcf_trade_promotion">
+                      <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                    </a>
+                    {% endif %}
+
+                  </td>
+                  <td class="date-cell"> {{ row['date_created'] }}<br>
+                    {% if row['date_modified'] %}
+                    <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
+                      }}</i>
+                    {% endif %}</i>
+                    </td>
+
+
+                </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+
+
+
+        </div>
+
+      </div>
+
+      <div class="py-4">
+        <div class="dropdown">
+          <button class="btn btn-default d-inline-flex align-items-center me-2"
+            onclick="window.open('/dcf/form7', '_blank')">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            &nbsp; GO TO Trade Promotion Services Tracker FORM
+          </button>
+        </div>
+      </div>
+      {% include "includes/form_spreadsheet/form7spreadsheet.html" %}
+
+      <!-- Page content -->
+    </div>
+  </div>
+</div>
+
+<script>
+   function showDeleteConfirmation(id) {
+                swalWithCustomButtons.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, delete it!',
+                  cancelButtonText: 'No, cancel',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = `/delete_record/dcf_trade_promotion/${id}`;
+                  } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithCustomButtons.fire(
+                      'Cancelled',
+                      'Your record is safe',
+                      'error'
+                    );
+                  }
+                });
+
+                // Prevent the default link behavior
+                return false;
+              }
+
+              const swalWithCustomButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              });
+</script>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script>
+
+</script>
+<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+
+{% endblock javascripts %}

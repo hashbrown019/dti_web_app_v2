@@ -20,7 +20,8 @@ from views.feature_0  import feature_0_sub
 from views.psalm  import bp_app as psalm
 from views.doofen  import bp_app as doofen
 from views.fund_tracker  import bp_app as fund_tracker
-from views.dcf  import bp_app as dcf
+# from views.dcf  import bp_app as dcf
+from views.dcfv2  import bp_app as dcfv2
 from views.fmi  import bp_app as fmi
 
 from views._tests_  import bp_app as test
@@ -50,7 +51,8 @@ app.register_blueprint(webrep.app);
 app.register_blueprint(psalm.app);
 app.register_blueprint(doofen.app);
 app.register_blueprint(fund_tracker.app);
-app.register_blueprint(dcf.app);
+# app.register_blueprint(dcf.app);
+app.register_blueprint(dcfv2.app);
 app.register_blueprint(fmi.app);
 app.register_blueprint(test.app);
 

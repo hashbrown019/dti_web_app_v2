@@ -1,0 +1,540 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "dcf_dashboard" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  {% include "includes/sweetalert.html" %}
+
+<div class="right_col" role="main">
+          <!-- top tiles -->
+          <div class="row" style="display: inline-block;" >
+          <div class="tile_count">
+             <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-users"></i> Total Entries</span>
+              <div class="count _money_tag">{{dcf_form3}}</div>
+              <span style="font-size: 10px;" class="count_bottom"></span>
+
+            </div>
+                   <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Male</span>
+              <div class="count _money_tag">{{dcf_form3male}} </div>
+              <span style="font-size: 10px;" class="count_bottom"></span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
+              <div class="count _money_tag">{{dcf_form3female}}</div>
+              <span style="font-size: 10px;" class="count_bottom"></span>
+
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"> Agri-technical</span>
+              <div class="count _money_tag">{{form3_agri[0]['total_agri']}}</div>
+              <span style="font-size: 10px;" class="count_bottom">Field of Expertise</span>
+            </div>
+     
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"> Entrepreneurial</span>
+              <div class="count _money_tag">{{form3_entrep[0]['total_entrep']}}</div>
+              <span style="font-size: 10px;" class="count_bottom">Field of Expertise</span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"> Extension Service</span>
+              <div class="count _money_tag">{{form3_extserv[0]['total_extserv']}}</div>
+              <span style="font-size: 10px;" class="count_bottom">Field of Expertise</span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"> Organizational</span>
+              <div class="count _money_tag">{{form3_org[0]['total_org']}}</div>
+              <span style="font-size: 10px;" class="count_bottom">Field of Expertise</span>
+            </div>
+          </div>
+        </div>
+          <!-- /top tiles -->
+
+          <br />
+
+          <div class="row">
+
+
+                   <div class="col-md-6 col-sm-6  ">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Philgeps Registered <small>Pie Chart</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                          </div>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="pieChart3"></canvas>
+                    <div style="text-align: center;">
+    <p><i class="fa fa-square" style="color:#cc3300 "></i> Red: {{form3red[0]['totalred']}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#cfccc9 "></i> Platinum: {{form3plat[0]['totalplat']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-square" style="color:#669999 "></i> Unregistered: {{form3unreg[0]['totalunreg']}}
+</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+                 <div class="col-md-6 col-sm-6  ">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Type of BDSP <small>Bar Chart</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                          </div>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="mybarChart3"></canvas>
+                  </div>
+
+                  <div style="text-align: center;">
+    <p>Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp; Organizational/Firm: {{form3orgfirm[0]['totalorgfirm']}}</p>
+</div>
+</div>
+
+
+              </div>
+    
+
+               
+
+
+
+
+
+            <script>// Replace this with your actual variable or value
+
+
+              
+              function init_chart_doughnut() {
+
+
+    if (typeof (Chart) === 'undefined') { return; }
+
+
+    console.log('init_chart_doughnut');
+
+    if ($('.canvasDoughnut').length) {
+
+        var _labels = [];
+        var _data = [];
+        
+        // Sample data
+        {% for key in over_all_commodity_count %}
+          _labels.push('{{key}}');
+          _data.push('{{over_all_commodity_count[key]}}');
+        {% endfor %}
+        // Calculate total for _data
+var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+
+// Normalize _data to make its total equivalent to totalData
+var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
+
+var chart_doughnut_settings = {
+    type: 'doughnut',
+    tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+    data: {
+        labels: _labels,
+        datasets: [{
+            data: normalizedData, // Use normalizedData here
+            backgroundColor: [
+                "#BDC3C7",
+                "#5c5c3d",
+                "#994d00",
+                "#331a00",
+                "#23a98c"
+            ],
+            hoverBackgroundColor: [
+                "#CFD4D8",
+                "#8a8a5c",
+                "#cc6600",
+                "#663500",
+                "#56dcbf"
+            ]
+        }]
+    },
+    options: {
+        legend: false,
+        responsive: false,
+        tooltips: {
+            callbacks: {
+                label: function (tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                    var currentValue = _data[tooltipItem.index];
+                    var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
+                    return _labels[tooltipItem.index] + ": " + percentage;
+                }
+            }
+        }
+
+    }
+};
+
+        $('.canvasDoughnut').each(function () {
+
+            var chart_element = $(this);
+            var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+
+        });
+
+    }
+
+}
+
+function init_charts() {
+
+    console.log('run_charts  typeof [' + typeof (Chart) + ']');
+
+    if (typeof (Chart) === 'undefined') { return; }
+
+    console.log('init_charts');
+
+
+    Chart.defaults.global.legend = {
+        enabled: false
+    };
+
+
+ if ($("#mybarChart3").length) e = document.getElementById("mybarChart3"), new Chart(e, {
+      type: "bar",
+      data: {
+        labels: ["Individual", "Organizational/Firm"],
+        datasets: [{
+          label: "Total",
+          backgroundColor:  ["#009999", "#666699"],
+          data: [{{form3indiv[0]['totalindiv']}}, {{form3orgfirm[0]['totalorgfirm']}}]
+        },]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: !0
+            }
+          }]
+        }
+      }
+    });
+
+
+
+
+
+
+
+
+if ($('#pieChart3').length) {
+    var xValues2 = [
+        'Red: ' + {{form3red[0]['totalred']}},
+        'Platinum: ' + {{form3plat[0]['totalplat']}},
+        'Unregistered: ' + {{form3unreg[0]['totalunreg']}}
+    ];
+
+    var yValues2 = [
+        {{form3red[0]['totalred']}},
+        {{form3plat[0]['totalplat']}},
+        {{form3unreg[0]['totalunreg']}}
+        // {{total_untagged}},
+    ];
+    var barColors = ['#cc3300', '#cfccc9', '#669999'];
+
+    var total = yValues2.reduce((a, b) => a + b, 0);
+
+    var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+
+    var ctx = document.getElementById("pieChart3");
+    var data = {
+        datasets: [{
+            data: yValues2,
+            backgroundColor: barColors,
+            label: 'My dataset' // for legend
+        }],
+        labels: xValues2
+    };
+
+    var pieChart = new Chart(ctx, {
+        data: data,
+        type: 'pie',
+        options: {
+            plugins: {
+                datalabels: {
+                    color: 'white',
+                    formatter: (value, context) => {
+                        return percentageValues[context.dataIndex] + '%';
+                    }
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var label = data.labels[tooltipItem.index];
+                        var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                        var percentage = percentageValues[tooltipItem.index] + '%';
+                        return `${label} (${percentage})`;
+                    },
+                },
+            },
+        },
+    });
+}
+    // Radar 
+}
+
+
+  function showDeleteConfirmation(id) {
+                swalWithCustomButtons.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, delete it!',
+                  cancelButtonText: 'No, cancel',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = `/delete_record/dcf_bdsp_reg/${id}`;
+                  } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithCustomButtons.fire(
+                      'Cancelled',
+                      'Your record is safe',
+                      'error'
+                    );
+                  }
+                });
+
+                return false;
+              }
+
+              const swalWithCustomButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              });
+
+
+    
+
+
+            </script>
+
+
+
+
+                <!-- Start to do list -->
+                   <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Data<small>Table</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                          </div>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                      <div class="row">
+                          <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                    <p class=" text-muted font-13 m-b-30">
+                      All entries of Form 3 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
+                    </p>
+          
+                    <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                  <th>ID</th>
+                  <th>Types of BDSP</th>
+                  <th>Contact Person</th>
+                  <th>Office/Main Address</th>
+                  <th>Action</th>
+                  <th>Timestamp</th>
+                        </tr>
+                      </thead>
+                     <tbody>
+                <tr>
+                  <div>
+                    {% for row in form3_datatable %}
+                    <td>{{ row['id'] }}</td>
+                    <td>{{ row['form_3_types_of_bdsp'] }}</td>
+                    <td>{{ row['form_3_contact_person'] }}</td>
+                    <td>{{ row['form_3_office_addr'] }}</td>
+                    <td>
+                      <!-- {{row['upload_by']}} === {{user_data['id']}} -->
+                
+
+                      {% if row['upload_by']|string == user_data['id']|string %}
+                          <a style="color: #00e673;" href="/dcf/form3?id={{ row['id'] }}&table=dcf_bdsp_reg">
+                      <span><i class="fa fa-pencil-square-o"></i></span> Edit
+                    </a>&nbsp;&nbsp;&nbsp;
+                     <a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+                    +{{ row["id"] }}+"&i=dcf_bdsp_reg",true)'>
+                      <span><i class="fa fa-user-plus"></i></span> Add Participants
+                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                      <a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+                        href="/delete_record/dcf_bdsp_reg/{{ row['id'] }}">
+                        <span><i class="fa fa-trash"></i></span> Delete
+                      </a>
+                      {% elif user_data['job'] == "Super Admin" %}
+                      <a style="color: #33cccc;" href="/dcf/form3?id={{ row['id'] }}&table=dcf_bdsp_reg">
+                        <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                      </a>
+                      {% else %}
+                      <a style="color: #33cccc;" href="/dcf/form3?id={{ row['id'] }}&table=dcf_bdsp_reg">
+                        <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                      </a>
+                      {% endif %}
+
+                    </td>
+                    <td class="date-cell"> {{ row['date_created'] }}<br>
+                      {% if row['date_modified'] %}
+                      <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
+                        }}</i>
+                      {% endif %}</i>
+                    </td>
+
+
+                </tr>
+
+                {% endfor %}
+              </tbody>
+                    </table>
+          
+          
+                  </div>
+                </div>
+            </div>
+                </div>
+              </div>
+
+
+
+                <div class="col-md-12 col-sm-12 ">
+              <div class="x_panel tile">
+                <div class="x_title">
+                  <h2>FORM 3 BDSP REGISTRY <small>SPREADSHEET MANAGEMENT</small></h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">Settings 1</a>
+                          <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form action="/dcf" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col">
+            <select id="export_type" name="export_type" class="form-control">
+              <option value="form3export">FORM 3 BDSP REGISTRY</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <strong>
+              <label for="position">Export Data:</label>
+            </strong><br>
+            <button type="submit" class="btn btn-md btn-dark"><span><i class="fa fa-cloud-download"></i></span>
+              Export</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+        <form action="/importcsvform3" method="POST" enctype="multipart/form-data">
+      {% include "includes/sweetalert.html" %}
+      <div class="form-group">
+        <div class="form-row">
+
+          <div class="col">
+            <strong>
+              <label for="position">Import Data:</label>
+            </strong><br>
+            <div class="file-upload">
+              <div class="file-select">
+                <div class="file-select-button" id="fileName">Choose File</div>
+                <div class="file-select-name" id="noFile">No file chosen...</div>
+                <input multiple type="file"
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  name="chooseFile" id="chooseFile" required>
+
+              </div>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
+
+            <span style="cursor: pointer;" onclick="download_login_start('DCF_Form_1.xlsx')" class="btn btn-success btn-xs"><span><i class="fa-solid fa-file-excel"></i></span> Download form 1 excel template</span>
+          </div>
+        </div>
+    </form>
+
+
+                </div>
+              </div>
+            </div>
+                <!-- End to do list -->
+          
+                <!-- end of weather widget -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+
+{% block javascripts %}
+
+
+
+{% endblock javascripts %}
