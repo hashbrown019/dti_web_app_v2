@@ -12,6 +12,8 @@ IP_address = socket.gethostbyname(host_name)
 SECRET_KEY = "@002342562988603673976#131452@HHPLHKHHH"
 # HOST = host_name;
 
+VIBER_TOKEN = "524fe3a9d127e6da-5e8765b3e533f3fc-c7abfcf58c51424"
+
 LOCAL_IP ="127.0.0.1"
 HOST = "0.0.0.0";
 CUSTOM_HOST = "192.168.0.1";
