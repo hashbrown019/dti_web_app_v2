@@ -1,0 +1,103 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "spreadsheet" %}
+{% block title %} Spreadsheet {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+
+
+
+    <div class="card" style="width:60%;   margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+        <div class="card-header" style="background-color: #007399;">
+            <h3 style="color: white;">Spreadsheet Management</h3>
+        </div>
+        <div class="card-body" style="background-color: #b4cde4;;">
+            <form action="/dcf" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                <div class="form-row">
+                  <div class="col">
+                    <strong>
+                      <label for="export_type">Choose Form:</label>
+                    </strong><br>
+                    <select id="export_type" name="export_type" class="form-control">
+                      <option value="form1export">Form 1 PREPARATION, REVIEW AND APPROVAL STATUS</option>
+                      <option value="form2export">Form 2 Implementing Unit</option>
+                      <option value="form3export">Form 3 BDSP Registry</option>
+                      <option value="form4export">Form 4 Capacity Building for Beneficiaries</option>
+                      <option value="form5export">Form 5 Matching Grant Implementation Tracker</option>
+                      <option value="form6export">Form 6 Product Development/ Enhancement Assistance Provided/ Consultancy Services</option>
+                      <option value="form7export">Form 7 Trade Promotion Services Tracker</option>
+                      <option value="form9export">Form 9 Enablers' Activity Tracker</option>
+                      <option value="form10export">Form 10 Negosyo Center Tracker</option>
+                      <option value="form11export">Form 11 Access to Financing Tracker</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <strong>
+                      <label for="name">Export Data:</label>
+                    </strong><br>
+                    <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span> Export</button>
+                  </div>
+                </div>
+                </div>
+              </form>
+
+              <form style="margin-left: 2%; margin-right: 2%;" action="/importcsvform1" method="POST"  enctype="multipart/form-data">
+                {% include "includes/sweetalert.html" %}
+                <div class="form-group">
+                    <div class="form-row" >
+             
+                        <div class="col">
+                            <strong>
+                                <label for="position">Import Data:</label>
+                            </strong><br>
+                            <div class="file-upload">
+                                <div class="file-select">
+                                  <div class="file-select-button" id="fileName">Choose File</div>
+                                  <div class="file-select-name" id="noFile">No file chosen...</div> 
+                                  <input multiple type="file"accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="chooseFile" id="chooseFile" required>
+                                 
+                                </div>
+                              </div>
+                              <br>
+                              <button type="submit"  class="btn btn-md btn-default"><span><i class="fa-solid fa-file-arrow-down"></i></span> Import</button>
+                        </div>
+                        </div>
+                    </form>
+
+            
+
+    
+    
+    
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+{% endblock javascripts %}

@@ -1,0 +1,410 @@
+{% for row in form2_datatable %}
+<div class="modal fade" id="form2view{{row['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="modaldialogedit" role="document" style="max-width: 80%;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #007399;">
+                <h5 class="modal-title text-white" id="exampleModalLabel">VIEW DATA</h5>
+                <button type="button" id="xbutton" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="text-white" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalbodyedit">
+
+                <form style="margin-left: 2%; margin-right: 2%;" id="form2" method="POST">
+                    {% include "includes/sweetalert.html" %}
+
+                    <div class="x-col l1 ">
+                        &nbsp;
+                    </div>
+
+                    <div class=" x-col l13 x-padding x-container x-card x-light-grey"
+                        style="margin-top: 10px; margin-bottom: 20px;">
+                        <center>
+                            <h2 class=" x-container text-white x-padding" style="background-color: #007399;">
+                                Implementing Unit</h2>
+                        </center>
+
+                        <!---text--->
+                        <div class="x-row x-container x-padding">
+
+                            <div class="x-col l4 x-container x-padding">
+                                <input type="hidden" name="id" value="{{ row['id'] }}">
+                                <label class="">RCUs</label>
+                                <select class="form_data_b x-border x-select x-border" id="form_2_rcus"
+                                    name="form_2_rcus" disabled><br>
+                                    <option>{{ row['form_2_rcus'] }}</option>
+                                    <option value="8">Region Vlll - Eastern Visayas</option>
+                                    <option value="9">Region lX - Zamboanga Peninsula</option>
+                                    <option value="10">Region X - Northern Mindanao</option>
+                                    <option value="11">Region Xl - Davao Region</option>
+                                    <option value="12">Region Xll - SOCCSKSARGEN</option>
+                                    <option value="13">Region Xlll - Caraga</option>
+                                    <option value="BARMM">BARMM</option>
+                                </select>
+                            </div>
+                            <div class="x-col l4 x-container x-padding">
+                                <label class="">PCU</label>
+                                <select class="form_data_b x-border x-select x-border" id="form_2_pcu" name="form_2_pcu"
+                                    disabled><br>
+                                    <option>{{ row['form_2_pcu'] }}</option>
+                                    <option>Northern Samar</option>
+                                    <option>Leyte</option>
+                                    <option>Southern Leyte</option>
+                                    <option>Zamboanga del Norte</option>
+                                    <option>Zamboanga Sibugay</option>
+                                    <option>Zamboanga del Sur</option>
+                                    <option>Misamis Oriental</option>
+                                    <option>Bukidnon</option>
+                                    <option>Lanao del Norte</option>
+                                    <option>Davao de Oro</option>
+                                    <option>Davao Oriental</option>
+                                    <option>Davao del Norte</option>
+                                    <option>Davao del Sur</option>
+                                    <option>Davao Occidental</option>
+                                    <option>North Cotabato</option>
+                                    <option>Sultan Kudarat</option>
+                                    <option>Sarangani</option>
+                                    <option>Agusan del Norte</option>
+                                    <option>Agusan del Sur</option>
+                                    <option>Surigao del Sur</option>
+                                    <option>Maguindanao</option>
+                                </select>
+                            </div>
+                            <div class="x-col l4 x-container x-padding">
+                                <label class="">Commodity:</label>
+                                <select class=" x-border x-select x-border" id="form_2_commodity"
+                                    value="{{ row['form_2_commodity'] }}" name="form_2_commodity" disabled><br>
+                                    <option>{{ row['form_2_commodity'] }}</option>
+                                    <option>Coffee</option>
+                                    <option>Cacao</option>
+                                    <option>Coconut</option>
+                                    <option>PFN</option>
+                                </select>
+                            </div>
+
+                            <div class="x-row">
+                                <div class="x-col l8 x-container x-padding">
+                                    <label class="">DIP Alignment: (If Yes, select Yes and type the name of the Anchor
+                                        Firm/DIP Name and Select No for no DIP alignment):
+                                    </label>
+                                    <input disabled class=" x-input x-border" id="form_2_dip_alignment" value="{{ row['form_2_dip_alignment'] }}" name="form_2_dip_alignment" type="text"
+                                    placeholder="Write Here">
+                                </div>
+                      
+                            </div>
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Name of Owner or Manager of the anchor Firm/MSMEs:</label>
+                                <input class=" x-input x-border" id="form_2_name_owner_manager"
+                                    value="{{ row['form_2_name_owner_manager'] }}" disabled
+                                    name="form_2_name_owner_manager" type="text" autocomplete="on"
+                                    placeholder="Write Here">
+                            </div>
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Sex of the Owner or Manager of the anchor Firm/MSMEs:</label>
+                                <select class="form_data_b x-border x-select x-border" id="form_2_sex_owner_manager"
+                                    disabled value="{{ row['form_2_sex_owner_manager'] }}"
+                                    name="form_2_sex_owner_manager"><br>
+                                    <option>{{ row['form_2_sex_owner_manager'] }}</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <div class="x-col l5 x-container x-padding">
+                                <label class="">Sector of Owner or manager of the anchor firm/MSMEs:</label>
+                                <select  value="{{ row['form_2_sector_owner_manager'] }}" class="form_data_b x-border x-select x-border" id="form_2_sector_owner_manager"
+                                name="form_2_sector_owner_manager" disabled><br>
+                                <option>{{ row['form_2_sector_owner_manager'] }}</option>
+                                <option>PWD</option>
+                                <option>Youth</option>
+                                <option>IP</option>
+                                <option>SC</option>
+                                <option>Abled</option>
+                            </select>
+                            </div>
+                             <div class="x-col l6 x-container x-padding">
+                                <label class=""></span> Business Name:</label>
+                                <input class=" x-input x-border" disabled id="form_2_businessname" value="{{ row['form_2_businessname'] }}" name="form_2_businessname" type="text" autocomplete="on" placeholder="">
+                           </div>
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Business Address of Owner or manager of the anchor firm/MSMEs:</label>
+                                <input class=" x-input x-border" disabled id="form_2_business_owner_manager" disabled
+                                    value="{{ row['form_2_business_owner_manager'] }}"
+                                    name="form_2_business_owner_manager" type="text" placeholder="">
+                            </div>
+                             <div class="x-col l6  x-container x-padding">
+                                    <label class="">Name of Partner FOs Engaged:</label>
+                                    <input class=" x-input x-border" disabled id="form_2_partner_fo_engaged" value="{{ row['form_2_partner_fo_engaged'] }}" name="form_2_partner_fo_engaged" type="text" placeholder="">
+                                </div>
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Chairperson or Manager of Partner FO:</label>
+                                <input class=" x-input x-border" id="form_2_chairperson_manager" disabled
+                                    value="{{ row['form_2_chairperson_manager'] }}" name="form_2_chairperson_manager"
+                                    type="text" placeholder="">
+                            </div>
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Sex of the Chairperson or Manager of Partner FO:</label>
+                                <select class="form_data_b x-border x-select x-border" disabled
+                                    id="form_2_sex_chairperson_manager"
+                                    value="{{ row['form_2_sex_chairperson_manager'] }}"
+                                    name="form_2_sex_chairperson_manager"><br>
+                                    <option>{{ row['form_2_sex_chairperson_manager'] }}</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Sector of Chairperson or Manager of Partner FO:</label>
+
+                                <select class="form_data_b x-border x-select x-border" disabled
+                                    id="form_2_sector_chairperson_manager"
+                                    value="{{ row['form_2_sector_chairperson_manager'] }}"
+                                    name="form_2_sector_chairperson_manager"><br>
+                                    <option>{{ row['form_2_sector_chairperson_manager'] }}</option>
+                                    <option>PWD</option>
+                                    <option>Youth</option>
+                                    <option>IP</option>
+                                    <option>SC</option>
+                                    <option>N/A</option>
+                                </select>
+                            </div>
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Office Address of FO:</label>
+                                <input class=" x-input x-border" disabled id="form_2_office_address_province"
+                                    value="{{ row['form_2_office_address_province'] }}" type="text"
+                                    name="form_2_office_address_province" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="x-row x-container x-padding">
+                            <div class="x-col l4 x-container x-padding">
+                                <label class="">Total number of FO members:</label>
+                                <input class=" x-input x-border" id="form_2_total_number_fo" disabled
+                                    name="form_2_total_number_fo" value="{{ row['form_2_total_number_fo'] }}"
+                                    type="number" placeholder="">
+                            </div>
+                            <div class="x-container x-padding">
+                                <style>
+                                    table,
+                                    th,
+                                    td {
+                                        border: 1px solid black;
+                                        border-collapse: collapse;
+                                    }
+                                </style>
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <th colspan="2">
+                                            <center>Total number of FO members by Gender</center>
+                                        </th>
+                                        <th colspan="4">
+                                            <center>Total number of FO members by Sector</center>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <!---gender---->
+                                        <td>
+                                            <center>Male</center>
+                                        </td>
+                                        <td>
+                                            <center>Female</center>
+                                        </td>
+
+                                        <!---SectorG---->
+                                        <td>
+                                            <center>PWD</center>
+                                        </td>
+                                        <td>
+                                            <center>Youth</center>
+                                        </td>
+                                        <td>
+                                            <center>IP</center>
+                                        </td>
+                                        <td>
+                                            <center>SC</center>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <!---gender--->
+                                        <td><input class="  x-input" id="form_2_male" value="{{ row['form_2_male'] }}"
+                                                disabled type="number" name="form_2_male"></td>
+                                        <td><input class="  x-input" id="form_2_female"
+                                                value="{{ row['form_2_female'] }}" disabled type="number"
+                                                name="form_2_female"></td>
+
+                                        <!--sectorG--->
+                                        <td><input class="  x-input" id="form_2_pwde" value="{{ row['form_2_pwde'] }}"
+                                                disabled type="number" name="form_2_pwde"></td>
+                                        <td><input class="  x-input" id="form_2_youth" value="{{ row['form_2_youth'] }}"
+                                                disabled type="number" name="form_2_youth"></td>
+                                        <td><input class="  x-input" id="form_2_ip" value="{{ row['form_2_ip'] }}"
+                                                disabled type="number" name="form_2_ip"></td>
+                                        <td><input class="  x-input" id="form_2_sc" value="{{ row['form_2_sc'] }}"
+                                                disabled type="number" name="form_2_sc"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <center>
+                            <h2 class=" x-container text-white x-padding" style="background-color: #007399;">CPA
+                                Information</h2>
+                        </center>
+                        <div class="x-row x-container x-padding">
+                            <!-- <div class="x-col l6 x-container x-padding">
+                                <label class="">Address of FO Member:</label>
+                                <input class=" x-input x-border" id="form_2_address_of_fo_members" disabled
+                                    value="{{ row['form_2_address_of_fo_members'] }}"
+                                    name="form_2_address_of_fo_members" type="text" placeholder="">
+                            </div> -->
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Hectares Covered:</label>
+                                <input class=" x-input x-border" id="form_2_hectares_covered" disabled
+                                    value="{{ row['form_2_hectares_covered'] }}" name="form_2_hectares_covered"
+                                    type="text" placeholder="">
+                            </div>
+                            <div class="x-col l3 x-container x-padding">
+                                <label for="form_2_cpa_date_signing">Date of CPA Signing:</label>
+                                <input class="x-input x-border" type="date" id="form_2_cpa_date_signing" disabled
+                                    value="{{ row['form_2_cpa_date_signing'] }}" style="width: 100%;"
+                                    name="form_2_cpa_date_signinge" onchange="computeDaysRemaining()">
+                            </div>
+                            <div class="x-col l3 x-container x-padding">
+                                <label for="form_2_cpa_date_expiration">CPA Expiration Date:</label>
+                                <input class="x-input x-border" type="date" id="form_2_cpa_date_expiration" disabled
+                                    value="{{ row['form_2_cpa_date_expiration'] }}" style="width: 100%"
+                                    name="form_2_cpa_date_expiration" onchange="computeDaysRemaining()">
+                            </div>
+                            <div class="x-col l3 x-container x-padding">
+                                <label for="form_2_days_remaining">Days Remaining:</label>
+                                <input class="x-input x-border" type="number" id="form_2_days_remaining" disabled
+                                    value="{{ row['form_2_days_remaining'] }}" style="width: 100%;"
+                                    name="form_2_days_remaining" readonly>
+                            </div>
+                            <div class="x-col l3 x-container x-padding">
+                                <label class="">Date Renewed:</label>
+                                <input class=" x-input x-border" id="form_2_date_renewed" disabled
+                                    value="{{ row['form_2_date_renewed'] }}" name="form_2_date_renewed" type="date"
+                                    placeholder="">
+                            </div>
+                            <div class="x-col l6 x-container x-padding">
+                                <label class="">Notable CPA incentives(Optional entry):</label>
+                                <input class=" x-input x-border" id="form_2_notable_cpa_incentives" disabled
+                                    value="{{ row['form_2_notable_cpa_incentives'] }}"
+                                    name="form_2_notable_cpa_incentives" style="width: 100%;" type="text"
+                                    placeholder="">
+                            </div>
+                        
+                        </div>
+                        <div class="x-row x-container x-padding">
+                            <div class="x-col l5 x-container x-padding">
+                                <label class="">Remarks/Status :</label>
+                                <select class="form_data_b x-border x-select x-border" id="form_2_remarks_status"
+                                    disabled value="{{ row['form_2_remarks_status'] }}"
+                                    name="form_2_remarks_status"><br>
+                                    <option>{{ row['form_2_remarks_status'] }}</option>
+                                    <option>Non-renewal</option>
+                                    <option>Cancelled</option>
+                                    <option>On-going</option>
+                                </select>
+                            </div>
+                            <div class="x-col l7 x-container x-padding" style="width: 55%;">
+                                <style>
+                                    table,
+                                    th,
+                                    td {
+                                        border: 1px solid black;
+                                        border-collapse: collapse;
+                                    }
+                                </style>
+                                <table class="x-table x-container x-table-border">
+                                    <tr>
+                                        <th colspan="2">
+                                            <center>CPA Implementation</center>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <center>Activity/Agreements (Outputs vis-à-vis signed CPA)</center>
+                                        </td>
+                                        <td>
+                                            <center>Date conducted/implemented</center>
+                                        </td>
+                                    </tr>
+
+
+                                    <tbody id="update_table_">
+                                        {% set list1 = row['form_2_activity_agreements'].split(',') %}
+                                        {% for index in range(list1|length) %}
+                                        <tr>
+                                            <td><input class="x-input" disabled
+                                                    value="{{ row['form_2_activity_agreements'].split(',')[index] }}"
+                                                    id="form_2_activity_agreements" type="text"
+                                                    name="form_2_activity_agreements[]"></td>
+                                            <td><input class="x-input" disabled
+                                                    value="{{ row['form_2_date_conducted'].split(',')[index] }}"
+                                                    id="form_2_date_conducted" type="text"
+                                                    name="form_2_date_conducted[]"></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="x-col l5">
+                                <form method="post" enctype="multipart/form-data">
+                                    <div class="x-col l3 x-container x-padding" style="width: 10px">
+                                        <input class="x-padding" type="file" id="form_2_image_uploads"
+                                            name="image_uploads"
+                                            accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx"
+                                            multiple />
+                                    </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" id="closebtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+            <script type="text/javascript">
+                function getDropDown(sel) {
+                    hideAll();
+                    document.getElementById(sel.options[sel.selectedIndex].value).style.display
+                        = 'block';
+                }
+
+                function hideAll() {
+                    document.getElementById("yes").style.display = 'none';
+
+                }
+
+                function computeDaysRemaining() {
+                    const signingDate = new Date(document.getElementById("form_2_cpa_date_signing").value);
+                    const expirationDate = new Date(document.getElementById("form_2_cpa_date_expiration").value);
+                    const timeDiff = expirationDate.getTime() - signingDate.getTime();
+                    const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    document.getElementById("form_2_days_remaining").value = daysRemaining;
+                }
+            </script>
+
+        </div>
+
+    </div>
+</div>
+
+{% endfor %}

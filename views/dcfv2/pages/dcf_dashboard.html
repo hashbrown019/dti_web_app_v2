@@ -1,0 +1,58 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "dcf_dashboard" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<title>Data Capture Form</title>
+
+    
+
+{% include "form_dashboard/main_dashboard.html" %}
+
+
+
+<style>
+    .custom-swal-popup {
+    text-align: left; /* Adjust text alignment as needed */
+  }
+</style>
+<script>
+  const isDialogShown = localStorage.getItem('dialogShown');
+
+  if (!isDialogShown) {
+    Swal.fire({
+      title: "Changelogs",
+      html: "<div style='text-align: left;'>" +
+        "1. Resolved an issue in Excel export where all regions were visible. Users can now only view data specific to their region.<br><br>" +
+        "2. Implemented changes in Excel export, adding new data fields: date created, date modified, and uploaded by.<br><br>" +
+        "3. Removed the 'Add Participants' button in data capture forms. Users can now directly manage participants in the data table, alongside the edit and delete buttons. The Excel import for adding participants is still in development.<br><br>" +
+        "4. Updated Excel import templates for all forms by adding a new sheet named 'Guidelines.' This sheet provides information and guidance on input fields and formats.<br><br>" +
+        "5. In Data Capture Form 6, the Outputs for the Product Development table are now tagged as 'On Dev.' We are still addressing the bug related to displaying the data" +
+        "</div>",
+      icon: "info",
+      width: '800px',
+      showCancelButton: false,
+      confirmButtonText: 'Got it',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.setItem('dialogShown', 'true');
+      }
+    });
+  }
+</script>
+    
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+  <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  <script>
+
+  </script>
+
+{% endblock javascripts %}
