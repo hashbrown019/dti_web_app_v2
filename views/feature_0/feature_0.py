@@ -63,18 +63,27 @@ class _main:
 		Filter.position_data_filter() # initialize restrictions
 		return render_template("feature_0_home.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
 
-	def settings(setngs):
+	@c.login_auth_web()
+	@app.route("/settings",methods=["POST","GET"])
+	def settings():
 		session["USER_DATA"][0]["office"] = "On Dev"
+		setngs = request.args
+		CUR_SESH = session["USER_DATA"]
+
 		for ss in setngs:
 			if(ss == "getsesh"):
 				return redirect("/settings/getsesh")
 			elif(ss == "chjob"):
 				print(" * Changing job")
-				session["USER_DATA"][0]["job"] = setngs['chjob']
+				session["USER_DATA"][0]["job"] = setngs['chjob'].replace("_"," ")
 			elif(ss == "chrcu"):
 				print(" * Changing job")
 				session["USER_DATA"][0]["rcu"] = setngs['chrcu'].replace("_"," ").upper()
-		pass
+
+		session.clear()
+		session.clear()
+		session["USER_DATA"] = CUR_SESH
+		return redirect("/menuv2")
 
 	@app.route("/settings/getsesh",methods=["POST","GET"])
 	@c.login_auth_web()
