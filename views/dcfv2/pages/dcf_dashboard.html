@@ -20,28 +20,31 @@
   }
 </style>
 <script>
-  const isDialogShown = localStorage.getItem('dialogShown');
+const isDialogShownx5 = localStorage.getItem('dialogShownx5');
 
-  if (!isDialogShown) {
-    Swal.fire({
-      title: "Changelogs",
-      html: "<div style='text-align: left;'>" +
-        "1. Resolved an issue in Excel export where all regions were visible. Users can now only view data specific to their region.<br><br>" +
-        "2. Implemented changes in Excel export, adding new data fields: date created, date modified, and uploaded by.<br><br>" +
-        "3. Removed the 'Add Participants' button in data capture forms. Users can now directly manage participants in the data table, alongside the edit and delete buttons. The Excel import for adding participants is still in development.<br><br>" +
-        "4. Updated Excel import templates for all forms by adding a new sheet named 'Guidelines.' This sheet provides information and guidance on input fields and formats.<br><br>" +
-        "5. In Data Capture Form 6, the Outputs for the Product Development table are now tagged as 'On Dev.' We are still addressing the bug related to displaying the data" +
-        "</div>",
-      icon: "info",
-      width: '800px',
-      showCancelButton: false,
-      confirmButtonText: 'Got it',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.setItem('dialogShown', 'true');
-      }
-    });
-  }
+if (!isDialogShownx5) {
+  Swal.fire({
+    title: "&#128640; Exciting Update! &#128640;",
+    html: "<div style='text-align: left;'>" +
+      "1. Data Capture Form Dashboard v2.<br>" +
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Unveiling the next version of our Data Capture Form Dashboard!<br>" +
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Experience improved performance, smoother charts, and faster loading times.<br>" +
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Dive into the enhanced user-friendly experience!<br><br>" +
+      "2. Main Dashboard Integration<br>" +
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Introducing the Main Dashboard!<br><br><br>" +
+      "Stay tuned as we continue developing to add more data to the dashboards for an even more user-friendly experience! 🌐✨"+
+      "</div>",
+    icon: "info",
+    width: '800px',
+    showCancelButton: true,
+    confirmButtonText: 'Got it',
+    cancelButtonText: 'Close',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.setItem('dialogShownx5', 'true');
+    }
+  });
+}
 </script>
     
 {% endblock content %}
