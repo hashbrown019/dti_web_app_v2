@@ -389,8 +389,38 @@ def displayform():
     selectdcf_form3female=db.select("SELECT form_3_sex AS total_female3 FROM dcf_bdsp_reg {} AND form_3_sex = 'female';".format(position_data_filter()))
     dcf_form3male=len(selectdcf_form3male)
     dcf_form3female=len(selectdcf_form3female)
-    dcf_form4male=db.select("SELECT SUM(cbb_total_number_per_gender_male) AS total_male4 FROM dcf_capacity_building {};".format(position_data_filter()))
-    dcf_form4female=db.select("SELECT SUM(cbb_total_number_per_gender_female) AS total_female4 FROM dcf_capacity_building {};".format(position_data_filter()))
+
+    dcf_form4female=db.select("SELECT SUM(cbb_female_total) AS total_female4 FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf_form4male=db.select("SELECT SUM(cbb_male_total) AS total_male4 FROM dcf_capacity_building {};".format(position_data_filter()))
+
+    dcf_form4maleip=db.select("SELECT SUM(cbb_male_ip) AS total_male4ip FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf_form4maleyouth=db.select("SELECT SUM(cbb_male_youth) AS total_male4youth FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf_form4malepwd=db.select("SELECT SUM(cbb_male_pwd) AS total_male4pwd FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf_form4malesc=db.select("SELECT SUM(cbb_male_sc) AS total_male4sc FROM dcf_capacity_building {};".format(position_data_filter()))
+
+    dcf_form4femaleip=db.select("SELECT SUM(cbb_female_ip) AS total_female4ip FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf_form4femaleyouth=db.select("SELECT SUM(cbb_female_youth) AS total_female4youth FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf_form4femalepwd=db.select("SELECT SUM(cbb_female_pwd) AS total_female4pwd FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf_form4femalesc=db.select("SELECT SUM(cbb_female_sc) AS total_female4sc FROM dcf_capacity_building {};".format(position_data_filter()))
+
+
+    dcf_form7msme=db.select("SELECT COUNT(form_7_beneficiary) AS totalmsme7 FROM dcf_trade_promotion {} AND form_7_beneficiary = 'MSME';".format(position_data_filter()))
+    dcf_form7fo=db.select("SELECT COUNT(form_7_beneficiary) AS totalfo7 FROM dcf_trade_promotion {} AND form_7_beneficiary = 'FO';".format(position_data_filter()))
+    dcf_form7farmer=db.select("SELECT COUNT(form_7_beneficiary) AS totalfarmer7 FROM dcf_trade_promotion {} AND form_7_beneficiary = 'Farmer';".format(position_data_filter()))
+
+    dcf_form7male=db.select("SELECT COUNT(form_7_sex) AS totalmale7 FROM dcf_trade_promotion {} AND form_7_sex = 'Male';".format(position_data_filter()))
+    dcf_form7female=db.select("SELECT COUNT(form_7_sex) AS totalfemale7 FROM dcf_trade_promotion {} AND form_7_sex = 'Female';".format(position_data_filter()))
+
+    dcf_form7pwd=db.select("SELECT COUNT(form_7_sector) AS totalpwd7 FROM dcf_trade_promotion {} AND form_7_sector = 'PWD';".format(position_data_filter()))
+    dcf_form7youth=db.select("SELECT COUNT(form_7_sector) AS totalyouth7 FROM dcf_trade_promotion {} AND form_7_sector = 'Youth';".format(position_data_filter()))
+    dcf_form7ip=db.select("SELECT COUNT(form_7_sector) AS totalip7 FROM dcf_trade_promotion {} AND form_7_sector = 'IP';".format(position_data_filter()))
+    dcf_form7sc=db.select("SELECT COUNT(form_7_sector) AS totalsc7 FROM dcf_trade_promotion {} AND form_7_sector = 'SC';".format(position_data_filter()))
+    dcf_form7abled=db.select("SELECT COUNT(form_7_sector) AS totalabled7 FROM dcf_trade_promotion {} AND form_7_sector = 'Abled';".format(position_data_filter()))
+
+
+
+
+
 
     dcf_form1msme=db.select("SELECT SUM(total_large_enterprise) as total_large_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
     dcf_form1msme2=db.select("SELECT SUM(total_medium_enterprise) as total_medium_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
@@ -421,6 +451,46 @@ def displayform():
     #         form_1_rcus,
     #         form_1_commodity
     #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+
+
+
+
+
+###################FORM7####################################################
+
+    dips_list7 = form7_datatable
+    over_all_commodity_count7 = {}
+    for index in range(len(dips_list7)):
+        DIP7 = dips_list7[index]
+        _comm_rule7 = ["cacao","coconut","coffee","pfn"]
+        _com7 = DIP7['form_7_commodity']
+        if(_com7.lower() not in _comm_rule7):
+            _com7 = "Others"
+        if(_com7 not in over_all_commodity_count7):
+            over_all_commodity_count7[_com7 ] = 0
+        over_all_commodity_count7[_com7 ] += 1
+
+
+
+
+
+
+###################FORM5####################################################
+
+    dips_list5 = form5_datatable
+    over_all_commodity_count5 = {}
+    for index in range(len(dips_list5)):
+        DIP5 = dips_list5[index]
+        _comm_rule5 = ["cacao","coconut","coffee","pfn"]
+        _com5 = DIP5['mgit_commodity']
+        if(_com5.lower() not in _comm_rule5):
+            _com5 = "Others"
+        if(_com5 not in over_all_commodity_count5):
+            over_all_commodity_count5[_com5 ] = 0
+        over_all_commodity_count5[_com5 ] += 1
+
+
+
 
 
 ###########################FORM4##################################################
@@ -635,6 +705,8 @@ def displayform():
         'over_all_commodity_count':over_all_commodity_count,
         'over_all_commodity_count2':over_all_commodity_count2,
         'over_all_commodity_count4':over_all_commodity_count4,
+        'over_all_commodity_count5':over_all_commodity_count5,
+        'over_all_commodity_count7':over_all_commodity_count7,
         'typebdsp':typebdsp,
         'form1_data_jul':form1_data_jul,
         'form1_data_aug':form1_data_aug,
@@ -761,9 +833,29 @@ def displayform():
         'dcf_form5pwd':dcf_form5pwd,
         'dcf_form5youth':dcf_form5youth,
         'dcf_form5ip':dcf_form5ip,
-        'dcf_form5sc':dcf_form5sc
+        'dcf_form5sc':dcf_form5sc,
+        'dcf_form4maleip':dcf_form4maleip,
+        'dcf_form4maleyouth':dcf_form4maleyouth,
+        'dcf_form4malepwd':dcf_form4malepwd,
+        'dcf_form4malesc':dcf_form4malesc,
+        'dcf_form4femaleip':dcf_form4femaleip,
+        'dcf_form4femaleyouth':dcf_form4femaleyouth,
+        'dcf_form4femalepwd':dcf_form4femalepwd,
+        'dcf_form4femalesc':dcf_form4femalesc,
+        'dcf_form7msme':dcf_form7msme,
+        'dcf_form7fo':dcf_form7fo,
+        'dcf_form7farmer':dcf_form7farmer,
+        'dcf_form7female':dcf_form7female,
+        'dcf_form7male':dcf_form7male,
+        'dcf_form7pwd':dcf_form7pwd,
+        'dcf_form7youth':dcf_form7youth,
+        'dcf_form7ip':dcf_form7ip,
+        'dcf_form7sc':dcf_form7sc,
+        'dcf_form7abled':dcf_form7abled
 
     }
+
+
 
 def position_data_filter():
     _filter = "WHERE 1 "

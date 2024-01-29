@@ -124,14 +124,7 @@
 
             <script>// Replace this with your actual variable or value
 
-  // Convert the float to an integer before formatting
-  var formattedTotal = Math.floor({{total_untagged}}).toLocaleString();
 
-   document.getElementById('formatedtotal').innerText = formattedTotal;
-
-     var formattedovrTotal = Math.floor({{dcf_form1sextotal[0]['total_sex'] }}).toLocaleString();
-
-   document.getElementById('formatedoveralltotal').innerText = formattedovrTotal;
               
               function init_chart_doughnut() {
 
@@ -266,10 +259,6 @@ function init_charts() {
         var totalnotstartedDips = not_started.reduce(function(acc, val) {
     return acc + parseFloat(val);
 }, 0);
-     document.getElementById('totalApprovedDipsValue').innerText = totalApprovedDips.toFixed(0);
-     document.getElementById('totalpipelineDipsValue').innerText = totalpipelineDips.toFixed(0);
-     document.getElementById('totalongoingDipsValue').innerText = totalongoingDips.toFixed(0);
-     document.getElementById('totalnotstartedDipsValue').innerText = totalnotstartedDips.toFixed(0);
 
         var ctx = document.getElementById("mybarChart");
         var mybarChart = new Chart(ctx, {
