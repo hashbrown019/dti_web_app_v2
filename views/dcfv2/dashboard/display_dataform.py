@@ -417,6 +417,14 @@ def displayform():
     dcf_form7sc=db.select("SELECT COUNT(form_7_sector) AS totalsc7 FROM dcf_trade_promotion {} AND form_7_sector = 'SC';".format(position_data_filter()))
     dcf_form7abled=db.select("SELECT COUNT(form_7_sector) AS totalabled7 FROM dcf_trade_promotion {} AND form_7_sector = 'Abled';".format(position_data_filter()))
 
+    dcf_form7cashsales=db.select("SELECT SUM(form_7_cash_sales) AS total_cash7 FROM dcf_trade_promotion {};".format(position_data_filter()))
+    dcf_form7bookedsales=db.select("SELECT SUM(form_7_booked_sales) AS total_booked7 FROM dcf_trade_promotion {};".format(position_data_filter()))
+    dcf_form7undernego=db.select("SELECT SUM(form_7_under_negotiations) AS total_undernego FROM dcf_trade_promotion {};".format(position_data_filter()))
+    dcf_form7total=db.select("SELECT SUM(form_7_total_autosum) AS total_ovrlltotal FROM dcf_trade_promotion {};".format(position_data_filter()))
+
+
+
+
 
 
 
@@ -851,11 +859,13 @@ def displayform():
         'dcf_form7youth':dcf_form7youth,
         'dcf_form7ip':dcf_form7ip,
         'dcf_form7sc':dcf_form7sc,
-        'dcf_form7abled':dcf_form7abled
+        'dcf_form7abled':dcf_form7abled,
+        'dcf_form7cashsales':dcf_form7cashsales,
+        'dcf_form7bookedsales':dcf_form7bookedsales,
+        'dcf_form7undernego':dcf_form7undernego,
+        'dcf_form7total':dcf_form7total
 
     }
-
-
 
 def position_data_filter():
     _filter = "WHERE 1 "

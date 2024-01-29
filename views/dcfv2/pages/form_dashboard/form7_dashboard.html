@@ -19,12 +19,12 @@
 
             </div>
                    <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total MSME</span>
+              <span class="count_top"> Total MSME</span>
               <div class="count _money_tag">{{dcf_form7msme[0]['totalmsme7']}} </div>
               <span style="font-size: 10px;" class="count_bottom">Total # of Beneficiary</span>
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total FO</span>
+              <span class="count_top"> Total FO</span>
               <div class="count _money_tag">{{dcf_form7fo[0]['totalfo7']}}</div>
               <span style="font-size: 10px;" class="count_bottom">Total # of Beneficiary</span>
 
@@ -36,38 +36,38 @@
             </div>
      
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Total Male</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total Male</span>
               <div class="count _money_tag">{{dcf_form7male[0]['totalmale7']}}</div>
               <span style="font-size: 10px;" class="count_bottom">Total # of male outputs</span>
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Total Female</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
               <div class="count _money_tag">{{dcf_form7female[0]['totalfemale7']}}</div>
               <span style="font-size: 10px;" class="count_bottom">Total # of female outputs</span>
             </div>
 
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Total PWD</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total PWD</span>
               <div class="count _money_tag">{{dcf_form7pwd[0]['totalpwd7']}}</div>
               <span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Total Youth</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total Youth</span>
               <div class="count _money_tag">{{dcf_form7youth[0]['totalyouth7']}}</div>
               <span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Total IP</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total IP</span>
               <div class="count _money_tag">{{dcf_form7ip[0]['totalip7']}}</div>
               <span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Total SC</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total SC</span>
               <div class="count _money_tag">{{dcf_form7sc[0]['totalsc7']}}</div>
               <span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Total Abled</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total Abled</span>
               <div class="count _money_tag">{{dcf_form7abled[0]['totalabled7']}}</div>
               <span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
             </div>
@@ -86,7 +86,6 @@
             
 
             <div class="col-md-4 col-sm-4 ">
-              <br>
               <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
                   <h2>Commodity</h2>
@@ -144,9 +143,46 @@
               </div>
             </div>
 
-            <script>// Replace this with your actual variable or value
 
-              
+    <div class="col-md-6 col-sm-6">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Sales Generated per MSME <small>Bar Chart</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                          </div>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="mybarChart7"></canvas>
+                  </div>
+
+                  <div style="text-align: center;">
+    <p><i class="fa fa-square" style="color:#884dff "></i> Cash Sales: <span class="_money_tag">{{dcf_form7cashsales[0]['total_cash7']}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ac7339 "></i> Booked Sales: <span class="_money_tag">{{dcf_form7bookedsales[0]['total_booked7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ffa31a "></i> Under Negotiations: <span class="_money_tag">{{dcf_form7undernego[0]['total_undernego']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Total: <span class="_money_tag">{{dcf_form7total[0]['total_ovrlltotal']}}</span></p>
+</div>
+</div>
+
+
+
+              </div>
+
+
+            <script>
+
+            // Replace this with your actual variable or value
+
+
+           
               function init_chart_doughnut() {
 
 
@@ -238,167 +274,30 @@ function init_charts() {
 
 
     // Bar chart
-
-    if ($('#mybarChart').length) {
-
-    var _labelsrcu = [];
-    var approved_dips = [];
-    var pipeline_dips = [];
-    var ongoing_dips = [];
-    var not_started = [];
-    
-    // Sample data
-    {% for dip in dips_list %}
-      var dipData = {
-        label: '{{dip}}',
-        approve: '{{dips_list[dip]["approve"]}}',
-        pipeline: '{{dips_list[dip]["pipeline"]}}',
-        ongoing: '{{dips_list[dip]["ongoing"]}}',
-        not_started: '{{dips_list[dip]["not_started"]}}',
-      };
-    
-      // Add region to each data entry in _labelsrcu
-      var regions = ['RCU'];
-      regions.forEach(function(region) {
-        var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
-        _labelsrcu.push(regionData.label);
-        approved_dips.push(regionData.approve);
-        pipeline_dips.push(regionData.pipeline);
-        ongoing_dips.push(regionData.ongoing);
-        not_started.push(regionData.not_started);
-      });
-    {% endfor %}
-        var totalApprovedDips = approved_dips.reduce(function(acc, val) {
-    return acc + parseFloat(val);
-}, 0);
-        var totalpipelineDips = pipeline_dips.reduce(function(acc, val) {
-    return acc + parseFloat(val);
-}, 0);
-        var totalongoingDips = ongoing_dips.reduce(function(acc, val) {
-    return acc + parseFloat(val);
-}, 0);
-        var totalnotstartedDips = not_started.reduce(function(acc, val) {
-    return acc + parseFloat(val);
-}, 0);
-
-
-        var ctx = document.getElementById("mybarChart");
-        var mybarChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: _labelsrcu,
-                datasets: [{
-                    label: 'Approved DIPs',
-                    backgroundColor: "#99e6ff",
-                    data: approved_dips
-                }, {
-                    label: 'Pipeline DIPs',
-                    backgroundColor: "#33ccff",
-                    data: pipeline_dips
-
-                },{
-                    label: 'Ongoing DIPs',
-                    backgroundColor: "#0099cc",
-                    data: ongoing_dips
-
-                },{
-                    label: 'Not Started',
-                    backgroundColor: "#ff8080",
-                    data: not_started
-
-                }]
-            },
-
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+ if ($("#mybarChart7").length) e = document.getElementById("mybarChart7"), new Chart(e, {
+      type: "bar",
+      data: {
+        labels: ["Cash Sales", "Booked Sales","Under Negotiations"],
+        datasets: [{
+          label: "Total",
+          backgroundColor:  ["#884dff", "#ac7339", "#ffa31a"],
+          data: [{{dcf_form7cashsales[0]['total_cash7']}}, {{dcf_form7bookedsales[0]['total_booked7']}},{{dcf_form7undernego[0]['total_undernego']}}]
+        },]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: !0
             }
-        });
+          }]
+        }
+      }
+    });
 
-    }
 
 
-     if ($('#mybarChart2').length) {
 
-      var tooltips = [];
-      var xValuesbar = [];
-      var yValuesbar = [];
-      var label_ = [];
-      var all_perc = []
-      var barColorsbar = ["red", "green", "blue", "orange", "brown", "yellow", "violet", "black"];
-      
-      var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}')
-    
-    // Sample data
-{% for dip in dip_sex_group_per_region %}
-    xValuesbar.push('RCU: ' + '{{dip}}');
-    var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["total_bene"]}}')
-    // var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
-    var perc = ((rcu_total / over_all) * 100).toFixed(2)
-    // yValuesbar.push(perc);
-    all_perc.push(perc);
-    yValuesbar.push(rcu_total);
-    label_.push(rcu_total)
-
-    tooltips.push([
-      'Total with sex/tagged: ' +'{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}',
-      'Total: ' +money('{{dip_sex_group_per_region[dip]["total_bene"]|int}}'),
-      ' ',
-      'Male: ' + '{{dip_sex_group_per_region[dip]["male"]["total"]}}',
-      'Youth: ' + '{{dip_sex_group_per_region[dip]["male"]["youth"]}}',
-      'IP: ' + '{{dip_sex_group_per_region[dip]["male"]["ip"]}}',
-      'PWD: ' + '{{dip_sex_group_per_region[dip]["male"]["pwd"]}}',
-      '--------------',
-      'Female: ' + '{{dip_sex_group_per_region[dip]["female"]["total"]}}',
-      'Youth: ' + '{{dip_sex_group_per_region[dip]["female"]["youth"]}}',
-      'IP: ' + '{{dip_sex_group_per_region[dip]["female"]["ip"]}}',
-      'PWD: ' + '{{dip_sex_group_per_region[dip]["female"]["pwd"]}}',
-      '--------------',
-      'Untagged: ' + '{{(dip_sex_group_per_region[dip]["total_bene"]-dip_sex_group_per_region[dip]["female"]["total"]+dip_sex_group_per_region[dip]["male"]["total"])|int}}',
-      '--------------',
-      'Overall Total',
-      'Youth: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_youth"]}}',
-      'IP: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_ip"]}}',
-      'PWD: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_pwd"]}}',
-    ])
-{% endfor %}
-
-        var ctx = document.getElementById("mybarChart2");
-        var mybarChart2 = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: xValuesbar,
-                tooltip_label:tooltips,
-                datasets: [{
-                    backgroundColor: barColorsbar,
-                    data: yValuesbar,
-                    labels : label_
-                }]
-            },
-
-           options: {
-     
-    tooltips: {
-        callbacks: {
-            label: function (tooltipItem, data) {
-                // Display only the percentage value without .00 in the tooltip
-          println(tooltipItem)
-
-                return data.tooltip_label[tooltipItem.index];
-            },
-        },
-        displayColors: false, // Set to false to hide the color squares in the tooltip
-    },
-
-    },
-        });
-
-    }
 
 
 
@@ -584,7 +483,7 @@ function download_login_start(fff){
                     <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                  <th>ID</th>
+                  <th id="sorted_btn">ID</th>
                   <th>Implementing Unit</th>
                   <th>Title of Trade Promotion Services Provided</th>
                   <th>Name of Beneficiary</th>

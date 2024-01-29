@@ -698,16 +698,17 @@ function myFunction3() {
 					});
 			},300)
 
+
+
 })();
 
 
-
-
-
-
-
-
-
+$onload(function(){
+		$('#datatable-responsive').dataTable({
+		/* Disable initial sort */
+		"aaSorting": []
+		});
+})
 
 function toastr(type, message, title, options) {
 	toastr.options = options;
