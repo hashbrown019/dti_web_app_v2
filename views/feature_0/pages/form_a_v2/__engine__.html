@@ -70,7 +70,8 @@
 
 	function fill_data_inp_f_a(data_){
 		// alert("====")
-		show_dialog_fa_v2();
+		// show_dialog_fa_v2(); // to SHOW FULL DETAILS IN FORM A // DISABLED TEMPORARILY
+		modeal_basic_info(data_)
 		DICT_TO_INPUT(data_[0][0],'FORM_DATA_A');
 	}
 
@@ -80,58 +81,79 @@
 	// })
 	// $onload(show_dialog_fa_v2)
 
-	$onload(modeal_basic_info)
-	function modeal_basic_info(){
-		var profile_panel_basic = $dialog({
+	// $onload(modeal_basic_info)
+	var profile_panel_basic
+	var full_details = undefined
+
+	function modeal_basic_info(full_details_){
+		full_details = full_details_[0][0]
+		profile_panel_basic = $dialog({
 			title : "Basic Information",
 			subtitle : " ",
-			content : $ID("basic_panel").innerHTML
+			content : (`
+			<div class="x-row">
+				<div class="x-container x-col l6 m6 s6">
+					<img class="" src="../static/img/male.png" style="width:100%">
+				</div>
+				<div class="x-container x-col l6 m6 s6">
+					<span style="line-height: 0.0px;">
+						<span class="x-text-grey" >Name:<br></span> 
+						<b class="x-xlarge">
+							<span >${full_details["frmer_prof_@_basic_Info_@_First_name"]}</span> 
+							<span >${full_details["frmer_prof_@_basic_Info_@_Middle_name"]}</span> 
+							<span >${full_details["frmer_prof_@_basic_Info_@_Last_name"]}</span>, 
+							<span >${full_details["frmer_prof_@_basic_Info_@_Extension_name"]}</span>
+						</b><br>
+						<br>
+					<span>
+					<span style="line-height: 0.0px;">
+						<span class="x-text-grey">Address:<br></span> 
+						<b class="x-xlarge"> 
+							<span >Region ${full_details["frmer_prof_@_frmer_addr_@_region"]}</span>, 
+							<span >${full_details["frmer_prof_@_frmer_addr_@_province"]}</span>, 
+							<span >${full_details["frmer_prof_@_frmer_addr_@_city_municipality"]}</span>, 
+							</b><br>
+						<br>
+					<span>
+					<span style="line-height: 0.0px;">
+						<span class="x-text-grey">Commodity:<br></span> 
+						<b class="x-xlarge" >${full_details["frmer_prof_@_Farming_Basic_Info_@_primary_crop"]}</b><br>
+						<br>
+					<span>
+					<span style="line-height: 0.0px;">
+						<span class="x-text-grey">Status:<br></span>
+						<label class="switch">
+							<input type="checkbox" >${full_details["togBtn"]}
+							<div class="slider round">
+								<!--ADDED HTML -->
+								<span class="x-padding on">Active</span>
+								<span class="x-padding off">Inactive</span>
+								<!--END-->
+							</div>
+						</label>
+						<br>
+					<span>
+					<br>
+					<br>
+					<br>
+					<span style="line-height: 0.0px;">
+						<span class="x-text-grey">More Actions:<br></span> 
+						<i class="x-large x-text-blue x-chip" onclick="see_full_details()">Edit This Profile</i><br>
+						<br>
+					<span>
+				</div>
+			</div>`),
 		})
 		profile_panel_basic.show()
+
+	}
+
+	function see_full_details(){
+		profile_panel_basic.destroy()
+		show_dialog_fa_v2();
+		DICT_TO_INPUT(full_details[0][0],'FORM_DATA_A');
+
 	}
 </script>
 <div id="basic_panel" style="display: none;">
-	<div class="x-row">
-		<div class="x-container x-col l6 m6 s6">
-			<img class="" src="../static/img/male.png" style="width:100%">
-		</div>
-		<div class="x-container x-col l6 m6 s6">
-			<span style="line-height: 0.0px;">
-				<span class="x-text-grey">Name:<br></span> 
-				<b class="x-xlarge"> Juan Dela Cruz</b><br>
-				<br>
-			<span>
-			<span style="line-height: 0.0px;">
-				<span class="x-text-grey">Address:<br></span> 
-				<b class="x-xlarge"> R-13, Agusan Del Norte, Butuan City</b><br>
-				<br>
-			<span>
-			<span style="line-height: 0.0px;">
-				<span class="x-text-grey">Commodity:<br></span> 
-				<b class="x-xlarge"> CACAO</b><br>
-				<br>
-			<span>
-			<span style="line-height: 0.0px;">
-				<span class="x-text-grey">Status:<br></span>
-				<label class="switch">
-					<input type="checkbox" id="togBtn">
-					<div class="slider round">
-						<!--ADDED HTML -->
-						<span class="x-padding on">Active</span>
-						<span class="x-padding off">Inactive</span>
-						<!--END-->
-					</div>
-				</label>
-				<br>
-			<span>
-			<br>
-			<br>
-			<br>
-			<span style="line-height: 0.0px;">
-				<span class="x-text-grey">More Actions:<br></span> 
-				<i class="x-large x-text-blue x-chip">Edit This Profile</i><br>
-				<br>
-			<span>
-		</div>
-	</div>
 </div>
