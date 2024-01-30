@@ -151,6 +151,50 @@ def tutorial():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
 	return render_template("form_dashboard/tutorial.html",user_data=session["USER_DATA"][0],**form_disp)
+# ===============================================
+# ===============================================
+# ===============================================
+# ===============================================
+@app.route("/imported_file/<form_>")
+def imported_file(form_):
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	print(form_)
+	num_form = form_.split("m")[0] + "m " +form_.split("m")[1].replace("_","")
+	form_ = _FORM_NAME[form_]
+	SQL =f'''
+	SELECT {form_}.filename, COUNT({form_}.filename) AS _COUNT, users.name , {form_}.date_created
+	FROM `{form_}`
+	JOIN `users` ON {form_}.upload_by = users.id
+	WHERE {form_}.upload_by = {session["USER_DATA"][0]['id']}
+	GROUP BY {form_}.filename
+	ORDER BY {form_}.date_created DESC;
+	'''
+	uploaded_file_by_user1 = db.select(SQL)
+	return render_template("/form_dashboard/imported_file.html",user_data=session["USER_DATA"][0],uploaded_file_by_user1=uploaded_file_by_user1,table_for_del=form_,num_form=num_form)
+
+
+@app.route('/dcf_delete/<string:filename_>/<string:table_>', methods = ['POST','GET'])
+def dcf_delete(filename_,table_):
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	filename_ = filename_.replace("@@","#")
+	sql="DELETE FROM `{}` WHERE `filename` = '{}' ".format(table_,filename_)
+	delete=db.do(sql)
+	form_ = FORM_NAME[table_]
+	print(form_)
+	print(table_)
+	if(delete["response"]=="error"):
+			flash(f"An error occured !", "error") 
+			print(str(delete))
+	else:
+			flash(f"The file was deleted successfully!", "success")
+			print(str(delete))
+	return redirect(f"/imported_file/{form_}")
+# ===============================================
+# ===============================================
+# ===============================================
+# ===============================================
+
+
 
 @app.route('/updateform1',methods=['POST','GET'])
 def updateform1():
@@ -1150,6 +1194,20 @@ FORM_NAME={
 	'dcf_access_financing' : 'form11_',
 	'form_c' : 'formc',
 }
+
+_FORM_NAME={
+	 'form1_':'dcf_prep_review_aprv_status',
+	 'form2_':'dcf_implementing_unit',
+	 'form3_':'dcf_bdsp_reg',
+	 'form4_':'dcf_capacity_building',
+	 'form5_':'dcf_matching_grant',
+	 'form6_':'dcf_product_development',
+	 'form7_':'dcf_trade_promotion',
+	 'form8_':'form8',
+	 'form9_':'dcf_enablers_activity',
+	 'form10_':'dcf_negosyo_center',
+	 'form11_':'dcf_access_financing',
+	 'formc':'form_c'}
 # if __name__ == "__main__":
 #     app.run(debug=True)
 
