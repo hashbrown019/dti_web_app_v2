@@ -69,6 +69,7 @@
 	}
 
 	function fill_data_inp_f_a(data_){
+		// alert("====")
 		show_dialog_fa_v2();
 		DICT_TO_INPUT(data_[0][0],'FORM_DATA_A');
 	}
@@ -78,4 +79,59 @@
 	// 	$ID("FORM_A_CONTENT_HOLDER").innerHTML = "WALA na HIIHIHI";
 	// })
 	// $onload(show_dialog_fa_v2)
+
+	$onload(function(){
+		var profile_panel_basic = $dialog({
+			title : "Basic Information",
+			subtitle : " ",
+			content : $ID("basic_panel").innerHTML
+		})
+		profile_panel_basic.show()
+	})
 </script>
+
+<div id="basic_panel" style="display: none;">
+	<div class="x-row">
+		<div class="x-container x-col l6 m6 s6">
+			<img class="" src="../static/img/male.png" style="width:100%">
+		</div>
+		<div class="x-container x-col l6 m6 s6">
+			<span style="line-height: 0.0px;">
+				<span class="x-text-grey">Name:<br></span> 
+				<b class="x-xlarge"> Juan Dela Cruz</b><br>
+				<br>
+			<span>
+			<span style="line-height: 0.0px;">
+				<span class="x-text-grey">Address:<br></span> 
+				<b class="x-xlarge"> R-13, Agusan Del Norte, Butuan City</b><br>
+				<br>
+			<span>
+			<span style="line-height: 0.0px;">
+				<span class="x-text-grey">Commodity:<br></span> 
+				<b class="x-xlarge"> CACAO</b><br>
+				<br>
+			<span>
+			<span style="line-height: 0.0px;">
+				<span class="x-text-grey">Status:<br></span>
+				<label class="switch">
+					<input type="checkbox" id="togBtn">
+					<div class="slider round">
+						<!--ADDED HTML -->
+						<span class="x-padding on">Active</span>
+						<span class="x-padding off">Inactive</span>
+						<!--END-->
+					</div>
+				</label>
+				<br>
+			<span>
+			<br>
+			<br>
+			<br>
+			<span style="line-height: 0.0px;">
+				<span class="x-text-grey">More Actions:<br></span> 
+				<i class="x-large x-text-blue x-chip">Edit This Profile</i><br>
+				<br>
+			<span>
+		</div>
+	</div>
+</div>
