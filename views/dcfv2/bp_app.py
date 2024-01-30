@@ -146,6 +146,12 @@ def form11_dashboard():
 	form_disp = display_dataform.displayform()
 	return render_template("form_dashboard/form11_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
+@app.route('/tutorial')
+def tutorial():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	form_disp = display_dataform.displayform()
+	return render_template("form_dashboard/tutorial.html",user_data=session["USER_DATA"][0],**form_disp)
+
 @app.route('/updateform1',methods=['POST','GET'])
 def updateform1():
 	update_dataform1.updateform1(request)
