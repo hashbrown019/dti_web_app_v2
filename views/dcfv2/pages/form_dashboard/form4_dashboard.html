@@ -23,19 +23,74 @@
               <div class="count _money_tag">{{dcf_form4male[0]['total_male4']}} </div>
               <span style="font-size: 10px;" class="count_bottom">Total # of Participants</span>
             </div>
+
             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
-              <div class="count _money_tag">{{dcf_form4female[0]['total_female4']}}</div>
-              <span style="font-size: 10px;" class="count_bottom">Total # of Participants</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total IP</span>
+              <div class="count _money_tag">{{dcf_form4maleip[0]['total_male4ip']}} </div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Male participants per sector </span>
+            </div>
+
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Youth</span>
+              <div class="count _money_tag">{{dcf_form4maleyouth[0]['total_male4youth']}} </div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Male participants per sector</span>
+            </div>
+
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total PWD</span>
+              <div class="count _money_tag">{{dcf_form4malepwd[0]['total_male4pwd']}} </div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Male participants per sector</span>
+            </div>
+
+
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total SC</span>
+              <div class="count _money_tag">{{dcf_form4malesc[0]['total_male4sc']}}</div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Male participants per sector</span>
 
             </div>
-            <div class="col-md-4 col-sm-4  tile_stats_count">
+
+
+                               <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
+              <div class="count _money_tag">{{dcf_form4female[0]['total_female4']}} </div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Participants</span>
+            </div>
+
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total IP</span>
+              <div class="count _money_tag">{{dcf_form4femaleip[0]['total_female4ip']}} </div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Female participants per sector </span>
+            </div>
+
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Youth</span>
+              <div class="count _money_tag">{{dcf_form4femaleyouth[0]['total_female4youth']}} </div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Female participants per sector</span>
+            </div>
+
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total PWD</span>
+              <div class="count _money_tag">{{dcf_form4femalepwd[0]['total_female4pwd']}} </div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Female participants per sector</span>
+            </div>
+
+
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total SC</span>
+              <div class="count _money_tag">{{dcf_form4femalesc[0]['total_female4sc']}}</div>
+              <span style="font-size: 10px;" class="count_bottom">Total # of Female participants per sector</span>
+
+            </div>
+
+
+            <div class="col-md-2 col-sm-4  tile_stats_count">
               <span class="count_top"> Conducted before DIP approval</span>
               <div class="count _money_tag">{{form4beforedip[0]['totalbeforedip']}}</div>
               <span style="font-size: 10px;" class="count_bottom">DIP-approved alignment</span>
             </div>
      
-            <div class="col-md-4 col-sm-4  tile_stats_count">
+            <div class="col-md-2 col-sm-4  tile_stats_count">
               <span class="count_top"> Conducted after DIP approval</span>
               <div class="count _money_tag">{{form4afterdip[0]['totalafterdip']}}</div>
               <span style="font-size: 10px;" class="count_bottom">DIP-approved alignment</span>
@@ -53,11 +108,11 @@
 
 
             
-<div class="col-md-4 col-sm-4 ">
+<div class="col-md-5 col-sm-5 ">
               <br>
               <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
-                  <h2>DIPs by Commodity</h2>
+                  <h2>Commodity</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -513,7 +568,12 @@ if ($('#pieChart').length) {
 
 
     
-
+function download_login_start(fff){
+  let a= document.createElement('a');
+  a.target= '_blank';
+  a.href= '/login/download_file/'+fff;
+  a.click();
+}
 
             </script>
 
@@ -679,7 +739,7 @@ if ($('#pieChart').length) {
             <br>
             <button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
 
-            <span style="cursor: pointer;" onclick="download_login_start('DCF_Form_1.xlsx')" class="btn btn-success btn-xs"><span><i class="fa-solid fa-file-excel"></i></span> Download form 1 excel template</span>
+            <span style="cursor: pointer;" onclick="download_login_start('DCF_Form_4.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download form 4 excel template</span>
           </div>
         </div>
     </form>

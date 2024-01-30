@@ -20,28 +20,32 @@
   }
 </style>
 <script>
-  const isDialogShown = localStorage.getItem('dialogShown');
+const isDialogShownx6 = localStorage.getItem('dialogShownx6');
 
-  if (!isDialogShown) {
-    Swal.fire({
-      title: "Changelogs",
-      html: "<div style='text-align: left;'>" +
-        "1. Resolved an issue in Excel export where all regions were visible. Users can now only view data specific to their region.<br><br>" +
-        "2. Implemented changes in Excel export, adding new data fields: date created, date modified, and uploaded by.<br><br>" +
-        "3. Removed the 'Add Participants' button in data capture forms. Users can now directly manage participants in the data table, alongside the edit and delete buttons. The Excel import for adding participants is still in development.<br><br>" +
-        "4. Updated Excel import templates for all forms by adding a new sheet named 'Guidelines.' This sheet provides information and guidance on input fields and formats.<br><br>" +
-        "5. In Data Capture Form 6, the Outputs for the Product Development table are now tagged as 'On Dev.' We are still addressing the bug related to displaying the data" +
-        "</div>",
-      icon: "info",
-      width: '800px',
-      showCancelButton: false,
-      confirmButtonText: 'Got it',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.setItem('dialogShown', 'true');
-      }
-    });
-  }
+if (!isDialogShownx6) {
+  Swal.fire({
+    title: "Changelog Update - (2024-01-30)",
+    html: "<div style='text-align: left;'>" +
+      "1. Dashboard Enhancements.<br>" +
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Additional charts for data capture form dashboards.<br><br>" +
+      "2. New Features<br>" +
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Added a new sidebar menu: Guide<br>" +
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•Specifically, a tutorial for data capture forms is now available.<br>" + 
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•This tutorial provides comprehensive guidance on utilizing data capture forms effectively.<br>" +  
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•Users can conveniently watch tutorials directly from the sidebar menu. <br><br>" +
+      "Stay tuned for more updates and improvements in the future! 🌐✨"+
+      "</div>",
+    icon: "info",
+    width: '800px',
+    showCancelButton: true,
+    confirmButtonText: 'Got it',
+    cancelButtonText: 'Close',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.setItem('dialogShownx6', 'true');
+    }
+  });
+}
 </script>
     
 {% endblock content %}
