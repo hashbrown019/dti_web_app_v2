@@ -165,7 +165,7 @@ def imported_file(form_):
 	SELECT {form_}.filename, COUNT({form_}.filename) AS _COUNT, users.name , {form_}.date_created
 	FROM `{form_}`
 	JOIN `users` ON {form_}.upload_by = users.id
-	WHERE {form_}.upload_by = {session["USER_DATA"][0]['id']}
+	WHERE {form_}.upload_by = {session["USER_DATA"][0]['id']} AND {form_}.filename != " "
 	GROUP BY {form_}.filename
 	ORDER BY {form_}.date_created DESC;
 	'''
