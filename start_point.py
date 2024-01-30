@@ -135,5 +135,11 @@ def format_timestamp(timestamp):
         return timestamp.strftime("%Y-%m-%d %H:%M:%S")
 
 
+
+def websafe_filename(fname):
+	return fname.replace("#","@@")
+
+
 # Register the custom filter on the Flask application
 app.jinja_env.filters['format_timestamp'] = format_timestamp
+app.jinja_env.filters['websafe_filename'] = websafe_filename
