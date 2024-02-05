@@ -1,0 +1,155 @@
+<div id="entry_data_modal" style="display: none;">
+	<div class="x-padding x-container">
+		<div class="x-row">
+			<input id="" class="form_data_ft x-input x-border x-hide" type="text" name="" hidden>
+
+			<div class="x-col l6 m6 x-container">
+				<span>Logframe Alignment Indicator</span>
+				<input id="log_frame_ind" class="form_data_ft x-input x-border" type="date" name="">
+				<div class="x-row">
+					<div class="x-col l6 m6">
+						<span>AWPB Code Activity</span>
+						<input id="awpb_code" class="form_data_ft x-input x-border" type="" name="">
+					</div>
+					<div class="x-col l6 m6">
+						<span>Corresponding Indicator #</span>
+						<input id="corr_ind" class="form_data_ft x-input x-border" type="" name="">
+					</div>
+				</div>
+				<br>
+				<span>Number of Participants</span>
+				<div class="x-container">
+					<div class="x-col l2 m2 s2">
+						<span>Male</span>
+						<input id="target_male" class="form_data_ft x-input x-border" type="number" name="">
+					</div>
+					<div class="x-col l2 m2 s2">
+						<span>Female</span>
+						<input id="target_female" class="form_data_ft x-input x-border" type="number" name="">
+					</div>
+					<div class="x-col l2 m2 s2">
+						<span>IP</span>
+						<input id="target_ip" class="form_data_ft x-input x-border" type="number" name="">
+					</div>
+					<div class="x-col l2 m2 s2">
+						<span>Youth</span>
+						<input id="target_youth" class="form_data_ft x-input x-border" type="number" name="">
+					</div>
+					<div class="x-col l2 m2 s2">
+						<span>PWD</span>
+						<input id="target_pwd" class="form_data_ft x-input x-border" type="number" name="">
+					</div>
+				</div>
+			</div>
+			<div class="x-col l6 m6 x-container">
+				<span>Target Date</span>
+				<input id="target_date" class="form_data_ft x-input x-border" type="date" name="">
+				<span>Venue</span>
+				<input id="venue" class="form_data_ft x-input x-border" type="" name="">
+				<span>Resource Person</span>
+				<input id="res_person" class="form_data_ft x-input x-border" type="" name="">
+				<span>NPCO Lead person/Unit</span>
+				<input id="" class="form_data_ft x-input x-border" type="number" name="">
+				<span>Allocated Budget</span>
+				<input id="" class="form_data_ft x-input x-border" type="number" name="">
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	// $onload(show_modal_entry)
+	var entry_dialog = undefined
+	function show_modal_entry(){
+		// get_db_table_for_dp()
+		println("Swoing enter dialog")
+		entry_dialog = $dialog({
+			type:"warning",
+			title : "Add Entry",
+			subtitle : "Add entry for Fund Tracker",
+			content : $dialog_content("entry_data_modal"),
+			buttons : ["Submit","Cancel"],
+			buttons_actions : [submit_ft_data]
+
+		})
+		entry_dialog.dialog.style.width = "90%";
+		entry_dialog.show();
+		$ID("date").value = $datetime();
+	};
+
+	function submit_ft_data(){
+		var data_form_ft = {}
+		var form_data_ft_class = $CLASS("form_data_ft")
+		for (var i = 0; i < form_data_ft_class.length; i++) {
+			var field_val = form_data_ft_class[i].value
+			var field_key = form_data_ft_class[i].id
+			data_form_ft[field_key] = field_val
+		}
+
+		data_form_ft['input_by'] = "{{USER_DATA['id']}}"
+		println(data_form_ft)
+		$send({
+			action : "/fundtracker/submit_entry_ft_main",
+			method : POST,
+			data : $DATA(data_form_ft),
+			func : function(res){
+				entry_dialog.destroy()
+				var resp = JSON.parse(res)
+				if(resp['msg']=="done"){
+					$dialog({
+						type:"success",
+						title : "Transaction Complete",
+						subtitle : "Your data entry has been processed and will be displayed shortly",
+
+					}).show()
+				}
+				else{
+					$dialog({
+						type:"error",
+						title : "Transaction Failed",
+						subtitle : "Your data entry has been processed and encountered an error. Please contact the Developers",
+
+					}).show()
+				}
+				goto("/fundtracker/dashboard")
+			}
+		})
+
+	}
+
+	function get_db_table_for_dp(){
+		$send({
+			action : "/fundtracker/get_table_data",
+			method : POST,
+			a_sync : false,
+			func : function(res){
+				var output_desc = "<option selected disabled>Select</option>"
+				var exp_acc = "<option selected disabled>Select</option>"
+				var resp = JSON.parse(res)
+
+				for (var i = 0; i < resp["output"].length; i++) {
+					output_desc += (`
+						<option value="`+resp["output"][i]['id']+`">
+							`+resp["output"][i]['ref_and_description']+`
+						</option>
+					`)
+				}
+				for (var i = 0; i < resp["object"].length; i++) {
+					exp_acc += (`
+						<option value="`+resp["object"][i]['id']+`">
+							`+resp["object"][i]['objectclass']+`
+						</option>
+					`)
+				}
+				// $ID("output_desc").innerHTML = output_desc
+				// $ID("exp_acc").innerHTML = exp_acc
+				println(resp)
+			}
+		})
+	}
+
+	// $onload(get_db_table_for_dp)
+
+	function $get_dataForm_object(){}
+
+	function $dialog_content(ids){return $ID(ids).innerHTML}
+</script>

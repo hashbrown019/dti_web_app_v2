@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064) -->
+<html>
+	{% include 'head.html' %}
+	<script async type="text/javascript" src="../../static/js/amcharts/index.js"></script>
+	<script async type="text/javascript" src="../../static/js/amcharts/xy.js"></script>
+	<script async type="text/javascript" src="../../static/js/amcharts/Animated.js"></script>
+	<script async type="text/javascript" src="../../static/js/amcharts/percent.js"></script>
+	<script async type="text/javascript" src="../../static/js/amcharts/hierarchy.js"></script>
+	<body class="x-light-grey">
+		<header class="x-header x-bar x-top x-rapid-teal-heavy x-large" style="z-index:9;">
+			<div class="x-container x-padding x-left x-rapid-macha-dark"  onclick="x_open()" style="width:200px;">
+				<div class="x-col l4">
+					<img src="../static/img/avatar2.png" class="x-circle x-margin-right" style="width:46px">
+				</div>
+				<div class="x-col l8">
+					<span class="x-text-shrink "><strong>{{USER_DATA['name']}}</strong></span><br>
+					<span class="x-text-shrink x-tiny">{{USER_DATA['job']}}</span>
+				</div>
+			</div>
+			<div class="x-container x-padding x-left x-text-rapid-macha-light" style="width:200px;">
+				Showing figures for<br>
+				<b class="x-large">{{USER_DATA['rcu']}}</b>
+			</div>
+			<div class="x-zoom x-bar-item x-right x-small">
+				{% include 'excel_man.html' %}
+			</div>
+		</header>
+		<br><br><br>
+		<!-- Top container -->
+		
+		<!-- Sidebar/menu -->
+		<nav class="x-sidebar x-collapse x-white x-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+			<div class="x-container">
+				<h5>Dashboard</h5>
+			</div>
+			<div class="x-bar-block">
+				<a href="#" class="x-bar-item x-button x-padding-16 x-hide-large x-dark-grey x-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
+				<a href="#" class="x-bar-item x-button x-padding x-hover-blue x-green" onclick="show_modal_entry()"><i class="fa fa-hashtag fa-fw"></i>&nbsp;Add Entry</a>
+				<a href="#" class="x-bar-item x-button x-padding x-hover-blue"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
+				<a href="#" class="x-bar-item x-button x-padding x-hover-blue"><i class="fa fa-eye fa-fw"></i>&nbsp; Reports</a>
+			</div>
+
+			<div class="x-rowx-center" style="display: fixed;bottom: 100px;">
+				<div class="x-container x-row x-padding">
+					<button class="x-block x-btn x-border x-round x-border-orange" onclick="goto('/menuv2')"> <span class="x-text-orange x-hover-orange fa fa-home"></span> Home</button>
+				</div>
+				<div class="x-container x-row x-padding">
+					<button class="x-block x-btn x-round x-red" onclick="logout()"> <span class="x-text fa fa-power-off"></span> Logout</button>
+				</div>
+			</div>
+		</nav>
+
+
+		<!-- Overlay effect when opening sidebar on small screens -->
+		<div class="x-overlay x-hide-large x-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+		<!-- !PAGE CONTENT! -->
+		<div class="x-main" style="margin-left:200px;margin-top:43px;">
+
+			<!-- Header -->
+			<header class="x-container" style="padding-top:22px">
+				<h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+			</header>
+
+			<div class="x-row-padding x-margin-bottom">
+				<!-- {% include 'parts/dashboard_charts.html'%} -->
+			</div>
+			<div class="x-row-padding x-margin-bottom">
+				{% include 'parts/table_main_entries.html'%}
+			</div>
+			{% include 'modals/add_npco_activity.html' %}
+			<!-- End page content -->
+		</div>
+
+		<script>
+
+			// Get the Sidebar
+			var mySidebar = document.getElementById("mySidebar");
+
+			// Get the DIV with overlay effect
+			var overlayBg = document.getElementById("myOverlay");
+
+			// Toggle between showing and hiding the sidebar, and add overlay effect
+			function w3_open() {
+				if (mySidebar.style.display === 'block') {
+					mySidebar.style.display = 'none';
+					overlayBg.style.display = "none";
+				} else {
+					mySidebar.style.display = 'block';
+					overlayBg.style.display = "block";
+				}
+			}
+
+	// Close the sidebar with the close button
+			function w3_close() {
+				mySidebar.style.display = "none";
+				overlayBg.style.display = "none";
+			}
+		</script>
+	</body>
+</html>

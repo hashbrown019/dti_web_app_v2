@@ -22,6 +22,7 @@ from views.doofen  import bp_app as doofen
 from views.fund_tracker  import bp_app as fund_tracker
 # from views.dcf  import bp_app as dcf
 from views.dcfv2  import bp_app as dcfv2
+from views.npco_act_tracker  import npco_track as npco_tracker
 from views.fmi  import bp_app as fmi
 
 from views._tests_  import bp_app as test
@@ -51,6 +52,7 @@ app.register_blueprint(webrep.app);
 app.register_blueprint(psalm.app);
 app.register_blueprint(doofen.app);
 app.register_blueprint(fund_tracker.app);
+app.register_blueprint(npco_tracker.app);
 # app.register_blueprint(dcf.app);
 app.register_blueprint(dcfv2.app);
 app.register_blueprint(fmi.app);
