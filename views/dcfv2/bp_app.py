@@ -189,6 +189,12 @@ def dcf_delete(filename_,table_):
 			flash(f"The file was deleted successfully!", "success")
 			print(str(delete))
 	return redirect(f"/imported_file/{form_}")
+
+@app.route('/dcf_download/<string:filename_>', methods=['GET'], endpoint='dcf_download')
+def dcf_download(filename_):
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	path = "assets/objects/spreadsheets_dcf/queued/" + filename_
+	return send_file(path, as_attachment=True)	
 # ===============================================
 # ===============================================
 # ===============================================

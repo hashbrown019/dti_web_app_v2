@@ -62,10 +62,14 @@
                         <td>{{ row['_COUNT'] }}</td>
                         <td>
                           <!-- {{row['upload_by']}} === {{user_data['id']}} -->
+                          <a style="color: #00cc99;"  href="{{ url_for('dcfv2.dcf_download', filename_=row['filename']) }}">
+                            <span><i class="fa fa-cloud-download"></i></span> Download
+                          </a>&nbsp;&nbsp;&nbsp;
 
                           <a style="color: #ff5c33;" onclick="confirmation(event)"  href="/dcf_delete/{{row['filename'] | websafe_filename}}/{{table_for_del}}">
                             <span><i class="fa fa-trash"></i></span> Delete
                           </a>
+                          
 
 
                         </td>
