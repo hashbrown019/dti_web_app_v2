@@ -92,7 +92,7 @@
                                     {% if (row['filename'])!="" and (row['filename'])!=" " %}
                                     <td class="text-info">{{ row['name'] }}</td>
                                     <td><a title="Download file" class="text-success" href="{{ url_for('form_c.download_file', filename_=row['filename']) }}">{{ row['filename'] }}</a></td>
-                                    <td><a class="text-danger" onclick="confirmation(event)"  href="/delete/{{row['filename']}}">  <span><i class="fa-solid fa-trash"></i></span> Delete</a>
+                                    <td><a class="text-danger" onclick="confirmation(event)"  href="/delete/{{row['filename'] | websafe_filename}}">  <span><i class="fa-solid fa-trash"></i></span> Delete</a>
 
                                         {%else%}
                              
