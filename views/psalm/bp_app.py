@@ -263,6 +263,7 @@ def spreadsheet():
 @app.route('/delete/<string:filename_>', methods = ['POST','GET'])
 def delete(filename_):
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	filename_ = filename_.replace("@@","#")
 	sql='DELETE FROM form_c WHERE filename = {0}'.format(filename_)
 	delete=db.do(sql)
 	if(delete["response"]=="error"):

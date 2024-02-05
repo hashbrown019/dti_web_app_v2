@@ -165,7 +165,7 @@ def imported_file(form_):
 	SELECT {form_}.filename, COUNT({form_}.filename) AS _COUNT, users.name , {form_}.date_created
 	FROM `{form_}`
 	JOIN `users` ON {form_}.upload_by = users.id
-	WHERE {form_}.upload_by = {session["USER_DATA"][0]['id']}
+	WHERE {form_}.upload_by = {session["USER_DATA"][0]['id']} AND {form_}.filename != " "
 	GROUP BY {form_}.filename
 	ORDER BY {form_}.date_created DESC;
 	'''
@@ -189,6 +189,12 @@ def dcf_delete(filename_,table_):
 			flash(f"The file was deleted successfully!", "success")
 			print(str(delete))
 	return redirect(f"/imported_file/{form_}")
+
+@app.route('/dcf_download/<string:filename_>', methods=['GET'], endpoint='dcf_download')
+def dcf_download(filename_):
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	path = "assets/objects/spreadsheets_dcf/queued/" + filename_
+	return send_file(path, as_attachment=True)	
 # ===============================================
 # ===============================================
 # ===============================================
