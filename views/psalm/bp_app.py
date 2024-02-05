@@ -264,7 +264,8 @@ def spreadsheet():
 def delete(filename_):
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	filename_ = filename_.replace("@@","#")
-	sql='DELETE FROM form_c WHERE filename = {0}'.format(filename_)
+	sql="DELETE FROM form_c WHERE filename = '{}'; ".format(filename_)
+	print(sql)
 	delete=db.do(sql)
 	if(delete["response"]=="error"):
 			flash(f"An error occured !", "error") 
@@ -272,7 +273,7 @@ def delete(filename_):
 	else:
 			flash(f"The file was deleted successfully!", "success")
 			print(str(delete))
-	return render_template("spreadsheet.html",user_data=session["USER_DATA"][0])
+	return redirect("/spreadsheet")
 
 @app.route('/download/<string:filename_>', methods=['GET'], endpoint='download_file')
 def download_file(filename_):
