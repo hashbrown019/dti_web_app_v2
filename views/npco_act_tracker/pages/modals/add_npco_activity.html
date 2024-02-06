@@ -1,7 +1,7 @@
-<div id="entry_data_modal" style="display: none;">
-	<div class="x-padding x-container">
+<div id="entry_data_modal" cla style="display: none;">
+	<div class="x-padding x-container x-round-large">
 		<div class="x-row">
-			<input id="" class="form_data_ft x-input x-border x-hide" type="text" name="" hidden>
+			<!-- <input id="id" class="form_data_ft x-input x-border x-hide" type="text" name="" hidden> -->
 
 			<div class="x-col l6 m6 x-container">
 				<span>Logframe Alignment Indicator</span>
@@ -72,48 +72,49 @@
 
 		})
 		entry_dialog.dialog.style.width = "90%";
+		// entry_dialog.dialog.classList.add("x-round-large");
 		entry_dialog.show();
-		$ID("date").value = $datetime();
+		// $ID("date").value = $datetime();
 	};
 
 	function submit_ft_data(){
-		var data_form_ft = {}
-		var form_data_ft_class = $CLASS("form_data_ft")
-		for (var i = 0; i < form_data_ft_class.length; i++) {
-			var field_val = form_data_ft_class[i].value
-			var field_key = form_data_ft_class[i].id
-			data_form_ft[field_key] = field_val
-		}
+		// var data_form_ft = {}
+		// var form_data_ft_class = $CLASS("form_data_ft")
+		println(input_to_json("form_data_ft"))
+		// for (var i = 0; i < form_data_ft_class.length; i++) {
+		// 	var field_val = form_data_ft_class[i].value
+		// 	var field_key = form_data_ft_class[i].id
+		// 	data_form_ft[field_key] = field_val
+		// }
 
-		data_form_ft['input_by'] = "{{USER_DATA['id']}}"
-		println(data_form_ft)
-		$send({
-			action : "/fundtracker/submit_entry_ft_main",
-			method : POST,
-			data : $DATA(data_form_ft),
-			func : function(res){
-				entry_dialog.destroy()
-				var resp = JSON.parse(res)
-				if(resp['msg']=="done"){
-					$dialog({
-						type:"success",
-						title : "Transaction Complete",
-						subtitle : "Your data entry has been processed and will be displayed shortly",
+		// data_form_ft['input_by'] = "{{USER_DATA['id']}}"
+		// println(data_form_ft)
+		// $send({
+		// 	action : "/fundtracker/submit_entry_ft_main",
+		// 	method : POST,
+		// 	data : $DATA(data_form_ft),
+		// 	func : function(res){
+		// 		entry_dialog.destroy()
+		// 		var resp = JSON.parse(res)
+		// 		if(resp['msg']=="done"){
+		// 			$dialog({
+		// 				type:"success",
+		// 				title : "Transaction Complete",
+		// 				subtitle : "Your data entry has been processed and will be displayed shortly",
 
-					}).show()
-				}
-				else{
-					$dialog({
-						type:"error",
-						title : "Transaction Failed",
-						subtitle : "Your data entry has been processed and encountered an error. Please contact the Developers",
+		// 			}).show()
+		// 		}
+		// 		else{
+		// 			$dialog({
+		// 				type:"error",
+		// 				title : "Transaction Failed",
+		// 				subtitle : "Your data entry has been processed and encountered an error. Please contact the Developers",
 
-					}).show()
-				}
-				goto("/fundtracker/dashboard")
-			}
-		})
-
+		// 			}).show()
+		// 		}
+		// 		goto("/fundtracker/dashboard")
+		// 	}
+		// })
 	}
 
 	function get_db_table_for_dp(){
