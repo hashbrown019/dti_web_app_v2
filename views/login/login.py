@@ -104,6 +104,7 @@ class _main:
 			res["success"] = True
 			res["data"] = log_res[0]['name']
 			res["profilepic"] = log_res[0]['profilepic']
+			res["job"] = log_res[0]['job']
 			return jsonify(res);
 		else:
 			return jsonify(res);
