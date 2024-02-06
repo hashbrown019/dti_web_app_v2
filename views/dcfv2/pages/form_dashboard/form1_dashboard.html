@@ -6,935 +6,935 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-  {% include "includes/sweetalert.html" %}
+{% include "includes/sweetalert.html" %}
 <title>Form 1 Dashboard</title>
 
 <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row" style="display: inline-block;" >
-          <div class="tile_count">
-             <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Total Entries</span>
-              <div class="count">{{dcf_form1}}</div>
-              <span style="font-size: 10px;" class="count_bottom">Total # of Entries</span>
+	<!-- top tiles -->
+	<div class="row" style="display: inline-block;" >
+		<div class="tile_count">
+		 <div class="col-md-2 col-sm-4  tile_stats_count">
+			<span class="count_top"><i class="fa fa-users"></i> Total Entries</span>
+			<div class="count">{{dcf_form1}}</div>
+			<span style="font-size: 10px;" class="count_bottom">Total # of Entries</span>
 
-            </div>
-                   <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Male</span>
-              <div class="count _money_tag">{{dcf_form1male[0]['total_male']}} </div>
-              <span style="font-size: 10px;" class="count_bottom">Smallholder Farming Households</span>
-            </div>
-            <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
-              <div class="count _money_tag">{{dcf_form1female[0]['total_female']}}</div>
-              <span style="font-size: 10px;" class="count_bottom">Smallholder Farming Households</span>
+		</div>
+		<div class="col-md-2 col-sm-4  tile_stats_count">
+			<span class="count_top"><i class="fa fa-user"></i> Total Male</span>
+			<div class="count _money_tag">{{dcf_form1male[0]['total_male']}} </div>
+			<span style="font-size: 10px;" class="count_bottom">Smallholder Farming Households</span>
+		</div>
+		<div class="col-md-2 col-sm-4  tile_stats_count">
+			<span class="count_top"><i class="fa fa-user"></i> Total Female</span>
+			<div class="count _money_tag">{{dcf_form1female[0]['total_female']}}</div>
+			<span style="font-size: 10px;" class="count_bottom">Smallholder Farming Households</span>
 
-            </div>
-            <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Large Enterprise</span>
-              <div class="count _money_tag">{{dcf_form1msme[0]['total_large_entep']}}</div>
-              <span style="font-size: 10px;" class="count_bottom">Total # of Large Enterprises</span>
-            </div>
-     
-            <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Medium Enterprises</span>
-              <div class="count _money_tag">{{dcf_form1msme2[0]['total_medium_entep']}}</div>
-              <span style="font-size: 10px;" class="count_bottom">Total # of Medium Enterprises</span>
-            </div>
-            <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Small Enterprises</span>
-              <div class="count _money_tag">{{dcf_form1msme3[0]['total_small_entep']}}</div>
-              <span style="font-size: 10px;" class="count_bottom">Total # of small enterprises</span>
-            </div>
-            <div class="col-md-2 col-sm-4  tile_stats_count">
-              <span class="count_top"> Micro Enterprises</span>
-              <div class="count _money_tag">{{dcf_form1msme4[0]['total_micro_entep']}}</div>
-              <span style="font-size: 10px;" class="count_bottom">Total # of Micro Enterprises</span>
-            </div>
-          </div>
-        </div>
-          <!-- /top tiles -->
+		</div>
+		<div class="col-md-2 col-sm-4  tile_stats_count">
+			<span class="count_top"> Large Enterprise</span>
+			<div class="count _money_tag">{{dcf_form1msme[0]['total_large_entep']}}</div>
+			<span style="font-size: 10px;" class="count_bottom">Total # of Large Enterprises</span>
+		</div>
+		
+		<div class="col-md-2 col-sm-4  tile_stats_count">
+			<span class="count_top"> Medium Enterprises</span>
+			<div class="count _money_tag">{{dcf_form1msme2[0]['total_medium_entep']}}</div>
+			<span style="font-size: 10px;" class="count_bottom">Total # of Medium Enterprises</span>
+		</div>
+		<div class="col-md-2 col-sm-4  tile_stats_count">
+			<span class="count_top"> Small Enterprises</span>
+			<div class="count _money_tag">{{dcf_form1msme3[0]['total_small_entep']}}</div>
+			<span style="font-size: 10px;" class="count_bottom">Total # of small enterprises</span>
+		</div>
+		<div class="col-md-2 col-sm-4  tile_stats_count">
+			<span class="count_top"> Micro Enterprises</span>
+			<div class="count _money_tag">{{dcf_form1msme4[0]['total_micro_entep']}}</div>
+			<span style="font-size: 10px;" class="count_bottom">Total # of Micro Enterprises</span>
+		</div>
+	</div>
+</div>
+<!-- /top tiles -->
 
-          <div class="row">
-            <div class="col-md-12 col-sm-12 ">
-              <div class="dashboard_graph">
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="dashboard_graph">
 
-                 <div class="col-md-6 col-sm-6  ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>DIPs by Region <small>Bar Chart</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                          </div>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="mybarChart"></canvas>
-                  </div>
+		 <div class="col-md-6 col-sm-6  ">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>DIPs by Region <small>Bar Chart</small></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="#">Settings 1</a>
+								<a class="dropdown-item" href="#">Settings 2</a>
+							</div>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="mybarChart"></canvas>
+				</div>
 
-                  <div style="text-align: center;">
-    <p><i class="fa fa-square" style="color:#99e6ff "></i> Approved DIPs: <span id="totalApprovedDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i>Pipeline DIPs: <span id="totalpipelineDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc "></i> Ongoing DIPs: <span id="totalongoingDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ff8080 "></i> Not Started: <span id="totalnotstartedDipsValue"></span></p>
+				<div style="text-align: center;">
+					<p><i class="fa fa-square" style="color:#99e6ff "></i> Approved DIPs: <span id="totalApprovedDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i>Pipeline DIPs: <span id="totalpipelineDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc "></i> Ongoing DIPs: <span id="totalongoingDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ff8080 "></i> Not Started: <span id="totalnotstartedDipsValue"></span></p>
+				</div>
+			</div>
+
+			
+
+			
+			<div class="clearfix"></div>
+			<div class="x_content">
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-3  bg-white">
+
+			<div class="x_title">
+				<h2>DIPs by Region <small>Table</small></h2>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="col-md-12 col-sm-12 ">
+
+
+				<table class="table table-bordered" style="width:70vh;">
+					<thead>
+						<tr>
+							<th>RCU</th>
+							<th>Approved DIPs</th>
+							<th>Pipeline DIPs</th>
+							<th>Ongoing DIPs</th>
+							<th>Not Started</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						{% for dip in dips_list %}
+
+						<tr>
+							<th scope="row">{{dip}}</th>
+							<td>{{dips_list[dip]["approve"]}}</td>
+							<td>{{dips_list[dip]["pipeline"]}}</td>
+							<td>{{dips_list[dip]["ongoing"]}}</td>
+							<td>{{dips_list[dip]["not_started"]}}</td>
+						</tr>
+						{% endfor %}
+
+					</tbody>
+				</table>
+
+			</div>
+
+
+		</div>
+
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+</div>
+<br />
+
+<div class="row">
+
+
+	<div class="col-md-12 col-sm-12 ">
+		<div class="dashboard_graph">
+
+		 <div class="col-md-6 col-sm-6  ">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>Smallholder Farming Households By Region<small>Bar Chart</small></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="#">Settings 1</a>
+								<a class="dropdown-item" href="#">Settings 2</a>
+							</div>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="mybarChart2"></canvas>
+				</div>
+
+			</div>
+
+			
+
+			
+			<div class="clearfix"></div>
+			<div class="x_content">
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-3  bg-white">
+
+			<div class="x_title">
+				<h2>Smallholder Farming Households By Region<small>Table</small></h2>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="col-md-12 col-sm-12 ">
+
+
+
+				<table class="table table-bordered" style="width:80vh;">
+					<thead>
+						<tr>
+							<th>RCU</th>
+							<th>Male</th>
+							<th>Male <small>Youth</small></th>
+							<th>Male <small>IP</small></th>
+							<th>Male <small>PWD</small></th>
+							<th>Female</th>
+							<th>Female <small>Youth</small></th>
+							<th>Female <small>IP</small></th>
+							<th>Female <small>PWD</small></th>
+
+
+						</tr>
+					</thead>
+					<tbody>
+					 {% for dip in dip_sex_group_per_region %}
+
+
+					 <tr>
+						<th scope="row">{{dip}}</th>
+						<td>{{dip_sex_group_per_region[dip]["male"]["total"]}}</td>
+						<td>{{dip_sex_group_per_region[dip]["male"]["youth"]}}</td>
+						<td>{{dip_sex_group_per_region[dip]["male"]["ip"]}}</td>
+						<td>{{dip_sex_group_per_region[dip]["male"]["pwd"]}}</td>
+						<td>{{dip_sex_group_per_region[dip]["female"]["total"]}}</td>
+						<td>{{dip_sex_group_per_region[dip]["female"]["youth"]}}</td>
+						<td>{{dip_sex_group_per_region[dip]["female"]["ip"]}}</td>
+						<td>{{dip_sex_group_per_region[dip]["female"]["pwd"]}}</td>
+
+					</tr>
+					{% endfor %}
+
+
+				</tbody>
+			</table>
+
+
+
+		</div>
+
+
+	</div>
+
+	<div class="clearfix"></div>
 </div>
 </div>
 
-          
+<div class="col-md-6 col-sm-6  ">
+	<br>
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>Overall Total Smallholder Farming Households <small>Pie Chart</small></h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#">Settings 1</a>
+						<a class="dropdown-item" href="#">Settings 2</a>
+					</div>
+				</li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a>
+				</li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<canvas id="pieChart"></canvas>
+			<div style="text-align: center;">
+				<p><i class="fa fa-square" style="color:#0099cc "></i> Male: {{dcf_form1male[0]['total_male']}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#cc0066 ">&nbsp;&nbsp;&nbsp;</i>Female: {{dcf_form1female[0]['total_female']}}&nbsp;&nbsp;&nbsp; Overall Total: <span id="formatedoveralltotal"></span>&nbsp;&nbsp;&nbsp; Untagged: <span id="formatedtotal"></span>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                    
-                    <div class="clearfix"></div>
-                  <div class="x_content">
-                </div>
-              </div>
-                <div class="col-md-3 col-sm-3  bg-white">
+	
 
-                  <div class="x_title">
-                    <h2>DIPs by Region <small>Table</small></h2>
-                    <div class="clearfix"></div>
-                  </div>
+	<div class="col-md-4 col-sm-4 ">
+		<br>
+		<div class="x_panel tile overflow_hidden">
+			<div class="x_title">
+				<h2>DIPs by Commodity</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a>
+							<a class="dropdown-item" href="#">Settings 2</a>
+						</div>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table class="" style="width:100%">
+					<tr>
+						<th>
+							<p>Pie Chart Percentage</p>
+						</th>
+						<th>
+							<p class="">Commodities</p>
+							
+						</th>
+						
+					</tr>
+					<tr>
+						<td>
+							<canvas class="canvasDoughnut" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+						</td>
+						<td>
+							<table class="tile_info">
+								{% for key in over_all_commodity_count %}
+								<tr>
+									<td>
+										{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
+										{% set color_index = loop.index0 % square_colors|length %}
+										<p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count[key] }}</p>
+									</td>
 
-                  <div class="col-md-12 col-sm-12 ">
-
-
-                    <table class="table table-bordered" style="width:70vh;">
-                      <thead>
-                        <tr>
-                          <th>RCU</th>
-                          <th>Approved DIPs</th>
-                          <th>Pipeline DIPs</th>
-                          <th>Ongoing DIPs</th>
-                          <th>Not Started</th>
-
-                        </tr>
-                      </thead>
-                      <tbody>
-    {% for dip in dips_list %}
-
-                        <tr>
-                          <th scope="row">{{dip}}</th>
-                          <td>{{dips_list[dip]["approve"]}}</td>
-                          <td>{{dips_list[dip]["pipeline"]}}</td>
-                          <td>{{dips_list[dip]["ongoing"]}}</td>
-                          <td>{{dips_list[dip]["not_started"]}}</td>
-                        </tr>
-    {% endfor %}
-
-                      </tbody>
-                    </table>
-
-                  </div>
-
-
-                </div>
-
-                <div class="clearfix"></div>
-              </div>
-            </div>
-
-          </div>
-          <br />
-
-          <div class="row">
-
-
-            <div class="col-md-12 col-sm-12 ">
-              <div class="dashboard_graph">
-
-                 <div class="col-md-6 col-sm-6  ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Smallholder Farming Households By Region<small>Bar Chart</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                          </div>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="mybarChart2"></canvas>
-                  </div>
-
+								</tr>
+								{% endfor %}
+							</tr>
+							
+						</table>
+					</td>
+					
+				</tr>
+			</table>
+		</div>
+	</div>
 </div>
 
-          
+						<script>// Replace this with your actual variable or value
 
-                    
-                    <div class="clearfix"></div>
-                  <div class="x_content">
-                </div>
-              </div>
-                <div class="col-md-3 col-sm-3  bg-white">
+	// Convert the float to an integer before formatting
+						var formattedTotal = Math.floor({{total_untagged}}).toLocaleString();
 
-                  <div class="x_title">
-                    <h2>Smallholder Farming Households By Region<small>Table</small></h2>
-                    <div class="clearfix"></div>
-                  </div>
+						document.getElementById('formatedtotal').innerText = formattedTotal;
 
-                  <div class="col-md-12 col-sm-12 ">
+						var formattedovrTotal = Math.floor({{dcf_form1sextotal[0]['total_sex'] }}).toLocaleString();
+
+						document.getElementById('formatedoveralltotal').innerText = formattedovrTotal;
+						
+						function init_chart_doughnut() {
 
 
-
-                    <table class="table table-bordered" style="width:80vh;">
-                      <thead>
-                        <tr>
-                          <th>RCU</th>
-                          <th>Male</th>
-                          <th>Male <small>Youth</small></th>
-                          <th>Male <small>IP</small></th>
-                          <th>Male <small>PWD</small></th>
-                          <th>Female</th>
-                          <th>Female <small>Youth</small></th>
-                          <th>Female <small>IP</small></th>
-                          <th>Female <small>PWD</small></th>
+							if (typeof (Chart) === 'undefined') { return; }
 
 
-                        </tr>
-                      </thead>
-                      <tbody>
-   {% for dip in dip_sex_group_per_region %}
+							console.log('init_chart_doughnut');
 
+							if ($('.canvasDoughnut').length) {
 
-                        <tr>
-                          <th scope="row">{{dip}}</th>
-                          <td>{{dip_sex_group_per_region[dip]["male"]["total"]}}</td>
-                          <td>{{dip_sex_group_per_region[dip]["male"]["youth"]}}</td>
-                          <td>{{dip_sex_group_per_region[dip]["male"]["ip"]}}</td>
-                          <td>{{dip_sex_group_per_region[dip]["male"]["pwd"]}}</td>
-                          <td>{{dip_sex_group_per_region[dip]["female"]["total"]}}</td>
-                          <td>{{dip_sex_group_per_region[dip]["female"]["youth"]}}</td>
-                          <td>{{dip_sex_group_per_region[dip]["female"]["ip"]}}</td>
-                          <td>{{dip_sex_group_per_region[dip]["female"]["pwd"]}}</td>
-
-                        </tr>
-    {% endfor %}
-
-
-                      </tbody>
-                    </table>
-
-
-
-                  </div>
-
-
-                </div>
-
-                <div class="clearfix"></div>
-              </div>
-            </div>
-
-              <div class="col-md-6 col-sm-6  ">
-                <br>
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Overall Total Smallholder Farming Households <small>Pie Chart</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                          </div>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="pieChart"></canvas>
-                    <div style="text-align: center;">
-    <p><i class="fa fa-square" style="color:#0099cc "></i> Male: {{dcf_form1male[0]['total_male']}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#cc0066 ">&nbsp;&nbsp;&nbsp;</i>Female: {{dcf_form1female[0]['total_female']}}&nbsp;&nbsp;&nbsp; Overall Total: <span id="formatedoveralltotal"></span>&nbsp;&nbsp;&nbsp; Untagged: <span id="formatedtotal"></span>
-</div>
-                  </div>
-                </div>
-              </div>
-
-            
-
-            <div class="col-md-4 col-sm-4 ">
-              <br>
-              <div class="x_panel tile overflow_hidden">
-                <div class="x_title">
-                  <h2>DIPs by Commodity</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th>
-                        <p>Pie Chart Percentage</p>
-                      </th>
-                      <th>
-                          <p class="">Commodities</p>
-                          
-                      </th>
-                 
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                            {% for key in over_all_commodity_count %}
-                          <tr>
-                            <td>
-                              {% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
-                              {% set color_index = loop.index0 % square_colors|length %}
-                              <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count[key] }}</p>
-                            </td>
-
-                          </tr>
-                        {% endfor %}
-                          </tr>
-                          
-                        </table>
-                      </td>
-                     
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <script>// Replace this with your actual variable or value
-
-  // Convert the float to an integer before formatting
-  var formattedTotal = Math.floor({{total_untagged}}).toLocaleString();
-
-   document.getElementById('formatedtotal').innerText = formattedTotal;
-
-     var formattedovrTotal = Math.floor({{dcf_form1sextotal[0]['total_sex'] }}).toLocaleString();
-
-   document.getElementById('formatedoveralltotal').innerText = formattedovrTotal;
-              
-              function init_chart_doughnut() {
-
-
-    if (typeof (Chart) === 'undefined') { return; }
-
-
-    console.log('init_chart_doughnut');
-
-    if ($('.canvasDoughnut').length) {
-
-        var _labels = [];
-        var _data = [];
-        
-        // Sample data
-        {% for key in over_all_commodity_count %}
-          _labels.push('{{key}}');
-          _data.push('{{over_all_commodity_count[key]}}');
-        {% endfor %}
-        // Calculate total for _data
-var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+								var _labels = [];
+								var _data = [];
+								
+				// Sample data
+								{% for key in over_all_commodity_count %}
+								_labels.push('{{key}}');
+								_data.push('{{over_all_commodity_count[key]}}');
+								{% endfor %}
+				// Calculate total for _data
+								var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
 
 // Normalize _data to make its total equivalent to totalData
-var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
+								var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
 
-var chart_doughnut_settings = {
-    type: 'doughnut',
-    tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-    data: {
-        labels: _labels,
-        datasets: [{
-            data: normalizedData, // Use normalizedData here
-            backgroundColor: [
-                "#BDC3C7",
-                "#5c5c3d",
-                "#994d00",
-                "#331a00",
-                "#23a98c"
-            ],
-            hoverBackgroundColor: [
-                "#CFD4D8",
-                "#8a8a5c",
-                "#cc6600",
-                "#663500",
-                "#56dcbf"
-            ]
-        }]
-    },
-    options: {
-        legend: false,
-        responsive: false,
-        tooltips: {
-            callbacks: {
-                label: function (tooltipItem, data) {
-                    var dataset = data.datasets[tooltipItem.datasetIndex];
-                    var currentValue = _data[tooltipItem.index];
-                    var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
-                    return _labels[tooltipItem.index] + ": " + percentage;
-                }
-            }
-        }
+								var chart_doughnut_settings = {
+									type: 'doughnut',
+									tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+									data: {
+										labels: _labels,
+										datasets: [{
+						data: normalizedData, // Use normalizedData here
+						backgroundColor: [
+							"#BDC3C7",
+							"#5c5c3d",
+							"#994d00",
+							"#331a00",
+							"#23a98c"
+							],
+						hoverBackgroundColor: [
+							"#CFD4D8",
+							"#8a8a5c",
+							"#cc6600",
+							"#663500",
+							"#56dcbf"
+							]
+					}]
+									},
+									options: {
+										legend: false,
+										responsive: false,
+										tooltips: {
+											callbacks: {
+												label: function (tooltipItem, data) {
+													var dataset = data.datasets[tooltipItem.datasetIndex];
+													var currentValue = _data[tooltipItem.index];
+													var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
+													return _labels[tooltipItem.index] + ": " + percentage;
+												}
+											}
+										}
 
-    }
-};
+									}
+								};
 
-        $('.canvasDoughnut').each(function () {
+								$('.canvasDoughnut').each(function () {
 
-            var chart_element = $(this);
-            var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+									var chart_element = $(this);
+									var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
 
-        });
+								});
 
-    }
+							}
 
-}
+						}
 
-function init_charts() {
+						function init_charts() {
 
-    console.log('run_charts  typeof [' + typeof (Chart) + ']');
+							console.log('run_charts  typeof [' + typeof (Chart) + ']');
 
-    if (typeof (Chart) === 'undefined') { return; }
+							if (typeof (Chart) === 'undefined') { return; }
 
-    console.log('init_charts');
-
-
-    Chart.defaults.global.legend = {
-        enabled: false
-    };
+							console.log('init_charts');
 
 
-
-    // Bar chart
-
-    if ($('#mybarChart').length) {
-
-    var _labelsrcu = [];
-    var approved_dips = [];
-    var pipeline_dips = [];
-    var ongoing_dips = [];
-    var not_started = [];
-    
-    // Sample data
-    {% for dip in dips_list %}
-      var dipData = {
-        label: '{{dip}}',
-        approve: '{{dips_list[dip]["approve"]}}',
-        pipeline: '{{dips_list[dip]["pipeline"]}}',
-        ongoing: '{{dips_list[dip]["ongoing"]}}',
-        not_started: '{{dips_list[dip]["not_started"]}}',
-      };
-    
-      // Add region to each data entry in _labelsrcu
-      var regions = ['RCU'];
-      regions.forEach(function(region) {
-        var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
-        _labelsrcu.push(regionData.label);
-        approved_dips.push(regionData.approve);
-        pipeline_dips.push(regionData.pipeline);
-        ongoing_dips.push(regionData.ongoing);
-        not_started.push(regionData.not_started);
-      });
-    {% endfor %}
-        var totalApprovedDips = approved_dips.reduce(function(acc, val) {
-    return acc + parseFloat(val);
-}, 0);
-        var totalpipelineDips = pipeline_dips.reduce(function(acc, val) {
-    return acc + parseFloat(val);
-}, 0);
-        var totalongoingDips = ongoing_dips.reduce(function(acc, val) {
-    return acc + parseFloat(val);
-}, 0);
-        var totalnotstartedDips = not_started.reduce(function(acc, val) {
-    return acc + parseFloat(val);
-}, 0);
-     document.getElementById('totalApprovedDipsValue').innerText = totalApprovedDips.toFixed(0);
-     document.getElementById('totalpipelineDipsValue').innerText = totalpipelineDips.toFixed(0);
-     document.getElementById('totalongoingDipsValue').innerText = totalongoingDips.toFixed(0);
-     document.getElementById('totalnotstartedDipsValue').innerText = totalnotstartedDips.toFixed(0);
-
-        var ctx = document.getElementById("mybarChart");
-        var mybarChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: _labelsrcu,
-                datasets: [{
-                    label: 'Approved DIPs',
-                    backgroundColor: "#99e6ff",
-                    data: approved_dips
-                }, {
-                    label: 'Pipeline DIPs',
-                    backgroundColor: "#33ccff",
-                    data: pipeline_dips
-
-                },{
-                    label: 'Ongoing DIPs',
-                    backgroundColor: "#0099cc",
-                    data: ongoing_dips
-
-                },{
-                    label: 'Not Started',
-                    backgroundColor: "#ff8080",
-                    data: not_started
-
-                }]
-            },
-
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-
-    }
-
-
-     if ($('#mybarChart2').length) {
-
-      var tooltips = [];
-      var xValuesbar = [];
-      var yValuesbar = [];
-      var label_ = [];
-      var all_perc = []
-      var barColorsbar = ["red", "green", "blue", "orange", "brown", "yellow", "violet", "black"];
-      
-      var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}')
-    
-    // Sample data
-{% for dip in dip_sex_group_per_region %}
-    xValuesbar.push('RCU: ' + '{{dip}}');
-    var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["total_bene"]}}')
-    // var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
-    var perc = ((rcu_total / over_all) * 100).toFixed(2)
-    // yValuesbar.push(perc);
-    all_perc.push(perc);
-    yValuesbar.push(rcu_total);
-    label_.push(rcu_total)
-
-    tooltips.push([
-      'Total with sex/tagged: ' +'{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}',
-      'Total: ' +money('{{dip_sex_group_per_region[dip]["total_bene"]|int}}'),
-      ' ',
-      'Male: ' + '{{dip_sex_group_per_region[dip]["male"]["total"]}}',
-      'Youth: ' + '{{dip_sex_group_per_region[dip]["male"]["youth"]}}',
-      'IP: ' + '{{dip_sex_group_per_region[dip]["male"]["ip"]}}',
-      'PWD: ' + '{{dip_sex_group_per_region[dip]["male"]["pwd"]}}',
-      '--------------',
-      'Female: ' + '{{dip_sex_group_per_region[dip]["female"]["total"]}}',
-      'Youth: ' + '{{dip_sex_group_per_region[dip]["female"]["youth"]}}',
-      'IP: ' + '{{dip_sex_group_per_region[dip]["female"]["ip"]}}',
-      'PWD: ' + '{{dip_sex_group_per_region[dip]["female"]["pwd"]}}',
-      '--------------',
-      'Untagged: ' + '{{(dip_sex_group_per_region[dip]["total_bene"]-dip_sex_group_per_region[dip]["female"]["total"]+dip_sex_group_per_region[dip]["male"]["total"])|int}}',
-      '--------------',
-      'Overall Total',
-      'Youth: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_youth"]}}',
-      'IP: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_ip"]}}',
-      'PWD: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_pwd"]}}',
-    ])
-{% endfor %}
-
-        var ctx = document.getElementById("mybarChart2");
-        var mybarChart2 = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: xValuesbar,
-                tooltip_label:tooltips,
-                datasets: [{
-                    backgroundColor: barColorsbar,
-                    data: yValuesbar,
-                    labels : label_
-                }]
-            },
-
-           options: {
-     
-    tooltips: {
-        callbacks: {
-            label: function (tooltipItem, data) {
-                // Display only the percentage value without .00 in the tooltip
-          println(tooltipItem)
-
-                return data.tooltip_label[tooltipItem.index];
-            },
-        },
-        displayColors: false, // Set to false to hide the color squares in the tooltip
-    },
-
-    },
-        });
-
-    }
+							Chart.defaults.global.legend = {
+								enabled: false
+							};
 
 
 
+		// Bar chart
+
+							if ($('#mybarChart').length) {
+
+								var _labelsrcu = [];
+								var approved_dips = [];
+								var pipeline_dips = [];
+								var ongoing_dips = [];
+								var not_started = [];
+								
+		// Sample data
+								{% for dip in dips_list %}
+								var dipData = {
+									label: '{{dip}}',
+									approve: '{{dips_list[dip]["approve"]}}',
+									pipeline: '{{dips_list[dip]["pipeline"]}}',
+									ongoing: '{{dips_list[dip]["ongoing"]}}',
+									not_started: '{{dips_list[dip]["not_started"]}}',
+								};
+								
+			// Add region to each data entry in _labelsrcu
+								var regions = ['RCU'];
+								regions.forEach(function(region) {
+									var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
+									_labelsrcu.push(regionData.label);
+									approved_dips.push(regionData.approve);
+									pipeline_dips.push(regionData.pipeline);
+									ongoing_dips.push(regionData.ongoing);
+									not_started.push(regionData.not_started);
+								});
+								{% endfor %}
+								var totalApprovedDips = approved_dips.reduce(function(acc, val) {
+									return acc + parseFloat(val);
+								}, 0);
+								var totalpipelineDips = pipeline_dips.reduce(function(acc, val) {
+									return acc + parseFloat(val);
+								}, 0);
+								var totalongoingDips = ongoing_dips.reduce(function(acc, val) {
+									return acc + parseFloat(val);
+								}, 0);
+								var totalnotstartedDips = not_started.reduce(function(acc, val) {
+									return acc + parseFloat(val);
+								}, 0);
+								document.getElementById('totalApprovedDipsValue').innerText = totalApprovedDips.toFixed(0);
+								document.getElementById('totalpipelineDipsValue').innerText = totalpipelineDips.toFixed(0);
+								document.getElementById('totalongoingDipsValue').innerText = totalongoingDips.toFixed(0);
+								document.getElementById('totalnotstartedDipsValue').innerText = totalnotstartedDips.toFixed(0);
+
+								var ctx = document.getElementById("mybarChart");
+								var mybarChart = new Chart(ctx, {
+									type: 'bar',
+									data: {
+										labels: _labelsrcu,
+										datasets: [{
+											label: 'Approved DIPs',
+											backgroundColor: "#99e6ff",
+											data: approved_dips
+										}, {
+											label: 'Pipeline DIPs',
+											backgroundColor: "#33ccff",
+											data: pipeline_dips
+
+										},{
+											label: 'Ongoing DIPs',
+											backgroundColor: "#0099cc",
+											data: ongoing_dips
+
+										},{
+											label: 'Not Started',
+											backgroundColor: "#ff8080",
+											data: not_started
+
+										}]
+									},
+
+									options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero: true
+												}
+											}]
+										}
+									}
+								});
+
+							}
 
 
-    // Doughnut chart
+							if ($('#mybarChart2').length) {
 
-    if ($('#canvasDoughnut').length) {
+								var tooltips = [];
+								var xValuesbar = [];
+								var yValuesbar = [];
+								var label_ = [];
+								var all_perc = []
+								var barColorsbar = ["red", "green", "blue", "orange", "brown", "yellow", "violet", "black"];
+								
+								var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}')
+								
+		// Sample data
+								{% for dip in dip_sex_group_per_region %}
+								xValuesbar.push('RCU: ' + '{{dip}}');
+								var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["total_bene"]}}')
+		// var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
+								var perc = ((rcu_total / over_all) * 100).toFixed(2)
+		// yValuesbar.push(perc);
+								all_perc.push(perc);
+								yValuesbar.push(rcu_total);
+								label_.push(rcu_total)
 
-        var ctx = document.getElementById("canvasDoughnut");
-        var data = {
-            labels: [
-                "Dark Grey",
-                "Purple Color",
-                "Gray Color",
-                "Green Color",
-                "Blue Color"
-            ],
-            datasets: [{
-                data: [120, 50, 140, 180, 100],
-                backgroundColor: [
-                    "#455C73",
-                    "#9B59B6",
-                    "#BDC3C7",
-                    "#26B99A",
-                    "#3498DB"
-                ],
-                hoverBackgroundColor: [
-                    "#34495E",
-                    "#B370CF",
-                    "#CFD4D8",
-                    "#36CAAB",
-                    "#49A9EA"
-                ]
+								tooltips.push([
+									'Total with sex/tagged: ' +'{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}',
+									'Total: ' +money('{{dip_sex_group_per_region[dip]["total_bene"]|int}}'),
+									' ',
+									'Male: ' + '{{dip_sex_group_per_region[dip]["male"]["total"]}}',
+									'Youth: ' + '{{dip_sex_group_per_region[dip]["male"]["youth"]}}',
+									'IP: ' + '{{dip_sex_group_per_region[dip]["male"]["ip"]}}',
+									'PWD: ' + '{{dip_sex_group_per_region[dip]["male"]["pwd"]}}',
+									'--------------',
+									'Female: ' + '{{dip_sex_group_per_region[dip]["female"]["total"]}}',
+									'Youth: ' + '{{dip_sex_group_per_region[dip]["female"]["youth"]}}',
+									'IP: ' + '{{dip_sex_group_per_region[dip]["female"]["ip"]}}',
+									'PWD: ' + '{{dip_sex_group_per_region[dip]["female"]["pwd"]}}',
+									'--------------',
+									'Untagged: ' + '{{(dip_sex_group_per_region[dip]["total_bene"]-dip_sex_group_per_region[dip]["female"]["total"]+dip_sex_group_per_region[dip]["male"]["total"])|int}}',
+									'--------------',
+									'Overall Total',
+									'Youth: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_youth"]}}',
+									'IP: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_ip"]}}',
+									'PWD: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_pwd"]}}',
+									])
+								{% endfor %}
 
-            }]
-        };
+								var ctx = document.getElementById("mybarChart2");
+								var mybarChart2 = new Chart(ctx, {
+									type: 'bar',
+									data: {
+										labels: xValuesbar,
+										tooltip_label:tooltips,
+										datasets: [{
+											backgroundColor: barColorsbar,
+											data: yValuesbar,
+											labels : label_
+										}]
+									},
 
-        var canvasDoughnut = new Chart(ctx, {
-            type: 'doughnut',
-            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-            data: data
-        });
+									options: {
+									 
+										tooltips: {
+											callbacks: {
+												label: function (tooltipItem, data) {
+								// Display only the percentage value without .00 in the tooltip
+													println(tooltipItem)
 
-    }
+													return data.tooltip_label[tooltipItem.index];
+												},
+											},
+				displayColors: false, // Set to false to hide the color squares in the tooltip
+			},
 
+		},
+	});
 
-if ($('#pieChart').length) {
-    var xValues2 = [
-        'Male: ' + {{dcf_form1male[0]['total_male']}},
-        'Female: ' + {{dcf_form1female[0]['total_female']}},
-        'Untagged: ' + money({{total_untagged}})
-    ];
-
-    var yValues2 = [
-        {{dcf_form1male[0]['total_male']}},
-        {{dcf_form1female[0]['total_female']}},
-        // {{total_untagged}},
-    ];
-    var barColors = ['#0099cc', '#cc0066'];
-
-    var total = yValues2.reduce((a, b) => a + b, 0);
-
-    var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
-
-    var ctx = document.getElementById("pieChart");
-    var data = {
-        datasets: [{
-            data: yValues2,
-            backgroundColor: barColors,
-            label: 'Total'
-        }],
-        labels: xValues2
-    };
-
-    var pieChart = new Chart(ctx, {
-        data: data,
-        type: 'pie',
-        options: {
-            plugins: {
-                datalabels: {
-                    color: 'white',
-                    formatter: (value, context) => {
-                        return percentageValues[context.dataIndex] + '%';
-                    }
-                }
-            },
-            tooltips: {
-                callbacks: {
-                    label: function (tooltipItem, data) {
-                        var label = data.labels[tooltipItem.index];
-                        var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                        var percentage = percentageValues[tooltipItem.index] + '%';
-                        return `${label} (${percentage})`;
-                    },
-                },
-            },
-        },
-    });
-}
-    // Radar 
-}
-
-
-  function showDeleteConfirmation(id) {
-                swalWithCustomButtons.fire({
-                  title: 'Are you sure?',
-                  text: "You won't be able to revert this!",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Yes, delete it!',
-                  cancelButtonText: 'No, cancel',
-                  reverseButtons: true,
-                  customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger',
-                  },
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    window.location.href = `/delete_record/dcf_prep_review_aprv_status/${id}`;
-                  } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithCustomButtons.fire(
-                      'Cancelled',
-                      'Your record is safe',
-                      'error'
-                    );
-                  }
-                });
-
-                return false;
-              }
-
-              const swalWithCustomButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-              });
-
-function download_login_start(fff){
-  let a= document.createElement('a');
-  a.target= '_blank';
-  a.href= '/login/download_file/'+fff;
-  a.click();
-}
-    
-
-
-            </script>
+							}
 
 
 
 
-                <!-- Start to do list -->
-                   <div class="col-md-12 col-sm-12 ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Data<small>Table</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                          </div>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                      <div class="row">
-                          <div class="col-sm-12">
-                            <div class="card-box table-responsive">
-                    <p class=" text-muted font-13 m-b-30">
-                      All entries of Form 1 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
-                    </p>
+
+		// Doughnut chart
+
+							if ($('#canvasDoughnut').length) {
+
+								var ctx = document.getElementById("canvasDoughnut");
+								var data = {
+									labels: [
+										"Dark Grey",
+										"Purple Color",
+										"Gray Color",
+										"Green Color",
+										"Blue Color"
+										],
+									datasets: [{
+										data: [120, 50, 140, 180, 100],
+										backgroundColor: [
+											"#455C73",
+											"#9B59B6",
+											"#BDC3C7",
+											"#26B99A",
+											"#3498DB"
+											],
+										hoverBackgroundColor: [
+											"#34495E",
+											"#B370CF",
+											"#CFD4D8",
+											"#36CAAB",
+											"#49A9EA"
+											]
+
+									}]
+								};
+
+								var canvasDoughnut = new Chart(ctx, {
+									type: 'doughnut',
+									tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+									data: data
+								});
+
+							}
+
+
+							if ($('#pieChart').length) {
+								var xValues2 = [
+									'Male: ' + {{dcf_form1male[0]['total_male']}},
+									'Female: ' + {{dcf_form1female[0]['total_female']}},
+									'Untagged: ' + money({{total_untagged}})
+									];
+
+								var yValues2 = [
+									{{dcf_form1male[0]['total_male']}},
+									{{dcf_form1female[0]['total_female']}},
+				// {{total_untagged}},
+									];
+								var barColors = ['#0099cc', '#cc0066'];
+
+								var total = yValues2.reduce((a, b) => a + b, 0);
+
+								var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+
+								var ctx = document.getElementById("pieChart");
+								var data = {
+									datasets: [{
+										data: yValues2,
+										backgroundColor: barColors,
+										label: 'Total'
+									}],
+									labels: xValues2
+								};
+
+								var pieChart = new Chart(ctx, {
+									data: data,
+									type: 'pie',
+									options: {
+										plugins: {
+											datalabels: {
+												color: 'white',
+												formatter: (value, context) => {
+													return percentageValues[context.dataIndex] + '%';
+												}
+											}
+										},
+										tooltips: {
+											callbacks: {
+												label: function (tooltipItem, data) {
+													var label = data.labels[tooltipItem.index];
+													var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+													var percentage = percentageValues[tooltipItem.index] + '%';
+													return `${label} (${percentage})`;
+												},
+											},
+										},
+									},
+								});
+							}
+		// Radar 
+						}
+
+
+						function showDeleteConfirmation(id) {
+							swalWithCustomButtons.fire({
+								title: 'Are you sure?',
+								text: "You won't be able to revert this!",
+								icon: 'warning',
+								showCancelButton: true,
+								confirmButtonText: 'Yes, delete it!',
+								cancelButtonText: 'No, cancel',
+								reverseButtons: true,
+								customClass: {
+									confirmButton: 'btn btn-success',
+									cancelButton: 'btn btn-danger',
+								},
+							}).then((result) => {
+								if (result.isConfirmed) {
+									window.location.href = `/delete_record/dcf_prep_review_aprv_status/${id}`;
+								} else if (result.dismiss === Swal.DismissReason.cancel) {
+									swalWithCustomButtons.fire(
+										'Cancelled',
+										'Your record is safe',
+										'error'
+										);
+								}
+							});
+
+							return false;
+						}
+
+						const swalWithCustomButtons = Swal.mixin({
+							customClass: {
+								confirmButton: 'btn btn-success',
+								cancelButton: 'btn btn-danger'
+							},
+							buttonsStyling: false
+						});
+
+						function download_login_start(fff){
+							let a= document.createElement('a');
+							a.target= '_blank';
+							a.href= '/login/download_file/'+fff;
+							a.click();
+						}
+						
+
+
+					</script>
+
+
+
+
+					<!-- Start to do list -->
+					<div class="col-md-12 col-sm-12 ">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>Data<small>Table</small></h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+									</li>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">Settings 1</a>
+											<a class="dropdown-item" href="#">Settings 2</a>
+										</div>
+									</li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a>
+									</li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card-box table-responsive">
+											<p class=" text-muted font-13 m-b-30">
+												All entries of Form 1 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
+											</p>
+											
+											<table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>RCUs</th>
+														<th>Scope/Provinces</th>
+														<th>Commodity</th>
+														<th>Action</th>
+														<th>Timestamp</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<div>
+															{% for row in form1_datatable %}
+															<td>{{ row['id'] }}</td>
+															<td>{{ row['form_1_rcus'] }}</td>
+															<td>{{ row['form_1_scope_provinces'] }}</td>
+															<td>{{ row['form_1_commodity'] }} {{ row['form_1_commodity_others'] }}</td>
+															<td>
+																<!-- {{row['upload_by']}} === {{user_data['id']}} -->
+																
+
+																{% if row['upload_by']|string == user_data['id']|string %}
+																<a style="color: #00e673;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
+																	<span><i class="fa fa-pencil-square-o"></i></span> Edit
+																</a>&nbsp;&nbsp;&nbsp;
+																<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+																+{{ row["id"] }}+"&i=dcf_prep_review_aprv_status",true)'>
+																<span><i class="fa fa-user-plus"></i></span> Add Participants
+															</a> &nbsp;&nbsp;&nbsp;&nbsp;
+															<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+															href="/delete_record/dcf_prep_review_aprv_status/{{ row['id'] }}">
+															<span><i class="fa fa-trash"></i></span> Delete
+														</a>
+														{% elif user_data['job'] == "Super Admin" %}
+														<a style="color: #33cccc;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
+															<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+														</a>
+														{% else %}
+														<a style="color: #33cccc;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
+															<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+														</a>
+														{% endif %}
+
+													</td>
+													<td class="date-cell"> {{ row['date_created'] }}<br>
+														{% if row['date_modified'] %}
+														<i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
+														}}</i>
+													{% endif %}</i>
+												</td>
+
+
+											</tr>
+
+											{% endfor %}
+										</tbody>
+									</table>
+									
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="col-md-12 col-sm-12 ">
+					<div class="x_panel tile">
+						<div class="x_title">
+							<h2>FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS <small>SPREADSHEET MANAGEMENT</small></h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+								</li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<a class="dropdown-item" href="#">Settings 1</a>
+										<a class="dropdown-item" href="#">Settings 2</a>
+									</div>
+								</li>
+								<li><a class="close-link"><i class="fa fa-close"></i></a>
+								</li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+							<form action="/dcf" method="POST" enctype="multipart/form-data">
+								<div class="form-group">
+									<div class="form-row">
+										<div class="col">
+											<select id="export_type" name="export_type" class="form-control">
+												<option value="form1export">Form 1 PREPARATION, REVIEW AND APPROVAL STATUS</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="col">
+											<strong>
+												<label for="position">Export Data:</label>
+											</strong><br>
+											<button type="submit" class="btn btn-md btn-dark"><span><i class="fa fa-cloud-download"></i></span>
+											Export</button>
+										</div>
+									</div>
+								</div>
+							</form>
+
+							<form action="/importcsvform1" method="POST" enctype="multipart/form-data">
+								{% include "includes/sweetalert.html" %}
+								<div class="form-group">
+									<div class="form-row">
+
+										<div class="col">
+											<strong>
+												<label for="position">Import Data:</label>
+											</strong><br>
+											<div class="file-upload">
+												<div class="file-select">
+													<div class="file-select-button" id="fileName">Choose File</div>
+													<div class="file-select-name" id="noFile">No file chosen...</div>
+													<input multiple type="file"
+													accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+													name="chooseFile" id="chooseFile" required>
+
+												</div>
+											</div>
+											<br>
+											<button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
+
+											<span style="cursor: pointer;" onclick="download_login_start('DCF_Form_1.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download form 1 excel template</span>
+										</div>
+									</div>
+								</form>
+
+
+							</div>
+						</div>
+					</div>
+					<!-- End to do list -->
 					
-                    <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                      <thead>
-                        <tr>
-                  <th>ID</th>
-                  <th>RCUs</th>
-                  <th>Scope/Provinces</th>
-                  <th>Commodity</th>
-                  <th>Action</th>
-                  <th>Timestamp</th>
-                        </tr>
-                      </thead>
-                     <tbody>
-                <tr>
-                  <div>
-                    {% for row in form1_datatable %}
-                    <td>{{ row['id'] }}</td>
-                    <td>{{ row['form_1_rcus'] }}</td>
-                    <td>{{ row['form_1_scope_provinces'] }}</td>
-                    <td>{{ row['form_1_commodity'] }} {{ row['form_1_commodity_others'] }}</td>
-                    <td>
-                      <!-- {{row['upload_by']}} === {{user_data['id']}} -->
-                
-
-                      {% if row['upload_by']|string == user_data['id']|string %}
-                          <a style="color: #00e673;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
-                      <span><i class="fa fa-pencil-square-o"></i></span> Edit
-                    </a>&nbsp;&nbsp;&nbsp;
-                     <a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
-                    +{{ row["id"] }}+"&i=dcf_prep_review_aprv_status",true)'>
-                      <span><i class="fa fa-user-plus"></i></span> Add Participants
-                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
-                      <a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
-                        href="/delete_record/dcf_prep_review_aprv_status/{{ row['id'] }}">
-                        <span><i class="fa fa-trash"></i></span> Delete
-                      </a>
-                      {% elif user_data['job'] == "Super Admin" %}
-                      <a style="color: #33cccc;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
-                        <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-                      </a>
-                      {% else %}
-                      <a style="color: #33cccc;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
-                        <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-                      </a>
-                      {% endif %}
-
-                    </td>
-                    <td class="date-cell"> {{ row['date_created'] }}<br>
-                      {% if row['date_modified'] %}
-                      <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
-                        }}</i>
-                      {% endif %}</i>
-                    </td>
+					<!-- end of weather widget -->
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-                </tr>
+	{% endblock content %}
 
-                {% endfor %}
-              </tbody>
-                    </table>
-					
-					
-                  </div>
-                </div>
-            </div>
-                </div>
-              </div>
+	<!-- Specific JS goes HERE -->
+
+	{% block javascripts %}
 
 
 
-                <div class="col-md-12 col-sm-12 ">
-              <div class="x_panel tile">
-                <div class="x_title">
-                  <h2>FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS <small>SPREADSHEET MANAGEMENT</small></h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <form action="/dcf" method="POST" enctype="multipart/form-data">
-      <div class="form-group">
-        <div class="form-row">
-          <div class="col">
-            <select id="export_type" name="export_type" class="form-control">
-              <option value="form1export">Form 1 PREPARATION, REVIEW AND APPROVAL STATUS</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="col">
-            <strong>
-              <label for="position">Export Data:</label>
-            </strong><br>
-            <button type="submit" class="btn btn-md btn-dark"><span><i class="fa fa-cloud-download"></i></span>
-              Export</button>
-          </div>
-        </div>
-      </div>
-    </form>
-
-        <form action="/importcsvform1" method="POST" enctype="multipart/form-data">
-      {% include "includes/sweetalert.html" %}
-      <div class="form-group">
-        <div class="form-row">
-
-          <div class="col">
-            <strong>
-              <label for="position">Import Data:</label>
-            </strong><br>
-            <div class="file-upload">
-              <div class="file-select">
-                <div class="file-select-button" id="fileName">Choose File</div>
-                <div class="file-select-name" id="noFile">No file chosen...</div>
-                <input multiple type="file"
-                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                  name="chooseFile" id="chooseFile" required>
-
-              </div>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
-
-            <span style="cursor: pointer;" onclick="download_login_start('DCF_Form_1.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download form 1 excel template</span>
-          </div>
-        </div>
-    </form>
-
-
-                </div>
-              </div>
-            </div>
-                <!-- End to do list -->
-          
-                <!-- end of weather widget -->
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-{% endblock content %}
-
-<!-- Specific JS goes HERE -->
-
-{% block javascripts %}
-
-
-
-{% endblock javascripts %}
+	{% endblock javascripts %}
