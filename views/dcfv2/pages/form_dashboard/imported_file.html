@@ -41,7 +41,7 @@
             <div class="col-sm-12">
               <div class="card-box table-responsive">
                 <p class=" text-muted font-13 m-b-30">
-                  All excel file of {{num_form | upper}} are displayed in this data table. <b>Reminder! deleting this file will permanently remove the data from the database.</b>.
+                  All import excel files of {{num_form | upper}} are displayed in this data table. <b style="color: #ff8080;"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Deleting this files will permanently remove the data from the database.</b>
                 </p>
                 <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                   <thead>
@@ -58,15 +58,15 @@
                       <div>
                         {% for row in uploaded_file_by_user1 %}
                         <td class="date-cell"> {{ row['date_created'] }}</td>
-                        <td>{{ row['filename'] }}</td>
+                        <td><span style="color: #00e6ac;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp; {{ row['filename'] }}</span></td>
                         <td>{{ row['_COUNT'] }}</td>
                         <td>
                           <!-- {{row['upload_by']}} === {{user_data['id']}} -->
-                          <a style="color: #00cc99;"  href="{{ url_for('dcfv2.dcf_download', filename_=row['filename']) }}">
+                          <a style="color: #71dada;"  href="{{ url_for('dcfv2.dcf_download', filename_=row['filename']) }}">
                             <span><i class="fa fa-cloud-download"></i></span> Download
                           </a>&nbsp;&nbsp;&nbsp;
 
-                          <a style="color: #ff5c33;" onclick="confirmation(event)"  href="/dcf_delete/{{row['filename'] | websafe_filename}}/{{table_for_del}}">
+                          <a style="color: #ff704d;" onclick="confirmation(event)"  href="/dcf_delete/{{row['filename'] | websafe_filename}}/{{table_for_del}}">
                             <span><i class="fa fa-trash"></i></span> Delete
                           </a>
                           
