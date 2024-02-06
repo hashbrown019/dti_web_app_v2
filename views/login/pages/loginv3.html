@@ -7,7 +7,7 @@
 			/*background-image: url('../static/img/bg.webp');*/
 			background: 
 				linear-gradient(rgba(200, 200, 200, 2),
-				rgba(255, 255, 255, 0.85)),
+				rgba(255, 255, 255, 0.95)),
 				url('../static/img/bg.jpg');
 			background-position: center;
 			background-size: cover;
@@ -66,13 +66,13 @@
 			</div>
 		</header>
 		<div class="x-display-container" style="height:99vh;padding: 0px;">
-			<div class="x-col l3 x-display-middle x-padding x-white_ x-round-large" style="top:350px">
+			<div class="x-col l4 m6 s12 x-display-middle x-padding x-white_ x-round-large x-center" style="top:350px">
 				<div class="x-container x-padding-large x-round-large " style="" >
 					<div class="x-container">
 						<div class="x-row x-container x-padding x-center" id="username_welcome">
 							<div id="def_img" class="x-round x-text-teal x-white_ x-center x-fade" style="height:20vh">
 								<div class="x-container x-center">
-									<img class="x-img" src="../static/img/mis_2023_v2.svg" style="width: 80%;">
+									<img class="x-img" src="../static/img/mis_2023_v2.svg" style="width: 50%;">
 								</div>
 							</div>
 						</div>
@@ -131,7 +131,7 @@
 				
 			</div>
 		</div>
-		<div class="x-container" id="Announcements_">
+		<div class="x-container" id="Announcements_" style="display:none">
 			{% include 'tabs.html' %}
 		</div>
 		<br><br><br><br>
@@ -183,9 +183,11 @@
 						}
 						$ID('username_welcome').innerHTML = (`
 							<div class="x-container  x-center" onclick='back_username()'>
-								<img class="x-img x-circle" src="`+img_src+`" alt="`+res.data+`" style="width:300px;height:300px;">
+								<img class="x-img x-round-xxlarge" src="`+img_src+`" alt="`+res.data+`" style="width:100%;">
 								<br>
-								<b class='x-text-teal x-xlarge'>`+res.data+`</b>
+								<br>
+								<b class='x-text-teal x-xlarge'>`+res.data+`</b><br>
+								<b class='x-'>`+res.job+`</b>
 							</div
 						`);
 						$ID('username_cont').style.display= "none"
