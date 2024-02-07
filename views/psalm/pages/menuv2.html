@@ -419,39 +419,12 @@ p {
   position: relative;
 }
 
-.olcards li .content::before {
-  content: "";
-  position: absolute;
-  width: var(--labelOffset);
-  height: var(--labelOffset);
-  background: var(--cardColor);
-  left: 0;
-  bottom: 0;
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  filter: brightness(0.75);
-}
-.olcards li .content::after {
-  content: "";
-  position: absolute;
-  height: var(--cardsGap);
-  width: var(--cardsGap);
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.25), transparent 50%);
-  left: 0;
-  top: 100%;
-}
 .olcards li .icon {
   grid-area: icon;
   align-self: center;
   font-size: 2em;
 }
-.olcards li .content .title {
-  grid-area: title;
-  font-size: 1.25em;
-  /* font-weight: 700; */
-}
-.olcards li .content .text {
-  grid-area: text;
-}
+
 
 </style>
 
@@ -527,7 +500,7 @@ p {
     <h1 class="h4 mb-0 texttheme font-weight-bold" >LEADERBOARDS</h1>
     <ol class="olcards" id="rank_card_holder">
         <div style="display:none">
-            <div id="gold_rank">
+            <div id="gold_rank" style="width: 100%;">
                 <li style="--cardColor:#035c63">
                     <div class="gold">
                         <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;  border: 3px solid #f2f2f2 ;"></div>
@@ -536,7 +509,7 @@ p {
                     </div>
                 </li>
             </div>
-            <div id="silver_rank">
+            <div id="silver_rank" style="width: 100%;">
                 <li style="--cardColor:#035c63">
                     <div class="silver">
                         <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
@@ -545,7 +518,7 @@ p {
                     </div>
                 </li>
             </div>
-            <div id="bronze_rank">
+            <div id="bronze_rank" style="width: 100%;">
                 <li style="--cardColor:#035c63">
                     <div class="bronze">
                         <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
@@ -554,7 +527,7 @@ p {
                     </div>
                 </li>
             </div>
-            <div id="default_rank">
+            <div id="default_rank" style="width: 100%;">
                 <li style="--cardColor:#035c63">
                     <div class="content">
                         <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
@@ -632,6 +605,7 @@ p {
                 temp_holder = $ID("bronze_rank").innerHTML
             }
             else{
+                temp_holder = $ID("bronze_rank").innerHTML
                 temp_holder = $ID("default_rank").innerHTML
             }
 
