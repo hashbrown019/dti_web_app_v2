@@ -56,6 +56,7 @@ class user_management:
 			return [{"id":"0","name":"no_data"}]
 
 	@app.route("/api/edit_user",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
 	def edit_user():
 		print("  * Edit User Module")
 		data = dict(request.form)
@@ -109,6 +110,7 @@ class user_management:
 
 
 	@app.route("/api/user_status",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
 	def user_status():
 		print("  * Edit User status")
 		# FILE_REQ = file_from_request(app)
@@ -125,6 +127,7 @@ class user_management:
 		return jsonify({"last_row_id":last_row_id})
 
 	@app.route("/api/user/change_pass",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
 	def change_pass():
 		msg = "on process"
 		if(user_management.is_on_session()):
@@ -139,16 +142,20 @@ class user_management:
 
 
 
-	@app.route("/api/user/all_ranks",methods=["POST","GET"]) # GE
+	@app.route("/api/user/get_all_id",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
 	def all_ranks_users():
 		user_rankings = []
 		all_users = rapid_mysql.select("SELECT `id`, `name`, `job` FROM `users` WHERE `status` != 'halt' ;");
-		for user in all_users :
-			user_rankings.append( user_management.count_all(user['id']) )
-			# user_rankings[user['name']] = user_management.count_all(user['id'])[0]["over_all_encoded"]
+		# for user in all_users :
+		# 	user_rankings.append( user_management.count_all(user['id']) )
+		# 	# user_rankings[user['name']] = user_management.count_all(user['id'])[0]["over_all_encoded"]
 
-		return jsonify(user_rankings)
+		return jsonify(all_users)
 
+
+	@app.route("/api/user/all_ranks/<ids>",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
 	def count_all(ids):
 		sql = (f'''
 			
