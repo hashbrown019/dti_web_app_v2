@@ -162,7 +162,8 @@ class user_management:
 				(SELECT
 					(SELECT `users`.`id` FROM `users` WHERE `users`.`id` = {ids}) as 'uid' ,
 					(SELECT `users`.`name` FROM `users` WHERE `users`.`id` = {ids}) as 'name' ,
-					(SELECT `users`.`profilepic` FROM `users` WHERE `users`.`id` = {ids}) as 'pic'  ,
+					(SELECT `users`.`profilepic` FROM `users` WHERE `users`.`id` = {ids}) as 'pic' ,
+					(SELECT `users`.`rcu` FROM `users` WHERE `users`.`id` = {ids}) as 'rcu' ,
 					(SELECT COUNT(*) FROM `excel_import_form_a` WHERE `excel_import_form_a`.`user_id` = {ids}) + 
 					(SELECT COUNT(*) FROM `form_b` WHERE `form_b`.`uploaded_by` = {ids}) + 
 					(SELECT COUNT(*) FROM `form_c` WHERE `form_c`.`upload_by` = {ids}) + 
@@ -181,7 +182,7 @@ class user_management:
 				)
 		''')
 		# return sql
-		return rapid_mysql.select(sql)
+		return rapid_mysql.select(sql)[0]
 
 	@app.route("/api/user/rankings/<user_id>",methods=["POST","GET"]) # GE
 	def user_rankings(user_id):

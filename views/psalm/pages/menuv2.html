@@ -304,6 +304,7 @@ p {
   padding-bottom: var(--cardsGap);
 }
 .olcards li {
+
   counter-increment: cardCount;
   display: flex;
   color: white;
@@ -327,7 +328,8 @@ p {
   padding-inline: 0.5em;
 }
 
-.olcards li .content {
+.olcards li .gold{
+    border: 5px solid #FFD700;
   background-color: var(--cardColor);
   --inlinePadding: 1em;
   --boxPadding: 0.5em;
@@ -348,6 +350,75 @@ p {
   );
   position: relative;
 }
+
+.olcards li .silver{
+    border: 5px solid #C0C0C0;
+  background-color: var(--cardColor);
+  --inlinePadding: 1em;
+  --boxPadding: 0.5em;
+  display: grid;
+  padding: var(--boxPadding) calc(var(--inlinePadding) + var(--arrowClipSize))
+    var(--boxPadding) calc(var(--inlinePadding) + var(--labelOffset));
+  grid-template-areas:
+    "icon title"
+    "icon text";
+  gap: 0.25em 1em;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--arrowClipSize)) 0,
+    100% 50%,
+    calc(100% - var(--arrowClipSize)) 100%,
+    calc(100% - var(--arrowClipSize)) calc(100% + var(--cardsGap)),
+    0 calc(100% + var(--cardsGap))
+  );
+  position: relative;
+}
+
+.olcards li .bronze{
+    border: 5px solid #CD7F32;
+  background-color: var(--cardColor);
+  --inlinePadding: 1em;
+  --boxPadding: 0.5em;
+  display: grid;
+  padding: var(--boxPadding) calc(var(--inlinePadding) + var(--arrowClipSize))
+    var(--boxPadding) calc(var(--inlinePadding) + var(--labelOffset));
+  grid-template-areas:
+    "icon title"
+    "icon text";
+  gap: 0.25em 1em;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--arrowClipSize)) 0,
+    100% 50%,
+    calc(100% - var(--arrowClipSize)) 100%,
+    calc(100% - var(--arrowClipSize)) calc(100% + var(--cardsGap)),
+    0 calc(100% + var(--cardsGap))
+  );
+  position: relative;
+}
+
+.olcards li .content{
+  background-color: var(--cardColor);
+  --inlinePadding: 1em;
+  --boxPadding: 0.5em;
+  display: grid;
+  padding: var(--boxPadding) calc(var(--inlinePadding) + var(--arrowClipSize))
+    var(--boxPadding) calc(var(--inlinePadding) + var(--labelOffset));
+  grid-template-areas:
+    "icon title"
+    "icon text";
+  gap: 0.25em 1em;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--arrowClipSize)) 0,
+    100% 50%,
+    calc(100% - var(--arrowClipSize)) 100%,
+    calc(100% - var(--arrowClipSize)) calc(100% + var(--cardsGap)),
+    0 calc(100% + var(--cardsGap))
+  );
+  position: relative;
+}
+
 .olcards li .content::before {
   content: "";
   position: absolute;
@@ -454,50 +525,134 @@ p {
 <div class="card border-0 shadow">
       <div class="card-body p-1-9 p-xl-5">
     <h1 class="h4 mb-0 texttheme font-weight-bold" >LEADERBOARDS</h1>
-    <ol class="olcards">
-        <li style="--cardColor:#035c63">
-            <div class="content">
-                <div class="icon"><img id="prof_imgs" src="\api\user_pic\{{user_data['profilepic']}}" class="fadeIn rounded-circle" style="height: 50px; width: 50px;  border: 3px solid #ffd11a ;"></div>
-                <div class="title">Samuel A. Cabagay <small class="text-light" style="opacity: 60%;">RCU: 11</small></div>
-                <div class="text" style="color:#ffa64d;">Total data encoded: 52</div>
+    <ol class="olcards" id="rank_card_holder">
+        <div style="display:hidden">
+            <div id="gold_rank">
+                <li style="--cardColor:#035c63">
+                    <div class="gold">
+                        <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;  border: 3px solid #f2f2f2 ;"></div>
+                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;">RCU: __RCU__</small></div>
+                        <div class="text" style="color:#ffa64d;">Total data encoded: __ENCODE__</div>
+                    </div>
+                </li>
             </div>
-        </li>
-        <li style="--cardColor:#035c63">
-            <div class="content">
-                <div class="icon"><img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
-                <div class="title">Christian Bron <small class="text-light" style="opacity: 60%;">RCU: 12</small></div>
-                <div class="text" style="color:#ffa64d;">Total data encoded: 34</div>
+            <div id="silver_rank">
+                <li style="--cardColor:#035c63">
+                    <div class="silver">
+                        <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
+                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;">RCU: __RCU__</small></div>
+                        <div class="text" style="color:#ffa64d;">Total data encoded: __ENCODE__</div>
+                    </div>
+                </li>
             </div>
-        </li>
-        <li style="--cardColor:#035c63">
-            <div class="content">
-                <div class="icon"><img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #cc9966 ;"></div>
-                <div class="title">Jay Balino <small class="text-light" style="opacity: 60%;">RCU: 13</small></div>
-                <div class="text" style="color:#ffa64d;">Total data encoded: 29</div>
+            <div id="bronze_rank">
+                <li style="--cardColor:#035c63">
+                    <div class="bronze">
+                        <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
+                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;">RCU: __RCU__</small></div>
+                        <div class="text" style="color:#ffa64d;">Total data encoded: __ENCODE__</div>
+                    </div>
+                </li>
             </div>
-        </li>
-        <li style="--cardColor:#035c63">
-            <div class="content">
-                <div class="icon"><img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
-                <div class="title">Cris John Montanez <small class="text-light" style="opacity: 60%;">RCU: 8</small></div>
-                <div class="text" style="color:#ffa64d;">Total data encoded: 15</div>
+            <div id="default_rank">
+                <li style="--cardColor:#035c63">
+                    <div class="content">
+                        <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
+                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;">RCU: __RCU__</small></div>
+                        <div class="text" style="color:#ffa64d;">Total data encoded: __ENCODE__</div>
+                    </div>
+                </li>
             </div>
-        </li>
-         <li style="--cardColor:#035c63">
-            <div class="content">
-                <div class="icon"><img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
-                <div class="title">Carlos Agassi <small class="text-light" style="opacity: 60%;">RCU: 10</small></div>
-                <div class="text" style="color:#ffa64d;">Total data encoded: 12</div>
-            </div>
-        </li>
+        </div>
     </ol>
 </div>
 </div>
 
 <script type="text/javascript">
+    let all_user_ranks = []
+    let temp_all_user_ranks = {}
+    let sorted_all_user_ranks = []
+    let counter = 0
+
     $onload(function(){
-        
+        $send({
+            action : "/api/user/get_all_id",
+            method : POST,
+            func : function(r){
+                var res = JSON.parse(r)
+                ls_user_ID = res
+                for (var i = 0; i < res.length; i++) {
+                    
+                    $send({
+                        action : "/api/user/all_ranks/"+res[i]["id"],
+                        method : POST,
+                        func : function(r){
+                            var _res = JSON.parse(r)
+                            all_user_ranks.push(_res)
+                            temp_all_user_ranks[parseFloat(_res["over_all_encoded"]+"."+_res["uid"])] = _res
+                            // println(`${counter} / ${res.length-1}`)
+                            if(counter == res.length-1){
+                                println("DONE")
+                                sort_user_rank()
+                            }
+                            counter += 1
+                        }
+                    })
+                }
+                
+            }
+        })
     })
+
+
+    function sort_user_rank(){
+        var temp_key = []; var SORTED_USER_ARR = []
+        for(key in temp_all_user_ranks){ temp_key.push(parseFloat(key))}
+        var sorted_user = temp_key.sort(function(a,b) { return a - b;})
+        // println(sorted_user)
+        // ==================================================
+        for (var i = sorted_user.length - 1; i >= 0; i--) {
+            var ids = sorted_user[i]
+            for(key in temp_all_user_ranks){
+                if(key==ids){ SORTED_USER_ARR.push(temp_all_user_ranks[key])}   
+            }
+        }
+        // $ID("rank_card_holder").innerHTML = ""
+        var card_holder =""
+        for (var i = 0; i < 5; i++) {
+            var data = (SORTED_USER_ARR[i])
+            var temp_holder = ""
+            if(i==0){
+                temp_holder = $ID("gold_rank").innerHTML
+            }
+            else if(i==1){
+                temp_holder = $ID("silver_rank").innerHTML
+            }
+            else if(i==2){
+                temp_holder = $ID("bronze_rank").innerHTML
+            }
+            else{
+                temp_holder = $ID("default_rank").innerHTML
+            }
+
+            var pics = "/api/user_pic/"+data["pic"];
+            if(data["pic"] == "" || data["pic"] == " " || data["pic"] == undefined){
+                pics = "/static/psalm_static/menu/img/profilepic.png";
+            }
+
+            card_holder += temp_holder.replaceAll("__NAME__",data["name"]).replaceAll("__RCU__",data["rcu"]).replaceAll("__ENCODE__",data["over_all_encoded"]).replaceAll("__PIC__",pics)
+            // card_holder += (`
+            //     <li style="--cardColor:#035c63">
+            //         <div class="content">
+            //             <div class="icon"><img id="prof_imgs" src="/api/user_pic/`+data["pic"]+`" class="fadeIn rounded-circle" style="height: 50px; width: 50px;  border: 3px solid #ffd11a ;"></div>
+            //             <div class="title">`+data["name"]+` <small class="text-light" style="opacity: 60%;">RCU: --</small></div>
+            //             <div class="text" style="color:#ffa64d;">Total data encoded: `+data["over_all_encoded"]+`</div>
+            //         </div>
+            //     </li>
+            // `)
+        }
+        $ID("rank_card_holder").innerHTML = card_holder
+    }
 
 </script>
 
