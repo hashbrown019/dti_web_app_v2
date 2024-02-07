@@ -132,7 +132,8 @@ def form8_dashboard():
 def form9_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
-	return render_template("form_dashboard/form9_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+	count = displayCount.display__()
+	return render_template("form_dashboard/form9_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form10_dashboard')
 def form10_dashboard():
@@ -144,7 +145,8 @@ def form10_dashboard():
 def form11_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
-	return render_template("form_dashboard/form11_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+	count = displayCount.display__()
+	return render_template("form_dashboard/form11_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/tutorial')
 def tutorial():

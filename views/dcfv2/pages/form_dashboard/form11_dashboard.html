@@ -11,48 +11,48 @@
 
 <div class="right_col" role="main">
   <!-- top tiles -->
-<!--           <div class="row" style="display: inline-block;" >
+          <div class="row" style="display: inline-block;" >
 		  <div class="tile_count">
 			 <div class="col-md-2 col-sm-4  tile_stats_count">
 			  <span class="count_top"><i class="fa fa-users"></i> Total Entries</span>
-			  <div class="count">{{dcf_form5}}</div>
+			  <div class="count">{{dcf_form11}}</div>
 			  <span style="font-size: 10px;" class="count_bottom">Total # of Entries</span>
 
 			</div>
 				   <div class="col-md-2 col-sm-4  tile_stats_count">
 			  <span class="count_top"><i class="fa fa-user"></i> Total Male</span>
-			  <div class="count _money_tag">{{dcf_form5male[0]['totalmale5']}} </div>
+			  <div class="count _money_tag">{{dcf_form11male[0]['total_male11']}} </div>
 			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sex</span>
 			</div>
 			<div class="col-md-2 col-sm-4  tile_stats_count">
 			  <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
-			  <div class="count _money_tag">{{dcf_form5female[0]['totalfemale5']}}</div>
+			  <div class="count _money_tag">{{dcf_form11female[0]['total_female11']}}</div>
 			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sex</span>
 
 			</div>
 			<div class="col-md-2 col-sm-4  tile_stats_count">
 			  <span class="count_top"> PWD</span>
-			  <div class="count _money_tag">{{dcf_form5pwd[0]['totalpwd5']}}</div>
+			  <div class="count _money_tag">{{dcf_form11pwd[0]['total_pwd11']}}</div>
 			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
 			</div>
 	 
 			<div class="col-md-2 col-sm-4  tile_stats_count">
 			  <span class="count_top"> Youth</span>
-			  <div class="count _money_tag">{{dcf_form5youth[0]['totalyouth5']}}</div>
+			  <div class="count _money_tag">{{dcf_form11youth[0]['total_youth11']}}</div>
 			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
 			</div>
 			<div class="col-md-2 col-sm-4  tile_stats_count">
 			  <span class="count_top"> IP</span>
-			  <div class="count _money_tag">{{dcf_form5ip[0]['totalip5']}}</div>
+			  <div class="count _money_tag">{{dcf_form11ip[0]['total_ip11']}}</div>
 			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
 			</div>
 			<div class="col-md-2 col-sm-4  tile_stats_count">
 			  <span class="count_top"> SC</span>
-			  <div class="count _money_tag">{{dcf_form5sc[0]['totalsc5']}}</div>
+			  <div class="count _money_tag">{{dcf_form11sc[0]['total_sc11']}}</div>
 			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
 			</div>
 		  </div>
-	  </div> -->
+	  </div>
 	  <!-- /top tiles -->
 
 
@@ -62,7 +62,7 @@
 
 
 
-		   <!--  
+		    
 
 			<div class="col-md-4 col-sm-4 ">
 			  <br>
@@ -98,16 +98,16 @@
 					</tr>
 					<tr>
 					  <td>
-						<canvas class="canvasDoughnut" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+						<canvas class="canvasDoughnut11" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
 					  </td>
 					  <td>
 						<table class="tile_info">
-							{% for key in over_all_commodity_count %}
+							{% for key in over_all_commodity_count11 %}
 						  <tr>
 							<td>
 							  {% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
 							  {% set color_index = loop.index0 % square_colors|length %}
-							  <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count[key] }}</p>
+							  <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count11[key] }}</p>
 							</td>
 
 						  </tr>
@@ -121,7 +121,7 @@
 				  </table>
 				</div>
 			  </div>
-		  </div> -->
+		  </div>
 
 			<script>// Replace this with your actual variable or value
 
@@ -135,15 +135,15 @@
 
 				console.log('init_chart_doughnut');
 
-				if ($('.canvasDoughnut').length) {
+				if ($('.canvasDoughnut11').length) {
 
 					var _labels = [];
 					var _data = [];
 					
 		// Sample data
-					{% for key in over_all_commodity_count %}
+					{% for key in over_all_commodity_count11 %}
 					_labels.push('{{key}}');
-					_data.push('{{over_all_commodity_count[key]}}');
+					_data.push('{{over_all_commodity_count11[key]}}');
 					{% endfor %}
 		// Calculate total for _data
 					var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
@@ -191,7 +191,7 @@
 						}
 					};
 
-					$('.canvasDoughnut').each(function () {
+					$('.canvasDoughnut11').each(function () {
 
 						var chart_element = $(this);
 						var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
@@ -386,99 +386,8 @@
 
 	// Doughnut chart
 
-			  if ($('#canvasDoughnut').length) {
-
-				var ctx = document.getElementById("canvasDoughnut");
-				var data = {
-					labels: [
-						"Dark Grey",
-						"Purple Color",
-						"Gray Color",
-						"Green Color",
-						"Blue Color"
-						],
-					datasets: [{
-						data: [120, 50, 140, 180, 100],
-						backgroundColor: [
-							"#455C73",
-							"#9B59B6",
-							"#BDC3C7",
-							"#26B99A",
-							"#3498DB"
-							],
-						hoverBackgroundColor: [
-							"#34495E",
-							"#B370CF",
-							"#CFD4D8",
-							"#36CAAB",
-							"#49A9EA"
-							]
-
-					}]
-				};
-
-				var canvasDoughnut = new Chart(ctx, {
-					type: 'doughnut',
-					tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-					data: data
-				});
-
-			}
 
 
-			if ($('#pieChart').length) {
-				var xValues2 = [
-					'Male: ' + {{dcf_form1male[0]['total_male']}},
-					'Female: ' + {{dcf_form1female[0]['total_female']}},
-					'Untagged: ' + money({{total_untagged}})
-					];
-
-				var yValues2 = [
-					{{dcf_form1male[0]['total_male']}},
-					{{dcf_form1female[0]['total_female']}},
-		// {{total_untagged}},
-					];
-				var barColors = ['#0099cc', '#cc0066'];
-
-				var total = yValues2.reduce((a, b) => a + b, 0);
-
-				var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
-
-				var ctx = document.getElementById("pieChart");
-				var data = {
-					datasets: [{
-						data: yValues2,
-						backgroundColor: barColors,
-			label: 'My dataset' // for legend
-		}],
-					labels: xValues2
-				};
-
-				var pieChart = new Chart(ctx, {
-					data: data,
-					type: 'pie',
-					options: {
-						plugins: {
-							datalabels: {
-								color: 'white',
-								formatter: (value, context) => {
-									return percentageValues[context.dataIndex] + '%';
-								}
-							}
-						},
-						tooltips: {
-							callbacks: {
-								label: function (tooltipItem, data) {
-									var label = data.labels[tooltipItem.index];
-									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-									var percentage = percentageValues[tooltipItem.index] + '%';
-									return `${label} (${percentage})`;
-								},
-							},
-						},
-					},
-				});
-			}
 	// Radar 
 		}
 

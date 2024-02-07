@@ -174,6 +174,14 @@ def menuv2():
 		except Exception as e:
 			prof_a_percentage = 0
 
+		prof_b_inputed_data = user_rank['prof_b']['inputed']
+		prof_b_total_data = user_rank['prof_b']['total']
+
+		try:
+			prof_b_percentage = (prof_b_inputed_data / prof_b_total_data) * 100
+		except Exception as e:
+			prof_b_percentage = 0
+
 		prof_c_inputed_data = user_rank['prof_c']['inputed']
 		prof_c_total_data = user_rank['prof_c']['total']
 		try:
@@ -181,7 +189,7 @@ def menuv2():
 		except Exception as e:
 			prof_c_percentage = 0
 
-		return render_template("menuv2.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),user_rank=user_management.user_rankings(sesh['id']))
+		return render_template("menuv2.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_b_percentage = round(prof_b_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),user_rank=user_management.user_rankings(sesh['id']))
 	else:
 		return redirect("/login?force_url=1")
 	

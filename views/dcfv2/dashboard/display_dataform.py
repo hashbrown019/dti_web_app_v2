@@ -423,6 +423,19 @@ def displayform():
     dcf_form7undernego=db.select("SELECT SUM(form_7_under_negotiations) AS total_undernego FROM dcf_trade_promotion {};".format(position_data_filter()))
     dcf_form7total=db.select("SELECT SUM(form_7_total_autosum) AS total_ovrlltotal FROM dcf_trade_promotion {};".format(position_data_filter()))
 
+    dcf_form9capb=db.select("SELECT COUNT(form_9_type_of_training) AS totalcapbuild9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Capbuild';".format(position_data_filter()))
+    dcf_form9meetings=db.select("SELECT COUNT(form_9_type_of_training) AS totalmeetings9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Meetings';".format(position_data_filter()))
+    dcf_form9policy=db.select("SELECT COUNT(form_9_type_of_training) AS totalpolicy9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Policy issuances';".format(position_data_filter()))
+    dcf_form9budg=db.select("SELECT SUM(form_9_rapid_actual_budget) as totalact9 FROM dcf_enablers_activity {};".format(position_data_filter()))
+
+
+    dcf_form11ip=db.select("SELECT SUM(form_11_ip) AS total_ip11 FROM dcf_access_financing {};".format(position_data_filter()))
+    dcf_form11youth=db.select("SELECT SUM(form_11_youth) AS total_youth11 FROM dcf_access_financing {};".format(position_data_filter()))
+    dcf_form11pwd=db.select("SELECT SUM(form_11_pwd) AS total_pwd11 FROM dcf_access_financing {};".format(position_data_filter()))
+    dcf_form11sc=db.select("SELECT SUM(form_11_sc) AS total_sc11 FROM dcf_access_financing {};".format(position_data_filter()))
+
+    dcf_form11female=db.select("SELECT SUM(form_11_female) AS total_female11 FROM dcf_access_financing {};".format(position_data_filter()))
+    dcf_form11male=db.select("SELECT SUM(form_11_male) AS total_male11 FROM dcf_access_financing {};".format(position_data_filter()))
 
 
 
@@ -461,7 +474,19 @@ def displayform():
     #         form_1_commodity
     #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
 
+######################FORM11#################################################
 
+    dips_list11 = form11_datatable
+    over_all_commodity_count11 = {}
+    for index in range(len(dips_list11)):
+        DIP11 = dips_list11[index]
+        _comm_rule11 = ["cacao","coconut","coffee","pfn"]
+        _com11 = DIP11['form_11_industry_cluster']
+        if(_com11.lower() not in _comm_rule11):
+            _com11 = "Others"
+        if(_com11 not in over_all_commodity_count11):
+            over_all_commodity_count11[_com11 ] = 0
+        over_all_commodity_count11[_com11 ] += 1
 
 
 
@@ -716,6 +741,7 @@ def displayform():
         'over_all_commodity_count4':over_all_commodity_count4,
         'over_all_commodity_count5':over_all_commodity_count5,
         'over_all_commodity_count7':over_all_commodity_count7,
+        'over_all_commodity_count11':over_all_commodity_count11,
         'typebdsp':typebdsp,
         'form1_data_sep':form1_data_sep,
         'form1_data_oct':form1_data_oct,
@@ -854,11 +880,21 @@ def displayform():
         'form7_data_feb':form7_data_feb,
         'form9_data_feb':form9_data_feb,
         'form10_data_feb':form10_data_feb,
-        'form11_data_feb':form11_data_feb
-
-
+        'form11_data_feb':form11_data_feb,
+        'dcf_form9capb':dcf_form9capb,
+        'dcf_form9meetings':dcf_form9meetings,
+        'dcf_form9policy':dcf_form9policy,
+        'dcf_form9budg':dcf_form9budg,
+        'dcf_form11ip':dcf_form11ip,
+        'dcf_form11youth':dcf_form11youth,
+        'dcf_form11pwd':dcf_form11pwd,
+        'dcf_form11sc':dcf_form11sc,
+        'dcf_form11female':dcf_form11female,
+        'dcf_form11male':dcf_form11male
 
     }
+
+
 
 def position_data_filter():
     _filter = "WHERE 1 "
