@@ -468,7 +468,7 @@ class _main:
 	@app.route("/forum/get_comment/<com_id>",methods=["POST","GET"])
 	def get_comment(com_id):
 		if(_main.is_on_session()):
-			comments = db.select("SELECT `webrep_forum_comments`.*, `users`.`name` as 'commenter', `users`.`profilepic` as 'profilepic', `users`.`job` FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by`= `users`.`id` WHERE `webrep_forum_comments`.`topic_id`='{}';".format(com_id))
+			comments = db.select("SELECT `webrep_forum_comments`.*, `users`.`name` as 'commenter', `users`.`id` as 'commenter_id', `users`.`profilepic` as 'profilepic', `users`.`job` FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by`= `users`.`id` WHERE `webrep_forum_comments`.`topic_id`='{}';".format(com_id))
 			return [comments,_main.get_topic_people(com_id)]
 		else:
 			return redirect("/login?force_url=1")

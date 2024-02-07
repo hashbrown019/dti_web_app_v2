@@ -161,12 +161,13 @@
 	$onload(load_comments,function(){
 		window.setInterval(load_comments,5000)
 	})
+
 	function load_comments(){
 		$send({
 			action : "/forum/get_comment/{{forum['id']}}",
 			func : function(r){
 				var com_cards = ""
-				var card_participants = ""
+				var card_participants = []
 				var ls_comments = JSON.parse(r)[0]
 				var ls_participants = JSON.parse(r)[1]
 				$ID("participants").innerHTML = ""
@@ -235,39 +236,45 @@
 
 					com_cards +=(`
 						<div class=" d-flex">
-						<div class="px-2">
-						</div>
-						<div class="container bg-light rounded-2" >
-						<div class="d-flex justify-content-between pt-3  text-white">
-						<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
-						<p>`+prof_pic+`</p>
-						<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
-						<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+com['date_created'] +`</p>
-						</div>
-						</div>
-						`+com_conts+`
-						</div>
+							<div class="px-2">
+							</div>
+							<div class="container bg-light rounded-2" >
+								<div class="d-flex justify-content-between pt-3  text-white">
+									<a style="cursor" href="/viewprofile?_id=${com['commenter_id']}" target="_blank">
+										<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
+												<p>`+prof_pic+`</p>
+												<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
+												<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+com['date_created'] +`</p>
+										</div>
+									</a>
+								</div>
+								`+com_conts+`
+							</div>
 						</div><br> `)
 
-					card_participants += (`
-
+					card_participants.push(`
 						<div class="border border-light rounded-3 d-flex" style="width: 300px; height: 100px;">
-							<div class="d-flex align-self-center">
-								<div>							
-									<p class="fs-1 mt-3">
-										`+prof_pic+`
-									</p>						
-								</div>
-								<div class="mt-3 ms-4 lh-sm">
-									<span>`+commenter+`</span><br>
-									<span class="text-muted small">`+com['job']+`</span><br>
+							<a style="cursor" href="/viewprofile?_id=${com['commenter_id']}" target="_blank">
+								<div class="d-flex align-self-center">
+									<div>							
+										<p class="fs-1 mt-3">
+											`+prof_pic+`
+										</p>						
+									</div>
+									<div class="mt-3 ms-4 lh-sm">
+										<span>`+commenter+`</span><br>
+										<span class="text-muted small">`+com['job']+`</span><br>
 
+									</div>
 								</div>
-							</div>
+							</a>
 						</div>
 					`)
 				}
-				$ID('card_participants').innerHTML = card_participants
+				var uniq =arr_rem_dup(card_participants) ;
+				var final_par = ""
+				for (var i = 0; i < uniq.length; i++) {final_par += uniq[i]}
+				$ID('card_participants').innerHTML = final_par
 				$ID("reply_container").innerHTML=com_cards
 			}
 		})
