@@ -210,61 +210,61 @@ class user_management:
 				}
 			except:pass
 			try:
-				data['dcf_access_financing'] = {
+				data['dcf11'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing`;")),
 				'inputed':len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_bdsp_reg'] = {
+				data['dcf3'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_capacity_building'] = {
+				data['dcf4'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_enablers_activity'] = {
+				data['dcf9'] = {
 				"total" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity`;")),
 				"inputed" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_implementing_unit'] = {
+				data['dcf2'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_matching_grant'] = {
+				data['dcf5'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_negosyo_center'] ={ 
+				data['dcf10'] ={ 
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_prep_review_aprv_status'] = {
+				data['dcf1'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_product_development'] = {
+				data['dcf6'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_trade_promotion'] = {
+				data['dcf7'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion` WHERE `upload_by` = '{}';".format(user_id)))
 				}

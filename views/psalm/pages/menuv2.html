@@ -285,6 +285,103 @@ p {
   background-color: #a047cc;
 }
 
+
+.olcards,
+.olcards * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.olcards {
+  list-style: none;
+  counter-reset: cardCount;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  --cardsGap: 1rem;
+  gap: var(--cardsGap);
+  padding-bottom: var(--cardsGap);
+}
+.olcards li {
+  counter-increment: cardCount;
+  display: flex;
+  color: white;
+  --labelOffset: 1rem;
+  --arrowClipSize: 1.5rem;
+  margin-top: var(--labelOffset);
+}
+
+.olcards li::before {
+  content: counter(cardCount, decimal-leading-zero);
+  background: white;
+  color: var(--cardColor);
+  font-size: 2em;
+  font-weight: 700;
+  transform: translateY(calc(-1 * var(--labelOffset)));
+  margin-right: calc(-1 * var(--labelOffset));
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 0.5em;
+}
+
+.olcards li .content {
+  background-color: var(--cardColor);
+  --inlinePadding: 1em;
+  --boxPadding: 0.5em;
+  display: grid;
+  padding: var(--boxPadding) calc(var(--inlinePadding) + var(--arrowClipSize))
+    var(--boxPadding) calc(var(--inlinePadding) + var(--labelOffset));
+  grid-template-areas:
+    "icon title"
+    "icon text";
+  gap: 0.25em 1em;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--arrowClipSize)) 0,
+    100% 50%,
+    calc(100% - var(--arrowClipSize)) 100%,
+    calc(100% - var(--arrowClipSize)) calc(100% + var(--cardsGap)),
+    0 calc(100% + var(--cardsGap))
+  );
+  position: relative;
+}
+.olcards li .content::before {
+  content: "";
+  position: absolute;
+  width: var(--labelOffset);
+  height: var(--labelOffset);
+  background: var(--cardColor);
+  left: 0;
+  bottom: 0;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  filter: brightness(0.75);
+}
+.olcards li .content::after {
+  content: "";
+  position: absolute;
+  height: var(--cardsGap);
+  width: var(--cardsGap);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.25), transparent 50%);
+  left: 0;
+  top: 100%;
+}
+.olcards li .icon {
+  grid-area: icon;
+  align-self: center;
+  font-size: 2em;
+}
+.olcards li .content .title {
+  grid-area: title;
+  font-size: 1.25em;
+  /* font-weight: 700; */
+}
+.olcards li .content .text {
+  grid-area: text;
+}
+
 </style>
 
 {% include "includes/menucards/profile.html" %}
@@ -345,48 +442,48 @@ p {
 
 
 <br>
-
-                     <div class="mb-5 wow fadeIn">
-                    <div class="text-start mb-1-6 wow fadeIn">
-                        <h2 class="mb-0 text-primaryx">Knowledge Center Contributions</h2>
-                    </div>
-                    <div class="row mt-n4">
-
-                        <div class="col-md-6 col-xl-4 mt-4">
-                            <div class="card text-center border-0 rounded-3">
-                                <div class="card-body">
-                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-newspaper"></i> Articles</h3>
-                                    <p class="mb-0">Posted : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_articles']['inputed'] }}</samuel></p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-xl-4 mt-4">
-                            <div class="card text-center border-0 rounded-3">
-                                <div class="card-body">
-                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-comments"></i> Comments</h3>
-                                    <p class="mb-0">Replies : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_forum_comments']['inputed'] }}</samuel></p>
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="col-md-6 col-xl-4 mt-4">
-                            <div class="card text-center border-0 rounded-3">
-                                <div class="card-body">
-                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-cloud-arrow-up"></i> Uploads</h3>
-                                    <p class="mb-0">Uploaded : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_uploads']['inputed'] }}</samuel></p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                
-                
-                                  </div>
-            
-                                </div>
-
-
-
+<div class="card border-0 shadow">
+      <div class="card-body p-1-9 p-xl-5">
+    <h1 class="h4 mb-0 texttheme font-weight-bold" >LEADERBOARDS</h1>
+    <ol class="olcards">
+        <li style="--cardColor:#035c63">
+            <div class="content">
+                <div class="icon"><img id="prof_imgs" src="\api\user_pic\{{user_data['profilepic']}}" class="fadeIn rounded-circle" style="height: 50px; width: 50px;  border: 3px solid #ffd11a ;"></div>
+                <div class="title">Samuel A. Cabagay <small class="text-light" style="opacity: 60%;">RCU: 11</small></div>
+                <div class="text" style="color:#ffa64d;">Total data encoded: 52</div>
+            </div>
+        </li>
+        <li style="--cardColor:#035c63">
+            <div class="content">
+                <div class="icon"><img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
+                <div class="title">Christian Bron <small class="text-light" style="opacity: 60%;">RCU: 12</small></div>
+                <div class="text" style="color:#ffa64d;">Total data encoded: 34</div>
+            </div>
+        </li>
+        <li style="--cardColor:#035c63">
+            <div class="content">
+                <div class="icon"><img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #cc9966 ;"></div>
+                <div class="title">Jay Balino <small class="text-light" style="opacity: 60%;">RCU: 13</small></div>
+                <div class="text" style="color:#ffa64d;">Total data encoded: 29</div>
+            </div>
+        </li>
+        <li style="--cardColor:#035c63">
+            <div class="content">
+                <div class="icon"><img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
+                <div class="title">Cris John Montanez <small class="text-light" style="opacity: 60%;">RCU: 8</small></div>
+                <div class="text" style="color:#ffa64d;">Total data encoded: 15</div>
+            </div>
+        </li>
+         <li style="--cardColor:#035c63">
+            <div class="content">
+                <div class="icon"><img id="prof_imgs" src="\static\psalm_static\menu\img\profilepic.png" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
+                <div class="title">Carlos Agassi <small class="text-light" style="opacity: 60%;">RCU: 10</small></div>
+                <div class="text" style="color:#ffa64d;">Total data encoded: 12</div>
+            </div>
+        </li>
+    </ol>
+</div>
+</div>
 
 
 
@@ -467,8 +564,8 @@ p {
 
                                       
                                       <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size: 15px;">
-                                        <samuel class="h6 font-weight-bold texttheme">Form A: <samuel class="material-icons text-info mr-2 font-weight-bold">Profiling</samuel></samuel><br>
-                                        Inputed Data: <samuel style="font-size: 15px;" class="material-icons text-info mr-1 font-weight-bold ">{{ user_rank['profiling_a']['inputed'] }}</samuel>out of<br> <samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['profiling_a']['total'] }}</samuel>Total Data Enrolled</p>
+                                        <samuel class="h6 font-weight-bold texttheme">Form A: <samuel class="material-icons  mr-2 font-weight-bold" style="color:#3d5c5c;" >Profiling</samuel></samuel><br>
+                                        Inputed Data: <samuel style="color: #339966; font-size: 15px;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['profiling_a']['inputed'] }}</samuel>out of<br> <samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['profiling_a']['total'] }}</samuel>Total Data Enrolled</p>
                                     </div>
 
                                 </div>
@@ -482,7 +579,7 @@ p {
                                     <div style="display: flex; align-items: center;">
                                      
                                       <div class="single-chart">
-                                        <svg viewBox="0 0 40 40" class="circular-chart green">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
                                           <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                           <path class="circle" stroke-dasharray="{{prof_b_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                           <text x="18" y="20.35" class="percentage">{{prof_b_percentage}}%</text>
@@ -490,7 +587,7 @@ p {
                                       </div>
 
                                       <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size:15px;">
-                                <samuel class="h6 font-weight-bold texttheme">Form B: <samuel style="color: #339966;" class="material-icons mr-2">Farmer's Org </samuel></samuel><br>
+                                <samuel class="h6 font-weight-bold texttheme">Form B: <samuel style="color: #3d5c5c;" class="material-icons mr-2">Farmer's Org </samuel></samuel><br>
                                         Inputed Data: <samuel style="color: #339966; font-size: 15px;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['prof_b']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['prof_b']['total'] }}</samuel>Total Data Enrolled</p>
                                     </div>
             
@@ -507,7 +604,7 @@ p {
                                     <div style="display: flex; align-items: center;">
                                      
                                       <div class="single-chart">
-                                        <svg viewBox="0 0 40 40" class="circular-chart gray">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
                                           <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                           <path class="circle" stroke-dasharray="{{prof_c_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                           <text  x="18" y="20.35" class="percentage">{{prof_c_percentage}}%</text>
@@ -515,7 +612,7 @@ p {
                                       </div>
                                       <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size:15px;">
                                                <samuel class="h6 font-weight-bold texttheme">Form C: <samuel style="color: #3d5c5c;" class=" material-icons mr-2">MSME</samuel></samuel><br>
-                                        Inputed Data: <samuel style="font-size: 15px; color: #3d5c5c;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['prof_c']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['prof_c']['total'] }}</samuel>Total Data Enrolled</p>
+                                        Inputed Data: <samuel style="font-size: 15px; color: #339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['prof_c']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['prof_c']['total'] }}</samuel>Total Data Enrolled</p>
                                     </div>
             </div>
             
@@ -547,15 +644,15 @@ p {
                                       <div class="single-chart">
                                         <svg viewBox="0 0 40 40" class="circular-chart blue">
                                           <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                          <path class="circle" stroke-dasharray="{{prof_a_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                          <text x="18" y="20.35" class="percentage">{{prof_a_percentage}}%</text>
+                                          <path class="circle" stroke-dasharray="{{dcf1_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">{{dcf1_percentage}}%</text>
                                         </svg>
                                       </div>
 
                                       
                                       <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size: 15px;">
-                                        <samuel class="h6 font-weight-bold texttheme">Form A: <samuel class="material-icons text-info mr-2 font-weight-bold">Profiling</samuel></samuel><br>
-                                        Inputed Data: <samuel style="font-size: 15px;" class="material-icons text-info mr-1 font-weight-bold ">{{ user_rank['profiling_a']['inputed'] }}</samuel>out of<br> <samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['profiling_a']['total'] }}</samuel>Total Data Enrolled</p>
+                                        <samuel class="h6 font-weight-bold texttheme">Form 1: <samuel style="color: #3d5c5c;" class="material-icons mr-2 font-weight-bold">Prep. Review</samuel></samuel><br>
+                                        Inputed Data: <samuel style="font-size: 15px; color:#339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf1']['inputed'] }}</samuel>out of<br> <samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf1']['total'] }}</samuel>Total Data Enrolled</p>
                                     </div>
 
                                 </div>
@@ -569,16 +666,16 @@ p {
                                     <div style="display: flex; align-items: center;">
                                      
                                       <div class="single-chart">
-                                        <svg viewBox="0 0 40 40" class="circular-chart green">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
                                           <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                          <path class="circle" stroke-dasharray="{{prof_b_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                          <text x="18" y="20.35" class="percentage">{{prof_b_percentage}}%</text>
+                                          <path class="circle" stroke-dasharray="{{dcf2_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">{{dcf2_percentage}}%</text>
                                         </svg>
                                       </div>
 
                                       <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size:15px;">
-                                <samuel class="h6 font-weight-bold texttheme">Form B: <samuel style="color: #339966;" class="material-icons mr-2">Farmer's Org </samuel></samuel><br>
-                                        Inputed Data: <samuel style="color: #339966; font-size: 15px;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['prof_b']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['prof_b']['total'] }}</samuel>Total Data Enrolled</p>
+                                <samuel class="h6 font-weight-bold texttheme">Form 2: <samuel style="color: #3d5c5c;" class="material-icons mr-2">CPA Tacker</samuel></samuel><br>
+                                        Inputed Data: <samuel style=" font-size: 15px; color: #339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf2']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf2']['total'] }}</samuel>Total Data Enrolled</p>
                                     </div>
             
             
@@ -594,15 +691,90 @@ p {
                                     <div style="display: flex; align-items: center;">
                                      
                                       <div class="single-chart">
-                                        <svg viewBox="0 0 40 40" class="circular-chart gray">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
                                           <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                          <path class="circle" stroke-dasharray="{{prof_c_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                          <text  x="18" y="20.35" class="percentage">{{prof_c_percentage}}%</text>
+                                          <path class="circle" stroke-dasharray="{{dcf3_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text  x="18" y="20.35" class="percentage">{{dcf3_percentage}}%</text>
                                         </svg>
                                       </div>
                                       <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size:15px;">
-                                               <samuel class="h6 font-weight-bold texttheme">Form C: <samuel style="color: #3d5c5c;" class=" material-icons mr-2">MSME</samuel></samuel><br>
-                                        Inputed Data: <samuel style="font-size: 15px; color: #3d5c5c;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['prof_c']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['prof_c']['total'] }}</samuel>Total Data Enrolled</p>
+                                               <samuel class="h6 font-weight-bold texttheme">Form 3: <samuel style="color: #3d5c5c;" class=" material-icons mr-2">BDSP Registry</samuel></samuel><br>
+                                        Inputed Data: <samuel style="font-size: 15px; color: #339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf3']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf3']['total'] }}</samuel>Total Data Enrolled</p>
+                                    </div>
+            </div>
+            
+            
+                                </div>
+                            </div>
+                        </div>
+<hr>
+
+
+                        <div class="row">
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <div style="display: flex; align-items: center;">
+                              
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{dcf4_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">{{dcf4_percentage}}%</text>
+                                        </svg>
+                                      </div>
+
+                                      
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size: 15px;">
+                                        <samuel class="h6 font-weight-bold texttheme">Form 4: <samuel style="color: #3d5c5c;" class="material-icons mr-2 font-weight-bold">CapBuild</samuel></samuel><br>
+                                        Inputed Data: <samuel style="font-size: 15px; color:#339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf4']['inputed'] }}</samuel>out of<br> <samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf4']['total'] }}</samuel>Total Data Enrolled</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    
+                                    <div style="display: flex; align-items: center;">
+                                     
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{dcf5_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">{{dcf5_percentage}}%</text>
+                                        </svg>
+                                      </div>
+
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size:15px;">
+                                <samuel class="h6 font-weight-bold texttheme">Form 5: <samuel style="color: #3d5c5c;" class="material-icons mr-2">Matching Grant</samuel></samuel><br>
+                                        Inputed Data: <samuel style=" font-size: 15px; color: #339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf5']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf5']['total'] }}</samuel>Total Data Enrolled</p>
+                                    </div>
+            
+            
+                                </div>
+                            </div>
+                        </div>
+
+    
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                        
+                                    <div style="display: flex; align-items: center;">
+                                     
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{dcf6_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text  x="18" y="20.35" class="percentage">{{dcf6_percentage}}%</text>
+                                        </svg>
+                                      </div>
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size:15px;">
+                                               <samuel class="h6 font-weight-bold texttheme">Form 6: <samuel style="color: #3d5c5c;" class=" material-icons mr-2">Product Dev.</samuel></samuel><br>
+                                        Inputed Data: <samuel style="font-size: 15px; color: #339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf6']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf6']['total'] }}</samuel>Total Data Enrolled</p>
                                     </div>
             </div>
             
@@ -611,7 +783,155 @@ p {
                             </div>
                         </div>
                            
+
+<hr>
+
+                            <div class="row">
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <div style="display: flex; align-items: center;">
+                              
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{dcf7_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">{{dcf7_percentage}}%</text>
+                                        </svg>
+                                      </div>
+
+                                      
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size: 15px;">
+                                        <samuel class="h6 font-weight-bold texttheme">Form 7: <samuel style="color: #3d5c5c;" class="material-icons mr-2 font-weight-bold">Trade Promotion</samuel></samuel><br>
+                                        Inputed Data: <samuel style="font-size: 15px; color:#339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf7']['inputed'] }}</samuel>out of<br> <samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf7']['total'] }}</samuel>Total Data Enrolled</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    
+                                    <div style="display: flex; align-items: center;">
+                                     
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{dcf9_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">{{dcf9_percentage}}%</text>
+                                        </svg>
+                                      </div>
+
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size:15px;">
+                                <samuel class="h6 font-weight-bold texttheme">Form 9: <samuel style="color: #3d5c5c;" class="material-icons mr-2">Enabler's Activity</samuel></samuel><br>
+                                        Inputed Data: <samuel style=" font-size: 15px; color: #339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf9']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf9']['total'] }}</samuel>Total Data Enrolled</p>
+                                    </div>
+            
+            
+                                </div>
+                            </div>
+                        </div>
+
+    
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                        
+                                    <div style="display: flex; align-items: center;">
+                                     
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{dcf10_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text  x="18" y="20.35" class="percentage">{{dcf10_percentage}}%</text>
+                                        </svg>
+                                      </div>
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size:15px;">
+                                               <samuel class="h6 font-weight-bold texttheme">Form 10: <samuel style="color: #3d5c5c;" class=" material-icons mr-2">Negosyo Center</samuel></samuel><br>
+                                        Inputed Data: <samuel style="font-size: 15px; color: #339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf10']['inputed'] }}</samuel>out of <br><samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf10']['total'] }}</samuel>Total Data Enrolled</p>
+                                    </div>
+            </div>
+            
+            
+                                </div>
+                            </div>
+                        </div>
                            
+
+<hr>
+
+                              <div class="row">
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <div style="display: flex; align-items: center;">
+                              
+                                      <div class="single-chart">
+                                        <svg viewBox="0 0 40 40" class="circular-chart blue">
+                                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <path class="circle" stroke-dasharray="{{dcf11_percentage}}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                          <text x="18" y="20.35" class="percentage">{{dcf11_percentage}}%</text>
+                                        </svg>
+                                      </div>
+
+                                      
+                                      <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size: 15px;">
+                                        <samuel class="h6 font-weight-bold texttheme">Form 11: <samuel style="color: #3d5c5c;" class="material-icons mr-2 font-weight-bold">Access Financing</samuel></samuel><br>
+                                        Inputed Data: <samuel style="font-size: 15px; color:#339966;" class="material-icons mr-1 font-weight-bold ">{{ user_rank['dcf11']['inputed'] }}</samuel>out of<br> <samuel style="color: #ff6666; font-size: 15px;" class="material-icons mr-1 font-weight-bold">{{ user_rank['dcf11']['total'] }}</samuel>Total Data Enrolled</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+               
+
+    
+                        </div>
+
+
+                            
+                     <div class="mb-5 wow fadeIn">
+                    <div class="text-start mb-1-6 wow fadeIn">
+                        <h2 class="mb-0 text-primaryx">Knowledge Center Contributions</h2>
+                    </div>
+                    <div class="row mt-n4">
+
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-newspaper"></i> Articles</h3>
+                                    <p class="mb-0">Posted : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_articles']['inputed'] }}</samuel></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-comments"></i> Comments</h3>
+                                    <p class="mb-0">Replies : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_forum_comments']['inputed'] }}</samuel></p>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col-md-4 col-4">
+                            <div class="card text-center border-0 rounded-3">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3 font-weight-bold texttheme"><i class="fa-solid fa-cloud-arrow-up"></i> Uploads</h3>
+                                    <p class="mb-0">Uploaded : <samuel class="material-icons text-dark mr-1 font-weight-bold ">{{ user_rank['webrep_uploads']['inputed'] }}</samuel></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                
+                
+                                  </div>
+            
+                                </div>
+
     
                         
                     
