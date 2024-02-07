@@ -501,40 +501,48 @@ p {
     <ol class="olcards" id="rank_card_holder">
         <div style="display:none">
             <div id="gold_rank" style="width: 100%;">
-                <li style="--cardColor:#035c63">
-                    <div class="gold">
-                        <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;  border: 3px solid #f2f2f2 ;"></div>
-                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
-                        <div class="text" style="color:#ffa64d;">Total data encoded: <b>__ENCODE__</b></div>
-                    </div>
-                </li>
+                <a style="cursor" href="/viewprofile?_id=__UID__" target="_blank">
+                    <li style="--cardColor:#035c63">
+                        <div class="gold">
+                            <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;  border: 3px solid #f2f2f2 ;"></div>
+                            <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
+                            <div class="text" style="color:#ffa64d;">Total data encoded: <b>__ENCODE__</b></div>
+                        </div>
+                    </li>
+                </a>
             </div>
             <div id="silver_rank" style="width: 100%;">
-                <li style="--cardColor:#035c63">
-                    <div class="silver">
-                        <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
-                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
-                        <div class="text" style="color:#ffa64d;">Total data encoded: <b>__ENCODE__</b></div>
-                    </div>
-                </li>
+                <a style="cursor" href="/viewprofile?_id=__UID__" target="_blank">
+                    <li style="--cardColor:#035c63">
+                        <div class="silver">
+                            <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
+                            <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
+                            <div class="text" style="color:#ffa64d;">Total data encoded: <b>__ENCODE__</b></div>
+                        </div>
+                    </li>
+                </a>
             </div>
             <div id="bronze_rank" style="width: 100%;">
-                <li style="--cardColor:#035c63">
-                    <div class="bronze">
-                        <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
-                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
-                        <div class="text" style="color:#ffa64d;">Total data encoded: <b>__ENCODE__</b></div>
-                    </div>
-                </li>
+                <a style="cursor" href="/viewprofile?_id=__UID__" target="_blank">
+                    <li style="--cardColor:#035c63">
+                        <div class="bronze">
+                            <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
+                            <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
+                            <div class="text" style="color:#ffa64d;">Total data encoded: <b>__ENCODE__</b></div>
+                        </div>
+                    </li>
+                </a>
             </div>
             <div id="default_rank" style="width: 100%;">
-                <li style="--cardColor:#035c63">
-                    <div class="content">
-                        <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
-                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
-                        <div class="text" style="color:#ffa64d;">Total data encoded: <b>__ENCODE__</b></div>
-                    </div>
-                </li>
+                <a style="cursor" href="/viewprofile?_id=__UID__" target="_blank">
+                    <li style="--cardColor:#035c63">
+                        <div class="content">
+                            <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
+                            <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
+                            <div class="text" style="color:#ffa64d;">Total data encoded: <b>__ENCODE__</b></div>
+                        </div>
+                    </li>
+                </a>
             </div>
         </div>
     </ol>
@@ -614,7 +622,7 @@ p {
                 pics = "/static/psalm_static/menu/img/profilepic.png";
             }
 
-            card_holder += temp_holder.replaceAll("__NAME__",data["name"]).replaceAll("__RCU__",data["rcu"]).replaceAll("__ENCODE__",money(data["over_all_encoded"])).replaceAll("__PIC__",pics)
+            card_holder += temp_holder.replaceAll("__NAME__",data["name"]).replaceAll("__RCU__",data["rcu"]).replaceAll("__ENCODE__",money(data["over_all_encoded"])).replaceAll("__PIC__",pics).replaceAll("__UID__",data["uid"])
             // card_holder += (`
             //     <li style="--cardColor:#035c63">
             //         <div class="content">
@@ -1040,7 +1048,7 @@ p {
     
                         </div>
 
-
+          </div>
                             
                      <div class="mb-5 wow fadeIn">
                     <div class="text-start mb-1-6 wow fadeIn">
@@ -1086,7 +1094,7 @@ p {
                     
     
                     
-                  </div>
+        
 
 
 

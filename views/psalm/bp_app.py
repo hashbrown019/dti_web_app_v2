@@ -141,22 +141,110 @@ def viewprofile():
 	if(is_on_session()):
 		sesh = db.select("SELECT `id`,`name`,`job`,`email`,`mobile`,`address`,`profilepic`,`rcu`,`pcu` FROM `users` WHERE `id`='{}' ;".format(request.args['_id']))[0]
 		print(sesh)
-		user_rank_=user_management.user_rankings(sesh['id'])
-		prof_a_inputed_data = user_rank_['profiling_a']['inputed']
-		prof_a_total_data = user_rank_['profiling_a']['total']
+		user_rank=user_management.user_rankings(sesh['id'])
+		prof_a_inputed_data = user_rank['profiling_a']['inputed']
+		prof_a_total_data = user_rank['profiling_a']['total']
 		try:
 			prof_a_percentage = (prof_a_inputed_data / prof_a_total_data) * 100
 		except Exception as e:
 			prof_a_percentage = 0
 
-		prof_c_inputed_data = user_rank_['prof_c']['inputed']
-		prof_c_total_data = user_rank_['prof_c']['total']
+		prof_b_inputed_data = user_rank['prof_b']['inputed']
+		prof_b_total_data = user_rank['prof_b']['total']
+
+		try:
+			prof_b_percentage = (prof_b_inputed_data / prof_b_total_data) * 100
+		except Exception as e:
+			prof_b_percentage = 0
+
+		prof_c_inputed_data = user_rank['prof_c']['inputed']
+		prof_c_total_data = user_rank['prof_c']['total']
 		try:
 			prof_c_percentage = (prof_c_inputed_data / prof_c_total_data) * 100
 		except Exception as e:
-			prof_c_percentage=0
+			prof_c_percentage = 0
 
-		return render_template("viewprofile.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),user_rank=user_rank_)
+		dcf1_inputed_data = user_rank['dcf1']['inputed']
+		dcf1_total_data = user_rank['dcf1']['total']
+
+		try:
+			dcf1_percentage = (dcf1_inputed_data / dcf1_total_data) * 100
+		except Exception as e:
+			dcf1_percentage = 0
+
+		dcf2_inputed_data = user_rank['dcf2']['inputed']
+		dcf2_total_data = user_rank['dcf2']['total']
+
+		try:
+			dcf2_percentage = (dcf2_inputed_data / dcf2_total_data) * 100
+		except Exception as e:
+			dcf2_percentage = 0
+
+		dcf3_inputed_data = user_rank['dcf3']['inputed']
+		dcf3_total_data = user_rank['dcf3']['total']
+
+		try:
+			dcf3_percentage = (dcf3_inputed_data / dcf3_total_data) * 100
+		except Exception as e:
+			dcf3_percentage = 0
+
+		dcf4_inputed_data = user_rank['dcf4']['inputed']
+		dcf4_total_data = user_rank['dcf4']['total']
+
+		try:
+			dcf4_percentage = (dcf4_inputed_data / dcf4_total_data) * 100
+		except Exception as e:
+			dcf4_percentage = 0
+
+		dcf5_inputed_data = user_rank['dcf5']['inputed']
+		dcf5_total_data = user_rank['dcf5']['total']
+
+		try:
+			dcf5_percentage = (dcf5_inputed_data / dcf5_total_data) * 100
+		except Exception as e:
+			dcf5_percentage = 0
+
+		dcf6_inputed_data = user_rank['dcf6']['inputed']
+		dcf6_total_data = user_rank['dcf6']['total']
+
+		try:
+			dcf6_percentage = (dcf6_inputed_data / dcf6_total_data) * 100
+		except Exception as e:
+			dcf6_percentage = 0
+
+		dcf7_inputed_data = user_rank['dcf7']['inputed']
+		dcf7_total_data = user_rank['dcf7']['total']
+
+		try:
+			dcf7_percentage = (dcf7_inputed_data / dcf7_total_data) * 100
+		except Exception as e:
+			dcf7_percentage = 0
+
+		dcf9_inputed_data = user_rank['dcf9']['inputed']
+		dcf9_total_data = user_rank['dcf9']['total']
+
+		try:
+			dcf9_percentage = (dcf9_inputed_data / dcf9_total_data) * 100
+		except Exception as e:
+			dcf9_percentage = 0
+
+		dcf10_inputed_data = user_rank['dcf10']['inputed']
+		dcf10_total_data = user_rank['dcf10']['total']
+
+		try:
+			dcf10_percentage = (dcf10_inputed_data / dcf10_total_data) * 100
+		except Exception as e:
+			dcf10_percentage = 0
+
+		dcf11_inputed_data = user_rank['dcf11']['inputed']
+		dcf11_total_data = user_rank['dcf11']['total']
+
+		try:
+			dcf11_percentage = (dcf11_inputed_data / dcf11_total_data) * 100
+		except Exception as e:
+			dcf11_percentage = 0
+
+		return render_template("viewprofile.html",user_data=sesh,prof_a_percentage = round(prof_a_percentage, 3),prof_b_percentage = round(prof_b_percentage, 3),prof_c_percentage = round(prof_c_percentage, 3),dcf1_percentage = round(dcf1_percentage, 3),dcf2_percentage = round(dcf2_percentage, 3),dcf3_percentage = round(dcf3_percentage, 3),dcf4_percentage = round(dcf4_percentage, 3),dcf5_percentage = round(dcf5_percentage, 3),dcf6_percentage = round(dcf6_percentage, 3),dcf7_percentage = round(dcf7_percentage, 3),dcf9_percentage = round(dcf9_percentage, 3),dcf10_percentage = round(dcf10_percentage, 3),dcf11_percentage = round(dcf11_percentage, 3),user_rank=user_rank)
 	else:
 		return redirect("/login?force_url=1")
 
