@@ -146,7 +146,7 @@ class user_management:
 	@c.login_auth_web()
 	def all_ranks_users():
 		user_rankings = []
-		all_users = rapid_mysql.select("SELECT `id`, `name`, `job` FROM `users` WHERE `status` != 'halt' ;");
+		all_users = rapid_mysql.select("SELECT `id`, `name`, `job` FROM `users` WHERE `status` = 'active' ;");
 		# for user in all_users :
 		# 	user_rankings.append( user_management.count_all(user['id']) )
 		# 	# user_rankings[user['name']] = user_management.count_all(user['id'])[0]["over_all_encoded"]
