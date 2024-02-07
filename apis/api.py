@@ -146,7 +146,7 @@ class user_management:
 	@c.login_auth_web()
 	def all_ranks_users():
 		user_rankings = []
-		all_users = rapid_mysql.select("SELECT `id`, `name`, `job` FROM `users` WHERE `status` != 'halt' ;");
+		all_users = rapid_mysql.select("SELECT `id`, `name`, `job` FROM `users` WHERE `status` = 'active' ;");
 		# for user in all_users :
 		# 	user_rankings.append( user_management.count_all(user['id']) )
 		# 	# user_rankings[user['name']] = user_management.count_all(user['id'])[0]["over_all_encoded"]
@@ -159,27 +159,27 @@ class user_management:
 	def count_all(ids):
 		sql = (f'''
 			
-				(SELECT
-					(SELECT `users`.`id` FROM `users` WHERE `users`.`id` = {ids}) as 'uid' ,
-					(SELECT `users`.`name` FROM `users` WHERE `users`.`id` = {ids}) as 'name' ,
-					(SELECT `users`.`profilepic` FROM `users` WHERE `users`.`id` = {ids}) as 'pic' ,
-					(SELECT `users`.`rcu` FROM `users` WHERE `users`.`id` = {ids}) as 'rcu' ,
-					(SELECT COUNT(*) FROM `excel_import_form_a` WHERE `excel_import_form_a`.`user_id` = {ids}) + 
-					(SELECT COUNT(*) FROM `form_b` WHERE `form_b`.`uploaded_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `form_c` WHERE `form_c`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_bdsp_reg` WHERE `dcf_bdsp_reg`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_capacity_building` WHERE `dcf_capacity_building`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_enablers_activity` WHERE `dcf_enablers_activity`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_implementing_unit` WHERE `dcf_implementing_unit`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_matching_grant` WHERE `dcf_matching_grant`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_negosyo_center` WHERE `dcf_negosyo_center`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_prep_review_aprv_status` WHERE `dcf_prep_review_aprv_status`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_product_development` WHERE `dcf_product_development`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `dcf_trade_promotion` WHERE `dcf_trade_promotion`.`upload_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `webrep_articles` WHERE `webrep_articles`.`USER_ID` = {ids}) + 
-					(SELECT COUNT(*) FROM `webrep_forum_comments` WHERE `webrep_forum_comments`.`comment_by` = {ids}) + 
-					(SELECT COUNT(*) FROM `webrep_uploads` WHERE `webrep_uploads`.`USER_ID` = {ids}) as 'over_all_encoded'
-				)
+			(SELECT
+				(SELECT `users`.`id` FROM `users` WHERE `users`.`id` = {ids}) as 'uid' ,
+				(SELECT `users`.`name` FROM `users` WHERE `users`.`id` = {ids}) as 'name' ,
+				(SELECT `users`.`profilepic` FROM `users` WHERE `users`.`id` = {ids}) as 'pic' ,
+				(SELECT `users`.`rcu` FROM `users` WHERE `users`.`id` = {ids}) as 'rcu' ,
+				(SELECT COUNT(*) FROM `excel_import_form_a` WHERE `excel_import_form_a`.`user_id` = {ids}) + 
+				(SELECT COUNT(*) FROM `form_b` WHERE `form_b`.`uploaded_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `form_c` WHERE `form_c`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_bdsp_reg` WHERE `dcf_bdsp_reg`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_capacity_building` WHERE `dcf_capacity_building`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_enablers_activity` WHERE `dcf_enablers_activity`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_implementing_unit` WHERE `dcf_implementing_unit`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_matching_grant` WHERE `dcf_matching_grant`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_negosyo_center` WHERE `dcf_negosyo_center`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_prep_review_aprv_status` WHERE `dcf_prep_review_aprv_status`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_product_development` WHERE `dcf_product_development`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_trade_promotion` WHERE `dcf_trade_promotion`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `webrep_articles` WHERE `webrep_articles`.`USER_ID` = {ids}) + 
+				(SELECT COUNT(*) FROM `webrep_forum_comments` WHERE `webrep_forum_comments`.`comment_by` = {ids}) + 
+			(SELECT COUNT(*) FROM `webrep_uploads` WHERE `webrep_uploads`.`USER_ID` = {ids}) as 'over_all_encoded'
+			)
 		''')
 		# return sql
 		return rapid_mysql.select(sql)[0]
