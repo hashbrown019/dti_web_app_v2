@@ -526,12 +526,12 @@ p {
       <div class="card-body p-1-9 p-xl-5">
     <h1 class="h4 mb-0 texttheme font-weight-bold" >LEADERBOARDS</h1>
     <ol class="olcards" id="rank_card_holder">
-        <div style="display:hidden">
+        <div style="display:none">
             <div id="gold_rank">
                 <li style="--cardColor:#035c63">
                     <div class="gold">
                         <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;  border: 3px solid #f2f2f2 ;"></div>
-                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;">RCU: __RCU__</small></div>
+                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
                         <div class="text" style="color:#ffa64d;">Total data encoded: __ENCODE__</div>
                     </div>
                 </li>
@@ -540,7 +540,7 @@ p {
                 <li style="--cardColor:#035c63">
                     <div class="silver">
                         <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
-                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;">RCU: __RCU__</small></div>
+                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
                         <div class="text" style="color:#ffa64d;">Total data encoded: __ENCODE__</div>
                     </div>
                 </li>
@@ -549,7 +549,7 @@ p {
                 <li style="--cardColor:#035c63">
                     <div class="bronze">
                         <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px; border: 3px solid #f2f2f2 ;"></div>
-                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;">RCU: __RCU__</small></div>
+                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
                         <div class="text" style="color:#ffa64d;">Total data encoded: __ENCODE__</div>
                     </div>
                 </li>
@@ -558,7 +558,7 @@ p {
                 <li style="--cardColor:#035c63">
                     <div class="content">
                         <div class="icon"><img id="prof_imgs" src="__PIC__" class="fadeIn rounded-circle" style="height: 50px; width: 50px;"></div>
-                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;">RCU: __RCU__</small></div>
+                        <div class="title">__NAME__ <small class="text-light" style="opacity: 60%;"> __RCU__</small></div>
                         <div class="text" style="color:#ffa64d;">Total data encoded: __ENCODE__</div>
                     </div>
                 </li>
@@ -640,7 +640,7 @@ p {
                 pics = "/static/psalm_static/menu/img/profilepic.png";
             }
 
-            card_holder += temp_holder.replaceAll("__NAME__",data["name"]).replaceAll("__RCU__",data["rcu"]).replaceAll("__ENCODE__",data["over_all_encoded"]).replaceAll("__PIC__",pics)
+            card_holder += temp_holder.replaceAll("__NAME__",data["name"]).replaceAll("__RCU__",data["rcu"]).replaceAll("__ENCODE__",money(data["over_all_encoded"])).replaceAll("__PIC__",pics)
             // card_holder += (`
             //     <li style="--cardColor:#035c63">
             //         <div class="content">
