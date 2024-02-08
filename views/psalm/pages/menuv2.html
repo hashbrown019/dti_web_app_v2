@@ -546,6 +546,9 @@ p {
             </div>
         </div>
     </ol>
+    <div id="ur_rank">
+        
+    </div>
 </div>
 </div>
 
@@ -603,6 +606,7 @@ p {
         for (var i = 0; i < SORTED_USER_ARR.length; i++) {
             var data = (SORTED_USER_ARR[i])
             var temp_holder = ""
+                println(parseInt(data["uid"]))
             if(i==0){
                 temp_holder = $ID("gold_rank").innerHTML
             }
@@ -612,14 +616,14 @@ p {
             else if(i==2){
                 temp_holder = $ID("bronze_rank").innerHTML
             }
-            else if({{user_data['id']}}==parseInt(data["uid"])){
-                println($ID("bronze_rank").innerHTML)
-                temp_holder = "<br>Your Standing ["+i+1+"] <hr>" + ($ID("bronze_rank").innerHTML.replace("6",i))
+            else if(parseInt(data["uid"])=={{user_data['id']}}){
+                temp_holder = "<hr>"+$ID("bronze_rank").innerHTML
             }
-            else if(i>4){
-                continue
+            else if(i>5){
+                $ID("ur_rank").innerHTML = "<span style='display:none'>"+$ID("bronze_rank").querySelector("div").innerHTML+"</span>"
             }
             else{
+                temp_holder = $ID("bronze_rank").innerHTML
                 temp_holder = $ID("default_rank").innerHTML
             }
 
