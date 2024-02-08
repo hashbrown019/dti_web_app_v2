@@ -600,7 +600,7 @@ p {
         }
         // $ID("rank_card_holder").innerHTML = ""
         var card_holder =""
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < SORTED_USER_ARR.length; i++) {
             var data = (SORTED_USER_ARR[i])
             var temp_holder = ""
             if(i==0){
@@ -612,8 +612,14 @@ p {
             else if(i==2){
                 temp_holder = $ID("bronze_rank").innerHTML
             }
+            else if({{user_data['id']}}==parseInt(data["uid"])){
+                println($ID("bronze_rank").innerHTML)
+                temp_holder = "<br>Your Standing ["+i+1+"] <hr>" + ($ID("bronze_rank").innerHTML.replace("6",i))
+            }
+            else if(i>4){
+                continue
+            }
             else{
-                temp_holder = $ID("bronze_rank").innerHTML
                 temp_holder = $ID("default_rank").innerHTML
             }
 
