@@ -28,6 +28,7 @@ data_clean = d_c(app,rapid_mysql,session)
 # app['sample_decorator'] = sample_decorator
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 
+
 class _main:
 	def __init__(self, arg):
 		print(" * main loading done")
