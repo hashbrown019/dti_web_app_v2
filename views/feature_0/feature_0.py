@@ -63,6 +63,8 @@ class _main:
 		Filter.position_data_filter() # initialize restrictions
 		return render_template("feature_0_home.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
 
+
+
 	@c.login_auth_web()
 	@app.route("/settings",methods=["POST","GET"])
 	def settings():
