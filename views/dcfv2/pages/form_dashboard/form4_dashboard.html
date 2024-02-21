@@ -12,18 +12,57 @@
 <div class="right_col" role="main">
   <!-- top tiles -->
   <div class="row" style="display: inline-block;" >
-	  <div class="tile_count">
-	   <div class="col-md-2 col-sm-4  tile_stats_count">
-		  <span class="count_top"><i class="fa fa-users"></i> Total Entries</span>
-		  <div class="count _money_tag">{{dcf_form4}}</div>
-		  <span style="font-size: 10px;" class="count_bottom">Total # of Entries</span>
 
-	  </div>
-	  <div class="col-md-2 col-sm-4  tile_stats_count">
-		  <span class="count_top"><i class="fa fa-user"></i> Total Male</span>
-		  <div class="count _money_tag">{{dcf_form4male[0]['total_male4']}} </div>
-		  <span style="font-size: 10px;" class="count_bottom">Total # of Participants</span>
-	  </div>
+
+			<div class="top_tiles">
+              <div class="animated flipInY col-lg-2 col-md-3 col-sm-6 ">
+                <div class="tile-stats">
+                  <div class="count _money_tag">{{dcf_form4}}</div>
+                  <h3>Total Entries</h3>
+                  <p>Total # of Entries.</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+                <div class="tile-stats">
+                  <div class="count _money_tag">{{dcf_form4male[0]['total_male4']}}</div>
+                  <h3>Total Male</h3>
+                  <p>Total # of Participants by Sex.</p>
+
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+                <div class="tile-stats">
+                  <div class="count _money_tag">{{dcf_form4female[0]['total_female4']}} </div>
+                  <h3>Total Female</h3>
+                  <p>Total # of Participants by Sex.</p>
+
+                </div>
+              </div>
+
+              <div class="animated flipInY col-lg-4 col-md-3 col-sm-6 ">
+                <div class="tile-stats">
+                  <div class="count _money_tag">{{form4beforedip[0]['totalbeforedip']}}</div>
+                  <h3>Conducted before DIP approval</h3>
+                  <p>DIP-approved alignment.</p>
+
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-4 col-md-3 col-sm-6 ">
+                <div class="tile-stats">
+                  <div class="count _money_tag">{{form4afterdip[0]['totalafterdip']}} </div>
+                  <h3>Conducted after DIP approval</h3>
+                  <p>DIP-approved alignment.</p>
+
+                </div>
+              </div>
+         
+              
+            </div>
+
+
+<!-- 	  <div class="tile_count">
+	   
+	 
 
 	  <div class="col-md-2 col-sm-4  tile_stats_count">
 		  <span class="count_top"><i class="fa fa-user"></i> Total IP</span>
@@ -52,11 +91,6 @@
 	  </div>
 
 
-	  <div class="col-md-2 col-sm-4  tile_stats_count">
-		  <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
-		  <div class="count _money_tag">{{dcf_form4female[0]['total_female4']}} </div>
-		  <span style="font-size: 10px;" class="count_bottom">Total # of Participants</span>
-	  </div>
 
 	  <div class="col-md-2 col-sm-4  tile_stats_count">
 		  <span class="count_top"><i class="fa fa-user"></i> Total IP</span>
@@ -85,20 +119,10 @@
 	  </div>
 
 
-	  <div class="col-md-2 col-sm-4  tile_stats_count">
-		  <span class="count_top"> Conducted before DIP approval</span>
-		  <div class="count _money_tag">{{form4beforedip[0]['totalbeforedip']}}</div>
-		  <span style="font-size: 10px;" class="count_bottom">DIP-approved alignment</span>
-	  </div>
-	  
-	  <div class="col-md-2 col-sm-4  tile_stats_count">
-		  <span class="count_top"> Conducted after DIP approval</span>
-		  <div class="count _money_tag">{{form4afterdip[0]['totalafterdip']}}</div>
-		  <span style="font-size: 10px;" class="count_bottom">DIP-approved alignment</span>
-	  </div>
+
 	  
 	  
-  </div>
+  </div> -->
 </div>
 <!-- /top tiles -->
 
@@ -106,6 +130,35 @@
 
 
 <div class="row">
+
+	 <div class="col-md-6 col-sm-6  ">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Total # of Participants by Sex <small> per Sector</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                          </div>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="canvasRadar"></canvas>
+                    <div style="text-align: center;">
+				<strong><p>Male Youth: {{dcf_form4maleyouth[0]['total_male4youth']}} &nbsp;&nbsp;&nbsp;Male PWD: {{dcf_form4malepwd[0]['total_male4pwd']}}&nbsp;&nbsp;&nbsp; Male SC: {{dcf_form4malesc[0]['total_male4sc']}}&nbsp;&nbsp;&nbsp; Male IP: {{dcf_form4maleip[0]['total_male4ip']}}</p>
+				<p>Female Youth: {{dcf_form4femaleyouth[0]['total_female4youth']}} &nbsp;&nbsp;&nbsp;Female PWD: {{dcf_form4femalepwd[0]['total_female4pwd']}}&nbsp;&nbsp;&nbsp; Female SC: {{dcf_form4femalesc[0]['total_female4sc']}}&nbsp;&nbsp;&nbsp; Female IP: {{dcf_form4femaleip[0]['total_female4ip']}}</p></strong>
+				</div>
+                  </div>
+                </div>
+              </div>
 
 
 	
@@ -349,6 +402,39 @@
 					});
 
 				}
+
+				  if ($('#canvasRadar').length) {
+
+        var ctx = document.getElementById("canvasRadar");
+        var data = {
+            labels: ["Youth", "PWD", "SC", "IP"],
+            datasets: [{
+                label: "Total of # of Male",
+                backgroundColor: "rgba(3, 88, 106, 0.2)",
+                borderColor: "rgba(3, 88, 106, 0.80)",
+                pointBorderColor: "rgba(3, 88, 106, 0.80)",
+                pointBackgroundColor: "rgba(3, 88, 106, 0.80)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                data: [{{dcf_form4maleyouth[0]['total_male4youth']}}, {{dcf_form4malepwd[0]['total_male4pwd']}}, {{dcf_form4malesc[0]['total_male4sc']}}, {{dcf_form4maleip[0]['total_male4ip']}}]
+            }, {
+                label: "Total of # of Female",
+                backgroundColor: "rgba(38, 185, 154, 0.2)",
+                borderColor: "rgba(38, 185, 154, 0.85)",
+                pointColor: "rgba(38, 185, 154, 0.85)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [{{dcf_form4maleyouth[0]['total_female4youth']}}, {{dcf_form4femalepwd[0]['total_female4pwd']}}, {{dcf_form4femalesc[0]['total_female4sc']}}, {{dcf_form4femaleip[0]['total_female4ip']}}]
+            }]
+        };
+
+        var canvasRadar = new Chart(ctx, {
+            type: 'radar',
+            data: data,
+        });
+
+    }
 
 
 				if ($('#mybarChart2').length) {

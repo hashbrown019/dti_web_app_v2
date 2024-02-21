@@ -437,6 +437,7 @@ def displayform():
     dcf_form11female=db.select("SELECT SUM(form_11_female) AS total_female11 FROM dcf_access_financing {};".format(position_data_filter()))
     dcf_form11male=db.select("SELECT SUM(form_11_male) AS total_male11 FROM dcf_access_financing {};".format(position_data_filter()))
 
+    dcf_form6actualbudget=db.select("SELECT SUM(form_6_rapid_actual_budget) AS total_actbug6 FROM dcf_product_development {};".format(position_data_filter()))
 
 
 
@@ -890,7 +891,9 @@ def displayform():
         'dcf_form11pwd':dcf_form11pwd,
         'dcf_form11sc':dcf_form11sc,
         'dcf_form11female':dcf_form11female,
-        'dcf_form11male':dcf_form11male
+        'dcf_form11male':dcf_form11male,
+        'dcf_form6actualbudget':dcf_form6actualbudget
+
 
     }
 
