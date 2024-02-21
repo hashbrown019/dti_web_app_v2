@@ -935,6 +935,20 @@
 		}
 	}
 
+	    var x_inputsss_ = $CLASS('x-input')
+	for (let index = 0; index < x_inputss_.length; index++) {
+		if (x_inputss_[index].id != 'form_1_y') {
+			x_inputss_[index].addEventListener('keyup', function (ee) {
+				var nums1 = parseFloat($ID("form_1_total_matching_grant").value); 
+
+				if (isNaN(nums1)) { nums1 = 0 }
+
+				$ID('form_1_y').value = nums1
+
+			})
+		}
+	}
+
 	// ===============================================================================
 
 	$(document).ready(function(){
