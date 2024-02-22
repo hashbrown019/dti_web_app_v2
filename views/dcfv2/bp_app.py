@@ -163,11 +163,15 @@ def imported_file(form_):
 	print(form_)
 	num_form = form_.split("m")[0] + "m " +form_.split("m")[1].replace("_","")
 	form_ = _FORM_NAME[form_]
+	if (session["USER_DATA"][0]['job']=="Super Admin"):
+		is_admin = "1"
+	else:
+		is_admin = f'''{form_}.upload_by = {session["USER_DATA"][0]['id']}'''
 	SQL =f'''
 	SELECT {form_}.filename, COUNT({form_}.filename) AS _COUNT, users.name , {form_}.date_created
 	FROM `{form_}`
 	JOIN `users` ON {form_}.upload_by = users.id
-	WHERE {form_}.upload_by = {session["USER_DATA"][0]['id']} AND {form_}.filename != " "
+	WHERE {is_admin} AND {form_}.filename != " "
 	GROUP BY {form_}.filename
 	ORDER BY {form_}.date_created DESC;
 	'''
