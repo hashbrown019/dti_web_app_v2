@@ -94,8 +94,6 @@ DATA_CLEAN_FORM_A_REF = {
 	},
 }
 
-
-
 # ================================
 global __STORE ;
 __STORE = {} ;

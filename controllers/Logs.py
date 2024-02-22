@@ -22,7 +22,7 @@ def ACCESS_LOGS(addr, endpoint, session, agent):
 
 	date_ar = str(datetime.today()).split(" ")[0].split("-")
 	date_file_name = "{}_{}".format(date_ar[0],date_ar[1])
-	print(f" * Logs stored in file : {date_file_name}")
+	# print(f" * Logs stored in file : {date_file_name}")
 	DATE_NOW = str(str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_"))
 	strs = "{}||{}||{}||{}||{}||{}||{}||{}||{}\n".format(DATE_NOW, in_session, user_id,user_name, uname, addr, mac_addr,endpoint,agent)
 	file_object = open(c.RECORDS+'/objects/logs/'+date_file_name+'.logs', 'a')

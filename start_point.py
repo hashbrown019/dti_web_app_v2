@@ -105,13 +105,12 @@ def after_request_func(response):
 	return response
 
 	
-# - Dutchmil strawberry:
 # SECRET RECIPEE COCKTAIL
+# - Dutchmil strawberry:
 # - Zafiro Premium GIN
 # - COLD- 
 
 # BE YOURSELF, TRUST UR GUTS 
-
 
 
 def format_timestamp(timestamp):
