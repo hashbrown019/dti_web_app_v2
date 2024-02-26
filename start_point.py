@@ -58,20 +58,6 @@ app.register_blueprint(dcfv2.app);
 app.register_blueprint(fmi.app);
 app.register_blueprint(test.app);
 
-print(" * MIS Stat")
-
-def add_all_headers(temp):
-	r = make_response(render_template(temp))
-	r.headers.set('Strict-Transport-Security', "max-age=31536000 ")
-	r.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'")
-	r.headers.set('X-Frame-Options', "DENY")
-	r.headers.set('X-Content-Type-Options', "nosniff")
-	r.headers.set('Referrer-Policy', "same-origin'")
-	r.headers.set('Permissions-Policy', "geolocation=(self 'none'), camera=(), microphone=()")
-	return r
-
-render_template = add_all_headers
-
 
 @app.route("/")
 def index():
@@ -114,6 +100,13 @@ def after_request_func(response):
 			# print(request.headers)
 	# if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	# print(response.get_json())
+	# r = make_response(render_template(temp))
+	response.headers.set('Strict-Transport-Security', "max-age=31536000 ")
+	response.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'")
+	response.headers.set('X-Frame-Options', "DENY")
+	response.headers.set('X-Content-Type-Options', "nosniff")
+	response.headers.set('Referrer-Policy', "same-origin'")
+	response.headers.set('Permissions-Policy', "geolocation=(self 'none'), camera=(), microphone=()")
 	return response
 
 	
