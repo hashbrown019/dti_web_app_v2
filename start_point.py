@@ -1,6 +1,6 @@
 import Configurations as c
 
-from flask import Flask, session, jsonify, request, redirect, Blueprint
+from flask import Flask, session, jsonify, request, redirect, Blueprint, make_response, render_template
 
 # ======FOR_LIGIN_AUTH==============
 # @c.login_auth_web()
@@ -59,6 +59,18 @@ app.register_blueprint(fmi.app);
 app.register_blueprint(test.app);
 
 print(" * MIS Stat")
+
+def add_all_headers(temp):
+	r = make_response(render_template(temp))
+	r.headers.set('Strict-Transport-Security', "max-age=31536000 ")
+	r.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'")
+	r.headers.set('X-Frame-Options', "DENY")
+	r.headers.set('X-Content-Type-Options', "nosniff")
+	r.headers.set('Referrer-Policy', "same-origin'")
+	r.headers.set('Permissions-Policy', "geolocation=(self 'none'), camera=(), microphone=()")
+	return r
+
+render_template = add_all_headers
 
 
 @app.route("/")

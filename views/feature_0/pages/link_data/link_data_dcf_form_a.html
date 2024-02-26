@@ -114,17 +114,17 @@
 										<hr>
 										<b class="x-large">For Trade Fairs</b><br>
 										<b>Name Of Prodduct</b>
-										<input id="farmer_primary_crop" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										<input id="trade_fair_prod_name" class="trade_fair f_clear x-round-large  x-input x-border" type="" name="">
 										<b>Buyer</b>
-										<input id="farmer_primary_crop" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										<input id="trade_fair_buyer" class="trade_fair f_clear x-round-large x-input x-border" type="" name="">
 										<b>Cash Sales</b>
-										<input id="farmer_primary_crop" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										<input id="trade_fair_cash_sales" class="trade_fair f_clear x-round-large x-input x-border" type="" name="">
 										<b>Book Sales</b>
-										<input id="farmer_primary_crop" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										<input id="trade_fair_book_sales" class="trade_fair f_clear x-round-large x-input x-border" type="" name="">
 										<b>Under Nego</b>
-										<input id="farmer_primary_crop" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										<input id="trade_fair_under_nego" class="trade_fair f_clear x-round-large x-input x-border" type="" name="">
 										<b>Sales</b>
-										<input id="farmer_primary_crop" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
+										<input id="trade_fair_sales" class="trade_fair f_clear x-round-large x-input x-border" type="" name="">
 									</div>
 								</div>
 								<div class="x-col l6 m6 x-container x-padding x-round-large x-pale-green">
@@ -354,13 +354,15 @@
 			function add_profile(){
 				var sectoral = multiple_ch($ID("sectoral"))
 				var profile_added=input_to_json('f_profile')
+				var trade_fair = JSON.stringify(input_to_json('trade_fair'))
 				if(profile_added["link_to_id"]=='' || profile_added["link_to_id"]==' ' || profile_added["link_to_id"]== undefined){
-					profile_added["not_recorded"] = input_to_json('f_profile')
+					profile_added["not_recorded"] = JSON.stringify(input_to_json('f_profile'))
 				}
 				profile_added['link_from_id'] = URL_ARGS["h"]
 				profile_added['type'] = $ID('type').value
 				profile_added['db_table'] = URL_ARGS["i"]
 				profile_added['sectoral'] = sectoral
+				profile_added['data'] = trade_fair
 				delete profile_added['id']
 				println(profile_added)
 				add_entry_benef(profile_added)
