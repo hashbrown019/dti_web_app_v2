@@ -711,7 +711,6 @@
 				var res = JSON.parse(r)
 				ls_user_ID = res
 				for (var i = 0; i < res.length; i++) {
-					
 					$send({
 						action : "/api/user/all_ranks/"+res[i]["id"],
 						method : POST,
@@ -750,7 +749,7 @@
 		var card_holder ="";var ur_rank_card = ""
 		for (var i = 0; i < SORTED_USER_ARR.length; i++) {
 			var data = (SORTED_USER_ARR[i])
-			var temp_holder = ""
+			var temp_holder = "";
 			var pics = "/api/user_pic/"+data["pic"];
 			if(data["pic"] == "" || data["pic"] == " " || data["pic"] == undefined){
 				pics = "/static/psalm_static/menu/img/profilepic.png";
