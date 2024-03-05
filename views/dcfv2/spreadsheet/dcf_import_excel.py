@@ -237,35 +237,36 @@ def excel_upload_open3(path):
 		return "done:Sheet Error"
 	for row in data[5:]:
 		upload_by = session["USER_DATA"][0]['id']
-		form_3_types_of_bdsp = row[0]
-		form_3_contact_person = row[1]
-		form_3_sex = row[2]
-		form_3_office_addr = row[3]
-		form_3_email = row[4]
-		form_3_breif_description = row[5]
-		phone = row[6]
-		form_3_choices = row[7]
-		form_3_preferred_region = row[8]
-		form_3_preferred_province = row[9]
-		form_3_name = row[10]
-		form_3_education = row[11]
-		form_3_expertise = row[12]
-		form_3_prior_rapid_engagements = row[13]
-		form_3_date_registered = row[14]
-		form_3_rapid_implementing_unit = row[15]
-		form_3_nature_engagements = row[16]
-		form_3_suppliers_evaluation = row[17]
-		form_3_other_engagement_outside_rapid = row[18]
-		form_3_lecture_training_seminar = row[19]
-		form_3_training_materials = row[20]
-		form_3_organize_pool = "row[21]"
-		form_3_demand_basis = "row[22]"
-		form_3_extension_service_facilitation = "row[23]"
-		form_3_philgeps_registered = "row[24]"                                                                                                          
+		form_3_orgfirm = row[0]
+		form_3_types_of_bdsp = row[1]
+		form_3_contact_person = row[2]
+		form_3_sex = row[3]
+		form_3_office_addr = row[4]
+		form_3_email = row[5]
+		form_3_breif_description = row[6]
+		phone = row[7]
+		form_3_choices = row[8]
+		form_3_preferred_region = row[9]
+		form_3_preferred_province = row[10]
+		form_3_name = row[11]
+		form_3_education = row[12]
+		form_3_expertise = row[13]
+		form_3_prior_rapid_engagements = row[14]
+		form_3_date_registered = row[15]
+		form_3_rapid_implementing_unit = row[16]
+		form_3_nature_engagements = row[17]
+		form_3_suppliers_evaluation = row[18]
+		form_3_other_engagement_outside_rapid = row[19]
+		form_3_lecture_training_seminar = row[20]
+		form_3_training_materials = row[21]
+		form_3_organize_pool = "row[22]"
+		form_3_demand_basis = "row[23]"
+		form_3_extension_service_facilitation = "row[24]"
+		form_3_philgeps_registered = "row[25]"                                                                                                          
 		filename = UPLOAD_NAME
 
-		querycsv = ("INSERT INTO dcf_bdsp_reg ( upload_by,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
-		format(upload_by,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename))
+		querycsv = ("INSERT INTO dcf_bdsp_reg ( upload_by,form_3_orgfirm,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by,form_3_orgfirm,form_3_types_of_bdsp,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename))
 		insert=db.do(querycsv)
 		print(insert)
 		print("===============================================")

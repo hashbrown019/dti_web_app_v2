@@ -716,6 +716,7 @@ def dcfexport_data():
 			def form3export():
 				if request.method == "POST":
 					query= db.select('''SELECT dcf_bdsp_reg.id,
+					dcf_bdsp_reg.form_3_orgfirm,
 					dcf_bdsp_reg.form_3_types_of_bdsp,
 					dcf_bdsp_reg.form_3_contact_person,
 					dcf_bdsp_reg.form_3_sex,
@@ -750,7 +751,7 @@ def dcfexport_data():
 					df = df.astype(str)
 					writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form3_exported_file.xlsx') 
 					df.to_excel(writer, sheet_name='dcf_form3_exported_file', index=False)
-					new_column_names = 'ID,Types of BDSP, Contact Person, Sex, Office/Main Address, Email Address, Brief Description of Company Institution and/or Consultant Background, Tel/Cellphone number,Field of Expertise, Preferred Region to work in for RAPID, Preferred Province to work in for RAPID, Name, Education, Expertise, Prior RAPID Engagements?, RAPID Implementing Unit, Type/Nature of Engagements, Suppliers Evaluation (Refer to ISO/Procurement ratings),	Other engagement outside RAPID, Willing to conduct on-line lecture/training/seminar?, Willing to develop modular video training materials?, Willing to join other providers as organize pool of service providers?, Willing to be a mentor/coach on demand basis?, Willing to be part of long-term engagement for extension service facilitation?, Philgeps Registered,Date Created, Date Modified, Uploaded by'
+					new_column_names = 'ID, Name of BDSP,Types of BDSP, Contact Person, Sex, Office/Main Address, Email Address, Brief Description of Company Institution and/or Consultant Background, Tel/Cellphone number,Field of Expertise, Preferred Region to work in for RAPID, Preferred Province to work in for RAPID, Name, Education, Expertise, Prior RAPID Engagements?, RAPID Implementing Unit, Type/Nature of Engagements, Suppliers Evaluation (Refer to ISO/Procurement ratings),	Other engagement outside RAPID, Willing to conduct on-line lecture/training/seminar?, Willing to develop modular video training materials?, Willing to join other providers as organize pool of service providers?, Willing to be a mentor/coach on demand basis?, Willing to be part of long-term engagement for extension service facilitation?, Philgeps Registered,Date Created, Date Modified, Uploaded by'
 					new_column_names_list = new_column_names.split(',')
 					df.columns = new_column_names_list
 
