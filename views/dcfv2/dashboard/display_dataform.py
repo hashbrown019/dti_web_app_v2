@@ -428,6 +428,10 @@ def displayform():
     dcf_form9policy=db.select("SELECT COUNT(form_9_type_of_training) AS totalpolicy9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Policy issuances';".format(position_data_filter()))
     dcf_form9budg=db.select("SELECT SUM(form_9_rapid_actual_budget) as totalact9 FROM dcf_enablers_activity {};".format(position_data_filter()))
 
+    dcf_form10female=db.select("SELECT SUM(form_10_sex_female) AS total_female10 FROM dcf_negosyo_center {};".format(position_data_filter()))
+    dcf_form10male=db.select("SELECT SUM(form_10_sex_male) AS total_male10 FROM dcf_negosyo_center {};".format(position_data_filter()))
+
+
 
     dcf_form11ip=db.select("SELECT SUM(form_11_ip) AS total_ip11 FROM dcf_access_financing {};".format(position_data_filter()))
     dcf_form11youth=db.select("SELECT SUM(form_11_youth) AS total_youth11 FROM dcf_access_financing {};".format(position_data_filter()))
@@ -488,6 +492,24 @@ def displayform():
         if(_com11 not in over_all_commodity_count11):
             over_all_commodity_count11[_com11 ] = 0
         over_all_commodity_count11[_com11 ] += 1
+
+
+
+####################FORM10##################################################
+
+    dips_list10 = form10_datatable
+    over_all_commodity_count10 = {}
+    for index in range(len(dips_list10)):
+        DIP11 = dips_list10[index]
+        _comm_rule10 = ["cacao","coconut","coffee","pfn"]
+        _com10 = DIP11['form_10_commodity']
+        if(_com10.lower() not in _comm_rule10):
+            _com10 = "Others"
+        if(_com10 not in over_all_commodity_count10):
+            over_all_commodity_count10[_com10 ] = 0
+        over_all_commodity_count10[_com10 ] += 1
+
+
 
 
 
@@ -742,6 +764,7 @@ def displayform():
         'over_all_commodity_count4':over_all_commodity_count4,
         'over_all_commodity_count5':over_all_commodity_count5,
         'over_all_commodity_count7':over_all_commodity_count7,
+        'over_all_commodity_count10':over_all_commodity_count10,
         'over_all_commodity_count11':over_all_commodity_count11,
         'typebdsp':typebdsp,
         'form1_data_sep':form1_data_sep,
@@ -860,6 +883,8 @@ def displayform():
         'dcf_form4femalesc':dcf_form4femalesc,
         'dcf_form7msme':dcf_form7msme,
         'dcf_form7fo':dcf_form7fo,
+        'dcf_form10female':dcf_form10female,
+        'dcf_form10male':dcf_form10male,
         'dcf_form7farmer':dcf_form7farmer,
         'dcf_form7female':dcf_form7female,
         'dcf_form7male':dcf_form7male,

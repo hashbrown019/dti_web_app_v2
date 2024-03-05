@@ -15,8 +15,7 @@
         <div class="row">
     <div class="col-md-12 col-sm-12 x-card  x-light-grey">
 		<center>
-			<h2 class="text-white x-container x-padding" style="background-color: #007399;">FORM 10 - NEGOSYO CENTER
-				TRACKER</h2>
+			<h2 class="text-white x-container x-padding" style="background-color: #007399;">FORM 10 - NEGOSYO CENTER TRACKER</h2>
 			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
 
 		</center>
@@ -113,13 +112,24 @@
 
 					<!---sex--->
 					<td><input class="FORM10_FIELD t1 x-light-grey x-input" id="form_10_sex_male" name="form_10_sex_male"
-							type="text"></td>
+							type="number"></td>
 					<td><input class="FORM10_FIELD t1 x-light-grey x-input" id="form_10_sex_female" name="form_10_sex_female"
-							type="text"></td>
+							type="number"></td>
 
 					<!---com--->
-					<td><input class="FORM10_FIELD t1 x-light-grey x-input" id="form_10_commodity" name="form_10_commodity"
-							type="text"></td>
+					<td><!-- <input class="FORM10_FIELD t1 x-light-grey x-input" id="form_10_commodity" name="form_10_commodity"
+							type="text"> -->
+							<select class="FORM10_FIELD t1 withother x-border x-select x-border" id="form_10_commodity" name="form_10_commodity"
+							required>
+							<option selected disabled value="none">Choose your option</option>
+							<option value="Coffee">Coffee</option>
+							<option value="Cacao">Cacao</option>
+							<option value="Coconut">Coconut</option>
+							<option value="PFN">PFN</option>
+						</select>
+						<input type="text" class="FORM10_FIELD hidden-textbox x-input x-border" name="form_10_commodity_others"
+							id="form_10_commodity_others" show-base="form_10_commodity" show-trigger="PFN"  placeholder="Please specify">		
+							</td>
 				</tr>
 			</table>
 			<!-- <div class="x-col l4 x-container x-padding">

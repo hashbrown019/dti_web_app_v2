@@ -139,7 +139,8 @@ def form9_dashboard():
 def form10_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
-	return render_template("form_dashboard/form10_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
+	count = displayCount.display__()
+	return render_template("form_dashboard/form10_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form11_dashboard')
 def form11_dashboard():
@@ -208,60 +209,60 @@ def dcf_download(filename_):
 
 
 
-@app.route('/updateform1',methods=['POST','GET'])
-def updateform1():
-	update_dataform1.updateform1(request)
-	return redirect("/form1_dashboard")
+# @app.route('/updateform1',methods=['POST','GET'])
+# def updateform1():
+# 	update_dataform1.updateform1(request)
+# 	return redirect("/form1_dashboard")
 
-@app.route('/updateform2',methods=['POST','GET'])
-def updateform2():
-	update_dataform2.updateform2(request)
-	return redirect("/form2_dashboard")
-
-
-@app.route('/updateform3',methods=['POST','GET'])
-def updateform3():
-	update_dataform3.updateform3(request)
-	return redirect("/form3_dashboard")
+# @app.route('/updateform2',methods=['POST','GET'])
+# def updateform2():
+# 	update_dataform2.updateform2(request)
+# 	return redirect("/form2_dashboard")
 
 
-@app.route('/updateform4',methods=['POST','GET'])
-def updateform4():
-	update_dataform4.updateform4(request)
-	return redirect("/form4_dashboard")
-
-@app.route('/updateform5',methods=['POST','GET'])
-def updateform5():
-	update_dataform5.updateform5(request)
-	return redirect("/form5_dashboard")
-
-@app.route('/updateform6',methods=['POST','GET'])
-def updateform6():
-	update_dataform6.updateform6(request)
-	return redirect("/form6_dashboard")
+# @app.route('/updateform3',methods=['POST','GET'])
+# def updateform3():
+# 	update_dataform3.updateform3(request)
+# 	return redirect("/form3_dashboard")
 
 
-@app.route('/updateform7',methods=['POST','GET'])
-def updateform7():
-	update_dataform7.updateform7(request)
-	return redirect("/form7_dashboard")
+# @app.route('/updateform4',methods=['POST','GET'])
+# def updateform4():
+# 	update_dataform4.updateform4(request)
+# 	return redirect("/form4_dashboard")
+
+# @app.route('/updateform5',methods=['POST','GET'])
+# def updateform5():
+# 	update_dataform5.updateform5(request)
+# 	return redirect("/form5_dashboard")
+
+# @app.route('/updateform6',methods=['POST','GET'])
+# def updateform6():
+# 	update_dataform6.updateform6(request)
+# 	return redirect("/form6_dashboard")
 
 
-@app.route('/updateform9',methods=['POST','GET'])
-def updateform9():
-	update_dataform9.updateform9(request)
-	return redirect("/form9_dashboard")
+# @app.route('/updateform7',methods=['POST','GET'])
+# def updateform7():
+# 	update_dataform7.updateform7(request)
+# 	return redirect("/form7_dashboard")
 
 
-@app.route('/updateform10',methods=['POST','GET'])
-def updateform10():
-	update_dataform10.updateform10(request)
-	return redirect("/form10_dashboard")
+# @app.route('/updateform9',methods=['POST','GET'])
+# def updateform9():
+# 	update_dataform9.updateform9(request)
+# 	return redirect("/form9_dashboard")
 
-@app.route('/updateform11',methods=['POST','GET'])
-def updateform11():
-	update_dataform11.updateform11(request)
-	return redirect("/form11_dashboard")
+
+# @app.route('/updateform10',methods=['POST','GET'])
+# def updateform10():
+# 	update_dataform10.updateform10(request)
+# 	return redirect("/form10_dashboard")
+
+# @app.route('/updateform11',methods=['POST','GET'])
+# def updateform11():
+# 	update_dataform11.updateform11(request)
+# 	return redirect("/form11_dashboard")
 
 @app.route('/dcf_forms')
 def dcf_forms():
@@ -509,6 +510,30 @@ def importcsvform10():
 def importcsvform11():
 	importcsv_form11.importcsvform11(request)
 	return redirect("/form11_dashboard")
+
+# @app.route('/exportdashboardcsv1', methods=['POST'])
+# def exportdashboardcsv1():
+#     if c.IN_MAINTENANCE:
+#         return redirect("/we_will_be_back_later")
+    
+#     if request.method == "POST":
+#         form_disp = display_dataform.displayform()
+#         dips_list = form_disp["dips_list"]
+#         new_list = []
+#         print(dips_list)
+#         del dips_list[""]
+#         for key in dips_list:
+#             del dips_list[key]["max"]
+#             dips_list[key]["RCU"] = key
+#             new_list.append(dips_list[key])
+#         excel_file_path = c.RECORDS + '/objects/_temp_/DCF_Form1_Dashboard.csv'
+#         df = pd.DataFrame(new_list)
+
+#         df = df[df.columns[::-1]]
+
+#         df.to_csv(excel_file_path,index=False, header=True)
+
+#         return send_file(excel_file_path)
 
 #-------------------------------------------------------------------------------
 
@@ -1165,6 +1190,7 @@ def set_data(table):
 			args += ",`{}`='{}'".format(data_,form_data[data_])
 		sql = "UPDATE `{}` SET {},date_modified=CURRENT_TIMESTAMP WHERE `id`='{}';".format(table,args[1:],request.form['id'])
 		pass
+
 
 	last_row_id ="None"
 	status = "Unfinished"
