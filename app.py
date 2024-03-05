@@ -13,6 +13,7 @@ def _init_config_():
 	c.PORT = 80
 	c.IS_ON_SERVER = True
 # ======================================================================
+
 print(" * Providing Imports Flask app")
 
 def nullified(args):pass
@@ -22,6 +23,7 @@ _init_config_()
 import start_point as sp
 _init_config_()
 app = sp.app
+
 # app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG,ssl_context='adhoc')
 # app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG)
 

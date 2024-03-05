@@ -149,6 +149,7 @@ class _main:
 		return vals
 	
 	# ========================================================================
+	# ===========================DEPRICATED==================================
 	@app.route("/migrations/export_excel_mobile",methods=["POST","GET"])
 	@c.login_auth_web()
 	def export_excel_mobile():
@@ -253,7 +254,8 @@ class _main:
 				temp_data1[area][crop] = 1
 		for key in temp_data1:
 			graph_data.append(temp_data1[key])
-		return [graph_data,crops_name,g2_data]
+		hectare_sex = _main.get_hectareage()
+		return [graph_data,crops_name,g2_data,hectare_sex]
 
 
 	@app.route("/feature_0/dashgraph2",methods=["POST","GET"])
@@ -362,7 +364,8 @@ class _main:
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a`
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
-		RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False)
+		# RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False) # DEPRICATED MOBILE DATA
+		RES = rapid_mysql.select(sql_excel,False)
 		random.shuffle(RES)
 		return RES
 
@@ -415,7 +418,8 @@ class _main:
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a`
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
-		RES = rapid_mysql.select(sql_mobile,True) + rapid_mysql.select(sql_excel,True)
+		# RES = rapid_mysql.select(sql_mobile,True) + rapid_mysql.select(sql_excel,True) # DEPRICTED MOBILE DATA
+		RES = rapid_mysql.select(sql_excel,True)
 		random.shuffle(RES)
 		return RES
 
@@ -447,22 +451,26 @@ class _main:
 	def dashboard_home_sql_driven():
 		FILTER_SUFFIX = Filter.position_data_filter()
 		count_excel = rapid_mysql.select("SELECT COUNT(`frmer_prof_@_basic_Info_@_First_name`) as `ex` FROM excel_import_form_a {};".format(FILTER_SUFFIX))
-		count_mobile = rapid_mysql.select("SELECT COUNT(`farmer_code`) as `mob` FROM form_a_farmer_profiles {};".format(FILTER_SUFFIX))
-		all_farmer_count = count_excel[0]['ex'] + count_mobile[0]['mob'] 
+		# DEPRICATED MOBILE DATA
+		# count_mobile = rapid_mysql.select("SELECT COUNT(`farmer_code`) as `mob` FROM form_a_farmer_profiles {};".format(FILTER_SUFFIX))
+		# all_farmer_count = count_excel[0]['ex'] + count_mobile[0]['mob']
+
+		all_farmer_count = count_excel[0]['ex']
 
 		query = rapid_mysql.select
 		dic = Filter.strct_clean
 		dic_ = Filter.strct_dic
 
-		mobile_sex = dic(query("SELECT `farmer_sex` as `key`, count(farmer_sex) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_sex;".format(FILTER_SUFFIX) ))
-		mobile_ip = dic(query("SELECT `farmer_is_ip` as `key`, count(farmer_is_ip) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_is_ip;".format(FILTER_SUFFIX) ))
-		mobile_head_hh = dic(query("SELECT `farmer_head_of_house` as `key`, count(farmer_head_of_house) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_head_of_house;".format(FILTER_SUFFIX) ))
-		mobile_ip_grp = dic(query("SELECT `farmer_ip` as `key`, count(farmer_ip) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_ip;".format(FILTER_SUFFIX) ))
-		mobile_fo = dic_(query("SELECT `farmer_fo_name_rapid` as `key`, count(farmer_fo_name_rapid) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_fo_name_rapid;".format(FILTER_SUFFIX) ))
-		mobile_dip = dic_(query("SELECT `farmer_dip_ref` as `key`, count(farmer_dip_ref) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_dip_ref;".format(FILTER_SUFFIX) ))
-		mobile_primary_c = dic(query("SELECT `farmer_primary_crop` as `key`, count(farmer_primary_crop) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_primary_crop;".format(FILTER_SUFFIX) ))
+		# DEPRICATED MOBILE DATA
+		# mobile_sex = dic(query("SELECT `farmer_sex` as `key`, count(farmer_sex) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_sex;".format(FILTER_SUFFIX) ))
+		# mobile_ip = dic(query("SELECT `farmer_is_ip` as `key`, count(farmer_is_ip) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_is_ip;".format(FILTER_SUFFIX) ))
+		# mobile_head_hh = dic(query("SELECT `farmer_head_of_house` as `key`, count(farmer_head_of_house) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_head_of_house;".format(FILTER_SUFFIX) ))
+		# mobile_ip_grp = dic(query("SELECT `farmer_ip` as `key`, count(farmer_ip) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_ip;".format(FILTER_SUFFIX) ))
+		# mobile_fo = dic_(query("SELECT `farmer_fo_name_rapid` as `key`, count(farmer_fo_name_rapid) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_fo_name_rapid;".format(FILTER_SUFFIX) ))
+		# mobile_dip = dic_(query("SELECT `farmer_dip_ref` as `key`, count(farmer_dip_ref) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_dip_ref;".format(FILTER_SUFFIX) ))
+		# mobile_primary_c = dic(query("SELECT `farmer_primary_crop` as `key`, count(farmer_primary_crop) as `total` FROM form_a_farmer_profiles  {} GROUP by farmer_primary_crop;".format(FILTER_SUFFIX) ))
 
-		mobile_geotag = query("SELECT `farmer_primary_crop`,`farmer_coords_long`,`farmer_coords_lat` FROM `form_a_farmer_profiles` {} AND `farmer_coords_lat` != '' AND `farmer_coords_lat` != ' ';".format(FILTER_SUFFIX))
+		# mobile_geotag = query("SELECT `farmer_primary_crop`,`farmer_coords_long`,`farmer_coords_lat` FROM `form_a_farmer_profiles` {} AND `farmer_coords_lat` != '' AND `farmer_coords_lat` != ' ';".format(FILTER_SUFFIX))
 
 		excl_sex = dic(query("SELECT `frmer_prof_@_basic_Info_@_Sex` as `key`, count(`frmer_prof_@_basic_Info_@_Sex`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_basic_Info_@_Sex`;".format(FILTER_SUFFIX) ))
 		excl_ip = dic(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_farmer_ip` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_farmer_ip`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_farmer_ip`;".format(FILTER_SUFFIX) ))
@@ -498,59 +506,77 @@ class _main:
 				ORDER BY count(excel_import_form_a.user_id) DESC;
 		''').format(FILTER_SUFFIX) ))
 
-
-		if('untagged' not in mobile_dip):mobile_dip['untagged'] = 0;
-		if('untagged' not in mobile_fo):mobile_fo['untagged'] = 0;
-		if("" not in mobile_dip):mobile_dip[""] = 0;
-		if("" not in mobile_fo):mobile_fo[""] = 0;
+		# DEPRICATED MOBILE DATA
+		# if('untagged' not in mobile_dip):mobile_dip['untagged'] = 0;
+		# if('untagged' not in mobile_fo):mobile_fo['untagged'] = 0;
+		# if("" not in mobile_dip):mobile_dip[""] = 0;
+		# if("" not in mobile_fo):mobile_fo[""] = 0;
+		# if("male" not in mobile_sex):mobile_sex["male"] = 0;
+		# if("female" not in mobile_sex):mobile_sex["female"] = 0;
+		# if("false" not in mobile_ip):mobile_ip["false"] = 0;
+		# if("true" not in mobile_ip):mobile_ip["true"] = 0;
+		# if("" not in mobile_ip):mobile_ip[""] = 0;
+		# if("false" not in mobile_head_hh):mobile_head_hh["false"] = 0;
+		# if("false" not in mobile_head_hh):mobile_head_hh["false"] = 0;
+		# if("" not in mobile_head_hh):mobile_head_hh[""] = 0;
 
 		if('untagged' not in excl_dip):excl_dip['untagged'] = 0;
 		if('untagged' not in excl_fo):excl_fo['untagged'] = 0;
 		if("" not in excl_dip):excl_dip[""] = 0;
 		if("" not in excl_fo):excl_fo[""] = 0;
-
-		if("male" not in mobile_sex):mobile_sex["male"] = 0;
-		if("female" not in mobile_sex):mobile_sex["female"] = 0;
 		if("male" not in excl_sex):excl_sex["male"] = 0;
 		if("female" not in excl_sex):excl_sex["female"] = 0;
-		if("false" not in mobile_ip):mobile_ip["false"] = 0;
-		if("true" not in mobile_ip):mobile_ip["true"] = 0;
-		if("" not in mobile_ip):mobile_ip[""] = 0;
 		if("false" not in excl_ip):excl_ip["false"] = 0;
 		if("true" not in excl_ip):excl_ip["true"] = 0;
 		if("" not in excl_ip):excl_ip[""] = 0;
-		if("false" not in mobile_head_hh):mobile_head_hh["false"] = 0;
-		if("false" not in mobile_head_hh):mobile_head_hh["false"] = 0;
-		if("" not in mobile_head_hh):mobile_head_hh[""] = 0;
 		if("false" not in excl_head_hh):excl_head_hh["false"] = 0;
 		if("false" not in excl_head_hh):excl_head_hh["false"] = 0;
 		if("" not in excl_head_hh):excl_head_hh[""] = 0;
 
 
-		with_dip = all_farmer_count - (mobile_dip['untagged']+excl_dip[""])
-		with_fo = all_farmer_count - (mobile_fo['untagged']+excl_fo[""])
+		# DEPRICATED MOBILE DATA
+		# with_dip = all_farmer_count - (mobile_dip['untagged']+excl_dip[""])
+		# with_fo = all_farmer_count - (mobile_fo['untagged']+excl_fo[""])
+		# primary_crop = Populate.primary_crop(mobile_primary_c,excl_primary_c)
 
-		primary_crop = Populate.primary_crop(mobile_primary_c,excl_primary_c)
+
+		with_dip = all_farmer_count - excl_dip[""]
+		with_fo = all_farmer_count - excl_fo[""]
+
+		primary_crop = Populate.primary_crop({},excl_primary_c)
 		data = {
 			# "hectareage" : _main.get_hectareage(),
+			# DEPRICATED MOBILE DATA
+			# "all_sex_untag" : all_farmer_count + (mobile_sex['male'] + mobile_sex['female'] + excl_sex['male'] + excl_sex['female'] ),# DEPRICATED MOBILE DATA
+			# "all_sex_female" : mobile_sex['female'] + excl_sex['female'],# DEPRICATED MOBILE DATA
+			# "all_sex_male" : mobile_sex['male'] + excl_sex['male'],# DEPRICATED MOBILE DATA
+			# "is_ip_num" : all_farmer_count - (mobile_ip['false']+excl_ip[""]), # DEPRICATED MOBILE DATA
+			# "is_hh_head_num" : all_farmer_count - (mobile_head_hh['false']+excl_head_hh[""]), # DEPRICATED MOBILE DATA
+			# "mobile_geotag": mobile_geotag ,
+			# "sex" : {"mobile":mobile_sex,"excel":excl_sex},
+			# "enumerator": {"mobile":enumerator_mobile,"excel":enumerator_excel} ,
 			"query_suffix" : str(FILTER_SUFFIX),
 			"area_reg" : session["USER_DATA"][0]["office"],
 			"all_farmer_count" : all_farmer_count,
-			"all_sex_untag" : all_farmer_count + (mobile_sex['male'] + mobile_sex['female'] + excl_sex['male'] + excl_sex['female'] ),
-			"all_sex_female" : mobile_sex['female'] + excl_sex['female'],
-			"all_sex_male" : mobile_sex['male'] + excl_sex['male'],
-			"is_ip_num" : all_farmer_count - (mobile_ip['false']+excl_ip[""]),
-			"is_hh_head_num" : all_farmer_count - (mobile_head_hh['false']+excl_head_hh[""]),
+			"all_sex_untag" : all_farmer_count + (excl_sex['male'] + excl_sex['female'] ),
+			"all_sex_female" : excl_sex['female'],
+			"all_sex_male" : excl_sex['male'],
+			"is_ip_num" : all_farmer_count - excl_ip[""],
+			"is_hh_head_num" : all_farmer_count - excl_head_hh[""],
 			"with_dip": with_dip,
 			"with_fo": with_fo,
-			"enumerator": {"mobile":enumerator_mobile,"excel":enumerator_excel} ,
-			"mobile_geotag": mobile_geotag ,
-			"sex" : {"mobile":mobile_sex,"excel":excl_sex},
+			"enumerator": {"excel":enumerator_excel} ,
+			"sex" : {"excel":excl_sex},
 			"ls_arr" : {
-				"primary_crop" :{"main": primary_crop,"breakdown":{"excel": excl_primary_c , "mobile" : mobile_primary_c}},
-				"ip_gr" :{"excel": excl_ip_grp , "mobile" : mobile_ip_grp},
-				"fo" :{"excel": excl_fo , "mobile" : mobile_fo},
-				"dip" :{"excel": excl_dip , "mobile" : mobile_dip},
+				# DEPRICATED MOBILE DATA
+				# "primary_crop" :{"main": primary_crop,"breakdown":{"excel": excl_primary_c , "mobile" : mobile_primary_c}},
+				# "ip_gr" :{"excel": excl_ip_grp , "mobile" : mobile_ip_grp},
+				# "fo" :{"excel": excl_fo , "mobile" : mobile_fo},
+				# "dip" :{"excel": excl_dip , "mobile" : mobile_dip},
+				"primary_crop" :{"main": primary_crop,"breakdown":{"excel": excl_primary_c}},
+				"ip_gr" :{"excel": excl_ip_grp },
+				"fo" :{"excel": excl_fo },
+				"dip" :{"excel": excl_dip },
 			}
 		}
 		return data
@@ -561,29 +587,8 @@ class _main:
 	@c.login_auth_web()
 	def get_hectareage():
 		segre ={
-			"male":{
-				"below_to_0_5": 0,
-				"0_5_to_1": 0,
-				"1_to_1_5": 0,
-				"1_5_to_2": 0,
-				"2_to_2_5": 0,
-				"2_5_to_3": 0,
-				"3_to_3_5": 0,
-				"3_to_above": 0,
-				"untagged": 0,
-			},
-			"female":{
-				"below_to_0_5": 0,
-				"0_5_to_1": 0,
-				"1_to_1_5": 0,
-				"1_5_to_2": 0,
-				"2_to_2_5": 0,
-				"2_5_to_3": 0,
-				"3_to_3_5": 0,
-				"3_to_above": 0,
-				"untagged": 0,
-			},
-
+			"male":{"below_to_0_5": 0,"0_5_to_1": 0,"1_to_1_5": 0,"1_5_to_2": 0,"2_to_2_5": 0,"2_5_to_3": 0,"3_to_3_5": 0,"3_to_above": 0,"untagged": 0,},
+			"female":{"below_to_0_5": 0,"0_5_to_1": 0,"1_to_1_5": 0,"1_5_to_2": 0,"2_to_2_5": 0,"2_5_to_3": 0,"3_to_3_5": 0,"3_to_above": 0,"untagged": 0,}
 		}
 		actual = {}
 		FILTER_SUFFIX = Filter.position_data_filter()
@@ -591,46 +596,30 @@ class _main:
 		dic = Filter.strct_clean
 		hectareage = query("SELECT `farm_info@_Farm_Basic_Info_@_declared_area_Ha` as 'ha', `frmer_prof_@_basic_Info_@_Sex` as 'sex' FROM `excel_import_form_a`  {} ;".format(FILTER_SUFFIX))
 		for details in hectareage:
-			ha__ = (re.sub(r"[a-zA-Z]", '', details['ha']))
-
+			ha__ = re.sub(r"[a-zA-Z]", '', details['ha'])
 			try:
 				ha = float(ha__)
 				if(ha not in actual):
 					actual[ha] = 0
 				actual[ha]+=1
-
-				if(ha <= 0.5):
-					segre[details["sex"]]["below_to_0_5"] +=1
-				elif(ha > 0.5 and ha <= 1.0):
-					segre[details["sex"]]["0_5_to_1"] +=1
-				elif(ha > 1.0 and ha <= 1.5):
-					segre[details["sex"]]["1_to_1_5"] +=1
-				elif(ha > 1.5 and ha <= 2.0):
-					segre[details["sex"]]["1_5_to_2"] +=1
-				elif(ha > 2.0 and ha <= 2.5):
-					segre[details["sex"]]["2_to_2_5"] +=1
-				elif(ha > 2.5 and ha <= 3.0):
-					segre[details["sex"]]["2_5_to_3"] +=1
-				elif(ha > 3.0 and ha <= 3.5):
-					segre[details["sex"]]["3_to_3_5"] +=1
-				elif(ha > 3.5):
-					segre[details["sex"]]["3_to_3_5"] +=1
-				else:
-					segre[details["sex"]]["untagged"] +=1
-
-
-				print(float(details))
+				SEX = details["sex"].lower()
+				if(ha <= 0.5): segre[SEX]["below_to_0_5"] +=1;
+				elif(ha > 0.5 and ha <= 1.0): segre[SEX]["0_5_to_1"] +=1;
+				elif(ha > 1.0 and ha <= 1.5): segre[SEX]["1_to_1_5"] +=1;
+				elif(ha > 1.5 and ha <= 2.0): segre[SEX]["1_5_to_2"] +=1;
+				elif(ha > 2.0 and ha <= 2.5): segre[SEX]["2_to_2_5"] +=1;
+				elif(ha > 2.5 and ha <= 3.0): segre[SEX]["2_5_to_3"] +=1;
+				elif(ha > 3.0 and ha <= 3.5): segre[SEX]["3_to_3_5"] +=1;
+				elif(ha > 3.5): segre[SEX]["3_to_3_5"] +=1;
+				else: segre[SEX]["untagged"] +=1
 			except Exception as e:
-				# raise e
-				# print(f"{e} == {ha__}")
 				pass
 		myKeys = list(actual.keys())
 		myKeys.sort()
 		sorted_dict = {i: actual[i] for i in myKeys}
-
 		print(sorted_dict)
-		return sorted_dict.update(segre)
-		# return segre
+		# return sorted_dict.update(segre)
+		return segre
 
 	@app.route("/feature_0/data_clean_duplicates",methods=["POST","GET"])
 	@c.login_auth_web()
@@ -640,14 +629,12 @@ class _main:
 		for datum in _data:
 			fr_name = datum[2]+" "+datum[3]+" "+datum[4]
 			if(len(fr_name.replace(" ",""))<=1):
-				fr_name = datum[14]
+				fr_name = datum[14];
 				# print(len(datum))
-
-			unique_name = re.sub(r'[^\w\s]', '',fr_name.replace(" ","") ).lower()
+			unique_name = re.sub(r'[^\w\s]', '',fr_name.replace(" ","") ).lower();
 
 			if(unique_name not in unique_name_arr):
-				unique_name_arr[unique_name] = []
-
+				unique_name_arr[unique_name] = [];
 			unique_name_arr[unique_name].append({
 				"name":fr_name,
 				"db_id":datum[0],
@@ -734,7 +721,6 @@ class Filter:
 		else:
 			session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
 			_filter = "WHERE  USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
-
 		return _filter
 
 	def strct_dic(dict_):
