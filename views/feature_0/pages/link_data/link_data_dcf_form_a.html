@@ -110,8 +110,11 @@
 										<b>Primary Crop/Commodity</b>
 										<input id="farmer_primary_crop" class="f_profile f_clear x-round-large main_input x-input x-border" type="" name="">
 									</div>
-									<iframe src="dti"></iframe>
-									<div id="for_dcf_trade_promotion">
+									<!-- ========================================== -->
+									<!-- ========================================== -->
+									<!-- ========================================== -->
+									<!-- ========================================== -->
+									<div id="for_dcf_trade_promotion" style="display:none">
 										<hr>
 										<b class="x-large">For Trade Fairs</b><br>
 										<b>Name Of Prodduct</b>
@@ -127,6 +130,11 @@
 										<b>Sales</b>
 										<input id="trade_fair_sales" class="trade_fair f_clear x-round-large x-input x-border" type="" name="">
 									</div>
+									<!-- ========================================== -->
+									<!-- ========================================== -->
+									<!-- ========================================== -->
+									<!-- ========================================== -->
+
 								</div>
 								<div class="x-col l6 m6 x-container x-padding x-round-large x-pale-green">
 									<b class="x-small">Only fill up this form if the type of participants/benificiary is not a group (MSME,FO) otherwise, leave this field blank</b>
@@ -170,7 +178,7 @@
 					</div> 
 				</div>
 				<hr>
-				<div id="accordion_form_" class="x-container">
+				<div id="accordion_form_" class="x-container x-hide">
 					<h3>Import from Excel <span class="x-padding x-tiny x-round-large x-red">On-Dev</span></h3>
 					<div class="x-row x-container">
 						<div class="x-row x-container">
@@ -211,6 +219,16 @@
 		<script type="text/javascript">
 			document.title = document.title + " | Entry Data Links"
 			var farmer_ls_modal
+			println(URL_ARGS)
+			$onload(function(){
+				try{
+					println("for_"+URL_ARGS["i"])
+					$ID("for_"+URL_ARGS["i"]).style.display = "block"
+				}catch(e){
+					warnprintln(e)
+				}
+			})
+
 
 			$onload(function(){
 				$(document).ready(function(){
