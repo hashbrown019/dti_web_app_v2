@@ -1,0 +1,574 @@
+<div class="row" id="bdsp" style="display: none;">
+    <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+    <div class="x_title">
+        <span style="font-size: 18px; color: #73879C;">Qualified business providers able to provide business services to MSEs<br><small>Pool of qualified service providers set up per province</small></span>
+        <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Settings 1</a>
+                    <a class="dropdown-item" href="#">Settings 2</a>
+                </div>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="col-md-6 col-sm-6" style="margin-top: 10px;">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Male & Female <small>Pie Chart</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <canvas id="pieChart3"></canvas>
+            <div style="text-align: center;">
+                <p>
+                    <i class="fa fa-square" style="color:#005fcc"></i> Male: {{dcf_form3male}}&nbsp;&nbsp;&nbsp; 
+                    <i class="fa fa-square" style="color:#eb4e97"></i> Female: {{dcf_form3female}}&nbsp;&nbsp;&nbsp;
+                     Total: {{dcf_form3male + dcf_form3female}}
+                </p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-6" style="margin-top: 10px;">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Type of BDSP <small>Bar Chart</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="mybarChart3"></canvas>
+            </div>
+            <div style="text-align: center;">
+                <p>Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp; Organizational/Firm: {{form3orgfirm[0]['totalorgfirm']}}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="x_title">
+        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>	
+    </div>
+        <div class="x_title">
+            <span style="font-size: 18px; color: #73879C;">Field of expertise per type by region</span>	
+        </div>
+    <div class="col-md-6 col-sm-6  ">
+        <div class="x_panel tile overflow_hidden">
+          <div class="x_title">
+              <h2>Region 8</h2>
+              <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">Settings 1</a>
+                          <a class="dropdown-item" href="#">Settings 2</a>
+                      </div>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+              </ul>
+              <div class="clearfix"></div>
+          </div>
+    <div class="x_content">
+        <table style="width:100%">
+            <tr>
+                <th>
+                    <p>Pie Chart Percentage</p>
+                </th>
+                <th>
+                    <p class=""></p>    
+                </th>   
+            </tr>
+            <tr>
+                <td>
+                    <canvas class="canvasDoughnutREG8" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+                </td>
+                <td>
+                    <table class="tile_info">
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region8_entrep[0]['dcf3_entrep8'] }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region8_agri[0]['dcf3_agri8'] }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region8_es[0]['dcf3_es8'] }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region8_org[0]['dcf3_org8'] }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>           
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+
+<div class="col-md-6 col-sm-6  ">
+<div class="x_panel tile overflow_hidden">
+  <div class="x_title">
+      <h2>Region 9</h2>
+      <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Settings 1</a>
+                  <a class="dropdown-item" href="#">Settings 2</a>
+              </div>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+      </ul>
+      <div class="clearfix"></div>
+  </div>
+<div class="x_content">
+<table style="width:100%">
+    <tr>
+        <th>
+            <p>Pie Chart Percentage</p>
+        </th>
+        <th>
+            <p class=""></p>    
+        </th>   
+    </tr>
+    <tr>
+        <td>
+            <canvas class="canvasDoughnutREG9" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+        </td>
+        <td>
+            <table class="tile_info">
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region9_entrep[0]['dcf3_entrep9'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region9_agri[0]['dcf3_agri9'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region9_es[0]['dcf3_es9'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region9_org[0]['dcf3_org9'] }}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>           
+    </tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="col-md-6 col-sm-6  ">
+<div class="x_panel tile overflow_hidden">
+<div class="x_title">
+    <h2>Region 10</h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Settings 1</a>
+                <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+<table style="width:100%">
+    <tr>
+        <th>
+            <p>Pie Chart Percentage</p>
+        </th>
+        <th>
+            <p class=""></p>    
+        </th>   
+    </tr>
+    <tr>
+        <td>
+            <canvas class="canvasDoughnutREG10" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+        </td>
+        <td>
+            <table class="tile_info">
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region10_entrep[0]['dcf3_entrep10'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region10_agri[0]['dcf3_agri10'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region10_es[0]['dcf3_es10'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region10_org[0]['dcf3_org10'] }}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>           
+    </tr>
+</table>
+</div>
+</div>
+</div>
+
+
+<div class="col-md-6 col-sm-6  ">
+<div class="x_panel tile overflow_hidden">
+<div class="x_title">
+    <h2>Region 11</h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Settings 1</a>
+                <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+<table style="width:100%">
+    <tr>
+        <th>
+            <p>Pie Chart Percentage</p>
+        </th>
+        <th>
+            <p class=""></p>    
+        </th>   
+    </tr>
+    <tr>
+        <td>
+            <canvas class="canvasDoughnutREG11" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+        </td>
+        <td>
+            <table class="tile_info">
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region11_entrep[0]['dcf3_entrep11'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region11_agri[0]['dcf3_agri11'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region11_es[0]['dcf3_es11'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region11_org[0]['dcf3_org11'] }}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>           
+    </tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="col-md-6 col-sm-6  ">
+<div class="x_panel tile overflow_hidden">
+<div class="x_title">
+    <h2>Region 12</h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Settings 1</a>
+                <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+<table style="width:100%">
+    <tr>
+        <th>
+            <p>Pie Chart Percentage</p>
+        </th>
+        <th>
+            <p class=""></p>    
+        </th>   
+    </tr>
+    <tr>
+        <td>
+            <canvas class="canvasDoughnutREG12" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+        </td>
+        <td>
+            <table class="tile_info">
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region12_entrep[0]['dcf3_entrep12'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region12_agri[0]['dcf3_agri12'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region12_es[0]['dcf3_es12'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region12_org[0]['dcf3_org12'] }}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>           
+    </tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="col-md-6 col-sm-6  ">
+<div class="x_panel tile overflow_hidden">
+<div class="x_title">
+    <h2>Region 13</h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Settings 1</a>
+                <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+<table style="width:100%">
+    <tr>
+        <th>
+            <p>Pie Chart Percentage</p>
+        </th>
+        <th>
+            <p class=""></p>    
+        </th>   
+    </tr>
+    <tr>
+        <td>
+            <canvas class="canvasDoughnutREG13" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+        </td>
+        <td>
+            <table class="tile_info">
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region13_entrep[0]['dcf3_entrep13'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region13_agri[0]['dcf3_agri13'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region13_es[0]['dcf3_es13'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region13_org[0]['dcf3_org13'] }}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>           
+    </tr>
+</table>
+</div>
+</div>
+</div>
+
+
+<div class="col-md-6 col-sm-6  ">
+<div class="x_panel tile overflow_hidden">
+<div class="x_title">
+    <h2>Region BARMM</h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Settings 1</a>
+                <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+<table style="width:100%">
+    <tr>
+        <th>
+            <p>Pie Chart Percentage</p>
+        </th>
+        <th>
+            <p class=""></p>    
+        </th>   
+    </tr>
+    <tr>
+        <td>
+            <canvas class="canvasDoughnutREGB" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+        </td>
+        <td>
+            <table class="tile_info">
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_regionB_entrep[0]['dcf3_entrepB'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_regionB_agri[0]['dcf3_agriB'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_regionB_es[0]['dcf3_esB'] }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_regionB_org[0]['dcf3_orgB'] }}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>           
+    </tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="col-md-6 col-sm-6  ">
+<div class="x_panel tile overflow_hidden">
+<div class="x_title">
+<h2>Overall Total per Region</h2>
+<ul class="nav navbar-right panel_toolbox">
+    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Settings 1</a>
+            <a class="dropdown-item" href="#">Settings 2</a>
+        </div>
+    </li>
+    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+</ul>
+<div class="clearfix"></div>
+</div>
+<div class="x_content">
+<table style="width:100%">
+<tr>
+    <th>
+        <p>Pie Chart Percentage</p>
+    </th>
+    <th>
+        <p class=""></p>    
+    </th>   
+</tr>
+<tr>
+    <td>
+        <canvas class="canvasDoughnutREGTOTAL" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+    </td>
+    <td>
+        <table class="tile_info">
+            <tr>
+                <td>
+                    <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_total_entrep[0]['dcf3_entrepT'] }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_total_agri[0]['dcf3_agriT'] }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_total_es[0]['dcf3_esT'] }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_total_org[0]['dcf3_orgT'] }}</p>
+                </td>
+            </tr>
+        </table>
+    </td>           
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>

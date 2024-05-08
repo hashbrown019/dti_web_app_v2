@@ -1,1840 +1,59 @@
 <style>
-
 	.titlecard{
 		font-size: 20px;
 		color: #BAB8B8
 	}
-
 </style>
+
 <div class="right_col" role="main">
 	<!-- top tiles -->
-	<div class="row" style="display: inline-block;" >
-		<div class="tile_count">
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS</small></span>
-				<div class="count _money_tag">{{dcf_form1}}</div>
-				{% if form1_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form1_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form1_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 2 CPA TRACKER</small></span>
-				<div class="count _money_tag">{{dcf_form2}}</div>
-				{% if form2_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form2_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form2_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 3 BDSP REGISTRY</small></span>
-				<div class="count _money_tag">{{dcf_form3}}</div>
-				{% if form3_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form3_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form3_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 4 CAPACITY BUILDING FOR BENEFICIARIES</small></span>
-				<div class="count _money_tag">{{dcf_form4}}</div>
-				{% if form4_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form4_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form4_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-			
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 5 MATCHING GRANT IMPLEMENTATION TRACKER</small></span>
-				<div class="count _money_tag">{{dcf_form5}}</div>
-				{% if form5_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form5_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form5_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 6 PRODUCT DEVELOPMENT/ ENHANCEMENT ASSISTANCE PROVIDED/ CONSULTANCY SERVICES</small></span>
-				<div class="count _money_tag">{{dcf_form6}}</div>
-				{% if form6_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form6_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form6_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 7 TRADE PROMOTION SERVICES TRACKER</small></span>
-				<div class="count _money_tag">{{dcf_form7}}</div>
-				{% if form9_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form9_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form9_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 9 ENABLER'S ACTIVITY TRACKER</small></span>
-				<div class="count _money_tag">{{dcf_form9}}</div>
-				{% if form9_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form9_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form9_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 10 NEGOSYO CENTER TRACKER</small></span>
-				<div class="count _money_tag">{{dcf_form10}}</div>
-				{% if form10_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form10_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form10_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-
-			<div class="col-md-2 col-sm-2  tile_stats_count">
-				<span class="count_top"><small>FORM 11 ACCESS TO FINANCING TRACKER</small></span>
-				<div class="count _money_tag">{{dcf_form11}}</div>
-				{% if form11_percentages >=0 %}
-				<span style="font-size: 10px;" class=" count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #00cc66;"> <i class="fa fa-arrow-up"></i>{{ form11_percentages }}%This Month</i></span>
-				{%else%}
-				<span style="font-size: 10px;" class="count_bottom">Total # of Entries &nbsp;&nbsp; <i style="color: #ff8080;"> <i class="fa fa-arrow-down"></i>{{ form11_percentages }}%This Month</i> </span>
-				{%endif%}
-			</div>
-		</div>
-	</div>
+	{% include 'includes/dashboard/maindashboard_include/formsData.html' %}
 	<!-- /top tiles -->
 
 	<label for="graphFilter">Filter Graph : </label>
 		<select name="graphFilter" id="graphFilter" class="btn btn-secondary dropdown-toggle">
-			<option value="Select">Select Filter</option>
+			<option value="Select">Select Options</option>
 			<option value="All">All Graph</option>
 			<option value="Forms">Forms Monthly Entries</option>
 			<option value="DIPs">Detailed Investment Plans (DIPs) developed (Project-wide)</option>
 			<option value="BDSP">Qualified business providers able to provide business services to MSEs</option>
-			<option value="Form4">Capacities of farmers, farmers’ organizations and MEs to manage enterprises strengthened </option>
+			<option value="Form4">Capacities of farmers, farmers’ organizations and MEs to manage enterprises strengthened</option>
 			<option value="Form7">Access to Market</option>
 			<option value="Form9">Capacities of enablers</option>
 			<option value="Form10">Networks of Negosyo Centers</option>
 		</select>
 	<hr>
-	<div class="row" id="forms" style="display: none;">
-		<div class="col-md-6 col-sm-6">
-
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart"></canvas>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 2 CPA TRACKER<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart2"></canvas>
-				</div>
-			</div>
-		</div>	
-	</div>
-<div class="clearfix"></div>
-
-	<br/>
-
-	<div class="row" id="forms" style="display: none;">
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 3 BDSP REGISTRY<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart3"></canvas>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 4 CAPACITY BUILDING FOR BENEFICIARIES<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart4"></canvas>
-				</div>
-			</div>
-		</div>
-
 	
-	</div>
-	<div class="clearfix"></div>
-	<br />
-
-	<div class="row" id="forms" style="display: none;">
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 5 Matching Grant Implementation Tracker<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart5"></canvas>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 6 PRODUCT DEVELOPMENT/ ENHANCEMENT <br>ASSISTANCE PROVIDED/ CONSULTANCY SERVICES<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart6"></canvas>
-				</div>
-			</div>
-		</div>
-		
-	</div>
+	{% include 'includes/dashboard/maindashboard_include/fme.html' %}
 	<div class="clearfix"></div>
 	<br/>
 
-	<div class="row" id="forms" style="display: none;">
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 7 Trade Promotion Services Tracker<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart7"></canvas>
-				</div>
-			</div>
-		</div>
 
-
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 9 Enablers' Activity Tracker<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart8"></canvas>
-				</div>
-			</div>
-		</div>
-	
-	</div>
-	<div class="clearfix"></div>
+	{% include 'includes/dashboard/maindashboard_include/dips.html' %}
 	<br/>
 
-	<div class="row" id="forms" style="display: none;">
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 10 NEGOSYO CENTER TRACKER<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart9"></canvas>
-				</div>
-			</div>
-		</div>
 
-
-		<div class="col-md-6 col-sm-6">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>FORM 11 ACCESS TO FINANCING TRACKER<small><br>Total Entries By Months</small></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="lineChart10"></canvas>
-				</div>
-			  </div>
-		    </div>
-	      </div>
-	    <br>
-
-			<div class="row" id="dips" style="display: none;">
-				<div class="col-md-12 col-sm-12">
-					<div class="dashboard_graph" style="border: 1px solid #d1d1d196;">
-						<div class="x_title">
-							<span style="font-size: 18px; color: #73879C;">DIPs connecting farmers to SMEs and facilitating access to markets and servicesroduct of farmers, farmers’ organizations, cooperatives, SMEs conforming to market requirements enhanced<br><small>Detailed Investment Plans (DIPs) developed (Project-wide)</small></span>
-							<ul class="nav navbar-right panel_toolbox">
-								<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">Settings 1</a>
-										<a class="dropdown-item" href="#">Settings 2</a>
-									</div>
-								</li>
-								<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-							</ul>
-							<div class="clearfix"></div>
-						</div>
-						   <div class="col-md-6 col-sm-6  ">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>DIPs by Region <small>Bar Chart</small></h2>
-									<ul class="nav navbar-right panel_toolbox">
-										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown">
-											<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<a class="dropdown-item" href="#">Settings 1</a>
-												<a class="dropdown-item" href="#">Settings 2</a>
-											</div>
-										</li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-									</ul>
-									<div class="clearfix"></div>
-								</div>
-								<div class="x_content">
-									<canvas id="mybarChart"></canvas>
-								</div>
-								<div style="text-align: center;">
-									<p>
-										<i class="fa fa-square" style="color:#99e6ff "></i> Approved DIPs: <span id="totalApprovedDipsValue"></span>&nbsp;&nbsp;&nbsp; 
-										<i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i> Pipeline DIPs: <span id="totalpipelineDipsValue"></span>&nbsp;&nbsp;&nbsp;<br> 
-										<i class="fa fa-square" style="color:#0099cc "></i> Ongoing DIPs: <span id="totalongoingDipsValue"></span>&nbsp;&nbsp;&nbsp; 
-										<i class="fa fa-square" style="color:#ff8080 "></i> Not Started: <span id="totalnotstartedDipsValue"></span>&nbsp;&nbsp;&nbsp; 
-										Overall Total: <span id="totalAllCategoriesValue"></span>
-									</p>
-								</div>
-								
-							</div>
-
-						<div class="clearfix"></div>
-					<div class="x_content">
-				</div>
-			</div>
-
-		  <div class="col-md-6 col-sm-6  ">
-		  <div class="x_panel tile overflow_hidden">
-			<div class="x_title">
-				<h2>DIPs by Commodity</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a>
-							<a class="dropdown-item" href="#">Settings 2</a>
-						</div>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<table class="" style="width:100%">
-					<tr>
-						<th>
-							<p>Pie Chart Percentage</p>
-						</th>
-						<th>
-							<p class="">Commodities</p>	
-						</th>	
-					</tr>
-					<tr>
-						<td>
-							<canvas class="canvasDoughnut" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-						</td>
-						<td>
-							<table class="tile_info">
-								{% for key in over_all_commodity_count %}
-								<tr>
-									<td>
-										{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
-										{% set color_index = loop.index0 % square_colors|length %}
-										<p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count[key] }}</p>
-									</td>
-								</tr>
-								{% endfor %}
-							   </tr>		
-						      </table>
-					        </td>			
-				         </tr>
-			          </table>
-		           </div>
-	            </div>
-             </div>
-
-			 <div class="col-md-6 col-sm-6  bg-white">
-				<div class="x_title">
-					<h2>DIPs by Region <small>Table</small></h2>
-					<div class="clearfix"></div>
-				</div>
-				<div class="col-md-12 col-sm-12 ">
-
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>RCU</th>
-								<th>Approved DIPs</th>
-								<th>Pipeline DIPs</th>
-								<th>Ongoing DIPs</th>
-								<th>Not Started</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for dip in dips_list %}
-							<tr>
-								<th scope="row">{{dip}}</th>
-								<td>{{dips_list[dip]["approve"]}}</td>
-								<td>{{dips_list[dip]["pipeline"]}}</td>
-								<td>{{dips_list[dip]["ongoing"]}}</td>
-								<td>{{dips_list[dip]["not_started"]}}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</div>
-			    </div>
-		        <div class="clearfix"></div>
-	            </div>
-	            <br>
-            </div>
-            </div>
-
-			<div class="row" id="bdsp" style="display: none;">
-				<div class="col-md-12 col-sm-12">
-				<div class="x_panel">
-				<div class="x_title">
-					<span style="font-size: 18px; color: #73879C;">Qualified business providers able to provide business services to MSEs<br><small>Pool of qualified service providers set up per province</small></span>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a>
-								<a class="dropdown-item" href="#">Settings 2</a>
-							</div>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="col-md-6 col-sm-6" style="margin-top: 10px;">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>Individual BDSPs By Male & Female <small>Pie Chart</small></h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">Settings 1</a>
-									<a class="dropdown-item" href="#">Settings 2</a>
-								</div>
-							</li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<canvas id="pieChart3"></canvas>
-						<div style="text-align: center;">
-							<p>
-								<i class="fa fa-square" style="color:#005fcc"></i> Male: {{dcf_form3male}}&nbsp;&nbsp;&nbsp; 
-								<i class="fa fa-square" style="color:#eb4e97"></i> Female: {{dcf_form3female}}&nbsp;&nbsp;&nbsp;
-								<i class="fa fa-square" style="color:#009e54"></i>Total: {{dcf_form3male + dcf_form3female}}
-							</p>
-						</div>
-					</div>
-					</div>
-				</div>
-
-				<div class="col-md-6 col-sm-6" style="margin-top: 10px;">
-					<div class="x_panel">
-						<div class="x_title">
-							<h2>Type of BDSP <small>Bar Chart</small></h2>
-							<ul class="nav navbar-right panel_toolbox">
-								<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">Settings 1</a>
-										<a class="dropdown-item" href="#">Settings 2</a>
-									</div>
-								</li>
-								<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-							</ul>
-							<div class="clearfix"></div>
-						</div>
-						<div class="x_content">
-							<canvas id="mybarChart3"></canvas>
-						</div>
-						<div style="text-align: center;">
-							<p>Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp; Organizational/Firm: {{form3orgfirm[0]['totalorgfirm']}}</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="x_title">
-					<span style="font-size: 18px; color: #73879C;"> &nbsp; </span>	
-				</div>
-					<div class="x_title">
-						<span style="font-size: 18px; color: #73879C;">Field of expertise per type by region</span>	
-					</div>
-				<div class="col-md-6 col-sm-6  ">
-					<div class="x_panel tile overflow_hidden">
-					  <div class="x_title">
-						  <h2>Region 8</h2>
-						  <ul class="nav navbar-right panel_toolbox">
-							  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-							  <li class="dropdown">
-								  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-								  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									  <a class="dropdown-item" href="#">Settings 1</a>
-									  <a class="dropdown-item" href="#">Settings 2</a>
-								  </div>
-							  </li>
-							  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						  </ul>
-						  <div class="clearfix"></div>
-					  </div>
-				<div class="x_content">
-					<table style="width:100%">
-						<tr>
-							<th>
-								<p>Pie Chart Percentage</p>
-							</th>
-							<th>
-								<p class=""></p>    
-							</th>   
-						</tr>
-						<tr>
-							<td>
-								<canvas class="canvasDoughnutREG8" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-							</td>
-							<td>
-								<table class="tile_info">
-									<tr>
-										<td>
-											<p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region8_entrep[0]['dcf3_entrep8'] }}</p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region8_agri[0]['dcf3_agri8'] }}</p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region8_es[0]['dcf3_es8'] }}</p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region8_org[0]['dcf3_org8'] }}</p>
-										</td>
-									</tr>
-								</table>
-							</td>           
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-6 col-sm-6  ">
-			<div class="x_panel tile overflow_hidden">
-			  <div class="x_title">
-				  <h2>Region 9</h2>
-				  <ul class="nav navbar-right panel_toolbox">
-					  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-					  <li class="dropdown">
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							  <a class="dropdown-item" href="#">Settings 1</a>
-							  <a class="dropdown-item" href="#">Settings 2</a>
-						  </div>
-					  </li>
-					  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				  </ul>
-				  <div class="clearfix"></div>
-			  </div>
-		<div class="x_content">
-			<table style="width:100%">
-				<tr>
-					<th>
-						<p>Pie Chart Percentage</p>
-					</th>
-					<th>
-						<p class=""></p>    
-					</th>   
-				</tr>
-				<tr>
-					<td>
-						<canvas class="canvasDoughnutREG9" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-					</td>
-					<td>
-						<table class="tile_info">
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region9_entrep[0]['dcf3_entrep9'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region9_agri[0]['dcf3_agri9'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region9_es[0]['dcf3_es9'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region9_org[0]['dcf3_org9'] }}</p>
-								</td>
-							</tr>
-						</table>
-					</td>           
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-		<div class="col-md-6 col-sm-6  ">
-			<div class="x_panel tile overflow_hidden">
-			<div class="x_title">
-				<h2>Region 10</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a>
-							<a class="dropdown-item" href="#">Settings 2</a>
-						</div>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-		<div class="x_content">
-			<table style="width:100%">
-				<tr>
-					<th>
-						<p>Pie Chart Percentage</p>
-					</th>
-					<th>
-						<p class=""></p>    
-					</th>   
-				</tr>
-				<tr>
-					<td>
-						<canvas class="canvasDoughnutREG10" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-					</td>
-					<td>
-						<table class="tile_info">
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region10_entrep[0]['dcf3_entrep10'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region10_agri[0]['dcf3_agri10'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region10_es[0]['dcf3_es10'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region10_org[0]['dcf3_org10'] }}</p>
-								</td>
-							</tr>
-						</table>
-					</td>           
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-
-		<div class="col-md-6 col-sm-6  ">
-			<div class="x_panel tile overflow_hidden">
-			<div class="x_title">
-				<h2>Region 11</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a>
-							<a class="dropdown-item" href="#">Settings 2</a>
-						</div>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-		<div class="x_content">
-			<table style="width:100%">
-				<tr>
-					<th>
-						<p>Pie Chart Percentage</p>
-					</th>
-					<th>
-						<p class=""></p>    
-					</th>   
-				</tr>
-				<tr>
-					<td>
-						<canvas class="canvasDoughnutREG11" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-					</td>
-					<td>
-						<table class="tile_info">
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region11_entrep[0]['dcf3_entrep11'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region11_agri[0]['dcf3_agri11'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region11_es[0]['dcf3_es11'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region11_org[0]['dcf3_org11'] }}</p>
-								</td>
-							</tr>
-						</table>
-					</td>           
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-		<div class="col-md-6 col-sm-6  ">
-			<div class="x_panel tile overflow_hidden">
-			<div class="x_title">
-				<h2>Region 12</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a>
-							<a class="dropdown-item" href="#">Settings 2</a>
-						</div>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-		<div class="x_content">
-			<table style="width:100%">
-				<tr>
-					<th>
-						<p>Pie Chart Percentage</p>
-					</th>
-					<th>
-						<p class=""></p>    
-					</th>   
-				</tr>
-				<tr>
-					<td>
-						<canvas class="canvasDoughnutREG12" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-					</td>
-					<td>
-						<table class="tile_info">
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region12_entrep[0]['dcf3_entrep12'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region12_agri[0]['dcf3_agri12'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region12_es[0]['dcf3_es12'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region12_org[0]['dcf3_org12'] }}</p>
-								</td>
-							</tr>
-						</table>
-					</td>           
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-		<div class="col-md-6 col-sm-6  ">
-			<div class="x_panel tile overflow_hidden">
-			<div class="x_title">
-				<h2>Region 13</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a>
-							<a class="dropdown-item" href="#">Settings 2</a>
-						</div>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-		<div class="x_content">
-			<table style="width:100%">
-				<tr>
-					<th>
-						<p>Pie Chart Percentage</p>
-					</th>
-					<th>
-						<p class=""></p>    
-					</th>   
-				</tr>
-				<tr>
-					<td>
-						<canvas class="canvasDoughnutREG13" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-					</td>
-					<td>
-						<table class="tile_info">
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region13_entrep[0]['dcf3_entrep13'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region13_agri[0]['dcf3_agri13'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region13_es[0]['dcf3_es13'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region13_org[0]['dcf3_org13'] }}</p>
-								</td>
-							</tr>
-						</table>
-					</td>           
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-
-		<div class="col-md-6 col-sm-6  ">
-			<div class="x_panel tile overflow_hidden">
-			<div class="x_title">
-				<h2>Region BARMM</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a>
-							<a class="dropdown-item" href="#">Settings 2</a>
-						</div>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-		<div class="x_content">
-			<table style="width:100%">
-				<tr>
-					<th>
-						<p>Pie Chart Percentage</p>
-					</th>
-					<th>
-						<p class=""></p>    
-					</th>   
-				</tr>
-				<tr>
-					<td>
-						<canvas class="canvasDoughnutREGB" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-					</td>
-					<td>
-						<table class="tile_info">
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_regionB_entrep[0]['dcf3_entrepB'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_regionB_agri[0]['dcf3_agriB'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_regionB_es[0]['dcf3_esB'] }}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_regionB_org[0]['dcf3_orgB'] }}</p>
-								</td>
-							</tr>
-						</table>
-					</td>           
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-	<div class="col-md-6 col-sm-6  ">
-		<div class="x_panel tile overflow_hidden">
-		<div class="x_title">
-			<h2>Overall Total per Region</h2>
-			<ul class="nav navbar-right panel_toolbox">
-				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">Settings 1</a>
-						<a class="dropdown-item" href="#">Settings 2</a>
-					</div>
-				</li>
-				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>
-	<div class="x_content">
-		<table style="width:100%">
-			<tr>
-				<th>
-					<p>Pie Chart Percentage</p>
-				</th>
-				<th>
-					<p class=""></p>    
-				</th>   
-			</tr>
-			<tr>
-				<td>
-					<canvas class="canvasDoughnutREGTOTAL" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-				</td>
-				<td>
-					<table class="tile_info">
-						<tr>
-							<td>
-								<p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_total_entrep[0]['dcf3_entrepT'] }}</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_total_agri[0]['dcf3_agriT'] }}</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_total_es[0]['dcf3_esT'] }}</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_total_org[0]['dcf3_orgT'] }}</p>
-							</td>
-						</tr>
-					</table>
-				</td>           
-			</tr>
-		</table>
-	</div>
-	</div>
-	</div>
-
-			</div>
-		</div>
-	</div>
-
+	{% include 'includes/dashboard/maindashboard_include/bdsp.html' %}		
 	<br>
+	
+
+	<div class="clearfix"></div>
+	{% include 'includes/dashboard/maindashboard_include/cbp.html' %}
+    <br>
+	
+
+    {% include 'includes/dashboard/maindashboard_include/tradePromotion.html' %}
 	<div class="clearfix"></div>
 
-	<div class="row" id="form4" style="display: none;">
-		    <div class="col-md-12 col-sm-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<span style="font-size: 18px; color: #73879C;">Capacities of farmers, farmers’ organizations and MEs to manage enterprises strengthened</span>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">Settings 1</a>
-									<a class="dropdown-item" href="#">Settings 2</a>
-								</div>
-							</li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-			<div class="x_panel">
-		<div class="top_tiles">
-			<div class="animated flipInY col-lg-5 col-md-5 col-sm-6 ">
-				<div class="x_title">
-						<span style="font-size: 18px; color: #73879C;">Type of Trainings (project-wide)</span>
-					</div>
-				<div class="tile-stats">
 
-				  <div class="count _money_tag">{{dcf4_TOT[0]['tot4']}}</div>
-				  <h3 class="titlecard">Total Number of Training Conducted </h3>			  	  
-				</div>
-			  </div>
-			 </div>
-			</div>
-		   </div>
-		  </div>
-		 </div>
-		</div>
-	
-   <br>
+	{% include 'includes/dashboard/maindashboard_include/EnablersAct.html' %}
+	<div class="x_content"></div>
 
-	<div class="row" id="form7" style="display: none;">
-		<div class="col-md-12 col-sm-12">
-		<div class="x_panel">
-			<div class="x_title">
-				<span style="font-size: 18px; color: #73879C;">Access to Market<br><small>Market linkages established through Trade Fairs/Promotions</small></span>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a>
-							<a class="dropdown-item" href="#">Settings 2</a>
-						</div>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="x_panel">
-							<div class="row">
-								<div class="col-lg-6 col-md-6 col-sm-6">
-									<div class="tile-stats">
-										<div class="count _money_tag">{{ dcf7_TFP[0]['tfp7'] }}</div>
-										<h3 class="titlecard">Trade Fair - Provincial</h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									</div>
-								</div>
-								<div class="col-lg-6 col-md-6 col-sm-6">
-									<div class="tile-stats">
-										<div class="count _money_tag">{{ dcf7_TFR[0]['tfr7'] }}</div>
-										<h3 class="titlecard">Trade Fair - Regional</h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									</div>
-								</div>
-									<div class="col-lg-6 col-md-6 col-sm-6">
-									  <div class="tile-stats">
-										<div class="count _money_tag">{{dcf7_TFN[0]['tfn7']}} </div>
-										<h3 class="titlecard">Trade Fair - National</h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									  </div>
-									</div>
-								
-									<div class="col-lg-6 col-md-6 col-sm-6">
-									  <div class="tile-stats">
-										<div class="count _money_tag">{{dcf7_TFI[0]['tfi7']}}</div>
-										<h3 class="h4">Trade Fair - International</h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									  </div>
-									</div>
-								
-									<div class="col-lg-6 col-md-6 col-sm-6">
-									  <div class="tile-stats">
-										<div class="count _money_tag">{{dcf7_TSMPR[0]['tsmpr7']}} </div>
-										<h3 class="titlecard">Trade/Selling Mission Province and Region </h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									  </div>
-									</div>
 
-									<div class="col-lg-6 col-md-6 col-sm-6">
-									  <div class="tile-stats">
-										<div class="count _money_tag">{{dcf7_TSMN[0]['tsmn7']}} </div>
-										<h3 class="titlecard">Trade/Selling Mission National </h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									  </div>
-									</div>
+	{% include 'includes/dashboard/maindashboard_include/NegosyoCenter.html' %}			
+	</div>
 
-									<div class="col-lg-6 col-md-6 col-sm-6">
-									  <div class="tile-stats">
-										<div class="count _money_tag">{{dcf7_TSMI[0]['tsmi7']}} </div>
-										<h3 class="titlecard">Trade/Selling Mission International </h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									  </div>
-									</div>	
 
-									<div class="col-lg-6 col-md-6 col-sm-6">
-									  <div class="tile-stats">
-										<div class="count _money_tag">{{dcf7_BMPR[0]['bmpr7']}} </div>
-										<h3 class="titlecard">Business Matching Povince and Region </h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									  </div>
-									</div>  
-
-									<div class="col-lg-6 col-md-6 col-sm-6">
-									  <div class="tile-stats">
-										<div class="count _money_tag">{{dcf7_BMN[0]['bmn7']}} </div>
-										<h3 class="titlecard">Business Matching National </h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									  </div>
-									</div> 
-
-									<div class="col-lg-6 col-md-6 col-sm-6">
-									  <div class="tile-stats">
-										<div class="count _money_tag">{{dcf7_BMI[0]['bmi7']}} </div>
-										<h3 class="titlecard">Business Matching International </h3>
-										<p>Total # of Trade Promotion Services organized/participated.</p>
-									  </div>
-									</div>	
-
-							    </div>
-						   </div>
-					  </div>
-
-					<div class="col-md-6">
-						<div class="x_panel">
-							<div class="x_title">
-								<span style="font-size: 16px; color: #73879C;">Number of Trade promotions/trade fair activities per type<br><small>Pie Chart</small></span>
-								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">Settings 1</a>
-											<a class="dropdown-item" href="#">Settings 2</a>
-										</div>
-									</li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-								</ul>
-								<div class="clearfix"></div>
-							</div>
-							<div class="x_content">
-								<canvas id="pieChart7"></canvas>
-								<div style="text-align: center;">
-									<p>
-										<i class="fa fa-square" style="color:#00becc"></i> Provincial: {{ dcf7_TFP[0]['tfp7']|int }} |
-										<i class="fa fa-square" style="color:#eb4eaa"></i> Regional: {{ dcf7_TFR[0]['tfr7']|int }} | 
-										<i class="fa fa-square" style="color:#abf1ce"></i> National: {{dcf7_TFN[0]['tfn7']|int}} | 
-										<i class="fa fa-square" style="color:#9e5400"></i> International: {{dcf7_TFI[0]['tfi7']|int}} | <br>
-										<i class="fa fa-square" style="color:#4a009e"></i> Trade/Selling Mission Province and Region: {{dcf7_TSMPR[0]['tsmpr7']|int}} | 
-										<i class="fa fa-square" style="color:#00719e"></i> Trade/Selling Mission National: {{dcf7_TSMN[0]['tsmn7']|int}} | 
-										<i class="fa fa-square" style="color:#9e0022"></i> Trade/Selling Mission International: {{dcf7_TSMI[0]['tsmi7']|int}} | 
-										<i class="fa fa-square" style="color:#949e00"></i> Business Matching Povince and Region: {{dcf7_BMPR[0]['bmpr7']|int}} | 
-										<i class="fa fa-square" style="color:#0400ff"></i> Business Matching National: {{dcf7_BMN[0]['bmn7']|int}} | 
-										<i class="fa fa-square" style="color:#009e4f"></i> Business Matching International: {{dcf7_BMI[0]['bmi7']|int}}
-									</p>
-								  </div>
-							    </div>
-						      </div>
-					
-								<div class="x_panel" style="margin-top: 7px;">
-									<div class="x_title">
-										<h2>Sales Generated per MSME <small>Bar Chart</small></h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a class="dropdown-item" href="#">Settings 1</a>
-													<a class="dropdown-item" href="#">Settings 2</a>
-												</div>
-											</li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div class="x_content">
-										<canvas id="mybarChart7"></canvas>
-									</div>
-									<div style="text-align: center;">
-										<p><i class="fa fa-square" style="color:#884dff "></i> Cash Sales: <span class="_money_tag">{{dcf_form7cashsales[0]['total_cash7']}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ac7339 "></i> Booked Sales: <span class="_money_tag">{{dcf_form7bookedsales[0]['total_booked7']}}</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ffa31a "></i> Under Negotiations: <span class="_money_tag">{{dcf_form7undernego[0]['total_undernego']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Total: <span class="_money_tag">{{dcf_form7total[0]['total_ovrlltotal']}}</span></p>
-									</div>
-									<div class="col-lg-12 col-md-12 col-sm-12">
-										<hr>
-										  <h3 class="count _money_tag">{{dcf7_TA[0]['ta7']}} </h3>
-										  <h4 class="titlecard">Total amount of sales during participation in trade fairs/promotions activities </h4>
-										  <p>Total of Trade Promotion Services organized/participated.</p>
-									  </div>
-								    </div>
-							      </div>
-				                </div>
-								
-								<div class="row">
-									<div class="col-md-12 col-sm-12 ">	
-										<div class="x_panel">
-									<div class="top_tiles">
-										<div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_TFPCOFFEE[0]['tfpcoffee7']}}</div>
-											  <h3 class="titlecard">Coffee</h3>
-											  <p style="font-weight: bold;">Trade Fair - Provincial. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_TFPCACAO[0]['tfpcacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Trade Fair - Provincial. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_TFPCOCONUT[0]['tfpcoconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Trade Fair - Provincial. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_TFPPFN[0]['tfppfn7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Trade Fair - Provincial. </p>		  	  
-											</div>
-										  </div>
-										</div>
-										
-										<div class="row">
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_TFRCOFFEE[0]['tfrcoffee7']}}</div>
-											  <h3 class="titlecard">Coffee </h3>	
-											  <p style="font-weight: bold;">Trade Fair - Regional. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_TFRCACAO[0]['tfrcacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Trade Fair - Regional. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_TFRCOCONUT[0]['tfrcoconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Trade Fair - Regional. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_TFRPFN[0]['tfrpfn7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Trade Fair - Regional. </p>		  	  
-											</div>
-										  </div>
-										</div>
-
-										<div class="row">
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tfn_coffee[0]['tfn_coffee7']}}</div>
-											  <h3 class="titlecard">Coffee </h3>	
-											  <p style="font-weight: bold;">Trade Fair - National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tfn_coconut[0]['tfn_coconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Trade Fair - National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tfn_cacao[0]['tfn_cacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Trade Fair - National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tfn_PFN[0]['tfn_PFN7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Trade Fair - National. </p>		  	  
-											</div>
-										  </div>
-										</div>
-												
-										<div class="row">
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tfi_coffee[0]['tfi_coffee7']}}</div>
-											  <h3 class="titlecard">Coffee </h3>	
-											  <p style="font-weight: bold;">Trade Fair - International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tfi_coconut[0]['tfi_coconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Trade Fair - International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tfi_cacao[0]['tfi_cacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Trade Fair - International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tfi_PFN[0]['tfi_PFN7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Trade Fair - International. </p>		  	  
-											</div>
-										  </div>
-										</div>
-
-										<div class="row">
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmpr_coffee[0]['tmpr_coffee7']}}</div>
-											  <h3 class="titlecard">Coffee </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions Province and Region. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmpr_cacao[0]['tmpr_cacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions Province and Region. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmpr_coconut[0]['tmpr_coconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions Province and Region. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmpr_PFN[0]['tmpr_PFN7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions Province and Region. </p>		  	  
-											</div>
-										  </div>
-										</div>
-
-										<div class="row">
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmn_coffee[0]['tmn_coffee7']}}</div>
-											  <h3 class="titlecard">Coffee </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmn_coconut[0]['tmn_coconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmn_cacao[0]['tmn_cacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmn_PFN[0]['tmn_PFN7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions National. </p>		  	  
-											</div>
-										  </div>
-										</div>
-								
-										<div class="row">
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmi_coffee[0]['tmi_coffee7']}}</div>
-											  <h3 class="titlecard">Coffee </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmi_coconut[0]['tmi_coconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmi_cacao[0]['tmi_cacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_tmi_PFN[0]['tmi_PFN7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Trade/Selling Missions International. </p>		  	  
-											</div>
-										  </div>
-										</div>
-								
-										<div class="row">
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmpr_coffee[0]['bmpr_coffee7']}}</div>
-											  <h3 class="titlecard">Coffee </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and Region. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3"">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmpr_coconut[0]['bmpr_coconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and Region. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmpr_cacao[0]['bmpr_cacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and Region. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmpr_PFN[0]['bmpr_PFN7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and Region. </p>
-										 </div>
-										</div>
-									   </div>
-								
-									   <div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmn_coffee[0]['bmn_coffee7']}}</div>
-											  <h3 class="titlecard">Coffee </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmn_coconut[0]['bmn_coconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmn_cacao[0]['bmn_cacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and National. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmn_PFN[0]['bmn_PFN7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and National. </p>
-										 </div>
-										</div>
-									  </div>
-								
-									  <div class="row">
-										<div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmi_coffee[0]['bmi_coffee7']}}</div>
-											  <h3 class="titelcard">Coffee </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmi_coconut[0]['bmi_coconut7']}}</div>
-											  <h3 class="titlecard">Coconut </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmi_cacao[0]['bmi_cacao7']}}</div>
-											  <h3 class="titlecard">Cacao </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and International. </p>		  	  
-											</div>
-										  </div>
-								
-										  <div class="col-lg-3 col-md-3 col-sm-3">
-											<div class="tile-stats">
-											  <div class="count _money_tag">{{dcf7_bmi_PFN[0]['bmi_PFN7']}}</div>
-											  <h3 class="titlecard">PFN </h3>	
-											  <p style="font-weight: bold;">Business Matching Province and International. </p>
-										 </div>
-										</div>
-									   </div>
-									  </div>
-									 </div>
-									</div>
-								   </div>
-			                      </div>
-		                         </div>
-	                           </div>
-							 </div>
-					      <div class="clearfix"></div>
-
-					 <div class="row" id="form9" style="display: none;">
-						<div class="col-md-12 col-sm-12">
-							<div>
-								<div class="x_panel">
-									<div class="x_title">
-										<span style="font-size: 16px; color: #73879C;">Capacities of enablers (e.g., DTI, LGUs and industry councils) for value chain development strengthened <br><small>Functional industry councils in selected value chain commodities</small></span>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-											<li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a class="dropdown-item" href="#">Settings 1</a>
-													<a class="dropdown-item" href="#">Settings 2</a>
-												</div>
-											</li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-
-									<div class="x_content">
-										<div class="top_tiles">
-											<div class="row">
-												<div class="col-lg-6 col-md-6 col-sm-6">
-													<div class="tile-stats" style="margin-bottom: 10px;">
-														<div class="count _money_tag">{{dcf_form9policy[0]['totalpolicy9']}}</div>
-														<h3 class="titlecard"><i class=></i> Total Policy Issuances</h3>
-														<p>Total Number of Training/Activity</p>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						 </div>
-					 </div>
-				  <div class="x_content">
-			 </div>
-				<div class="row" id="form10" style="display: none;">
-					<div class="col-md-12 col-sm-12 ">	
-						 <div>
-							<div class="x_panel">
-								<div class="x_title">
-									<span style="font-size: 17px; color: #73879C;">Networks of Negosyo Centers set up servicing farmers, farmers associations, cooperatives and MSMEs in 21 provinces<br><small>Negosyo Centers assisting the RAPID Project (Project-wide)</small></span>
-									<ul class="nav navbar-right panel_toolbox">
-										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-										<li class="dropdown">
-											<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<a class="dropdown-item" href="#">Settings 1</a>
-												<a class="dropdown-item" href="#">Settings 2</a>
-											</div>
-										</li>
-										<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-									</ul>
-									<div class="clearfix"></div>
-								</div>
-
-						<div class="x_content">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="x_panel">
-										<div class="top_tiles">
-											<div class="col-lg-12 col-md-12 col-sm-12">
-												<div class="tile-stats">
-													<div class="count _money_tag">{{dcf10_FO[0]['FO10']}}</div>
-													<h3 class="titlecard">Total number of assisted FOs</h3>
-													<p>Negosyo Center Tracker.</p>
-												</div>
-											</div>
-
-											<div class="col-lg-12 col-md-12 col-sm-12">
-												<div class="tile-stats">
-													<div class="count _money_tag">{{dcf10_MSME[0]['msme10']}}</div>
-													<h3 class="titlecard">Total number of assisted MSMEs</h3>
-													<p>Negosyo Center Tracker.</p>
-												</div>
-											</div>
-
-											<div class="col-lg-12 col-md-12 col-sm-12">
-												<div class="tile-stats" style="margin-bottom: 10px;">
-													<div class="count _money_tag">{{dcf_form10_male[0]['totalmale10']}}</div>
-													<h3 class="titlecard"><i class="fa fa-male"></i> Total Male</h3>
-													<p>Total number of assisted male individual project beneficiaries.</p>
-												</div>
-											</div>
-
-											<div class="col-lg-12 col-md-12 col-sm-12">
-												<div class="tile-stats" style="margin-bottom: 10px;">
-													<div class="count _money_tag">{{dcf_form10_female[0]['totalfemale10']}}</div>
-													<h3 class="titlecard"><i class="fa fa-female"></i> Total Female</h3>
-													<p>Total number of assisted female individual project beneficiaries.</p>
-												</div>
-											</div>
-
-											<div class="col-lg-12 col-md-12 col-sm-12">
-												<div class="tile-stats">
-												  <div class="count _money_tag">{{dcf10_NOT[0]['NOT10']}}</div>
-												  <h3 class="titlecard">Total Number of Assisted Individual Project </h3>
-												  <p>Negosyo Center Tracker.</p>			  	  
-												</div>
-											  </div>
-
-										</div>
-									</div>
-								</div>
-							
-								<div class="col-md-6">
-									<div class="x_panel">
-										<div class="x_title">
-											<h2>Individual _ By Male & Female <small>Pie Chart</small></h2>
-											<ul class="nav navbar-right panel_toolbox">
-												<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-												<li class="dropdown">
-													<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-														<a class="dropdown-item" href="#">Settings 1</a>
-														<a class="dropdown-item" href="#">Settings 2</a>
-													</div>
-												</li>
-												<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-											</ul>
-											<div class="clearfix"></div>
-										</div>
-										<div class="x_content">
-											<canvas id="pieChart10"></canvas>
-											<div style="text-align: center;">
-												<p>
-													<i class="fa fa-square" style="color:#00becc"></i> Male: {{ dcf_form10_male[0]['totalmale10']|int }}&nbsp;&nbsp;&nbsp; 
-													<i class="fa fa-square" style="color:#eb4eaa"></i> Female: {{ dcf_form10_female[0]['totalfemale10']|int }}&nbsp;&nbsp;&nbsp;
-												     Total: {{ (dcf_form10_male[0]['totalmale10']|int) + (dcf_form10_female[0]['totalfemale10']|int) }}
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>						
-					     </div>
-					 </div>
-				 </div>
-			 </div>
-		 </div>
-	 </div>
 		<div class="clearfix"></div>
 	      </div>
 	     </div>
@@ -1848,23 +67,19 @@
 
 <script>
 	function init_charts() {
-
 		console.log('run_charts  typeof [' + typeof (Chart) + ']');
-
 		if (typeof (Chart) === 'undefined') { return; }
-
 		console.log('init_charts');
-
 
 		Chart.defaults.global.legend = {
 			enabled: false
 		};
-		if ($("#lineChart").length) {
+				if ($("#lineChart").length) {
 			var e = document.getElementById("lineChart");
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -1874,7 +89,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [ {{form1_data_sep}}, {{form1_data_oct}}, {{form1_data_nov}}, {{form1_data_dec}}, {{form1_data_jan}}, {{form1_data_feb}}, {{form1_data_mar}}, {{form1_data_apr}}]
+						data: [ {{form1_data_sep}}, {{form1_data_oct}}, {{form1_data_nov}}, {{form1_data_dec}}, {{form1_data_jan}}, {{form1_data_feb}}, {{form1_data_mar}}, {{form1_data_apr}}, {{form1_data_may}}]
 					}]
 				}
 			})
@@ -1885,7 +100,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -1895,7 +110,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [ {{form2_data_sep}}, {{form2_data_oct}}, {{form2_data_nov}}, {{form2_data_dec}}, {{form2_data_jan}}, {{form2_data_feb}}, {{form2_data_mar}}, {{form2_data_apr}}]
+						data: [ {{form2_data_sep}}, {{form2_data_oct}}, {{form2_data_nov}}, {{form2_data_dec}}, {{form2_data_jan}}, {{form2_data_feb}}, {{form2_data_mar}}, {{form2_data_apr}}, {{form2_data_may}}]
 					}]
 				}
 			})
@@ -1906,7 +121,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -1916,7 +131,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [ {{form3_data_sep}}, {{form3_data_oct}}, {{form3_data_nov}}, {{form3_data_dec}}, {{form3_data_jan}}, {{form3_data_feb}}, {{form3_data_mar}}, {{form3_data_apr}}]
+						data: [ {{form3_data_sep}}, {{form3_data_oct}}, {{form3_data_nov}}, {{form3_data_dec}}, {{form3_data_jan}}, {{form3_data_feb}}, {{form3_data_mar}}, {{form3_data_apr}}, {{form3_data_may}}]
 					}]
 				}
 			})
@@ -1927,7 +142,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -1937,7 +152,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [ {{form4_data_sep}}, {{form4_data_oct}}, {{form4_data_nov}}, {{form4_data_dec}}, {{form4_data_jan}}, {{form4_data_feb}}, {{form4_data_mar}}, {{form4_data_apr}}]
+						data: [ {{form4_data_sep}}, {{form4_data_oct}}, {{form4_data_nov}}, {{form4_data_dec}}, {{form4_data_jan}}, {{form4_data_feb}}, {{form4_data_mar}}, {{form4_data_apr}}, {{form4_data_may}}]
 					}]
 				}
 			})
@@ -1948,7 +163,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -1958,7 +173,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [ {{form5_data_sep}}, {{form5_data_oct}}, {{form5_data_nov}}, {{form5_data_dec}}, {{form5_data_jan}}, {{form5_data_feb}}, {{form5_data_mar}}, {{form5_data_apr}}]
+						data: [ {{form5_data_sep}}, {{form5_data_oct}}, {{form5_data_nov}}, {{form5_data_dec}}, {{form5_data_jan}}, {{form5_data_feb}}, {{form5_data_mar}}, {{form5_data_apr}}, {{form5_data_may}}]
 					}]
 				}
 			})
@@ -1969,7 +184,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -1979,7 +194,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [ {{form6_data_sep}}, {{form6_data_oct}}, {{form6_data_nov}}, {{form6_data_dec}}, {{form6_data_jan}}, {{form6_data_feb}}, {{form6_data_mar}}, {{form6_data_apr}}]
+						data: [ {{form6_data_sep}}, {{form6_data_oct}}, {{form6_data_nov}}, {{form6_data_dec}}, {{form6_data_jan}}, {{form6_data_feb}}, {{form6_data_mar}}, {{form6_data_apr}}, {{form6_data_may}}]
 					}]
 				}
 			})
@@ -1990,7 +205,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -2000,7 +215,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [ {{form7_data_sep}}, {{form7_data_oct}}, {{form7_data_nov}}, {{form7_data_dec}}, {{form7_data_jan}}, {{form7_data_feb}}, {{form7_data_mar}}, {{form7_data_apr}}]
+						data: [ {{form7_data_sep}}, {{form7_data_oct}}, {{form7_data_nov}}, {{form7_data_dec}}, {{form7_data_jan}}, {{form7_data_feb}}, {{form7_data_mar}}, {{form7_data_apr}}, {{form7_data_may}}]
 					}]
 				}
 			})
@@ -2011,7 +226,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -2021,7 +236,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [ {{form9_data_sep}}, {{form9_data_oct}}, {{form9_data_nov}}, {{form9_data_dec}}, {{form9_data_jan}}, {{form9_data_feb}}, {{form9_data_mar}}, {{form9_data_apr}}]
+						data: [ {{form9_data_sep}}, {{form9_data_oct}}, {{form9_data_nov}}, {{form9_data_dec}}, {{form9_data_jan}}, {{form9_data_feb}}, {{form9_data_mar}}, {{form9_data_apr}}, {{form9_data_may}}]
 					}]
 				}
 			})
@@ -2032,7 +247,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -2042,7 +257,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [{{form10_data_sep}}, {{form10_data_oct}}, {{form10_data_nov}}, {{form10_data_dec}}, {{form10_data_jan}}, {{form10_data_feb}}, {{form10_data_mar}}, {{form10_data_apr}}]
+						data: [{{form10_data_sep}}, {{form10_data_oct}}, {{form10_data_nov}}, {{form10_data_dec}}, {{form10_data_jan}}, {{form10_data_feb}}, {{form10_data_mar}}, {{form10_data_apr}}, {{form10_data_may}}]
 					}]
 				}
 			})
@@ -2053,7 +268,7 @@
 			new Chart(e, {
 				type: "line",
 				data: {
-					labels: ["September", "October", "November", "December", "January", "February","March","April"],
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May"],
 					datasets: [{
 						label: "Entries",
 						backgroundColor: "rgba(38, 185, 154, 0.31)",
@@ -2063,7 +278,7 @@
 						pointHoverBackgroundColor: "#fff",
 						pointHoverBorderColor: "rgba(220,220,220,1)",
 						pointBorderWidth: 1,
-						data: [{{form11_data_sep}}, {{form11_data_oct}}, {{form11_data_nov}}, {{form11_data_dec}}, {{form11_data_jan}}, {{form11_data_feb}}, {{form11_data_mar}}, {{form11_data_apr}}]
+						data: [{{form11_data_sep}}, {{form11_data_oct}}, {{form11_data_nov}}, {{form11_data_dec}}, {{form11_data_jan}}, {{form11_data_feb}}, {{form11_data_mar}}, {{form11_data_apr}}, {{form11_data_may}}]
 					}]
 				}
 			})
@@ -2182,7 +397,199 @@
 					}
 				}
 			});
-		}
+		};
+
+
+		if ($('#mybarChartStacked').length) {
+			var _labelsrcu = ['Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'Region 13', 'BARMM'];
+				var dipData = {
+				coffee: [],
+				cacao: [],
+				coconut: [],
+				pfn: []
+				};
+
+				// Sample data population (assuming the same logic exists)
+
+				// Calculate total counts for each crop
+				var totalCoffee = dipData.coffee.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalCacao = dipData.cacao.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalCoconut = dipData.coconut.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalPfn = dipData.pfn.reduce((acc, val) => acc + parseFloat(val), 0);
+
+				var totalCoffee = {{ dcf1_COFFEE_8[0]['coffee_8_1'] + dcf1_COFFEE_9[0]['coffee_9_1'] + dcf1_COFFEE_10[0]['coffee_10_1'] + dcf1_COFFEE_11[0]['coffee_11_1'] + dcf1_COFFEE_12[0]['coffee_12_1'] + dcf1_COFFEE_13[0]['coffee_13_1'] + dcf1_COFFEE_BARMM[0]['coffee_BARMM_1'] }};
+				var totalCacao = {{ dcf1_CACAO_8[0]['cacao_8_1'] + dcf1_CACAO_9[0]['cacao_9_1'] + dcf1_CACAO_10[0]['cacao_10_1'] + dcf1_CACAO_11[0]['cacao_11_1'] + dcf1_CACAO_12[0]['cacao_12_1'] + dcf1_CACAO_13[0]['cacao_13_1'] + dcf1_CACAO_BARMM[0]['cacao_BARMM_1'] }};
+				var totalCoconut = {{ dcf1_COCONUT_8[0]['coconut_8_1'] + dcf1_COCONUT_9[0]['coconut_9_1'] + dcf1_COCONUT_10[0]['coconut_10_1'] + dcf1_COCONUT_11[0]['coconut_11_1'] + dcf1_COCONUT_12[0]['coconut_12_1'] + dcf1_COCONUT_13[0]['coconut_13_1'] + dcf1_COCONUT_BARMM[0]['coconut_BARMM_1'] }};
+				var totalPfn = {{ dcf1_PFN_8[0]['pfn_8_1'] + dcf1_PFN_9[0]['pfn_9_1'] + dcf1_PFN_10[0]['pfn_10_1'] + dcf1_PFN_11[0]['pfn_11_1'] + dcf1_PFN_12[0]['pfn_12_1'] + dcf1_PFN_13[0]['pfn_13_1'] + dcf1_PFN_BARMM[0]['pfn_BARMM_1'] }};
+
+				var ctx = document.getElementById("mybarChartStacked");
+				var mybarChartStacked = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: _labelsrcu,
+						datasets: [{
+							label: 'Coffee',
+							backgroundColor: "#99e6ff",
+							data: [
+								{{ dcf1_COFFEE_8[0]['coffee_8_1'] }},
+								{{ dcf1_COFFEE_9[0]['coffee_9_1'] }},
+								{{ dcf1_COFFEE_10[0]['coffee_10_1'] }},
+								{{ dcf1_COFFEE_11[0]['coffee_11_1'] }},
+								{{ dcf1_COFFEE_12[0]['coffee_12_1'] }},
+								{{ dcf1_COFFEE_13[0]['coffee_13_1'] }},
+								{{ dcf1_COFFEE_BARMM[0]['coffee_BARMM_1'] }}
+							]
+						}, {
+							label: 'Cacao',
+							backgroundColor: "#33ccff",
+							data: [
+								{{ dcf1_CACAO_8[0]['cacao_8_1'] }},
+								{{ dcf1_CACAO_9[0]['cacao_9_1'] }},
+								{{ dcf1_CACAO_10[0]['cacao_10_1'] }},
+								{{ dcf1_CACAO_11[0]['cacao_11_1'] }},
+								{{ dcf1_CACAO_12[0]['cacao_12_1'] }},
+								{{ dcf1_CACAO_13[0]['cacao_13_1'] }},
+								{{ dcf1_CACAO_BARMM[0]['cacao_BARMM_1'] }}
+							]
+						}, {
+							label: 'Coconut',
+							backgroundColor: "#0099cc",
+							data: [
+								{{ dcf1_COCONUT_8[0]['coconut_8_1'] }},
+								{{ dcf1_COCONUT_9[0]['coconut_9_1'] }},
+								{{ dcf1_COCONUT_10[0]['coconut_10_1'] }},
+								{{ dcf1_COCONUT_11[0]['coconut_11_1'] }},
+								{{ dcf1_COCONUT_12[0]['coconut_12_1'] }},
+								{{ dcf1_COCONUT_13[0]['coconut_13_1'] }},
+								{{ dcf1_COCONUT_BARMM[0]['coconut_BARMM_1'] }}
+							]
+						}, {
+							label: 'PFN',
+							backgroundColor: "#ff8080",
+							data: [
+								{{ dcf1_PFN_8[0]['pfn_8_1'] }},
+								{{ dcf1_PFN_9[0]['pfn_9_1'] }},
+								{{ dcf1_PFN_10[0]['pfn_10_1'] }},
+								{{ dcf1_PFN_11[0]['pfn_11_1'] }},
+								{{ dcf1_PFN_12[0]['pfn_12_1'] }},
+								{{ dcf1_PFN_13[0]['pfn_13_1'] }},
+								{{ dcf1_PFN_BARMM[0]['pfn_BARMM_1'] }}
+							]
+						}]
+					},
+					options: {
+						scales: {
+							xAxes: [{ stacked: true }],
+							yAxes: [{ stacked: true }]
+						},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+									// Calculate percentage based on total count for current crop
+									var currentCrop = datasetLabel.toLowerCase();
+									var total = 0;
+
+									switch (currentCrop) {
+										case 'coffee':
+											total = totalCoffee;
+											break;
+										case 'cacao':
+											total = totalCacao;
+											break;
+										case 'coconut':
+											total = totalCoconut;
+											break;
+										case 'pfn':
+											total = totalPfn;
+											break;
+										default:
+											break;
+									}
+									var percentage = total !== 0 ? parseFloat((value / total * 100).toFixed(2)) : 0;
+									return datasetLabel + ': ' + value + ' (' + percentage + '%)';
+								}
+							}
+						}
+					}
+				});
+			};
+
+
+			if ($('#pieChartM').length) {
+				var totalMale = {{ dcf_form1male_appr[0]['total_male_appr'] }};
+				var totalFemale = {{ dcf_form1female_appr[0]['total_female_appr'] }};
+				var totalMaleIP = {{ dcf_form1maleip_appr[0]['total_maleip_appr'] }};
+				var totalFemaleIP = {{ dcf_form1femaleip_appr[0]['total_femaleip_appr'] }};
+				var totalMaleYouth = {{ dcf_form1maleyouth_appr[0]['total_maleyouth_appr'] }};
+				var totalFemaleYouth = {{ dcf_form1femaleyouth_appr[0]['total_femaleyouth_appr'] }};
+
+				var totalMaleWithoutIPAndYouth = totalMale - totalMaleIP - totalMaleYouth;
+				var totalFemaleWithoutIPAndYouth = totalFemale - totalFemaleIP - totalFemaleYouth;
+
+				var xValues2 = [
+					'Male: ' + totalMaleWithoutIPAndYouth,
+					'Female: ' + totalFemaleWithoutIPAndYouth,
+					'Male_IP: ' + totalMaleIP,
+					'Male_Youth: ' + totalMaleYouth,
+					'Female_IP: ' + totalFemaleIP,
+					'Female_Youth: ' + totalFemaleYouth,
+					'Approved DIPs of smallholder farmers: ' + (totalMale + totalFemale)
+				];
+
+				var yValues2 = [
+					totalMaleWithoutIPAndYouth,
+					totalFemaleWithoutIPAndYouth,
+					totalMaleIP,
+					totalMaleYouth,
+					totalFemaleIP,
+					totalFemaleYouth,
+					totalMale + totalFemale
+				];
+
+				var barColors = ['#0070cc', '#0070cc', '#0070cc', '#cc00aa', '#cc00aa', '#cc00aa', '#4eeb82'];
+
+				var ctx = document.getElementById("pieChartM");
+				var data = {
+				datasets: [{
+					data: yValues2,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+				};
+
+				var pieChartM = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+					datalabels: {
+						color: 'white',
+						formatter: (value, context) => {
+						const total = yValues2.reduce((a, b) => a + b, 0);
+						const percentage = ((value / total) * 100).toFixed(2) + '%';
+						return percentage;
+						}
+					}
+					},
+					tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+						const label = data.labels[tooltipItem.index];
+						const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+						const total = yValues2.reduce((a, b) => a + b, 0);
+						const percentage = ((value / total) * 100).toFixed(2) + '%';
+						return `${label} (${percentage})`;
+						}
+					}
+					}
+				}
+				});
+			};
+
 
 
 		if ($('#pieChart3').length) {
@@ -2198,7 +605,7 @@
 				];
 			var barColors = ['#005fcc', '#eb4e97'];
 			var total = yValues2.reduce((a, b) => a + b, 0);
-			var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var percentageValues3 = yValues2.map((value) => ((value / total) * 100).toFixed(2));
 			var ctx = document.getElementById("pieChart3");
 			var data = {
 				datasets: [{
@@ -2217,7 +624,7 @@
 						datalabels: {
 							color: 'white',
 							formatter: (value, context) => {
-								return percentageValues[context.dataIndex] + '%';
+								return percentageValues3[context.dataIndex] + '%';
 							}
 						}
 					},
@@ -2226,14 +633,14 @@
 							label: function (tooltipItem, data) {
 								var label = data.labels[tooltipItem.index];
 								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-								var percentage = percentageValues[tooltipItem.index] + '%';
+								var percentage = percentageValues3[tooltipItem.index] + '%';
 								return `${label} (${percentage})`;
 							},
 						},
 					},
 				},
 			});
-		}
+		};
 
 		
 		if ($('#pieChart7').length) {
@@ -2265,11 +672,11 @@
 
 			var barColors = ['#00becc', '#eb4eaa', '#abf1ce', '#9e5400', '#4a009e', '#00719e', '#9e0022', '#949e00', '#0400ff', '#009e4f'];
 			var total = yValues2.reduce((a, b) => a + b, 0);
-			var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var percentageValues7 = yValues2.map((value) => ((value / total) * 100).toFixed(2));
 			var ctx = document.getElementById("pieChart7");
 			var data = {
 				datasets: [{
-					data: percentageValues,
+					data: percentageValues7,
 					backgroundColor: barColors,
 					label: 'Total'
 				}],
@@ -2284,7 +691,7 @@
 						datalabels: {
 							color: 'white',
 							formatter: (value, context) => {
-								return percentageValues[context.dataIndex] + '%';
+								return percentageValues7[context.dataIndex] + '%';
 							}
 						}
 					},
@@ -2292,15 +699,187 @@
 						callbacks: {
 							label: function (tooltipItem, data) {
 								var label = data.labels[tooltipItem.index];
-								var value = data.datasets[0].data[tooltipItem.index];
-								var percentage = ((value / total) * 100).toFixed(2);
-								return `${label} (${value}%)`;
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValues7[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
 							},
 						},
 					},
 				},
 			});
 		};
+
+
+		if ($('#pieChartDIPS').length) {
+			var xValues2 = [
+				'Region 8: ' + {{ dcf_form2_rcu8[0]['form2_rcu8']|int }},
+				'Region 9: ' + {{ dcf_form2_rcu9[0]['form2_rcu9']|int }},
+				'Region 10: ' + {{ dcf_form2_rcu10[0]['form2_rcu10']|int}},
+				'Region 11: ' + {{ dcf_form2_rcu11[0]['form2_rcu11']|int}},
+				'Region 12: ' + {{ dcf_form2_rcu12[0]['form2_rcu12']|int}},
+				'Region 13: ' + {{ dcf_form2_rcu13[0]['form2_rcu13']|int}},
+				'Region BARMM: ' + {{ dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int}},
+			];
+
+			var yValues2 = [
+				{{ dcf_form2_rcu8[0]['form2_rcu8']|int }},
+				{{ dcf_form2_rcu9[0]['form2_rcu9']|int }},
+				{{ dcf_form2_rcu10[0]['form2_rcu10']|int}},
+				{{ dcf_form2_rcu11[0]['form2_rcu11']|int}},
+				{{ dcf_form2_rcu12[0]['form2_rcu12']|int }},
+				{{ dcf_form2_rcu13[0]['form2_rcu13']|int }},
+				{{ dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int }},
+			];
+
+			var barColors = ['#00becc', '#eb4eaa', '#abf1ce', '#9e5400', '#4a009e', '#00719e', '#9e0022', '#949e00', '#0400ff', '#009e4f'];
+			var total = yValues2.reduce((a, b) => a + b, 0);
+			var percentageValuesDIPS = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartDIPS");
+			var data = {
+				datasets: [{
+					data: percentageValuesDIPS,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartDIPS = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesDIPS[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesDIPS[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+		
+
+		if ($('#pieChartDIPS2').length) {
+			var xValues2 = [
+				'Coffee: ' + {{ dcf1_COFFEE_FO[0]['coffee_fo']|int }},
+				'Cacao: ' + {{ dcf1_CACAO_FO[0]['cacao_fo']|int }},
+				'Coconut: ' + {{ dcf1_COCONUT_FO[0]['coconut_fo']|int }},
+				'PFN: ' + {{ dcf1_PFN_FO[0]['pfn_fo']|int }},
+			];
+
+			var yValues2 = [
+				{{ dcf1_COFFEE_FO[0]['coffee_fo']|int }},
+				{{ dcf1_CACAO_FO[0]['cacao_fo']|int }},
+				{{ dcf1_COCONUT_FO[0]['coconut_fo']|int }},
+				{{ dcf1_PFN_FO[0]['pfn_fo']|int }},
+			];
+
+			var barColors = ['#00becc', '#eb4eaa', '#abf1ce', '#9e5400', '#4a009e', '#00719e', '#9e0022', '#949e00', '#0400ff', '#009e4f'];
+			var total = yValues2.reduce((a, b) => a + b, 0);
+			var percentageValuesDIPS2 = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartDIPS2");
+			var data = {
+				datasets: [{
+					data: percentageValuesDIPS2,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartDIPS2 = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesDIPS2[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesDIPS2[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+
+		if ($('#pieChartDIPS_pt').length) {
+					var totalCPA = {{ dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int}};
+					var percentageCPA = (totalCPA / 100) * 100;
+
+					var xValues2 = [
+						'Total # of signed CPA from all regions: ' + totalCPA,
+						'Project targets: 100'
+					];
+
+					var yValues2 = [
+						totalCPA,
+						100
+					];
+
+					var barColors = ['#00becc', '#4eeb70'];
+					var ctx = document.getElementById("pieChartDIPS_pt");
+					var data = {
+						datasets: [{
+							data: [percentageCPA, 100 - percentageCPA],
+							backgroundColor: barColors,
+							label: 'Total'
+						}],
+						labels: xValues2
+					};
+
+					var pieChartDIPS_pt = new Chart(ctx, {
+						data: data,
+						type: 'pie',
+						options: {
+							plugins: {
+								datalabels: {
+									color: 'white',
+									formatter: (value, context) => {
+										return value.toFixed(2) + '%';
+									}
+								}
+							},
+							tooltips: {
+								callbacks: {
+									label: function (tooltipItem, data) {
+										var label = data.labels[tooltipItem.index];
+										var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+										if (label.includes('Total # of signed CPA from all regions')) {
+											return `${label}: ${value.toFixed(2)}%`;
+										} else {
+											return `${label}`;
+										}
+									},
+								},
+							},
+						},
+					});
+				}
+
 
 		if ($('#pieChart10').length) {
 		
@@ -2315,7 +894,7 @@
 				];
 			var barColors = ['#00becc', '#eb4eaa'];
 			var total = yValues2.reduce((a, b) => a + b, 0);
-			var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var percentageValues10 = yValues2.map((value) => ((value / total) * 100).toFixed(2));
 			var ctx = document.getElementById("pieChart10");
 			var data = {
 				datasets: [{
@@ -2334,7 +913,7 @@
 						datalabels: {
 							color: 'white',
 							formatter: (value, context) => {
-								return percentageValues[context.dataIndex] + '%';
+								return percentageValues10[context.dataIndex] + '%';
 							}
 						}
 					},
@@ -2343,7 +922,7 @@
 							label: function (tooltipItem, data) {
 								var label = data.labels[tooltipItem.index];
 								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-								var percentage = percentageValues[tooltipItem.index] + '%';
+								var percentage = percentageValues10[tooltipItem.index] + '%';
 								return `${label} (${percentage})`;
 							},
 						},
@@ -2359,7 +938,7 @@
 			var barColors = ["#009999", "#666699"];
 
 			var total = yValues.reduce((a, b) => a + b, 0);
-			var percentageValues = yValues.map(value => ((value / total) * 100).toFixed(2));
+			var percentageValuesB3 = yValues.map(value => ((value / total) * 100).toFixed(2));
 
 			var data = {
 				labels: xValues,
@@ -2386,7 +965,7 @@
 							label: function(tooltipItem, data) {
 								var label = data.labels[tooltipItem.index];
 								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-								var percentage = percentageValues[tooltipItem.index] + '%';
+								var percentage = percentageValuesB3[tooltipItem.index] + '%';
 								return `${value} (${percentage})`;
 							}
 						}
@@ -2395,102 +974,64 @@
 			});
 		}
 
-		if ($('.canvasDoughnut').length) {
+		if ($('.canvasDoughnut1').length) {
 
-		var _labels = [];
-		var _data = [];
+			var _labels = [];
+			var _data = [];
 
-		{% for key in over_all_commodity_count %}
-		_labels.push('{{key}}');
-		_data.push('{{over_all_commodity_count[key]}}');
-		{% endfor %}
-		var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-		var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
-		var chart_doughnut_settings = {
-			type: 'doughnut',
-			tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-			data: {
-				labels: _labels,
-				datasets: [{
-		data: normalizedData, 
-		backgroundColor: [
-		"#BDC3C7",
-		"#5c5c3d",
-		"#994d00",
-		"#331a00",
-		"#23a98c"
-		],
-		hoverBackgroundColor: [
-		"#CFD4D8",
-		"#8a8a5c",
-		"#cc6600",
-		"#663500",
-		"#56dcbf"
-		]
-		}]
-			},
-			options: {
-				legend: false,
-				responsive: false,
-				tooltips: {
-					callbacks: {
-						label: function (tooltipItem, data) {
-							var dataset = data.datasets[tooltipItem.datasetIndex];
-							var currentValue = _data[tooltipItem.index];
-							var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
-							return _labels[tooltipItem.index] + ": " + percentage;
+			{% for key in over_all_commodity_count %}
+			_labels.push('{{key}}');
+			_data.push('{{over_all_commodity_count[key]}}');
+			{% endfor %}
+			var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+			var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
+			var chart_doughnut_settings = {
+				type: 'doughnut',
+				tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+				data: {
+					labels: _labels,
+					datasets: [{
+			data: normalizedData, 
+			backgroundColor: [
+			"#BDC3C7",
+			"#5c5c3d",
+			"#994d00",
+			"#331a00",
+			"#23a98c"
+			],
+			hoverBackgroundColor: [
+			"#CFD4D8",
+			"#8a8a5c",
+			"#cc6600",
+			"#663500",
+			"#56dcbf"
+			]
+			}]
+				},
+				options: {
+					legend: false,
+					responsive: false,
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var dataset = data.datasets[tooltipItem.datasetIndex];
+								var currentValue1 = _data[tooltipItem.index];
+								var percentage1 = ((currentValue1 / totalData) * 100).toFixed(2) + "%";
+								return _labels[tooltipItem.index] + ": " + percentage1;
+							}
 						}
 					}
+
 				}
+			};
+
+			$('.canvasDoughnut1').each(function () {
+				var chart_element = $(this);
+				var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+
+			});
 
 			}
-		};
-
-		$('.canvasDoughnut').each(function () {
-			var chart_element = $(this);
-			var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
-
-		});
-
-		}
-
-		if ($('#canvasDoughnut').length) {
-		var ctx = document.getElementById("canvasDoughnut");
-		var data = {
-			labels: [
-				"Dark Grey",
-				"Purple Color",
-				"Gray Color",
-				"Green Color",
-				"Blue Color"
-				],
-			datasets: [{
-				data: [120, 50, 140, 180, 100],
-				backgroundColor: [
-					"#455C73",
-					"#9B59B6",
-					"#BDC3C7",
-					"#26B99A",
-					"#3498DB"
-					],
-				hoverBackgroundColor: [
-					"#34495E",
-					"#B370CF",
-					"#CFD4D8",
-					"#36CAAB",
-					"#49A9EA"
-					]
-
-			}]
-		};
-
-		var canvasDoughnut = new Chart(ctx, {
-			type: 'doughnut',
-			tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-			data: data
-		});
-
-		}
 
 
 		if ($("#mybarChart7").length) e = document.getElementById("mybarChart7"), new Chart(e, {
@@ -2540,6 +1081,7 @@
 					]
 				}]
 			},
+
 			options: {
 				legend: false,
 				responsive: false,
@@ -2551,7 +1093,7 @@
 								return previousValue + currentValue;
 							});
 							var currentValue = dataset.data[tooltipItem.index];
-							var percentage = Math.round((currentValue / total) * 100);
+							var percentage =((currentValue / total) * 100).toFixed(2);
 							return data.labels[tooltipItem.index] + ': ' + percentage + '%';
 						}
 					}
@@ -2597,7 +1139,7 @@
                             return previousValue + currentValue;
                         });
                         var currentValue = dataset.data[tooltipItem.index];
-                        var percentage = Math.round((currentValue / total) * 100);
+                        var percentage =((currentValue / total) * 100).toFixed(2);
                         return data.labels[tooltipItem.index] + ': ' + percentage + '%';
                     }
                 }
@@ -2643,7 +1185,7 @@
                             return previousValue + currentValue;
                         });
                         var currentValue = dataset.data[tooltipItem.index];
-                        var percentage = Math.round((currentValue / total) * 100);
+                        var percentage =((currentValue / total) * 100).toFixed(2);
                         return data.labels[tooltipItem.index] + ': ' + percentage + '%';
                     }
                 }
@@ -2689,7 +1231,7 @@
                             return previousValue + currentValue;
                         });
                         var currentValue = dataset.data[tooltipItem.index];
-                        var percentage = Math.round((currentValue / total) * 100);
+                        var percentage =((currentValue / total) * 100).toFixed(2);
                         return data.labels[tooltipItem.index] + ': ' + percentage + '%';
                     }
                 }
@@ -2735,7 +1277,7 @@
                             return previousValue + currentValue;
                         });
                         var currentValue = dataset.data[tooltipItem.index];
-                        var percentage = Math.round((currentValue / total) * 100);
+                        var percentage =((currentValue / total) * 100).toFixed(2);
                         return data.labels[tooltipItem.index] + ': ' + percentage + '%';
                     }
                 }
@@ -2781,7 +1323,7 @@
                             return previousValue + currentValue;
                         });
                         var currentValue = dataset.data[tooltipItem.index];
-                        var percentage = Math.round((currentValue / total) * 100);
+                        var percentage = ((currentValue / total) * 100).toFixed(2);
                         return data.labels[tooltipItem.index] + ': ' + percentage + '%';
                     }
                 }
@@ -2827,7 +1369,7 @@
                             return previousValue + currentValue;
                         });
                         var currentValue = dataset.data[tooltipItem.index];
-                        var percentage = Math.round((currentValue / total) * 100);
+                        var percentage = ((currentValue / total) * 100).toFixed(2);
                         return data.labels[tooltipItem.index] + ': ' + percentage + '%';
                     }
                 }
@@ -2873,7 +1415,7 @@
                             return previousValue + currentValue;
                         });
                         var currentValue = dataset.data[tooltipItem.index];
-                        var percentage = Math.round((currentValue / total) * 100);
+						var percentage = ((currentValue / total) * 100).toFixed(2);
                         return data.labels[tooltipItem.index] + ': ' + percentage + '%';
                     }
                 }
@@ -2882,7 +1424,166 @@
     });
 
 
-	};
+	if ($('.canvasDoughnut2').length) {
+
+		var _labels2 = []; // Changed variable name
+		var _data2 = []; // Changed variable name
+
+		// Sample data
+		{% for key in over_all_commodity_count4 %}
+		_labels2.push('{{key}}');
+		_data2.push('{{over_all_commodity_count4[key]}}');
+		{% endfor %}
+		// Calculate total for _data2
+		var totalData2 = _data2.reduce((a, b) => parseFloat(a) + parseFloat(b), 0); // Changed variable name
+
+		// Normalize _data2 to make its total equivalent to totalData2
+		var normalizedData2 = _data2.map(value => ((parseFloat(value) / totalData2) * 100).toFixed(2)); // Changed variable name
+
+		var chart_doughnut_settings2 = {
+			type: 'doughnut',
+			tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+			data: {
+				labels: _labels2,
+				datasets: [{
+					data: normalizedData2, // Use normalizedData2 here
+					backgroundColor: [
+						"#BDC3C7",
+						"#5c5c3d",
+						"#994d00",
+						"#331a00",
+						"#23a98c"
+					],
+					hoverBackgroundColor: [
+						"#CFD4D8",
+						"#8a8a5c",
+						"#cc6600",
+						"#663500",
+						"#56dcbf"
+					]
+				}]
+			},
+			options: {
+				legend: false,
+				responsive: false,
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var currentValue = _data2[tooltipItem.index];
+							var percentage = ((currentValue / totalData2) * 100).toFixed(2) + "%";
+							return _labels2[tooltipItem.index] + ": " + percentage;
+						}
+					}
+				}
+
+			}
+		};
+
+		$('.canvasDoughnut2').each(function () {
+
+			var chart_element = $(this);
+			var chart_doughnut = new Chart(chart_element, chart_doughnut_settings2);
+
+		});
+
+		}
+
+		var ctx = document.getElementsByClassName('canvasDoughnutCOM');
+			var region8DoughnutChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: {
+				labels: ['Coffee', 'Cacao', 'Cococnut', 'PFN'],
+				datasets: [{
+					data: [
+						{{ dcf2_COFFEE[0]['coffee_2'] }},
+						{{ dcf2_CACAO[0]['cacao_2'] }},
+						{{ dcf2_COCONUT[0]['coconut_2'] }},
+						{{ dcf2_PFN[0]['pfn_2'] }}
+					],
+					backgroundColor: [
+						'#5c5c3d',
+						'#994d00',
+						'#331a00',
+						'#23a98c'
+					],
+					hoverBackgroundColor: [
+						'#5c5c7d',
+						'#994d20',
+						'#331a20',
+						'#23a69c'
+					]
+				}]
+			},
+
+			options: {
+				legend: false,
+				responsive: false,
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+								return previousValue + currentValue;
+							});
+							var currentValue = dataset.data[tooltipItem.index];
+							var percentage = ((currentValue / total) * 100).toFixed(2);
+							return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+						}
+					}
+				}
+			}
+		});
+
+
+		var ctx = document.getElementsByClassName('canvasDoughnutCOMFO');
+			var region8DoughnutChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: {
+				labels: ['Coffee', 'Cacao', 'Cococnut', 'PFN'],
+				datasets: [{
+					data: [
+						{{dcf_form2_nom_coffee[0]['form2nom_coffee'] }},
+						{{dcf_form2_nom_cacao[0]['form2nom_cacao'] }},
+						{{ dcf_form2_nom_coconut[0]['form2nom_coconut'] }},
+						{{ dcf_form2_nom_PFN[0]['form2nom_PFN'] }}
+					],
+					backgroundColor: [
+						'#5c5c3d',
+						'#994d00',
+						'#331a00',
+						'#23a98c'
+					],
+					hoverBackgroundColor: [
+						'#5c5c7d',
+						'#994d20',
+						'#331a20',
+						'#23a69c'
+					]
+				}]
+			},
+
+			options: {
+				legend: false,
+				responsive: false,
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+								return previousValue + currentValue;
+							});
+							var currentValue = dataset.data[tooltipItem.index];
+							var percentage = ((currentValue / total) * 100).toFixed(2);
+							return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+						}
+					}
+				}
+			}
+		});
+
+		
+		};
 </script>
 
 <script>

@@ -1,0 +1,104 @@
+<div class="row" id="form10" style="display: none;">
+    <div class="col-md-12 col-sm-12 ">	
+         <div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <span style="font-size: 17px; color: #73879C;">Networks of Negosyo Centers set up servicing farmers, farmers associations, cooperatives and MSMEs in 21 provinces<br><small>Negosyo Centers assisting the RAPID Project (Project-wide)</small></span>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+        <div class="x_content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="x_panel">
+                        <div class="top_tiles">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="tile-stats">
+                                    <div class="count _money_tag">{{dcf10_FO[0]['FO10']}}</div>
+                                    <h3 class="titlecard">Total number of assisted FOs</h3>
+                                    <p>Negosyo Center Tracker.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="tile-stats">
+                                    <div class="count _money_tag">{{dcf10_MSME[0]['msme10']}}</div>
+                                    <h3 class="titlecard">Total number of assisted MSMEs</h3>
+                                    <p>Negosyo Center Tracker.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="tile-stats" style="margin-bottom: 10px;">
+                                    <div class="count _money_tag">{{dcf_form10_male[0]['totalmale10']}}</div>
+                                    <h3 class="titlecard"><i class="fa fa-male"></i> Total Male</h3>
+                                    <p>Total number of assisted male individual project beneficiaries.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="tile-stats" style="margin-bottom: 10px;">
+                                    <div class="count _money_tag">{{dcf_form10_female[0]['totalfemale10']}}</div>
+                                    <h3 class="titlecard"><i class="fa fa-female"></i> Total Female</h3>
+                                    <p>Total number of assisted female individual project beneficiaries.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="tile-stats">
+                                  <div class="count _money_tag">{{dcf10_NOT[0]['NOT10']}}</div>
+                                  <h3 class="titlecard">Total Number of Assisted Individual Project </h3>
+                                  <p>Negosyo Center Tracker.</p>			  	  
+                                </div>
+                              </div>
+
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-md-6">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Individual _ By Male & Female <small>Pie Chart</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Settings 1</a>
+                                        <a class="dropdown-item" href="#">Settings 2</a>
+                                    </div>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <canvas id="pieChart10"></canvas>
+                            <div style="text-align: center;">
+                                <p>
+                                    <i class="fa fa-square" style="color:#00becc"></i> Male: {{ dcf_form10_male[0]['totalmale10']|int }}&nbsp;&nbsp;&nbsp; 
+                                    <i class="fa fa-square" style="color:#eb4eaa"></i> Female: {{ dcf_form10_female[0]['totalfemale10']|int }}&nbsp;&nbsp;&nbsp;
+                                     Total: {{ (dcf_form10_male[0]['totalmale10']|int) + (dcf_form10_female[0]['totalfemale10']|int) }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>						
+         </div>
+     </div>
+ </div>
+</div>
+</div>

@@ -1,0 +1,697 @@
+<style>
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+  
+    .ui-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+  
+    .ui-table th,
+    .ui-table td {
+      padding: 10px 13px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    .ui-table th {
+      background-color: #f2f2f2;
+      color: #333;
+      font-weight: 600;
+    }
+  
+    .ui-table tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  
+    .ui-table tbody tr:hover {
+      background-color: #f2f2f2;
+    }
+  
+  </style>
+
+<div class="row" id="dips" style="display: none;">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_graph" style="border: 1px solid #d1d1d196;">
+            <div class="x_title">
+                <span style="font-size: 18px; color: #73879C;">DIPs connecting farmers to SMEs and facilitating access to markets and servicesroduct of farmers, farmers’ organizations, cooperatives, SMEs conforming to market requirements enhanced<br><small>Detailed Investment Plans (DIPs) developed (Project-wide)</small></span>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>DIPs by Region <small>Bar Chart</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <canvas id="mybarChart"></canvas>
+                        <div style="text-align: center;">
+                            <p>
+                                <i class="fa fa-square" style="color:#99e6ff "></i> Approved DIPs: <span id="totalApprovedDipsValue"></span>&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i> Pipeline DIPs: <span id="totalpipelineDipsValue"></span>&nbsp;&nbsp;&nbsp;<br>
+                                <i class="fa fa-square" style="color:#0099cc "></i> Ongoing DIPs: <span id="totalongoingDipsValue"></span>&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-square" style="color:#ff8080 "></i> Not Started: <span id="totalnotstartedDipsValue"></span>&nbsp;&nbsp;&nbsp;
+                                Overall Total: <span id="totalAllCategoriesValue"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>DIPs by Commodity</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table style="width:100%">
+                            <tr>
+                                <th>
+                                    <p>Pie Chart Percentage</p>
+                                </th>
+                                <th>
+                                    <p class="">Commodities</p>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <canvas class="canvasDoughnut1" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+                                </td>
+                                <td>
+                                    <table class="tile_info">
+                                        {% for key in over_all_commodity_count %}
+                                        <tr>
+                                            <td>
+                                                {% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
+                                                {% set color_index = loop.index0 % square_colors|length %}
+                                                <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count[key] }}</p>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-md-6 col-sm-6">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Number of DIPs per commodity by region <small>Bar Chart</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <canvas id="mybarChartStacked"></canvas>
+                        <div style="text-align: center;">
+                            <p>
+                                <i class="fa fa-square" style="color:#99e6ff "></i> Coffee: {{ dcf1_COFFEE_8[0]['coffee_8_1'] + dcf1_COFFEE_9[0]['coffee_9_1'] + dcf1_COFFEE_10[0]['coffee_10_1'] + dcf1_COFFEE_11[0]['coffee_11_1'] + dcf1_COFFEE_12[0]['coffee_12_1'] + dcf1_COFFEE_13[0]['coffee_13_1'] + dcf1_COFFEE_BARMM[0]['coffee_BARMM_1']}} &nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i> Cacao: {{ dcf1_CACAO_8[0]['cacao_8_1'] + dcf1_CACAO_9[0]['cacao_9_1'] + dcf1_CACAO_10[0]['cacao_10_1'] + dcf1_CACAO_11[0]['cacao_11_1'] +  dcf1_CACAO_12[0]['cacao_12_1'] + dcf1_CACAO_13[0]['cacao_13_1'] +  dcf1_CACAO_BARMM[0]['cacao_BARMM_1']}}&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-square" style="color:#0099cc "></i> Coconut: {{ dcf1_COCONUT_8[0]['coconut_8_1'] + dcf1_COCONUT_9[0]['coconut_9_1'] + dcf1_COCONUT_10[0]['coconut_10_1'] + dcf1_COCONUT_11[0]['coconut_11_1'] + dcf1_COCONUT_12[0]['coconut_12_1'] + dcf1_COCONUT_13[0]['coconut_13_1'] +  dcf1_COCONUT_BARMM[0]['coconut_BARMM_1']}} &nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-square" style="color:#ff8080 "></i> PFN: {{ dcf1_PFN_8[0]['pfn_8_1'] + dcf1_PFN_9[0]['pfn_9_1'] + dcf1_PFN_10[0]['pfn_10_1'] + dcf1_PFN_11[0]['pfn_11_1'] + dcf1_PFN_12[0]['pfn_12_1'] + dcf1_PFN_13[0]['pfn_13_1'] + dcf1_PFN_BARMM[0]['pfn_BARMM_1'] }} &nbsp;&nbsp;&nbsp;
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 bg-white">
+                <div class="x_title">
+                    <h2>DIPs by Region <small>Table</small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>RCU</th>
+                                <th>Approved DIPs</th>
+                                <th>Pipeline DIPs</th>
+                                <th>Ongoing DIPs</th>
+                                <th>Not Started</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dip in dips_list %}
+                            <tr>
+                                <th scope="row">{{ dip }}</th>
+                                <td>{{ dips_list[dip]["approve"] }}</td>
+                                <td>{{ dips_list[dip]["pipeline"] }}</td>
+                                <td>{{ dips_list[dip]["ongoing"] }}</td>
+                                <td>{{ dips_list[dip]["not_started"] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                
+            </div>
+        
+        <div class="clearfix"></div>
+        <div class="x_title">
+            <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+        </div>
+        <div class="x_title">
+            <span style="font-size: 18px; color: #73879C;">Farming households participating in Approved Detailed Investment Plans (DIPs) by commodity</span>
+        </div>
+
+        <div class="col-md-6 col-sm-6">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Male & Female<small>Pie Chart</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <canvas id="pieChartM"></canvas>
+                    <div style="text-align: center;">
+                        <p>
+                            <i class="fa fa-square" style="color:#0070cc"></i> Male: {{ dcf_form1male_appr[0]['total_male_appr'] }} | &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-square" style="color:#cc00aa"></i> Female: {{ dcf_form1female_appr[0]['total_female_appr'] }} | &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-square" ></i> Ip: {{ dcf_form1maleip_appr[0]['total_maleip_appr'] + dcf_form1femaleip_appr[0]['total_femaleip_appr'] }} | &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-square" ></i> Youth: {{ dcf_form1maleyouth_appr[0]['total_maleyouth_appr'] + dcf_form1femaleyouth_appr[0]['total_femaleyouth_appr'] }}&nbsp;&nbsp;&nbsp;<br>
+                            <i class="fa fa-square" style="color:#4eeb82"></i> approved DIPs of smallholder farmers: {{ dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] }}&nbsp;&nbsp;&nbsp;
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="x_title">
+            <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+        </div>
+        <div class="x_title">
+            <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises by commodity</span>
+        </div>
+
+        <div class="col-md-6 col-sm-6 ">
+            <div class="x_panel tile overflow_hidden">
+              <div class="x_title">
+                <h2>Number of signed CPAs per commodity</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <table class="" style="width:100%">
+              <tr>
+                <th>
+                  <p>Pie Chart Percentage</p>
+              </th>
+              <th>
+                <p class="">Commodities</p>
+                
+            </th>
+            
+        </tr>
+        <tr>
+            <td>
+              <canvas class="canvasDoughnut2" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+          </td>
+          <td>
+              <table class="tile_info">
+                  {% for key in over_all_commodity_count4 %}
+                  <tr>
+                      <td>
+                        {% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
+                        {% set color_index = loop.index0 % square_colors|length %}
+                        <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count4[key] }}</p>
+                    </td>
+      
+                </tr>
+                {% endfor %}
+            </tr>
+            
+        </table>
+      </td>
+      
+      </tr>
+      </table>
+      </div>
+      </div>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="x_title">
+        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+      </div>
+      <div class="x_title">
+        <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises by region</span>
+      </div>
+
+
+      <div class="col-md-6 col-sm-6 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <span style="font-size: 16px; color: #73879C;">Number of signed CPAs per region and its percentage versus the total number of signed CPAs (from all regions)<br><small>Pie Chart</small></span>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="pieChartDIPS"></canvas>
+                <div style="text-align: center;">
+                    <p>
+                        <i class="fa fa-square" style="color:#00becc"></i> Region 8: {{ dcf_form2_rcu8[0]['form2_rcu8']|int }} |
+                        <i class="fa fa-square" style="color:#eb4eaa"></i> Region 9: {{ dcf_form2_rcu9[0]['form2_rcu9']|int }} | 
+                        <i class="fa fa-square" style="color:#abf1ce"></i> Region 10: {{ dcf_form2_rcu10[0]['form2_rcu10']|int}} | 
+                        <i class="fa fa-square" style="color:#9e5400"></i> Region 11: {{ dcf_form2_rcu11[0]['form2_rcu11']|int}} | <br>
+                        <i class="fa fa-square" style="color:#4a009e"></i> Region 12: {{ dcf_form2_rcu12[0]['form2_rcu12']|int}} | 
+                        <i class="fa fa-square" style="color:#00719e"></i> Region 13: {{ dcf_form2_rcu13[0]['form2_rcu13']|int}} | 
+                        <i class="fa fa-square" style="color:#9e0022"></i> Region BARMM: {{ dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int}} <br>
+                        <h4>Total # of signed CPA from all region: {{ dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int}}</h4>
+                       </p>
+                  </div>
+                </div>
+              </div>
+        </div>
+        
+        <div class="clearfix"></div>
+
+        
+
+      {% set total_signed_cpas = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %}	
+        <div class="col-md-6 col-sm-6 ">	
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Number of <b>Anchor Firms</b> signed CPAs<br>per region and its percentage versus the<br>total number of signed CPAs from all regions</h2>
+                <div class="clearfix"></div>
+            </div>
+                <div class="top_tiles">                                              
+                <div class="table-container">
+                    <table class="ui-table">
+                        <thead>
+                            <tr>
+                                <th>Region</th>
+                                <th>total # of anchor firms</th>
+                                <th>percentage of total # signed cpa</th>
+                            </tr>
+                        </thead>
+                     <tbody>
+                        <tr>
+                            <td>Region 8</td>
+                            <td class="text-center">{{ dcf_form2_rcu8_nom[0]['form2_rcu8_nom'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu8_nom[0]['form2_rcu8_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 9</td>
+                            <td class="text-center">{{ dcf_form2_rcu9_nom[0]['form2_rcu9_nom'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu9_nom[0]['form2_rcu9_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 10</td>
+                            <td class="text-center">{{ dcf_form2_rcu10_nom[0]['form2_rcu10_nom'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu10_nom[0]['form2_rcu10_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 11</td>
+                            <td class="text-center">{{ dcf_form2_rcu11_nom[0]['form2_rcu11_nom'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu11_nom[0]['form2_rcu11_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 12</td>
+                            <td class="text-center">{{ dcf_form2_rcu12_nom[0]['form2_rcu12_nom'] }}</td>
+                            <td class="text-center">{{ ( dcf_form2_rcu12_nom[0]['form2_rcu12_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 13</td>
+                            <td class="text-center">{{ dcf_form2_rcu13_nom[0]['form2_rcu13_nom'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu13_nom[0]['form2_rcu13_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>BARMM</td>
+                            <td class="text-center">{{ dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+                     
+{% set total_signed_cpas = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %}	
+<div class="col-md-6 col-sm-6 ">    
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Number of <b>FOs</b> signed CPAs per region and its <br>percentage versus the total number of signed CPAs<br>from all regions</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="top_tiles">                                              
+            <div class="table-container">
+                <table class="ui-table">
+                    <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th>total # of FOs</th>
+                            <th>percentage of total # signed cpa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Region 8</td>
+                            <td class="text-center">{{ dcf_form2_rcu8_fo[0]['form2_rcu8_fo'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu8_fo[0]['form2_rcu8_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 9</td>
+                            <td class="text-center">{{ dcf_form2_rcu9_fo[0]['form2_rcu9_fo'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu9_fo[0]['form2_rcu9_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 10</td>
+                            <td class="text-center">{{ dcf_form2_rcu10_fo[0]['form2_rcu10_fo'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu10_fo[0]['form2_rcu10_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 11</td>
+                            <td class="text-center">{{ dcf_form2_rcu11_fo[0]['form2_rcu11_fo'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu11_fo[0]['form2_rcu11_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 12</td>
+                            <td class="text-center">{{ dcf_form2_rcu12_fo[0]['form2_rcu12_fo'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu12_fo[0]['form2_rcu12_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Region 13</td>
+                            <td class="text-center">{{ dcf_form2_rcu13_fo[0]['form2_rcu13_fo'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcu13_fo[0]['form2_rcu13_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>BARMM</td>
+                            <td class="text-center">{{ dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo'] }}</td>
+                            <td class="text-center">{{ (dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+        <div class="x_title">
+            <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+          </div>
+          <div class="x_title">
+            <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises</span>
+          </div>
+          
+
+          {% set total_signed_pie = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %}	          
+        <div class="col-md-6 col-sm-6 bg-white">
+            <div class="x_panel">
+                <div class="x_title">
+                    <span style="font-size: 16px; color: #73879C;">Total number of CPAs signed and its percentage versus the 100 end of project targets<br><small>Pie Chart</small></span>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <canvas id="pieChartDIPS_pt"></canvas>
+                    <div style="text-align: center;">
+                        <p>
+                            <i class="fa fa-square" style="color:#00becc"></i> Total # of signed CPA from all region: {{ total_signed_pie }} ({{ ((total_signed_pie / 100) * 100)|round(2) }}%) |
+                            <i class="fa fa-square" style="color:#4eeb70"></i> Project targets: 100 
+                           </p>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+               <div class="col-md-6 col-sm-6 bg-white">
+               <div class="x_content">
+                <div class="top_tiles">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="tile-stats" style="margin-bottom: 10px;">
+                                <div class="count _money_tag">{{dcf2_CPAs[0]['cpas_2']}}</div>
+                                <h3 class="titlecard"><i class=></i> Number of renewed CPAs</h3>
+                                <p> &nbsp&nbsp </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      <div class="clearfix"></div>
+      <div class="x_title">
+        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+      </div>
+      <div class="x_title">
+        <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises by commodity</span>
+      </div>
+
+      <div class="col-md-6 col-sm-6 bg-white">
+        <div class="x_panel">
+            <div class="x_title">
+                <span style="font-size: 16px; color: #73879C;">Number of signed CPAs per region and its percentage versus the total number of signed CPAs (from all regions)<br><small>Pie Chart</small></span>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="pieChartDIPS2"></canvas>
+                <div style="text-align: center;">
+                    <p>
+                        <i class="fa fa-square" style="color:#00becc"></i> Coffee: {{ dcf1_COFFEE_FO[0]['coffee_fo']|int }} |
+                        <i class="fa fa-square" style="color:#eb4eaa"></i> Cacao: {{ dcf1_CACAO_FO[0]['cacao_fo']|int }} | 
+                        <i class="fa fa-square" style="color:#abf1ce"></i> Coconut: {{ dcf1_COCONUT_FO[0]['coconut_fo']|int}} | 
+                        <i class="fa fa-square" style="color:#9e5400"></i> PFN: {{ dcf1_PFN_FO[0]['pfn_fo']|int}} | <br>
+                        <h4>Total: {{ dcf1_COFFEE_FO[0]['coffee_fo']|int + dcf1_CACAO_FO[0]['cacao_fo']|int + dcf1_COCONUT_FO[0]['coconut_fo']|int + dcf1_PFN_FO[0]['pfn_fo']|int }}</h4>
+                       </p>
+                  </div>
+                </div>
+              </div>
+    </div>
+
+    <div class="col-md-6 col-sm-6  ">
+        <div class="x_panel tile overflow_hidden">
+          <div class="x_title">
+              <h2>Number of anchor firms signed CPAs per commodity<br>(from all regions)</h2>
+              <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">Settings 1</a>
+                          <a class="dropdown-item" href="#">Settings 2</a>
+                      </div>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+              </ul>
+              <div class="clearfix"></div>
+          </div>
+    <div class="x_content">
+        <table style="width:100%">
+            <tr>
+                <th>
+                    <p>Pie Chart Percentage</p>
+                </th>
+                <th>
+                    <p class=""></p>    
+                </th>   
+            </tr>
+            <tr>
+                <td>
+                    <canvas class="canvasDoughnutCOM" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+                </td>
+                <td>
+                    <table class="tile_info">
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #5c5c3d"></i> Coffee: {{ dcf2_COFFEE[0]['coffee_2'] }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #994d00;"></i> Cacao: {{ dcf2_CACAO[0]['cacao_2'] }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #331a00;"></i> Coconut: {{ dcf2_COCONUT[0]['coconut_2'] }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #23a98c;"></i> PFN: {{ dcf2_PFN[0]['pfn_2'] }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>           
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+<div class="clearfix"></div>
+
+<div class="col-md-6 col-sm-6  ">
+    <div class="x_panel tile overflow_hidden">
+      <div class="x_title">
+          <h2>Number of FOs signed CPAs per commodity<br>(from all regions)</h2>
+          <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Settings 1</a>
+                      <a class="dropdown-item" href="#">Settings 2</a>
+                  </div>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+          </ul>
+          <div class="clearfix"></div>
+      </div>
+<div class="x_content">
+    <table style="width:100%">
+        <tr>
+            <th>
+                <p>Pie Chart Percentage</p>
+            </th>
+            <th>
+                <p class=""></p>    
+            </th>   
+        </tr>
+        <tr>
+            <td>
+                <canvas class="canvasDoughnutCOMFO" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+            </td>
+            <td>
+                <table class="tile_info">
+                    <tr>
+                        <td>
+                            <p><i class="fa fa-square" style="color: #5c5c3d"></i> Coffee: {{dcf_form2_nom_coffee[0]['form2nom_coffee'] }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p><i class="fa fa-square" style="color: #994d00;"></i> Cacao: {{dcf_form2_nom_cacao[0]['form2nom_cacao'] }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p><i class="fa fa-square" style="color: #331a00;"></i> Coconut: {{ dcf_form2_nom_coconut[0]['form2nom_coconut'] }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p><i class="fa fa-square" style="color: #23a98c;"></i> PFN: {{ dcf_form2_nom_PFN[0]['form2nom_PFN'] }}</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>           
+        </tr>
+    </table>
+</div>
+</div>
+</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
