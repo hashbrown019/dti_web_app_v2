@@ -796,6 +796,16 @@ def dcfexport_data():
 					dcf_capacity_building.cbb_total_number_per_sector_ip,
 					dcf_capacity_building.cbb_total_number_per_sector_sc,
 					dcf_capacity_building.cbb_total_number_per_sector_total,
+					cbb_male_ip,
+					cbb_female_ip,
+					cbb_male_youth,
+					cbb_female_youth,
+					cbb_male_pwd,
+					cbb_female_pwd,
+					cbb_male_sc,
+					cbb_female_sc,
+					cbb_male_total,
+					cbb_female_total,
 					dcf_capacity_building.cbb_results_of_activity_pre_test,
 					dcf_capacity_building.cbb_results_of_activity_post_test,
 					dcf_capacity_building.cbb_client_feedback_survey_rating,
@@ -810,7 +820,7 @@ def dcfexport_data():
 					df = df.astype(str)
 					writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form4_exported_file.xlsx') 
 					df.to_excel(writer, sheet_name='dcf_form4_exported_file', index=False)
-					new_column_names = 'ID,Implementing Unit, Activity Title, Types of Training, Topic Of Training, DIP approved alignment, Name of DIPs, ACTIVITY DURATION (start date), ACTIVITY DURATION (end date), Total Number of Participants, Commodity, Venue, Name of Resource Person/Facilitator/BDSP (First Name Middle Name Last Name), RAPID Actual Budget Actual (CY 2022 Onwards e.g. 34000.00),Name of Partner/Organization, Counterpart Amount(monetize & estimates), Male, Female, Total, PWD, Youth, IP, SC, Total, Pre-Test, Post-Test, Rating, Comments/ Areas of Improvement,Date Created, Date Modified, Uploaded by'
+					new_column_names = 'ID,Implementing Unit, Activity Title, Types of Training, Topic Of Training, DIP approved alignment, Name of DIPs, ACTIVITY DURATION (start date), ACTIVITY DURATION (end date), Total Number of Participants, Commodity, Venue, Name of Resource Person/Facilitator/BDSP (First Name Middle Name Last Name), RAPID Actual Budget Actual (CY 2022 Onwards e.g. 34000.00),Name of Partner/Organization, Counterpart Amount(monetize & estimates), Male, Female, Total, PWD, Youth, IP, SC, Total,Male IP, Female IP,Male Youth, Female Youth,Male PWD, Female PWD, Male SC,Female SC, Male Total, Female Total, Pre-Test, Post-Test, Rating, Comments/ Areas of Improvement,Date Created, Date Modified, Uploaded by'
 					new_column_names_list = new_column_names.split(',')
 					df.columns = new_column_names_list
 

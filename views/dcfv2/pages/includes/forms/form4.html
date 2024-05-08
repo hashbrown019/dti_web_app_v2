@@ -326,7 +326,7 @@
 					</select>
 				</div> -->
 
-				<div class="x-container x-padding" style="opacity: 30%;">
+				<div class="x-container x-padding">
 					<style>
 						table,
 						th,
@@ -338,8 +338,7 @@
 					<table class="x-table x-container x-table-border">
 						<tr>
 
-							<th colspan="3"><label style="background-color: #ff4d4d; color: white;"
-									class="badge badge-pill">On Dev</label>
+							<th colspan="3">
 								<center>Total Number Per Sex</center>
 							</th>
 							<th colspan="5">
@@ -383,22 +382,22 @@
 						<tr>
 							<!---gender--->
 							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_male"
-									type="text" name="cbb_total_number_per_gender_male"></td>
+									type="number" name="cbb_total_number_per_gender_male"></td>
 							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_female"
-									type="text" name="cbb_total_number_per_gender_female"></td>
-							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_total"
+									type="number" name="cbb_total_number_per_gender_female"></td>
+							<td><input readonly class="FORM4_FIELD x-input" id="cbb_total_number_per_gender_total"
 									type="text" name="cbb_total_number_per_gender_total"></td>
 
 							<!--sector--->
-							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_pwd"
-									type="text" name="cbb_total_number_per_sector_pwd"></td>
-							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_youth"
-									type="text" name="cbb_total_number_per_sector_youth"></td>
-							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_ip"
-									type="text" name="cbb_total_number_per_sector_ip"></td>
-							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_sc"
-									type="text" name="cbb_total_number_per_sector_sc"></td>
-							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_sector_total"
+							<td><input readonly  class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_pwd"
+									type="number" name="cbb_total_number_per_sector_pwd"></td>
+							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_youth"
+									type="number" name="cbb_total_number_per_sector_youth"></td>
+							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_ip"
+									type="number" name="cbb_total_number_per_sector_ip"></td>
+							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_sc"
+									type="number" name="cbb_total_number_per_sector_sc"></td>
+							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_total"
 									type="text" name="cbb_total_number_per_sector_total"></td>
 						</tr>
 					</table>
@@ -452,18 +451,18 @@
 						<tr>
 							<td><center>Male</center></td>
 							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_male_ip"
-									type="text" name="cbb_male_ip"></td>
+									type="number" name="cbb_male_ip"></td>
 
 							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_male_youth"
-									type="text" name="cbb_male_youth"></td>
+									type="number" name="cbb_male_youth"></td>
 							<td><input class="FORM4_FIELD x-light-grey x-input"
-									id="cbb_male_pwd" type="text"
+									id="cbb_male_pwd" type="number"
 									name="cbb_male_pwd"></td>
 									<td><input class="FORM4_FIELD x-light-grey x-input"
-										id="cbb_male_sc" type="text"
+										id="cbb_male_sc" type="number"
 										name="cbb_male_sc"></td>
 										<td><input readonly class="FORM4_FIELD x-input"
-											id="cbb_male_total" type="text"
+											id="cbb_male_total" type="number"
 											name="cbb_male_total"></td>
 
 
@@ -471,18 +470,18 @@
 						<tr>
 							<td><center>Female</center></td>
 							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_female_ip"
-									type="text" name="cbb_female_ip"></td>
+									type="number" name="cbb_female_ip"></td>
 
 							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_female_youth"
-									type="text" name="cbb_female_youth"></td>
+									type="number" name="cbb_female_youth"></td>
 							<td><input class="FORM4_FIELD x-light-grey x-input"
-									id="cbb_female_pwd" type="text"
+									id="cbb_female_pwd" type="number"
 									name="cbb_female_pwd"></td>
 									<td><input class="FORM4_FIELD x-light-grey x-input"
-										id="cbb_female_sc" type="text"
+										id="cbb_female_sc" type="number"
 										name="cbb_female_sc"></td>
 										<td><input readonly class="FORM4_FIELD  x-input"
-											id="cbb_female_total" type="text"
+											id="cbb_female_total" type="number"
 											name="cbb_female_total"></td>
 
 
@@ -779,7 +778,76 @@
 			},
 		}); 
 	});
-		   
+
+
+	 $(document).ready(function(){
+    $('#cbb_total_number_per_gender_male, #cbb_total_number_per_gender_female').on('input', function(){
+      var male = parseFloat($('#cbb_total_number_per_gender_male').val()) || 0;
+      var female = parseFloat($('#cbb_total_number_per_gender_female').val()) || 0;
+      var total = male + female;
+      $('#cbb_total_number_per_gender_total').val(total);
+    });
+  });  
+
+
+  	 $(document).ready(function(){
+    $('#cbb_male_ip, #cbb_female_ip').on('input', function(){
+      var male = parseFloat($('#cbb_male_ip').val()) || 0;
+      var female = parseFloat($('#cbb_female_ip').val()) || 0;
+      var total = male + female;
+      $('#cbb_total_number_per_sector_ip').val(total);
+    });
+  });   
+
+
+  	 $(document).ready(function(){
+    $('#cbb_female_youth, #cbb_male_youth').on('input', function(){
+      var male = parseFloat($('#cbb_female_youth').val()) || 0;
+      var female = parseFloat($('#cbb_male_youth').val()) || 0;
+      var total = male + female;
+      $('#cbb_total_number_per_sector_youth').val(total);
+    });
+  });   
+
+  	 	 $(document).ready(function(){
+    $('#cbb_female_pwd, #cbb_male_pwd').on('input', function(){
+      var male = parseFloat($('#cbb_female_pwd').val()) || 0;
+      var female = parseFloat($('#cbb_male_pwd').val()) || 0;
+      var total = male + female;
+      $('#cbb_total_number_per_sector_pwd').val(total);
+    });
+  });   
+
+  	 	   	 	 $(document).ready(function(){
+    $('#cbb_male_sc, #cbb_female_sc').on('input', function(){
+      var male = parseFloat($('#cbb_male_sc').val()) || 0;
+      var female = parseFloat($('#cbb_female_sc').val()) || 0;
+      var total = male + female;
+      $('#cbb_total_number_per_sector_sc').val(total);
+    });
+  });   
+
+
+
+
+  var x_inputs_ = $CLASS('x-input')
+	for (let index = 0; index < x_inputs_.length; index++) {
+		if (x_inputs_[index].id != 'cbb_total_number_per_sector_total') {
+			x_inputs_[index].addEventListener('keyup', function (ee) {
+				var num1 = parseFloat($ID("cbb_total_number_per_sector_ip").value); 
+				var num2 = parseFloat($ID("cbb_total_number_per_sector_pwd").value); 
+				var num3 = parseFloat($ID("cbb_total_number_per_sector_youth").value); 
+				var num4 = parseFloat($ID("cbb_total_number_per_sector_sc").value)
+				if (isNaN(num1)) { num1 = 0 }
+				if (isNaN(num2)) { num2 = 0 }
+				if (isNaN(num3)) { num3 = 0 }
+				if (isNaN(num4)) { num4 = 0 }
+				$ID('cbb_total_number_per_sector_total').value = num1 + num2 + num3 + num4
+
+			})
+		}
+	}
+
 	   </script>
 
 
