@@ -735,7 +735,7 @@ def displayform():
             commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
             # dip_status_group_per_region[DIP['form_1_rcus']]["approve"].append(DIP)
 
-        elif(DIP["form_1_for_development"] != "" and DIP["form_1_date_of_rtwg"] != "" and DIP["form_1_date_of_npco_cursory"] !=""):
+        elif( DIP["form_1_finalized_approved"] or DIP["form_1_date_of_parallel_review"] or DIP["form_1_date_of_submission"] or DIP["form_1_date_of_rtwg"] or DIP["form_1_date_of_npco_cursory"]):
             dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
             over_all["over_all_total"] +=1
             dip_status_group_per_region[DIP['form_1_rcus']]["pipeline"]+= 1
