@@ -228,9 +228,9 @@
                         <p>
                             <i class="fa fa-square" style="color:#0070cc"></i> Male: {{ dcf_form1male_appr[0]['total_male_appr'] }} | &nbsp;&nbsp;&nbsp;
                             <i class="fa fa-square" style="color:#cc00aa"></i> Female: {{ dcf_form1female_appr[0]['total_female_appr'] }} | &nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-square" ></i> Ip: {{ dcf_form1maleip_appr[0]['total_maleip_appr'] + dcf_form1femaleip_appr[0]['total_femaleip_appr'] }} | &nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-square" ></i> Youth: {{ dcf_form1maleyouth_appr[0]['total_maleyouth_appr'] + dcf_form1femaleyouth_appr[0]['total_femaleyouth_appr'] }}&nbsp;&nbsp;&nbsp;<br>
-                            <i class="fa fa-square" style="color:#4eeb82"></i> approved DIPs of smallholder farmers: {{ dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] }}&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-square" ></i> Ip: {{ (dcf_form1maleip_appr[0]['total_maleip_appr'] or 0) + (dcf_form1femaleip_appr[0]['total_femaleip_appr']or 0) }} | &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-square" ></i> Youth: {{ (dcf_form1maleyouth_appr[0]['total_maleyouth_appr'] or 0) + (dcf_form1femaleyouth_appr[0]['total_femaleyouth_appr']or 0) }}&nbsp;&nbsp;&nbsp;<br>
+                            <i class="fa fa-square" style="color:#4eeb82"></i> approved DIPs of smallholder farmers: {{ (dcf_form1male_appr[0]['total_male_appr'] or 0) + (dcf_form1female_appr[0]['total_female_appr']or 0) }}&nbsp;&nbsp;&nbsp;
                         </p>
                     </div>
                 </div>
