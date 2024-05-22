@@ -1004,13 +1004,13 @@ def displayform():
     dcf_form2_rcuBARMM=db.select("SELECT COUNT(form_2_rcus) AS form2_rcuBARMM FROM dcf_implementing_unit {} AND `form_2_rcus` LIKE '%BARMM%' ;".format(position_data_filter()))
 
 
-    dcf_form2_rcu8_nom=db.select("SELECT COUNT(form_2_name_owner_manager) AS form2_rcu8_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%8%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='' ;".format(position_data_filter()))
-    dcf_form2_rcu9_nom=db.select("SELECT COUNT(form_2_name_owner_manager) AS form2_rcu9_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%9%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
-    dcf_form2_rcu10_nom=db.select("SELECT COUNT(form_2_name_owner_manager) AS form2_rcu10_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%10%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
-    dcf_form2_rcu11_nom=db.select("SELECT COUNT(form_2_name_owner_manager) AS form2_rcu11_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%11%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
-    dcf_form2_rcu12_nom=db.select("SELECT COUNT(form_2_name_owner_manager) AS form2_rcu12_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%12%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
-    dcf_form2_rcu13_nom=db.select("SELECT COUNT(form_2_name_owner_manager) AS form2_rcu13_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%13%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
-    dcf_form2_rcuBARMM_nom=db.select("SELECT COUNT(form_2_name_owner_manager) AS form2_rcuBARMM_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%BARMM%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
+    dcf_form2_rcu8_nom=db.select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu8_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%8%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='' ;".format(position_data_filter()))
+    dcf_form2_rcu9_nom=db.select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu9_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%9%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
+    dcf_form2_rcu10_nom=db.select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu10_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%10%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
+    dcf_form2_rcu11_nom=db.select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu11_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%11%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
+    dcf_form2_rcu12_nom=db.select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu12_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%12%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
+    dcf_form2_rcu13_nom=db.select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu13_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%13%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
+    dcf_form2_rcuBARMM_nom=db.select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcuBARMM_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%BARMM%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';".format(position_data_filter()))
 
     #NEW DATA MAY3(FRANZ)
     dcf1_COFFEE_FO=db.select("SELECT SUM(form_1_totalcooperatives + form_1_totalassociations) AS coffee_fo FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';".format(position_data_filter()))
@@ -1019,13 +1019,13 @@ def displayform():
     dcf1_PFN_FO=db.select("SELECT SUM(form_1_totalcooperatives + form_1_totalassociations) AS pfn_fo FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';".format(position_data_filter()))
 
     #NEW DATA MAY6(ANDY)
-    dcf_form2_rcu8_fo=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2_rcu8_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%8%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
-    dcf_form2_rcu9_fo=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2_rcu9_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%9%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
-    dcf_form2_rcu10_fo=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2_rcu10_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%10%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
-    dcf_form2_rcu11_fo=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2_rcu11_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%11%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
-    dcf_form2_rcu12_fo=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2_rcu12_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%12%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
-    dcf_form2_rcu13_fo=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2_rcu13_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%13%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
-    dcf_form2_rcuBARMM_fo=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2_rcuBARMM_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%BARMM%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
+    dcf_form2_rcu8_fo=db.select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu8_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%8%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
+    dcf_form2_rcu9_fo=db.select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu9_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%9%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
+    dcf_form2_rcu10_fo=db.select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu10_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%10%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
+    dcf_form2_rcu11_fo=db.select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu11_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%11%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
+    dcf_form2_rcu12_fo=db.select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu12_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%12%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
+    dcf_form2_rcu13_fo=db.select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu13_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%13%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
+    dcf_form2_rcuBARMM_fo=db.select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcuBARMM_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%BARMM%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;".format(position_data_filter()))
 
     dcf_form2_nom_cacao=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2nom_cacao FROM dcf_implementing_unit {} AND form_2_commodity LIKE '%Cacao%' AND form_2_name_owner_manager ='' AND form_2_partner_fo_engaged !=''; ".format(position_data_filter()))
     dcf_form2_nom_coffee=db.select("SELECT COUNT(form_2_partner_fo_engaged) AS form2nom_coffee FROM dcf_implementing_unit {} AND form_2_commodity LIKE '%Coffee%' AND form_2_name_owner_manager ='' AND form_2_partner_fo_engaged !=''; ".format(position_data_filter()))
@@ -1040,8 +1040,373 @@ def displayform():
     dcf2_COCONUT=db.select("SELECT COUNT(`form_2_name_owner_manager` ) AS coconut_2 FROM dcf_implementing_unit {} AND `form_2_commodity` ='coconut' AND form_2_partner_fo_engaged ='' AND form_2_name_owner_manager !='';".format(position_data_filter()))
     dcf2_PFN=db.select("SELECT COUNT(`form_2_name_owner_manager` ) AS pfn_2 FROM dcf_implementing_unit {} AND `form_2_commodity` ='pfn' AND form_2_partner_fo_engaged ='' AND form_2_name_owner_manager !='';".format(position_data_filter()))
 
+    #NEW DATA MAY 9(FRANZ)
+    dcf2_CPAs_FOs=db.select("SELECT COUNT(DISTINCT `form_2_name_owner_manager`) AS cpasfos_2 FROM dcf_implementing_unit {} AND `form_2_partner_fo_engaged` !='';".format(position_data_filter()))
+    dcf2_FOs_CPAs=db.select("SELECT COUNT(DISTINCT `form_2_partner_fo_engaged`) AS foscpas_2 FROM dcf_implementing_unit {} AND `form_2_name_owner_manager` !='';".format(position_data_filter()))
+    dcf2_FO_MEMBERS=db.select("SELECT SUM(`form_2_total_number_fo`) AS fomember_2 FROM dcf_implementing_unit;".format(position_data_filter()))
     
+    dcf2_RCU8_FO=db.select("SELECT SUM(`form_2_total_number_fo`) AS rcu8_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='8';".format(position_data_filter()))
+    dcf2_RCU9_FO=db.select("SELECT SUM(`form_2_total_number_fo`) AS rcu9_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='9';".format(position_data_filter()))
+    dcf2_RCU10_FO=db.select("SELECT SUM(`form_2_total_number_fo`) AS rcu10_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='10';".format(position_data_filter()))
+    dcf2_RCU11_FO=db.select("SELECT SUM(`form_2_total_number_fo`) AS rcu11_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='11';".format(position_data_filter()))
+    dcf2_RCU12_FO=db.select("SELECT SUM(`form_2_total_number_fo`) AS rcu12_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='12';".format(position_data_filter()))
+    dcf2_RCU13_FO=db.select("SELECT SUM(`form_2_total_number_fo`) AS rcu13_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='13';".format(position_data_filter()))
+    dcf2_RCUBARMM_FO=db.select("SELECT SUM(`form_2_total_number_fo`) AS rcubarmm_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='barmm';".format(position_data_filter()))
+    ######################################################################################################################
+    dcf3_RCU8_ORG=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu8_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region Vlll - Eastern Visayas';".format(position_data_filter()))
+    dcf3_RCU9_ORG=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu9_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region IX - Zamboanga Peninsula';".format(position_data_filter()))
+    dcf3_RCU10_ORG=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu10_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region X - Northern Mindanao';".format(position_data_filter()))
+    dcf3_RCU11_ORG=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu11_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region Xl - Davao Region';".format(position_data_filter()))
+    dcf3_RCU12_ORG=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu12_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region Xll - SOCCSKSARGEN';".format(position_data_filter()))
+    dcf3_RCU13_ORG=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu13_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region Xlll - Caraga';".format(position_data_filter()))
+    dcf3_BARMM_ORG=db.select("SELECT COUNT(form_3_types_of_bdsp) AS barmm_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Barmm - Bangsamoro Autonomous Region in Muslim Mindanao';".format(position_data_filter()))
+
+    dcf3_RCU8_INDIV=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu8_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region Vlll - Eastern Visayas';".format(position_data_filter()))
+    dcf3_RCU9_INDIV=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu9_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region IX - Zamboanga Peninsula';".format(position_data_filter()))
+    dcf3_RCU10_INDIV=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu10_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region X - Northern Mindanao';".format(position_data_filter()))
+    dcf3_RCU11_INDIV=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu11_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region Xl - Davao Region';".format(position_data_filter()))
+    dcf3_RCU12_INDIV=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu12_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region Xll - SOCCSKSARGEN';".format(position_data_filter()))
+    dcf3_RCU13_INDIV=db.select("SELECT COUNT(form_3_types_of_bdsp) AS rcu13_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region Xlll - Caraga';".format(position_data_filter()))
+    dcf3_BARMM_INDIV=db.select("SELECT COUNT(form_3_types_of_bdsp) AS barmm_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Barmm - Bangsamoro Autonomous Region in Muslim Mindanao';".format(position_data_filter()))
+
+    #NEW DATA MAY(10 FRANZ)
+    dcf_MALEIP_CACAO_APPR=db.select("SELECT SUM(form_1_maleip) AS maleip_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';".format(position_data_filter()))
+    dcf_MALEYOUTH_CACAO_APPR=db.select("SELECT SUM(form_1_maleyouth) AS maleyouth_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';".format(position_data_filter()))
+    dcf_TOTALMALE_CACAO_APPR=db.select("SELECT SUM(form_1_totalmale) AS totalmale_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';".format(position_data_filter()))
+
+    dcf_FEMALEIP_CACAO_APPR=db.select("SELECT SUM(form_1_femaleip) AS femaleip_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';".format(position_data_filter()))
+    dcf_FEMALEYOUTH_CACAO_APPR=db.select("SELECT SUM(form_1_femaleyouth) AS femaleyouth_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';".format(position_data_filter()))
+    dcf_TOTALFEMALE_CACAO_APPR=db.select("SELECT SUM(form_1_totalfemale) AS totalfemale_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';".format(position_data_filter()))
+
+    dcf_MALEIP_COFFEE_APPR=db.select("SELECT SUM(form_1_maleip) AS maleip_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';".format(position_data_filter()))
+    dcf_MALEYOUTH_COFFEE_APPR=db.select("SELECT SUM(form_1_maleyouth) AS maleyouth_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';".format(position_data_filter()))
+    dcf_TOTALMALE_COFFEE_APPR=db.select("SELECT SUM(form_1_totalmale) AS totalmale_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';".format(position_data_filter()))
+
+    dcf_FEMALEIP_COFFEE_APPR=db.select("SELECT SUM(form_1_femaleip) AS femaleip_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';".format(position_data_filter()))
+    dcf_FEMALEYOUTH_COFFEE_APPR=db.select("SELECT SUM(form_1_femaleyouth) AS femaleyouth_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';".format(position_data_filter()))
+    dcf_TOTALFEMALE_COFFEE_APPR=db.select("SELECT SUM(form_1_totalfemale) AS totalfemale_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';".format(position_data_filter()))
+
+    dcf_MALEIP_COCONUT_APPR=db.select("SELECT SUM(form_1_maleip) AS maleip_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';".format(position_data_filter()))
+    dcf_MALEYOUTH_COCONUT_APPR=db.select("SELECT SUM(form_1_maleyouth) AS maleyouth_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';".format(position_data_filter()))
+    dcf_TOTALMALE_COCONUT_APPR=db.select("SELECT SUM(form_1_totalmale) AS totalmale_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';".format(position_data_filter()))
+
+    dcf_FEMALEIP_COCONUT_APPR=db.select("SELECT SUM(form_1_femaleip) AS femaleip_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';".format(position_data_filter()))
+    dcf_FEMALEYOUTH_COCONUT_APPR=db.select("SELECT SUM(form_1_femaleyouth) AS femaleyouth_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';".format(position_data_filter()))
+    dcf_TOTALFEMALE_COCONUT_APPR=db.select("SELECT SUM(form_1_totalfemale) AS totalfemale_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';".format(position_data_filter()))
+
+    dcf_MALEIP_PFN_APPR=db.select("SELECT SUM(form_1_maleip) AS maleip_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';".format(position_data_filter()))
+    dcf_MALEYOUTH_PFN_APPR=db.select("SELECT SUM(form_1_maleyouth) AS maleyouth_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';".format(position_data_filter()))
+    dcf_TOTALMALE_PFN_APPR=db.select("SELECT SUM(form_1_totalmale) AS totalmale_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';".format(position_data_filter()))
+
+    dcf_FEMALEIP_PFN_APPR=db.select("SELECT SUM(form_1_femaleip) AS femaleip_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';".format(position_data_filter()))
+    dcf_FEMALEYOUTH_PFN_APPR=db.select("SELECT SUM(form_1_femaleyouth) AS femaleyouth_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';".format(position_data_filter()))
+    dcf_TOTALFEMALE_PFN_APPR=db.select("SELECT SUM(form_1_totalfemale) AS totalfemale_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';".format(position_data_filter()))
+
+##############################################################################################################
+
+    dcf1_TSHF_8_APPR=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_TSHF_9_APPR=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_TSHF_10_APPR=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_TSHF_11_APPR=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_TSHF_12_APPR=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_TSHF_13_APPR=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_TSHF_BARMM_APPR=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    
+    dcf1_TSHF_8_ONGOING=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_TSHF_9_ONGOING=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='' ;".format(position_data_filter()))
+    dcf1_TSHF_10_ONGOING=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_TSHF_11_ONGOING=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_TSHF_12_ONGOING=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='' ;".format(position_data_filter()))
+    dcf1_TSHF_13_ONGOING=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='' ;".format(position_data_filter()))
+    dcf1_TSHF_BARMM_ONGOING=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';".format(position_data_filter()))
+    
+    dcf1_TSHF_8_PIPELINE=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);".format(position_data_filter()))
+    dcf1_TSHF_9_PIPELINE=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);".format(position_data_filter()))
+    dcf1_TSHF_10_PIPELINE=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);".format(position_data_filter()))
+    dcf1_TSHF_11_PIPELINE=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);".format(position_data_filter()))
+    dcf1_TSHF_12_PIPELINE=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);".format(position_data_filter()))
+    dcf1_TSHF_13_PIPELINE=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);".format(position_data_filter()))
+    dcf1_TSHF_BARMM_PIPELINE=db.select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);".format(position_data_filter()))
+    
+###################################################################### 
+
+    dcf1_MALE_8_APPR=db.select("SELECT SUM(`form_1_totalmale`) AS male_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_MALE_9_APPR=db.select("SELECT SUM(`form_1_totalmale`) AS male_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_MALE_10_APPR=db.select("SELECT SUM(`form_1_totalmale`) AS male_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_MALE_11_APPR=db.select("SELECT SUM(`form_1_totalmale`) AS male_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_MALE_12_APPR=db.select("SELECT SUM(`form_1_totalmale`) AS male_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_MALE_13_APPR=db.select("SELECT SUM(`form_1_totalmale`) AS male_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_MALE_BARMM_APPR=db.select("SELECT SUM(`form_1_totalmale`) AS male_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+
+    dcf1_MALE_8_ONGOING=db.select("SELECT SUM(`form_1_totalmale`) AS male_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_MALE_9_ONGOING=db.select("SELECT SUM(`form_1_totalmale`) AS male_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_MALE_10_ONGOING=db.select("SELECT SUM(`form_1_totalmale`) AS male_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_MALE_11_ONGOING=db.select("SELECT SUM(`form_1_totalmale`) AS male_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_MALE_12_ONGOING=db.select("SELECT SUM(`form_1_totalmale`) AS male_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_MALE_13_ONGOING=db.select("SELECT SUM(`form_1_totalmale`) AS male_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_MALE_BARMM_ONGOING=db.select("SELECT SUM(`form_1_totalmale`) AS male_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';".format(position_data_filter()))
+    
+    dcf1_MALE_8_PIPELINE=db.select("SELECT SUM(`form_1_totalmale`) AS male_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_MALE_9_PIPELINE=db.select("SELECT SUM(`form_1_totalmale`) AS male_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_MALE_10_PIPELINE=db.select("SELECT SUM(`form_1_totalmale`) AS male_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_MALE_11_PIPELINE=db.select("SELECT SUM(`form_1_totalmale`) AS male_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_MALE_12_PIPELINE=db.select("SELECT SUM(`form_1_totalmale`) AS male_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_MALE_13_PIPELINE=db.select("SELECT SUM(`form_1_totalmale`) AS male_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_MALE_BARMM_PIPELINE=db.select("SELECT SUM(`form_1_totalmale`) AS male_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+
+########################################################################
+
+    dcf1_FEMALE_8_APPR=db.select("SELECT SUM(`form_1_totalfemale`) AS female_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_FEMALE_9_APPR=db.select("SELECT SUM(`form_1_totalfemale`) AS female_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_FEMALE_10_APPR=db.select("SELECT SUM(`form_1_totalfemale`) AS female_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_FEMALE_11_APPR=db.select("SELECT SUM(`form_1_totalfemale`) AS female_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_FEMALE_12_APPR=db.select("SELECT SUM(`form_1_totalfemale`) AS female_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_FEMALE_13_APPR=db.select("SELECT SUM(`form_1_totalfemale`) AS female_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_FEMALE_BARMM_APPR=db.select("SELECT SUM(`form_1_totalfemale`) AS female_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+
+    dcf1_FEMALE_8_ONGOING=db.select("SELECT SUM(`form_1_totalfemale`) AS female_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_FEMALE_9_ONGOING=db.select("SELECT SUM(`form_1_totalfemale`) AS female_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_FEMALE_10_ONGOING=db.select("SELECT SUM(`form_1_totalfemale`) AS female_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_FEMALE_11_ONGOING=db.select("SELECT SUM(`form_1_totalfemale`) AS female_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_FEMALE_12_ONGOING=db.select("SELECT SUM(`form_1_totalfemale`) AS female_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_FEMALE_13_ONGOING=db.select("SELECT SUM(`form_1_totalfemale`) AS female_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_FEMALE_BARMM_ONGOING=db.select("SELECT SUM(`form_1_totalfemale`) AS female_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';".format(position_data_filter()))
+    
+    dcf1_FEMALE_8_PIPELINE=db.select("SELECT SUM(`form_1_totalfemale`) AS female_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_FEMALE_9_PIPELINE=db.select("SELECT SUM(`form_1_totalfemale`) AS female_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_FEMALE_10_PIPELINE=db.select("SELECT SUM(`form_1_totalfemale`) AS female_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_FEMALE_11_PIPELINE=db.select("SELECT SUM(`form_1_totalfemale`) AS female_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_FEMALE_12_PIPELINE=db.select("SELECT SUM(`form_1_totalfemale`) AS female_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_FEMALE_13_PIPELINE=db.select("SELECT SUM(`form_1_totalfemale`) AS female_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_FEMALE_BARMM_PIPELINE=db.select("SELECT SUM(`form_1_totalfemale`) AS female_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+
+##########################################################################
+
+    dcf1_YOUTH_8_APPR=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_YOUTH_9_APPR=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_YOUTH_10_APPR=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_YOUTH_11_APPR=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_YOUTH_12_APPR=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_YOUTH_13_APPR=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_YOUTH_BARMM_APPR=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+
+    dcf1_YOUTH_8_ONGOING=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_YOUTH_9_ONGOING=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_YOUTH_10_ONGOING=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_YOUTH_11_ONGOING=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_YOUTH_12_ONGOING=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_YOUTH_13_ONGOING=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_YOUTH_BARMM_ONGOING=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';".format(position_data_filter()))
+    
+    dcf1_YOUTH_8_PIPELINE=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_YOUTH_9_PIPELINE=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_YOUTH_10_PIPELINE=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_YOUTH_11_PIPELINE=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_YOUTH_12_PIPELINE=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_YOUTH_13_PIPELINE=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_YOUTH_BARMM_PIPELINE=db.select("SELECT SUM(`form_1_totalyouth`) AS youth_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+
+###########################################################################
+
+    dcf1_IP_8_APPR=db.select("SELECT SUM(`form_1_totalip`) AS ip_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_IP_9_APPR=db.select("SELECT SUM(`form_1_totalip`) AS ip_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_IP_10_APPR=db.select("SELECT SUM(`form_1_totalip`) AS ip_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_IP_11_APPR=db.select("SELECT SUM(`form_1_totalip`) AS ip_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_IP_12_APPR=db.select("SELECT SUM(`form_1_totalip`) AS ip_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_IP_13_APPR=db.select("SELECT SUM(`form_1_totalip`) AS ip_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+    dcf1_IP_BARMM_APPR=db.select("SELECT SUM(`form_1_totalip`) AS ip_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';".format(position_data_filter()))
+
+    dcf1_IP_8_ONGOING=db.select("SELECT SUM(`form_1_totalip`) AS ip_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_IP_9_ONGOING=db.select("SELECT SUM(`form_1_totalip`) AS ip_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_IP_10_ONGOING=db.select("SELECT SUM(`form_1_totalip`) AS ip_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_IP_11_ONGOING=db.select("SELECT SUM(`form_1_totalip`) AS ip_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_IP_12_ONGOING=db.select("SELECT SUM(`form_1_totalip`) AS ip_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_IP_13_ONGOING=db.select("SELECT SUM(`form_1_totalip`) AS ip_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='';".format(position_data_filter()))
+    dcf1_IP_BARMM_ONGOING=db.select("SELECT SUM(`form_1_totalip`) AS ip_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';".format(position_data_filter()))
+    
+    dcf1_IP_8_PIPELINE=db.select("SELECT SUM(`form_1_totalip`) AS ip_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_IP_9_PIPELINE=db.select("SELECT SUM(`form_1_totalip`) AS ip_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_IP_10_PIPELINE=db.select("SELECT SUM(`form_1_totalip`) AS ip_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_IP_11_PIPELINE=db.select("SELECT SUM(`form_1_totalip`) AS ip_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_IP_12_PIPELINE=db.select("SELECT SUM(`form_1_totalip`) AS ip_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_IP_13_PIPELINE=db.select("SELECT SUM(`form_1_totalip`) AS ip_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+    dcf1_IP_BARMM_PIPELINE=db.select("SELECT SUM(`form_1_totalip`) AS ip_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
+
+
     return {
+        'dcf1_IP_8_APPR':dcf1_IP_8_APPR,
+        'dcf1_IP_9_APPR':dcf1_IP_9_APPR,
+        'dcf1_IP_10_APPR':dcf1_IP_10_APPR,
+        'dcf1_IP_11_APPR':dcf1_IP_11_APPR,
+        'dcf1_IP_12_APPR':dcf1_IP_12_APPR,
+        'dcf1_IP_13_APPR':dcf1_IP_13_APPR,
+        'dcf1_IP_BARMM_APPR':dcf1_IP_BARMM_APPR,
+
+        'dcf1_IP_8_ONGOING':dcf1_IP_8_ONGOING,
+        'dcf1_IP_9_ONGOING':dcf1_IP_9_ONGOING,
+        'dcf1_IP_10_ONGOING':dcf1_IP_10_ONGOING,
+        'dcf1_IP_11_ONGOING':dcf1_IP_11_ONGOING,
+        'dcf1_IP_12_ONGOING':dcf1_IP_12_ONGOING,
+        'dcf1_IP_13_ONGOING':dcf1_IP_13_ONGOING,
+        'dcf1_IP_BARMM_ONGOING':dcf1_IP_BARMM_ONGOING,
+
+        'dcf1_IP_8_PIPELINE':dcf1_IP_8_PIPELINE,
+        'dcf1_IP_9_PIPELINE':dcf1_IP_9_PIPELINE,
+        'dcf1_IP_10_PIPELINE':dcf1_IP_10_PIPELINE,
+        'dcf1_IP_11_PIPELINE':dcf1_IP_11_PIPELINE,
+        'dcf1_IP_12_PIPELINE':dcf1_IP_12_PIPELINE,
+        'dcf1_IP_13_PIPELINE':dcf1_IP_13_PIPELINE,
+        'dcf1_IP_BARMM_PIPELINE':dcf1_IP_BARMM_PIPELINE,
+        'dcf1_YOUTH_8_APPR':dcf1_YOUTH_8_APPR,
+        'dcf1_YOUTH_9_APPR':dcf1_YOUTH_9_APPR,
+        'dcf1_YOUTH_10_APPR':dcf1_YOUTH_10_APPR,
+        'dcf1_YOUTH_11_APPR':dcf1_YOUTH_11_APPR,
+        'dcf1_YOUTH_12_APPR':dcf1_YOUTH_12_APPR,
+        'dcf1_YOUTH_13_APPR':dcf1_YOUTH_13_APPR,
+        'dcf1_YOUTH_BARMM_APPR':dcf1_YOUTH_BARMM_APPR,
+
+        'dcf1_YOUTH_8_ONGOING':dcf1_YOUTH_8_ONGOING,
+        'dcf1_YOUTH_9_ONGOING':dcf1_YOUTH_9_ONGOING,
+        'dcf1_YOUTH_10_ONGOING':dcf1_YOUTH_10_ONGOING,
+        'dcf1_YOUTH_11_ONGOING':dcf1_YOUTH_11_ONGOING,
+        'dcf1_YOUTH_12_ONGOING':dcf1_YOUTH_12_ONGOING,
+        'dcf1_YOUTH_13_ONGOING':dcf1_YOUTH_13_ONGOING,
+        'dcf1_YOUTH_BARMM_ONGOING':dcf1_YOUTH_BARMM_ONGOING,
+
+        'dcf1_YOUTH_8_PIPELINE':dcf1_YOUTH_8_PIPELINE,
+        'dcf1_YOUTH_9_PIPELINE':dcf1_YOUTH_9_PIPELINE,
+        'dcf1_YOUTH_10_PIPELINE':dcf1_YOUTH_10_PIPELINE,
+        'dcf1_YOUTH_11_PIPELINE':dcf1_YOUTH_11_PIPELINE,
+        'dcf1_YOUTH_12_PIPELINE':dcf1_YOUTH_12_PIPELINE,
+        'dcf1_YOUTH_13_PIPELINE':dcf1_YOUTH_13_PIPELINE,
+        'dcf1_YOUTH_BARMM_PIPELINE':dcf1_YOUTH_BARMM_PIPELINE,
+        'dcf1_FEMALE_8_APPR':dcf1_FEMALE_8_APPR,
+        'dcf1_FEMALE_9_APPR':dcf1_FEMALE_9_APPR,
+        'dcf1_FEMALE_10_APPR':dcf1_FEMALE_10_APPR,
+        'dcf1_FEMALE_11_APPR':dcf1_FEMALE_11_APPR,
+        'dcf1_FEMALE_12_APPR':dcf1_FEMALE_12_APPR,
+        'dcf1_FEMALE_13_APPR':dcf1_FEMALE_13_APPR,
+        'dcf1_FEMALE_BARMM_APPR':dcf1_FEMALE_BARMM_APPR,
+
+        'dcf1_FEMALE_8_ONGOING':dcf1_FEMALE_8_ONGOING,
+        'dcf1_FEMALE_9_ONGOING':dcf1_FEMALE_9_ONGOING,
+        'dcf1_FEMALE_10_ONGOING':dcf1_FEMALE_10_ONGOING,
+        'dcf1_FEMALE_11_ONGOING':dcf1_FEMALE_11_ONGOING,
+        'dcf1_FEMALE_12_ONGOING':dcf1_FEMALE_12_ONGOING,
+        'dcf1_FEMALE_13_ONGOING':dcf1_FEMALE_13_ONGOING,
+        'dcf1_FEMALE_BARMM_ONGOING':dcf1_FEMALE_BARMM_ONGOING,
+
+        'dcf1_FEMALE_8_PIPELINE':dcf1_FEMALE_8_PIPELINE,
+        'dcf1_FEMALE_9_PIPELINE':dcf1_FEMALE_9_PIPELINE,
+        'dcf1_FEMALE_10_PIPELINE':dcf1_FEMALE_10_PIPELINE,
+        'dcf1_FEMALE_11_PIPELINE':dcf1_FEMALE_11_PIPELINE,
+        'dcf1_FEMALE_12_PIPELINE':dcf1_FEMALE_12_PIPELINE,
+        'dcf1_FEMALE_13_PIPELINE':dcf1_FEMALE_13_PIPELINE,
+        'dcf1_FEMALE_BARMM_PIPELINE':dcf1_FEMALE_BARMM_PIPELINE,
+        'dcf1_MALE_8_APPR':dcf1_MALE_8_APPR,
+        'dcf1_MALE_9_APPR':dcf1_MALE_9_APPR,
+        'dcf1_MALE_10_APPR':dcf1_MALE_10_APPR,
+        'dcf1_MALE_11_APPR':dcf1_MALE_11_APPR,
+        'dcf1_MALE_12_APPR':dcf1_MALE_12_APPR,
+        'dcf1_MALE_13_APPR':dcf1_MALE_13_APPR,
+        'dcf1_MALE_BARMM_APPR':dcf1_MALE_BARMM_APPR,
+
+        'dcf1_MALE_8_ONGOING':dcf1_MALE_8_ONGOING,
+        'dcf1_MALE_9_ONGOING':dcf1_MALE_9_ONGOING,
+        'dcf1_MALE_10_ONGOING':dcf1_MALE_10_ONGOING,
+        'dcf1_MALE_11_ONGOING':dcf1_MALE_11_ONGOING,
+        'dcf1_MALE_12_ONGOING':dcf1_MALE_12_ONGOING,
+        'dcf1_MALE_13_ONGOING':dcf1_MALE_13_ONGOING,
+        'dcf1_MALE_BARMM_ONGOING':dcf1_MALE_BARMM_ONGOING,
+
+        'dcf1_MALE_8_PIPELINE':dcf1_MALE_8_PIPELINE,
+        'dcf1_MALE_9_PIPELINE':dcf1_MALE_9_PIPELINE,
+        'dcf1_MALE_10_PIPELINE':dcf1_MALE_10_PIPELINE,
+        'dcf1_MALE_11_PIPELINE':dcf1_MALE_11_PIPELINE,
+        'dcf1_MALE_12_PIPELINE':dcf1_MALE_12_PIPELINE,
+        'dcf1_MALE_13_PIPELINE':dcf1_MALE_13_PIPELINE,
+        'dcf1_MALE_BARMM_PIPELINE':dcf1_MALE_BARMM_PIPELINE,
+        'dcf1_TSHF_8_APPR':dcf1_TSHF_8_APPR,
+        'dcf1_TSHF_9_APPR':dcf1_TSHF_9_APPR,
+        'dcf1_TSHF_10_APPR':dcf1_TSHF_10_APPR,
+        'dcf1_TSHF_11_APPR':dcf1_TSHF_11_APPR,
+        'dcf1_TSHF_12_APPR':dcf1_TSHF_12_APPR,
+        'dcf1_TSHF_13_APPR':dcf1_TSHF_13_APPR,
+        'dcf1_TSHF_BARMM_APPR':dcf1_TSHF_BARMM_APPR,
+
+        'dcf1_TSHF_8_ONGOING':dcf1_TSHF_8_ONGOING,
+        'dcf1_TSHF_9_ONGOING':dcf1_TSHF_9_ONGOING,
+        'dcf1_TSHF_10_ONGOING':dcf1_TSHF_10_ONGOING,
+        'dcf1_TSHF_11_ONGOING':dcf1_TSHF_11_ONGOING,
+        'dcf1_TSHF_12_ONGOING':dcf1_TSHF_12_ONGOING,
+        'dcf1_TSHF_13_ONGOING':dcf1_TSHF_13_ONGOING,
+        'dcf1_TSHF_BARMM_ONGOING':dcf1_TSHF_BARMM_ONGOING,
+
+        'dcf1_TSHF_8_PIPELINE':dcf1_TSHF_8_PIPELINE,
+        'dcf1_TSHF_9_PIPELINE':dcf1_TSHF_9_PIPELINE,
+        'dcf1_TSHF_10_PIPELINE':dcf1_TSHF_10_PIPELINE,
+        'dcf1_TSHF_11_PIPELINE':dcf1_TSHF_11_PIPELINE,
+        'dcf1_TSHF_12_PIPELINE':dcf1_TSHF_12_PIPELINE,
+        'dcf1_TSHF_13_PIPELINE':dcf1_TSHF_13_PIPELINE,
+        'dcf1_TSHF_BARMM_PIPELINE':dcf1_TSHF_BARMM_PIPELINE,
+        #NEW DATA MAY(10 FRANZ)
+        'dcf_MALEIP_CACAO_ APPR':dcf_MALEIP_CACAO_APPR,
+        'dcf_MALEYOUTH_CACAO_APPR':dcf_MALEYOUTH_CACAO_APPR,
+        'dcf_TOTALMALE_CACAO_APPR':dcf_TOTALMALE_CACAO_APPR,
+        'dcf_FEMALEIP_CACAO_APPR':dcf_FEMALEIP_CACAO_APPR,
+        'dcf_FEMALEYOUTH_CACAO_APPR':dcf_FEMALEYOUTH_CACAO_APPR,
+        'dcf_TOTALFEMALE_CACAO_APPR':dcf_TOTALFEMALE_CACAO_APPR,
+        
+        'dcf_MALEIP_COFFEE_APPR':dcf_MALEIP_COFFEE_APPR,
+        'dcf_MALEYOUTH_COFFEE_APPR':dcf_MALEYOUTH_COFFEE_APPR,
+        'dcf_TOTALMALE_COFFEE_APPR':dcf_TOTALMALE_COFFEE_APPR,
+        'dcf_FEMALEIP_COFFEE_APPR':dcf_FEMALEIP_COFFEE_APPR,
+        'dcf_FEMALEYOUTH_COFFEE_APPR':dcf_FEMALEYOUTH_COFFEE_APPR,
+        'dcf_TOTALFEMALE_COFFEE_APPR':dcf_TOTALFEMALE_COFFEE_APPR,
+
+        'dcf_MALEIP_COCONUT_APPR':dcf_MALEIP_COCONUT_APPR,
+        'dcf_MALEYOUTH_COCONUT_APPR':dcf_MALEYOUTH_COCONUT_APPR,
+        'dcf_TOTALMALE_COCONUT_APPR':dcf_TOTALMALE_COCONUT_APPR,
+        'dcf_FEMALEIP_COCONUT_APPR':dcf_FEMALEIP_COCONUT_APPR,
+        'dcf_FEMALEYOUTH_COCONUT_APPR':dcf_FEMALEYOUTH_COCONUT_APPR,
+        'dcf_TOTALFEMALE_COCONUT_APPR':dcf_TOTALFEMALE_COCONUT_APPR,
+
+        'dcf_MALEIP_PFN_APPR':dcf_MALEIP_PFN_APPR,
+        'dcf_MALEYOUTH_PFN_APPR':dcf_MALEYOUTH_PFN_APPR,
+        'dcf_TOTALMALE_PFN_APPR':dcf_TOTALMALE_PFN_APPR,
+        'dcf_FEMALEIP_PFN_APPR':dcf_FEMALEIP_PFN_APPR,
+        'dcf_FEMALEYOUTH_PFN_APPR':dcf_FEMALEYOUTH_PFN_APPR,
+        'dcf_TOTALFEMALE_PFN_APPR':dcf_TOTALFEMALE_PFN_APPR,
+
+        #NEW DATA MAY 9(FRANZ)
+        'dcf3_RCU8_ORG':dcf3_RCU8_ORG,
+        'dcf3_RCU9_ORG':dcf3_RCU9_ORG,
+        'dcf3_RCU10_ORG':dcf3_RCU10_ORG,
+        'dcf3_RCU11_ORG':dcf3_RCU11_ORG,
+        'dcf3_RCU12_ORG':dcf3_RCU12_ORG,
+        'dcf3_RCU13_ORG':dcf3_RCU13_ORG,
+        'dcf3_BARMM_ORG':dcf3_BARMM_ORG,
+
+        'dcf3_RCU8_INDIV':dcf3_RCU8_INDIV,
+        'dcf3_RCU9_INDIV':dcf3_RCU9_INDIV,
+        'dcf3_RCU10_INDIV':dcf3_RCU10_INDIV,
+        'dcf3_RCU11_INDIV':dcf3_RCU11_INDIV,
+        'dcf3_RCU12_INDIV':dcf3_RCU12_INDIV,
+        'dcf3_RCU13_INDIV':dcf3_RCU13_INDIV,
+        'dcf3_BARMM_INDIV':dcf3_BARMM_INDIV,
+    #############################################
+        'dcf2_CPAs_FOs':dcf2_CPAs_FOs,
+        'dcf2_FOs_CPAs':dcf2_FOs_CPAs,
+        'dcf2_FO_MEMBERS':dcf2_FO_MEMBERS,
+
+        'dcf2_RCU8_FO':dcf2_RCU8_FO,
+        'dcf2_RCU9_FO':dcf2_RCU9_FO,
+        'dcf2_RCU10_FO':dcf2_RCU10_FO,
+        'dcf2_RCU11_FO':dcf2_RCU11_FO,
+        'dcf2_RCU12_FO':dcf2_RCU12_FO,
+        'dcf2_RCU13_FO':dcf2_RCU13_FO,
+        'dcf2_RCUBARMM_FO':dcf2_RCUBARMM_FO,
+
         #NEW DATA MAY 6(FRANZ)
         'dcf2_CPAs':dcf2_CPAs,
 

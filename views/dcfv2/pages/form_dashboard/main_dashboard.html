@@ -518,78 +518,260 @@
 			};
 
 
+			if ($('#mybarChartStacked2').length) {
+			var _labelsrcu = ['Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'Region 13', 'BARMM'];
+				var dipData = {
+				approved: [],
+				pipeline: [],
+				ongoing: [],
+				};
+
+				// Sample data population (assuming the same logic exists)
+
+				// Calculate total counts for each crop
+				var totalApproved = dipData.approved.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalPipeline = dipData.pipeline.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalOngoing = dipData.ongoing.reduce((acc, val) => acc + parseFloat(val), 0);
+
+				var totalApproved = {{ (dcf1_TSHF_8_APPR[0]['tshf_8_appr1'] or 0) + (dcf1_TSHF_9_APPR[0]['tshf_9_appr1'] or 0) + (dcf1_TSHF_10_APPR[0]['tshf_10_appr1'] or 0) + (dcf1_TSHF_11_APPR[0]['tshf_11_appr1'] or 0) + (dcf1_TSHF_12_APPR[0]['tshf_12_appr1'] or 0) + (dcf1_TSHF_13_APPR[0]['tshf_13_appr1'] or 0) + (dcf1_TSHF_BARMM_APPR[0]['tshf_barmm_appr1'] or 0)  }};
+				var totalPipeline = {{ (dcf1_TSHF_8_PIPELINE[0]['tshf_8_pipeline1'] or 0) + (dcf1_TSHF_9_PIPELINE[0]['tshf_9_pipeline1'] or 0) + (dcf1_TSHF_10_PIPELINE[0]['tshf_10_pipeline1'] or 0) + (dcf1_TSHF_11_PIPELINE[0]['tshf_11_pipeline1'] or 0) + (dcf1_TSHF_12_PIPELINE[0]['tshf_12_pipeline1'] or 0) + (dcf1_TSHF_13_PIPELINE[0]['tshf_13_pipeline1'] or 0) + (dcf1_TSHF_BARMM_PIPELINE[0]['tshf_barmm_pipeline1'] or 0) }};
+				var totalOngoing = {{ (dcf1_TSHF_8_ONGOING[0]['tshf_8_ongoing1'] or 0) + (dcf1_TSHF_9_ONGOING[0]['tshf_9_ongoing1'] or 0) + (dcf1_TSHF_10_ONGOING[0]['tshf_10_ongoing1'] or 0) + (dcf1_TSHF_11_ONGOING[0]['tshf_11_ongoing1'] or 0) + (dcf1_TSHF_12_ONGOING[0]['tshf_12_ongoing1'] or 0) + (dcf1_TSHF_13_ONGOING[0]['tshf_13_ongoing1'] or 0) + (dcf1_TSHF_BARMM_ONGOING[0]['tshf_barmm_ongoing1'] or 0) }};
+
+				var ctx = document.getElementById("mybarChartStacked2");
+				var mybarChartStacked2 = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: _labelsrcu,
+						datasets: [{
+							label: 'Approved',
+							backgroundColor: "#99e6ff",
+							data: [
+								{{ dcf1_TSHF_8_APPR[0]['tshf_8_appr1'] }},
+								{{ dcf1_TSHF_9_APPR[0]['tshf_9_appr1'] }},
+								{{ dcf1_TSHF_10_APPR[0]['tshf_10_appr1'] }},
+								{{ dcf1_TSHF_11_APPR[0]['tshf_11_appr1'] }},
+								{{ dcf1_TSHF_12_APPR[0]['tshf_12_appr1'] }},
+								{{ dcf1_TSHF_13_APPR[0]['tshf_13_appr1'] }},
+								{{ dcf1_TSHF_BARMM_APPR[0]['tshf_barmm_appr1'] }},
+							]
+						}, {
+							label: 'Pipeline',
+							backgroundColor: "#33ccff",
+							data: [
+								{{ dcf1_TSHF_8_PIPELINE[0]['tshf_8_pipeline1'] }},
+								{{ dcf1_TSHF_9_PIPELINE[0]['tshf_9_pipeline1'] }},
+								{{ dcf1_TSHF_10_PIPELINE[0]['tshf_10_pipeline1'] }},
+								{{ dcf1_TSHF_11_PIPELINE[0]['tshf_11_pipeline1'] }},
+								{{ dcf1_TSHF_12_PIPELINE[0]['tshf_12_pipeline1'] }},
+								{{ dcf1_TSHF_13_PIPELINE[0]['tshf_13_pipeline1'] }},
+								{{ dcf1_TSHF_BARMM_PIPELINE[0]['tshf_barmm_pipeline1'] }},
+							]
+						}, {
+							label: 'Ongoing',
+							backgroundColor: "#0099cc",
+							data: [
+								{{ dcf1_TSHF_8_ONGOING[0]['tshf_8_ongoing1'] }},
+								{{ dcf1_TSHF_9_ONGOING[0]['tshf_9_ongoing1'] }},
+								{{ dcf1_TSHF_10_ONGOING[0]['tshf_10_ongoing1'] }},
+								{{ dcf1_TSHF_11_ONGOING[0]['tshf_11_ongoing1'] }},
+								{{ dcf1_TSHF_12_ONGOING[0]['tshf_12_ongoing1'] }},
+								{{ dcf1_TSHF_13_ONGOING[0]['tshf_13_ongoing1'] }},
+								{{ dcf1_TSHF_BARMM_ONGOING[0]['tshf_barmm_ongoing1'] }},
+							]
+						},]
+					},
+					options: {
+						scales: {
+							xAxes: [{ stacked: true }],
+							yAxes: [{ stacked: true }]
+						},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+									// Calculate percentage based on total count for current crop
+									var currentCrop = datasetLabel.toLowerCase();
+									var total = 0;
+
+									switch (currentCrop) {
+										case 'approved':
+											total = totalApproved;
+											break;
+										case 'pipeline':
+											total = totalPipeline;
+											break;
+										case 'ongoing':
+											total = totalOngoing;
+											break;
+										default:
+											break;
+									}
+									var percentage = total !== 0 ? parseFloat((value / total * 100).toFixed(2)) : 0;
+									return datasetLabel + ': ' + value + ' (' + percentage + '%)';
+								}
+							}
+						}
+					}
+				});
+			};
+
+
+
+			if ($('#mybarChartStackedBDSP').length) {
+			var _labelsrcu = ['Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'Region 13', 'BARMM'];
+				var dipData = {
+				indv: [],
+				org: [],
+				};
+				var totalIndvidual = dipData.indv.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalOrganizational = dipData.org.reduce((acc, val) => acc + parseFloat(val), 0);
+
+				var totalIndvidual = {{ dcf3_RCU8_INDIV[0]['rcu8_indiv'] + dcf3_RCU9_INDIV[0]['rcu9_indiv'] + dcf3_RCU10_INDIV[0]['rcu10_indiv'] + dcf3_RCU11_INDIV[0]['rcu11_indiv'] + dcf3_RCU12_INDIV[0]['rcu12_indiv'] + dcf3_RCU13_INDIV[0]['rcu13_indiv'] +  dcf3_BARMM_INDIV[0]['barmm_indiv'] }};
+				var totalOrganizational = {{ dcf3_RCU8_ORG[0]['rcu8_org'] + dcf3_RCU9_ORG[0]['rcu9_org'] + dcf3_RCU10_ORG[0]['rcu10_org'] + dcf3_RCU11_ORG[0]['rcu11_org'] + dcf3_RCU12_ORG[0]['rcu12_org'] + dcf3_RCU13_ORG[0]['rcu13_org'] + dcf3_BARMM_ORG[0]['barmm_org'] }};
+
+				var ctx = document.getElementById("mybarChartStackedBDSP");
+				var mybarChartStackedBDSP = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: _labelsrcu,
+						datasets: [{
+							label: 'Individual',
+							backgroundColor: "#0099cc",
+							data: [
+								{{ dcf3_RCU8_INDIV[0]['rcu8_indiv'] }},
+								{{ dcf3_RCU9_INDIV[0]['rcu9_indiv'] }},
+								{{ dcf3_RCU10_INDIV[0]['rcu10_indiv'] }},
+								{{ dcf3_RCU11_INDIV[0]['rcu11_indiv'] }},
+								{{ dcf3_RCU12_INDIV[0]['rcu12_indiv'] }},
+								{{ dcf3_RCU13_INDIV[0]['rcu13_indiv'] }},
+								{{ dcf3_BARMM_INDIV[0]['barmm_indiv'] }}
+							]
+						}, {
+							label: 'Organizational',
+							backgroundColor: "#ff8080",
+							data: [
+								{{ dcf3_RCU8_ORG[0]['rcu8_org'] }},
+								{{ dcf3_RCU9_ORG[0]['rcu9_org'] }},
+								{{ dcf3_RCU10_ORG[0]['rcu10_org'] }},
+								{{ dcf3_RCU11_ORG[0]['rcu11_org'] }},
+								{{ dcf3_RCU12_ORG[0]['rcu12_org'] }},
+								{{ dcf3_RCU13_ORG[0]['rcu13_org'] }},
+								{{ dcf3_BARMM_ORG[0]['barmm_org'] }}
+							]
+						},]
+					},
+					options: {
+						scales: {
+							xAxes: [{ stacked: true }],
+							yAxes: [{ stacked: true }]
+						},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+
+									var currentCrop = datasetLabel.toLowerCase();
+									var total = 0;
+
+									switch (currentCrop) {
+										case 'individual':
+											total = totalIndvidual;
+											break;
+										case 'organizational':
+											total = totalOrganizational;
+											break;
+										default:
+											break;
+									}
+									var percentage = total !== 0 ? parseFloat((value / total * 100).toFixed(2)) : 0;
+									return datasetLabel + ': ' + value + ' (' + percentage + '%)';
+								}
+							}
+						}
+					}
+				});
+			};
+
+
 			if ($('#pieChartM').length) {
 				var totalMale = {{ dcf_form1male_appr[0]['total_male_appr'] }};
-				var totalFemale = {{ dcf_form1female_appr[0]['total_female_appr'] }};
 				var totalMaleIP = {{ dcf_form1maleip_appr[0]['total_maleip_appr'] }};
-				var totalFemaleIP = {{ dcf_form1femaleip_appr[0]['total_femaleip_appr'] }};
 				var totalMaleYouth = {{ dcf_form1maleyouth_appr[0]['total_maleyouth_appr'] }};
+				var totalFemale = {{ dcf_form1female_appr[0]['total_female_appr'] }};
+				var totalFemaleIP = {{ dcf_form1femaleip_appr[0]['total_femaleip_appr'] }};
 				var totalFemaleYouth = {{ dcf_form1femaleyouth_appr[0]['total_femaleyouth_appr'] }};
 
-				var totalMaleWithoutIPAndYouth = totalMale - totalMaleIP - totalMaleYouth;
-				var totalFemaleWithoutIPAndYouth = totalFemale - totalFemaleIP - totalFemaleYouth;
+				var totalDIPs = totalMale + totalFemale;
+
+				var totalMalePercentage = (totalMale / totalDIPs) * 100;
+				var totalFemalePercentage = (totalFemale / totalDIPs) * 100;
+
+				var maleIPPercentage = (totalMaleIP / totalMale) * totalMalePercentage;
+				var maleYouthPercentage = (totalMaleYouth / totalMale) * totalMalePercentage;
+
+				var femaleIPPercentage = (totalFemaleIP / totalFemale) * totalFemalePercentage;
+				var femaleYouthPercentage = (totalFemaleYouth / totalFemale) * totalFemalePercentage;
 
 				var xValues2 = [
-					'Male: ' + totalMaleWithoutIPAndYouth,
-					'Female: ' + totalFemaleWithoutIPAndYouth,
-					'Male_IP: ' + totalMaleIP,
-					'Male_Youth: ' + totalMaleYouth,
-					'Female_IP: ' + totalFemaleIP,
-					'Female_Youth: ' + totalFemaleYouth,
-					'Approved DIPs of smallholder farmers: ' + (totalMale + totalFemale)
+					'Male: ' + totalMale,
+					'Male IP: ' + totalMaleIP,
+					'Male Youth: ' + totalMaleYouth,
+					'Female: ' + totalFemale,
+					'Female IP: ' + totalFemaleIP,
+					'Female Youth: ' + totalFemaleYouth,
+					'Approved DIPs of smallholder farmers: ' + totalDIPs
 				];
 
 				var yValues2 = [
-					totalMaleWithoutIPAndYouth,
-					totalFemaleWithoutIPAndYouth,
-					totalMaleIP,
-					totalMaleYouth,
-					totalFemaleIP,
-					totalFemaleYouth,
-					totalMale + totalFemale
+					totalMalePercentage,
+					maleIPPercentage,
+					maleYouthPercentage,
+					totalFemalePercentage,
+					femaleIPPercentage,
+					femaleYouthPercentage,
+					totalMalePercentage + totalFemalePercentage
 				];
 
 				var barColors = ['#0070cc', '#0070cc', '#0070cc', '#cc00aa', '#cc00aa', '#cc00aa', '#4eeb82'];
 
 				var ctx = document.getElementById("pieChartM");
 				var data = {
-				datasets: [{
-					data: yValues2,
-					backgroundColor: barColors,
-					label: 'Total'
-				}],
-				labels: xValues2
+					datasets: [{
+						data: yValues2,
+						backgroundColor: barColors,
+						label: 'Total'
+					}],
+					labels: xValues2
 				};
 
 				var pieChartM = new Chart(ctx, {
-				data: data,
-				type: 'pie',
-				options: {
-					plugins: {
-					datalabels: {
-						color: 'white',
-						formatter: (value, context) => {
-						const total = yValues2.reduce((a, b) => a + b, 0);
-						const percentage = ((value / total) * 100).toFixed(2) + '%';
-						return percentage;
+					data: data,
+					type: 'pie',
+					options: {
+						plugins: {
+							datalabels: {
+								color: 'white',
+								formatter: (value, context) => {
+									return value.toFixed(2) + '%';
+								}
+							}
+						},
+						tooltips: {
+							callbacks: {
+								label: function (tooltipItem, data) {
+									const label = data.labels[tooltipItem.index];
+									const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+									return `${label} (${value.toFixed(2)}%)`;
+								}
+							}
 						}
 					}
-					},
-					tooltips: {
-					callbacks: {
-						label: function (tooltipItem, data) {
-						const label = data.labels[tooltipItem.index];
-						const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-						const total = yValues2.reduce((a, b) => a + b, 0);
-						const percentage = ((value / total) * 100).toFixed(2) + '%';
-						return `${label} (${percentage})`;
-						}
-					}
-					}
-				}
 				});
-			};
-
+			}
 
 
 		if ($('#pieChart3').length) {
@@ -824,61 +1006,6 @@
 				},
 			});
 		};
-
-
-		if ($('#pieChartDIPS_pt').length) {
-					var totalCPA = {{ dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int}};
-					var percentageCPA = (totalCPA / 100) * 100;
-
-					var xValues2 = [
-						'Total # of signed CPA from all regions: ' + totalCPA,
-						'Project targets: 100'
-					];
-
-					var yValues2 = [
-						totalCPA,
-						100
-					];
-
-					var barColors = ['#00becc', '#4eeb70'];
-					var ctx = document.getElementById("pieChartDIPS_pt");
-					var data = {
-						datasets: [{
-							data: [percentageCPA, 100 - percentageCPA],
-							backgroundColor: barColors,
-							label: 'Total'
-						}],
-						labels: xValues2
-					};
-
-					var pieChartDIPS_pt = new Chart(ctx, {
-						data: data,
-						type: 'pie',
-						options: {
-							plugins: {
-								datalabels: {
-									color: 'white',
-									formatter: (value, context) => {
-										return value.toFixed(2) + '%';
-									}
-								}
-							},
-							tooltips: {
-								callbacks: {
-									label: function (tooltipItem, data) {
-										var label = data.labels[tooltipItem.index];
-										var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-										if (label.includes('Total # of signed CPA from all regions')) {
-											return `${label}: ${value.toFixed(2)}%`;
-										} else {
-											return `${label}`;
-										}
-									},
-								},
-							},
-						},
-					});
-				}
 
 
 		if ($('#pieChart10').length) {
@@ -1582,7 +1709,6 @@
 			}
 		});
 
-		
 		};
 </script>
 

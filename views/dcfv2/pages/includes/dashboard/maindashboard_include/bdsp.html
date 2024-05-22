@@ -38,9 +38,9 @@
             <canvas id="pieChart3"></canvas>
             <div style="text-align: center;">
                 <p>
-                    <i class="fa fa-square" style="color:#005fcc"></i> Male: {{dcf_form3male}}&nbsp;&nbsp;&nbsp; 
-                    <i class="fa fa-square" style="color:#eb4e97"></i> Female: {{dcf_form3female}}&nbsp;&nbsp;&nbsp;
-                     Total: {{dcf_form3male + dcf_form3female}}
+                    <i class="fa fa-square" style="color:#005fcc"></i> Male: {{'{:,}'.format(dcf_form3male)}}&nbsp;&nbsp;&nbsp; 
+                    <i class="fa fa-square" style="color:#eb4e97"></i> Female: {{'{:,}'.format(dcf_form3female)}}&nbsp;&nbsp;&nbsp;
+                     Total: {{'{:,}'.format(dcf_form3male + dcf_form3female)}}
                 </p>
             </div>
         </div>
@@ -68,16 +68,47 @@
                 <canvas id="mybarChart3"></canvas>
             </div>
             <div style="text-align: center;">
-                <p>Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp; Organizational/Firm: {{form3orgfirm[0]['totalorgfirm']}}</p>
+                <p>Individual: {{ '{:,}'.format(form3indiv[0]['totalindiv'])}} &nbsp;&nbsp;&nbsp;
+                    Organizational/Firm: {{'{:,}'.format(form3orgfirm[0]['totalorgfirm'])}}</p>
             </div>
         </div>
     </div>
-    
+
+    <div class="col-md-7 col-sm-7">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>BDSPs per region by type of service provider and its percentage versus the total number of BDSPs <small>Bar Chart</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="mybarChartStackedBDSP"></canvas>
+                <div style="text-align: center;">
+                    <p>
+                        <i class="fa fa-square" style="color:#0099cc "></i> Individual: {{'{:,}'.format( dcf3_RCU8_INDIV[0]['rcu8_indiv'] + dcf3_RCU9_INDIV[0]['rcu9_indiv'] + dcf3_RCU10_INDIV[0]['rcu10_indiv'] + dcf3_RCU11_INDIV[0]['rcu11_indiv'] + dcf3_RCU12_INDIV[0]['rcu12_indiv'] + dcf3_RCU13_INDIV[0]['rcu13_indiv'] +  dcf3_BARMM_INDIV[0]['barmm_indiv'] )}} &nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-square" style="color:#ff8080 "></i> Organizational: {{'{:,}'.format( dcf3_RCU8_ORG[0]['rcu8_org'] + dcf3_RCU9_ORG[0]['rcu9_org'] + dcf3_RCU10_ORG[0]['rcu10_org'] + dcf3_RCU11_ORG[0]['rcu11_org'] + dcf3_RCU12_ORG[0]['rcu12_org'] + dcf3_RCU13_ORG[0]['rcu13_org'] + dcf3_BARMM_ORG[0]['barmm_org'] )}} &nbsp;&nbsp;&nbsp;
+                        Total: {{'{:,}'.format( dcf3_RCU8_INDIV[0]['rcu8_indiv'] + dcf3_RCU9_INDIV[0]['rcu9_indiv'] + dcf3_RCU10_INDIV[0]['rcu10_indiv'] + dcf3_RCU11_INDIV[0]['rcu11_indiv'] + dcf3_RCU12_INDIV[0]['rcu12_indiv'] + dcf3_RCU13_INDIV[0]['rcu13_indiv'] +  dcf3_BARMM_INDIV[0]['barmm_indiv'] + dcf3_RCU8_ORG[0]['rcu8_org'] + dcf3_RCU9_ORG[0]['rcu9_org'] + dcf3_RCU10_ORG[0]['rcu10_org'] + dcf3_RCU11_ORG[0]['rcu11_org'] + dcf3_RCU12_ORG[0]['rcu12_org'] + dcf3_RCU13_ORG[0]['rcu13_org'] + dcf3_BARMM_ORG[0]['barmm_org'])}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
     <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>	
+        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>  
     </div>
         <div class="x_title">
-            <span style="font-size: 18px; color: #73879C;">Field of expertise per type by region</span>	
+            <span style="font-size: 18px; color: #73879C;">Field of expertise per type by region</span> 
         </div>
     <div class="col-md-6 col-sm-6  ">
         <div class="x_panel tile overflow_hidden">
@@ -114,22 +145,22 @@
                     <table class="tile_info">
                         <tr>
                             <td>
-                                <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region8_entrep[0]['dcf3_entrep8'] }}</p>
+                                <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{'{:,}'.format( dcf3_region8_entrep[0]['dcf3_entrep8'] )}}</p>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region8_agri[0]['dcf3_agri8'] }}</p>
+                                <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{'{:,}'.format( dcf3_region8_agri[0]['dcf3_agri8'] )}}</p>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region8_es[0]['dcf3_es8'] }}</p>
+                                <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{'{:,}'.format( dcf3_region8_es[0]['dcf3_es8'] )}}</p>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region8_org[0]['dcf3_org8'] }}</p>
+                                <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{'{:,}'.format( dcf3_region8_org[0]['dcf3_org8'] )}}</p>
                             </td>
                         </tr>
                     </table>
@@ -175,22 +206,22 @@
             <table class="tile_info">
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region9_entrep[0]['dcf3_entrep9'] }}</p>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{'{:,}'.format( dcf3_region9_entrep[0]['dcf3_entrep9'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region9_agri[0]['dcf3_agri9'] }}</p>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{'{:,}'.format( dcf3_region9_agri[0]['dcf3_agri9'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region9_es[0]['dcf3_es9'] }}</p>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{'{:,}'.format( dcf3_region9_es[0]['dcf3_es9'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region9_org[0]['dcf3_org9'] }}</p>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{'{:,}'.format( dcf3_region9_org[0]['dcf3_org9'] )}}</p>
                     </td>
                 </tr>
             </table>
@@ -236,22 +267,22 @@
             <table class="tile_info">
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region10_entrep[0]['dcf3_entrep10'] }}</p>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{'{:,}'.format( dcf3_region10_entrep[0]['dcf3_entrep10'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region10_agri[0]['dcf3_agri10'] }}</p>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{'{:,}'.format( dcf3_region10_agri[0]['dcf3_agri10'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region10_es[0]['dcf3_es10'] }}</p>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{'{:,}'.format( dcf3_region10_es[0]['dcf3_es10'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region10_org[0]['dcf3_org10'] }}</p>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{'{:,}'.format( dcf3_region10_org[0]['dcf3_org10'] )}}</p>
                     </td>
                 </tr>
             </table>
@@ -298,22 +329,22 @@
             <table class="tile_info">
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region11_entrep[0]['dcf3_entrep11'] }}</p>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{'{:,}'.format( dcf3_region11_entrep[0]['dcf3_entrep11'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region11_agri[0]['dcf3_agri11'] }}</p>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{'{:,}'.format( dcf3_region11_agri[0]['dcf3_agri11'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region11_es[0]['dcf3_es11'] }}</p>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{'{:,}'.format( dcf3_region11_es[0]['dcf3_es11'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region11_org[0]['dcf3_org11'] }}</p>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{'{:,}'.format( dcf3_region11_org[0]['dcf3_org11'] )}}</p>
                     </td>
                 </tr>
             </table>
@@ -359,22 +390,22 @@
             <table class="tile_info">
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region12_entrep[0]['dcf3_entrep12'] }}</p>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ '{:,}'.format(dcf3_region12_entrep[0]['dcf3_entrep12'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region12_agri[0]['dcf3_agri12'] }}</p>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ '{:,}'.format(dcf3_region12_agri[0]['dcf3_agri12'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region12_es[0]['dcf3_es12'] }}</p>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ '{:,}'.format(dcf3_region12_es[0]['dcf3_es12'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region12_org[0]['dcf3_org12'] }}</p>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ '{:,}'.format(dcf3_region12_org[0]['dcf3_org12'] )}}</p>
                     </td>
                 </tr>
             </table>
@@ -420,22 +451,22 @@
             <table class="tile_info">
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_region13_entrep[0]['dcf3_entrep13'] }}</p>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{'{:,}'.format( dcf3_region13_entrep[0]['dcf3_entrep13'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_region13_agri[0]['dcf3_agri13'] }}</p>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{'{:,}'.format( dcf3_region13_agri[0]['dcf3_agri13'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_region13_es[0]['dcf3_es13'] }}</p>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{'{:,}'.format( dcf3_region13_es[0]['dcf3_es13'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_region13_org[0]['dcf3_org13'] }}</p>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{'{:,}'.format( dcf3_region13_org[0]['dcf3_org13'] )}}</p>
                     </td>
                 </tr>
             </table>
@@ -482,22 +513,22 @@
             <table class="tile_info">
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_regionB_entrep[0]['dcf3_entrepB'] }}</p>
+                        <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{'{:,}'.format( dcf3_regionB_entrep[0]['dcf3_entrepB'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_regionB_agri[0]['dcf3_agriB'] }}</p>
+                        <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{'{:,}'.format( dcf3_regionB_agri[0]['dcf3_agriB'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_regionB_es[0]['dcf3_esB'] }}</p>
+                        <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{'{:,}'.format( dcf3_regionB_es[0]['dcf3_esB'] )}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_regionB_org[0]['dcf3_orgB'] }}</p>
+                        <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{'{:,}'.format( dcf3_regionB_org[0]['dcf3_orgB'] )}}</p>
                     </td>
                 </tr>
             </table>
@@ -543,22 +574,22 @@
         <table class="tile_info">
             <tr>
                 <td>
-                    <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{ dcf3_total_entrep[0]['dcf3_entrepT'] }}</p>
+                    <p><i class="fa fa-square" style="color: #2177b1;"></i> Entrepreneurial: {{'{:,}'.format( dcf3_total_entrep[0]['dcf3_entrepT'] )}}</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{ dcf3_total_agri[0]['dcf3_agriT'] }}</p>
+                    <p><i class="fa fa-square" style="color: #c2c23d;"></i> Agri-technical: {{'{:,}'.format( dcf3_total_agri[0]['dcf3_agriT'] )}}</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{ dcf3_total_es[0]['dcf3_esT'] }}</p>
+                    <p><i class="fa fa-square" style="color: #478a09;"></i> Extension Service: {{'{:,}'.format( dcf3_total_es[0]['dcf3_esT'] )}}</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{ dcf3_total_org[0]['dcf3_orgT'] }}</p>
+                    <p><i class="fa fa-square" style="color: #ff911b;"></i> Organizational: {{'{:,}'.format( dcf3_total_org[0]['dcf3_orgT'] )}}</p>
                 </td>
             </tr>
         </table>
