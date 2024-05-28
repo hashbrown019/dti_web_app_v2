@@ -3,7 +3,7 @@
 		<div class="">
 			<span class="x-text-grey">Area</span>
 			<select id="f_rcu" class="FILTER_FIELD x-input x-select x-border x-round">
-				<option value="all"  selected disabled>Select Area</option>
+				<option value="all"  selected disabled>Select Region Area</option>
 				<option>All</option>
 				<option>RCU 8</option>
 				<option>RCU 9</option>
@@ -14,7 +14,7 @@
 				<option>BARMM</option>
 			</select>
 		</div>
-		<div class="">
+		<div class="x-hide">
 			<span class="x-text-grey">Sub-Form A</span>
 			<select id="f_subform" class="FILTER_FIELD x-input x-select x-border x-round">
 				<option value="all" selected disabled>Select Subform</option>
@@ -51,108 +51,159 @@
 	<div class="x-row x-container x-padding">
 		<!-- DASH FOR MALE -->
 		<div class="x-container x-padding x-col l6 m6 x-border x-border-dashed">
-			<div class="x-row x-container x-padding">
-				<div class="x-container x-center x-teal x-padding x-round x-border-dashed x-border-teal">
-					<b id="total_mal" class="x-xxlarge _money_tag"> 00 </b><br>
-					<b class="x-large">
-						Male<br>
-					</b>
+			<div class="x-col l4 m4">
+				<div class="x-row x-container x-padding">
+					<div class="x-container x-center x-teal x-padding x-round x-border-dashed x-border-teal">
+						<b id="total_mal" class="x-xxlarge _money_tag"> 00 </b><br>
+						<b class="x-large">
+							Male<br>
+						</b>
+					</div>
+				</div>
+				<div class="x-row ">
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+							<b id="male_is_pwd" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								PWD<br>
+							</span>
+						</div>
+					</div>
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+							<b id="male_is_ip" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								IP<br>
+							</span>
+						</div>
+					</div>
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+							<b id="male_is_youth" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								Youth<br>
+							</span>
+						</div>
+					</div>
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+							<b id="male_is_sen_cit" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								Senior Citizen<br>
+							</span>
+						</div>
+					</div>
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
+							<b id="male_is_head_hh" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								Head of the Household<br>
+							</span>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="x-row ">
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
-						<b id="male_is_pwd" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							PWD<br>
-						</span>
-					</div>
-				</div>
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
-						<b id="male_is_ip" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							Youth<br>
-						</span>
-					</div>
-				</div>
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
-						<b id="male_is_youth" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							IP<br>
-						</span>
-					</div>
-				</div>
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
-						<b id="male_is_sen_cit" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							Senior Citizen<br>
-						</span>
-					</div>
-				</div>
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-teal">
-						<b id="male_is_head_hh" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							Head of the Household<br>
-						</span>
-					</div>
-				</div>
+			<div class="x-col l4 m4 x-container x-padding">
+				<b class="x-container x-block x-teal x-large">Male Landholding Income</b>
+				<table class="x-table x-bordered">
+					<thead class="x-teal">
+						<th>Hectares</th>
+						<th># of SFH</th>
+						<th>Avg Income</th>
+					</thead>
+					<tbody id="male_ha_dash">
+					</tbody>
+				</table>
+			</div>
+			<div class="x-col l4 m4 x-container x-padding">
+				<b class="x-container x-block x-teal x-large">Male Age Range</b>
+				<table class="x-table x-bordered">
+					<thead class="x-teal">
+						<th>Age Range</th>
+						<th>Number of Farmers</th>
+					</thead>
+					<tbody id="male_age_dash">
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<!-- DASH FOR FEMALE -->
 		<div class="x-container x-padding x-col l6 m6 x-border x-border-dashed">
-			<div class="x-row x-container x-padding">
-				<div class="x-container x-center x-orange x-padding x-round x-border-dashed x-border-orange">
-					<b id="total_female" class="x-xxlarge _money_tag"> 00 </b><br>
-					<b class="x-large">
-						Female<br>
-					</b>
+			<div class="x-col l4 m4">
+				<div class="x-row x-container x-padding">
+					<div class="x-container x-center x-orange x-padding x-round x-border-dashed x-border-orange">
+						<b id="total_female" class="x-xxlarge _money_tag"> 00 </b><br>
+						<b class="x-large">
+							Female<br>
+						</b>
+					</div>
+				</div>
+				<div class="x-row ">
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
+							<b id="female_is_pwd" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								PWD<br>
+							</span>
+						</div>
+					</div>
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
+							<b id="female_is_ip" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								IP<br>
+							</span>
+						</div>
+					</div>
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
+							<b id="female_is_youth" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								Youth<br>
+							</span>
+						</div>
+					</div>
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
+							<b id="female_is_sen_cit" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								Senior Citizen<br>
+							</span>
+						</div>
+					</div>
+					<div class="x-container x-padding">
+						<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
+							<b id="female_is_head_hh" class="x-large _money_tag"> 00 </b><br>
+							<span class="x-small">
+								Head of the Household<br>
+							</span>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="x-row ">
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
-						<b id="female_is_pwd" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							PWD<br>
-						</span>
-					</div>
-				</div>
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
-						<b id="female_is_ip" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							Youth<br>
-						</span>
-					</div>
-				</div>
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
-						<b id="female_is_youth" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							IP<br>
-						</span>
-					</div>
-				</div>
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
-						<b id="female_is_sen_cit" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							Senior Citizen<br>
-						</span>
-					</div>
-				</div>
-				<div class="x-container x-padding">
-					<div class="x-container x-center x-padding x-round x-border-dashed x-border-orange">
-						<b id="female_is_head_hh" class="x-large _money_tag"> 00 </b><br>
-						<span class="x-small">
-							Head of the Household<br>
-						</span>
-					</div>
-				</div>
+
+			<div class="x-col l4 m4 x-container x-padding">
+				<b class="x-container x-block x-orange x-large">Female Landholding Income</b>
+				<table class="x-table x-bordered">
+					<thead class="x-orange">
+						<th>Hectares</th>
+						<th># of SFH</th>
+						<th>Avg Income</th>
+					</thead>
+					<tbody id="female_ha_dash">
+					</tbody>
+				</table>
+			</div>
+			<div class="x-col l4 m4 x-container x-padding">
+				<b class="x-container x-block x-orange x-large">Female Age Range</b>
+				<table class="x-table x-bordered">
+					<thead class="x-orange">
+						<th>Age Range</th>
+						<th>Number of Farmers</th>
+					</thead>
+					<tbody id="female_age_dash">
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -187,6 +238,8 @@
 				dash_get_form_a1(res)
 				// println(" Requesting Done")
 				$ID('fltr_load').style.display = "none"
+				create_ha_dash(res['ha_area'])
+				create_age_sex_range(res['age_sex_area'])
 			}
 		})
 		// println(" Requesting Data")
@@ -209,11 +262,76 @@
 				Some profiles will not reflect in the dashboard filter, this data is either corrupt, untagged in a specific category or an orphan data (data that has no associated user creator). some of this data are subject in validation and data cleansing `),
 			content : adv_f_holder
 		})
-		adv_filter.dialog.style.width = '30%';
+		adv_filter.dialog.style.width = '95%';
 		adv_filter.show()
 	}
+
 	$onload(function(){
 		adv_f_holder = $ID('adv_f_holder').innerHTML;
 		$ID('adv_f_holder').innerHTML = ""
 	})
+
+	function create_ha_dash(_data){
+		var ha_male = _data['simple']['male']
+		var ha_holdaer_male = ""
+		println(ha_male)
+		for(ha in ha_male){
+			ha_holdaer_male += (`
+				<tr>
+					<td>${ha}</td>
+					<td class="_money_tag">${  Money(Math.round(ha_male[ha]['num_farmer_has_inc']* 100) / 100) }</td>
+					<td class="_money_tag">${  Money(Math.round(ha_male[ha]['ave_income']* 100) / 100) }</td>
+				</tr>
+			`)
+			println(key)
+		}
+		$ID("male_ha_dash").innerHTML = ha_holdaer_male
+
+		var ha_female = _data['simple']['female']
+		var ha_holdaer_female = ""
+		println(ha_female)
+		for(ha in ha_female){
+			ha_holdaer_female += (`
+				<tr>
+					<td>${ha}</td>
+					<td class="_money_tag">${  Money(Math.round(ha_female[ha]['num_farmer_has_inc']* 100) / 100) }</td>
+					<td class="_money_tag">${  Money(Math.round(ha_female[ha]['ave_income']* 100) / 100) }</td>
+				</tr>
+			`)
+			println(key)
+		}
+		$ID("female_ha_dash").innerHTML = ha_holdaer_female
+	}
+
+
+	function create_age_sex_range(_data){
+		var sex_range_male = _data['age_range']
+		var sex_range_holdaer_male = ""
+		println(sex_range_male)
+		for(_range in sex_range_male){
+			sex_range_holdaer_male += (`
+				<tr>
+					<td>${_range}</td>
+					<td class="_money_tag">${  Money(Math.round(sex_range_male[_range]['male']* 100) / 100) }</td>
+				</tr>
+			`)
+			println(key)
+		}
+		$ID("male_age_dash").innerHTML = sex_range_holdaer_male
+		// ======================
+
+		var sex_range_female = _data['age_range']
+		var sex_range_holdaer_female = ""
+		println(sex_range_female)
+		for(_range in sex_range_female){
+			sex_range_holdaer_female += (`
+				<tr>
+					<td>${_range}</td>
+					<td class="_money_tag">${  Money(Math.round(sex_range_female[_range]['female']* 100) / 100) }</td>
+				</tr>
+			`)
+			println(key)
+		}
+		$ID("female_age_dash").innerHTML = sex_range_holdaer_female
+	}
 </script>

@@ -1,4 +1,8 @@
-from datetime import date, datetime
+from datetime import date 
+from datetime import datetime as dt 
+import datetime as DT 
+from dateutil import relativedelta
+
 from flask import Blueprint, render_template, request, session, redirect, jsonify, Response,send_file
 from flask_session import Session
 from modules.Connections import mysql,sqlite
@@ -13,7 +17,11 @@ from controllers.engine_excel_to_sql import form_excel_a_handler
 
 from multiprocessing import Process
 import threading
-import time
+import time, re
+
+from difflib import SequenceMatcher
+import pandas as pd
+import json
 
 app = Blueprint("feature_0_sub",__name__,template_folder='pages')
 _excel = form_excel_a_handler(__name__)
@@ -52,18 +60,18 @@ class _main:
 	@app.route("/form_a/dash_a1/dash_get_form_a1/<area>",methods=["POST","GET"])
 	def dash_get_form_a1(area):
 		# print(area)
-		return {"male":_main.dash_get_male(area),"female":_main.dash_get_female(area)}
+		return {"male":_main.dash_get_male(area),"female":_main.dash_get_female(area),"ha_area":_main.get_hectareage(area),"age_sex_area":_main.birthday_by_sex(area)}
 
 	@app.route("/form_a/dash_a1/dash_get_male/<area>",methods=["POST","GET"])
 	def dash_get_male(area):
 		_filter(area)
-		m_c_male = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male';".format(_filter(area)) )[0]['count']
+		# m_c_male = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male';".format(_filter(area)) )[0]['count']
 
-		m_c_male_is_pwd = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_is_pwd`='true';".format(_filter(area)) )[0]['count']
-		m_c_male_is_ip = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_is_ip`='true';".format(_filter(area)) )[0]['count']
-		m_c_male_is_youth = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_age` BETWEEN '15' AND '30';".format(_filter(area)) )[0]['count']
-		m_c_male_is_sen_cit = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_age` BETWEEN '60' AND '90';".format(_filter(area)) )[0]['count']
-		m_c_male_is_head_hh = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_head_of_house` LIKE '%true%';".format(_filter(area)) )[0]['count']
+		# m_c_male_is_pwd = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_is_pwd`='true';".format(_filter(area)) )[0]['count']
+		# m_c_male_is_ip = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_is_ip`='true';".format(_filter(area)) )[0]['count']
+		# m_c_male_is_youth = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_age` BETWEEN '15' AND '30';".format(_filter(area)) )[0]['count']
+		# m_c_male_is_sen_cit = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_age` BETWEEN '60' AND '90';".format(_filter(area)) )[0]['count']
+		# m_c_male_is_head_hh = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'male' AND `farmer_head_of_house` LIKE '%true%';".format(_filter(area)) )[0]['count']
 		# =============
 		ex_c_male = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `excel_import_form_a` WHERE {} `frmer_prof_@_basic_Info_@_Sex`='male';".format(_filter(area)) )[0]['count']
 
@@ -77,7 +85,6 @@ class _main:
 		ex_c_male_sen_cit = 0
 
 		current_year = date.today().year
-
 		for bd in _ex_mal_bday:
 			bday = bd['bday'].split("-")
 			if(len(bday)==3):
@@ -91,24 +98,32 @@ class _main:
 				except Exception as e:
 					print(e)
 		return {
-			'total_mal':ex_c_male + m_c_male,
-			'male_is_pwd':m_c_male_is_pwd + ex_c_male_is_pwd,
-			'male_is_ip':m_c_male_is_ip + ex_c_male_is_ip,
-			'male_is_youth':m_c_male_is_youth + ex_c_male_is_youth,
-			'male_is_sen_cit':m_c_male_is_sen_cit + ex_c_male_sen_cit,
-			'male_is_head_hh':m_c_male_is_head_hh + ex_c_male_male_is_head_hh
+			'total_mal':ex_c_male ,
+			'male_is_pwd': ex_c_male_is_pwd,
+			'male_is_ip': ex_c_male_is_ip,
+			'male_is_youth': ex_c_male_is_youth,
+			'male_is_sen_cit': ex_c_male_sen_cit,
+			'male_is_head_hh': ex_c_male_male_is_head_hh
 			}
+		# return {
+		# 	'total_mal':ex_c_male + m_c_male,
+		# 	'male_is_pwd':m_c_male_is_pwd + ex_c_male_is_pwd,
+		# 	'male_is_ip':m_c_male_is_ip + ex_c_male_is_ip,
+		# 	'male_is_youth':m_c_male_is_youth + ex_c_male_is_youth,
+		# 	'male_is_sen_cit':m_c_male_is_sen_cit + ex_c_male_sen_cit,
+		# 	'male_is_head_hh':m_c_male_is_head_hh + ex_c_male_male_is_head_hh
+		# 	}
 
 		
 	@app.route("/form_a/dash_a1/dash_get_female/<area>",methods=["POST","GET"])
 	def dash_get_female(area):
-		m_c_female = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female';".format(_filter(area)) )[0]['count']
+		# m_c_female = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female';".format(_filter(area)) )[0]['count']
 
-		m_c_female_is_pwd = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_is_pwd`='true';".format(_filter(area)) )[0]['count']
-		m_c_female_is_ip = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_is_ip`='true';".format(_filter(area)) )[0]['count']
-		m_c_female_is_youth = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_age` BETWEEN '15' AND '30';".format(_filter(area)) )[0]['count']
-		m_c_female_is_sen_cit = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_age` BETWEEN '60' AND '90';".format(_filter(area)) )[0]['count']
-		m_c_female_is_head_hh = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_head_of_house` LIKE '%true%';".format(_filter(area)) )[0]['count']
+		# m_c_female_is_pwd = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_is_pwd`='true';".format(_filter(area)) )[0]['count']
+		# m_c_female_is_ip = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_is_ip`='true';".format(_filter(area)) )[0]['count']
+		# m_c_female_is_youth = rapid_mysql.select("SELECT COUNT(`farmer_code`) as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_age` BETWEEN '15' AND '30';".format(_filter(area)) )[0]['count']
+		# m_c_female_is_sen_cit = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_age` BETWEEN '60' AND '90';".format(_filter(area)) )[0]['count']
+		# m_c_female_is_head_hh = rapid_mysql.select("SELECT COUNT(`farmer_code`)  as 'count' FROM `form_a_farmer_profiles` WHERE {} `farmer_sex` = 'female' AND `farmer_head_of_house` LIKE '%true%';".format(_filter(area)) )[0]['count']
 		
 		# =============
 		ex_c_female = rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `excel_import_form_a` WHERE {} `frmer_prof_@_basic_Info_@_Sex`='female';".format(_filter(area)) )[0]['count']
@@ -137,13 +152,21 @@ class _main:
 				except Exception as e:
 					print(e)
 		return {
-			'total_female':ex_c_female + m_c_female,
-			'female_is_pwd':m_c_female_is_pwd + ex_c_female_is_pwd,
-			'female_is_ip':m_c_female_is_ip + ex_c_female_is_ip,
-			'female_is_youth':m_c_female_is_youth + ex_c_female_is_youth,
-			'female_is_sen_cit':m_c_female_is_sen_cit + ex_c_female_sen_cit,
-			'female_is_head_hh':m_c_female_is_head_hh + ex_c_female_female_is_head_hh
+			'total_female':ex_c_female,
+			'female_is_pwd': ex_c_female_is_pwd,
+			'female_is_ip': ex_c_female_is_ip,
+			'female_is_youth': ex_c_female_is_youth,
+			'female_is_sen_cit': ex_c_female_sen_cit,
+			'female_is_head_hh': ex_c_female_female_is_head_hh
 		}
+		# return {
+		# 	'total_female':ex_c_female + m_c_female,
+		# 	'female_is_pwd':m_c_female_is_pwd + ex_c_female_is_pwd,
+		# 	'female_is_ip':m_c_female_is_ip + ex_c_female_is_ip,
+		# 	'female_is_youth':m_c_female_is_youth + ex_c_female_is_youth,
+		# 	'female_is_sen_cit':m_c_female_is_sen_cit + ex_c_female_sen_cit,
+		# 	'female_is_head_hh':m_c_female_is_head_hh + ex_c_female_female_is_head_hh
+		# }
 
 	@app.route("/form_a/clean_get_val_table/<col>",methods=["POST","GET"])
 	def get_val_table(col):
@@ -204,58 +227,10 @@ class _main:
 		else:
 			return redirect("/login?force_url=1")
 			
-	@app.route("/data_link/search_farmer_profile",methods=["POST","G ET"])
-	@c.login_auth_web()
-	def search_farmer_profile():
-		search_item = request.form['search_item']
-		data_m = '''
-			SELECT 
-				`id`,
-				CONCAT(`f_name`,' ',`m_name`,' ',`l_name`) as 'fname',
-			    `farmer_name` as 'complete_name',
-				`farmer_code` as 'reference',
-				`farmer_bday`,
-				`addr_region`,
-				`addr_prov`,
-				`addr_city`,
-				`addr_brgy`,
-				`farmer_primary_crop`,
-				`farmer_sex` as 'sex',
-				`farmer_civil_status` as 'civil_status'
-			FROM 
-				`form_a_farmer_profiles` 
-			WHERE 
-				`f_name` LIKE '{}' OR
-				`m_name` LIKE '{}' OR
-				`l_name` LIKE '{}' OR
-				`farmer_name` LIKE '{}';
-		'''.format(search_item,search_item,search_item,search_item)
+	# ===============================================
 
-		data_ex = '''
-			SELECT 
-				`id`,
-				 CONCAT(`frmer_prof_@_basic_Info_@_First_name`,' ',`frmer_prof_@_basic_Info_@_Middle_name`,' ',`frmer_prof_@_basic_Info_@_Last_name`) as 'fname',
-				`file_name` as 'reference',
-				`frmer_prof_@_basic_Info_@_birthday` as 'farmer_bday',
-				`frmer_prof_@_frmer_addr_@_region` as 'addr_region',
-				`frmer_prof_@_frmer_addr_@_province` as 'addr_prov',
-				`frmer_prof_@_frmer_addr_@_city_municipality` as 'addr_city',
-				`frmer_prof_@_frmer_addr_@_brgy` as 'addr_brgy',
-				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'farmer_primary_crop',
-				`frmer_prof_@_basic_Info_@_Sex` as 'sex',
-				`frmer_prof_@_basic_Info_@_civil_status` as 'civil_status'
-			FROM 
-				`excel_import_form_a` 
-			WHERE 
-				`frmer_prof_@_basic_Info_@_First_name` LIKE '{}' OR
-				`frmer_prof_@_basic_Info_@_Middle_name` LIKE '{}' OR
-				`frmer_prof_@_basic_Info_@_Last_name` LIKE '{}';
-		'''.format(search_item,search_item,search_item)
 
-		ind = rapid_mysql.select(data_m) + rapid_mysql.select(data_ex)
-		return jsonify(ind)
-
-	@app.route("/data_link/search_farmer_org",methods=["POST","G ET"])
+	@app.route("/data_link/search_farmer_org",methods=["POST","GET"])
 	@c.login_auth_web()
 	def search_farmer_org():
 		search_item = request.form['search_item']
@@ -274,6 +249,402 @@ class _main:
 		ind = rapid_mysql.select(data_ex)
 		return jsonify(ind)
 
+
+	
+	def similar(a, b):
+		return SequenceMatcher(None, a, b).ratio()
+
+	@app.route("/data_link/search_farmer_profile",methods=["POST","G ET"])
+	@c.login_auth_web()
+	def search_farmer_profile():
+		search_item = request.form['search_item'].lower()
+		return jsonify(_main.get_search_val(search_item))
+
+	def get_search_val(search_item):
+		for k in search_item.split("\n"):
+			search_item = (re.sub(r"[^a-zA-Z0-9]+", ' ', k))
+
+		tem_Str = []
+		for strs in search_item.split(" "):
+			tem_Str.append("'{}'".format(strs))
+
+		search_item =",".join(tem_Str)
+		# print(search_item)
+
+		data_ex = '''
+			SELECT 
+				`id`,
+				 CONCAT(`frmer_prof_@_basic_Info_@_First_name`,' ',`frmer_prof_@_basic_Info_@_Middle_name`,' ',`frmer_prof_@_basic_Info_@_Last_name`) as 'fname',
+				`file_name` as 'reference',
+				`frmer_prof_@_basic_Info_@_birthday` as 'farmer_bday',
+				`frmer_prof_@_frmer_addr_@_region` as 'addr_region',
+				`frmer_prof_@_frmer_addr_@_province` as 'addr_prov',
+				`frmer_prof_@_frmer_addr_@_city_municipality` as 'addr_city',
+				`frmer_prof_@_frmer_addr_@_brgy` as 'addr_brgy',
+				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'farmer_primary_crop',
+				`frmer_prof_@_basic_Info_@_Sex` as 'sex',
+				`frmer_prof_@_basic_Info_@_civil_status` as 'civil_status'
+			FROM 
+				`excel_import_form_a` 
+			WHERE 
+				`frmer_prof_@_basic_Info_@_First_name` in ({}) OR
+				`frmer_prof_@_basic_Info_@_Middle_name` in ({}) OR
+				`frmer_prof_@_basic_Info_@_Last_name` in ({});
+		'''.format(search_item,search_item,search_item)
+		# ind = rapid_mysql.select(data_m) + rapid_mysql.select(data_ex)  # DEPRICATEA MOBILE ENTRIES
+		
+		ind = rapid_mysql.select(data_ex)
+		while len(ind)>10 :
+			array_counter = 0
+			for items_ in ind:
+				if array_counter != 0:
+					if(_main.similar(search_item,ind[array_counter]['fname'])>_main.similar(search_item,ind[array_counter-1]['fname'])):
+						del ind[array_counter-1]
+					else:
+						del ind[array_counter]
+				array_counter +=1
+
+		array_counter = 0
+		for items_ in ind:
+			ind[array_counter]["search_acc"] = _main.similar(search_item,ind[array_counter]['fname'])
+			# print(f"Search : {search_item} | Result : {items_['fname']} >> {_main.similar(search_item,items_['fname'])}")
+			array_counter +=1
+
+		ind = sorted(ind, key=lambda x: x["search_acc"],reverse=True)
+		return ind
+
+	@app.route("/data_link/sent_attn",methods=["POST","GET"])
+	def search_fromExcel():
+		if 'file' not in request.files:
+			return "No file part"
+
+		file = request.files['file']
+		if file.filename == '':
+			return "No selected file"
+
+		# Read the Excel file
+		excel_data_df = pd.read_excel(file)
+		# print(excel_data_df)
+
+		thisisjson = excel_data_df.to_json(orient='records')
+
+		# Print out the result
+		# print('Excel Sheet to JSON:\n', thisisjson)
+
+		# Make the string into a list to be able to input in to a JSON-file
+		thisisjson_dict = json.loads(thisisjson)
+		# print(thisisjson_dict)
+		arr_c =0
+		for name in thisisjson_dict:
+			thisisjson_dict[arr_c]["search_res"] = _main.get_search_val(name["NAME / ORG NAME"])
+			arr_c += 1
+		# Define file to write to and 'w' for write option -> json.dump() 
+		# defining the list to write from and file to write to
+		# with open('data.json', 'w') as json_file:
+		# 	json.dump(thisisjson_dict, json_file)
+
+		# pass
+		return jsonify(thisisjson_dict)
+
+	def birthday_by_sex(area):
+		query = rapid_mysql.select
+		q = '''
+			SELECT 
+				`frmer_prof_@_basic_Info_@_Sex` as 'sex',
+				`frmer_prof_@_basic_Info_@_birthday` as 'bday'
+			FROM `excel_import_form_a`
+			WHERE
+				{}
+			;'''.format(_main.___filter(area) )
+
+		bday = query(q)
+		ALL_BDAY = {"female":[],"male":[]}
+		tital_num_farmer = 0
+		tital_num_farmer_valid = 0
+		for inx in range(len(bday)):
+			try:
+				if("-" in bday[inx]["bday"] ):
+					if(len(bday[inx]["bday"].split("-")[0])==4):
+						ALL_BDAY[bday[inx]["sex"].lower()].append(bday[inx]["bday"])
+				elif("." in bday[inx]["bday"] ):
+					int_bday = int(str(bday[inx]["bday"]).split(".")[0])
+					reference_date = date(1900, 1, 1)
+					days_since_epoch = int_bday
+					target_date = reference_date + DT.timedelta(days=days_since_epoch)
+					formatted_date = target_date.strftime('%Y-%m-%d')
+					ALL_BDAY[bday[inx]["sex"].lower()].append(formatted_date)
+			except Exception as e:
+				# print( e)
+				pass
+			tital_num_farmer +=1
+
+		# return ALL_BDAY #=================================================
+		print(DT.date.today())
+		all_years = []
+		age_range = {
+			"75-100":{"male":0,"female":0},"70-74":{"male":0,"female":0},"65-69":{"male":0,"female":0},"60-64":{"male":0,"female":0},"55-59":{"male":0,"female":0},"50-54":{"male":0,"female":0},"45-49":{"male":0,"female":0},"40-44":{"male":0,"female":0},"35-39":{"male":0,"female":0},"30-34":{"male":0,"female":0},"25-29":{"male":0,"female":0},"20-24":{"male":0,"female":0},"15-19":{"male":0,"female":0},"10-14":{"male":0,"female":0},"none":{"male":0,"female":0}
+		}
+		for _sex in ALL_BDAY:
+			for _date in ALL_BDAY[_sex]:
+				try:
+					xdate = _date.split("-")
+					if(int(xdate[1])>12):
+						print(_date)
+						_date = f"{xdate[0]}-01-01"
+					start_date = dt.strptime(_date, "%Y-%m-%d")
+					end_date = DT.date.today()
+					delta = relativedelta.relativedelta(end_date, start_date)
+					# print(delta.years, 'Years,', delta.months, 'months,', delta.days, 'days')
+					tital_num_farmer_valid += 1
+					YEARS_OLD = delta.years
+					age_range[_main.get_age_range(YEARS_OLD)][_sex] += 1
+
+				except Exception as e:
+					pass
+		return {"age_range":age_range,"bdays":[],"tital_num_farmer_valid":tital_num_farmer_valid,"tital_num_farmer":tital_num_farmer}
+
+	def get_age_range(AGE_):
+		ranges = [(75, 100),(70, 74),(65, 69),(60, 64),(55, 59),(50, 54),(45, 49),(40, 44),(35, 39),(30, 34),(25, 29),(20, 24),(15, 19),(10, 14)]
+
+		def find_range(number, ranges):
+			for start, end in ranges:
+				if start <= number <= end:
+					return (start, end)
+			return None
+
+		# Example usage
+		number = AGE_
+		range_found = find_range(number, ranges)
+		if range_found:
+			return f"{range_found[0]}-{range_found[1]}"
+		else:
+			return f"none"
+
+	def get_hectareage(area):
+		print("Getting HA via AREA")
+		_CC =  {
+				"income_primary": 0,
+				"income_primary_count":0,
+				"income_avg":0,
+				"num_farmers": 0,
+				"num_farmers_has_inc": 0
+			}
+		segre ={
+			"male":{"below_to_0_5":{"total":0,"commodity":{}},"0_5_to_1":{"total":0,"commodity":{}},"1_to_1_5":{"total":0,"commodity":{}},"1_5_to_2":{"total":0,"commodity":{}},"2_to_2_5":{"total":0,"commodity":{}},"2_5_to_3":{"total":0,"commodity":{}},"3_to_3_5":{"total":0,"commodity":{}},"3_to_above":{"total":0,"commodity":{}},"untagged":{"total":0,"commodity":{}},},
+			"female":{"below_to_0_5":{"total":0,"commodity":{}},"0_5_to_1":{"total":0,"commodity":{}},"1_to_1_5":{"total":0,"commodity":{}},"1_5_to_2":{"total":0,"commodity":{}},"2_to_2_5":{"total":0,"commodity":{}},"2_5_to_3":{"total":0,"commodity":{}},"3_to_3_5":{"total":0,"commodity":{}},"3_to_above":{"total":0,"commodity":{}},"untagged":{"total":0,"commodity":{}},}
+		}
+		actual = {}
+		_CROP = ["coconut","","cacao","coffee","banana","calamansi"]
+		query = rapid_mysql.select
+		q = '''
+			SELECT 
+				`farm_info@_Farm_Basic_Info_@_declared_area_Ha` as 'ha',
+				`frmer_prof_@_basic_Info_@_Sex` as 'sex',
+				`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Primary_Crop_` as 'income_primary',
+				`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Secondary_Crop_` as 'income_secondary',
+				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'crop'
+			FROM `excel_import_form_a` 
+			WHERE
+				{}
+			;'''.format(_main.___filter(area)) 
+		hectareage = query(q)
+
+		_CROP = ["coconut","","cacao","coffee","banana","calamansi"]
+		simp = {
+			"male": {
+				"below to 0.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"0.5 to 1":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"1 to 1.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"1.5 to 2":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"2 to 2.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"2.5 to 3":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"3 to 3.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"untagged":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0}
+			},
+			"female":{
+				"below to 0.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"0.5 to 1":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"1 to 1.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"1.5 to 2":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"2 to 2.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"2.5 to 3":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"3 to 3.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"untagged":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0}
+			}
+		}
+
+		for details in hectareage:
+			ha__ = re.sub(r"[a-zA-Z]", '', details['ha'])
+			try:
+				ha = float(ha__)
+				if(ha not in actual):
+					actual[ha] = 0
+				actual[ha]+=1
+				SEX = details["sex"].lower()
+				CROP = ''.join(letter for letter in details["crop"].lower() if letter.isalnum())
+				if(CROP not in _CROP):
+					CROP = "others"
+				# CROP = details["crop"].lower()
+				INC_PRIME = details["income_primary"]
+				_CC =  {
+						"income_primary": 0,
+						"income_primary_count":0,
+						"income_avg":0,
+						"num_farmers": 0,
+						"num_farmers_has_inc": 0
+					}
+				# print(CROP)
+
+				if(ha <= 0.5):
+					segre[SEX]["below_to_0_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["below_to_0_5"]["commodity"]):
+						segre[SEX]["below_to_0_5"]["commodity"][CROP] = _CC
+					segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_primary"]  +=float(INC_PRIME)
+						simp[SEX]["below to 0.5"]["num_farmer_has_inc"] += 1
+						segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+					simp[SEX]["below to 0.5"]["total_inc"] += float(INC_PRIME)
+
+				elif(ha > 0.5 and ha <= 1.0):
+					segre[SEX][""]["total"] +=1;
+					if(CROP not in segre[SEX]["0_5_to_1"]["commodity"]):
+						segre[SEX]["0_5_to_1"]["commodity"][CROP] = _CC
+					segre[SEX]["0_5_to_1"]["commodity"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_primary"] += float(INC_PRIME)
+						simp[SEX]["0.5 to 1"]["num_farmer_has_inc"] += 1
+						segre[SEX]["0_5_to_1"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_primary"]/segre[SEX]["0_5_to_1"]["commodity"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+					simp[SEX]["0.5 to 1"]["total_inc"] += float(INC_PRIME)
+
+				elif(ha > 1.0 and ha <= 1.5):
+					segre[SEX]["1_to_1_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["1_to_1_5"]["commodity"]):
+						segre[SEX]["1_to_1_5"]["commodity"][CROP] = _CC
+					segre[SEX]["1_to_1_5"]["commodity"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["1_to_1_5"]["commodity"][CROP]["income_primary"] += float(INC_PRIME)
+						simp[SEX]["1 to 1.5"]["num_farmer_has_inc"] += 1
+						segre[SEX]["1_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["1_to_1_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_to_1_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+					simp[SEX]["1 to 1.5"]["total_inc"] += float(INC_PRIME)
+
+				elif(ha > 1.5 and ha <= 2.0):
+					segre[SEX]["1_5_to_2"]["total"] +=1;
+					if(CROP not in segre[SEX]["1_5_to_2"]["commodity"]):
+						segre[SEX]["1_5_to_2"]["commodity"][CROP] = _CC
+					segre[SEX]["1_5_to_2"]["commodity"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["1_5_to_2"]["commodity"][CROP]["income_primary"] += float(INC_PRIME)
+						simp[SEX]["1.5 to 2"]["num_farmer_has_inc"] += 1
+						segre[SEX]["1_5_to_2"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["1_5_to_2"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_5_to_2"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_5_to_2"]["commodity"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+					simp[SEX]["1.5 to 2"]["total_inc"] += float(INC_PRIME)
+
+				elif(ha > 2.0 and ha <= 2.5):
+					segre[SEX]["2_to_2_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["2_to_2_5"]["commodity"]):
+						segre[SEX]["2_to_2_5"]["commodity"][CROP] = _CC
+					segre[SEX]["2_to_2_5"]["commodity"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["2_to_2_5"]["commodity"][CROP]["income_primary"] += float(INC_PRIME)
+						simp[SEX]["2 to 2.5"]["num_farmer_has_inc"] += 1
+						segre[SEX]["2_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["2_to_2_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_to_2_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+					simp[SEX]["2 to 2.5"]["total_inc"] += float(INC_PRIME)
+
+				elif(ha > 2.5 and ha <= 3.0):
+					segre[SEX]["2_5_to_3"]["total"] +=1;
+					if(CROP not in segre[SEX]["2_5_to_3"]["commodity"]):
+						segre[SEX]["2_5_to_3"]["commodity"][CROP] = _CC
+					segre[SEX]["2_5_to_3"]["commodity"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["2_5_to_3"]["commodity"][CROP]["income_primary"] += float(INC_PRIME)
+						simp[SEX]["2.5 to 3"]["num_farmer_has_inc"] += 1
+						segre[SEX]["2_5_to_3"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["2_5_to_3"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_5_to_3"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_5_to_3"]["commodity"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+					simp[SEX]["2.5 to 3"]["total_inc"] += float(INC_PRIME)
+
+				elif(ha > 3.0 and ha <= 3.5):
+					segre[SEX]["3_to_3_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["3_to_3_5"]["commodity"]):
+						segre[SEX]["3_to_3_5"]["commodity"][CROP] = _CC
+					segre[SEX]["3_to_3_5"]["commodity"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["3_to_3_5"]["commodity"][CROP]["income_primary"] += float(INC_PRIME)
+						simp[SEX]["3 to 3.5"]["num_farmer_has_inc"] += 1
+						segre[SEX]["3_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["3_to_3_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_to_3_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+					simp[SEX]["3 to 3.5"]["total_inc"] += float(INC_PRIME)
+
+				else:
+					segre[SEX]["untagged"]["total"] +=1;
+					if(CROP not in segre[SEX]["untagged"]["commodity"]):
+						segre[SEX]["untagged"]["commodity"][CROP] = _CC
+					segre[SEX]["untagged"]["commodity"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["untagged"]["commodity"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+						simp[SEX]["untagged"]["num_farmer_has_inc"] += 1
+						segre[SEX]["untagged"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["untagged"]["commodity"][CROP]["income_primary"]/segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+					simp[SEX]["untagged"]["total_inc"] += float(INC_PRIME)
+
+			except Exception as e:
+				pass
+
+		print
+		myKeys = list(actual.keys())
+		myKeys.sort()
+		sorted_dict = {i: actual[i] for i in myKeys}
+		# print(sorted_dict)
+		# return sorted_dict.update(segre)
+		for z in simp:
+			for zz in simp[z]:
+				try:
+					simp[z][zz]["ave_income"] = simp[z][zz]["total_inc"] / simp[z][zz]["num_farmer_has_inc"]
+				except Exception as e:
+					# raise e
+					print(f'''{simp[z][zz]["total_inc"]} / {simp[z][zz]["num_farmer_has_inc"]}''')
+				pass
+
+		return {"detailed":segre,"simple":simp}
+
+	def ___filter(area):
+		_filter =""
+		if(area.lower() == "all"):
+			_filter ="1"
+		else:
+			_filter = "`USER_ID` in ( SELECT `id` from `users` WHERE `rcu`='{}' )".format(area)
+		return _filter
+
+
 def _filter(area):
 	_filter =""
 	if(area.lower() == "all"):
@@ -281,6 +652,7 @@ def _filter(area):
 	else:
 		_filter = "USER_ID in ( SELECT id from users WHERE rcu='{}' ) AND".format(area)
 	return _filter
+
 
 
 # netbank

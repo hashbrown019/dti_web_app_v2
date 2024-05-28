@@ -1,18 +1,18 @@
 <!--Todays News & Stories--> 
 <div class="title d-flex justify-content-center ">
 	
-	<p class="display-3 newsfont"><br>News & Stories</p>	
+	<b class="display-3 newsfont"><br>News & Stories</b>	
 </div>
 <div class="container">
 	<form class="searchbar d-flex mb-2" role="search">
-		<input class="form-control form-control-lg me-2 rounded-pill border border-secondary border-2" type="search" placeholder="Search" aria-label="Search" onkeyup="search_article(this.value)">
+		<input class="x-input x-round-xlarge x-border x-border-teal" type="search" placeholder="Search" aria-label="Search" onkeyup="search_article(this.value)">
 		<!--<button class="btn btn-dark rounded-5 rounded-pill" type="submit">Search</button>-->
 	</form>
 	<span id="result" class="mt-5 ms-4"></span>
 </div>
 
 
-<div class="x-container" style="padding: 10%;">
+<div class="x-container" style="padding-left: 10%;padding-right: 10%;">
 	<div class="  mb-3 mt-5 ">
 		<span id="title_search" href="#" class="display-5">Latest News</span>
 	</div>
@@ -26,17 +26,17 @@
 			}
 		</style>
 		<div class="x-col l6" style="display: flex;">
-			<iframe id="myIframe" src="../static/pdf/ao23.pdf" style="width: 100%;"></iframe>
+			<iframe onload="set_i_title()" id="myIframe" src="../static/pdf/ao23.pdf" style="width: 100%;"></iframe>
 			<script type="text/javascript">
 				$('.myIframe').css('height', $(window).height()+'px');
+
+	        	function set_i_title(){
+	        		
+	        	}
 			</script>
-			<!-- <object data="../static/pdf/ao23.pdf" type="application/pdf" style="width: 100%">
-	        <p>Unable to display PDF file. <a href="../static/pdf/ao23.pdf">Download</a> instead.</p> -->
-	    </object>
+			
 		</div>
 		<div class="x-col l6">
-				
-				
 				<img title="Latest News" class="x-container" src="../static/pdf/RAPID_Newsmakers_Vol1Issue1_final_page-0001.jpg" style="width: 100%">
 		</div>
 	</div>
@@ -44,13 +44,13 @@
 	<div class="x-row x-container">
 		
 		<div class="  mb-3 mt-5 ">
-			<span id="title_search" href="#" class="display-5">Articles and Activities</span>
+			<b id="title_search" href="#" class="display-5">Articles and Activities</b>
 		</div>
-		<div class="" style="height: 100%;">
-			<div class="container overflow-auto " style="height:95vh;">
+		<div class="" style="height: auto">
+			<div class="x-padding" >
 
 				<div id="res_res_no" class=""></div>
-				<div id="res_res" class="row row-cols-xxl-3 row-cols-xl-2 row-cols-md-2  px-1">
+				<div id="res_res" class="row row-cols-xxl-3 row-cols-xl-2 row-cols-md-2  px-1" style="overflow-y: scroll; height: 50%;">
 					{% for post in page_data %}
 						{% if post["status"]=='posted'%}
 						<div onclick="go_to_post('{{post_id}}')">
@@ -158,5 +158,9 @@
 				warnprintln(e)
 			}
 		}
+	}
+	function go_to_post(id){
+		goto("/rapid/articles/articles.html?id="+id)
+		
 	}
 </script>

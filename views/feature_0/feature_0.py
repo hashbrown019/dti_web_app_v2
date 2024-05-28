@@ -587,14 +587,21 @@ class _main:
 	@c.login_auth_web()
 	def get_hectareage():
 		segre ={
-			"male":{"below_to_0_5": 0,"0_5_to_1": 0,"1_to_1_5": 0,"1_5_to_2": 0,"2_to_2_5": 0,"2_5_to_3": 0,"3_to_3_5": 0,"3_to_above": 0,"untagged": 0,},
-			"female":{"below_to_0_5": 0,"0_5_to_1": 0,"1_to_1_5": 0,"1_5_to_2": 0,"2_to_2_5": 0,"2_5_to_3": 0,"3_to_3_5": 0,"3_to_above": 0,"untagged": 0,}
+			"male":{"below_to_0_5":{"total":0},"0_5_to_1":{"total":0},"1_to_1_5":{"total":0},"1_5_to_2":{"total":0},"2_to_2_5":{"total":0},"2_5_to_3":{"total":0},"3_to_3_5":{"total":0},"3_to_above":{"total":0},"untagged":{"total":0},},
+			"female":{"below_to_0_5":{"total":0},"0_5_to_1":{"total":0},"1_to_1_5":{"total":0},"1_5_to_2":{"total":0},"2_to_2_5":{"total":0},"2_5_to_3":{"total":0},"3_to_3_5":{"total":0},"3_to_above":{"total":0},"untagged":{"total":0},}
 		}
 		actual = {}
 		FILTER_SUFFIX = Filter.position_data_filter()
 		query = rapid_mysql.select
 		dic = Filter.strct_clean
-		hectareage = query("SELECT `farm_info@_Farm_Basic_Info_@_declared_area_Ha` as 'ha', `frmer_prof_@_basic_Info_@_Sex` as 'sex' FROM `excel_import_form_a`  {} ;".format(FILTER_SUFFIX))
+		hectareage = query('''
+			SELECT 
+				`farm_info@_Farm_Basic_Info_@_declared_area_Ha` as 'ha',
+				`frmer_prof_@_basic_Info_@_Sex` as 'sex',
+				`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Primary_Crop_` as 'income_primary',
+				`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Secondary_Crop_` as 'income_secondary',
+				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'crop'
+			FROM `excel_import_form_a`  {} ;'''.format(FILTER_SUFFIX))
 		for details in hectareage:
 			ha__ = re.sub(r"[a-zA-Z]", '', details['ha'])
 			try:
@@ -603,21 +610,139 @@ class _main:
 					actual[ha] = 0
 				actual[ha]+=1
 				SEX = details["sex"].lower()
-				if(ha <= 0.5): segre[SEX]["below_to_0_5"] +=1;
-				elif(ha > 0.5 and ha <= 1.0): segre[SEX]["0_5_to_1"] +=1;
-				elif(ha > 1.0 and ha <= 1.5): segre[SEX]["1_to_1_5"] +=1;
-				elif(ha > 1.5 and ha <= 2.0): segre[SEX]["1_5_to_2"] +=1;
-				elif(ha > 2.0 and ha <= 2.5): segre[SEX]["2_to_2_5"] +=1;
-				elif(ha > 2.5 and ha <= 3.0): segre[SEX]["2_5_to_3"] +=1;
-				elif(ha > 3.0 and ha <= 3.5): segre[SEX]["3_to_3_5"] +=1;
-				elif(ha > 3.5): segre[SEX]["3_to_3_5"] +=1;
-				else: segre[SEX]["untagged"] +=1
+				CROP = details["crop"].lower()
+				INC_PRIME = details["income_primary"]
+				_CC =  {
+						"income_primary": 0,
+						"income_primary_count":0,
+						"income_avg":0,
+						"num_farmers": 0,
+						"num_farmers_has_inc": 0
+					}
+				# print(CROP)
+				if(ha <= 0.5):
+					segre[SEX]["below_to_0_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["below_to_0_5"]):
+						segre[SEX]["below_to_0_5"][CROP] = _CC
+					segre[SEX]["below_to_0_5"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["below_to_0_5"][CROP]["income_primary"]  +=float(INC_PRIME)
+						segre[SEX]["below_to_0_5"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["below_to_0_5"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["below_to_0_5"][CROP]["income_primary"]/segre[SEX]["below_to_0_5"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+				elif(ha > 0.5 and ha <= 1.0):
+					segre[SEX]["0_5_to_1"]["total"] +=1;
+					if(CROP not in segre[SEX]["0_5_to_1"]):
+						segre[SEX]["0_5_to_1"][CROP] = _CC
+					segre[SEX]["0_5_to_1"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["0_5_to_1"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["0_5_to_1"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["0_5_to_1"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["0_5_to_1"][CROP]["income_primary"]/segre[SEX]["0_5_to_1"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+				elif(ha > 1.0 and ha <= 1.5):
+					segre[SEX]["1_to_1_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["1_to_1_5"]):
+						segre[SEX]["1_to_1_5"][CROP] = _CC
+					segre[SEX]["1_to_1_5"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["1_to_1_5"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["1_to_1_5"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["1_to_1_5"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_to_1_5"][CROP]["income_primary"]/segre[SEX]["1_to_1_5"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+				elif(ha > 1.5 and ha <= 2.0):
+					segre[SEX]["1_5_to_2"]["total"] +=1;
+					if(CROP not in segre[SEX]["1_5_to_2"]):
+						segre[SEX]["1_5_to_2"][CROP] = _CC
+					segre[SEX]["1_5_to_2"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["1_5_to_2"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["1_5_to_2"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["1_5_to_2"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_5_to_2"][CROP]["income_primary"]/segre[SEX]["1_5_to_2"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+				elif(ha > 2.0 and ha <= 2.5):
+					segre[SEX]["2_to_2_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["2_to_2_5"]):
+						segre[SEX]["2_to_2_5"][CROP] = _CC
+					segre[SEX]["2_to_2_5"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["2_to_2_5"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["2_to_2_5"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["2_to_2_5"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_to_2_5"][CROP]["income_primary"]/segre[SEX]["2_to_2_5"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+				elif(ha > 2.5 and ha <= 3.0):
+					segre[SEX]["2_5_to_3"]["total"] +=1;
+					if(CROP not in segre[SEX]["2_5_to_3"]):
+						segre[SEX]["2_5_to_3"][CROP] = _CC
+					segre[SEX]["2_5_to_3"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["2_5_to_3"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["2_5_to_3"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["2_5_to_3"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_5_to_3"][CROP]["income_primary"]/segre[SEX]["2_5_to_3"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+				elif(ha > 3.0 and ha <= 3.5):
+					segre[SEX]["3_to_3_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["3_to_3_5"]):
+						segre[SEX]["3_to_3_5"][CROP] = _CC
+					segre[SEX]["3_to_3_5"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["3_to_3_5"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["3_to_3_5"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["3_to_3_5"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_to_3_5"][CROP]["income_primary"]/segre[SEX]["3_to_3_5"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+				elif(ha > 3.5):
+					segre[SEX]["3_to_3_5"]["total"] +=1;
+					if(CROP not in segre[SEX]["3_to_3_5"]):
+						segre[SEX]["3_to_3_5"][CROP] = _CC
+					segre[SEX]["3_to_3_5"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["3_to_3_5"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["3_to_3_5"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["3_to_3_5"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_to_3_5"][CROP]["income_primary"]/segre[SEX]["3_to_3_5"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
+				else:
+					segre[SEX]["untagged"]["total"] +=1;
+					if(CROP not in segre[SEX]["untagged"]):
+						segre[SEX]["untagged"][CROP] = _CC
+					segre[SEX]["untagged"][CROP]["num_farmers"] += 1
+					try:
+						segre[SEX]["untagged"][CROP]["income_primary"] += float(INC_PRIME)
+						segre[SEX]["untagged"][CROP]["num_farmers_has_inc"] +=1
+						segre[SEX]["untagged"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["untagged"][CROP]["income_primary"]/segre[SEX]["untagged"][CROP]["num_farmers_has_inc"])
+
+					except ValueError:
+						pass
+
 			except Exception as e:
 				pass
 		myKeys = list(actual.keys())
 		myKeys.sort()
 		sorted_dict = {i: actual[i] for i in myKeys}
-		print(sorted_dict)
+		# print(sorted_dict)
 		# return sorted_dict.update(segre)
 		return segre
 
