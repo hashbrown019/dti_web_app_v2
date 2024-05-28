@@ -14,7 +14,7 @@ import base64
 from datetime import date, datetime
 from modules.Req_Brorn_util import file_from_request
 
-from docx2pdf import convert
+# from docx2pdf import convert
 # pip install docx2pdf
 
 db = mysql(*c.DB_CRED)
