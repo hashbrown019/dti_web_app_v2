@@ -352,9 +352,7 @@ class _main:
 			SELECT 
 				`frmer_prof_@_basic_Info_@_Sex` as 'sex',
 				`frmer_prof_@_basic_Info_@_birthday` as 'bday'
-			FROM `excel_import_form_a`
-			WHERE
-				{}
+			FROM `excel_import_form_a` {}
 			;'''.format(_main.___filter(area) )
 
 		bday = query(q)
@@ -443,9 +441,7 @@ class _main:
 				`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Primary_Crop_` as 'income_primary',
 				`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Secondary_Crop_` as 'income_secondary',
 				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'crop'
-			FROM `excel_import_form_a` 
-			WHERE
-				{}
+			FROM `excel_import_form_a` {}
 			;'''.format(_main.___filter(area)) 
 		hectareage = query(q)
 
@@ -671,9 +667,9 @@ class _main:
 	def ___filter(area):
 		_filter =""
 		if(area.lower() == "all"):
-			_filter ="1"
+			return ";"
 		else:
-			_filter = "`USER_ID` in ( SELECT `id` from `users` WHERE `rcu`='{}' )".format(area)
+			return "WHERE `USER_ID` in ( SELECT `id` from `users` WHERE `rcu`='{}' );".format(area)
 		return _filter
 
 
