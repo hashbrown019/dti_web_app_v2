@@ -428,8 +428,109 @@ class _main:
 				"num_farmers_has_inc": 0
 			}
 		segre ={
-			"male":{"below_to_0_5":{"total":0,"commodity":{}},"0_5_to_1":{"total":0,"commodity":{}},"1_to_1_5":{"total":0,"commodity":{}},"1_5_to_2":{"total":0,"commodity":{}},"2_to_2_5":{"total":0,"commodity":{}},"2_5_to_3":{"total":0,"commodity":{}},"3_to_3_5":{"total":0,"commodity":{}},"3_to_above":{"total":0,"commodity":{}},"untagged":{"total":0,"commodity":{}},},
-			"female":{"below_to_0_5":{"total":0,"commodity":{}},"0_5_to_1":{"total":0,"commodity":{}},"1_to_1_5":{"total":0,"commodity":{}},"1_5_to_2":{"total":0,"commodity":{}},"2_to_2_5":{"total":0,"commodity":{}},"2_5_to_3":{"total":0,"commodity":{}},"3_to_3_5":{"total":0,"commodity":{}},"3_to_above":{"total":0,"commodity":{}},"untagged":{"total":0,"commodity":{}},}
+			"male":{
+		        "below_to_0_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "0_5_to_1": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "1_01_to_1_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "1_6_to_2": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "2_01_to_2_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "2_06_to_3": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "3_01_to_3_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        # ===
+		        "3_06_to_4": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "4_01_to_4_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "4_6_to_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "5_above": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "untagged": {
+		            "total": 0,
+		            "commodity": {}
+		        }
+		    },
+		    "female":{
+		        "below_to_0_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "0_5_to_1": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "1_01_to_1_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "1_6_to_2": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "2_01_to_2_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "2_06_to_3": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "3_01_to_3_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        # ===
+		        "3_06_to_4": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "4_01_to_4_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "4_6_to_5": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "5_above": {
+		            "total": 0,
+		            "commodity": {}
+		        },
+		        "untagged": {
+		            "total": 0,
+		            "commodity": {}
+		        }
+		    },
+		    # ////FEMALE................
 		}
 		actual = {}
 		_CROP = ["coconut","","cacao","coffee","banana","calamansi"]
@@ -448,27 +549,37 @@ class _main:
 		_CROP = ["coconut","","cacao","coffee","banana","calamansi"]
 		simp = {
 			"male": {
-				"below to 0.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"below 0.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
 				"0.5 to 1":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"1 to 1.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"1.5 to 2":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"2 to 2.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"2.5 to 3":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"3 to 3.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"3.5 above":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"1.01 to 1.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"1.6 to 2":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"2.01 to 2.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"2.6 to 3":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"3.01 to 3.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+
+				"3.06 to 4":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"4.01 to 4.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"4.6 to 5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+
+				"5 above":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
 				"untagged":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0}
 			},
-			"female":{
-				"below to 0.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+			"female": {
+				"below 0.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
 				"0.5 to 1":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"1 to 1.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"1.5 to 2":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"2 to 2.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"2.5 to 3":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"3 to 3.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
-				"3.5 above":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"1.01 to 1.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"1.6 to 2":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"2.01 to 2.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"2.6 to 3":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"3.01 to 3.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+
+				"3.06 to 4":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"4.01 to 4.5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+				"4.6 to 5":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
+
+				"5 above":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0},
 				"untagged":{"total_inc":0,"ave_income":0,"num_farmer_has_inc":0,"num_farmers":0}
-			}
+			},
 		}
 
 		for details in hectareage:
@@ -518,13 +629,13 @@ class _main:
 				segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers"] += 1
 				try:
 					segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_primary"]  +=INC_PRIME
-					simp[SEX]["below to 0.5"]["num_farmer_has_inc"] += 1
+					simp[SEX]["below 0.5"]["num_farmer_has_inc"] += 1
 					segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
 					segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				except ValueError:
 					pass
-				simp[SEX]["below to 0.5"]["total_inc"] += INC_PRIME
+				simp[SEX]["below 0.5"]["total_inc"] += INC_PRIME
 
 			elif(ha > 0.5 and ha <= 1.0):
 				segre[SEX]["0_5_to_1"]["total"] +=1;
@@ -541,95 +652,163 @@ class _main:
 					pass
 				simp[SEX]["0.5 to 1"]["total_inc"] += INC_PRIME
 
-			elif(ha > 1.0 and ha <= 1.5):
-				segre[SEX]["1_to_1_5"]["total"] +=1;
-				if(CROP not in segre[SEX]["1_to_1_5"]["commodity"]):
-					segre[SEX]["1_to_1_5"]["commodity"][CROP] = _CC
-				segre[SEX]["1_to_1_5"]["commodity"][CROP]["num_farmers"] += 1
+			elif(ha > 1.01 and ha <= 1.5):
+				segre[SEX]["1_01_to_1_5"]["total"] +=1;
+				if(CROP not in segre[SEX]["1_01_to_1_5"]["commodity"]):
+					segre[SEX]["1_01_to_1_5"]["commodity"][CROP] = _CC
+				segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["num_farmers"] += 1
 				try:
-					segre[SEX]["1_to_1_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["1 to 1.5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["1_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["1_to_1_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_to_1_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"])
+					segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["1.01 to 1.5"]["num_farmer_has_inc"] += 1
+					segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				except ValueError:
 					pass
-				simp[SEX]["1 to 1.5"]["total_inc"] += INC_PRIME
+				simp[SEX]["1.01 to 1.5"]["total_inc"] += INC_PRIME
 
-			elif(ha > 1.5 and ha <= 2.0):
-				segre[SEX]["1_5_to_2"]["total"] +=1;
-				if(CROP not in segre[SEX]["1_5_to_2"]["commodity"]):
-					segre[SEX]["1_5_to_2"]["commodity"][CROP] = _CC
-				segre[SEX]["1_5_to_2"]["commodity"][CROP]["num_farmers"] += 1
+			elif(ha > 1.6 and ha <= 2.0):
+				segre[SEX]["1_6_to_2"]["total"] +=1;
+				if(CROP not in segre[SEX]["1_6_to_2"]["commodity"]):
+					segre[SEX]["1_6_to_2"]["commodity"][CROP] = _CC
+				segre[SEX]["1_6_to_2"]["commodity"][CROP]["num_farmers"] += 1
 				try:
-					segre[SEX]["1_5_to_2"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["1.5 to 2"]["num_farmer_has_inc"] += 1
-					segre[SEX]["1_5_to_2"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["1_5_to_2"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_5_to_2"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_5_to_2"]["commodity"][CROP]["num_farmers_has_inc"])
+					segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["1.6 to 2"]["num_farmer_has_inc"] += 1
+					segre[SEX]["1_6_to_2"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_6_to_2"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				except ValueError:
 					pass
-				simp[SEX]["1.5 to 2"]["total_inc"] += INC_PRIME
+				simp[SEX]["1.6 to 2"]["total_inc"] += INC_PRIME
 
-			elif(ha > 2.0 and ha <= 2.5):
-				segre[SEX]["2_to_2_5"]["total"] +=1;
-				if(CROP not in segre[SEX]["2_to_2_5"]["commodity"]):
-					segre[SEX]["2_to_2_5"]["commodity"][CROP] = _CC
-				segre[SEX]["2_to_2_5"]["commodity"][CROP]["num_farmers"] += 1
+			elif(ha > 2.01 and ha <= 2.5):
+				segre[SEX]["2_01_to_2_5"]["total"] +=1;
+				if(CROP not in segre[SEX]["2_01_to_2_5"]["commodity"]):
+					segre[SEX]["2_01_to_2_5"]["commodity"][CROP] = _CC
+				segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["num_farmers"] += 1
 				try:
-					segre[SEX]["2_to_2_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["2 to 2.5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["2_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["2_to_2_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_to_2_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"])
+					segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["2.01 to 2.5"]["num_farmer_has_inc"] += 1
+					segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				except ValueError:
 					pass
-				simp[SEX]["2 to 2.5"]["total_inc"] += INC_PRIME
+				simp[SEX]["2.01 to 2.5"]["total_inc"] += INC_PRIME
 
-			elif(ha > 2.5 and ha <= 3.0):
-				segre[SEX]["2_5_to_3"]["total"] +=1;
-				if(CROP not in segre[SEX]["2_5_to_3"]["commodity"]):
-					segre[SEX]["2_5_to_3"]["commodity"][CROP] = _CC
-				segre[SEX]["2_5_to_3"]["commodity"][CROP]["num_farmers"] += 1
+			elif(ha > 2.06and ha <= 3.0):
+				segre[SEX]["2_06_to_3"]["total"] +=1;
+				if(CROP not in segre[SEX]["2_06_to_3"]["commodity"]):
+					segre[SEX]["2_06_to_3"]["commodity"][CROP] = _CC
+				segre[SEX]["2_06_to_3"]["commodity"][CROP]["num_farmers"] += 1
 				try:
-					segre[SEX]["2_5_to_3"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["2.5 to 3"]["num_farmer_has_inc"] += 1
-					segre[SEX]["2_5_to_3"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["2_5_to_3"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_5_to_3"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_5_to_3"]["commodity"][CROP]["num_farmers_has_inc"])
+					segre[SEX]["2_06_to_3"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["2.6 to 3"]["num_farmer_has_inc"] += 1
+					segre[SEX]["2_06_to_3"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["2_06_to_3"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_06_to_3"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_06_to_3"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				except ValueError:
 					pass
-				simp[SEX]["2.5 to 3"]["total_inc"] += INC_PRIME
+				simp[SEX]["2.6 to 3"]["total_inc"] += INC_PRIME
 
-			elif(ha > 3.0 and ha <= 3.5):
-				segre[SEX]["3_to_3_5"]["total"] +=1;
-				if(CROP not in segre[SEX]["3_to_3_5"]["commodity"]):
-					segre[SEX]["3_to_3_5"]["commodity"][CROP] = _CC
-				segre[SEX]["3_to_3_5"]["commodity"][CROP]["num_farmers"] += 1
+			elif(ha > 3.01 and ha <= 3.5):
+				segre[SEX]["3_01_to_3_5"]["total"] +=1;
+				if(CROP not in segre[SEX]["3_01_to_3_5"]["commodity"]):
+					segre[SEX]["3_01_to_3_5"]["commodity"][CROP] = _CC
+				segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["num_farmers"] += 1
 				try:
-					segre[SEX]["3_to_3_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["3 to 3.5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["3_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["3_to_3_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_to_3_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"])
+					segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["3.01 to 3.5"]["num_farmer_has_inc"] += 1
+					segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				except ValueError:
 					pass
-				simp[SEX]["3 to 3.5"]["total_inc"] += INC_PRIME
+				simp[SEX]["3.01 to 3.5"]["total_inc"] += INC_PRIME
 
-			elif(ha > 3.5):
-				segre[SEX]["3_to_above"]["total"] +=1;
-				if(CROP not in segre[SEX]["3_to_above"]["commodity"]):
-					segre[SEX]["3_to_above"]["commodity"][CROP] = _CC
-				segre[SEX]["3_to_above"]["commodity"][CROP]["num_farmers"] += 1
+			elif(ha > 3.06 and ha <= 3.5):
+				segre[SEX]["3_06_to_3_5"]["total"] +=1;
+				if(CROP not in segre[SEX]["3_06_to_3_5"]["commodity"]):
+					segre[SEX]["3_06_to_3_5"]["commodity"][CROP] = _CC
+				segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["num_farmers"] += 1
 				try:
-					segre[SEX]["3_to_above"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["3.5 above"]["num_farmer_has_inc"] += 1
-					segre[SEX]["3_to_above"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["3_to_above"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_to_above"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_to_above"]["commodity"][CROP]["num_farmers_has_inc"])
+					segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["3.06 to 3.5"]["num_farmer_has_inc"] += 1
+					segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				except ValueError:
 					pass
-				simp[SEX]["3.5 above"]["total_inc"] += INC_PRIME
+				simp[SEX]["3.06 to 3.5"]["total_inc"] += INC_PRIME
+			# =====================
+			# =====================
+
+			elif(ha > 3.06 and ha <= 4):
+				segre[SEX]["3_06_to_4"]["total"] +=1;
+				if(CROP not in segre[SEX]["3_06_to_4"]["commodity"]):
+					segre[SEX]["3_06_to_4"]["commodity"][CROP] = _CC
+				segre[SEX]["3_06_to_4"]["commodity"][CROP]["num_farmers"] += 1
+				try:
+					segre[SEX]["3_06_to_4"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["3.06 to 4"]["num_farmer_has_inc"] += 1
+					segre[SEX]["3_06_to_4"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["3_06_to_4"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_06_to_4"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_06_to_4"]["commodity"][CROP]["num_farmers_has_inc"])
+
+				except ValueError:
+					pass
+				simp[SEX]["3.06 to 4"]["total_inc"] += INC_PRIME
+
+			elif(ha > 4.01 and ha <= 4.5):
+				segre[SEX]["4_01_to_4_5"]["total"] +=1;
+				if(CROP not in segre[SEX]["4_01_to_4_5"]["commodity"]):
+					segre[SEX]["4_01_to_4_5"]["commodity"][CROP] = _CC
+				segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["num_farmers"] += 1
+				try:
+					segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["4.01 to 4.5"]["num_farmer_has_inc"] += 1
+					segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["num_farmers_has_inc"])
+
+				except ValueError:
+					pass
+				simp[SEX]["4.01 to 4.5"]["total_inc"] += INC_PRIME
+
+			elif(ha > 4.06 and ha <= 4.5):
+				segre[SEX]["4_06_to_5"]["total"] +=1;
+				if(CROP not in segre[SEX]["4_06_to_5"]["commodity"]):
+					segre[SEX]["4_06_to_5"]["commodity"][CROP] = _CC
+				segre[SEX]["4_06_to_5"]["commodity"][CROP]["num_farmers"] += 1
+				try:
+					segre[SEX]["4_06_to_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["4.06 to 5"]["num_farmer_has_inc"] += 1
+					segre[SEX]["4_06_to_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["4_06_to_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["4_06_to_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["4_06_to_5"]["commodity"][CROP]["num_farmers_has_inc"])
+
+				except ValueError:
+					pass
+				simp[SEX]["4.06 to 5"]["total_inc"] += INC_PRIME
+
+
+
+			# =====================
+			# =====================
+			# =====================
+			# =====================
+			elif(ha > 5):
+				segre[SEX]["5_above"]["total"] +=1;
+				if(CROP not in segre[SEX]["5_above"]["commodity"]):
+					segre[SEX]["5_above"]["commodity"][CROP] = _CC
+				segre[SEX]["5_above"]["commodity"][CROP]["num_farmers"] += 1
+				try:
+					segre[SEX]["5_above"]["commodity"][CROP]["income_primary"] += INC_PRIME
+					simp[SEX]["5 above"]["num_farmer_has_inc"] += 1
+					segre[SEX]["5_above"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+					segre[SEX]["5_above"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["5_above"]["commodity"][CROP]["income_primary"]/segre[SEX]["5_above"]["commodity"][CROP]["num_farmers_has_inc"])
+
+				except ValueError:
+					pass
+				simp[SEX]["5 above"]["total_inc"] += INC_PRIME
 
 			else:
 				segre[SEX]["untagged"]["total"] +=1;

@@ -13,6 +13,9 @@ def _init_config_():
 	c.PORT = 80
 	c.IS_ON_SERVER = False
 	c.IP_address = c.LOCAL_IP
+
+
+
 # ===========================================================================
 print(" * LOCAL Launch")
 
