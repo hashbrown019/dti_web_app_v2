@@ -583,6 +583,13 @@ class _main:
 		for details in hectareage:
 			ha__ = re.sub(r"[a-zA-Z]", '', details['ha'])
 			SEX = details["sex"].lower().replace(" ","")
+			_CC =  {
+					"income_primary": 0,
+					"income_primary_count":0,
+					"income_avg":0,
+					"num_farmers": 0,
+					"num_farmers_has_inc": 0
+				}
 			if(SEX not in segre):print(SEX); continue
 			try: INC_PRIME = float(details["income_primary"])
 			except Exception as e: INC_PRIME= 0
@@ -591,19 +598,6 @@ class _main:
 				if(ha not in actual):
 					actual[ha] = 0
 				actual[ha]+=1
-				CROP = ''.join(letter for letter in details["crop"].lower() if letter.isalnum())
-				if(CROP not in _CROP):
-					CROP = "others"
-				# CROP = details["crop"].lower()
-				_CC =  {
-						"income_primary": 0,
-						"income_primary_count":0,
-						"income_avg":0,
-						"num_farmers": 0,
-						"num_farmers_has_inc": 0
-					}
-				# print(CROP)
-
 			except Exception as e:
 				segre[SEX]["untagged"]["total"] +=1;
 				if(CROP not in segre[SEX]["untagged"]["commodity"]):
@@ -619,6 +613,12 @@ class _main:
 					pass
 
 				simp[SEX]["untagged"]["total_inc"] += INC_PRIME
+
+
+			CROP = ''.join(letter for letter in details["crop"].lower() if letter.isalnum())
+			if(CROP not in _CROP):
+				CROP = "others"
+			print(CROP)
 
 			if(ha <= 0.5):
 				segre[SEX]["below_to_0_5"]["total"] +=1;
