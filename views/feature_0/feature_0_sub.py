@@ -603,36 +603,27 @@ class _main:
 				if(CROP not in segre[SEX]["untagged"]["commodity"]):
 					segre[SEX]["untagged"]["commodity"][CROP] = _CC
 				segre[SEX]["untagged"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["untagged"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					simp[SEX]["untagged"]["num_farmer_has_inc"] += 1
-					segre[SEX]["untagged"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["untagged"]["commodity"][CROP]["income_primary"]/segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["untagged"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				simp[SEX]["untagged"]["num_farmer_has_inc"] += 1
+				segre[SEX]["untagged"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["untagged"]["commodity"][CROP]["income_primary"]/segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				simp[SEX]["untagged"]["total_inc"] += INC_PRIME
 
-
-			CROP = ''.join(letter for letter in details["crop"].lower() if letter.isalnum())
-			if(CROP not in _CROP):
-				CROP = "others"
-			print(CROP)
+			CROP = details["crop"].lower() 
+			# CROP = ''.join(letter for letter in details["crop"].lower() if letter.isalnum())
+			# if(CROP not in _CROP):
+			# 	CROP = "others"
 
 			if(ha <= 0.5):
 				segre[SEX]["below_to_0_5"]["total"] +=1;
 				if(CROP not in segre[SEX]["below_to_0_5"]["commodity"]):
 					segre[SEX]["below_to_0_5"]["commodity"][CROP] = _CC
 				segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_primary"]  +=INC_PRIME
-					simp[SEX]["below_to_0_5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_primary"]  +=INC_PRIME
+				simp[SEX]["below_to_0_5"]["num_farmer_has_inc"] += 1
+				segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["below_to_0_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["below_to_0_5"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["below_to_0_5"]["total_inc"] += INC_PRIME
 
 			elif(ha > 0.5 and ha <= 1.0):
@@ -640,14 +631,10 @@ class _main:
 				if(CROP not in segre[SEX]["0_5_to_1"]["commodity"]):
 					segre[SEX]["0_5_to_1"]["commodity"][CROP] = _CC
 				segre[SEX]["0_5_to_1"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["0_5_to_1"]["num_farmer_has_inc"] += 1
-					segre[SEX]["0_5_to_1"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_primary"]/segre[SEX]["0_5_to_1"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["0_5_to_1"]["num_farmer_has_inc"] += 1
+				segre[SEX]["0_5_to_1"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["0_5_to_1"]["commodity"][CROP]["income_primary"]/segre[SEX]["0_5_to_1"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["0_5_to_1"]["total_inc"] += INC_PRIME
 
 			elif(ha > 1.01 and ha <= 1.5):
@@ -655,14 +642,10 @@ class _main:
 				if(CROP not in segre[SEX]["1_01_to_1_5"]["commodity"]):
 					segre[SEX]["1_01_to_1_5"]["commodity"][CROP] = _CC
 				segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["1_01_to_1_5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["1_01_to_1_5"]["num_farmer_has_inc"] += 1
+				segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_01_to_1_5"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["1_01_to_1_5"]["total_inc"] += INC_PRIME
 
 			elif(ha > 1.6 and ha <= 2.0):
@@ -670,14 +653,10 @@ class _main:
 				if(CROP not in segre[SEX]["1_6_to_2"]["commodity"]):
 					segre[SEX]["1_6_to_2"]["commodity"][CROP] = _CC
 				segre[SEX]["1_6_to_2"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["1_6_to_2"]["num_farmer_has_inc"] += 1
-					segre[SEX]["1_6_to_2"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_6_to_2"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["1_6_to_2"]["num_farmer_has_inc"] += 1
+				segre[SEX]["1_6_to_2"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["1_6_to_2"]["commodity"][CROP]["income_primary"]/segre[SEX]["1_6_to_2"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["1_6_to_2"]["total_inc"] += INC_PRIME
 
 			elif(ha > 2.01 and ha <= 2.5):
@@ -685,14 +664,10 @@ class _main:
 				if(CROP not in segre[SEX]["2_01_to_2_5"]["commodity"]):
 					segre[SEX]["2_01_to_2_5"]["commodity"][CROP] = _CC
 				segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["2_01_to_2_5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["2_01_to_2_5"]["num_farmer_has_inc"] += 1
+				segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_01_to_2_5"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["2_01_to_2_5"]["total_inc"] += INC_PRIME
 
 			elif(ha > 2.06and ha <= 3.0):
@@ -700,14 +675,10 @@ class _main:
 				if(CROP not in segre[SEX]["2_6_to_3"]["commodity"]):
 					segre[SEX]["2_6_to_3"]["commodity"][CROP] = _CC
 				segre[SEX]["2_6_to_3"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["2_6_to_3"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["2_6_to_3"]["num_farmer_has_inc"] += 1
-					segre[SEX]["2_6_to_3"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["2_6_to_3"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_6_to_3"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_6_to_3"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["2_6_to_3"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["2_6_to_3"]["num_farmer_has_inc"] += 1
+				segre[SEX]["2_6_to_3"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["2_6_to_3"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["2_6_to_3"]["commodity"][CROP]["income_primary"]/segre[SEX]["2_6_to_3"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["2_6_to_3"]["total_inc"] += INC_PRIME
 
 			elif(ha > 3.01 and ha <= 3.5):
@@ -715,14 +686,10 @@ class _main:
 				if(CROP not in segre[SEX]["3_01_to_3_5"]["commodity"]):
 					segre[SEX]["3_01_to_3_5"]["commodity"][CROP] = _CC
 				segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["3_01_to_3_5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["3_01_to_3_5"]["num_farmer_has_inc"] += 1
+				segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_01_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["3_01_to_3_5"]["total_inc"] += INC_PRIME
 
 			elif(ha > 3.06 and ha <= 3.5):
@@ -730,14 +697,10 @@ class _main:
 				if(CROP not in segre[SEX]["3_06_to_3_5"]["commodity"]):
 					segre[SEX]["3_06_to_3_5"]["commodity"][CROP] = _CC
 				segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["3.06 to 3.5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["3.06 to 3.5"]["num_farmer_has_inc"] += 1
+				segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_06_to_3_5"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["3.06 to 3.5"]["total_inc"] += INC_PRIME
 			# =====================
 			# =====================
@@ -747,14 +710,10 @@ class _main:
 				if(CROP not in segre[SEX]["3_6_to_4"]["commodity"]):
 					segre[SEX]["3_6_to_4"]["commodity"][CROP] = _CC
 				segre[SEX]["3_6_to_4"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["3_6_to_4"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["3_6_to_4"]["num_farmer_has_inc"] += 1
-					segre[SEX]["3_6_to_4"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["3_6_to_4"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_6_to_4"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_6_to_4"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["3_6_to_4"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["3_6_to_4"]["num_farmer_has_inc"] += 1
+				segre[SEX]["3_6_to_4"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["3_6_to_4"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["3_6_to_4"]["commodity"][CROP]["income_primary"]/segre[SEX]["3_6_to_4"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["3_6_to_4"]["total_inc"] += INC_PRIME
 
 			elif(ha > 4.01 and ha <= 4.5):
@@ -762,14 +721,10 @@ class _main:
 				if(CROP not in segre[SEX]["4_01_to_4_5"]["commodity"]):
 					segre[SEX]["4_01_to_4_5"]["commodity"][CROP] = _CC
 				segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["4_01_to_4_5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["4_01_to_4_5"]["num_farmer_has_inc"] += 1
+				segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["4_01_to_4_5"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["4_01_to_4_5"]["total_inc"] += INC_PRIME
 
 			elif(ha > 4.59 and ha <= 5):
@@ -777,14 +732,10 @@ class _main:
 				if(CROP not in segre[SEX]["4_59_to_5"]["commodity"]):
 					segre[SEX]["4_59_to_5"]["commodity"][CROP] = _CC
 				segre[SEX]["4_59_to_5"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["4_59_to_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["4_59_to_5"]["num_farmer_has_inc"] += 1
-					segre[SEX]["4_59_to_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["4_59_to_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["4_59_to_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["4_59_to_5"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["4_59_to_5"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["4_59_to_5"]["num_farmer_has_inc"] += 1
+				segre[SEX]["4_59_to_5"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["4_59_to_5"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["4_59_to_5"]["commodity"][CROP]["income_primary"]/segre[SEX]["4_59_to_5"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["4_59_to_5"]["total_inc"] += INC_PRIME
 
 			# elif(ha > 4.59 and ha <= 4.5):
@@ -813,14 +764,10 @@ class _main:
 				if(CROP not in segre[SEX]["5_above"]["commodity"]):
 					segre[SEX]["5_above"]["commodity"][CROP] = _CC
 				segre[SEX]["5_above"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["5_above"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					simp[SEX]["5_above"]["num_farmer_has_inc"] += 1
-					segre[SEX]["5_above"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					segre[SEX]["5_above"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["5_above"]["commodity"][CROP]["income_primary"]/segre[SEX]["5_above"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["5_above"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				simp[SEX]["5_above"]["num_farmer_has_inc"] += 1
+				segre[SEX]["5_above"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				segre[SEX]["5_above"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["5_above"]["commodity"][CROP]["income_primary"]/segre[SEX]["5_above"]["commodity"][CROP]["num_farmers_has_inc"])
 				simp[SEX]["5_above"]["total_inc"] += INC_PRIME
 
 			else:
@@ -828,14 +775,10 @@ class _main:
 				if(CROP not in segre[SEX]["untagged"]["commodity"]):
 					segre[SEX]["untagged"]["commodity"][CROP] = _CC
 				segre[SEX]["untagged"]["commodity"][CROP]["num_farmers"] += 1
-				try:
-					segre[SEX]["untagged"]["commodity"][CROP]["income_primary"] += INC_PRIME
-					segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-					simp[SEX]["untagged"]["num_farmer_has_inc"] += 1
-					segre[SEX]["untagged"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["untagged"]["commodity"][CROP]["income_primary"]/segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				except ValueError:
-					pass
+				segre[SEX]["untagged"]["commodity"][CROP]["income_primary"] += INC_PRIME
+				segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"] +=1
+				simp[SEX]["untagged"]["num_farmer_has_inc"] += 1
+				segre[SEX]["untagged"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["untagged"]["commodity"][CROP]["income_primary"]/segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"])
 
 				simp[SEX]["untagged"]["total_inc"] += INC_PRIME
 

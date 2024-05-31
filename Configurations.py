@@ -25,6 +25,7 @@ SQLITE_DB_LOCAL = "assets/sqlite_db/dti_rapidxi.db";
 SQLITE_DB_SERVER = "/var/www/html/dti_web_app_v2/assets/sqlite_db/dti_rapidxi.db";
 SQLITE_DB = "none";
 
+RECORDS_LINUX_LOCAL= "/mnt/c/Users/USER/Desktop/Systems/dti_web_app_v2/assets/";
 RECORDS_SERVER = "/var/www/html/dti_web_app_v2/assets/";
 RECORDS_LOCAL = "assets/";
 RECORDS = "none";
@@ -35,7 +36,7 @@ M_APPVER = "none";
 # --- DATABASE---- #
 
 LOCAL_PORT=3306
-# LOCAL_HOST = "0.0.0.0";
+LOCAL_HOST_LINUX = "0.0.0.0";
 LOCAL_HOST = "localhost";
 LOCAL_USER = "root";
 LOCAL_PASSWORD = "";
@@ -46,8 +47,8 @@ SERVER_PORT=3306;
 SERVER_HOST = "dti-rapid-database.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
 SERVER_USER = "admin";
 SERVER_PASSWORD = "NRGlBUhehOvi0Yt4fDE5";
-# SERVER_PASSWORD = "password123"; # OLD PASSWORD
 SERVER_DATABASE = "mis_2023";
+# SERVER_PASSWORD = "password123"; # OLD PASSWORD
 
 MOCK_DATABASE_TEST = "mis_2023_test";
 

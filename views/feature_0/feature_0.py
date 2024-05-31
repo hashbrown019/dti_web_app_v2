@@ -480,18 +480,18 @@ class _main:
 		excl_dip = dic_(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_DIP_name`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_DIP_name`;".format(FILTER_SUFFIX) ))
 		excl_primary_c = dic(query("SELECT `frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `key`, count(`frmer_prof_@_Farming_Basic_Info_@_primary_crop`) as `total` FROM `excel_import_form_a`  {} GROUP by `frmer_prof_@_Farming_Basic_Info_@_primary_crop`;".format(FILTER_SUFFIX) ))
 
-		enumerator_mobile = (query(('''
-				SELECT 
-					users.id as `id`,
-					users.name as `key`,
-					count(form_a_farmer_profiles.USER_ID) as `total`
-				FROM
-					form_a_farmer_profiles
-				INNER JOIN users ON form_a_farmer_profiles.USER_ID = users.id
-				{}
-				GROUP by users.name
-				ORDER BY count(form_a_farmer_profiles.USER_ID) DESC;
-		''').format(FILTER_SUFFIX) ))
+		# enumerator_mobile = (query(('''
+		# 		SELECT 
+		# 			users.id as `id`,
+		# 			users.name as `key`,
+		# 			count(form_a_farmer_profiles.USER_ID) as `total`
+		# 		FROM
+		# 			form_a_farmer_profiles
+		# 		INNER JOIN users ON form_a_farmer_profiles.USER_ID = users.id
+		# 		{}
+		# 		GROUP by users.name
+		# 		ORDER BY count(form_a_farmer_profiles.USER_ID) DESC;
+		# ''').format(FILTER_SUFFIX) ))
 
 		enumerator_excel = (query(('''
 				SELECT 

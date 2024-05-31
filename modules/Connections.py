@@ -39,12 +39,13 @@ class sqlite:
 	    return d
 
 class mysql:
-	def __init__(self, host,user,password,database):
+	def __init__(self, host,user,password,database,use_pure=False):
 		super(mysql, self).__init__()
 		self.host=host
 		self.user=user
 		self.password=password
 		self.database=database
+		self.use_pure=use_pure
 		self.err_page = 1 
 
 	def info(self):
@@ -57,7 +58,8 @@ class mysql:
 			host=self.host,
 			user=self.user,
 			password=self.password,
-			database=self.database)
+			database=self.database,
+			use_pure=self.use_pure)
 		return mydb
 
 	def do(self,sql):
