@@ -360,20 +360,24 @@ class _main:
 		tital_num_farmer = 0
 		tital_num_farmer_valid = 0
 		for inx in range(len(bday)):
-			try:
-				if("-" in bday[inx]["bday"] ):
-					if(len(bday[inx]["bday"].split("-")[0])==4):
-						ALL_BDAY[bday[inx]["sex"].lower()].append(bday[inx]["bday"])
-				elif("." in bday[inx]["bday"] ):
-					int_bday = int(str(bday[inx]["bday"]).split(".")[0])
-					reference_date = date(1900, 1, 1)
-					days_since_epoch = int_bday
-					target_date = reference_date + DT.timedelta(days=days_since_epoch)
-					formatted_date = target_date.strftime('%Y-%m-%d')
-					ALL_BDAY[bday[inx]["sex"].lower()].append(formatted_date)
-			except Exception as e:
-				# print( e)
-				pass
+
+			temp_sex = bday[inx]["sex"].lower().replace(" ","")
+			temp_bday = bday[inx]["bday"]
+			if temp_sex not in ALL_BDAY:continue
+
+			if("-" in temp_sex): 
+				if(len(temp_bday.split("-")[0])==4):
+					ALL_BDAY[temp_sex].append(temp_bday)
+			elif("." in temp_bday ):
+				try:
+					int_bday = int(str(temp_bday).split(".")[0])
+				except Exception as e:
+					int_bday = 0
+				reference_date = date(1900, 1, 1)
+				days_since_epoch = int_bday
+				target_date = reference_date + DT.timedelta(days=days_since_epoch)
+				formatted_date = target_date.strftime('%Y-%m-%d')
+				ALL_BDAY[temp_sex].append(formatted_date)
 			tital_num_farmer +=1
 
 		# return ALL_BDAY #=================================================
@@ -385,22 +389,19 @@ class _main:
 		}
 		for _sex in ALL_BDAY:
 			for _date in ALL_BDAY[_sex]:
-				try:
-					xdate = _date.split("-")
-					if(int(xdate[1])>12):
-						# print(_date)
-						_date = f"{xdate[0]}-01-01"
-					start_date = dt.strptime(_date, "%Y-%m-%d")
-					end_date = DT.date.today()
-					delta = relativedelta.relativedelta(end_date, start_date)
-					# print(delta.years, 'Years,', delta.months, 'months,', delta.days, 'days')
-					tital_num_farmer_valid += 1
-					YEARS_OLD = delta.years
-					age_range[_main.get_age_range(YEARS_OLD)][_sex] += 1
-					if(YEARS_OLD >= 15 and YEARS_OLD <= 30 ):
-						age_range["youth"][_sex] += 1
-				except Exception as e:
-					pass
+				xdate = _date.split("-")
+				if(int(xdate[1])>12):
+					# print(_date)
+					_date = f"{xdate[0]}-01-01"
+				start_date = dt.strptime(_date, "%Y-%m-%d")
+				end_date = DT.date.today()
+				delta = relativedelta.relativedelta(end_date, start_date)
+				# print(delta.years, 'Years,', delta.months, 'months,', delta.days, 'days')
+				tital_num_farmer_valid += 1
+				YEARS_OLD = delta.years
+				age_range[_main.get_age_range(YEARS_OLD)][_sex] += 1
+				if(YEARS_OLD >= 15 and YEARS_OLD <= 30 ):
+					age_range["youth"][_sex] += 1
 		return {"age_range":age_range,"bdays":[],"tital_num_farmer_valid":tital_num_farmer_valid,"tital_num_farmer":tital_num_farmer}
 
 	def get_age_range(AGE_):
@@ -591,30 +592,18 @@ class _main:
 					"num_farmers": 0,
 					"num_farmers_has_inc": 0
 				}
-			if(SEX not in segre):print(SEX); continue
+			if(SEX not in segre):print(f"sex[{SEX}]"); continue
 			try: INC_PRIME = float(details["income_primary"])
 			except Exception as e: INC_PRIME= 0
-			try:
-				ha = float(ha__)
-				if(ha not in actual):
-					actual[ha] = 0
-				actual[ha]+=1
-			except Exception as e:
-				segre[SEX]["untagged"]["total"] +=1;
-				if(CROP not in segre[SEX]["untagged"]["commodity"]):
-					segre[SEX]["untagged"]["commodity"][CROP] = _CC
-				segre[SEX]["untagged"]["commodity"][CROP]["num_farmers"] += 1
-				segre[SEX]["untagged"]["commodity"][CROP]["income_primary"] += INC_PRIME
-				segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"] +=1
-				simp[SEX]["untagged"]["num_farmer_has_inc"] += 1
-				segre[SEX]["untagged"]["commodity"][CROP]["income_avg"] = "{:.2f}".format(segre[SEX]["untagged"]["commodity"][CROP]["income_primary"]/segre[SEX]["untagged"]["commodity"][CROP]["num_farmers_has_inc"])
-
-				simp[SEX]["untagged"]["total_inc"] += INC_PRIME
-
-			CROP = details["crop"].lower() 
-			# CROP = ''.join(letter for letter in details["crop"].lower() if letter.isalnum())
-			# if(CROP not in _CROP):
-			# 	CROP = "others"
+			try:ha = float(ha__)
+			except Exception as e:ha = 0
+			
+			if(ha not in actual):
+				actual[ha] = 0
+			actual[ha]+=1
+			CROP = ''.join(letter for letter in details["crop"].lower() if letter.isalnum())
+			if(CROP not in _CROP):
+				CROP = "others"
 
 			if(ha <= 0.5):
 				segre[SEX]["below_to_0_5"]["total"] +=1;
