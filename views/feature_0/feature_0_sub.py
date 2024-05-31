@@ -543,7 +543,8 @@ class _main:
 				`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Secondary_Crop_` as 'income_secondary',
 				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'crop'
 			FROM `excel_import_form_a` {}
-			;'''.format(_main.___filter(area)) 
+			;'''.format(_main.___filter(area))
+		print(q)
 		hectareage = query(q)
 
 		_CROP = ["coconut","","cacao","coffee","banana","calamansi"]
