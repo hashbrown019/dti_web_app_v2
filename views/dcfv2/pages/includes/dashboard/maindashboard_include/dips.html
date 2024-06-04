@@ -811,7 +811,7 @@
                                  {% set total_coffeeIP = dcf_MALEIP_COFFEE_APPR[0]['maleip_coffee1'] if dcf_MALEIP_COFFEE_APPR else 0 %}
                                  {% set total_coconutIP = dcf_MALEIP_COCONUT_APPR[0]['maleip_coconut1'] if dcf_MALEIP_COCONUT_APPR else 0 %}
                                  {% set total_pfnIP = dcf_MALEIP__PFN_APPR[0]['maleip_pfn1'] if dcf_MALEIP__PFN_APPR else 0 %}
-                                 {% set total_farmersIP = total_cacaoIP + total_coffeeIP + total_coconutIP + total_pfnIP %}
+                                 {% set total_farmersIP = (total_cacaoIP or 0)+ (total_coffeeIP or 0) + (total_coconutIP or 0) + (total_pfnIP or 0) %}
                                  <!-- TOTAL MALE_YOUTH (CCCF) -->
                                  {% set total_cacaoYOUTH = dcf_MALEYOUTH_CACAO_APPR[0]['maleyouth_cacao1'] %}
                                  {% set total_coffeeYOUTH = dcf_MALEYOUTH_COFFEE_APPR[0]['maleyouth_coffee1'] %}
@@ -840,9 +840,9 @@
                             <tbody>
                                 <tr>
                                     <td>Male</td>
-                                    <td class="text-center">{{ total_cacao }} ({{ (total_cacao / total_farmers * 100)|round(2) }}%)</td>
-                                    <td class="text-center">{{ total_coffee }} ({{ (total_coffee / total_farmers * 100)|round(2) }}%)</td>
-                                    <td class="text-center">{{ total_coconut }} ({{ (total_coconut / total_farmers * 100)|round(2) }}%)</td>
+                                    <td class="text-center">{{ total_cacao }} ({{ (total_cacao or 0  / total_farmers * 100)|round(2) }}%)</td>
+                                    <td class="text-center">{{ total_coffee }} ({{ (total_coffee or 0  / total_farmers * 100)|round(2) }}%)</td>
+                                    <td class="text-center">{{ total_coconut }} ({{ (total_coconut or 0  / total_farmers * 100)|round(2) }}%)</td>
                                     <td class="text-center">{{ total_pfn }} ({{ (total_pfn or 0 / total_farmers * 100)|round(2) }}%)</td>
                                     <td class="text-center">{{ total_farmers }} ({{ (( (total_cacao or 0) + (total_coconut or 0) + (total_coffee or 0) + (total_pfn or 0)) / (dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)</td>
                                 </tr>
@@ -880,7 +880,21 @@
                                         (N/A%)
                                     {% endif %}
                                 </td>
-                                    <td class="text-center">{{ total_farmersIP }} ({{ ((total_cacaoIP or 0 + total_coffeeIP or 0 + total_coconutIP or 0 + total_pfnIP or 0 ) / (dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)</td>
+                       
+
+                                    <td class="text-center" role="cell" aria-label="Total Farmers and Percentage">
+                                    {{ total_farmersIP }} 
+                                
+                                        {{ (
+                                            (total_cacaoIP or 0) + 
+                                            (total_coffeeIP or 0) + 
+                                            (total_coconutIP or 0) + 
+                                            (total_pfnIP or 0)
+                                        ) / (
+                                            (dcf_form1male_appr[0]['total_male_appr'] or 0) + 
+                                            (dcf_form1female_appr[0]['total_female_appr'] or 0)
+                                        ) * 100 | round(2) }}%
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Male Youth</td>
@@ -946,7 +960,7 @@
                                 <td class="text-center">
                                     {{ total_coffeeF }} 
                                     {% if total_farmersF %}
-                                        ({{ (total_coffeeF / total_farmersF * 100)|round(2) }}%)
+                                        ({{ (total_coffeeF or 0 / total_farmersF * 100)|round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
@@ -954,7 +968,7 @@
                                 <td class="text-center">
                                     {{ total_coconutF }} 
                                     {% if total_farmersF %}
-                                        ({{ (total_coconutF / total_farmersF * 100)|round(2) }}%)
+                                        ({{ (total_coconutF or 0 / total_farmersF * 100)|round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
