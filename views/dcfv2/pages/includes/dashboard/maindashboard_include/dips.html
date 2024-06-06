@@ -909,7 +909,7 @@
                                    <td class="text-center">
                                     {{ total_coffeeYOUTH }}
                                     {% if total_farmersYOUTH != 0 %}
-                                        ({{ (total_coffeeYOUTH / total_farmersYOUTH * 100) | round(2) }}%)
+                                        ({{ (total_coffeeYOUTH or 0 / total_farmersYOUTH * 100) | round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
@@ -925,7 +925,7 @@
                                     <td class="text-center">
                                     {{ total_pfnYOUTH }}
                                     {% if total_farmersYOUTH != 0 %}
-                                        ({{ (total_pfnYOUTH / total_farmersYOUTH * 100) | round(2) }}%)
+                                        ({{ (total_pfnYOUTH or 0 / total_farmersYOUTH * 100) | round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
@@ -1046,7 +1046,7 @@
                                 <td class="text-center">
                                     {{ total_coffeeFYOUTH }} 
                                     {% if total_farmersFYOUTH %}
-                                        ({{ (total_coffeeFYOUTH / total_farmersFYOUTH * 100)|round(2) }}%)
+                                        ({{ (total_coffeeFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
@@ -1062,7 +1062,7 @@
                                 <td class="text-center">
                                     {{ total_pfnFYOUTH }} 
                                     {% if total_farmersFYOUTH %}
-                                        ({{ (total_pfnFYOUTH / total_farmersFYOUTH * 100)|round(2) }}%)
+                                        ({{ (total_pfnFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
@@ -1070,7 +1070,7 @@
                                 <td class="text-center">
                                     {{ total_farmersFYOUTH }} 
                                     {% if total_farmersFYOUTH and dcf_form1male_appr[0]['total_male_appr'] and dcf_form1female_appr[                            0]['total_female_appr'] %}
-                                        ({{ ((total_cacaoFYOUTH + total_coconutFYOUTH + total_coffeeFYOUTH + total_pfnFYOUTH) / (                           dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)
+                                        ({{ ((total_cacaoFYOUTH or 0 + total_coconutFYOUTH + total_coffeeFYOUTH + total_pfnFYOUTH) / (                           dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
