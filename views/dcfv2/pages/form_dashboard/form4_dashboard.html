@@ -244,6 +244,48 @@
 </div>
 
 
+    <div class="col-md-6 col-sm-6  ">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Bar graph <small>Types of Training: GESI</small> </h2>
+                    <form action="/dcf" method="POST" enctype="multipart/form-data">
+	  <div class="form-group">
+		<div class="form-row" style="display:none;">
+		  <div class="col">
+			<select id="export_type" name="export_type" class="form-control">
+			  <option value="form4gesiexport">FORM 4 GESI</option>
+		  </select>
+	  </div>
+  </div>
+  <div class="form-row">
+	  <div class="col"><button type="submit" class="btn btn-sm btn-dark"><span><i class="fa fa-cloud-download"></i></span>
+	  Download data</button>
+  </div>
+</div>
+</div>
+</form>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                          </div>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="mybarChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+
 			<script>// Replace this with your actual variable or value
 
 			
@@ -339,92 +381,32 @@
 
 	// Bar chart
 
-				if ($('#mybarChart').length) {
+    if ($('#mybarChart').length) {
 
-					var _labelsrcu = [];
-					var approved_dips = [];
-					var pipeline_dips = [];
-					var ongoing_dips = [];
-					var not_started = [];
-					
-	// Sample data
-					{% for dip in dips_list %}
-					var dipData = {
-						label: '{{dip}}',
-						approve: '{{dips_list[dip]["approve"]}}',
-						pipeline: '{{dips_list[dip]["pipeline"]}}',
-						ongoing: '{{dips_list[dip]["ongoing"]}}',
-						not_started: '{{dips_list[dip]["not_started"]}}',
-					};
-					
-	  // Add region to each data entry in _labelsrcu
-					var regions = ['RCU'];
-					regions.forEach(function(region) {
-						var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
-						_labelsrcu.push(regionData.label);
-						approved_dips.push(regionData.approve);
-						pipeline_dips.push(regionData.pipeline);
-						ongoing_dips.push(regionData.ongoing);
-						not_started.push(regionData.not_started);
-					});
-					{% endfor %}
-					var totalApprovedDips = approved_dips.reduce(function(acc, val) {
-						return acc + parseFloat(val);
-					}, 0);
-					var totalpipelineDips = pipeline_dips.reduce(function(acc, val) {
-						return acc + parseFloat(val);
-					}, 0);
-					var totalongoingDips = ongoing_dips.reduce(function(acc, val) {
-						return acc + parseFloat(val);
-					}, 0);
-					var totalnotstartedDips = not_started.reduce(function(acc, val) {
-						return acc + parseFloat(val);
-					}, 0);
-					document.getElementById('totalApprovedDipsValue').innerText = totalApprovedDips.toFixed(0);
-					document.getElementById('totalpipelineDipsValue').innerText = totalpipelineDips.toFixed(0);
-					document.getElementById('totalongoingDipsValue').innerText = totalongoingDips.toFixed(0);
-					document.getElementById('totalnotstartedDipsValue').innerText = totalnotstartedDips.toFixed(0);
+        var ctx = document.getElementById("mybarChart");
+        var mybarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Farmer Oganization", "MSME", "Individual Farmer"],
+                datasets: [{
+                    label: 'Total',
+                    backgroundColor: "#26B99A",
+                    data: [{{dcf4_GESIFO[0]['gesifo']}}, {{dcf4_GESImsme[0]['gesimsme']}}, {{dcf4_GESIif[0]['gesiif']}}]
+                }]
+            },
 
-					var ctx = document.getElementById("mybarChart");
-					var mybarChart = new Chart(ctx, {
-						type: 'bar',
-						data: {
-							labels: _labelsrcu,
-							datasets: [{
-								label: 'Approved DIPs',
-								backgroundColor: "#99e6ff",
-								data: approved_dips
-							}, {
-								label: 'Pipeline DIPs',
-								backgroundColor: "#33ccff",
-								data: pipeline_dips
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
 
-							},{
-								label: 'Ongoing DIPs',
-								backgroundColor: "#0099cc",
-								data: ongoing_dips
-
-							},{
-								label: 'Not Started',
-								backgroundColor: "#ff8080",
-								data: not_started
-
-							}]
-						},
-
-						options: {
-							scales: {
-								yAxes: [{
-									ticks: {
-										beginAtZero: true
-									}
-								}]
-							}
-						}
-					});
-
-				}
-
+    }
 				  if ($('#canvasRadar').length) {
 
         var ctx = document.getElementById("canvasRadar");
@@ -685,6 +667,8 @@
   }
 
 </script>
+
+
 
 
 

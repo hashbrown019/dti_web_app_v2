@@ -1233,11 +1233,19 @@ def displayform():
     dcf1_IP_BARMM_PIPELINE=db.select("SELECT SUM(`form_1_totalip`) AS ip_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';".format(position_data_filter()))
 
 
+    dcf4_GESIFO=db.select("SELECT COUNT(cbb_types_of_training) AS gesifo FROM `dcf_capacity_building` {} AND `cbb_types_of_training`='FO-GESI';".format(position_data_filter()))
+    dcf4_GESImsme=db.select("SELECT COUNT(cbb_types_of_training) AS gesimsme FROM `dcf_capacity_building` {} AND `cbb_types_of_training`='MSME-GESI';".format(position_data_filter()))
+    dcf4_GESIif=db.select("SELECT COUNT(cbb_types_of_training) AS gesiif FROM `dcf_capacity_building` {} AND `cbb_types_of_training`='Individual Farmer-GESI';".format(position_data_filter()))
+
+
 
     dcf1_IP_apprfm=db.select("SELECT SUM(form_1_maleip + form_1_femaleip) AS total_IP_appr FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coconut';".format(position_data_filter()))
 
 
     return {
+        'dcf4_GESIFO':dcf4_GESIFO,
+        'dcf4_GESImsme':dcf4_GESImsme,
+        'dcf4_GESIif':dcf4_GESIif,
         'dcf1_IP_apprfm':dcf1_IP_apprfm,
         'dcf1_IP_8_APPR':dcf1_IP_8_APPR,
         'dcf1_IP_9_APPR':dcf1_IP_9_APPR,

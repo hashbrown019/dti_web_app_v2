@@ -1171,6 +1171,77 @@ def dcfexport_data():
 					return send_file(c.RECORDS+'/objects/_temp_/dcf_form11_exported_file.xlsx')
 
 			return form11export()
+
+
+		elif export_type == 'form4gesiexport':
+			def form4gesiexport():
+				if request.method == "POST":
+					query= db.select('''SELECT dcf_capacity_building.id,
+					dcf_capacity_building.cbb_implementing_unit,
+					dcf_capacity_building.cbb_activity_title,
+					dcf_capacity_building.cbb_types_of_training,
+					dcf_capacity_building.cbb_topic_of_training,
+					dcf_capacity_building.cbb_dip_approved_alignment,
+					dcf_capacity_building.cbb_name_of_dip,
+					dcf_capacity_building.cbb_date_start,
+					dcf_capacity_building.cbb_date_end,
+					dcf_capacity_building.cbb_total_number_of_participants,
+					CONCAT(dcf_capacity_building.cbb_commodity,
+					 ' ',
+					 dcf_capacity_building.cbb_commodity_others) AS 'Commodity',
+					dcf_capacity_building.cbb_venue,
+					dcf_capacity_building.cbb_name_of_resource_person,
+					dcf_capacity_building.cbb_rapid_actual_budget,
+					dcf_capacity_building.cbb_dip_capbuild_activities_NPO,
+					dcf_capacity_building.cbb_dip_capbuild_activities_CA,
+					dcf_capacity_building.cbb_total_number_per_gender_male,
+					dcf_capacity_building.cbb_total_number_per_gender_female,
+					dcf_capacity_building.cbb_total_number_per_gender_total,
+					dcf_capacity_building.cbb_total_number_per_sector_pwd,
+					dcf_capacity_building.cbb_total_number_per_sector_youth,
+					dcf_capacity_building.cbb_total_number_per_sector_ip,
+					dcf_capacity_building.cbb_total_number_per_sector_sc,
+					dcf_capacity_building.cbb_total_number_per_sector_total,
+					cbb_male_ip,
+					cbb_female_ip,
+					cbb_male_youth,
+					cbb_female_youth,
+					cbb_male_pwd,
+					cbb_female_pwd,
+					cbb_male_sc,
+					cbb_female_sc,
+					cbb_male_total,
+					cbb_female_total,
+					dcf_capacity_building.cbb_results_of_activity_pre_test,
+					dcf_capacity_building.cbb_results_of_activity_post_test,
+					dcf_capacity_building.cbb_client_feedback_survey_rating,
+					dcf_capacity_building.cbb_client_feedback_survey_comments_AOI,
+					dcf_capacity_building.date_created,
+					dcf_capacity_building.date_modified,
+					users.name as 'Uploaded by'
+					FROM dcf_capacity_building
+					INNER JOIN users ON `dcf_capacity_building`.`upload_by` = `users`.`id`
+					AND dcf_capacity_building.cbb_types_of_training LIKE '%GESI%' {}'''.format(position_data_filter()))
+					df_nested_list = pd.json_normalize(query)
+					df = pd.DataFrame(df_nested_list)
+					df = df.astype(str)
+					writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form4gesi_exported_file.xlsx') 
+					df.to_excel(writer, sheet_name='dcf_form4gesi_exported_file', index=False)
+					new_column_names = 'ID,Implementing Unit, Activity Title, Types of Training, Topic Of Training, DIP approved alignment, Name of DIPs, ACTIVITY DURATION (start date), ACTIVITY DURATION (end date), Total Number of Participants, Commodity, Venue, Name of Resource Person/Facilitator/BDSP (First Name Middle Name Last Name), RAPID Actual Budget Actual (CY 2022 Onwards e.g. 34000.00),Name of Partner/Organization, Counterpart Amount(monetize & estimates), Male, Female, Total, PWD, Youth, IP, SC, Total,Male IP, Female IP,Male Youth, Female Youth,Male PWD, Female PWD, Male SC,Female SC, Male Total, Female Total, Pre-Test, Post-Test, Rating, Comments/ Areas of Improvement,Date Created, Date Modified, Uploaded by'
+					new_column_names_list = new_column_names.split(',')
+					df.columns = new_column_names_list
+
+					workbook = writer.book
+					worksheet = writer.sheets['dcf_form4gesi_exported_file']
+					header_format = workbook.add_format({'bold': True, 'text_wrap': True, 'valign': 'top', 'fg_color': '#00ace6', 'border': 1})
+					for col_num, value in enumerate(df.columns.values):
+						worksheet.write(0, col_num, value, header_format)
+						column_width = max(df[value].astype(str).apply(len).max(), len(value)) + 1
+						worksheet.set_column(col_num, col_num, column_width)
+					
+					writer.save()
+					return send_file(c.RECORDS+'/objects/_temp_/dcf_form4gesi_exported_file.xlsx')
+			return form4gesiexport()
 		
 	else:
 		return redirect('dcfspreadsheet.html')
