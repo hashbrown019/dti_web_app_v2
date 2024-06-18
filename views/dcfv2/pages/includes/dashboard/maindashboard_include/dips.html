@@ -883,17 +883,22 @@
                        
 
                                     <td class="text-center" role="cell" aria-label="Total Farmers and Percentage">
-                                    {{ total_farmersIP }} 
-                                
-                                        {{ (
-                                            (total_cacaoIP or 0) + 
-                                            (total_coffeeIP or 0) + 
-                                            (total_coconutIP or 0) + 
-                                            (total_pfnIP or 0)
-                                        ) / (
-                                            (dcf_form1male_appr[0]['total_male_appr'] or 0) + 
-                                            (dcf_form1female_appr[0]['total_female_appr'] or 0)
-                                        ) * 100 | round(2) }}%
+                            
+
+                                        {{ total_farmersYOUTH }}
+                                 {% set total_cacao = total_cacaoIP | default(0) %}
+                                 {% set total_coconut = total_coconutIP | default(0) %}
+                                 {% set total_coffee = total_coffeeIP | default(0) %}
+                                 {% set total_pfn = total_pfnIP | default(0) %}
+                                 {% set total_youth = (total_cacao or 0 )+ (total_coconut or 0) + (total_coffee or 0) + (total_pfn or 0) %}
+                                 {% set total_male_appr = dcf_form1male_appr[0]['total_male_appr'] | default(0) %}
+                                 {% set total_female_appr = dcf_form1female_appr[0]['total_female_appr'] | default(0) %}
+                                 {% set total_appr = (total_male_appr or 0) + (total_female_appr or 0) %}
+                                 {% if total_appr != 0 %}
+                                     ({{ (total_youth / total_appr * 100) | round(2) }}%)
+                                 {% else %}
+                                     (N/A%)
+                                 {% endif %}  
                                     </td>
                                 </tr>
                                 <tr>
@@ -1089,15 +1094,30 @@
             <div class="x_content">
                 <div class="top_tiles">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="tile-stats" style="margin-bottom: 10px;">
-                                <div class="count _money_tag">{{dcf1_IP_apprfm[0]['total_IP_appr']}}</div>
-                                <h3 class="titlecard"><i class=></i> Total number IP Farmers (male+female)  in the Coconut approved DIPs</h3>
+                                <div class="count _money_tag" style="color:#00becc;">{{dcf1_IP_apprfm[0]['total_IP_appr']}}</div>
+                                <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>IP Farmers (Male+Female)</b>  in the Coconut <br>approved DIPs.</p>
                                 <p> &nbsp&nbsp </p>
+                                <div class="count _money_tag" style="color:#4eeb70;">{{dcf_form1sextotalappr[0]['total_sexappr'] }}</div>
+                                 <p style="font-size: 17px; margin-left: 10px;"  class="titlecard"><i class=></i>Versus the total number of smallholder farmers based on approved DIPs.</p>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="tile-stats" style="margin-bottom: 10px;">
+                                <div class="count _money_tag" style="color:#00becc;">{{dcf1_youth_apprfm[0]['total_youth_appr']}}</div>
+                                <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>YOUTH Farmers (Male+Female)</b>  in the Coconut <br>approved DIPs.</p>
+                                <p> &nbsp&nbsp </p>
+                                <div class="count _money_tag" style="color:#4eeb70;">{{dcf_form1sextotalappr[0]['total_sexappr'] }}</div>
+                                 <p style="font-size: 17px; margin-left: 10px;"  class="titlecard"><i class=></i>Versus the total number of smallholder farmers based on approved DIPs.</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
         

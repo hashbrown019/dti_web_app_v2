@@ -53,19 +53,21 @@ def displayform():
         
     USER_INFO = session["USER_DATA"]
 
-    form1_data_sep = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form1_data_oct = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form1_data_nov =db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form1_data_dec = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form1_data_jan = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form1_data_feb = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form1_data_mar = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form1_data_apr = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form1_data_may = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+    form1_data_sep = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form1_data_oct = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form1_data_nov =db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
+    form1_data_dec = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form1_data_jan = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form1_data_feb = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form1_data_mar = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form1_data_apr = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form1_data_may = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form1_data_june = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
-    form1_thismonth=len(form1_data_may)
-    form1_lastmonth=len(form1_data_apr)
+
+    form1_thismonth=len(form1_data_june)
+    form1_lastmonth=len(form1_data_may)
     form1_subperc= form1_thismonth - form1_lastmonth
     try: form1_percentage= (form1_subperc / form1_lastmonth)
     except Exception as e: form1_percentage = 0
@@ -81,25 +83,28 @@ def displayform():
     form1_data_mar=len(form1_data_mar)
     form1_data_apr=len(form1_data_apr)
     form1_data_may=len(form1_data_may)
+    form1_data_june=len(form1_data_june)
 
 
 
 
 
-    form2_data_sep = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form2_data_oct = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form2_data_nov =db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form2_data_dec = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form2_data_jan = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form2_data_feb = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form2_data_mar = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form2_data_apr = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form2_data_may = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+    form2_data_sep = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form2_data_oct = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form2_data_nov =db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE -  INTERVAL 7 MONTH)".format(position_data_filter()))
+    form2_data_dec = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form2_data_jan = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form2_data_feb = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form2_data_mar = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form2_data_apr = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form2_data_may = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form2_data_june = db.select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
-    form2_thismonth=len(form2_data_may)
-    form2_lastmonth=len(form2_data_apr)
+    form2_thismonth=len(form2_data_june)
+    form2_lastmonth=len(form2_data_may)
     form2_subperc= form2_thismonth - form2_lastmonth
     try: form2_percentage= (form2_subperc / form2_lastmonth)
     except Exception as e: form2_percentage = 0
@@ -115,26 +120,29 @@ def displayform():
     form2_data_mar=len(form2_data_mar)
     form2_data_apr=len(form2_data_apr)
     form2_data_may=len(form2_data_may)
+    form2_data_june=len(form2_data_june)
 
 
 
 
 
 
-    form3_data_sep = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form3_data_oct = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form3_data_nov =db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form3_data_dec = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form3_data_jan = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form3_data_feb = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form3_data_mar = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form3_data_apr = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form3_data_may = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+    form3_data_sep = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form3_data_oct = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form3_data_nov = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE -  INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE -INTERVAL 7 MONTH)".format(position_data_filter()))
+    form3_data_dec = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form3_data_jan = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form3_data_feb = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form3_data_mar = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form3_data_apr = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form3_data_may = db.select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form3_data_june = db.select("SELECT * FROM dcf_bdsp_reg {}AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
-    form3_thismonth=len(form3_data_may)
-    form3_lastmonth=len(form3_data_apr)
+    form3_thismonth=len(form3_data_june)
+    form3_lastmonth=len(form3_data_may)
     form3_subperc= form3_thismonth - form3_lastmonth
     try: form3_percentage= (form3_subperc / form3_lastmonth)
     except Exception as e: form3_percentage = 0
@@ -150,6 +158,7 @@ def displayform():
     form3_data_mar=len(form3_data_mar)
     form3_data_apr=len(form3_data_apr)
     form3_data_may=len(form3_data_may)
+    form3_data_june=len(form3_data_june)
 
 
 
@@ -157,21 +166,22 @@ def displayform():
 
 
 
-    form4_data_sep = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form4_data_oct = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form4_data_nov =db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form4_data_dec = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form4_data_jan = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form4_data_feb = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form4_data_mar = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form4_data_apr = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form4_data_may = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+    form4_data_sep = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form4_data_oct = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form4_data_nov = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE -  INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE -INTERVAL 7 MONTH)".format(position_data_filter()))
+    form4_data_dec = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form4_data_jan = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form4_data_feb = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form4_data_mar = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form4_data_apr = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form4_data_may = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form4_data_june = db.select("SELECT * FROM dcf_capacity_building {}AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
 
-    form4_thismonth=len(form4_data_may)
-    form4_lastmonth=len(form4_data_apr)
+    form4_thismonth=len(form4_data_june)
+    form4_lastmonth=len(form4_data_may)
     form4_subperc= form4_thismonth - form4_lastmonth
     try: form4_percentage= (form4_subperc / form4_lastmonth)
     except Exception as e: form4_percentage = 0
@@ -187,26 +197,29 @@ def displayform():
     form4_data_mar=len(form4_data_mar)
     form4_data_apr=len(form4_data_apr)
     form4_data_may=len(form4_data_may)
+    form4_data_june=len(form4_data_june)
 
 
 
 
 
 
-    form5_data_sep = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form5_data_oct = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form5_data_nov =db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form5_data_dec = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form5_data_jan = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form5_data_feb = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form5_data_mar = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form5_data_apr = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form5_data_may = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+    form5_data_sep = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form5_data_oct = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form5_data_nov =db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
+    form5_data_dec = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form5_data_jan = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form5_data_feb = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form5_data_mar = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form5_data_apr = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form5_data_may = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form5_data_june = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
-    form5_thismonth=len(form5_data_may)
-    form5_lastmonth=len(form5_data_apr)
+    form5_thismonth=len(form5_data_june)
+    form5_lastmonth=len(form5_data_may)
     form5_subperc= form5_thismonth - form5_lastmonth
     try: form5_percentage= (form5_subperc / form5_lastmonth)
     except Exception as e: form5_percentage = 0
@@ -222,24 +235,27 @@ def displayform():
     form5_data_mar=len(form5_data_mar)
     form5_data_apr=len(form5_data_apr)
     form5_data_may=len(form5_data_may)
+    form5_data_june=len(form5_data_june)
 
 
 
 
-    form6_data_sep = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form6_data_oct = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form6_data_nov =db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form6_data_dec = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form6_data_jan = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form6_data_feb = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form6_data_mar = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form6_data_apr = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form6_data_may = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+    form6_data_sep = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form6_data_oct = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form6_data_nov =db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
+    form6_data_dec = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form6_data_jan = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form6_data_feb = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form6_data_mar = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form6_data_apr = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form6_data_may = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form6_data_june = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
-    form6_thismonth=len(form6_data_may)
-    form6_lastmonth=len(form6_data_apr)
+    form6_thismonth=len(form6_data_june)
+    form6_lastmonth=len(form6_data_may)
     form6_subperc= form6_thismonth - form6_lastmonth
     try: form6_percentage= (form6_subperc / form6_lastmonth)
     except Exception as e: form6_percentage = 0
@@ -255,26 +271,29 @@ def displayform():
     form6_data_mar=len(form6_data_mar)
     form6_data_apr=len(form6_data_apr)
     form6_data_may=len(form6_data_may)
+    form6_data_june=len(form6_data_june)
 
 
 
 
 
 
-    form7_data_sep = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form7_data_oct = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form7_data_nov =db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form7_data_dec = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form7_data_jan = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form7_data_feb = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form7_data_mar = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form7_data_apr = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form7_data_may = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+    form7_data_sep = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form7_data_oct = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form7_data_nov =db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
+    form7_data_dec = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form7_data_jan = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form7_data_feb = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form7_data_mar = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form7_data_apr = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form7_data_may = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form7_data_june = db.select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
-    form7_thismonth=len(form7_data_may)
-    form7_lastmonth=len(form7_data_apr)
+    form7_thismonth=len(form7_data_june)
+    form7_lastmonth=len(form7_data_may)
     form7_subperc= form7_thismonth - form7_lastmonth
     try: form7_percentage= (form7_subperc / form7_lastmonth)
     except Exception as e: form7_percentage = 0
@@ -290,26 +309,29 @@ def displayform():
     form7_data_mar=len(form7_data_mar)
     form7_data_apr=len(form7_data_apr)
     form7_data_may=len(form7_data_may)
+    form7_data_june=len(form7_data_june)
 
 
 
 
 
 
-    form9_data_sep = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form9_data_oct = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form9_data_nov =db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form9_data_dec = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form9_data_jan = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form9_data_feb = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form9_data_mar = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form9_data_apr = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form9_data_may = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+    form9_data_sep = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form9_data_oct = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form9_data_nov =db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
+    form9_data_dec = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form9_data_jan = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form9_data_feb = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form9_data_mar = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form9_data_apr = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form9_data_may = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form9_data_june = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
-    form9_thismonth=len(form9_data_may)
-    form9_lastmonth=len(form9_data_apr)
+    form9_thismonth=len(form9_data_june)
+    form9_lastmonth=len(form9_data_may)
     form9_subperc= form9_thismonth - form9_lastmonth
     try: form9_percentage= (form9_subperc / form9_lastmonth)
     except Exception as e: form9_percentage = 0
@@ -325,27 +347,30 @@ def displayform():
     form9_data_mar=len(form9_data_mar)
     form9_data_apr=len(form9_data_apr)
     form9_data_may=len(form9_data_may)
+    form9_data_june=len(form9_data_june)
 
 
 
 
 
 
-    form10_data_sep = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form10_data_oct = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form10_data_nov =db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form10_data_dec = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form10_data_jan = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form10_data_feb = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form10_data_mar = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form10_data_apr = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form10_data_may = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+    form10_data_sep = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form10_data_oct = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form10_data_nov =db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
+    form10_data_dec = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form10_data_jan = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form10_data_feb = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form10_data_mar = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form10_data_apr = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form10_data_may =  db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form10_data_june = db.select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
 
-    form10_thismonth=len(form10_data_may)
-    form10_lastmonth=len(form10_data_apr)
+    form10_thismonth=len(form10_data_june)
+    form10_lastmonth=len(form10_data_may)
     form10_subperc= form10_thismonth - form10_lastmonth
     try: form10_percentage= (form10_subperc / form10_lastmonth)
     except Exception as e: form10_percentage = 0
@@ -361,27 +386,30 @@ def displayform():
     form10_data_mar=len(form10_data_mar)
     form10_data_apr=len(form10_data_apr)
     form10_data_may=len(form10_data_may)
+    form10_data_june=len(form10_data_june)
 
 
 
 
 
 
-    form11_data_sep = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
-    form11_data_oct = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
-    form11_data_nov =db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
-    form11_data_dec = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
-    form11_data_jan = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
-    form11_data_feb = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
-    form11_data_mar = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
-    form11_data_apr = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
-    form11_data_may = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+    form11_data_sep = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
+    form11_data_oct = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
+    form11_data_nov =db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)".format(position_data_filter()))
+    form11_data_dec = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)".format(position_data_filter()))
+    form11_data_jan = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)".format(position_data_filter()))
+    form11_data_feb = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)".format(position_data_filter()))
+    form11_data_mar = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)".format(position_data_filter()))
+    form11_data_apr = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
+    form11_data_may = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
+    form11_data_june = db.select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
 
 
 
-    form11_thismonth=len(form11_data_may)
-    form11_lastmonth=len(form11_data_apr)
+    form11_thismonth=len(form11_data_june)
+    form11_lastmonth=len(form11_data_may)
     form11_subperc= form11_thismonth - form11_lastmonth
     try: form11_percentage= (form11_subperc / form11_lastmonth)
     except Exception as e: form11_percentage = 0
@@ -397,6 +425,8 @@ def displayform():
     form11_data_mar=len(form11_data_mar)
     form11_data_apr=len(form11_data_apr)
     form11_data_may=len(form11_data_may)
+    form11_data_june=len(form11_data_june)
+
 
 
 
@@ -438,6 +468,8 @@ def displayform():
     dcf_form2sextotal=db.select("SELECT  SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form3sextotal=db.select("SELECT COUNT(CASE WHEN form_3_sex = 'male' OR form_3_sex = 'female' THEN 1 END) AS total_sex3 FROM dcf_bdsp_reg {}; ".format(position_data_filter()))
     dcf_form4sextotal=db.select("SELECT  SUM(cbb_total_number_per_gender_male + cbb_total_number_per_gender_female)AS total_sex4 FROM dcf_capacity_building {}; ".format(position_data_filter()))
+
+    dcf_form1sextotalappr=db.select("SELECT SUM(form_1_total_farmerbene) AS total_sexappr FROM dcf_prep_review_aprv_status {} AND `form_1_date_of_ifad_no_inssuance` !='' ; ".format(position_data_filter()))
 
 
 
@@ -1240,13 +1272,16 @@ def displayform():
 
 
     dcf1_IP_apprfm=db.select("SELECT SUM(form_1_maleip + form_1_femaleip) AS total_IP_appr FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coconut';".format(position_data_filter()))
+    dcf1_youth_apprfm=db.select("SELECT SUM(form_1_maleyouth + form_1_femaleyouth) AS total_youth_appr FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coconut';".format(position_data_filter()))
 
 
     return {
         'dcf4_GESIFO':dcf4_GESIFO,
+        'dcf_form1sextotalappr':dcf_form1sextotalappr,
         'dcf4_GESImsme':dcf4_GESImsme,
         'dcf4_GESIif':dcf4_GESIif,
         'dcf1_IP_apprfm':dcf1_IP_apprfm,
+        'dcf1_youth_apprfm':dcf1_youth_apprfm,
         'dcf1_IP_8_APPR':dcf1_IP_8_APPR,
         'dcf1_IP_9_APPR':dcf1_IP_9_APPR,
         'dcf1_IP_10_APPR':dcf1_IP_10_APPR,
@@ -1842,7 +1877,17 @@ def displayform():
         'form7_data_may':form7_data_may,
         'form9_data_may':form9_data_may,
         'form10_data_may':form10_data_may,
-        'form11_data_may':form11_data_may
+        'form11_data_may':form11_data_may,
+        'form1_data_june':form1_data_june,
+        'form2_data_june':form2_data_june,
+        'form3_data_june':form3_data_june,
+        'form4_data_june':form4_data_june,
+        'form5_data_june':form5_data_june,
+        'form6_data_june':form6_data_june,
+        'form7_data_june':form7_data_june,
+        'form9_data_june':form9_data_june,
+        'form10_data_june':form10_data_june,
+        'form11_data_june':form11_data_june
 
 
     }
