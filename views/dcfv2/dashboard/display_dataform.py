@@ -1274,9 +1274,15 @@ def displayform():
     dcf1_IP_apprfm=db.select("SELECT SUM(form_1_maleip + form_1_femaleip) AS total_IP_appr FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coconut';".format(position_data_filter()))
     dcf1_youth_apprfm=db.select("SELECT SUM(form_1_maleyouth + form_1_femaleyouth) AS total_youth_appr FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coconut';".format(position_data_filter()))
 
+    dcf1_IP_apprfmcoffee=db.select("SELECT SUM(form_1_maleip + form_1_femaleip) AS total_IP_apprcoffee FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coffee';".format(position_data_filter()))
+    dcf1_youth_apprfmcoffee=db.select("SELECT SUM(form_1_maleyouth + form_1_femaleyouth) AS total_youth_apprcoffee FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coffee';".format(position_data_filter()))
+
 
     return {
         'dcf4_GESIFO':dcf4_GESIFO,
+        'dcf1_IP_apprfmcoffee':dcf1_IP_apprfmcoffee,
+        'dcf1_youth_apprfmcoffee':dcf1_youth_apprfmcoffee,
+        
         'dcf_form1sextotalappr':dcf_form1sextotalappr,
         'dcf4_GESImsme':dcf4_GESImsme,
         'dcf4_GESIif':dcf4_GESIif,
