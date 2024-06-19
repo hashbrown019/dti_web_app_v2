@@ -64,16 +64,16 @@
 				</span>
 				<div class="x-light-grey">
 					<div class="x-bar x-black">
-						<button class="x-bar-item x-button x-leftbar" onclick="switch_u_tab('__manual')">Manual Input</button>
 						<button class="x-bar-item x-button x-leftbar" onclick="switch_u_tab('__excel')">Bulk Upload</button>
+						<button class="x-bar-item x-button x-leftbar" onclick="switch_u_tab('__manual')">Manual Input</button>
 					</div>
-					<div id="__manual" class="x-container _upload_tab x-animate-top">
+					<div id="__excel" class="x-container _upload_tab x-animate-top" >
+						{% include "link_data/_excel.html" %}
+					</div>
+					<div id="__manual" class="x-container _upload_tab x-animate-top" style="display:none">
 						{% include "link_data/_manual.html" %}
 					</div>
 
-					<div id="__excel" class="x-container _upload_tab x-animate-top" style="display:none">
-						{% include "link_data/_excel.html" %}
-					</div>
 				</div>
 
 			</div>
