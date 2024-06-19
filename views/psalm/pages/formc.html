@@ -112,23 +112,30 @@
 				form_data[x_ins[index].id] = x_ins[index].value
 			}
 		}
-		$send({
-			action: "/set_data/" + table,
-			data: $DATA(form_data),
-			method: POST,
-			func: function (r) {
-				var res = JSON.parse(r)
-			
-				if (res.status == "success") {
-					Swal.fire(
-						'Success!',
-						'Record Saved!',
-						'success'
+			$send({
+		action: "/set_data/" + table,
+		data: $DATA(form_data),
+		method: POST,
+		func: function (r) {
+			var res = JSON.parse(r)
+			println(res)
+			if (res.id.response == "done") {
+				Swal.fire(
+					'Success!',
+					'Record Saved!',
+					'success'
 					).then((result) => {
 						if (result.isConfirmed) {
 							window.location.href = url;
 						}
 					});
+				}
+				else {
+					Swal.fire(
+						'Error!',
+						res.id,
+						'error'
+						);
 				}
 			}
 		})

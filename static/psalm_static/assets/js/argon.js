@@ -845,7 +845,7 @@ var BarsChart = (function() {
 		var ordersChart = new Chart($chart, {
 			type: 'bar',
 			data: {
-				labels: ['Jun', 'Jul', 'Aug', 'Sept','Oct','Nov','Dec','Jan','Feb','Mar'],
+				labels: ['Aug', 'Sept','Oct','Nov','Dec','Jan','Feb','Mar'],
 				datasets: [{
 					label: 'Entries',
 					data: [103, 205, 95, 105, 310, 450]
