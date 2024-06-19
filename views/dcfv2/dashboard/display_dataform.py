@@ -864,7 +864,7 @@ def displayform():
     dcf_form10_male=db.select("SELECT SUM(form_10_sex_male) as totalmale10 FROM dcf_negosyo_center {} AND form_10_type_of_beneficiary NOT LIKE '%FO%' AND `form_10_type_of_beneficiary` NOT LIKE '%farmer Organization%' AND `form_10_type_of_beneficiary` NOT LIKE '%MSME%';".format(position_data_filter()))
     dcf_form10_female=db.select("SELECT SUM(form_10_sex_female) as totalfemale10 FROM dcf_negosyo_center {} AND form_10_type_of_beneficiary NOT LIKE '%FO%' AND `form_10_type_of_beneficiary` NOT LIKE '%farmer Organization%' AND `form_10_type_of_beneficiary` NOT LIKE '%MSME%';".format(position_data_filter()))
 
-    dcf4_TOT=db.select("SELECT COUNT(cbb_types_of_training) AS tot4 FROM dcf_capacity_building {};".format(position_data_filter()))
+    dcf4_TOT=db.select("SELECT COUNT(cbb_types_of_training) AS tot4 FROM dcf_capacity_building {} AND cbb_types_of_training LIKE '%MSME-%' OR cbb_types_of_training LIKE '%FO-%' OR cbb_types_of_training LIKE '%Individual Farmer-%';".format(position_data_filter()))
 
     dcf10_NOT=db.select("SELECT COUNT(form_10_type_of_beneficiary) AS NOT10 FROM dcf_negosyo_center {} AND form_10_type_of_beneficiary NOT LIKE '%FO%' AND `form_10_type_of_beneficiary` NOT LIKE '%farmer Organization%' AND `form_10_type_of_beneficiary` NOT LIKE '%MSME%';".format(position_data_filter()))
 
@@ -1277,12 +1277,79 @@ def displayform():
     dcf1_IP_apprfmcoffee=db.select("SELECT SUM(form_1_maleip + form_1_femaleip) AS total_IP_apprcoffee FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coffee';".format(position_data_filter()))
     dcf1_youth_apprfmcoffee=db.select("SELECT SUM(form_1_maleyouth + form_1_femaleyouth) AS total_youth_apprcoffee FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coffee';".format(position_data_filter()))
 
+    dcf4_FOOEC=db.select("SELECT COUNT(cbb_types_of_training) AS FOOEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Organization Entrepreneurial Competency';".format(position_data_filter()))
+    dcf4_FOGOV=db.select("SELECT COUNT(cbb_types_of_training) AS FOGOV FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Governance';".format(position_data_filter()))
+    dcf4_FOOM=db.select("SELECT COUNT(cbb_types_of_training) AS FOOM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Organizational Management';".format(position_data_filter()))
+    dcf4_FOOP=db.select("SELECT COUNT(cbb_types_of_training) AS FOOP FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Operations';".format(position_data_filter()))
+    dcf4_FOTPD=db.select("SELECT COUNT(cbb_types_of_training) AS FOTPD FROM dcf_capacity_building {} AND cbb_types_of_training LIKE '%FO-Technology and Product Development%';".format(position_data_filter()))
+    dcf4_FOIMM=db.select("SELECT COUNT(cbb_types_of_training) AS FOIMM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Institutional Marketing Management';".format(position_data_filter()))
+    dcf4_FOHRM=db.select("SELECT COUNT(cbb_types_of_training) AS FOHRM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Human Resource Management';".format(position_data_filter()))
+    dcf4_FOFM=db.select("SELECT COUNT(cbb_types_of_training) AS FOFM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Financial Management';".format(position_data_filter()))
+    dcf4_FONLB=db.select("SELECT COUNT(cbb_types_of_training) AS FONLB FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Networking and Linkage-Building (External Relation; Business Membership Organization)';".format(position_data_filter()))
+    dcf4_FOGESI=db.select("SELECT COUNT(cbb_types_of_training) AS FOGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-GESI';".format(position_data_filter()))
+    dcf4_FOSEC=db.select("SELECT COUNT(cbb_types_of_training) AS FOSEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Social Environment & Climate';".format(position_data_filter()))
+    dcf4_FOMNR=db.select("SELECT COUNT(cbb_types_of_training) AS FOMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Managing Natural Resources';".format(position_data_filter()))
+
+    dcf4_MSMEEC=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Entrepreneurial Competency';".format(position_data_filter()))
+    dcf4_MSMEOP=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEOP FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Operations';".format(position_data_filter()))
+    dcf4_MSMEM=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEM FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Management';".format(position_data_filter()))
+    dcf4_MSMETPD=db.select("SELECT COUNT(cbb_types_of_training) AS MSMETPD FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Technology and Product Development';".format(position_data_filter()))
+    dcf4_MSMEMM=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEMM FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Marketing Management';".format(position_data_filter()))
+    dcf4_MSMEHRM=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEHRM FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Human Resource Management';".format(position_data_filter()))
+    dcf4_MSMEFM=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEFM FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Financial Management';".format(position_data_filter()))
+    dcf4_MSMENLB=db.select("SELECT COUNT(cbb_types_of_training) AS MSMENLB FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)';".format(position_data_filter()))
+    dcf4_MSMEGESI=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-GESI';".format(position_data_filter()))
+    dcf4_MSMESEC=db.select("SELECT COUNT(cbb_types_of_training) AS MSMESEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Social Environment & Climate';".format(position_data_filter()))
+    dcf4_MSMEMNR=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Managing Natural Resources';".format(position_data_filter()))
+
+    dcf4_IFMNR=db.select("SELECT COUNT(cbb_types_of_training) AS IFMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Managing Natural Resources';".format(position_data_filter()))
+    dcf4_IFMF=db.select("SELECT COUNT(cbb_types_of_training) AS IFMF FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Managing Finances';".format(position_data_filter()))
+    dcf4_IFM=db.select("SELECT COUNT(cbb_types_of_training) AS IFM FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Marketing';".format(position_data_filter()))
+    dcf4_IFI=db.select("SELECT COUNT(cbb_types_of_training) AS IFI FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Innovation';".format(position_data_filter()))
+    dcf4_IFT=db.select("SELECT COUNT(cbb_types_of_training) AS IFT FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Teamwork';".format(position_data_filter()))
+    dcf4_IFGESI=db.select("SELECT COUNT(cbb_types_of_training) AS IFGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-GESI';".format(position_data_filter()))
+    dcf4_IFSEC=db.select("SELECT COUNT(cbb_types_of_training) AS IFSEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Social Environment & Climate';".format(position_data_filter()))
+
+
 
     return {
+        'dcf4_FOOEC':dcf4_FOOEC,
+        'dcf4_FOGOV':dcf4_FOGOV,
+        'dcf4_FOOM':dcf4_FOOM,
+        'dcf4_FOOP':dcf4_FOOP,
+        'dcf4_FOTPD':dcf4_FOTPD,
+        'dcf4_FOIMM':dcf4_FOIMM,
+        'dcf4_FOHRM':dcf4_FOHRM,
+        'dcf4_FOFM':dcf4_FOFM,
+        'dcf4_FONLB':dcf4_FONLB,
+        'dcf4_FOGESI':dcf4_FOGESI,
+        'dcf4_FOSEC':dcf4_FOSEC,
+        'dcf4_FOMNR':dcf4_FOMNR,
+
+        'dcf4_MSMEEC':dcf4_MSMEEC,
+        'dcf4_MSMEOP':dcf4_MSMEOP,
+        'dcf4_MSMEM':dcf4_MSMEM,
+        'dcf4_MSMETPD':dcf4_MSMETPD,
+        'dcf4_MSMEMM':dcf4_MSMEMM,
+        'dcf4_MSMEHRM':dcf4_MSMEHRM,
+        'dcf4_MSMEFM':dcf4_MSMEFM,
+        'dcf4_MSMENLB':dcf4_MSMENLB,
+        'dcf4_MSMEGESI':dcf4_MSMEGESI,
+        'dcf4_MSMESEC':dcf4_MSMESEC,
+        'dcf4_MSMEMNR':dcf4_MSMEMNR,
+
+        'dcf4_IFMNR':dcf4_IFMNR,
+        'dcf4_IFMF':dcf4_IFMF,
+        'dcf4_IFM':dcf4_IFM,
+        'dcf4_IFI':dcf4_IFI,
+        'dcf4_IFT':dcf4_IFT,
+        'dcf4_IFGESI':dcf4_IFGESI,
+        'dcf4_IFSEC':dcf4_IFSEC,
+
+
         'dcf4_GESIFO':dcf4_GESIFO,
         'dcf1_IP_apprfmcoffee':dcf1_IP_apprfmcoffee,
         'dcf1_youth_apprfmcoffee':dcf1_youth_apprfmcoffee,
-        
         'dcf_form1sextotalappr':dcf_form1sextotalappr,
         'dcf4_GESImsme':dcf4_GESImsme,
         'dcf4_GESIif':dcf4_GESIif,
