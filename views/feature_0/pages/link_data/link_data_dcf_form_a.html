@@ -215,18 +215,25 @@
 
 			}
 
+			var propmts;
 			function link_entry_now(item,_id){
-				println(item)
-				println(_id)
 				$send({
 					action : "/data_link/replace_item_to_sync/"+URL_ARGS["i"]+"/"+URL_ARGS["h"],
 					method :POST,
 					data : $DATA({"matched_item":JSON.stringify(item),"selected_entry_id":_id}),
 					func : function(r){
 						var res = JSON.parse(r)
-						println(res)
+						var _func = function(){}
+						var dia_params ={
+							title : "Data Sync Report",
+							type : res["status"],
+							content : (`${res["msg"]}`)
+						}
+
 						get_list_benef()
 						match_ls_dialog.destroy()
+
+						$dialog(dia_params).show()
 					}
 				})
 			}
@@ -249,7 +256,7 @@
 							if(benef['link_to_id'] =="" ||benef['link_to_id'] ==" " ||benef['link_to_id'] ==undefined){
 								pf_color = "red"
 								status = (`<span class="x-text-red">Not Profiled</span>`)
-								synv_btn = (`
+								synv_btn = (`<br>
 									<button onclick="show_match_link('${benef['id']}','${benef['fname']}')" class="x-btn x-hover-green">
 										<span class="fa fa-address-book x-text-green"></span>
 										<span class="x-tiny">Click to link</span>
@@ -261,7 +268,7 @@
 							}
 							holder += (`
 								<tr class='x-leftbar x-border-${pf_color}'>
-									<td>`+benef['fname']+`</td>
+									<td>`+benef['fname']+`${synv_btn}</td>
 									<td>`+benef['sex']+`</td>
 									<td>`+benef['civil_status']+`</td>
 									<td>`+benef['farmer_bday']+`</td>
@@ -272,7 +279,7 @@
 									<td>Region `+benef['addr_region']+`</td>
 									<td>`+status+`</td>
 									<td>
-										${synv_btn}
+										
 										<button class="x-btn x-hover-red" onclick="del_entry_benef('`+benef['id']+`')">
 											<span class="fa fa-trash x-text-red"></span>
 											<span class="x-tiny">Remove</span>

@@ -342,33 +342,39 @@ class _main:
 		matched_entry = json.loads(request.form["matched_item"])
 		print(matched_entry)
 		selected_entry = request.form["selected_entry_id"]
-		from_entries = rapid_mysql.select(f'''
-			SELECT * FROM `__data_link_1` WHERE `id`='{selected_entry};';
-		''')[0]
-		del from_entries["not_recorded"]
-		_SQL = (f'''
-			UPDATE `__data_link_1` 
-			SET 
-				`remarks` = 'Synced',
-				`addr_brgy` = '{matched_entry["addr_brgy"]}',
-				`addr_city` = '{matched_entry["addr_city"]}',
-				`addr_prov` = '{matched_entry["addr_prov"]}',
-				`addr_region` = '{matched_entry["addr_region"]}',
-				`civil_status` = '{matched_entry["civil_status"]}',
-				`db_table` = '{db_table}',
-				`farmer_bday` = '{matched_entry["farmer_bday"]}',
-				`farmer_primary_crop` = '{matched_entry["farmer_primary_crop"]}',
-				`fname` = '{matched_entry["fname"]}',
-				`link_from_id` = '{form_id}',
-				`link_to_id` = '{matched_entry["id"]}',
-				`reference` = '{matched_entry["reference"]}',
-				`sex` = '{matched_entry["sex"]}',
-				`not_recorded` = {json.dumps(str(from_entries))}
-			WHERE
-				`id` = '{selected_entry}'
-		;''')
-		rapid_mysql.do(_SQL)
-		return {"sql":_SQL}
+		is_exist = rapid_mysql.select(f'''
+			SELECT * FROM `__data_link_1` WHERE `link_to_id`='{matched_entry["id"]}' AND `db_table`='{db_table}';
+		''')
+		if(len(is_exist)>0):
+			return {"status":"error","msg":"Record selected was already in the lists. Kindly delete the entry on the list that you think has a duplicate entry on the database otherwise select another profile "}
+		else:
+			from_entries = rapid_mysql.select(f'''
+				SELECT * FROM `__data_link_1` WHERE `id`='{selected_entry}';
+			''')[0]
+			del from_entries["not_recorded"]
+			_SQL = (f'''
+				UPDATE `__data_link_1` 
+				SET 
+					`remarks` = 'Synced',
+					`addr_brgy` = '{matched_entry["addr_brgy"]}',
+					`addr_city` = '{matched_entry["addr_city"]}',
+					`addr_prov` = '{matched_entry["addr_prov"]}',
+					`addr_region` = '{matched_entry["addr_region"]}',
+					`civil_status` = '{matched_entry["civil_status"]}',
+					`db_table` = '{db_table}',
+					`farmer_bday` = '{matched_entry["farmer_bday"]}',
+					`farmer_primary_crop` = '{matched_entry["farmer_primary_crop"]}',
+					`fname` = '{matched_entry["fname"]}',
+					`link_from_id` = '{form_id}',
+					`link_to_id` = '{matched_entry["id"]}',
+					`reference` = '{matched_entry["reference"]}',
+					`sex` = '{matched_entry["sex"]}',
+					`not_recorded` = {json.dumps(str(from_entries))}
+				WHERE
+					`id` = '{selected_entry}'
+			;''')
+			rapid_mysql.do(_SQL)
+			return {"status":"success","msg":"Data link was successfull"}
 
 	def add_to_benef_list(_data,form_id,db_table):
 		for _datum in _data:
