@@ -30,4 +30,121 @@
    </div>
   </div>
  </div>
+      <div class="col-md-4 col-sm-4 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <span style="font-size: 16px; color: #73879C;">Total number of trainings: <b>Farmer Organizations</b><br><small>Pie Chart</small></span>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="pieChartFO"></canvas>
+                <div style="text-align: center;">
+                    <p>
+                        <i class="fa fa-square" style="color:#00becc"></i> Organization Entrepreneurial Competency: {{ '{:,}'.format(dcf4_FOOEC[0]['FOOEC']|int )}} |
+                        <i class="fa fa-square" style="color:#eb4eaa"></i> Governance: {{ '{:,}'.format(dcf4_FOGOV[0]['FOGOV']|int )}} | 
+                        <i class="fa fa-square" style="color:#abf1ce"></i> Organizational Management: {{ '{:,}'.format(dcf4_FOOM[0]['FOOM']|int)}} | 
+                        <i class="fa fa-square" style="color:#9e5400"></i> Operations: {{'{:,}'.format(dcf4_FOOP[0]['FOOP']|int)}} | <br>
+                        <i class="fa fa-square" style="color:#4a009e"></i> Technology and Product Development(Business Development): {{ '{:,}'.format(dcf4_FOTPD[0]['FOTPD']|int)}} | 
+                        <i class="fa fa-square" style="color:#00719e"></i> Institutional Marketing Management: {{ '{:,}'.format(dcf4_FOIMM[0]['FOIMM']|int)}} | 
+                        <i class="fa fa-square" style="color:#9e0022"></i> Human Resource Management: {{ '{:,}'.format(dcf4_FOHRM[0]['FOHRM']|int)}} |
+                        <i class="fa fa-square" style="color:#206020"></i> Financial Management: {{ '{:,}'.format(dcf4_FOFM[0]['FOFM']|int)}} |
+                        <i class="fa fa-square" style="color:#999900"></i> Networking and Linkage-Building (External Relation; Business Membership Organization): {{ '{:,}'.format(dcf4_FONLB[0]['FONLB']|int)}} | 
+                        <i class="fa fa-square" style="color:#ccccff"></i> GESI: {{ '{:,}'.format(dcf4_FOGESI[0]['FOGESI']|int)}} |
+                        <i class="fa fa-square" style="color:#800080"></i> Social Environment & Climate: {{ '{:,}'.format(dcf4_FOSEC[0]['FOSEC']|int)}} |
+                        <i class="fa fa-square" style="color:#ffbf80"></i> Managing Natural Resources: {{ '{:,}'.format(dcf4_FOMNR[0]['FOMNR']|int)}} 
+                        <h4>Total # of trainings conducted (Farmer Organization): {{ '{:,}'.format(dcf4_FOOEC[0]['FOOEC']|int + dcf4_FOGOV[0]['FOGOV']|int + dcf4_FOOM[0]['FOOM']|int + dcf4_FOOP[0]['FOOP']|int + dcf4_FOTPD[0]['FOTPD']|int + dcf4_FOIMM[0]['FOIMM']|int + dcf4_FOHRM[0]['FOHRM']|int + dcf4_FOFM[0]['FOFM']|int + dcf4_FONLB[0]['FONLB']|int + dcf4_FOGESI[0]['FOGESI']|int + dcf4_FOSEC[0]['FOSEC']|int + dcf4_FOMNR[0]['FOMNR']|int)}}</h4>
+                       </p>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+
+        <div class="col-md-4 col-sm-4 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <span style="font-size: 16px; color: #73879C;">Total number of trainings: <b>MSME</b><br><small>Pie Chart</small></span>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="pieChartMSME"></canvas>
+                <div style="text-align: center;">
+                    <p>
+                        <i class="fa fa-square" style="color:#006666"></i> Entrepreneurial Competency: {{ '{:,}'.format(dcf4_MSMEEC[0]['MSMEEC']|int )}} |
+                        <i class="fa fa-square" style="color:#6600ff"></i> Operations: {{ '{:,}'.format(dcf4_MSMEOP[0]['MSMEOP']|int )}} | 
+                        <i class="fa fa-square" style="color:#339966"></i> Management: {{ '{:,}'.format(dcf4_MSMEM[0]['MSMEM']|int)}} | 
+                        <i class="fa fa-square" style="color:#993333"></i> Technology and Product Development: {{'{:,}'.format(dcf4_MSMETPD[0]['MSMETPD']|int)}} | <br>
+                        <i class="fa fa-square" style="color:#333300"></i> Marketing Management: {{ '{:,}'.format(dcf4_MSMEMM[0]['MSMEMM']|int)}} | 
+                        <i class="fa fa-square" style="color:#ff9933"></i> Human Resource Management: {{ '{:,}'.format(dcf4_MSMEHRM[0]['MSMEHRM']|int)}} | 
+                        <i class="fa fa-square" style="color:#248f8f"></i> Financial Management: {{ '{:,}'.format(dcf4_MSMEFM[0]['MSMEFM']|int)}} |
+                        <i class="fa fa-square" style="color:#e6004c"></i> Networking and Linkage-Building (External Relation; Business Membership Organization): {{ '{:,}'.format(dcf4_MSMENLB[0]['MSMENLB']|int)}} |
+                        <i class="fa fa-square" style="color:#ffff99"></i> GESI: {{ '{:,}'.format(dcf4_MSMEGESI[0]['MSMEGESI']|int)}} | 
+                        <i class="fa fa-square" style="color:#cc2900"></i> Social Environment & Climate: {{ '{:,}'.format(dcf4_MSMESEC[0]['MSMESEC']|int)}} |
+                        <i class="fa fa-square" style="color:#003300"></i> Managing Natural Resources: {{ '{:,}'.format(dcf4_MSMEMNR[0]['MSMEMNR']|int)}} <br><br>
+                        <h4>Total # of trainings conducted (MSME): {{ '{:,}'.format(dcf4_MSMEEC[0]['MSMEEC']|int + dcf4_MSMEOP[0]['MSMEOP']|int + dcf4_MSMEM[0]['MSMEM']|int + dcf4_MSMETPD[0]['MSMETPD']|int + dcf4_MSMEMM[0]['MSMEMM']|int + dcf4_MSMEHRM[0]['MSMEHRM']|int + dcf4_MSMEFM[0]['MSMEFM']|int + dcf4_MSMENLB[0]['MSMENLB']|int + dcf4_MSMEGESI[0]['MSMEGESI']|int + dcf4_MSMESEC[0]['MSMESEC']|int + dcf4_MSMEMNR[0]['MSMEMNR']|int)}}</h4>
+                       </p>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <span style="font-size: 16px; color: #73879C;">Total number of trainings: <b>Individual Farmer</b><br><small>Pie Chart</small></span>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="pieChartIF"></canvas>
+                <div style="text-align: center;">
+                    <p>
+                        <i class="fa fa-square" style="color:#ff8c1a"></i> Managing Natural Resources: {{ '{:,}'.format(dcf4_IFMNR[0]['IFMNR']|int )}} |
+                        <i class="fa fa-square" style="color:#ff6699"></i> Managing Finances: {{ '{:,}'.format(dcf4_IFMF[0]['IFMF']|int )}} | 
+                        <i class="fa fa-square" style="color:#006699"></i> Marketing: {{ '{:,}'.format(dcf4_IFM[0]['IFM']|int)}} | <br>
+                        <i class="fa fa-square" style="color:#339966"></i> Innovation: {{'{:,}'.format(dcf4_IFI[0]['IFI']|int)}} |
+                        <i class="fa fa-square" style="color:#b30000"></i> Teamwork: {{ '{:,}'.format(dcf4_IFT[0]['IFT']|int)}} | 
+                        <i class="fa fa-square" style="color:#666633"></i> GESI: {{ '{:,}'.format(dcf4_IFGESI[0]['IFGESI']|int)}} | 
+                        <i class="fa fa-square" style="color:#3d5c5c"></i> Social Environment & Climate: {{ '{:,}'.format(dcf4_IFSEC[0]['IFSEC']|int)}} 
+                         <br><br><br><br><br><br>
+                        <h4>Total # of trainings conducted (Individual Farmer): {{ '{:,}'.format(dcf4_IFMNR[0]['IFMNR']|int + dcf4_IFMF[0]['IFMF']|int + dcf4_IFM[0]['IFM']|int + dcf4_IFI[0]['IFI']|int + dcf4_IFT[0]['IFT']|int + dcf4_IFGESI[0]['IFGESI']|int + dcf4_IFSEC[0]['IFSEC']|int)}}</h4>
+                       </p>
+                  </div>
+                </div>
+              </div>
+        </div>
+
 </div>
+

@@ -618,6 +618,34 @@
 			};
 
 
+			    if ($('#mybarChart_trainings').length) {
+
+        var ctx = document.getElementById("mybarChart_trainings");
+        var mybarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Organization Entrepreneurial Competency", "Governance", "Organizational Management","Technology and Product Development (Business Development)", "Institutional Marketing Management","Human Resource Management","Financial Management","Networking and Linkage-Building (External Relation; Business Membership Organization)","Social Environment & Climate","Managing Natural Resources","GESI","Managing Natural Resources"],
+                datasets: [{
+                    label: 'Total',
+                    backgroundColor: "#26B99A",
+                    data: [{{dcf4_GESIFO[0]['gesifo']}}, {{dcf4_GESImsme[0]['gesimsme']}}, {{dcf4_GESIif[0]['gesiif']}}]
+                }]
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    }
+
+
 
 			if ($('#mybarChartStackedBDSP').length) {
 			var _labelsrcu = ['Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'Region 13', 'BARMM'];
@@ -951,7 +979,244 @@
 				},
 			});
 		};
+
+
+
+
+			if ($('#pieChartFO').length) {
+			var xValues2 = [
+				'Organization Entrepreneurial Competency: ' + {{ dcf4_FOOEC[0]['FOOEC']|int }},
+				'Governance: ' + {{ dcf4_FOGOV[0]['FOGOV']|int }},
+				'Organizational Management: ' + {{ dcf4_FOOM[0]['FOOM']|int}},
+				'Operations: ' + {{ dcf4_FOOP[0]['FOOP']|int}},
+				'Technology and Product Development(Business Development): ' + {{ dcf4_FOTPD[0]['FOTPD']|int}},
+				'Institutional Marketing Management: ' + {{ dcf4_FOIMM[0]['FOIMM']|int}},
+				'Human Resource Management: ' + {{ dcf4_FOHRM[0]['FOHRM']|int}},
+				'Financial Management: ' + {{ dcf4_FOFM[0]['FOFM']|int}},
+				'Networking and Linkage-Building (External Relation; Business Membership Organization): ' + {{ dcf4_FONLB[0]['FONLB']|int}},
+				'GESI: ' + {{ dcf4_FOGESI[0]['FOGESI']|int}},
+				'Social Environment & Climate: ' + {{ dcf4_FOSEC[0]['FOSEC']|int}},
+				'Managing Natural Resources: ' + {{ dcf4_FOMNR[0]['FOMNR']|int}},
+
+
+
+
+
+			];
+
+			var yValues2fo = [
+				{{ dcf4_FOOEC[0]['FOOEC']|int }},
+				{{ dcf4_FOGOV[0]['FOGOV']|int }},
+				{{ dcf4_FOOM[0]['FOOM']|int}},
+				{{ dcf4_FOOP[0]['FOOP']|int}},
+				{{ dcf4_FOTPD[0]['FOTPD']|int }},
+				{{ dcf4_FOIMM[0]['FOIMM']|int }},
+				{{ dcf4_FOHRM[0]['FOHRM']|int }},
+				{{ dcf4_FOFM[0]['FOFM']|int }},
+				{{ dcf4_FONLB[0]['FONLB']|int }},
+				{{ dcf4_FOGESI[0]['FOGESI']|int }},
+				{{ dcf4_FOSEC[0]['FOSEC']|int }},
+				{{ dcf4_FOMNR[0]['FOMNR']|int }},
+
+
+
+
+
+			];
+
+			var barColors = ['#00becc', '#eb4eaa', '#abf1ce', '#9e5400', '#4a009e', '#00719e', '#9e0022', '#206020','#999900','#ccccff', '#800080','#ffbf80'];
+			var total = yValues2fo.reduce((a, b) => a + b, 0);
+			var percentageValuesfo = yValues2fo.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartFO");
+			var data = {
+				datasets: [{
+					data: percentageValuesfo,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartFO = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesfo[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesfo[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
 		
+
+			if ($('#pieChartMSME').length) {
+			var xValues2 = [
+				'Entrepreneurial Competency: ' + {{ dcf4_MSMEEC[0]['MSMEEC']|int }},
+				'Operations: ' + {{ dcf4_MSMEOP[0]['MSMEOP']|int }},
+				'Management: ' + {{ dcf4_MSMEM[0]['MSMEM']|int}},
+				'Technology and Product Development: ' + {{ dcf4_MSMETPD[0]['MSMETPD']|int}},
+				'Marketing Management: ' + {{ dcf4_MSMEMM[0]['MSMEMM']|int}},
+				'Human Resource Management: ' + {{ dcf4_MSMEHRM[0]['MSMEHRM']|int}},
+				'Financial Management: ' + {{ dcf4_MSMEFM[0]['MSMEFM']|int}},
+				'Networking and Linkage-Building (External Relation; Business Membership Organization): ' + {{ dcf4_MSMENLB[0]['MSMENLB']|int}},
+				'GESI: ' + {{ dcf4_MSMEGESI[0]['MSMEGESI']|int}},
+				'Social Environment & Climate: ' + {{ dcf4_MSMESEC[0]['MSMESEC']|int}},
+				'Managing Natural Resources: ' + {{ dcf4_MSMEMNR[0]['MSMEMNR']|int}},
+
+
+
+
+
+
+			];
+
+			var yValues2msme = [
+				{{ dcf4_MSMEEC[0]['MSMEEC']|int }},
+				{{ dcf4_MSMEOP[0]['MSMEOP']|int }},
+				{{ dcf4_MSMEM[0]['MSMEM']|int}},
+				{{ dcf4_MSMETPD[0]['MSMETPD']|int}},
+				{{ dcf4_MSMEMM[0]['MSMEMM']|int }},
+				{{ dcf4_MSMEHRM[0]['MSMEHRM']|int }},
+				{{ dcf4_MSMEFM[0]['MSMEFM']|int }},
+				{{ dcf4_MSMENLB[0]['MSMENLB']|int }},
+				{{ dcf4_MSMEGESI[0]['MSMEGESI']|int }},
+				{{ dcf4_MSMESEC[0]['MSMESEC']|int }},
+				{{ dcf4_MSMEMNR[0]['MSMEMNR']|int }},
+
+
+
+
+
+			];
+
+			var barColors = ['#006666', '#6600ff', '#339966', '#993333', '#333300', '#ff9933', '#248f8f', '#e6004c','#ffff99','#cc2900', '#003300'];
+			var totalmsme = yValues2msme.reduce((a, b) => a + b, 0);
+			var percentageValuesmsme = yValues2msme.map((value) => ((value / totalmsme) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartMSME");
+			var data = {
+				datasets: [{
+					data: percentageValuesmsme,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartMSME = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesmsme[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesmsme[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+
+
+			if ($('#pieChartIF').length) {
+			var xValues2 = [
+				'Managing Natural Resources: ' + {{ dcf4_IFMNR[0]['IFMNR']|int }},
+				'Managing Finances: ' + {{ dcf4_IFMF[0]['IFMF']|int }},
+				'Marketing: ' + {{ dcf4_IFM[0]['IFM']|int}},
+				'Innovation: ' + {{ dcf4_IFI[0]['IFI']|int}},
+				'Teamwork: ' + {{ dcf4_IFT[0]['IFT']|int}},
+				'GESI: ' + {{ dcf4_IFGESI[0]['IFGESI']|int}},
+				'Social Environment & Climate: ' + {{ dcf4_IFSEC[0]['IFSEC']|int}},
+			
+
+
+
+
+
+
+			];
+
+			var yValues2IF = [
+				{{ dcf4_IFMNR[0]['IFMNR']|int }},
+				{{ dcf4_IFMF[0]['IFMF']|int }},
+				{{ dcf4_IFM[0]['IFM']|int}},
+				{{ dcf4_IFI[0]['IFI']|int}},
+				{{ dcf4_IFT[0]['IFT']|int }},
+				{{ dcf4_IFGESI[0]['IFGESI']|int }},
+				{{ dcf4_IFSEC[0]['IFSEC']|int }},
+
+
+
+
+
+
+			];
+
+			var barColors = ['#ff8c1a', '#ff6699', '#006699', '#339966', '#b30000', '#666633', '#3d5c5c'];
+			var totalIF = yValues2IF.reduce((a, b) => a + b, 0);
+			var percentageValuesIF = yValues2IF.map((value) => ((value / totalIF) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartIF");
+			var data = {
+				datasets: [{
+					data: percentageValuesIF,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartIF = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesIF[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesIF[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
 
 		if ($('#pieChartDIPS2').length) {
 			var xValues2 = [
