@@ -799,7 +799,6 @@ class _main:
 	def feature_0_link_data_dcf_form_a_view(table,data_entry):
 		res = "--"
 		res_ = rapid_mysql.select("SELECT * FROM `__data_link_1` WHERE `link_from_id`='{}' AND `db_table`='{}'; ".format(data_entry,table))
-		print(res_)
 		return jsonify(res_)
 
 
@@ -845,7 +844,7 @@ class Filter:
 			_filter = "WHERE 1 "
 		else:
 			session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-			_filter = "WHERE  USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
+			_filter = "WHERE USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
 		return _filter
 
 	def strct_dic(dict_):
@@ -867,3 +866,4 @@ class Filter:
 			new_dict_[KEY] = new_dict_[KEY]+dict_[key]
 			
 		return json.loads(json.dumps(new_dict_))
+

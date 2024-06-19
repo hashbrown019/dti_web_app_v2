@@ -313,38 +313,96 @@ class _main:
 		ind = sorted(ind, key=lambda x: x["search_acc"],reverse=True)
 		return ind
 
-	@app.route("/data_link/sent_attn",methods=["POST","GET"])
-	def search_fromExcel():
+	@app.route("/data_link/sent_attn/<form_id>/<db_table>",methods=["POST","GET"])
+	def search_fromExcel(form_id,db_table):
 		if 'file' not in request.files:
 			return "No file part"
 
 		file = request.files['file']
 		if file.filename == '':
 			return "No selected file"
-
-		# Read the Excel file
 		excel_data_df = pd.read_excel(file)
-		# print(excel_data_df)
-
 		thisisjson = excel_data_df.to_json(orient='records')
-
-		# Print out the result
-		# print('Excel Sheet to JSON:\n', thisisjson)
-
-		# Make the string into a list to be able to input in to a JSON-file
 		thisisjson_dict = json.loads(thisisjson)
-		# print(thisisjson_dict)
 		arr_c =0
 		for name in thisisjson_dict:
 			thisisjson_dict[arr_c]["search_res"] = _main.get_search_val(name["NAME / ORG NAME"])
 			arr_c += 1
-		# Define file to write to and 'w' for write option -> json.dump() 
-		# defining the list to write from and file to write to
-		# with open('data.json', 'w') as json_file:
-		# 	json.dump(thisisjson_dict, json_file)
-
-		# pass
+		_main.add_to_benef_list(thisisjson_dict,form_id,db_table)
 		return jsonify(thisisjson_dict)
+
+	@app.route("/data_link/search_from_db",methods=["POST","GET"])
+	def search_from_db():
+		item = request.form['item']
+		return jsonify(_main.get_search_val(item))
+
+
+	@app.route("/data_link/replace_item_to_sync/<db_table>/<form_id>",methods=["POST","GET"])
+	def replace_item_to_sync(db_table,form_id):
+		matched_entry = json.loads(request.form["matched_item"])
+		print(matched_entry)
+		selected_entry = request.form["selected_entry_id"]
+		from_entries = rapid_mysql.select(f'''
+			SELECT * FROM `__data_link_1` WHERE `id`='{selected_entry};';
+		''')[0]
+		del from_entries["not_recorded"]
+		_SQL = (f'''
+			UPDATE `__data_link_1` 
+			SET 
+				`remarks` = 'Synced',
+				`addr_brgy` = '{matched_entry["addr_brgy"]}',
+				`addr_city` = '{matched_entry["addr_city"]}',
+				`addr_prov` = '{matched_entry["addr_prov"]}',
+				`addr_region` = '{matched_entry["addr_region"]}',
+				`civil_status` = '{matched_entry["civil_status"]}',
+				`db_table` = '{db_table}',
+				`farmer_bday` = '{matched_entry["farmer_bday"]}',
+				`farmer_primary_crop` = '{matched_entry["farmer_primary_crop"]}',
+				`fname` = '{matched_entry["fname"]}',
+				`link_from_id` = '{form_id}',
+				`link_to_id` = '{matched_entry["id"]}',
+				`reference` = '{matched_entry["reference"]}',
+				`sex` = '{matched_entry["sex"]}',
+				`not_recorded` = {json.dumps(str(from_entries))}
+			WHERE
+				`id` = '{selected_entry}'
+		;''')
+		rapid_mysql.do(_SQL)
+		return {"sql":_SQL}
+
+	def add_to_benef_list(_data,form_id,db_table):
+		for _datum in _data:
+			sql = (f'''
+				INSERT INTO `__data_link_1`
+				(	
+					`addr_brgy`,
+					`addr_city`,
+					`addr_prov`,
+					`addr_region`,
+					`civil_status`,
+					`db_table`,
+					`farmer_primary_crop`,
+					`fname`,
+					`link_from_id`,
+					`sex`
+				)
+				VALUES
+					(
+					'{_datum["BARANGAY"]}',
+					'{_datum["CITY/MUNICIPALITY"]}',
+					'{_datum["PROVINCE"]}',
+					'{_datum["REGION"]}',
+					'{_datum["CIVIL STATUS (If Applicable)"]}',
+					'{db_table}',
+					'{_datum["PRIMARY CROP (If Applicable)"]}',
+					'{_datum["NAME / ORG NAME"]}',
+					'{form_id}',
+					'{_datum["SEX (If Applicable)"]}'
+					);
+			''')
+			rapid_mysql.do(sql)
+		pass
+
 
 	def birthday_by_sex(area):
 		query = rapid_mysql.select
@@ -430,108 +488,108 @@ class _main:
 			}
 		segre ={
 			"male":{
-		        "below_to_0_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "0_5_to_1": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "1_01_to_1_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "1_6_to_2": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "2_01_to_2_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "2_6_to_3": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "3_01_to_3_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        # ===
-		        "3_6_to_4": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "4_01_to_4_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "4_59_to_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "5_above": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "untagged": {
-		            "total": 0,
-		            "commodity": {}
-		        }
-		    },
-		    "female":{
-		        "below_to_0_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "0_5_to_1": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "1_01_to_1_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "1_6_to_2": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "2_01_to_2_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "2_6_to_3": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "3_01_to_3_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        # ===
-		        "3_6_to_4": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "4_01_to_4_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "4_59_to_5": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "5_above": {
-		            "total": 0,
-		            "commodity": {}
-		        },
-		        "untagged": {
-		            "total": 0,
-		            "commodity": {}
-		        }
-		    },
-		    # ////FEMALE................
+				"below_to_0_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"0_5_to_1": {
+					"total": 0,
+					"commodity": {}
+				},
+				"1_01_to_1_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"1_6_to_2": {
+					"total": 0,
+					"commodity": {}
+				},
+				"2_01_to_2_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"2_6_to_3": {
+					"total": 0,
+					"commodity": {}
+				},
+				"3_01_to_3_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				# ===
+				"3_6_to_4": {
+					"total": 0,
+					"commodity": {}
+				},
+				"4_01_to_4_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"4_59_to_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"5_above": {
+					"total": 0,
+					"commodity": {}
+				},
+				"untagged": {
+					"total": 0,
+					"commodity": {}
+				}
+			},
+			"female":{
+				"below_to_0_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"0_5_to_1": {
+					"total": 0,
+					"commodity": {}
+				},
+				"1_01_to_1_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"1_6_to_2": {
+					"total": 0,
+					"commodity": {}
+				},
+				"2_01_to_2_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"2_6_to_3": {
+					"total": 0,
+					"commodity": {}
+				},
+				"3_01_to_3_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				# ===
+				"3_6_to_4": {
+					"total": 0,
+					"commodity": {}
+				},
+				"4_01_to_4_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"4_59_to_5": {
+					"total": 0,
+					"commodity": {}
+				},
+				"5_above": {
+					"total": 0,
+					"commodity": {}
+				},
+				"untagged": {
+					"total": 0,
+					"commodity": {}
+				}
+			},
+			# ////FEMALE................
 		}
 		actual = {}
 		_CROP = ["coconut","","cacao","coffee","banana","calamansi"]

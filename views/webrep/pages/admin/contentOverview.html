@@ -122,7 +122,7 @@
 						lists_[key][i]
 						file_holder += (`
 						<div class="x-col l4 m4 x-padding" >
-							<div class="card card_size" style="height:120px;" onclick="dl('${lists_[key][i]}')">
+							<div class="card card_size" style="height:120px;" onclick="dl('${lists_[key][i]}','${key}')">
 								<div class="card-body x-hover-teal">
 									<h5 class="card-title mytext-truncate" style="display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden;">${lists_[key][i]}</h5>
 									<p class="card-text">Click to download</p>
@@ -139,8 +139,15 @@
 		})
 	}
 
-	function dl(nameF){
-		var src_ = window.location.protocol+"//"+window.location.host+"/static/pdf/MEEGuide/"+ nameF
+	function dl(nameF,key_){
+		var _folder= "";
+		if(key_=="mee"){
+			_folder= "MEEGuide";
+		}
+		else if(key_=="proc"){
+			_folder= "procurement";
+		}
+		var src_ = window.location.protocol+"//"+window.location.host+"/static/pdf/"+_folder+"/"+ nameF
 
 		let a= document.createElement('a');
 		a.target= '_blank';

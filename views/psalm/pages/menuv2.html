@@ -696,7 +696,8 @@
 	let sorted_all_user_ranks = []
 	let counter = 0
 
-	$onload(function(){
+	// $onload(get_user_rank_all)
+	function get_user_rank_all(){
 		$send({
 			action : "/api/user/get_all_id",
 			method : POST,
@@ -723,7 +724,7 @@
 				
 			}
 		})
-	})
+	}
 
 
 	function sort_user_rank(){
