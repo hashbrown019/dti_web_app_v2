@@ -398,7 +398,7 @@ class _main:
 					'{_datum["CITY/MUNICIPALITY"]}',
 					'{_datum["PROVINCE"]}',
 					'{_datum["REGION"]}',
-					'{_datum["CIVIL STATUS (If Applicable)"]}',
+					'{_datum["SECTORAL( ,Seprated)"]}',
 					'{db_table}',
 					'{_datum["PRIMARY CROP (If Applicable)"]}',
 					'{_datum["NAME / ORG NAME"]}',
