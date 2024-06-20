@@ -41,7 +41,7 @@ def display():
         'form8_datatable':  form8_datatable,
         'form9_datatable':  form9_datatable,
         'form10_datatable':  form10_datatable,
-        'form11_datatable':  form11_datatable
+        'form11_datatable':  form11_datatable,
     }
 
 
@@ -433,8 +433,6 @@ def displayform():
 
 
 
-
-
     form1_datatable=db.select("SELECT * FROM dcf_prep_review_aprv_status {} ORDER BY `id` DESC;".format(position_data_filter()))
     form2_datatable=db.select("SELECT * FROM dcf_implementing_unit {} ORDER BY `id` DESC;".format(position_data_filter()))
     form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg {} ORDER BY `id` DESC;".format(position_data_filter()))
@@ -446,6 +444,7 @@ def displayform():
     form9_datatable=db.select("SELECT * FROM dcf_enablers_activity {} ORDER BY `id` DESC;".format(position_data_filter()))
     form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {} ORDER BY `id` DESC;".format(position_data_filter()))
     form11_datatable=db.select("SELECT * FROM dcf_access_financing {} ORDER BY `id` DESC;".format(position_data_filter()))
+    form1_datatabledip =db.select("SELECT id,form_1_rcus,form_1_name_dip FROM dcf_prep_review_aprv_status".format(position_data_filter()))
 
 
     form2status_nonrenewal=db.select("SELECT form_2_remarks_status AS totalnonrenewal FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Non-renewal';".format(position_data_filter()))
@@ -700,7 +699,7 @@ def displayform():
 
 ##################################FORM3#########################################
 
-
+ 
     dips_list3 = form3_datatable
     typebdsp = {}
     for index in range(len(dips_list3)):
@@ -728,6 +727,7 @@ def displayform():
 
 ######################FORM1########################################
     dips_list = form1_datatable
+    dips_listdcf1 = form1_datatabledip
     
     dip_status_group_per_region={}
     over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
@@ -844,6 +844,8 @@ def displayform():
 
 
 
+
+  
 #######################################################################################################################
 ###NEW DATA FROM INTERNS###############################################################################################
 #######################################################################################################################
@@ -1960,8 +1962,10 @@ def displayform():
         'form7_data_june':form7_data_june,
         'form9_data_june':form9_data_june,
         'form10_data_june':form10_data_june,
-        'form11_data_june':form11_data_june
+        'form11_data_june':form11_data_june,
 
+        'dips_listdcf1':dips_listdcf1,
+        'form1_datatabledip': form1_datatabledip
 
     }
 
