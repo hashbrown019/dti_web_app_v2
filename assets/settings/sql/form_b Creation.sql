@@ -140,6 +140,14 @@ ALTER TABLE `form_b` ADD `operational_number_of_workers_r12` text NOT NULL;
 ALTER TABLE `form_b` ADD `operationalnumber_of_workers_l2` text NOT NULL;
 ALTER TABLE `form_b` ADD `operational_ip_member_r2` text NOT NULL;
 ALTER TABLE `form_b` ADD `operationalip_member_l2` text NOT NULL;
+
+
+
+
+
+
+
+
 ALTER TABLE `form_b` ADD `operational_youth_member_r2` text NOT NULL;
 ALTER TABLE `form_b` ADD `operational_youth_member_l2` text NOT NULL;
 ALTER TABLE `form_b` ADD `operational_ave_of_workdays_r2` text NOT NULL;
@@ -267,6 +275,18 @@ ALTER TABLE `form_b` ADD `admin_cash_book_no_checkbox` text NOT NULL;
 ALTER TABLE `form_b` ADD `admin_record_keeper_yes_checkbox` text NOT NULL;
 ALTER TABLE `form_b` ADD `admin_record_keeper_no_checkbox` text NOT NULL;
 ALTER TABLE `form_b` ADD `admin_bank_account_yes_checkbox` text NOT NULL;
+
+
+
+
+
+
+
+
+
+
+
+
 ALTER TABLE `form_b` ADD `admin_bank_account_no_checkbox` text NOT NULL;
 ALTER TABLE `form_b` ADD `admin_annual_audit_yes_checkbox` text NOT NULL;
 ALTER TABLE `form_b` ADD `admin_annual_audit_no_checkbox` text NOT NULL;
