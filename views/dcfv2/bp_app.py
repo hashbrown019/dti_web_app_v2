@@ -43,7 +43,7 @@ from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form9
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form10
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form11
 from modules.Req_Brorn_util import file_from_request
-
+from views.feature_0 import feature_0 as a_main
 
 
 
@@ -270,8 +270,14 @@ def dcf_forms():
  
 @app.route('/dcf/<form>')
 def form1(form):
+	try:
+		benf = a_main._main.feature_0_link_data_dcf_form_a_view(request.args['table'],request.args['id'])
+	except Exception as e:
+		benf = []
+		print(e)
+
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
-	return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0])
+	return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0],benef=benf)
 
 @app.route('/dcf/<viewform>')
 def viewform1(viewform):

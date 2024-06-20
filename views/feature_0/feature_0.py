@@ -799,7 +799,7 @@ class _main:
 	def feature_0_link_data_dcf_form_a_view(table,data_entry):
 		res = "--"
 		res_ = rapid_mysql.select("SELECT * FROM `__data_link_1` WHERE `link_from_id`='{}' AND `db_table`='{}'; ".format(data_entry,table))
-		return jsonify(res_)
+		return res_
 
 
 	@app.route("/feature_0/link_data_dcf_form_a_add",methods=["POST","GET"])
