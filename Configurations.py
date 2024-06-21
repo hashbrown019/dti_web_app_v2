@@ -36,8 +36,8 @@ M_APPVER = "none";
 # --- DATABASE---- #
 
 LOCAL_PORT=3306
-LOCAL_HOST_LINUX = "0.0.0.0";
-LOCAL_HOST = "localhost";
+LOCAL_HOST = "127.0.0.1";
+LOCAL_HOST_LINUX = "localhost";
 LOCAL_USER = "root";
 LOCAL_PASSWORD = "";
 LOCAL_DATABASE = "mis_2023";
