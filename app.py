@@ -24,7 +24,7 @@ def nullified(args):pass
 _init_config_()
 import start_point as sp
 db = mysql(*c.DB_CRED)
-db.do("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));")
+# db.do("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));")
 _init_config_()
 app = sp.app
 
