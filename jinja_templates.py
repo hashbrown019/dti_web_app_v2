@@ -43,8 +43,13 @@ class templates:
 		if(form_2_recent_cpa=="initial"):
 			cpa_note = "Initial CPA"
 		else:
-			res= db.select(f"SELECT * FROM `dcf_implementing_unit` WHERE `id`= '{form_2_recent_cpa}' ;")[0]
-			cpa_note = f"Renewal for RAPID_CPA_{res['id']} : {res['form_2_businessname']}"
+			res= db.select(f"SELECT * FROM `dcf_implementing_unit` WHERE `id`= '{form_2_recent_cpa}' ;")
+
+			if(len(res)==0):
+				return {"status":"Old Version Format","note":"No Date Available (You may update the CPA while on draft)","cpa":"Old Format || Initial CPA "}
+			else:
+				res= db.select(f"SELECT * FROM `dcf_implementing_unit` WHERE `id`= '{form_2_recent_cpa}' ;")[0]
+				cpa_note = f"Renewal for RAPID_CPA_{res['id']} : {res['form_2_businessname']}"
 			pass
 
 

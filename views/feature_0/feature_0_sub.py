@@ -850,7 +850,7 @@ class _main:
 					# raise e
 					# print(f'''{simp[z][zz]["total_inc"]} / {simp[z][zz]["num_farmer_has_inc"]}''')
 					pass
-
+		
 		return {"detailed":segre,"simple":simp}
 
 	def ___filter(area):
