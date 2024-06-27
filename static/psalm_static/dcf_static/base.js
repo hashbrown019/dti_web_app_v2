@@ -3,6 +3,7 @@ let CHOICES_SELECT = {}
 
 
 
+
 $(document).ready(function(){
 	$(".hidden-form11").hide();
 	$("select#form_11_dip_alignment").change(function(){
@@ -703,14 +704,10 @@ function myFunction3() {
 
 
 $onload(function(){
-		try{
-			$('#datatable-responsive').dataTable({
-			/* Disable initial sort */
-			"aaSorting": []
-			});
-		}catch(e){
-			warnprintln(e)
-		}
+		$('#datatable-responsive').dataTable({
+		/* Disable initial sort */
+		"aaSorting": []
+		});
 })
 
 function toastr(type, message, title, options) {
