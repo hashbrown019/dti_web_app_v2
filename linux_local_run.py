@@ -1,4 +1,6 @@
 import Configurations as c
+from modules.Connections import mysql
+
 def _init_config_():
 	c.SQLITE_DB = c.SQLITE_DB_LOCAL
 	c.RECORDS = c.RECORDS_LINUX_LOCAL
@@ -17,10 +19,13 @@ def _init_config_():
 
 
 # ===========================================================================
-print(" * LOCAL Launch")
+print(" * LINUX -LOCAL Launch")
+
 
 _init_config_()
 import start_point as sp
+db = mysql(*c.DB_CRED)
+db.do("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));")
 _init_config_()
 app = sp.app
 # app.run(host=c.HOST,port=c._PORT,debug=c.IS_DEBUG,ssl_context='adhoc') 

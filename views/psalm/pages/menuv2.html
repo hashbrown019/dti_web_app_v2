@@ -1305,29 +1305,42 @@ $ID("ur_rank_card_holder").start = 900
 	  </div>
 	</div>
   </div>
-  
+
 
 <!--Start of Tawk.to Script-->
+<!--Start of Tawk.to Script-->
 <script type="text/javascript">
-	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+// Compute HMAC-SHA-256 hash
+	const hmac = crypto.encrypt('sha256',"{{user_data['email']}}", "6675234feaf3bd8d4d12e05e");
+	// hmac.update(email);
+	println("hmac-----")
+	println(hmac)
+	println("hmac-----")
+	const hash = hmac.digest('hex');
+
+	console.log(hash); // Print the hash
+
+	var Tawk_API=Tawk_API||{}
+	Tawk_API.visitor = {
+		name : "{{user_data['name']}}",
+		email: "{{user_data['email']}}",
+		rcu: "R-{{user_data['rcu']}}",
+		userId: "{{user_data['id']}}",
+		hash: "{{user_data['id']}}",
+	};
+	var Tawk_LoadStart=new Date();
+
 	(function(){
 		var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
 		s1.async=true;
-		s1.src='https://embed.tawk.to/62f9c9c554f06e12d88ea549/1gafrob5j';
+		s1.src='https://embed.tawk.to/6675234feaf3bd8d4d12e05e/1i0spm1i4';
 		s1.charset='UTF-8';
 		s1.setAttribute('crossorigin','*');
 		s0.parentNode.insertBefore(s1,s0);
 	})();
-	Tawk_API.onLoad = function(){
-		alert("--")
-	    Tawk_API.setAttributes({
-	        'id'    : "MIS_USER_{{user_data['id']}}",
-	        'store' : 'Midvalley',
-	        'name' : "{{user_data['name']}}"
-	    }, function(error){});
-	};
 </script>
-
+<!--End of Tawk.to Script-->
+<!--End of Tawk.to Script-->
 
 <!--End of Tawk.to Script-->
   <script type="text/javascript">
