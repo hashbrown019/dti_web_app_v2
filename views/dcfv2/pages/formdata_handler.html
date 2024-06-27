@@ -173,6 +173,7 @@
 		}
 	}
 
+
 	function load_data(record_id,table,class_name){
 		// http://127.0.0.1:5000/dcf/form8?id=1&table=form8
 		$send({
@@ -240,6 +241,7 @@
 						var USER_ID = JSON.parse('{{user_data}}'.replaceAll('&#39;','"'))['id']
 						if(USER_ID==parseInt(res['upload_by'])){
 							x_ins[index].disabled = false;try{CHOICES_SELECT[x_ins[index].id].enable()}catch(e){warnprintln(e)}
+							cpa_select.style.display = "none";
 
 						}else{
 							x_ins[index].disabled = true;try{CHOICES_SELECT[x_ins[index].id].disable()}catch(e){warnprintln(e)}
@@ -267,7 +269,9 @@
 							}
 						}
 					}
-
+			for (var i = 0; i < ___SAM_FUNC_KAMOWN.length; i++) {
+				___SAM_FUNC_KAMOWN[i](res)
+			}
 			set_multi_table_row() // init multi table row with multiple value
 			dom_refresh();
 			
@@ -362,6 +366,8 @@ function submit_form(class_name,table, url){
 	form_data = Object.assign({}, temp_form_data, form_data);
 	// println(form_data)
 
+	// println(form_data)
+	// return
 	$send({
 		action: "/set_data/" + table,
 		data: $DATA(form_data),

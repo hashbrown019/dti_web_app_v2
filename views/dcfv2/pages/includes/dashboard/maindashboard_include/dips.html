@@ -301,37 +301,81 @@
                         <tr>
                             <td>Region 8</td>
                             <td class="text-center">{{ dcf2_RCU8_FO[0]['rcu8_fo2'] }}</td>
-                            <td class="text-center">{{ (dcf2_RCU8_FO[0]['rcu8_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                    <td class="text-center">
+                            {% if total_signed_cpas != 0 %}
+                                {{ ((dcf2_RCU8_FO[0]['rcu8_fo2'] | int) / total_signed_cpas * 100) | float | round(2) }}%
+                            {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 9</td>
                             <td class="text-center">{{ dcf2_RCU9_FO[0]['rcu9_fo2'] }}</td>
-                            <td class="text-center">{{ (dcf2_RCU9_FO[0]['rcu9_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                {% if total_signed_cpas != 0 %}
+                            {{ (dcf2_RCU9_FO[0]['rcu9_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                         {% else %}
+                                0.00%
+                            {% endif %}</td>
                         </tr>
                         <tr>
                             <td>Region 10</td>
                             <td class="text-center">{{ dcf2_RCU10_FO[0]['rcu10_fo2'] }}</td>
-                            <td class="text-center">{{ (dcf2_RCU10_FO[0]['rcu10_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf2_RCU10_FO[0]['rcu10_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                         {% else %}
+                                0.00%
+                            {% endif %}</td>
                         </tr>
                         <tr>
                             <td>Region 11</td>
                             <td class="text-center">{{ dcf2_RCU11_FO[0]['rcu11_fo2'] }}</td>
-                            <td class="text-center">{{ (dcf2_RCU11_FO[0]['rcu11_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                {% if total_signed_cpas != 0 %}
+                            {{ (dcf2_RCU11_FO[0]['rcu11_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 12</td>
                             <td class="text-center">{{ dcf2_RCU12_FO[0]['rcu12_fo2'] }}</td>
-                            <td class="text-center">{{ ( dcf2_RCU12_FO[0]['rcu12_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                {% if total_signed_cpas != 0 %}
+
+                            {{ ( dcf2_RCU12_FO[0]['rcu12_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                 {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 13</td>
                             <td class="text-center">{{ dcf2_RCU13_FO[0]['rcu13_fo2'] }}</td>
-                            <td class="text-center">{{ (dcf2_RCU13_FO[0]['rcu13_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf2_RCU13_FO[0]['rcu13_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                  {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>BARMM</td>
                             <td class="text-center">{{ dcf2_RCUBARMM_FO[0]['rcubarmm_fo2'] }}</td>
-                            <td class="text-center">{{ (dcf2_RCUBARMM_FO[0]['rcubarmm_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf2_RCUBARMM_FO[0]['rcubarmm_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+   {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                     </tbody>
                 </table>
@@ -363,37 +407,86 @@
                         <tr>
                             <td>Region 8</td>
                             <td class="text-center">{{ dcf_form2_rcu8_nom[0]['form2_rcu8_nom'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu8_nom[0]['form2_rcu8_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+                            {{ (dcf_form2_rcu8_nom[0]['form2_rcu8_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                              {% else %}
+                                0.00%
+                            {% endif %}
+
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 9</td>
                             <td class="text-center">{{ dcf_form2_rcu9_nom[0]['form2_rcu9_nom'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu9_nom[0]['form2_rcu9_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu9_nom[0]['form2_rcu9_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                             {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 10</td>
                             <td class="text-center">{{ dcf_form2_rcu10_nom[0]['form2_rcu10_nom'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu10_nom[0]['form2_rcu10_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu10_nom[0]['form2_rcu10_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                            {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 11</td>
                             <td class="text-center">{{ dcf_form2_rcu11_nom[0]['form2_rcu11_nom'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu11_nom[0]['form2_rcu11_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu11_nom[0]['form2_rcu11_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                             {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 12</td>
                             <td class="text-center">{{ dcf_form2_rcu12_nom[0]['form2_rcu12_nom'] }}</td>
-                            <td class="text-center">{{ ( dcf_form2_rcu12_nom[0]['form2_rcu12_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ ( dcf_form2_rcu12_nom[0]['form2_rcu12_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 13</td>
                             <td class="text-center">{{ dcf_form2_rcu13_nom[0]['form2_rcu13_nom'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu13_nom[0]['form2_rcu13_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu13_nom[0]['form2_rcu13_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                 {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>BARMM</td>
                             <td class="text-center">{{ dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                  {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                     </tbody>
                 </table>
@@ -423,37 +516,89 @@
                         <tr>
                             <td>Region 8</td>
                             <td class="text-center">{{ dcf_form2_rcu8_fo[0]['form2_rcu8_fo'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu8_fo[0]['form2_rcu8_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu8_fo[0]['form2_rcu8_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                  {% else %}
+                                0.00%
+                            {% endif %}
+                                </td>
                         </tr>
                         <tr>
                             <td>Region 9</td>
                             <td class="text-center">{{ dcf_form2_rcu9_fo[0]['form2_rcu9_fo'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu9_fo[0]['form2_rcu9_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu9_fo[0]['form2_rcu9_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                 {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 10</td>
                             <td class="text-center">{{ dcf_form2_rcu10_fo[0]['form2_rcu10_fo'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu10_fo[0]['form2_rcu10_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu10_fo[0]['form2_rcu10_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                 {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 11</td>
                             <td class="text-center">{{ dcf_form2_rcu11_fo[0]['form2_rcu11_fo'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu11_fo[0]['form2_rcu11_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu11_fo[0]['form2_rcu11_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                  {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 12</td>
                             <td class="text-center">{{ dcf_form2_rcu12_fo[0]['form2_rcu12_fo'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu12_fo[0]['form2_rcu12_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu12_fo[0]['form2_rcu12_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                 {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                         <tr>
                             <td>Region 13</td>
                             <td class="text-center">{{ dcf_form2_rcu13_fo[0]['form2_rcu13_fo'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcu13_fo[0]['form2_rcu13_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcu13_fo[0]['form2_rcu13_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                {% else %}
+                                0.00%
+                            {% endif %}
+
+                        </td>
                         </tr>
                         <tr>
                             <td>BARMM</td>
                             <td class="text-center">{{ dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo'] }}</td>
-                            <td class="text-center">{{ (dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo']|int / total_signed_cpas * 100)|float|round(2) }}%</td>
+                            <td class="text-center">
+
+                                 {% if total_signed_cpas != 0 %}
+
+                            {{ (dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+
+                                {% else %}
+                                0.00%
+                            {% endif %}
+                        </td>
                         </tr>
                     </tbody>
                 </table>
@@ -857,12 +1002,12 @@
                                     {% endif %}
                                 </td>
                                    <td class="text-center">
-                                    {{ total_coffeeIP }} 
-                                    {% if total_farmersIP != 0 %}
-                                        ({{ (total_coffeeIP / total_farmersIP * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
+                                   {{ total_coffeeIP }}
+{% if total_coffeeIP is not none and total_farmersIP is not none and total_farmersIP != 0 %}
+    ({{ (total_coffeeIP / total_farmersIP * 100) | round(2) }}%)
+{% else %}
+    (N/A%)
+{% endif %}
                                 </td>
                                     <td class="text-center">
                                     {{ total_coconutIP }} 
@@ -904,12 +1049,12 @@
                                 <tr>
                                     <td>Male Youth</td>
                                     <td class="text-center">
-                                   {{ total_cacaoYOUTH }} 
-                                   {% if total_farmersYOUTH != 0 %}
-                                       ({{ (total_cacaoYOUTH / total_farmersYOUTH * 100) | round(2) }}%)
-                                   {% else %}
-                                       (N/A%)
-                                   {% endif %}
+                                      {{ total_cacaoYOUTH }}
+    {% if total_cacaoYOUTH is not none and total_farmersYOUTH is not none and total_farmersYOUTH != 0 %}
+        ({{ (total_cacaoYOUTH / total_farmersYOUTH * 100) | round(2) }}%)
+    {% else %}
+    (N/A%)
+    {% endif %}
                                 </td>
                                    <td class="text-center">
                                     {{ total_coffeeYOUTH }}
@@ -956,11 +1101,11 @@
                                 <td>Female</td>
                                 <td class="text-center">
                                     {{ total_cacaoF }} 
-                                    {% if total_farmersF %}
-                                        ({{ (total_cacaoF / total_farmersF * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
+{% if total_cacaoF is not none and total_farmersF is not none and total_farmersF != 0 %}
+    ({{ (total_cacaoF / total_farmersF * 100)|round(2) }}%)
+{% else %}
+    (N/A%)
+{% endif %}
                                 </td>
                                 <td class="text-center">
                                     {{ total_coffeeF }} 
@@ -998,20 +1143,19 @@
                             <tr>
                                 <td>Female IP</td>
                                 <td class="text-center">
-                                    {{ total_cacaoFIP }} 
-                                    {% if total_farmersFIP %}
-                                        ({{ (total_cacaoFIP / total_farmersFIP * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
+                                   {{ total_cacaoFIP }}
+{% if total_cacaoFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+    ({{ (total_cacaoFIP / total_farmersFIP * 100)|round(2) }}%)
+{% else %}
+    (N/A%)
+{% endif %}                                </td>
                                 <td class="text-center">
-                                    {{ total_coffeeFIP }} 
-                                    {% if total_farmersFIP %}
-                                        ({{ (total_coffeeFIP / total_farmersFIP * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
+                                    {{ total_coffeeFIP }}
+{% if total_coffeeFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+    ({{ (total_coffeeFIP / total_farmersFIP * 100) | round(2) }}%)
+{% else %}
+    (N/A%)
+{% endif %}
                                 </td>
                                 <td class="text-center">
                                     {{ total_coconutFIP }} 
@@ -1022,31 +1166,63 @@
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
-                                    {{ total_pfnFIP }} 
-                                    {% if total_farmersFIP %}
-                                        ({{ (total_pfnFIP / total_farmersFIP * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
+                                  {{ total_pfnFIP }}
+{% if total_pfnFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+    ({{ (total_pfnFIP / total_farmersFIP * 100) | round(2) }}%)
+{% else %}
+    (N/A%)
+{% endif %}
+
                                 </td>
                                 <td class="text-center">
-                                    {{ total_farmersFIP }} 
-                                    {% if total_farmersFIP and dcf_form1male_appr[0]['total_male_appr'] and dcf_form1female_appr[                           0]['total_female_appr'] %}
-                                        ({{ ((total_cacaoFIP + total_coconutFIP + total_coffeeFIP + total_pfnFIP) / (dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) *100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
+ {{ total_farmersFIP }}
+{% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
+   {% set total_crop = 0 %}
+{% if total_cacaoFIP is not none %}
+    {% set total_crop = total_crop + total_cacaoFIP %}
+{% endif %}
+{% if total_coconutFIP is not none %}
+    {% set total_crop = total_crop + total_coconutFIP %}
+{% endif %}
+{% if total_coffeeFIP is not none %}
+    {% set total_crop = total_crop + total_coffeeFIP %}
+{% endif %}
+{% if total_pfnFIP is not none %}
+    {% set total_crop = total_crop + total_pfnFIP %}
+{% endif %}
+
+{{ total_crop }}
+
+{% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
+    {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
+    {% if total_approvers != 0 %}
+        ({{ (total_crop / total_approvers * 100) | round(2) }}%)
+    {% else %}
+        (N/A%)
+    {% endif %}
+{% else %}
+    (N/A%)
+{% endif %}
+    {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
+    {% if total_approvers != 0 %}
+        ({{ (total_crop / total_approvers * 100) | round(2) }}%)
+    {% else %}
+        (N/A%)
+    {% endif %}
+{% else %}
+    (N/A%)
+{% endif %}
                                 </td>
                             </tr>
                             <tr>
                                 <td>Female Youth</td>
                                 <td class="text-center">
-                                    {{ total_cacaoFYOUTH }} 
-                                    {% if total_farmersFYOUTH %}
-                                        ({{ (total_cacaoFYOUTH / total_farmersFYOUTH * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
+                                   {{ total_cacaoFYOUTH }}
+{% if total_cacaoFYOUTH is not none and total_farmersFYOUTH is not none and total_farmersFYOUTH != 0 %}
+    ({{ (total_cacaoFYOUTH / total_farmersFYOUTH * 100) | round(2) }}%)
+{% else %}
+    (N/A%)
+{% endif %}
                                 </td>
                                 <td class="text-center">
                                     {{ total_coffeeFYOUTH }} 
@@ -1073,12 +1249,18 @@
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
-                                    {{ total_farmersFYOUTH }} 
-                                    {% if total_farmersFYOUTH and dcf_form1male_appr[0]['total_male_appr'] and dcf_form1female_appr[                            0]['total_female_appr'] %}
-                                        ({{ ((total_cacaoFYOUTH or 0 + total_coconutFYOUTH + total_coffeeFYOUTH + total_pfnFYOUTH) / (                           dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
+                                    {{ total_farmersFYOUTH }}
+{% if total_farmersFYOUTH is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
+    {% set total_crop = (total_cacaoFYOUTH or 0) + (total_coconutFYOUTH or 0) + (total_coffeeFYOUTH or 0) + (total_pfnFYOUTH or 0) %}
+    {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
+    {% if total_approvers != 0 %}
+        ({{ (total_crop / total_approvers * 100) | round(2) }}%)
+    {% else %}
+        (N/A%)
+    {% endif %}
+{% else %}
+    (N/A%)
+{% endif %}
                                 </td>
                             </tr>
                             </tbody>
