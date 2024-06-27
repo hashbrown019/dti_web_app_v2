@@ -1,3 +1,4 @@
+import Configurations as c 
 from flask import Flask, Blueprint,request, flash, render_template, url_for,redirect, session,send_file, jsonify
 from decimal import Decimal
 import pandas as pd
@@ -30,7 +31,6 @@ from views.dcfv2.form_update import update_form7 as update_dataform7
 from views.dcfv2.form_update import update_form9 as update_dataform9
 from views.dcfv2.form_update import update_form10 as update_dataform10
 from views.dcfv2.form_update import update_form11 as update_dataform11
-import Configurations as c 
 from modules.Connections import mysql
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form1
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form2
@@ -44,8 +44,6 @@ from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form10
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form11
 from modules.Req_Brorn_util import file_from_request
 from views.feature_0 import feature_0 as a_main
-
-
 
 
 
@@ -276,8 +274,16 @@ def form1(form):
 		benf = []
 		print(e)
 
+	all_form_data = display_dataform.displayform()[f'{form}_datatable']
+	for index in range(len(all_form_data)):
+		del all_form_data[index]["date_created"]
+		del all_form_data[index]["date_modified"]
+		# del all_form_data[index]["form_2_cpa_date_signing"]
+		# del all_form_data[index]["form_2_cpa_date_expiration"]
+		
+
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
-	return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0],benef=benf)
+	return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0],benef=benf,all_form_data=all_form_data)
 
 @app.route('/dcf/<viewform>')
 def viewform1(viewform):
@@ -289,7 +295,7 @@ def dcf_spreadsheet():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	return render_template("dcf_spreadsheet.html",user_data=session["USER_DATA"][0])
 
-#INSERT DATA -------------------------------------------------------
+# INSERT DATA -------------------------------------------------------
 
 @app.route('/insert_form4', methods = ['POST'])
 def insert_form4():
