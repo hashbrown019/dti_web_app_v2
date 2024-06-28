@@ -46,6 +46,11 @@ class _main:
 	def feature_0_sub():
 		return {"status":"ok"}
 
+	@app.route("/ffffffaaa",methods=["POST","GET"])
+	@c.login_auth_web()
+	def ffffffaaa():
+		return rapid_mysql.select("SELECT * FROM `excel_import_form_a`",False)
+
 	@app.route("/web_cast",methods=["POST","GET"])
 	@c.login_auth_web()
 	def web_cast():
