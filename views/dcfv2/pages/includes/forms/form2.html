@@ -16,6 +16,7 @@
     <div class="right_col" role="main">
         <div class="row">
     <div class="col-md-12 col-sm-12 x-card  x-light-grey">
+
         <center>
             <h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 2 - CPA TRACKER</h2>
 			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
@@ -25,6 +26,7 @@
            
         </span>
         <script type="text/javascript">
+
             SAM_FUNC_KAMOWN(get_recent_cpa)
             function get_recent_cpa(dd){
                 println("---formdata oyeah")
@@ -45,7 +47,7 @@
 
             <input class="FORM2_FIELD x-input" type="hidden"  id="id">
 
-            <div style="display: block;" id="cpa_select" class="x-col l3 x-container x-padding">
+            <div id="cpa_select" class="x-col l3 x-container x-padding">
 
                 <label class="">Renewal for prev. CPA Track#</label>
                 <select onchange="renewal_field(this)" class="FORM2_FIELD x-border x-select x-border" id="form_2_recent_cpa" name="form_2_recent_cpa" required><br>
@@ -74,6 +76,11 @@
                     }
                     // var a=b=c=d="abcdefghijklmnopqrstuvwxyz_centralize"
                     // alert(`${a[18]}${b[7]}${c[0]}${d[19]}`,"quantum_compute_kamown")
+                    $onload(function(){
+                        if(URL_ARGS["table"]==undefined){
+                            $ID('cpa_select').remove()
+                        }
+                    })
                 </script>
 
             </div>
