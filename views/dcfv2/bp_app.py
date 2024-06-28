@@ -62,6 +62,7 @@ def sample(item):
 
 
 @app.route('/dcf_dashboard')
+@c.login_auth_web()
 def dcf_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	count = displayCount.display__()
@@ -71,6 +72,7 @@ def dcf_dashboard():
 
 
 @app.route('/form1_dashboard')
+@c.login_auth_web()
 def form1_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -79,6 +81,7 @@ def form1_dashboard():
 
 
 @app.route('/form2_dashboard')
+@c.login_auth_web()
 def form2_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -86,6 +89,7 @@ def form2_dashboard():
 	return render_template("form_dashboard/form2_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form3_dashboard')
+@c.login_auth_web()
 def form3_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -93,6 +97,7 @@ def form3_dashboard():
 	return render_template("form_dashboard/form3_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form4_dashboard')
+@c.login_auth_web()
 def form4_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -100,6 +105,7 @@ def form4_dashboard():
 	return render_template("form_dashboard/form4_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form5_dashboard')
+@c.login_auth_web()
 def form5_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -107,6 +113,7 @@ def form5_dashboard():
 	return render_template("form_dashboard/form5_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form6_dashboard')
+@c.login_auth_web()
 def form6_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -114,6 +121,7 @@ def form6_dashboard():
 	return render_template("form_dashboard/form6_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form7_dashboard')
+@c.login_auth_web()
 def form7_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -121,12 +129,14 @@ def form7_dashboard():
 	return render_template("form_dashboard/form7_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form8_dashboard')
+@c.login_auth_web()
 def form8_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
 	return render_template("form_dashboard/form8_dashboard.html",user_data=session["USER_DATA"][0],**form_disp)
 
 @app.route('/form9_dashboard')
+@c.login_auth_web()
 def form9_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -134,6 +144,7 @@ def form9_dashboard():
 	return render_template("form_dashboard/form9_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form10_dashboard')
+@c.login_auth_web()
 def form10_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
@@ -141,6 +152,7 @@ def form10_dashboard():
 	return render_template("form_dashboard/form10_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
 @app.route('/form11_dashboard')
+@c.login_auth_web()
 def form11_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
