@@ -108,7 +108,7 @@ class _main:
 			'male_is_youth': ex_c_male_is_youth,
 			'male_is_sen_cit': ex_c_male_sen_cit,
 			'male_is_head_hh': ex_c_male_male_is_head_hh
-			}
+		}
 		# return {
 		# 	'total_mal':ex_c_male + m_c_male,
 		# 	'male_is_pwd':m_c_male_is_pwd + ex_c_male_is_pwd,

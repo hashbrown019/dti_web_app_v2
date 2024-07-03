@@ -365,8 +365,19 @@ function submit_form(class_name,table, url){
 	form_data = Object.assign({}, temp_form_data, form_data);
 	// println(form_data)
 
-	// println(form_data)
-	// return
+
+	if(validate_form(class_name)){}
+	else{
+		Swal.fire(
+			'Error!',
+			"Some fields are required",
+			'error'
+		);
+		return
+	}
+
+
+
 	$send({
 		action: "/set_data/" + table,
 		data: $DATA(form_data),
@@ -396,6 +407,65 @@ function submit_form(class_name,table, url){
 		})
 	// println(form_data)
 }
+
+
+function validate_form(in_class){
+	var elem_in_class = $CLASS(in_class)
+	for (var i = 0; i < elem_in_class.length; i++) {
+		if(elem_in_class[i].hasAttribute("x-required")){
+			elem_in_class[i].value
+			if(
+				elem_in_class[i].value=="" ||
+				elem_in_class[i].value==" "
+				){
+				elem_in_class[i].style["background-color"] = "rgb(255, 97, 97)"
+				scroll_to_id(elem_in_class[i].id)
+				return false
+			}else{
+				elem_in_class[i].style["background-color"] = "white"
+			}
+		}
+	}
+	return true
+}
+
+$onload(function(){
+	var _input = $CLASS("x-input")
+	var _select = $CLASS("x-select")
+	for (var i = 0; i < _input.length; i++) {
+		if(_input[i].hasAttribute("x-required")){
+			_input[i].addEventListener('keyup',function(e){
+				println(e.srcElement.value)
+				println(e.srcElement.value)
+				if(e.srcElement.value.length>0){
+					e.srcElement.style["background-color"] = "white"
+				}else{
+					e.srcElement.style["background-color"] = "rgb(255, 97, 97)"
+				}
+			})
+		}
+	}
+	for (var i = 0; i < _select.length; i++) {
+		if(_select[i].hasAttribute("x-required")){
+			_select[i].addEventListener('change',function(e){
+				// println(e.srcElement.value)
+				// println(e.srcElement.value)
+				if(e.srcElement.classList.contains("choices__input")){
+
+				}
+
+				if(e.srcElement.value.length>0){
+					e.srcElement.style["background-color"] = "white"
+				}else{
+					e.srcElement.style["background-color"] = "rgb(255, 97, 97)"
+				}
+			})
+		}
+	}
+
+
+
+})
 
 
 
