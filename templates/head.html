@@ -52,14 +52,31 @@
 	<link rel="stylesheet" type="text/css" href="../static/bootstrap_/bootstrap-3.4.1-dist/css/bootstrap.min.css">
 	<script src="../static/bootstrap_/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
 
-	
-
+	<!-- PSALM/////////////////////////////-->
+	<script src="../static/psalm_static/dcf_static/tables/sweetalert2.js"></script>
 	
 <!-- 
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
  -->
-</head> 
+</head>
+
+
+<script type="text/javascript">
+	function unavailable(func){
+		swal.fire({
+			title:"Module Unavailable",
+			text: "This module is temporarily unavailable at this time",
+			icon: "warning",
+		    confirmButtonText: "Exit",
+		    closeOnConfirm: false
+		}).then(
+			function(){
+				func()
+			}
+		)
+  	}
+</script>
 
 {% include 'spinner_loader.html' %}
 <!-- https://cdn.amcharts.com/lib/5/geodata/philippinesLow.js -->

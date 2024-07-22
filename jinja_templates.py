@@ -9,7 +9,6 @@ class templates:
 		super(templates, self).__init__()
 		self.app = app
 
-
 	def format_timestamp(timestamp):
 		now = datetime.now()
 		time_difference = now - timestamp
