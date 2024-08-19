@@ -412,13 +412,26 @@ class _main:
 			rapid_mysql.do(sql)
 		pass
 
+	@app.route("/birthday_by_sex_all_per_region",methods=["POST","GET"])
+	def birthday_by_sex_all_per_region():
+		all_reg = {"RCU 8":{},"RCU 9":{},"RCU 10":{},"RCU 11":{},"RCU 12":{},"RCU 13":{},"BARMM":{}}
+		for reg in all_reg:
+			print(reg)
+			all_reg[reg] = _main.birthday_by_sex(reg)["all_temp_15_35"]
 
+		return all_reg
+
+
+	@app.route("/birthday_by_sex/<area>",methods=["POST","GET"])
 	def birthday_by_sex(area):
 		query = rapid_mysql.select
 		q = '''
 			SELECT 
 				`frmer_prof_@_basic_Info_@_Sex` as 'sex',
-				`frmer_prof_@_basic_Info_@_birthday` as 'bday'
+				`frmer_prof_@_basic_Info_@_birthday` as 'bday',
+				`frmer_prof_@_Farming_Basic_Info_@_farmer_ip` as 'is_ip',
+				`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as 'crop',
+				`frmer_prof_@_Farming_Basic_Info_@_Farmer_pwd` as 'is_pwd'
 			FROM `excel_import_form_a` {}
 			;'''.format(_main.___filter(area) )
 
@@ -444,23 +457,28 @@ class _main:
 				days_since_epoch = int_bday
 				target_date = reference_date + DT.timedelta(days=days_since_epoch)
 				formatted_date = target_date.strftime('%Y-%m-%d')
-				ALL_BDAY[temp_sex].append(formatted_date)
+				ALL_BDAY[temp_sex].append([formatted_date,bday[inx]["is_ip"],bday[inx]["is_pwd"],bday[inx]["crop"]])
 			tital_num_farmer +=1
 
 		# return ALL_BDAY #=================================================
 		# print(DT.date.today())
-		all_years = []
+		# all_years = []
 		age_range = {
 			"youth" : {"male":0,"female":0},
 			"75-100":{"male":0,"female":0},"70-74":{"male":0,"female":0},"65-69":{"male":0,"female":0},"60-64":{"male":0,"female":0},"55-59":{"male":0,"female":0},"50-54":{"male":0,"female":0},"45-49":{"male":0,"female":0},"40-44":{"male":0,"female":0},"35-39":{"male":0,"female":0},"30-34":{"male":0,"female":0},"25-29":{"male":0,"female":0},"20-24":{"male":0,"female":0},"15-19":{"male":0,"female":0},"10-14":{"male":0,"female":0},"none":{"male":0,"female":0}
 		}
+
+
+
+		all_temp_15_35 = {"male":{},"female":{}}
 		for _sex in ALL_BDAY:
+			temp_15_35 ={"coconut": {"total": 0,"pwd": 0,"ip": 0,"youth": 0},"cacao": {"total": 0,"pwd": 0,"ip": 0,"youth": 0},"coffee": {"total": 0,"pwd": 0,"ip": 0,"youth": 0},"pfn": {"total": 0,"pwd": 0,"ip": 0,"youth": 0}}
 			for _date in ALL_BDAY[_sex]:
-				xdate = _date.split("-")
+				xdate = _date[0].split("-")
 				if(int(xdate[1])>12):
 					# print(_date)
 					_date = f"{xdate[0]}-01-01"
-				start_date = dt.strptime(_date, "%Y-%m-%d")
+				start_date = dt.strptime(_date[0], "%Y-%m-%d")
 				end_date = DT.date.today()
 				delta = relativedelta.relativedelta(end_date, start_date)
 				# print(delta.years, 'Years,', delta.months, 'months,', delta.days, 'days')
@@ -469,7 +487,32 @@ class _main:
 				age_range[_main.get_age_range(YEARS_OLD)][_sex] += 1
 				if(YEARS_OLD >= 15 and YEARS_OLD <= 30 ):
 					age_range["youth"][_sex] += 1
-		return {"age_range":age_range,"bdays":[],"tital_num_farmer_valid":tital_num_farmer_valid,"tital_num_farmer":tital_num_farmer}
+
+
+				CROP_D =  _date[3].lower().replace(" ","")
+				if(YEARS_OLD >= 15 and YEARS_OLD <= 35 ):
+					if(CROP_D not in ["coconut","cacao","coffee","pfn"]):
+						if(CROP_D == "banana" or CROP_D == "calamansi"):
+							CROP_D = "pfn"
+						else:
+							continue
+					else:
+						pass
+
+
+					if(YEARS_OLD >= 15 and YEARS_OLD <= 35 ):
+						temp_15_35[CROP_D]["youth"] += 1
+					if(_date[1] != "" and _date[1] != " "  ):
+						temp_15_35[CROP_D]["ip"] += 1
+					if(_date[2] == "yes"):
+						temp_15_35[CROP_D]["pwd"] += 1
+					temp_15_35[CROP_D]["total"] += 1
+
+
+			all_temp_15_35[_sex] = temp_15_35
+
+
+		return {"all_temp_15_35":all_temp_15_35,"age_range":age_range,"bdays":[],"tital_num_farmer_valid":tital_num_farmer_valid,"tital_num_farmer":tital_num_farmer}
 
 	def get_age_range(AGE_):
 		ranges = [(75, 100),(70, 74),(65, 69),(60, 64),(55, 59),(50, 54),(45, 49),(40, 44),(35, 39),(30, 34),(25, 29),(20, 24),(15, 19),(10, 14)]
@@ -601,7 +644,7 @@ class _main:
 			# ////FEMALE................
 		}
 		actual = {}
-		_CROP = ["coconut","","cacao","coffee","banana","calamansi"]
+		_CROP = ["coconut","cacao","coffee","banana","calamansi"]
 		query = rapid_mysql.select
 		q = '''
 			SELECT 
