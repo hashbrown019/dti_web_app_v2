@@ -84,10 +84,10 @@ class templates:
 		return cpa_note
 
 
-	def trancuate_text(text,lngth):
+	def trancuate_text(text, lngth, elipse="...", word_tranc = "(truncated)"):
 		if(len(str(text))-5 < lngth):
 			return text
-		return f"{str(text)[:lngth]}....(truncated)"
+		return f"{str(text)[:lngth]}{elipse}{word_tranc}"
 
 	# ===========================================================================================================
 	# ===========================================================================================================
