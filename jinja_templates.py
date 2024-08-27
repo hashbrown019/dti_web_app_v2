@@ -83,6 +83,10 @@ class templates:
 		cpa_note = f"RAPID_CPA_{res['id']} : {res['form_2_businessname']}"
 		return cpa_note
 
+
+	def trancuate_text(text,lngth):
+		return f"{str(text)[:lngth]}....."
+
 	# ===========================================================================================================
 	# ===========================================================================================================
 	# ===========================================================================================================
@@ -94,4 +98,5 @@ class templates:
 		self.app.jinja_env.filters['websafe_filename'] = templates.websafe_filename
 		self.app.jinja_env.filters['cpa_status'] = templates.cpa_status
 		self.app.jinja_env.filters['get_cpa'] = templates.get_cpa
+		self.app.jinja_env.filters['trancuate_text'] = templates.trancuate_text
 	# Register the custom filter on the Flask application
