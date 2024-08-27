@@ -821,10 +821,14 @@
 															{% for row in form1_datatable %}
 															<td>{{ row['id'] }}</td>
 															<td>
-																{{ row['form_1_name_dip'] }} <br> 
-																<i class="small" title="{{ row['form_1_anchor_firm'] }}">
-																	{{ row['form_1_anchor_firm'] | trancuate_text(100) }}
-																</i>
+																<div>
+																	{{ row['form_1_name_dip'] }}
+																</div>
+																<div>
+																	<i class="small" title="{{ row['form_1_anchor_firm'] }}">
+																		{{ row['form_1_anchor_firm'] | trancuate_text(100) }}
+																	</i>
+																</div>
 															</td>
 															<td>{{ row['form_1_rcus'] }}</td>
 															<td>{{ row['form_1_scope_provinces'] }}</td>
