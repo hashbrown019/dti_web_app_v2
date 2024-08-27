@@ -1144,85 +1144,87 @@
                                 <td>Female IP</td>
                                 <td class="text-center">
                                    {{ total_cacaoFIP }}
-{% if total_cacaoFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
-    ({{ (total_cacaoFIP / total_farmersFIP * 100)|round(2) }}%)
-{% else %}
-    (N/A%)
-{% endif %}                                </td>
-                                <td class="text-center">
-                                    {{ total_coffeeFIP }}
-{% if total_coffeeFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
-    ({{ (total_coffeeFIP / total_farmersFIP * 100) | round(2) }}%)
-{% else %}
-    (N/A%)
-{% endif %}
+                                    {% if total_cacaoFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+                                        ({{ (total_cacaoFIP or 0 / total_farmersFIP * 100)|round(2) }}%)
+                                    {% else %}
+                                        (N/A%)
+                                    {% endif %}                                
                                 </td>
                                 <td class="text-center">
-                                    {{ total_coconutFIP }} 
-                                    {% if total_farmersFIP %}
-                                        ({{ (total_coconutFIP / total_farmersFIP * 100)|round(2) }}%)
+                                    {{ total_coffeeFIP }}
+                                    {% if total_coffeeFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+                                        ({{ (total_coffeeFIP or 0 / total_farmersFIP * 100) | round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
-                                  {{ total_pfnFIP }}
-{% if total_pfnFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
-    ({{ (total_pfnFIP / total_farmersFIP * 100) | round(2) }}%)
-{% else %}
-    (N/A%)
-{% endif %}
-
+                                    {{ total_coconutFIP }} 
+                                    {% if total_farmersFIP %}
+                                        ({{ (total_coconutFIP or 0 / total_farmersFIP * 100)|round(2) }}%)
+                                    {% else %}
+                                        (N/A%)
+                                    {% endif %}
                                 </td>
                                 <td class="text-center">
- {{ total_farmersFIP }}
-{% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
-   {% set total_crop = 0 %}
-{% if total_cacaoFIP is not none %}
-    {% set total_crop = total_crop + total_cacaoFIP %}
-{% endif %}
-{% if total_coconutFIP is not none %}
-    {% set total_crop = total_crop + total_coconutFIP %}
-{% endif %}
-{% if total_coffeeFIP is not none %}
-    {% set total_crop = total_crop + total_coffeeFIP %}
-{% endif %}
-{% if total_pfnFIP is not none %}
-    {% set total_crop = total_crop + total_pfnFIP %}
-{% endif %}
+                                    {{ total_pfnFIP }}
+                                    {% if total_pfnFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+                                        ({{ (total_pfnFIP or 0 / total_farmersFIP * 100) | round(2) }}%)
+                                    {% else %}
+                                        (N/A%)
+                                    {% endif %}
 
-{{ total_crop }}
+                                    </td>
+                                    <td class="text-center">
+                                     {{ total_farmersFIP }}
+                                    {% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
+                                       {% set total_crop = 0 %}
+                                    {% if total_cacaoFIP is not none %}
+                                        {% set total_crop = total_crop + total_cacaoFIP %}
+                                    {% endif %}
+                                    {% if total_coconutFIP is not none %}
+                                        {% set total_crop = total_crop + total_coconutFIP %}
+                                    {% endif %}
+                                    {% if total_coffeeFIP is not none %}
+                                        {% set total_crop = total_crop + total_coffeeFIP %}
+                                    {% endif %}
+                                    {% if total_pfnFIP is not none %}
+                                        {% set total_crop = total_crop + total_pfnFIP %}
+                                    {% endif %}
 
-{% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
-    {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
-    {% if total_approvers != 0 %}
-        ({{ (total_crop / total_approvers * 100) | round(2) }}%)
-    {% else %}
-        (N/A%)
-    {% endif %}
-{% else %}
-    (N/A%)
-{% endif %}
-    {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
-    {% if total_approvers != 0 %}
-        ({{ (total_crop / total_approvers * 100) | round(2) }}%)
-    {% else %}
-        (N/A%)
-    {% endif %}
-{% else %}
-    (N/A%)
-{% endif %}
+                                    {{ total_crop }}
+
+                                    {% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
+                                        {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
+                                        {% if total_approvers != 0 %}
+                                            ({{ (total_crop or 0 / total_approvers * 100) | round(2) }}%)
+                                        {% else %}
+                                            (N/A%)
+                                        {% endif %}
+                                    {% else %}
+                                        (N/A%)
+                                    {% endif %}
+                                        {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
+                                        {% if total_approvers != 0 %}
+                                            ({{ (total_crop or 0 / total_approvers * 100) | round(2) }}%)
+                                        {% else %}
+                                            (N/A%)
+                                        {% endif %}
+                                    {% else %}
+                                        (N/A%)
+                                    {% endif %}
+                                                                
                                 </td>
                             </tr>
                             <tr>
                                 <td>Female Youth</td>
                                 <td class="text-center">
                                    {{ total_cacaoFYOUTH }}
-{% if total_cacaoFYOUTH is not none and total_farmersFYOUTH is not none and total_farmersFYOUTH != 0 %}
-    ({{ (total_cacaoFYOUTH / total_farmersFYOUTH * 100) | round(2) }}%)
-{% else %}
-    (N/A%)
-{% endif %}
+                                    {% if total_cacaoFYOUTH is not none and total_farmersFYOUTH is not none and total_farmersFYOUTH != 0 %}
+                                        ({{ (total_cacaoFYOUTH or 0/ total_farmersFYOUTH * 100) | round(2) }}%)
+                                    {% else %}
+                                        (N/A%)
+                                    {% endif %}
                                 </td>
                                 <td class="text-center">
                                     {{ total_coffeeFYOUTH }} 
@@ -1235,7 +1237,7 @@
                                 <td class="text-center">
                                     {{ total_coconutFYOUTH }} 
                                     {% if total_farmersFYOUTH %}
-                                        ({{ (total_coconutFYOUTH / total_farmersFYOUTH * 100)|round(2) }}%)
+                                        ({{ (total_coconutFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
                                     {% else %}
                                         (N/A%)
                                     {% endif %}
