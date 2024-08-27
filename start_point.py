@@ -33,6 +33,10 @@ from apis import api
 import json
 from jinja_templates import templates
 from controllers import Logs
+import jinja2
+from jinja_try_catch import TryCatchExtension
+
+jinja_env = jinja2.Environment(extensions=[TryCatchExtension])
 
 Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL")
 
