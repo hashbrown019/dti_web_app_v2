@@ -1065,17 +1065,12 @@
                                     {% endif %}
                                 </td>
                                     <td class="text-center">
-                                        {%- try -%}
-                                            {{ total_coconutYOUTH }}
-                                            {% if total_farmersYOUTH != 0 %}
-                                                ({{ (total_coconutYOUTH / total_farmersYOUTH * 100) | round(2) }}%)
-                                            {% else %}
-                                                (N/A%)
-                                            {% endif %}
-                                        {%- catch -%}
-                                            Error in Computing
-                                        {%- endtry -%}
-
+                                    {{ total_coconutYOUTH }}
+                                    {% if total_farmersYOUTH != 0 %}
+                                        ({{ (total_coconutYOUTH / total_farmersYOUTH * 100) | round(2) }}%)
+                                    {% else %}
+                                        (N/A%)
+                                    {% endif %}
                                 </td>
                                     <td class="text-center">
                                     {{ total_pfnYOUTH }}
