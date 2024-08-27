@@ -802,6 +802,15 @@
 											<p class=" text-muted font-13 m-b-30">
 												All entries of Form 1 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
 											</p>
+
+											<style type="text/css">
+												.truncate {
+													  width: 250px;
+													  white-space: nowrap;
+													  overflow: hidden;
+													  text-overflow: ellipsis;
+													}
+											</style>
 											
 											<table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 												<thead>
@@ -820,7 +829,10 @@
 														<div>
 															{% for row in form1_datatable %}
 															<td>{{ row['id'] }}</td>
-															<td>{{ row['form_1_name_dip'] }} <br> <i class="small">{{ row['form_1_anchor_firm'] }}</i></td>
+															<td>
+																{{ row['form_1_name_dip'] }} <br> 
+																<i class="small truncate" title="{{ row['form_1_anchor_firm'] }}">{{ row['form_1_anchor_firm'] }}</i>
+															</td>
 															<td>{{ row['form_1_rcus'] }}</td>
 															<td>{{ row['form_1_scope_provinces'] }}</td>
 															<td>{{ row['form_1_commodity'] }} {{ row['form_1_commodity_others'] }}</td>
