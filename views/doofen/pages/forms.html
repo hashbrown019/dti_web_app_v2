@@ -13,44 +13,153 @@
 	}
 </style>
 
-<input class="form_data_b" id="id" name="first" type="text" hidden required>
-
-<div id="form_header" class="main-title">
-	<div class="x-left">
-		<p class="font-weight-bold " >FORM B</p>
+<div class="x-row">
+	<h2 class="x-text-teal"><b>Farmers' Organization Profile Form</b></h2>
+	<div id="form_header" class="main-title">
+		<div class="x-right x-text-grey">
+			Some fields aren't required to be filled up when there is no available data. You can come back and fill the fields and always check the <strong>Correct Spelling</strong> and <strong>observe the usage of special characters</strong> such as punctuation and numbers. contact the developers is you encountered an error or the input entry doesn't reflect to the dashboard or/and on the lists of entries. 
+		</div>
+		<div class="x-right">
+			-
+		</div>
 	</div>
-	<div class="x-right">
-		<p class="font-weight-bold x-btn x-text-blue x-round-large" onclick="show_mem_modal()">Farmer Members</p>
-		<p class="font-weight-bold x-btn x-green" onclick="save_form()" >Save</p>
+</div>
+<div class="x-row x-container x-right">
+	<b class="x-btn x-round-large x-border x-border-blue" style="margin-top:5px" onclick="show_mem_modal()">
+		<span class="x-text-blue fa fa-users"></span>
+		<span class="x-text-grey">Farmer Members</span>
+	</b>
+	<b class="x-btn x-round-large x-border x-border-green" style="margin-top:5px" onclick="save_form()">
+		<span class="x-text-green fa fa-save"></span>
+		<span class="x-text-grey">Save</span>
+	</b>
+</div>
+<br>
+<div class="x-container x-row">
+	<div class="x-col m2 l2">
+		<!-- <div id="qrs_holder" class="x-row">
+			<div class="qrs fadeIn" id="qrcode" style="max-width: 10%;"></div>
+		</div>
+		<hr> -->
+		<div onclick="scroll_to_id('b1');scroll_to_id('b1')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Respondent Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b2')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Organizational Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b3')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Operational Profile</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b4')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">FO Governance, Communication, and Planning</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b5')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Administrative and financial management and human resources management</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b6')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Capacity and Needs Assessment</div><br>
+		<div onclick="scroll_to_id('b1');scroll_to_id('b7')" class="x-zoom x-leftbar x-border-blue x-padding x-card x-block x-left x-round-large x-hover-teal x-border x-border-teal" onclick="" style="margin-top:5px">Partnership</div><br>
+		<br>
+		<hr>
 	</div>
-</div>
+	<div class="x-col m10 l10" style="overflow-y:scroll;height: 70vh;">
+		<input class="form_data_b" id="id" name="first" type="text" hidden required>
+		<div class="x-row">
+			
+		</div>
+		<div id="respondents" class="form_container x-container" style="display:block;">
+			{% include "B1-Respondents.html" %}
+		</div>
+		<div id="organizational" class="form_container x-container" style="display:block;">
+			{% include "B2-Organizational.html" %}
+		</div>
+		<div id="operational" class="form_container x-container" style="display:block;">
+			{% include "B3-Operational.html" %}
+		</div>
+		<div id="fogcp" class="form_container x-container" style="display:block;">
+			{% include "B4-FoGovernance.html" %}
+		</div>
+		<div id="admin" class="form_container x-container" style="display:block;">
+			{% include "B5-Administrative.html" %}
+		</div>
+		<div id="capacity" class="form_container x-container" style="display:block;">
+			{% include "B6-Capacity.html" %}
+		</div>
+		<div id="partnership" class="form_container x-container" style="display:block;">
+			{% include "B7-Partnership.html" %}
+		</div>
 
-<div id="respondents" class="form_container x-container" style="display:block;">
-	{% include "B1-Respondents.html" %}
-</div>
-<div id="organizational" class="form_container x-container" style="display:block;">
-	{% include "B2-Organizational.html" %}
-</div>
-<div id="operational" class="form_container x-container" style="display:block;">
-	{% include "B3-Operational.html" %}
-</div>
-<div id="fogcp" class="form_container x-container" style="display:block;">
-	{% include "B4-FoGovernance.html" %}
-</div>
-<div id="admin" class="form_container x-container" style="display:block;">
-	{% include "B5-Administrative.html" %}
-</div>
-<div id="capacity" class="form_container x-container" style="display:block;">
-	{% include "B6-Capacity.html" %}
-</div>
-<div id="partnership" class="form_container x-container" style="display:block;">
-	{% include "B7-Partnership.html" %}
-</div>
-
-<div id="form_header" class="main-title">
-	<p class="font-weight-bold x-left" >FORM B</p>
-	<p class="font-weight-bold x-btn x-right x-green" onclick="save_form()" >Save</p>
+		<div id="form_header" class="main-title">
+			<p class="x-left" >FORM B</p>
+			<p class="x-btn x-right x-green" onclick="save_form()" >Save</p>
+		</div>
+	</div>
 </div>
 {% include "modal_add_member.html" %}
 {% include "modal_table_member.html" %}
+<script src="../static/js/qr/qrcode.min.js"></script>
+
+<script>
+
+    // var imgs = $ID('prof_imgs')
+    // var qrs = $ID('qrcode')
+    // // var qr1 = new QRCode($ID("qrcode"), "MISFORMB"+$ID("id").value,{width:"1px"});
+    // var qrcode = new QRCode("qrcode", {
+	//     text: "MISFORMB"+$ID("id").value,
+	//     width: 59,
+	//     height: 59,
+	//     colorDark : "#000000",
+	//     colorLight : "#ffffff",
+	//     correctLevel : QRCode.CorrectLevel.H
+	// });
+    // println(qrcode)
+    // println($ID('qrs_holder').clientWidth)
+    // qrs.querySelectorAll("canvas").width = "20px"
+
+	function save_form(){
+		var FORM_DATA = {}
+		var form_data_b = $CLASS("form_data_b")
+		for (var i = 0; i < form_data_b.length; i++) {
+			var input_type = form_data_b[i].type
+			if(form_data_b[i].id==""){
+				continue
+			}
+			if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
+				FORM_DATA[form_data_b[i].id] = form_data_b[i].value
+			}
+			if( (["checkbox","radio"]).includes(input_type) ){
+				FORM_DATA[form_data_b[i].id] = form_data_b[i].checked
+			}
+		}
+		$send({
+			action : "/formb/save_form",
+			method : POST,
+			data : $DATA(FORM_DATA),
+			func : function(r){
+				SPINNER_LOADER.hide()
+				// println(r)
+				var res = JSON.parse(r)
+				// println(res)
+				var diadata = {} 
+				if(res['status']=="failed"){
+					diadata = {
+						type :"error",
+						title : "Data insertion Failed",
+						content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+						buttons : ['Finished Transaction'],
+						buttons_actions : [done_transac_excel]
+					}
+					SPINNER_LOADER.hide()
+					var dialog = $dialog(diadata)
+					dialog.show()
+				}
+				else if(res['status']=="success"){
+					diadata = {
+						title : "Data insertion Success",
+						type :"success",
+						content : "Your Data insertion had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+						buttons : ['Finished Transaction'],
+						buttons_actions : [done_transac_excel]
+					}
+					SPINNER_LOADER.hide()
+					var dialog = $dialog(diadata)
+					dialog.show()
+				}
+				SPINNER_LOADER.hide()
+			}
+		})
+	}
+	function done_transac_excel(){
+		location.reload()
+	}
+</script>
 <!-- ==================================================================================================== -->

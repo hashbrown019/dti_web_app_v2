@@ -923,7 +923,7 @@ var BarStackedChart = (function() {
 		// Chart data
 
 		var data = {
-			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			labels: ['Jun', 'Jul', 'Aug', 'Sept','Oct','Nov','Dec','Jan','Feb'],
 			datasets: [{
 				label: 'Dataset 1',
 				backgroundColor: Charts.colors.theme['danger'],
@@ -1201,7 +1201,7 @@ var PointsChart = (function() {
 				}
 			},
 			data: {
-				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				labels: ['Jun', 'Jul', 'Aug', 'Sept','Oct','Nov','Dec','Jan','Feb'],
 				datasets: [{
 					label: 'Performance',
 					data: [10, 18, 28, 23, 28, 40, 36, 46, 52],
@@ -1263,7 +1263,7 @@ var SalesChart = (function() {
 				}
 			},
 			data: {
-				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				labels: ['Jun', 'Jul', 'Aug', 'Sept','Oct','Nov','Dec','Jan','Feb'],
 				datasets: [{
 					label: 'Performance',
 					data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
@@ -1322,7 +1322,7 @@ var SalesChart = (function() {
 				}
 			},
 			data: {
-				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				labels: ['Jun', 'Jul', 'Aug', 'Sept','Oct','Nov','Dec','Jan','Feb'],
 				datasets: [{
 					label: 'Performance',
 					data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
@@ -1425,7 +1425,7 @@ var LineChart = (function() {
 				}
 			},
 			data: {
-				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				labels: ['Jun', 'Jul', 'Aug', 'Sept','Oct','Nov','Dec','Jan','Feb'],
 				datasets: [{
 					label: 'Performance',
 					data: [0, 20, 10, 30, 15, 40, 20, 60, 60]

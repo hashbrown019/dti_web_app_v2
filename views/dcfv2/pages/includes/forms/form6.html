@@ -1,0 +1,685 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "form6" %}
+{% set forms = "forms" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<title>Form 6</title>
+	{% include "includes/sweetalert.html" %}
+    <div class="right_col" role="main">
+        <div class="row">
+    <div class="col-md-12 col-sm-12 x-card  x-light-grey">
+
+		<center>
+			<h2 class=" text-white x-container x-padding" style="background-color: #007399;">FORM 6 - PRODUCT
+				DEVELOPMENT/ ENHANCEMENT ASSISTANCE PROVIDED/ CONSULTANCY SERVICES</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
+
+		</center>
+
+
+		<style>
+			table,
+			th,
+			td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+		</style>
+
+
+		<div class="x-row x-container x-padding">
+            <input class="FORM6_FIELD x-input" type="hidden"  id="id">
+
+			<div class="x-row x-container x-padding">
+				<div class="x-col l3 x-container x-padding">
+					<label class="">Implementing Unit:</label>
+					<select required class="FORM6_FIELD x-border x-select x-border" id="form_6_implementing_unit"
+						name="form_6_implementing_unit"><br>
+						<option value="">Choose your option</option>
+						<optgroup label="RCU">
+							<option value="8">Region Vlll - Eastern Visayas</option>
+							<option value="9">Region lX - Zamboanga Peninsula</option>
+							<option value="10">Region X - Northern Mindanao</option>
+							<option value="11">Region Xl - Davao Region</option>
+							<option value="12">Region Xll - SOCCSKSARGEN</option>
+							<option value="13">Region Xlll - Caraga</option>
+							<option value="BARMM">BARMM</option>
+						</optgroup>
+						<optgroup label="PCU">
+
+							<option>Northern Samar</option>
+							<option>Leyte</option>
+							<option>Southern Leyte</option>
+							<option>Zamboanga del Norte</option>
+							<option>Zamboanga Sibugay</option>
+							<option>Zamboanga del Sur</option>
+							<option>Misamis Oriental</option>
+							<option>Bukidnon</option>
+							<option>Lanao del Norte</option>
+							<option>Davao de Oro</option>
+							<option>Davao Oriental</option>
+							<option>Davao del Norte</option>
+							<option>Davao del Sur</option>
+							<option>Davao Occidental</option>
+							<option>North Cotabato</option>
+							<option>Sultan Kudarat</option>
+							<option>Sarangani</option>
+							<option>Agusan del Norte</option>
+							<option>Agusan del Sur</option>
+							<option>Surigao del Sur</option>
+							<option>Maguindanao</option>
+						</optgroup>
+						<option style="font-weight: bold;">NGA Partners</option>
+					</select>
+
+				</div>
+				<div class="x-col l3 x-container x-padding">
+					<label>Type of Assistance:</label>
+					<input required class="FORM6_FIELD x-input x-border" id="form_6_type_of_assisstance"
+						name="form_6_type_of_assisstance" type="text" autocomplete="on" placeholder="Write Here">
+				</div>
+				<div class="x-col l3 x-container x-padding">
+					<label>Type of Activity:</label>
+					<input required class="FORM6_FIELD x-input x-border" id="form_6_type_of_activity"
+						name="form_6_type_of_activity" type="text" autocomplete="on" placeholder="Write Here">
+				</div>
+
+				<div class="x-col l3 x-container x-padding">
+					<label><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (example: R8_SC Global)" tabindex="1"><i class="fa fa-info-circle"></i></span> DIP Alignment:</label>
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_dip_alignment" name="form_6_dip_alignment" type="text"
+						autocomplete="on" placeholder="Write Here">
+				</div>
+			</div>
+			<div class="x-row x-container x-padding">
+				<div class="x-col l3 x-container x-padding">
+					<label>Activity Duration Start Date:</label>
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_activity_duration_start"
+						name="form_6_activity_duration_start" type="date" autocomplete="on" placeholder="Write Here">
+				</div>
+				<div class="x-col l3 x-container x-padding">
+					<label>Activity Duration End Date:</label>
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_activity_duration_end"
+						name="form_6_activity_duration_end" type="date" autocomplete="on" placeholder="Write Here">
+				</div>
+					<div class="x-col l5 x-container x-padding">
+					<label>Venue:</label>
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_venue" name="form_6_venue" type="text" autocomplete="on"
+						placeholder="Write Here">
+				</div>
+			</div>
+			<div class="x-row x-container x-padding">
+			
+				<div class="x-col l4 x-container x-padding" style="width: 45%;">
+					<label>Name of Resource Person/Facilitator/BDSP:</label>
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_resource_person" name="form_6_resource_person"
+						type="text" autocomplete="on" placeholder="Write Here">
+				</div>
+				<div class="x-col l4 x-container x-padding">
+					<label>RAPID Actual Budget:</label>
+					<input class="FORM6_FIELD  x-input x-border" id="form_6_rapid_actual_budget" name="form_6_rapid_actual_budget"
+						type="text" autocomplete="on" placeholder="Write Here">
+				</div>
+			</div>
+			<div class="x-row x-container x-padding">
+				<style>
+					table,
+					th,
+					td {
+						border: 1px;
+						border-collapse: collapse;
+					}
+				</style>
+				<table id="form6table" class="x-table x-container x-table-border" style="border-color: transparent;">
+					<tr>
+						<th colspan="2">
+							<center>Fully & partially funded by partners outside RAPID
+								<button type="button" style="float: left;" class="btn btn-primary"
+								onclick="add_row()"><i
+									class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add</button> </center>
+						</th>
+					</tr>
+
+					<tr>
+						<td>
+							
+								<center>Name of Partner/Organization</center>
+						</td>
+						<td>
+							<center>Name of Partner/Organization</center>
+						</td>
+					</tr>
+
+					<tr>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_partner_organization_1_kapown_0" type="text"
+								name="form_6_name_of_partner_organization_1[]"></td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_partner_organization_2_kapown_0" type="text"
+								name="form_6_name_of_partner_organization_2[]"></td>
+					</tr>
+				</table>
+				<script>
+           			 var k_counter = 1
+
+					function add_row() {
+						// $ID('main_').innerHTML += og_row
+						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+						var row = form6table.insertRow(2);
+						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+						row.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_partner_organization_1_kapown_`+k_counter+`" type="text" name="form_6_name_of_partner_organization_1[]"></td>`
+						row.insertCell(1).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_partner_organization_2_kapown_`+k_counter+`" type="text" name="form_6_name_of_partner_organization_2[]"></td>`
+						k_counter += 1
+						// Add some text to the new cells:
+					}
+				</script>
+			</div>
+
+			<!-- <div class="x-row x-container x-padding">
+				<style>
+					table,
+					th,
+					td {
+						border: 1px;
+						border-collapse: collapse;
+					}
+				</style>
+				<table id="form6tablepartcic" class="x-table x-container x-table-border"
+					style="border-color: transparent;">
+
+
+					<tr>
+						<td>
+							<button type="button" style="float: left;" class="btn btn-primary"
+									onclick="add_row3()"><i class="fa fa-plus-circle"></i></button>
+								<center>Name of Beneficiary/Participant</center>
+						</td>
+						<td>
+							<center>Commodity</center>
+						</td>
+						<td>
+							<center>Type of Beneficiary</center>
+						</td>
+						<td>
+							<center>Sex</center>
+						</td>
+						<td>
+							<center>Sector</center>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_beneficiary_participant_kapown_0" type="text"
+								name="form_6_beneficiary_participant[]"></td>
+						<td>
+								<input class="FORM6_FIELD  x-light-grey x-input" id="form_6_commodity_kapown_0" type="text"
+								name="form_6_commodity[]">
+						</td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_type_of_beneficiary_kapown_0" type="text"
+								name="form_6_type_of_beneficiary[]"></td>
+						<td><select class="FORM6_FIELD x-border x-select x-border" id="form_6_sex_kapown_0"
+								name="form_6_sex[]"><br>
+								<option value="">Choose your option</option>
+								<option>Male</option>
+								<option>Female</option>
+							</select></td>
+						<td><select class="FORM6_FIELD x-border x-select x-border" id="form_6_sector_kapown_0"
+								name="form_6_sector[]"><br>
+								<option value="">Choose your option</option>
+								<option>PWD</option>
+								<option>Youth</option>
+								<option>IP</option>
+								<option>SC</option>
+								<option>Abled</option>
+
+							</select></td>
+
+					</tr>
+				</table>
+				<script>
+            	var k_counter2 = 1
+
+					function add_row3() {
+						// $ID('main_').innerHTML += og_row
+						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+						var row = form6tablepartcic.insertRow(2);
+						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+						row.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_beneficiary_participant_kapown_`+k_counter2+`" type="text" name="form_6_beneficiary_participant[]"></td>`
+						row.insertCell(1).innerHTML = `<td>
+							<input class="FORM6_FIELD  x-light-grey x-input" id="form_6_commodity_kapown_`+k_counter2+`" type="text"
+								name="form_6_commodity[]">
+					</td>`
+						row.insertCell(2).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_type_of_beneficiary_kapown_`+k_counter2+`" type="text" name="form_6_type_of_beneficiary[]"></td>`
+						row.insertCell(3).innerHTML = `<td><select class="FORM6_FIELD x-border x-select x-border" id="form_6_sex_kapown_`+k_counter2+`" name="form_6_sex[]"><br>
+						<option value="">Choose your option</option>
+							<option>Male</option>
+							<option>Female</option>
+					</select></td>`
+						row.insertCell(4).innerHTML = `<td><select class="FORM6_FIELD x-border x-select x-border" id="form_6_sector_kapown_`+k_counter2+`" name="form_6_sector[]"><br>
+						<option value="">Choose your option</option>
+							<option>PWD</option>
+							<option>Youth</option>
+							<option>IP</option>
+							<option>SC</option>
+							<option>Abled</option>
+					</select></td>`
+
+
+
+					k_counter2 += 1
+						// Add some text to the new cells:
+					}
+				</script>
+			</div>
+ -->
+
+			<!-- <div class="x-row x-container x-padding">
+			<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
+			<table class="x-table x-container x-table-border" style="border-color: transparent;">
+				<tr>
+					<th colspan="3">
+						<center>sex</center>
+					</th>
+					<th colspan="5">
+						<center>Sector</center>
+					</th>
+				</tr>
+
+				<tr>
+					<td><center>Male</center></td>
+					<td><center>Female</center></td>
+					<td><center>Total</center></td>
+
+					<td><center>PWD</center></td>
+					<td><center>Youth</center></td>
+					<td><center>IP</center></td>
+					<td><center>SC</center></td>
+					<td><center>Total</center></td>
+
+				</tr>
+
+				<tr>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_male" type="text" name="form_6_male"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_female" type="text" name="form_6_female"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_total_1" type="text" name="form_6_total_1"></td>
+
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_pwd" type="text" name="form_6_pwd"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_youth" type="text" name="form_6_youth"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_ip" type="text" name="form_6_ip"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_sc" type="text" name="form_6_sc"></td>
+					<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_total_2" type="text" name="form_6_total_2"></td>
+				</tr>
+			</table>
+		</div> -->
+
+
+			<div class="x-row x-container x-padding">
+				<style>
+					table,
+					th,
+					td {
+						border: 1px solid black;
+						border-collapse: collapse;
+					}
+
+				</style>
+				<table   id="form6table2" class="x-table x-container x-table-border" style="border-color: transparent;   opacity: 0.2;">
+					<tr>
+						<th colspan="4">
+							<center>Outputs for Product Development <label style="background-color: #ff4d4d; color: white;"
+									class="badge badge-pill">On Dev</label></center>
+						</th>
+
+					</tr>
+
+					<tr>
+						<td colspan="2">
+							<center>Products Developed</center>
+						</td>
+						<td colspan="2">
+							<center>Products Improved</center>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<center><button type="button" style="float: left;" class="btn btn-primary"
+									onclick="add_row2()"><i
+										class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add</button>Name of Product
+								Developed</center>
+						</td>
+						<td>
+							<center>Date Launched to Market</center>
+						</td>
+
+						<td>
+							<center>Name of Improved Product</center>
+						</td>
+						<td>
+							<center>Type of Product Improvement </center>
+						</td>
+					</tr>
+
+					<tr>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_developed_kapown_0" type="text"
+								name="form_6_product_developed[]"></td>
+								
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_launched_to_market_kapown_0" type="date"
+								name="form_6_date_launched_to_market[]"></td>
+
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_improved_product_kapown_0" type="text"
+								name="form_6_improved_product[]"></td>
+
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_type_of_product_improvement_kapown_0" type="text"
+								name="form_6_type_of_product_improvement[]"></td>
+					</tr>
+				</table>
+			</div>
+			<script>
+            	var k_counter3 = 1
+
+			
+				function add_row2() {
+					// $ID('main_').innerHTML += og_row
+					// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+					var row2 = form6table2.insertRow(3);
+					// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+					row2.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_developed_kapown_`+k_counter3+`" type="text" name="form_6_product_developed[]"></td>`
+					row2.insertCell(1).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_launched_to_market_kapown_`+k_counter3+`" type="date" name="form_6_date_launched_to_market[]"></td>`
+					row2.insertCell(2).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_improved_product_kapown_`+k_counter3+`" type="text" name="form_6_improved_product[]"></td>`
+					row2.insertCell(3).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_type_of_product_improvement_kapown_`+k_counter3+`" type="text" name="form_6_type_of_product_improvement[]"></td>`
+					
+					// Add some text to the new cells:
+					k_counter3 += 1
+				}
+				
+			</script>
+
+			<!----outputs---->
+			<div class="x-row x-container x-padding">
+				<style>
+					table,
+					th,
+					td {
+						border: 1px solid black;
+						border-collapse: collapse;
+					}
+				</style>
+				<table class="x-table x-container x-table-border" style="border-color: transparent;">
+					<tr>
+						<th colspan="7">
+							<center>Outputs for Consultancy Services</center>
+						</th>
+
+					</tr>
+
+					<tr>
+						<td colspan="2">
+							<center>Productivity Improvement</center>
+						</td>
+						<td colspan="1">
+							<center>Quality and Trade Certifications</center>
+						</td>
+						<td colspan="4">
+							<center>Post Consultancy Outputs</center>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<center>Name the System/Process Established/Improved</center>
+						</td>
+						<td>
+							<center>Date of Establishment/ Adoption</center>
+						</td>
+
+						<td>
+							<center>Name/Title of Certifications Facilitated</center>
+						</td>
+
+						<td>
+							<center>Name/Title of Certifications Acquired</center>
+						</td>
+						<td>
+							<center>Date of Issuance</center>
+						</td>
+						<td>
+							<center>Expiration Date</center>
+						</td>
+						<td>
+							<center>Product Certified</center>
+						</td>
+					</tr>
+
+					<tr>
+
+						<!---1--->
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_name_of_product_developed" type="text"
+								name="form_6_name_of_product_developed"></td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_" type="date" name="form_6_"></td>
+
+						<!---2--->
+						<td>
+							<div class="x-row x-container x-padding">
+								<select class="FORM6_FIELD x-border x-select x-border" id="form_6_certification"
+									name="form_6_certification"><br>
+									<option value="" selected>Choose your option</option>
+									<option>GMP</option>
+									<option>HACCP</option>
+									<option>Halal</option>
+									<option>Organic Certification</option>
+									<option>FDA-LTO Certification</option>
+									<option>FDA-CPR</option>
+									<option value="other">Others</option>
+								</select>
+								<input type="text" class="FORM6_FIELD hidden-textboxform6 x-input x-border" name="form6_otherss1"
+									id="form6_otherss1" show-base="form_6_certification" show-trigger="other" placeholder="Please specify">
+
+							</div>
+						</td>
+
+						<!---3--->
+						<td>
+							<div class="x-row x-container x-padding">
+								<select class="FORM6_FIELD x-border x-select x-border" id="form_6_certification2"
+									name="form_6_certification2"><br>
+									<option value="" selected>Choose your option</option>
+									<option>GMP</option>
+									<option>HACCP</option>
+									<option>Halal</option>
+									<option>Organic Certification</option>
+									<option>FDA-LTO Certification</option>
+									<option>FDA-CPR</option>
+									<option value="other">Others</option>
+								</select>
+								<input type="text" class="FORM6_FIELD hidden-textboxform62 x-input x-border" name="form6_otherss2"
+									id="form6_otherss2" show-base="form_6_certification2" show-trigger="other" placeholder="Please specify">
+
+							</div>
+						</td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_issuance" type="date"
+								name="form_6_date_issuance"></td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_expiration_date" type="date"
+								name="form_6_expiration_date"></td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_certified" type="text"
+								name="form_6_product_certified"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="x-row x-container x-padding">
+				<style>
+					table,
+					th,
+					td {
+						border: 1px solid black;
+						border-collapse: collapse;
+					}
+				</style>
+				<table class="x-table x-container x-table-border" style="border-color: transparent;">
+					<tr>
+						<th colspan="2">
+							<center>Client Feedback survey (average per activity)</center>
+						</th>
+					</tr>
+
+					<tr>
+						<td>
+							<center>Rating</center>
+						</td>
+						<td>
+							<center>Comments/Areas of Improvement</center>
+						</td>
+					</tr>
+
+					<tr>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_rating" type="text" name="form_6_rating">
+						</td>
+						<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_comment_ares_of_improvement" type="text"
+								name="form_6_comment_ares_of_improvement"></td>
+					</tr>
+				</table>
+			</div>
+
+
+{% if benef|length !=0 %}
+					<!-- Start to do list -->
+<div class="col-md-12 col-sm-12 ">
+	<div class="x_panel">
+	  <div class="x_title">
+		<h2>Participants&nbsp;&nbsp;&nbsp;
+				  <a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="
+				  +URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
+				  <span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants
+			  </a> </h2></h2>
+		<ul class="nav navbar-right panel_toolbox">
+		  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+		  </li>
+		  <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">Settings 1</a>
+				<a class="dropdown-item" href="#">Settings 2</a>
+			</div>
+		</li>
+		<li><a class="close-link"><i class="fa fa-close"></i></a>
+		</li>
+	</ul>
+	<div class="clearfix"></div>
+</div>
+<div class="x_content">
+  <div class="row">
+	  <div class="col-sm-12">
+		<div class="card-box table-responsive">
+			<p class=" text-muted font-13 m-b-30">
+			  Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
+		  </p>
+		  
+		  <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				<th>Name / Org Name</th>
+				<th>Sex</th>
+				<th>Birthday</th>
+				<th>Primary Crop (If Applicable)</th>
+				<th>Barangay</th>
+				<th>City/Municipality</th>
+				<th>Province</th>
+				<th>Region</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			{% for parti in benef%}
+				<tr>
+					<td>{{parti['fname']}}</td>
+					<td>{{parti['sex']}}</td>
+					<td>{{parti['farmer_bday']}}</td>
+					<td>{{parti['farmer_primary_crop']}}</td>
+					<td>{{parti['addr_brgy']}}</td>
+					<td>{{parti['addr_city']}}</td>
+					<td>{{parti['addr_prov']}}</td>
+					<td>Region {{parti['addr_region']}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+		
+
+			</div>
+{%endif%}
+			
+
+
+
+			<div class="x-col l5">
+				<div method="post" enctype="multipart/form-data">
+					<div class="x-col l3 x-container x-padding">
+						<input class=" x-padding" type="file" name="form_2_image_uploads" id="form_2_image_uploads"
+							name="image_uploads" accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx"
+							multiple />
+					</div>
+				</div>
+
+
+			</div>
+			<!-- <div class="x-col l4 x-container x-padding">	
+            <button data-toggle="modal" data-target="#form6_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
+        </div> -->
+		<p class="x-right" id="submit_btn_holder">
+            <button class="btn btn-primary" type="button" onclick="submit_form('FORM6_FIELD','dcf_product_development','/form6_dashboard')">Submit</button>
+</p>
+
+
+
+		</div>
+	</div>
+</div>
+		{% include 'formdata_handler.html' %}
+
+<script>
+	$onload(function () {
+		var record_id = URL_ARGS["id"]
+		var table = URL_ARGS["table"]
+		load_data(record_id, table, "FORM6_FIELD")
+		
+		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+	})
+	const elementsWithName = document.querySelectorAll('[name]');
+
+
+	elementsWithName.forEach(element => {
+		// console.log(element.getAttribute('name'));
+	});
+
+	// $(document).ready(function(){
+	// 	CHOICES_SELECT['form_6_type_of_product_improvement_kapown_0'] = new Choices('#form_6_type_of_product_improvement_kapown_0', {
+	// 		removeItemButton: true,
+	// 		choices: ["Product Quality","Packaging","Labels"],
+	// 		searchChoices: true,
+	// 		// maxItemCount:4,
+	// 		// searchResultLimit:4,
+	// 		addItems: true,
+	// 		uniqueItemText: 'Only unique values can be added',
+	// 		customAddItemText: 'Only values matching specific conditions can be added',
+	// 		addItemText: (value) => {
+	// 			// println(multipleCancelButton)
+	// 			return `Press Enter to add <b>`+value+`</b>`;
+	// 		},
+	// 	}); 
+	// });
+</script>
+{% endblock content %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}

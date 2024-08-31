@@ -31,52 +31,52 @@
 
 
 
-	function g2_data_reconstruct(_data){
-		var PRIV_TYPE = ("{{USER_DATA['PRIV_TYPE']}}")
-		var temp_data2 = {}
-		var area_key = ""
+	// function g2_data_reconstruct(_data){
+	// 	var PRIV_TYPE = ("{{USER_DATA['PRIV_TYPE']}}")
+	// 	var temp_data2 = {}
+	// 	var area_key = ""
 
-		if(PRIV_TYPE.includes('NPCO')){
-			is_npco_view = true;area_key = "addr_region";
-		}else{
-			is_npco_view = false;area_key = "addr_prov";
-		}
+	// 	if(PRIV_TYPE.includes('NPCO')){
+	// 		is_npco_view = true;area_key = "addr_region";
+	// 	}else{
+	// 		is_npco_view = false;area_key = "addr_prov";
+	// 	}
 		
-		for (var i = 0; i < _data.length; i++) {
-			var area = _data[i][area_key]
-			var crop = _data[i]['farmer_primary_crop'].toUpperCase().replaceAll(" ","")
-			var sex = _data[i]['farmer_sex'].toLowerCase()
-			var is_hh = _data[i]['is_head_hh'].toLowerCase()
-			if(area in temp_data2){
-				if(crop   in temp_data2[area]){
-					if(sex=='female'){
-						if(is_hh =='true' || is_hh =='yes'){
-							temp_data2[area][crop]['female_hh'] = temp_data2[area][crop]['female_hh'] + 1
-						}else{
-							temp_data2[area][crop]['female'] = temp_data2[area][crop]['female'] + 1
-						}
-					}else if(sex=='male'){
-						if(is_hh =='true' || is_hh =='yes'){
-							temp_data2[area][crop]['male_hh'] = temp_data2[area][crop]['male_hh'] + 1
-						}else{
-							temp_data2[area][crop]['male'] = temp_data2[area][crop]['male'] + 1
-						}
-					}
-				}else{
-					temp_data2[area][crop] = {
-						"male" :0,
-						"male_hh" :0,
-						"female" :0,
-						"female_hh" :0,
-					}
-				}
-			}else{
-				temp_data2[area] = {}
-			}
-		}
-		GRAPH_2_DATA = temp_data2
-		// set_graph2(_data)
-	}
+	// 	for (var i = 0; i < _data.length; i++) {
+	// 		var area = _data[i][area_key]
+	// 		var crop = _data[i]['farmer_primary_crop'].toUpperCase().replaceAll(" ","")
+	// 		var sex = _data[i]['farmer_sex'].toLowerCase()
+	// 		var is_hh = _data[i]['is_head_hh'].toLowerCase()
+	// 		if(area in temp_data2){
+	// 			if(crop   in temp_data2[area]){
+	// 				if(sex=='female'){
+	// 					if(is_hh =='true' || is_hh =='yes'){
+	// 						temp_data2[area][crop]['female_hh'] = temp_data2[area][crop]['female_hh'] + 1
+	// 					}else{
+	// 						temp_data2[area][crop]['female'] = temp_data2[area][crop]['female'] + 1
+	// 					}
+	// 				}else if(sex=='male'){
+	// 					if(is_hh =='true' || is_hh =='yes'){
+	// 						temp_data2[area][crop]['male_hh'] = temp_data2[area][crop]['male_hh'] + 1
+	// 					}else{
+	// 						temp_data2[area][crop]['male'] = temp_data2[area][crop]['male'] + 1
+	// 					}
+	// 				}
+	// 			}else{
+	// 				temp_data2[area][crop] = {
+	// 					"male" :0,
+	// 					"male_hh" :0,
+	// 					"female" :0,
+	// 					"female_hh" :0,
+	// 				}
+	// 			}
+	// 		}else{
+	// 			temp_data2[area] = {}
+	// 		}
+	// 	}
+	// 	GRAPH_2_DATA = temp_data2
+	// 	// set_graph2(_data)
+	// }
 
 	function hide_graph2_data(){
 		// $ID("g2_holder").style.display = "none"

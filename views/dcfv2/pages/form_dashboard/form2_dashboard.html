@@ -1,0 +1,603 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "dcf_dashboard" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% include "includes/sweetalert.html" %}
+<title>Form 2 Dashboard</title>
+
+<div class="right_col" role="main">
+	<!-- top tiles -->
+	<div class="row" style="display: inline-block;" >
+
+
+		<div class="top_tiles">
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats">
+					<div class="count _money_tag">{{dcf_form2}}</div>
+					<h3>Total Entries</h3>
+					<p>Total # of Entries.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats">
+					<div class="count _money_tag">{{dcf_form2sextotal[0]['total_sex2'] | int}}</div>
+					<h3>Total Members</h3>
+					<p>Total # of FO Members.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats">
+					<div class="count _money_tag">{{dcf_form2FOmale[0]['total_male2'] | int}} </div>
+					<h3>Total Male</h3>
+					<p>Total # of FO Members by Sex.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats">
+					<div class="count _money_tag">{{dcf_form2FOfemale[0]['total_female2'] | int}}</div>
+					<h3>Total Female</h3>
+					<p>Total # of FO Members by Sex.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats">
+					<div class="count _money_tag">{{dcf_form2FOpwd[0]['total_pwd'] | int}}</div>
+					<h3>PWD</h3>
+					<p>Total # of FO members by Sector.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats">
+					<div class="count _money_tag">{{dcf_form2FOyouth[0]['total_youth'] | int}}</div>
+					<h3>Youth</h3>
+					<p>Total # of FO members by Sector.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats">
+					<div class="count _money_tag">{{dcf_form2FOip[0]['total_ip'] | int}}</div>
+					<h3>IP</h3>
+					<p>Total # of FO members by Sector.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats">
+					<div class="count _money_tag">{{dcf_form2FOsc[0]['total_sc'] | int}}</div>
+					<h3>SC</h3>
+					<p>Total # of FO members by Sector.</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- /top tiles -->
+
+	<div class="row">
+
+
+		<div class="col-md-6 col-sm-6  ">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>Remarks/Status <small>Pie chart</small></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="#">Settings 1</a>
+								<a class="dropdown-item" href="#">Settings 2</a>
+							</div>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="polarArea"></canvas>
+					<div style="text-align: center;">
+						<p><i class="fa fa-square" style="color:#ff5c33 "></i> Cancelled: {{dcf_form2cancelled}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc">&nbsp;&nbsp;&nbsp;</i>On-going: {{dcf_form2og}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#999999">&nbsp;&nbsp;&nbsp;</i>Non-renewal: {{dcf_form2nonrenewal}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-4 col-sm-4 ">
+				<div class="x_panel tile overflow_hidden">
+					<div class="x_title">
+						<h2>Commodity</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">Settings 1</a>
+									<a class="dropdown-item" href="#">Settings 2</a>
+								</div>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<table class="" style="width:100%">
+							<tr>
+								<th>
+									<p>Pie Chart Percentage</p>
+								</th>
+								<th>
+									<p class="">Commodities</p>
+
+								</th>
+							</tr>
+							<tr>
+								<td>
+									<canvas class="canvasDoughnut" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+								</td>
+								<td>
+									<table class="tile_info">
+										{% for key in over_all_commodity_count2 %}
+										<tr>
+											<td>
+												{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
+												{% set color_index = loop.index0 % square_colors|length %}
+												<p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count2[key] }}</p>
+											</td>
+
+										</tr>
+										{% endfor %}
+									</tr>
+
+								</table>
+							</td>
+
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+
+
+	<br />
+
+	<div class="row">
+
+
+
+
+
+
+						<script>// Replace this with your actual variable or value
+
+
+						
+						function init_chart_doughnut() {
+
+
+							if (typeof (Chart) === 'undefined') { return; }
+
+
+							console.log('init_chart_doughnut');
+
+							if ($('.canvasDoughnut').length) {
+
+								var _labels = [];
+								var _data = [];
+								
+				// Sample data
+								{% for key in over_all_commodity_count2 %}
+								_labels.push('{{key}}');
+								_data.push('{{over_all_commodity_count2[key]}}');
+								{% endfor %}
+				// Calculate total for _data
+								var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+
+// Normalize _data to make its total equivalent to totalData
+								var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
+
+								var chart_doughnut_settings = {
+									type: 'doughnut',
+									tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+									data: {
+										labels: _labels,
+										datasets: [{
+						data: normalizedData, // Use normalizedData here
+						backgroundColor: [
+							"#BDC3C7",
+							"#5c5c3d",
+							"#994d00",
+							"#331a00",
+							"#23a98c"
+							],
+						hoverBackgroundColor: [
+							"#CFD4D8",
+							"#8a8a5c",
+							"#cc6600",
+							"#663500",
+							"#56dcbf"
+							]
+					}]
+									},
+									options: {
+										legend: false,
+										responsive: false,
+										tooltips: {
+											callbacks: {
+												label: function (tooltipItem, data) {
+													var dataset = data.datasets[tooltipItem.datasetIndex];
+													var currentValue = _data[tooltipItem.index];
+													var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
+													return _labels[tooltipItem.index] + ": " + percentage;
+												}
+											}
+										}
+
+									}
+								};
+
+								$('.canvasDoughnut').each(function () {
+
+									var chart_element = $(this);
+									var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+
+								});
+
+							}
+
+						}
+
+						function init_charts() {
+
+							console.log('run_charts  typeof [' + typeof (Chart) + ']');
+
+							if (typeof (Chart) === 'undefined') { return; }
+
+							console.log('init_charts');
+
+
+							Chart.defaults.global.legend = {
+								enabled: false
+							};
+
+							var _data =  [{{dcf_form2cancelled | int}}, {{dcf_form2og | int}}, {{dcf_form2nonrenewal | int}}]
+							println(_data)
+
+							if ($("#polarArea").length) e = document.getElementById("polarArea"), a = {
+								datasets: [{
+									data:_data,
+									backgroundColor: [ "#ff5c33","#0099cc","#999999"],
+									label: "My dataset"
+								}],
+								labels: ["Cancelled", "On-going", "Non-renewal"]
+							}, new Chart(e, {
+								data: a,
+								type: "polarArea",
+								options: {
+									scale: {
+										ticks: {
+											beginAtZero: true,
+											userCallback: function(label, index, labels) {
+                     // when the floored value is the same as the value we have a whole number
+												if (Math.floor(label) === label) {
+													return label;
+												}
+
+											}
+										},
+									}
+								}
+							})
+
+
+
+		// Radar 
+						}
+
+
+						function showDeleteConfirmation(id) {
+							swalWithCustomButtons.fire({
+								title: 'Are you sure?',
+								text: "You won't be able to revert this!",
+								icon: 'warning',
+								showCancelButton: true,
+								confirmButtonText: 'Yes, delete it!',
+								cancelButtonText: 'No, cancel',
+								reverseButtons: true,
+								customClass: {
+									confirmButton: 'btn btn-success',
+									cancelButton: 'btn btn-danger',
+								},
+							}).then((result) => {
+								if (result.isConfirmed) {
+									window.location.href = `/delete_record/dcf_implementing_unit/${id}`;
+								} else if (result.dismiss === Swal.DismissReason.cancel) {
+									swalWithCustomButtons.fire(
+										'Cancelled',
+										'Your record is safe',
+										'error'
+										);
+								}
+							});
+
+							return false;
+						}
+
+						const swalWithCustomButtons = Swal.mixin({
+							customClass: {
+								confirmButton: 'btn btn-success',
+								cancelButton: 'btn btn-danger'
+							},
+							buttonsStyling: false
+						});
+
+
+						
+						function download_login_start(fff){
+							let a= document.createElement('a');
+							a.target= '_blank';
+							a.href= '/login/download_file/'+fff;
+							a.click();
+						}
+
+					</script>
+
+
+
+
+					<!-- Start to do list -->
+					<div class="col-md-12 col-sm-12 ">
+						<div class="x_panel ">
+							<div class="x_title">
+								<h2>Data<small>Table</small></h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+									</li>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">Settings 1</a>
+											<a class="dropdown-item" href="#">Settings 2</a>
+										</div>
+									</li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a>
+									</li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card-box table-responsive">
+											<p class="text-muted font-13 m-b-30">
+												All entries of Form 2 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
+											</p>
+											
+											<table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>Name of Owner</th>
+														<th> Business Name</th>
+														<th>RCU</th>
+														<th>PCU</th>
+														<th>Commodity</th>
+														<th>Remark/Status</th>
+														<th>Action</th>
+														<th>Timestamp</th>
+														<th>Contracts</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<div>
+															{% for row in form2_datatable %}
+															<td>RAPID_CPA_{{row['id'] }}</td>
+															<td>{{ row['form_2_name_owner_manager'] }}</td>
+															<td>{{ row['form_2_businessname'] }}</td>
+															<td>{{ row['form_2_rcus'] }}</td>
+															<td>{{ row['form_2_pcu'] }}</td>
+															<td>{{ row['form_2_commodity'] }} {{ row['form_2_commodity_others'] }}</td>
+
+															{% set status =  row['form_2_recent_cpa'] | cpa_status(row['form_2_cpa_date_signing'],row['form_2_cpa_date_expiration'],row['form_2_cpa_date_renewed'],row['form_2_name_owner_manager'])%}
+
+															{% if status["status"] == 'Active'%}
+															<td style="color: #00e673;">
+																{{status["status"]}} || {{status["cpa"]}}<br>
+																<span style="color: #d9d9d9;"><i class="ti-info-alt"></i> {{status["note"]}}</span><br>
+															</td>
+															{%elif(status["status"]=="Expired")%}
+															<td style="color: #ff5c33;">
+																{{status["status"]}} || {{status["cpa"]}}<br>
+																<span style="color: #d9d9d9;"><i class="ti-info-alt"></i> {{status["note"]}}  &nbsp&nbsp <a style="cursor:pointer; color: #00bfff;"><i class="ti-new-window"></i> Renew CPA</a></span><br>
+															</td>
+															{%elif(status["status"]=="To be expire")%}
+
+															<td style="color: #ffc34d;">
+																{{status["status"]}} || {{status["cpa"]}}<br>
+																<span style="color: #d9d9d9;"><i class="ti-info-alt"></i> {{status["note"]}}&nbsp&nbsp <a style="cursor:pointer; color: #00bfff;"><i class="ti-file"></i> Create draft</a></span><br>
+															</td>
+															{%else%}
+
+															<td style="color: #d9b3ff;">
+																{{status["status"]}} || {{status["cpa"]}}<br>
+																<span style="color: #d9d9d9;"><i class="ti-info-alt"></i> {{status["note"]}}</span><br>
+															</td>
+
+															{%endif%}
+
+
+															<td>
+																<!-- {{row['upload_by']}} === {{user_data['id']}} -->
+																
+
+																{% if row['upload_by']|string == user_data['id']|string %}
+																<a style="color: #00e673;" href="/dcf/form2?id={{ row['id'] }}&table=dcf_implementing_unit">
+																	<span><i class="fa fa-pencil-square-o"></i></span> Edit
+																</a>&nbsp;&nbsp;&nbsp;
+																<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+																+{{ row["id"] }}+"&i=dcf_implementing_unit",true)'>
+																<span><i class="fa fa-user-plus"></i></span> Add Participants
+															</a> &nbsp;&nbsp;&nbsp;&nbsp;
+															<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+															href="/delete_record/dcf_implementing_unit/{{ row['id'] }}">
+															<span><i class="fa fa-trash"></i></span> Delete
+														</a>
+														{% elif user_data['job'] == "Super Admin" %}
+														<a style="color: #33cccc;" href="/dcf/form2?id={{ row['id'] }}&table=dcf_implementing_unit">
+															<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+														</a>
+														{% else %}
+														<a style="color: #33cccc;" href="/dcf/form2?id={{ row['id'] }}&table=dcf_implementing_unit">
+															<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+														</a>
+														{% endif %}
+
+													</td>
+													<td class="date-cell"> {{ row['date_created'] }}<br>
+														{% if row['date_modified'] %}
+														<i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
+														}}</i>
+													{% endif %}</i>
+												</td>
+												<td>
+													<table>
+														<tr>
+															<th>Title</th>
+															<th>Date</th>
+															<th>Status</th>
+															<th>Title</th>
+														</tr>
+														<tr>
+															<td>adadd</td>
+															<td>adadd</td>
+															<td>adadd</td>
+															<td>adadd</td>
+														</tr>
+														<tr>
+															<td>adadd</td>
+															<td>adadd</td>
+															<td>adadd</td>
+															<td>adadd</td>
+														</tr>
+													</table>
+												</td>
+
+
+											</tr>
+
+											{% endfor %}
+										</tbody>
+									</table>
+									
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="col-md-12 col-sm-12 ">
+					<div class="x_panel tile">
+						<div class="x_title">
+							<h2>FORM 2 CPA TRACKER<small>SPREADSHEET MANAGEMENT</small></h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+								</li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<a class="dropdown-item" href="#">Settings 1</a>
+										<a class="dropdown-item" href="#">Settings 2</a>
+									</div>
+								</li>
+								<li><a class="close-link"><i class="fa fa-close"></i></a>
+								</li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+							<form action="/dcf" method="POST" enctype="multipart/form-data">
+								<div class="form-group">
+									<div class="form-row">
+										<div class="col">
+											<select id="export_type" name="export_type" class="form-control">
+												<option value="form2export">FORM 2 CPA TRACKER</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="col">
+											<strong>
+												<label for="position">Export Data:</label>
+											</strong><br>
+											<button type="submit" class="btn btn-md btn-dark"><span><i class="fa fa-cloud-download"></i></span>
+											Export</button>
+										</div>
+									</div>
+								</div>
+							</form>
+
+							<form action="/importcsvform2" method="POST" enctype="multipart/form-data">
+								{% include "includes/sweetalert.html" %}
+								<div class="form-group">
+									<div class="form-row">
+
+										<div class="col">
+											<strong>
+												<label for="position">Import Data:</label>
+											</strong><br>
+											<div class="file-upload">
+												<div class="file-select">
+													<div class="file-select-button" id="fileName">Choose File</div>
+													<div class="file-select-name" id="noFile">No file chosen...</div>
+													<input multiple type="file"
+													accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+													name="chooseFile" id="chooseFile" required>
+
+												</div>
+											</div>
+											<br>
+											<button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
+
+											<span style="cursor: pointer;" onclick="download_login_start('DCF_Form_2.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download form 2 excel template</span>
+										</div>
+									</div>
+								</form>
+
+
+							</div>
+						</div>
+					</div>
+					<!-- End to do list -->
+					
+					<!-- end of weather widget -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endblock content %}
+
+	<!-- Specific JS goes HERE -->
+
+	{% block javascripts %}
+
+
+
+	{% endblock javascripts %}

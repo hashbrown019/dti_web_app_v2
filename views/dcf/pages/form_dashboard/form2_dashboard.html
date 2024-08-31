@@ -7,15 +7,25 @@
 
 {% block content %}
 <title>Form 2 Dasboard</title>
+<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
     <div class="header-body">
 
-      <div class="d-flex align-items-center">
+     <div class="header bg-primary pb-6">
+  <div class="container-fluid"><center>
+    <div class="header-body" style=" max-width: 95%; background-color: #007399;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+    <br>
         <!-- Search form -->
-        <div class="h1 fw-bolder text-gray mb-2">FORM 2 CPA TRACKER</div>
+
+    <h1 class=" text-white" style="font-size:1.8em; font-weight: bold; text-align: center; margin: 2px;">FORM 2 CPA TRACKER DASHBOARD</h1>
+        
         <!-- / Search form -->
-      </div>
+      <br>
+    </div></center><br><br>
       <style>
         .icon-button__badge {
           position: absolute;
@@ -30,25 +40,72 @@
           align-items: center;
           border-radius: 50%;
         }
+        .chartjs-wrapper {
+  margin:0 auto;
+  width: 32vw;
+  height: auto;
+}
       </style>
 
-      <div class="row">
-  <div class="col-xl-3 col-md-6">
-      <div class="card card-stats h-80"
-        style="height: 130px; background-color: #004466; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      <div class="col-xl-12 col-md-6">
+      <div class="card bg-secondary" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+<br>
+      
+        
+      <div class="bg-transparent">
+        <div class="row align-items-center">
+      
+        
+        </div>
+      
+        </div>
+        
+        <!-- Card body -->
+        <div class="card-body">
+
+
+<div class="row">
+ <div class="col-xl-5 col-md-6 mx-auto">
+    <!-- Chart 1 -->
+    <canvas id="sexchart" style="max-width: 700px; height: 500px;"></canvas>
+  </div>
+  <div class="col-xl-5 col-md-6 mx-auto">
+
+    <canvas id="myPieChart2" style="max-width: 700px;"></canvas>
+
+  </div>
+
+</div>  
+<br>
+<br>
+<div class="chartjs-wrapper">
+  <canvas class="chartjs-stacked-bar"></canvas>
+</div>
+
+
+<a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Show data</a>
+<div class="row">
+{% for dip in dips_list %}
+
+
+<div class="col">
+   <div class=" collapse multi-collapse" id="multiCollapseExample1">
+    <br>
+      <div class="card card-stats"
+        style="width: 200px; border: 2px solid #006080; ">
         <!-- Card body -->
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <h4 class="card-title text-uppercase text-white mb-0"><b class="formtext text-light">Total no. of FO members by Sex</b><br> Male</h4>
-              <span class="h1 text-white font-weight-bold mb-0">{{dcf_form2FOmale[0]['total_male2'] | int}}</span>
+              <p class="card-title text-default mb-0"><b class="text-default font-weight-bold mb-0">RCU: {{dip}}</b></p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">PWD: {{dips_list[dip]["approve"]}}</p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">Youth: {{dips_list[dip]["pipeline"]}}</p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">IP: {{dips_list[dip]["ongoing"]}}</p>
+              <p class=" text-mute textdesc font-weight-bold mb-0">SC: {{dips_list[dip]["not_started"]}}</p>
             </div>
-            <div class="col-auto">
-              <div class="icon icon-shape">
-                <img src="../static/psalm_static/dcf_static/assets/img/icons/man.png"
-                  style="width: 250%; height: 250%;">
-              </div>
-            </div>
+
+          
+            
           </div>
           <p class="mt mb-0 text-sm">
             <br>
@@ -57,31 +114,26 @@
 
   </div>
 </div>
- <div class="col-xl-3 col-md-6">
-      <div class="card card-stats h-80"
-        style="height: 130px; background-color: #cc0066; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-        <!-- Card body -->
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h4 class="card-title text-uppercase text-white mb-0"><b class="formtext text-light">Total no. of FO members by Sex</b><br> Female</h4>
-              <span class="h1 text-white font-weight-bold mb-0">{{dcf_form2FOfemale[0]['total_female2'] | int}}</span>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape">
-                <img src="../static/psalm_static/dcf_static/assets/img/icons/female.png"
-                  style="width: 250%; height: 250%;">
-              </div>
-            </div>
-          </div>
-          <p class="mt mb-0 text-sm">
-            <br>
-          </p>
-        </div>
+</div>
+{% endfor %}
+</div>
 
-  </div>
+
+
 </div>
+<br>
+
 </div>
+
+    
+    
+        </div>
+      </div>
+        
+    
+        
+    </div>
+
 
       <!-- Card header -->
       <div class="d-flex justify-content-center">
@@ -175,6 +227,227 @@
     </div>
   </div>
 </div>
+<script>
+
+
+var chart = new Chart(
+    document.getElementsByClassName('chartjs-stacked-bar'),
+    {
+    type: 'horizontalBar',
+    data: {
+        labels: ["Remarks/Status"],
+        datasets: [{
+            data: [{{dcf_form2nonrenewal}}],
+            label:"Non-renewal",
+            stack: "Remarks/Status",
+            backgroundColor: "#808080",
+            hoverBackgroundColor: "rgba(50,90,100,1)"
+        },{
+            data: [{{dcf_form2cancelled}}],
+            label: "Cancelled",
+            stack: "Remarks/Status",
+            backgroundColor: "#ff8566",
+            hoverBackgroundColor: "rgba(140,85,100,1)"
+        },{
+            data: [{{dcf_form2og}}],
+            label:"On-going",
+            stack: "Remarks/Status",
+            backgroundColor: "#80aaff",
+            hoverBackgroundColor: "rgba(46,185,235,1)"
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                stacked: true
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        },
+        title: {
+        display: true,
+        text: `Total remarks/status: {{totalstatus}}`,
+        fontSize: 15,
+        fontColor: '#204060',
+      }
+    }
+});
+
+  var xValues = [
+    'Male: ' + money({{dcf_form2FOmale[0]['total_male2']}}),
+    'Female: ' + money({{dcf_form2FOfemale[0]['total_female2']}}),
+  ];
+
+  var yValues = [
+    {{dcf_form2FOmale[0]['total_male2']}},
+    {{dcf_form2FOfemale[0]['total_female2']}},
+    // {{total_untagged}},
+  ];
+  var barColors = ['#2d5986', '#800055'];
+
+  var total = yValues.reduce((a, b) => a + b, 0);
+
+  var percentageValues = yValues.map((value) => ((value / total) * 100).toFixed(2));
+
+Chart.plugins.register({
+  afterDatasetsDraw: function (chart, easing) {
+    // Check if the chart has the ID 'sexchart'
+    if (chart.canvas.id === 'sexchart') {
+      var ctx = chart.ctx;
+
+      chart.data.datasets.forEach(function (dataset, i) {
+        var meta = chart.getDatasetMeta(i);
+        if (!meta.hidden) {
+          meta.data.forEach(function (element, index) {
+            ctx.fillStyle = 'white';
+
+            var fontSize = 13; // Change this to your desired font size
+            var fontStyle = 'bold';
+            var fontFamily = 'sans-serif';
+            ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+            // Display only the percentage value without .00
+            var dataString = Number(percentageValues[index]) + '%';
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            var padding = 5;
+            var position = element.tooltipPosition();
+            ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+          });
+        }
+      });
+    }
+  },
+});
+
+  new Chart('sexchart', {
+    type: 'pie',
+    data: {
+      labels: xValues,
+      datasets: [
+        {
+          backgroundColor: barColors,
+          data: yValues,
+        },
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: `Total Number of FO Members: `+money({{dcf_form2sextotal[0]['total_sex2'] | int}}),
+        fontSize: 15,
+        fontColor: '#204060',
+      },
+      plugins: {
+        datalabels: {
+          display: false,
+        },
+      },
+      legend: {
+        labels: {
+          fontColor: 'gray', // Customize the legend label color
+          fontSize: 13,
+           // Customize the legend label font size
+        },
+      },
+      tooltips: {
+        callbacks: {
+          label: function (tooltipItem, data) {
+            // Display only the percentage value without .00 in the tooltip
+            return data.labels[tooltipItem.index];
+          },
+        },
+      },
+    },
+  });
+
+
+var _labels = [];
+var _data = [];
+
+// Sample data
+{% for key in over_all_commodity_count2 %}
+  _labels.push('{{key}}');
+  _data.push('{{over_all_commodity_count2[key]}}');
+{% endfor %}
+
+// Calculate total for _data
+var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+
+// Normalize _data to make its total equivalent to totalData
+var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
+
+var data = {
+  labels: _labels,
+  datasets: [{
+    data: normalizedData, // Values for each category
+    backgroundColor: ['#994d00', '#1a0d00', '#5c5c3d', '#a6a6a6', '#006666'],
+  }]
+};
+
+var options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  tooltips: {
+    callbacks: {
+      label: function (tooltipItem, data) {
+        var label = data.labels[tooltipItem.index];
+        var value = _data[tooltipItem.index];
+        return label + ': ' + value;
+      },
+    },
+  },
+   title: {
+        display: true,
+        text: `Commodity`,
+        fontSize: 15,
+        fontColor: '#204060',
+      }
+};
+
+var ctx = document.getElementById('myPieChart2').getContext('2d');
+var myPieChart2 = new Chart(ctx, {
+  type: 'pie',
+  data: data,
+  options: options,
+  title: 'Commodity'
+});
+
+// Display total percentage values on the pie chart
+Chart.plugins.register({
+  afterDatasetsDraw: function (chart, easing) {
+    if (chart.canvas.id === 'myPieChart2') {
+      var ctx = chart.ctx;
+
+      chart.data.datasets.forEach(function (dataset, i) {
+        var meta = chart.getDatasetMeta(i);
+        if (!meta.hidden) {
+          meta.data.forEach(function (element, index) {
+            ctx.fillStyle = 'white';
+
+            var fontSize = 12;
+            var fontStyle = 'bold';
+            var fontFamily = 'sans-serif';
+            ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+            var dataString = normalizedData[index] + '%';
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            var padding = 5;
+            var position = element.tooltipPosition();
+            ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+          });
+        }
+      });
+    }
+  },
+});
+</script>
 
 
 
@@ -220,9 +493,8 @@
                 },
                 buttonsStyling: false
               });
+
 </script>
-<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.min.js"></script>
-<script src="/static/psalm_static/dcf_static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
 
 
 {% endblock javascripts %}

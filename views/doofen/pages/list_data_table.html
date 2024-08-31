@@ -1,48 +1,52 @@
-<table class="display" id="table_id_fo" style="width:100%">
-	<thead class="x-rapid-teal-heavy" style="width:100%">
-		<tr class="">
-			<th hidden>
-				ID<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="0" />
-			</th>
-			<th>
-				Farmer's Org Name<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
-			</th>
-			<th>
-				Address<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="2" />
-			</th>
-			<th>
-				Type of Organization<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index=3 />
-			</th>
-			<th>
-				Registering Agencies<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="4" />
-			</th>
-			<th>
-				Inputed By<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
-			</th>
-			<th>
-				RCU<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
-			</th>
-			
-		</tr>
-	</thead>
-	<tbody id="list_farmers" style="">
-	</tbody>
-</table>
+<div class="x-row x-container">
+	<h2 class="x-text-teal"><b>Farmers' Organization Entry Lists</b></h2>
+
+	<div class="x-text-grey">
+		Some entries will not appear nor include to the counting if the entry in a specific consolidation of field data is incorrect, blank or not listed on the baseline lists of dashboards data. Please check entries before submitting or perform regular data cleaning of the records
+	</div>
+</div>
+<div class="x-row x-container">
+	<table class="display" id="table_id_fo" style="width:100%">
+		<thead class="x-rapid-teal-heavy" style="width:100%">
+			<tr class="">
+				<th hidden>
+					ID<br>
+					<input style="border:0px" type="text" placeholder="Search" data-index="0" />
+				</th>
+				<th>
+					Farmer's Org Name<br>
+					<input style="border:0px" type="text" placeholder="Search" data-index="1" />
+				</th>
+				<th>
+					Address<br>
+					<input style="border:0px" type="text" placeholder="Search" data-index="2" />
+				</th>
+				<th>
+					Type of Organization<br>
+					<input style="border:0px" type="text" placeholder="Search" data-index=3 />
+				</th>
+				<th>
+					Registering Agencies<br>
+					<input style="border:0px" type="text" placeholder="Search" data-index="4" />
+				</th>
+				<th>
+					Inputed By<br>
+					<input style="border:0px" type="text" placeholder="Search" data-index="1" />
+				</th>
+				<th>
+					RCU<br>
+					<input style="border:0px" type="text" placeholder="Search" data-index="1" />
+				</th>
+			</tr>
+		</thead>
+		<tbody id="list_farmers" style="">
+		</tbody>
+	</table>
+</div>
 
 <script type="text/javascript">
 	var init_counter = 0
 	let TABLE
-
-	function onloads(){
-		showing_table_ls_farmer()
-	}
 
 	function showing_table_ls_farmer(){
 		SPINNER_LOADER.show()
@@ -226,7 +230,7 @@
 					// 	form_data_b[i].disabled = true
 					// }
 				}
-				show_view('forms','main-container')
+				show_view('forms','page_content')
 			}
 		})
 		// showing_table_ls_farmer()

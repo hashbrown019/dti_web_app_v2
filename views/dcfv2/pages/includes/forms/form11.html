@@ -1,0 +1,347 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "form11" %}
+{% set forms = "forms" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<title>Form 11 </title>
+
+	{% include "includes/sweetalert.html" %}
+    <div class="right_col" role="main">
+        <div class="row">
+    <div class="col-md-12 col-sm-12 x-card  x-light-grey">
+		<center>
+			<h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 11 - ACCESS TO
+				FINANCING TRACKER</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
+
+		</center>
+
+		<div class="x-container x-padding">
+			<style>
+				table,
+				th,
+				td {
+					border: 1px solid black;
+					border-collapse: collapse;
+				}
+			</style>
+		</div>
+
+
+		<div class="x-row x-container x-padding">
+            <input class="FORM11_FIELD x-input" type="hidden"  id="id">
+
+			<div class="x-col l4 x-container x-padding">
+				<label class="">DIP Alignment :</label>
+				<select id="form_11_dip_alignment" name="form_11_dip_alignment" class="FORM11_FIELD withother x-border x-select x-border"
+					required>
+					<option value="none">Choose your option</option>
+					<option value="Yes">Yes</option>
+					<option value="No DIP Alignment">No</option>
+				</select>
+				<input type="text" class="FORM11_FIELD hidden-textboxdip11 x-input x-border" name="form_11_dip_alignment_yes" id="form_11_dip_alignment_yes" show-base="form_11_dip_alignment" show-trigger="Yes"  placeholder="Please specify">
+			</div>
+
+			<div class="x-col l4 x-container x-padding" style="margin-left: 21%;">
+				<label>Activity Title:</label>
+				<input required class="FORM11_FIELD x-input x-border" id="form_11_activity_title" name="form_11_activity_title"
+					type="text" autocomplete="on" placeholder="">
+			</div>
+		</div>
+		<div class="x-row x-container x-padding">
+			<div class="x-col l8 x-container">
+				<label>Name of Beneficiary (Registered Business/FO Name):</label>
+				<input required class="FORM11_FIELD x-input x-border" id="form_11_name_of_beneficiary"
+					name="form_11_name_of_beneficiary" size="10" type="text" autocomplete="on" placeholder="">
+			</div>
+
+			<div class="x-col l3 x-container x-padding">
+				<span class="">Industry Cluster:</span>
+				<select class="FORM11_FIELD x-border x-select x-border" id="form_11_industry_cluster" name="form_11_industry_cluster"
+					required>
+					<option value="">Choose your option</option>
+					<option>Coffee</option>
+					<option>Cacao</option>
+					<option>Coconut</option>
+					<option>PFN</option>
+				</select>
+				<input type="text" class="FORM11_FIELD hidden-textbox x-input x-border" name="form_11_industry_pfn"
+					id="form_11_industry_pfn" show-base="form_11_industry_cluster" show-trigger="PFN" placeholder="Please specify">
+			</div>
+		</div>
+
+		<div class="x-row x-container x-padding">
+			<style>
+				table,
+				th,
+				td {
+					border: 1px solid black;
+					border-collapse: collapse;
+				}
+			</style>
+			<table class="x-table x-container x-table-border" style="border-color: transparent;">
+				<tr>
+
+					<th colspan="2">
+						<center>MSME/FO Location</center>
+					</th>
+					<th colspan="2">
+						<center>Sex</center>
+					</th>
+				</tr>
+
+				<tr>
+					<td>
+						<center>Region</center>
+					</td>
+					<td>
+						<center>Province</center>
+					</td>
+
+					<td>
+						<center>Male</center>
+					</td>
+					<td>
+						<center>Female</center>
+					</td>
+
+				</tr>
+
+				<tr>
+
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_msme_regional" type="text"
+							name="form_11_msme_regional"></td>
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_msme_province" type="text"
+							name="form_11_msme_province"></td>
+
+
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_male" type="number" name="form_11_male"></td>
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_female" type="number" name="form_11_female">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="x-col 9 x-container x-padding">
+			<style>
+				table,
+				th,
+				td {
+					border: 1px solid black;
+					border-collapse: collapse;
+				}
+			</style>
+			<table class="x-table x-container x-table-border" style="border-color: transparent;">
+				<tr>
+
+					<th colspan="4">
+						<center>Sector</center>
+					</th>
+					<th colspan="2">
+						<center>Proposal Submission</center>
+					</th>
+
+				</tr>
+
+				<tr>
+
+					<td>
+						<center>PWD</center>
+					</td>
+					<td>
+						<center>Youth</center>
+					</td>
+					<td>
+						<center>IP</center>
+					</td>
+					<td>
+						<center>SC</center>
+					</td>
+
+					<td>
+						<center>Date Submitted to FSP</center>
+					</td>
+					<td>
+						<center>Date Approved</center>
+					</td>
+
+				</tr>
+
+				<tr>
+
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_pwd" type="text" name="form_11_pwd"></td>
+					<td><input class=" x-light-grey x-input" id="form_11_youth" type="text" name="form_11_youth"></td>
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_ip" type="text" name="form_11_ip"></td>
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_sc" type="text" name="form_11_sc"></td>
+
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_date_submitted" type="date"
+							name="form_11_date_submitted"></td>
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_date_approved" type="date"
+							name="form_11_date_approved"></td>
+
+				</tr>
+			</table>
+		</div>
+		<div class="x-row x-container x-padding">
+			<style>
+				table,
+				th,
+				td {
+					border: 1px solid black;
+					border-collapse: collapse;
+				}
+			</style>
+			<table class="x-table x-container x-table-border" style="border-color: transparent;">
+				<tr>
+					<th colspan="2">
+						<center>Partner FSP</center>
+					</th>
+				</tr>
+
+				<tr>
+
+					<td>
+						<center>Name of FSP</center>
+					</td>
+					<td>
+						<center>Location/Address</center>
+					</td>
+
+				</tr>
+				<tr>
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_name_of_fsp" type="text"
+							name="form_11_name_of_fsp"></td>
+					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_location_address" type="text"
+							name="form_11_location_address"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="x-row x-container x-padding">
+			<div class="x-col l6 x-container x-padding">
+				<label>Amount of Equity Financing Approved/Accessed:</label>
+				<input class="FORM11_FIELD x-input x-border" id="form_11_amount_of_equity" name="form_11_amount_of_equity"
+					type="number" autocomplete="on" placeholder="">
+			</div>
+			<div class="x-col l4 x-container x-padding">
+				<label>Date Released:</label>
+				<input class="FORM11_FIELD x-input x-border" id="form_11_date_released" name="form_11_date_released" type="date"
+					autocomplete="on" placeholder="">
+			</div>
+			<!-- <div class="x-col l4 x-container x-padding">
+				<button data-toggle="modal" data-target="#form11_modalpart" href=""
+					style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart"
+					class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
+			</div> -->
+			
+		</div><br><br>
+
+
+
+{% if benef|length !=0 %}
+					<!-- Start to do list -->
+<div class="col-md-12 col-sm-12 ">
+	<div class="x_panel">
+	  <div class="x_title">
+		<h2>Participants&nbsp;&nbsp;&nbsp;
+				  <a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="
+				  +URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
+				  <span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants
+			  </a> </h2></h2>
+		<ul class="nav navbar-right panel_toolbox">
+		  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+		  </li>
+		  <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">Settings 1</a>
+				<a class="dropdown-item" href="#">Settings 2</a>
+			</div>
+		</li>
+		<li><a class="close-link"><i class="fa fa-close"></i></a>
+		</li>
+	</ul>
+	<div class="clearfix"></div>
+</div>
+<div class="x_content">
+  <div class="row">
+	  <div class="col-sm-12">
+		<div class="card-box table-responsive">
+			<p class=" text-muted font-13 m-b-30">
+			  Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
+		  </p>
+		  
+		  <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				<th>Name / Org Name</th>
+				<th>Sex</th>
+				<th>Birthday</th>
+				<th>Primary Crop (If Applicable)</th>
+				<th>Barangay</th>
+				<th>City/Municipality</th>
+				<th>Province</th>
+				<th>Region</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			{% for parti in benef%}
+				<tr>
+					<td>{{parti['fname']}}</td>
+					<td>{{parti['sex']}}</td>
+					<td>{{parti['farmer_bday']}}</td>
+					<td>{{parti['farmer_primary_crop']}}</td>
+					<td>{{parti['addr_brgy']}}</td>
+					<td>{{parti['addr_city']}}</td>
+					<td>{{parti['addr_prov']}}</td>
+					<td>Region {{parti['addr_region']}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+		
+
+			</div>
+{%endif%}
+
+
+	<p class="x-right" id="submit_btn_holder">
+						
+						<button class="btn btn-primary" type="button" onclick="submit_form('FORM11_FIELD','dcf_access_financing','/form11_dashboard')">Submit</button>
+					</p>
+	</div>
+</div>
+</div>
+{% include 'formdata_handler.html' %}
+
+<script>
+	$onload(function () {
+		var record_id = URL_ARGS["id"]
+		var table = URL_ARGS["table"]
+		load_data(record_id, table, "FORM11_FIELD")
+		
+		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+	})
+</script>
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}

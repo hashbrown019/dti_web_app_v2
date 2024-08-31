@@ -3,7 +3,6 @@ let CHOICES_SELECT = {}
 
 
 
-
 $(document).ready(function(){
 	$(".hidden-form11").hide();
 	$("select#form_11_dip_alignment").change(function(){
@@ -182,60 +181,65 @@ $(document).ready(function() {
 
 
 
-$(document).ready(function() {
-	$(".form_1_euqipments, .form_1_Facilities_warehouses").on("input", updateTotalProdInv);
+document.addEventListener('DOMContentLoaded', function () {
+  // Function for updating total production investment
+  function updateTotalProdInv() {
+    const form1Equipments = parseFloat(this.closest('tr').querySelector('.form_1_euqipments').value) || 0;
+    const form1FacilitiesWarehouses = parseFloat(this.closest('tr').querySelector('.form_1_Facilities_warehouses').value) || 0;
+    const totalProdInv = form1Equipments + form1FacilitiesWarehouses;
+    this.closest('tr').querySelector('.form_1_total_prod_invs').value = totalProdInv;
+    document.getElementById('form_1_totalcost_prodinvest2').value = totalProdInv;
+    document.getElementById('form_1_totalcost_prodinvest3').value = totalProdInv;
+    document.querySelector('.form_1_totalcost_prodinvest3').value = totalProdInv;
+  }
 
-	function updateTotalProdInv() {
-			const form_1_euqipments2 = parseFloat($(this).closest("tr").find(".form_1_euqipments").val()) || 0;
-			const form_1_Facilities_warehouses2 = parseFloat($(this).closest("tr").find(".form_1_Facilities_warehouses").val()) || 0;
-			const totalProdInv = form_1_euqipments2 + form_1_Facilities_warehouses2;
-			$(this).closest("tr").find(".form_1_total_prod_invs").val(totalProdInv);
-			$("#form_1_totalcost_prodinvest2").val(totalProdInv);
-			$("#form_1_totalcost_prodinvest3").val(totalProdInv);
-			$(".form_1_totalcost_prodinvest3").val(totalProdInv);
+  // Event listener for form_1_euqipments and form_1_Facilities_warehouses
+  document.querySelectorAll('.form_1_euqipments, .form_1_Facilities_warehouses').forEach(function (element) {
+    element.addEventListener('input', updateTotalProdInv);
+  });
 
-	}
+  // Function for updating total capital
+  function updateTotalCap() {
+    const form1Org = parseFloat(this.closest('tr').querySelector('.form1_org').value) || 0;
+    const form1Tech = parseFloat(this.closest('tr').querySelector('.form1_tech').value) || 0;
+    const form1PostProd = parseFloat(this.closest('tr').querySelector('.form1_postprod').value) || 0;
+    const form1Other = parseFloat(this.closest('tr').querySelector('.form1_otherz').value) || 0;
+    const totalCap = form1Org + form1Tech + form1PostProd + form1Other;
+    this.closest('tr').querySelector('.form1_total_caps').value = totalCap;
+    document.querySelector('.form1_cap').value = totalCap;
+  }
+
+  // Event listener for form1_org, form1_tech, form1_postprod, and form1_otherz
+  document.querySelectorAll('.form1_org, .form1_tech, .form1_postprod, .form1_otherz').forEach(function (element) {
+    element.addEventListener('input', updateTotalCap);
+  });
+
+  // Event listener for form_1_supply_chain_manager
+document.addEventListener('DOMContentLoaded', function () {
+  var supplyChainManagerInput = document.getElementById('form_1_supply_chain_manager');
+
+  if (supplyChainManagerInput) {
+    supplyChainManagerInput.addEventListener('input', function () {
+      var supplyChainManagerValue = this.value;
+      document.querySelector('.form1_sup').value = supplyChainManagerValue;
+    });
+  }
 });
+  // Function for updating total matching grant
+  function updateTotalMatchingGrant() {
+    const aaValue = parseFloat(this.closest('tr').querySelector('.form-1-aa').value) || 0;
+    const abValue = parseFloat(this.closest('tr').querySelector('.form-1-ab').value) || 0;
+    const acValue = parseFloat(document.getElementById('form_1_totalcost_prodinvest2').value) || 0;
+    const totalMatchingGrant = aaValue + abValue + acValue;
+    this.closest('tr').querySelector('.form-1-total-matching-grant-update').value = totalMatchingGrant;
+    document.querySelector('.form1_mg').value = totalMatchingGrant;
+  }
 
-$(document).ready(function() {
-	$(".form1_org, .form1_tech, .form1_postprod, .form1_otherz").on("input", updateTotalProdInv);
-
-	function updateTotalProdInv() {
-			const form1_orgz = parseFloat($(this).closest("tr").find(".form1_org").val()) || 0;
-			const form1_techz = parseFloat($(this).closest("tr").find(".form1_tech").val()) || 0;
-			const form1_postprodz = parseFloat($(this).closest("tr").find(".form1_postprod").val()) || 0;
-			const form1_otherzz = parseFloat($(this).closest("tr").find(".form1_otherz").val()) || 0;
-			const totalCap = form1_orgz + form1_techz + form1_postprodz + form1_otherzz;
-			$(this).closest("tr").find(".form1_total_caps").val(totalCap);
-			$(".form1_cap").val(totalCap);
-
-	}
+  // Event listeners for form-1-aa, form-1-ab, and form_1_totalcost_prodinvest2
+  document.querySelectorAll('.form-1-aa, .form-1-ab, #form_1_totalcost_prodinvest2').forEach(function (element) {
+    element.addEventListener('input', updateTotalMatchingGrant);
+  });
 });
-
-$(document).ready(function() {
-	$('#form_1_supply_chain_manager').on('input', function() {
-			var supplyChainManagerValue = $(this).val();
-			$('.form1_sup').val(supplyChainManagerValue);
-	});
-});
-
-$(document).ready(function() {
-	$(".form-1-aa").on("input", updateTotalMatchingGrant);
-	$(".form-1-ab").on("input", updateTotalMatchingGrant);
-	$("#form_1_totalcost_prodinvest2").on("input", updateTotalMatchingGrant);
-	
-
-	function updateTotalMatchingGrant() {
-			const aaValue = parseFloat($(this).closest("tr").find(".form-1-aa").val()) || 0;
-			const abValue = parseFloat($(this).closest("tr").find(".form-1-ab").val()) || 0;
-			const acValue = parseFloat($(this).closest("tr").find("#form_1_totalcost_prodinvest2").val()) || 0;
-			const total = $(this).closest("tr").find(".form-1-total-matching-grant-update");
-			const totalMatchingGrant = aaValue + abValue + acValue;
-			total.val(totalMatchingGrant);
-			$(".form1_mg").val(totalMatchingGrant);
-	}
-});
-
 
 
 $(document).ready(function() {
@@ -693,16 +697,21 @@ function myFunction3() {
 					});
 			},300)
 
+
+
 })();
 
 
-
-
-
-
-
-
-
+$onload(function(){
+		try{
+			$('#datatable-responsive').dataTable({
+			/* Disable initial sort */
+			"aaSorting": []
+			});
+		}catch(e){
+			warnprintln(e)
+		}
+})
 
 function toastr(type, message, title, options) {
 	toastr.options = options;

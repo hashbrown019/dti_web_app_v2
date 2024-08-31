@@ -1,0 +1,69 @@
+<style>
+#ha_male {
+	width: 100%;
+	height: 500px;
+}
+</style>
+
+<div id="g3_holder"  style="display:none">
+	<span>
+		The Graph below shows the percentage farmers based whether they are
+		the <span class="x-text-green">Head of Household</span> or <span class="x-text-red">not</span>.
+		Also group by their sex and what Primary Crop.
+	</span>
+	<div id="ha_male"></div>
+</div>
+<script>
+	let clear_chart3 = function(e){println("Nothing to be clear chart")};
+
+	function set_graph3_data(arg1,arg2){
+		// console.clear()
+		// println("======G3========")
+		// println(arg1)
+		// println(arg2)
+		// println("======G3========")
+		clear_chart3();
+		set_graph_3_male();
+		$ID("g3_holder").style.display="block";
+	}
+
+	var chart_male_ha = am5.Root.new("ha_male");
+	function set_graph_3_male() {
+		chart_male_ha.setThemes([
+			am5themes_Animated.new(chart_male_ha)
+		]);
+		var chart_3 = chart_male_ha.container.children.push(
+			am5percent.PieChart.new(chart_male_ha, { 
+				endAngle: 270
+			})
+		);
+		var series = chart_3.series.push(
+			am5percent.PieSeries.new(chart_male_ha, {
+				valueField: "value",
+				categoryField: "category",
+				endAngle: 270
+			})
+		);
+
+		series.states.create("hidden", {
+			endAngle: -90
+		});
+		series.data.setAll([
+			{category: "Lithuania",value: 501.9},
+			{category: "Czechia",value: 301.9},
+			{category: "Ireland",value: 201.1},
+			{category: "Germany",value: 165.8},
+			{category: "Australia",value: 139.9},
+			{category: "Austria",value: 128.3},
+			{category: "UK",value: 99}
+		]);
+
+		series.appear(1000, 100);
+		clear_chart3 = function(){
+			chart_3.dispose();
+			// while(chart2.series.length) {
+			// 	chart2.series.removeIndex(0).dispose();
+			// }
+		}
+	};
+</script>

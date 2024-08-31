@@ -3,8 +3,17 @@
 <html>
 	{% include 'head.html' %}
 	<body class="">
+
+<!-- 		<script type="text/javascript">
+			$onload(function(){
+				unavailable(function(){
+					goto("/menuv2")
+				})
+			})			
+		</script> -->
+		
 		<br id="top_br">
-		<header class="x-header x-bar x-white x-top x-large " style="z-index:2;width: 100%;">
+		<header class="x-header x-bar x-white x-top x-large x-light-grey x-topbar x-border-teal" style="z-index:2;width: 100%;">
 			<div class="x-container" style="margin-left:200px;margin-right:200px;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
 				<div class="x-container x-left"  onclick="x_open()" style="width:100px;">
 					<img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:100%">
@@ -26,6 +35,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="x-container x-text-grey" style="margin-left:200px;margin-right:200px;;margin-top:10px;">
 				<div class="x-left x-text-grey" style="padding-top: 5px;">
 					Showing figures for <b class="x-large">{{dash_data_['area_reg']}}</b>
@@ -47,24 +57,27 @@
 			</div>
 			<div class="x-container x-text-grey" style="margin-left:200px;margin-right:200px;;margin-top:10px;;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
 				<div class="x-left">
-					<a class="x-zoom" onclick="show_view('dashboard','page_content')">
+					<a class="x-zoom x-hover-black x-round-large" style="padding:3px;" onclick="show_view('dashboard','page_content')">
 						<i class="fa fa-users fa-fw x-text-teal"></i><b class="x-small">Overview</b>
 					</a>&nbsp;
-					<a class="x-zoom" onclick="show_view('lists','page_content');">
+					<a class="x-zoom x-hover-black x-round-large" style="padding:3px;" onclick="show_view('lists','page_content');">
 						<i class="fa fa-eye fa-fw x-text-teal"></i><b class="x-small">lists</b>
 					</a>&nbsp;
-					<a class="x-zoom" onclick="show_view('data_cleaning','page_content');load_excel_cols()">
+					<a class="x-zoom x-hover-black x-round-large" style="padding:3px;" onclick="show_view('data_cleaning','page_content');load_excel_cols()">
 						<i class="fa fa-history fa-fw x-text-teal"></i><b class="x-small">Data Cleaning</b>
-						<b class="w3-badge x-tiny x-text-red">On Dev</b>
+						<!-- <b class="w3-badge x-tiny x-text-red">On Dev</b> -->
 					</a>&nbsp;
-					<a class="x-zoom" onclick="form_a_forms()">
+					<a class="x-zoom x-hover-black x-round-large" style="padding:3px;" onclick="show_dialog_fa_v2()">
 						<i class="fa fa-user fa-fw x-text-teal"></i><b class="x-small">Add Profile</b>
-						<b class="w3-badge x-tiny x-text-red">On Dev</b>
+						<!-- <b class="w3-badge x-tiny x-text-red">On Dev</b> -->
 					</a>
 				</div>
 				<div class="x-right x-small">
 					{% include 'excel_upload_download_btn.html' %}
 				</div>
+			</div>
+			<div class="x-row">
+				&nbsp;
 			</div>
 		</header>
 		<!-- Top container -->
@@ -74,7 +87,7 @@
 		<!-- Overlay effect when opening sidebar on small screens -->
 		<div class="x-overlay x-hide-large x-animate-opacity" onclick="x_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 		<div class="x-row" id="page_content" style="">
-			.<br><br><br><br><br>
+			.<br><br><br>
 			
 			<div class="x-container x-padding">
 
@@ -177,6 +190,7 @@
 			// 	$ID('top_br').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
 			// })
 			// ====================================================
+			document.title = "DTI RAPID | Form A"
 		</script>
 	</body>
 </html>

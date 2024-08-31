@@ -41,9 +41,8 @@
               <thead class="thead">
                 <tr role="row">
                   <th>ID</th>
-                  <th>RCU</th>
-                  <th>PCU</th>
-                  <th>Name Of DIP</th>
+                  <th>DIP : Name Recipient</th>
+                  <th>Implementing Unit</th>
                   <th>Commodity</th>
                   <th>Action</th>
                   <th>Timestamp</th>
@@ -54,14 +53,17 @@
                   <div>
                     {% for row in form5_datatable %}
                     <td>{{ row['id'] }}</td>
-                    <td>{{ row['mgit_implementing_unit_rcu'] }}</td>
-                    <td>{{ row['mgit_implementing_unit_pcu'] }}</td>
-                    <td>{{ row['mgit_name_of_dip'] }}</td>
+                    <td>{{ row['mgit_name_of_dip'] }} : {{row['mgit_msme_recipient'] }}</td>
+                    <td>{{ row['mgit_implementing_unit_rcu'] }} {{row['mgit_implementing_unit_pcu'] }} {{row['mgit_implementing_unit'] }}</td>
                     <td>{{ row['mgit_commodity'] }} {{ row['mgit_commodity_others'] }}</td>
                     <td>
                       {% if row['upload_by']|string == user_data['id']|string %}
                     <a style="color: #00FFAB;" href="/dcf/form5?id={{ row['id'] }}&table=dcf_matching_grant">
                       <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a style="color: #e6b800; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+                    +{{ row["id"] }}+"&i=dcf_matching_grant",true)'>
+                      <span><i class="fa-solid fa-user-plus"></i></span> Add Participants
                     </a> &nbsp;&nbsp;&nbsp;&nbsp;
                     <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
                       href="/delete_record/dcf_matching_grant/{{ row['id'] }}">

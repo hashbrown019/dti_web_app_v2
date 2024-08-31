@@ -56,6 +56,7 @@ class user_management:
 			return [{"id":"0","name":"no_data"}]
 
 	@app.route("/api/edit_user",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
 	def edit_user():
 		print("  * Edit User Module")
 		data = dict(request.form)
@@ -109,6 +110,7 @@ class user_management:
 
 
 	@app.route("/api/user_status",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
 	def user_status():
 		print("  * Edit User status")
 		# FILE_REQ = file_from_request(app)
@@ -125,6 +127,7 @@ class user_management:
 		return jsonify({"last_row_id":last_row_id})
 
 	@app.route("/api/user/change_pass",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
 	def change_pass():
 		msg = "on process"
 		if(user_management.is_on_session()):
@@ -136,6 +139,50 @@ class user_management:
 			return jsonify({"msg":msg})
 		else:
 			return jsonify({"msg":"ERROR"})
+
+
+
+	@app.route("/api/user/get_all_id",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
+	def all_ranks_users():
+		user_rankings = []
+		all_users = rapid_mysql.select("SELECT `id`, `name`, `job` FROM `users` WHERE `status` = 'active' ;");
+		# for user in all_users :
+		# 	user_rankings.append( user_management.count_all(user['id']) )
+		# 	# user_rankings[user['name']] = user_management.count_all(user['id'])[0]["over_all_encoded"]
+
+		return jsonify(all_users)
+
+
+	@app.route("/api/user/all_ranks/<ids>",methods=["POST","GET"]) # GE
+	@c.login_auth_web()
+	def count_all(ids):
+		sql = (f'''
+			
+			(SELECT
+				(SELECT `users`.`id` FROM `users` WHERE `users`.`id` = {ids}) as 'uid' ,
+				(SELECT `users`.`name` FROM `users` WHERE `users`.`id` = {ids}) as 'name' ,
+				(SELECT `users`.`profilepic` FROM `users` WHERE `users`.`id` = {ids}) as 'pic' ,
+				(SELECT `users`.`rcu` FROM `users` WHERE `users`.`id` = {ids}) as 'rcu' ,
+				(SELECT COUNT(*) FROM `excel_import_form_a` WHERE `excel_import_form_a`.`user_id` = {ids}) + 
+				(SELECT COUNT(*) FROM `form_b` WHERE `form_b`.`uploaded_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `form_c` WHERE `form_c`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_bdsp_reg` WHERE `dcf_bdsp_reg`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_capacity_building` WHERE `dcf_capacity_building`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_enablers_activity` WHERE `dcf_enablers_activity`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_implementing_unit` WHERE `dcf_implementing_unit`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_matching_grant` WHERE `dcf_matching_grant`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_negosyo_center` WHERE `dcf_negosyo_center`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_prep_review_aprv_status` WHERE `dcf_prep_review_aprv_status`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_product_development` WHERE `dcf_product_development`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `dcf_trade_promotion` WHERE `dcf_trade_promotion`.`upload_by` = {ids}) + 
+				(SELECT COUNT(*) FROM `webrep_articles` WHERE `webrep_articles`.`USER_ID` = {ids}) + 
+				(SELECT COUNT(*) FROM `webrep_forum_comments` WHERE `webrep_forum_comments`.`comment_by` = {ids}) + 
+			(SELECT COUNT(*) FROM `webrep_uploads` WHERE `webrep_uploads`.`USER_ID` = {ids}) as 'over_all_encoded'
+			)
+		''')
+		# return sql
+		return rapid_mysql.select(sql)[0]
 
 	@app.route("/api/user/rankings/<user_id>",methods=["POST","GET"]) # GE
 	def user_rankings(user_id):
@@ -164,61 +211,61 @@ class user_management:
 				}
 			except:pass
 			try:
-				data['dcf_access_financing'] = {
+				data['dcf11'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing`;")),
 				'inputed':len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_bdsp_reg'] = {
+				data['dcf3'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_capacity_building'] = {
+				data['dcf4'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_enablers_activity'] = {
+				data['dcf9'] = {
 				"total" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity`;")),
 				"inputed" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_implementing_unit'] = {
+				data['dcf2'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_matching_grant'] = {
+				data['dcf5'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_negosyo_center'] ={ 
+				data['dcf10'] ={ 
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_prep_review_aprv_status'] = {
+				data['dcf1'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_product_development'] = {
+				data['dcf6'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
-				data['dcf_trade_promotion'] = {
+				data['dcf7'] = {
 				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion`;")),
 				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion` WHERE `upload_by` = '{}';".format(user_id)))
 				}

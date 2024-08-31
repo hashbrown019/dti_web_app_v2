@@ -22,9 +22,13 @@ class _main:
 
 	@app.route("/login",methods=["POST","GET"])
 	def login():
+		_attemp =""
+		if("urlvisit" in request.args):
+			_attemp = "&urlvisit="+request.args['urlvisit']
+			
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
-		return redirect("/login_v2023?ver=dti_rapidgrowth_"+c.DB_CRED[3])
+		return redirect("/login_v2023?ver=dti_rapidgrowth_"+c.DB_CRED[3]+_attemp)
 
 	@app.route("/login_dev_test",methods=["POST","GET"])
 	@app.route("/dev_test",methods=["POST","GET"])
@@ -48,7 +52,8 @@ class _main:
 	@app.route("/nlog",methods=["POST","GET"])
 	def nlog():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
-		return render_template("loginv2.html",DB_STAT=c.DB_CRED[3])
+		return render_template("loginv3.html",DB_STAT=c.DB_CRED[3])
+		# return render_template("loginv2.html",DB_STAT=c.DB_CRED[3])
 
 
 	@app.route("/login_auth",methods=["POST"])
@@ -58,19 +63,20 @@ class _main:
 		log_res = rapid_mysql.select("SELECT * from `users` WHERE `username` = '{}' AND `password`='{}';".format(username,password))
 		admin_type = ""
 		priv_type = ""
-		if(log_res[0]['job'] in ['Admin','Super Admin']):
-			admin_type = "_{}".format(log_res[0]['job'].upper().replace(" ","_"))
-			
-		if(log_res[0]['pcu']=='none'):
-			if(log_res[0]['rcu']=='NPCO'):
-				priv_type = "NPCO{}".format(admin_type)
-			else:
-				priv_type = "RCU{}".format(admin_type)
-		else:
-			priv_type = "PCU{}".format(admin_type)
 		
 
 		if(len(log_res)!=0):
+			if(log_res[0]['job'] in ['Admin','Super Admin']):
+				admin_type = "_{}".format(log_res[0]['job'].upper().replace(" ","_"))
+				
+			if(log_res[0]['pcu']=='none'):
+				if(log_res[0]['rcu']=='NPCO'):
+					priv_type = "NPCO{}".format(admin_type)
+				else:
+					priv_type = "RCU{}".format(admin_type)
+			else:
+				priv_type = "PCU{}".format(admin_type)
+				
 			session["USER_DATA_ADMIN_"] = log_res
 			log_res[0]['password'] = "********";
 			log_res[0]["PRIV_TYPE"] = priv_type
@@ -98,6 +104,7 @@ class _main:
 			res["success"] = True
 			res["data"] = log_res[0]['name']
 			res["profilepic"] = log_res[0]['profilepic']
+			res["job"] = log_res[0]['job']
 			return jsonify(res);
 		else:
 			return jsonify(res);

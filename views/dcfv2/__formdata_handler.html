@@ -1,0 +1,60 @@
+<script>
+    
+function edit_form(class_name,table){
+  for (let index = 0; index < $CLASS('class_name').length; index++) {
+    const element = $CLASS('class_name')[index].disabled = false
+  }
+}
+
+function load_data(record_id,table,class_name){
+  // http://127.0.0.1:5000/dcf/form8?id=1&table=form8
+  $send({
+    action : "/get_data/"+record_id+"/"+table,
+    method : POST,
+    func : function(r){
+      var res = JSON.parse(r)[0]
+      var x_ins = $CLASS(class_name)
+      for (let index = 0; index < x_ins.length; index++) {
+        x_ins[index].value = res[x_ins[index].id]
+		var JSON__ = `{{user_data}}`.replaceAll('&#39;','"')
+		println(JSON__)
+        var USER_ID = JSON.parse(JSON__)['id']
+        if(USER_ID==parseInt(res['upload_by'])){
+          x_ins[index].disabled = false
+        }else{
+          x_ins[index].disabled = true
+          $ID('submit_btn_holder').innerHTML = "<br><i class='x-text-red'>This Record is not yours</i>"
+        }
+      }
+    }
+  })
+}
+
+function submit_form(class_name,table,url_){
+  var x_ins = $CLASS(class_name);var form_data = {}
+  for (let index = 0; index < x_ins.length; index++) {
+    form_data[x_ins[index].id] =  x_ins[index].value
+  }
+  $send({
+    action : "/set_data/"+table,
+    data : $DATA(form_data),
+    method : POST,
+    func : function(r){
+      var res = JSON.parse(r)
+      if(res.status=="success"){
+        $dialog({
+          type : "success",
+          title : "Success",
+          subtitle : "your action is now on process",
+          content : (`dasdaad d asd ssaadad sad`),
+          buttons : ["Continue"],
+          buttons_actions : [function(){
+            goto('/'+url_+'_dashboard')
+          }]
+        }).show()
+      }
+    }
+  })
+  println(form_data)
+}
+</script>

@@ -1,0 +1,81 @@
+			function card_create1(device){
+				println(JSON.stringify(device))
+				var c_holder = ''
+				println(device)
+				println(typeof(device))
+				device = JSON.parse(device)
+				for (var i = 0; i < device.length; i++) {
+					c_holder += (`
+						<div class="x-container x-padding x-border-dashed">
+							<span class="x-text-grey">ID/Name : </span><b id="class_id" class="">`+device[i]['id']+`</b><br>
+							<span class="x-text-grey">Connectable : </span><b id="conn" class="">`+device[i]['connectable']+`</b><br>
+							<span class="x-text-grey">Advert/Broadcast : </span><b id="advert" class="">`+device[i]['advertising']+`</b><br>
+						</div>
+					`)
+				}
+				// $ID('data_blelogs').innerText = c_holder
+				return c_holder
+				// return device
+			}
+
+								// $ID("data_ble").innerHTML = "Please Wait <i></i>"
+					// ble.startScan([], function(device) {
+					//     // $ID("data_ble").innerHTML = JSON.stringify(device)
+					//     $ID('data_blelogs').innerHTML = JSON.stringify(device)
+					//     $ID("data_ble").innerHTML =card_create1(device)
+					//     dom_refresh()
+					// }, function(){
+					//     $ID("data_ble").innerHTML = "Failed using <i>ble.startScan</i>"
+
+					// });
+
+
+
+
+			function ble_2(){
+				$ID("data_ble").innerHTML = "Using Native Bluetooth | Scanning"
+				bluetoothSerial.discoverUnpaired(function(arg){
+					println(arg)
+					$ID('data_blelogs').innerHTML = JSON.stringify(args)
+					$ID("data_ble").innerHTML =JSON.stringify(arg)
+				}, function(){
+					$ID("data_ble").innerHTML = "Failed using <i>discoverUnpaired</i>"
+					println("failed")
+				});;
+				bluetoothSerial.readRSSI(function(arg){
+					println(arg)
+					$ID('data_blelogs').innerHTML = JSON.stringify(args)
+					$ID("data_ble").innerHTML =JSON.stringify(arg)
+				}, function(){
+					$ID("data_ble").innerHTML = "Failed using <i>bluetoothSerial.readRSSI</i>"
+					println("failed")
+				});
+			}
+
+
+			<!--           // "/manifest": [
+		  //   {
+		  //     "xml": "<uses-permission android:maxSdkVersion=\"28\" android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+		  //     "count": 2
+		  //   },
+		  //   {
+		  //     "xml": "<uses-permission android:maxSdkVersion=\"30\" android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+		  //     "count": 2
+		  //   },
+		  //   {
+		  //     "xml": "<uses-permission android:maxSdkVersion=\"30\" android:name=\"android.permission.BLUETOOTH\" />",
+		  //     "count": 2
+		  //   },
+		  //   {
+		  //     "xml": "<uses-permission android:maxSdkVersion=\"30\" android:name=\"android.permission.BLUETOOTH_ADMIN\" />",
+		  //     "count": 2
+		  //   },
+		  //   {
+		  //     "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH_SCAN\" android:usesPermissionFlags=\"neverForLocation\" />",
+		  //     "count": 2
+		  //   },
+		  //   {
+		  //     "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH_CONNECT\" />",
+		  //     "count": 2
+		  //   }
+		  // ], -->

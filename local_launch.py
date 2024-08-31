@@ -9,10 +9,14 @@ def _init_config_():
 	c._USER = c.LOCAL_USER
 	c._PASSWORD = c.LOCAL_PASSWORD
 	c._DATABASE = c.LOCAL_DATABASE
+	# c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE] # PRODUCTION DB CRED
 	c.DB_CRED = [c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE] # DEV
 	c.PORT = 80
 	c.IS_ON_SERVER = False
 	c.IP_address = c.LOCAL_IP
+
+
+
 # ===========================================================================
 print(" * LOCAL Launch")
 

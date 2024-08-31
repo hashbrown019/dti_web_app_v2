@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+{% include 'head.html' %}
+	<body>
+		<br id="top_br">
+		<header class="x-header x-bar x-light-grey x-topbar x-border-blue x-top x-large " style="z-index:2;width: 100%;">
+			<div class="x-container" style="margin-left:200px;margin-right:200px;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
+				<div class="x-container x-left"  onclick="x_open()" style="width:100px;">
+					<img src="../static/img/mis_2023_v2.svg" class="x-circle x-margin-right" style="width:100%">
+				</div>
+				<div class="x-left x-text-blue" style="padding-top:20px">
+					<b>MIS |</b><i> Farmers Organization Profiles - FORM B</i>
+				</div>
+				<div class="x-right x-right-align x-container x-padding">
+					<div class="x-container x-right-align" style="padding-top:6px">
+						<span class="x-zoom x-text-grey x-padding x-margin-top x-round-xxlarge" onclick="goto('/menuv2')">
+							<span class="x-large x-text-blue fa fa-home"></span>
+							<span class="x-small"> Home</span>
+						</span>
+						<span class="x-zoom x-text-grey x-padding x-margin-top" onclick="goto('/logout')">
+							<span class="x-large x-text-red fa fa-power-off"></span>
+							<span class="x-small"> Logout</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="x-container x-text-grey" style="margin-left:200px;margin-right:200px;;margin-top:10px;;border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey;">
+				<div class="x-zoom x-left">
+					<a class="x-zoom" onclick="show_view('dashboard','page_content')">
+						<i class="fa fa-users fa-fw x-text-blue"></i><b class="x-small">Overview/Dashboard</b>
+					</a>&nbsp;
+					<a class="x-zoom" onclick="show_view('lists','page_content');">
+						<i class="fa fa-eye fa-fw x-text-blue"></i><b class="x-small">lists of F.O</b>
+					</a>&nbsp;
+					<a class="x-zoom" onclick="show_view('forms','page_content');">
+						<i class="fa fa-plus fa-fw x-text-blue"></i><b class="x-small">Add Farmers Organization Profile</b>
+					</a>&nbsp;
+
+					<!-- <a class="x-zoom" onclick="show_view('data_cleaning','page_content');load_excel_cols()">
+						<i class="fa fa-history fa-fw x-text-blue"></i><b class="x-small">Data Cleaning</b>
+						<b class="w3-badge x-tiny x-text-red">On Dev</b>
+					</a>&nbsp; -->
+					<span class="x-zoom x-text-grey x-round-xxlarge" onclick="goto('/formb/get_list_fo_full')" style="margin-left:20px">
+						<span class="x-text-orange fa fa-download"></span>
+						<span class="x-small">Export Data</span>
+					</span>
+				</div>
+				<div class="x-right">
+					&nbsp;
+					{% if(USER_DATA['profilepic']=="" or USER_DATA['profilepic']==" " ): %}
+					<img src="\static\psalm_static\menu\img\profilepic.png" style="width: 40px; height: 40px;">
+					{% else: %}
+					<img class="rounded-circle x-circle" src="\api\user_pic\{{USER_DATA['profilepic']}}" alt="{{USER_DATA['profilepic']}}" style="width: 40px; height: 40px;">
+					{%endif%}
+				</div>
+				<div class="x-right x-text-blue">
+					<span class="x-right-align" style="border-bottom: 1px;border-top: 0px;border-left: 0px;border-right: 0px;border-style: solid;border-color: lightgrey">
+						<b class="">{{USER_DATA['name']}}</b>
+						<span class="x-text-shrink x-tiny">{{USER_DATA['job']}}</span>
+					</span>
+				</div>
+			</div>
+			<div class="x-row">
+				&nbsp;
+			</div>
+		</header>
+		<!-- ================================================= -->
+		<div class="x-main" style="margin-left:200px;margin-right:200px;margin-top:1px;">
+			<div class="x-overlay x-hide-large x-animate-opacity" onclick="x_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+			<div class="x-row" id="page_content" style="">
+				<br><br><br><br>
+				
+				<div class="x-container x-padding">
+
+					<div id="dashboard" class="page_content x-animate-left">
+						<br>{% include 'dash_conso.html' %}
+					</div>
+					<div id="lists" class="page_content x-animate-left" style="display:none;">
+						<br>{% include 'list_data_table.html' %}
+					</div>
+					<div id="forms" class="page_content x-animate-left" style="display:none;">
+						<br>{% include 'forms.html' %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="ls_modal" style="display: none;">
+			<div id="ls_farmer" class="x-container" style="overflow-y:scroll;height: 60vh;">
+				Loading
+			</div>
+		</div>
+		<script type="text/javascript">
+
+			$onload(
+				showing_table_ls_farmer
+			)
+
+			
+
+			var TYPES_ORG = [
+				"None",
+				"Farmers’/ Growers’ Association",
+				"Farmers’ Cooperative Type of Cooperative",
+				"Others"
+				]
+			var REG_AGENCIES = [
+				"None",
+				"Cooperative Development Authority ",
+				"Department of Labor and Employment",
+				"Securities and Exchange Commission",
+				"Department of Agriculture",
+				"Others"
+				]
+
+			document.title = "DTI RAPID | Form B"
+		</script>
+	</body>
+	
+	<footer class=" x-container x-padding-16 x-small x-white" style="margin-left:200px;margin-top:43px;">
+		<div class="x-container x-row x-text-grey">				
+			<img src="../static/img/dti.png" style="width:5%;">
+			<img src="../static/img/icon.png" style="width:5%;">
+			<img src="../static/img/ifad.jpg" style="width:5%;">
+		</div>
+		<div class="x-container x-padding x-row x-text-grey">
+			<div class=" x-row">
+				<b>DTI RAPID MIS</b> 
+				<span class="x-small">| all rights reserve | v2023 | C.S.C.J | </span>
+			</div>
+		</div>
+	</footer>
+</html>

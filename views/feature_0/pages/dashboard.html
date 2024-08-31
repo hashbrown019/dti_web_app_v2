@@ -51,29 +51,34 @@
 				</span>
 			</div>
 		</div>
-		<div class="x-container x-col l10 x-padding">
+		<div class="x-container x-col l8 x-padding">
 			<h5 class="x-text-teal">
 				<b>Chart by Area</b>
 			</h5>
+			<div class="x-container x-row">
+				{% include 'dashboard/graph3.html' %}
+			</div>
 			<div class="x-container x-row">
 				{% include 'dashboard/graph2.html' %}
 			</div>
 			<div class="x-container x-row">
 				{% include 'dashboard/graph1.html' %}
 			</div>
-			<h5 class="x-text-teal">
+		</div>
+		<div class="x-container x-col l2 x-border-dashed x-border-green x-round-large x-pale-green">
+			<h5 class="x-text-teal x-center">
 				<b>What's in the Basket</b>
 			</h5>
-			<div class="" style="overflow-y:scroll;height: 520px;">
+			<div class="x-padding" style="overflow-y:scroll;">
 				{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
 					{% if comdty_name[1] != 0 :%}
 					<div style="padding-bottom: 5px;">
 						<div class="x-container x-card x-white x-padding x-round-large x-hover-green">
-							<span class="x-col x-left" style="width:70%">
+							<span class="" style="">
 								<img src="../static/img/commodity/{{comdty_name[0]}}.png" style="width:10%">
 								<b>{{comdty_name[0]}}</b> 
-							</span>
-							<span class="x-col x-right x-right-align" style="width:30%">
+							</span><br>
+							<span class="" style="">
 								<b class="x-large _money_tag">{{comdty_name[1]}}</b>
 							</span>
 
@@ -82,18 +87,19 @@
 					{% endif %}
 				{% endfor %}
 
-				<div class="x-padding">
+				<div class="">
 					<div class="x-container x-card x-white x-padding x-round-large x-hover-black x-border-black" onclick="view_all_commodity_count()">
-						<span class="x-col x-left" style="width:70%">
+						<span class="">
 							<img src="../static/img/commodity/others.png" style="width:10%">
 							<b>Others</b> 
-						</span>
-						<span class="x-col x-right x-right-align" style="width:30%">
+						</span><br>
+						<span class="">
 							<b class="x-tiny">View all commodity</b>
 						</span>
 
 					</div>
 				</div>
+				<hr>
 			</div>
 		</div>
 	</div>
@@ -117,11 +123,26 @@
 </div>
 {% include 'advance_filter_a.html' %}
 <script>
+	$onload(getGraphs_data)
 
+	// function create_graphs(_data){
+	// 	g1_data_reconstruct(_data)//for Graph2
+	// 	g2_data_reconstruct(_data)//for Graph2
+	// }
 
-	function create_graphs(_data){
-		g1_data_reconstruct(_data)//for Graph2
-		g2_data_reconstruct(_data)//for Graph2
+	function getGraphs_data(){
+		$send({
+			action : "/feature_0/dashgraph1",
+			method : POST,
+			func : function(res){
+				var _data = JSON.parse(res)
+				GRAPH_2_DATA = _data[2]
+				set_graph1(_data[0],_data[1],_data[3])
+				// window.setInterval(get_notif_unseen,10000)
+				
+				// set_graph2(_data[2])
+			}
+		})
 	}
 
 

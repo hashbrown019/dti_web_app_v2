@@ -239,18 +239,21 @@
 				<input class="FORM3_FIELD  x-input x-border" id="form_3_rapid_implementing_unit"
 					name="form_3_rapid_implementing_unit" type="text" placeholder="">
 			</div>
-			<div class="x-col l3 x-container x-padding">
+
+			<div class="x-col l4 x-container x-padding">
 				<label class="">Type/Nature of Engagements:</label>
-				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_nature_engagements"
-					name="form_3_nature_engagements"><br>
-					<option selected disabled>Choose Your Option</option>
-					<option>Resource person</option>
-					<option>Facilitator</option>
-					<option>Manual Development</option>
-					<option>Business Plan Preparation</option>
-					<option>KM Product Development</option>
+				<select class="FORM3_FIELD" id="form_3_nature_engagements" name="form_3_nature_engagements[]"
+					placeholder="Select upto 5 tags" multiple>
+					<option value="Resource person">Resource person</option>
+					<option value="Facilitator">Facilitator</option>
+					<option value="Manual Development">Manual Development</option>
+					<option value="Business Plan Preparation">Business Plan Preparation</option>
+					<option value="KM Product Development">KM Product Development</option>
+
 				</select>
 			</div>
+
+
 		</div>
 		<div class="x-row x-container x-padding">
 			<div class="x-col l7 x-container x-padding">
@@ -369,6 +372,25 @@
 		
 		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
 	})
+
+
+
+	 		$(document).ready(function(){
+		CHOICES_SELECT['form_3_nature_engagements'] = new Choices('#form_3_nature_engagements', {
+			removeItemButton: true,
+			choices: ["Resource person","Facilitator","Manual Development","Business Plan Preparation","KM Product Development"],
+			searchChoices: true,
+			// maxItemCount:4,
+			// searchResultLimit:4,
+			addItems: true,
+			uniqueItemText: 'Only unique values can be added',
+			customAddItemText: 'Only values matching specific conditions can be added',
+			addItemText: (value) => {
+				// println(multipleCancelButton)
+				return `Press Enter to add <b>`+value+`</b>`;
+			},
+		}); 
+	});
 	
 
 	$(document).ready(function(){

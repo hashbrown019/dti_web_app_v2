@@ -12,6 +12,8 @@ IP_address = socket.gethostbyname(host_name)
 SECRET_KEY = "@002342562988603673976#131452@HHPLHKHHH"
 # HOST = host_name;
 
+VIBER_TOKEN = "524fe3a9d127e6da-5e8765b3e533f3fc-c7abfcf58c51424"
+
 LOCAL_IP ="127.0.0.1"
 HOST = "0.0.0.0";
 CUSTOM_HOST = "192.168.0.1";
@@ -23,6 +25,7 @@ SQLITE_DB_LOCAL = "assets/sqlite_db/dti_rapidxi.db";
 SQLITE_DB_SERVER = "/var/www/html/dti_web_app_v2/assets/sqlite_db/dti_rapidxi.db";
 SQLITE_DB = "none";
 
+RECORDS_LINUX_LOCAL= "/mnt/c/Users/USER/Desktop/Systems/dti_web_app_v2/assets/";
 RECORDS_SERVER = "/var/www/html/dti_web_app_v2/assets/";
 RECORDS_LOCAL = "assets/";
 RECORDS = "none";
@@ -33,22 +36,23 @@ M_APPVER = "none";
 # --- DATABASE---- #
 
 LOCAL_PORT=3306
-# LOCAL_HOST = "0.0.0.0";
-LOCAL_HOST = "localhost";
+LOCAL_HOST = "127.0.0.1";
+LOCAL_HOST_LINUX = "localhost";
 LOCAL_USER = "root";
 LOCAL_PASSWORD = "";
 LOCAL_DATABASE = "mis_2023";
 
 SERVER_PORT=3306;
-SERVER_HOST = "database-1.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
+# SERVER_HOST = "database-1.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com"; # OLD ENDPOINTT
+SERVER_HOST = "dti-rapid-database.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
 SERVER_USER = "admin";
-SERVER_PASSWORD = "password123";
+SERVER_PASSWORD = "NRGlBUhehOvi0Yt4fDE5";
 SERVER_DATABASE = "mis_2023";
+# SERVER_PASSWORD = "password123"; # OLD PASSWORD
 
 MOCK_DATABASE_TEST = "mis_2023_test";
 
 # LOCAL_DATABASE = "dti_rapidxi";
-
 IS_ON_SERVER = False;
 
 # SERVER_PORT=3306;
@@ -64,6 +68,12 @@ _HOST = "not initialized";
 _USER = "not initialized";
 _PASSWORD = "not initialized";
 _DATABASE = "not initialized";
+
+
+# =======for login auth===================================
+login_auth_web = None
+
+
 
 # =====Data CLEANING===========================================================
 DATA_CLEAN_FORM_A_REF = {
@@ -84,8 +94,6 @@ DATA_CLEAN_FORM_A_REF = {
 		"col":"organization_registered_name"
 	},
 }
-
-
 
 # ================================
 global __STORE ;

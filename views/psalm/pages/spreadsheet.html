@@ -51,17 +51,28 @@
                             </strong><br>
                             <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span> Export</button>
                             
+                             <span style="cursor: pointer;" onclick="download_login_start('VC_FORM_C.xls')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download Form C (MSME) excel template</span>
                         </div>
                     </div>
                 </div>
             </form>
+
+
 
     
     
     
         </div>
     </div>
-    <div class="card" style="width:60%;  margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <script>
+                function download_login_start(fff){
+                            let a= document.createElement('a');
+                            a.target= '_blank';
+                            a.href= '/login/download_file/'+fff;
+                            a.click();
+                        }
+    </script>
+<!--     <div class="card" style="width:60%;  margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
         <div class="card-header" style="background-color: #334257;">
             <h3 style="color: white;">Imported Files</h3>
@@ -88,20 +99,7 @@
                                 <tbody class=" bg-dark">
                                   <tr>
                                  <div>
-                                    {% for row in uploaded_file_by_user %}
-                                    {% if (row['filename'])!="" and (row['filename'])!=" " %}
-                                    <td class="text-info">{{ row['name'] }}</td>
-                                    <td><a title="Download file" class="text-success" href="{{ url_for('form_c.download_file', filename_=row['filename']) }}">{{ row['filename'] }}</a></td>
-                                    <td><a class="text-danger" onclick="confirmation(event)"  href="/delete/{{row['filename']}}">  <span><i class="fa-solid fa-trash"></i></span> Delete</a>
-
-                                        {%else%}
-                             
-                                    
-                                    
-                                        {%endif%}
-                                    </td>
-                                </tr>
-                                {% endfor  %}
+                                
                                   </tbody>
                         </table>
                         
@@ -120,7 +118,7 @@
     
         </div>
         
-    </div>
+    </div> -->
     
 
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://www.xschools.com/xcss/tryxcss_templates_analytics.htm -->
+<html>
+	{% include 'head.html' %}
+	<style type="text/css">
+		.bgimg-1{
+			background-image: url('../static/img/bg.jpg');
+		}
+		.default_margin{
+			margin-left: 50px;
+			margin-right: 50px;
+		}
+		.default_padding{
+			padding-left: 50px;
+			padding-right: 50px;
+		}
+	</style>
+	<body class="">
+		{% include  'v2_home/navbar_top_side.html'%}
+		{% include  'v2_home/home_carousel.html'%}
+		<footer class="x-center x-black x-padding x-bottom" style="margin-top:100px">
+			<a href="#home" class="x-button x-light-grey"><i class="fa fa-arrow-up x-margin-right"></i>To the top</a>
+			<div class="x-xlarge x-section">
+				<i class="fa fa-facebook-official x-hover-opacity"></i>
+				<i class="fa fa-instagram x-hover-opacity"></i>
+				<i class="fa fa-snapchat x-hover-opacity"></i>
+				<i class="fa fa-pinterest-p x-hover-opacity"></i>
+				<i class="fa fa-twitter x-hover-opacity"></i>
+				<i class="fa fa-linkedin x-hover-opacity"></i>
+			</div>
+			<p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="x-hover-text-green">w3.css</a></p>
+		</footer>
+		<!-- Navbar (sit on top) -->
+		 
+		<script>
+			// Modal Image Gallery
+			function onClick(element) {
+				document.getElementById("img01").src = element.src;
+				document.getElementById("modal01").style.display = "block";
+				var captionText = document.getElementById("caption");
+				captionText.innerHTML = element.alt;
+			}
+
+
+			// Toggle between showing and hiding the sidebar when clicking the menu icon
+			var mySidebar = document.getElementById("mySidebar");
+
+			function w3_open() {
+				if (mySidebar.style.display === 'block') {
+					mySidebar.style.display = 'none';
+				} else {
+					mySidebar.style.display = 'block';
+				}
+			}
+
+			// Close the sidebar with the close button
+			function w3_close() {
+					mySidebar.style.display = "none";
+			}
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,1080 @@
+{% extends 'layouts/dcf_base.html' %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	{% include "includes/sweetalert.html" %}
+<title>Form 1</title>
+
+	<div class="right_col" role="main">
+		<div class="row">
+	<div class="col-md-12 col-sm-12 x-card  x-light-grey">
+		<center>
+			<h2 class=" text-white  x-padding" style="background-color: #007399;">FORM 1 - PREPARATION,
+				REVIEW AND APPROVAL STATUS</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
+		</center>
+
+			<style>
+				table,
+				th,
+				td {
+					border: 1px solid black;
+					border-collapse: collapse;
+				}
+			</style>
+            <input class="FORM1_FIELD x-input" type="hidden"  id="id">
+
+			<!---text--->
+			<div class="x-row x-section x-padding ">
+				<div class="x-padding">
+					<div class="x-col l4  x-padding">
+						<label class="">RCUs:</label>
+						<select class="FORM1_FIELD
+						 x-border x-select x-border" id="form_1_rcus" name="form_1_rcus"
+							 ><br>
+							<option value="">Choose your option</option>
+							<option value="8">Region Vlll - Eastern Visayas</option>
+							<option value="9">Region lX - Zamboanga Peninsula</option>
+							<option value="10">Region X - Northern Mindanao</option>
+							<option value="11">Region Xl - Davao Region</option>
+							<option value="12">Region Xll - SOCCSKSARGEN</option>
+							<option value="13">Region Xlll - Caraga</option>
+							<option value="BARMM">BARMM</option>
+						</select>
+					</div>
+					<!-- <div class="x-col l4  x-padding">
+							<label>Number Of DIPs</label>
+							<input class="FORM1_FIELD  x-input x-border" id="form_1_number_of_dips" type="Number" name="form_1_number_of_dips" placeholder="">
+						</div> -->
+					<div class="x-col l4  x-padding">
+						<label><span style="color: #007399;" class="tool" data-tip="DIP name format: Region<space>DIP Name (ex. R8 SC Global)" tabindex="1"><i class="fa fa-info-circle"></i></span>  Name of DIP:</label>
+						<input class="FORM1_FIELD  x-input x-border" id="form_1_name_dip" type="text" name="form_1_name_dip"
+							placeholder="" required>
+					</div>
+					<div class="x-col l4  x-padding">
+						<label><span style="color: #007399;" class="tool" data-tip="Full Name of Main Anchor Firm based on official business registration (ex. SC Global Coco Products Inc. ) Add comma and <space> for multiple entries (ex. SC Global Coco Products Inc., Nestle Philippines " tabindex="1"><i class="fa fa-info-circle"></i></span> Anchor Firm:</label>
+						<input class="FORM1_FIELD  x-input x-border" id="form_1_anchor_firm" type="text" name="form_1_anchor_firm"
+							placeholder="">
+					</div>
+
+				</div>
+
+				<div class="x-row x-padding ">
+
+					<div class="x-col l2  x-padding">
+						<label class=""><span style="color: #007399;" class="tool" data-tip="For multiple entries of anchor firm, click the sizes of anchor firm according to order of anchor firms identified in previous box." tabindex="1"><i class="fa fa-info-circle"></i></span> Size of Anchor Firm:</label>
+						<select x-required class="FORM1_FIELD" id="form_1_size_of_anchor" name="form_1_size_of_anchor[]" multiple>
+							<option value="Large">Large</option>
+							<option value="Medium">Medium</option>
+							<option value="Small">Small</option>
+							<option value="Micro">Micro</option>
+						</select>
+					</div>
+
+
+					<div class="x-col l2  x-padding">
+						<label class=""><span style="color: #007399;" class="tool" data-tip="You can select multiple options from the provided list; text input won't be recorded." tabindex="1"><i class="fa fa-info-circle"></i></span> MSMEs:</label>
+						<select class="FORM1_FIELD" id="form_1_msmes" name="form_1_msmes[]" multiple>
+							<option value="Large">Large</option>
+							<option value="Medium">Medium</option>
+							<option value="Small">Small</option>
+							<option value="Micro">Micro</option>
+						</select>
+					</div>
+
+
+
+					<!-- <script>
+						$onload(function(){
+							dd1 = $dropdown_multiple({
+								id : "sample_dropdown",
+								dd_id : "ID WHERE VALUE WILL PUT: AUTO_GEN",
+								classn : "name_f",
+								option :  (VALUE_CHAIN_CROP),
+								search : true,
+								add : true,
+								on_add : function(item){}
+							})
+						})
+					</script> -->
+
+
+					<div class="x-col l5  x-padding">
+						<label class=""><span style="color: #007399;" class="tool" data-tip="You can select multiple options from the provided list; text input won't be recorded." tabindex="1"><i class="fa fa-info-circle"></i></span> Scope/Provinces:</label>
+						<select class="FORM1_FIELD choicesjs" id="form_1_scope_provinces" name="form_1_scope_provinces[]" multiple>
+							<option value="Northern Samar">Northern Samar</option>
+							<option value="Leyte">Leyte</option>
+							<option value="Southern Leyte">Southern Leyte</option>
+							<option value="Zamboanga del Norte">Zamboanga del Norte</option>
+							<option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+							<option value="Zamboanga del Sur">Zamboanga del Sur</option>
+							<option value="Misamis Oriental">Misamis Oriental</option>
+							<option value="Bukidnon">Bukidnon</option>
+							<option value="Lanao del Norte">Lanao del Norte</option>
+							<option value="Davao de Oro">Davao de Oro</option>
+							<option value="Davao Oriental">Davao Oriental</option>
+							<option value="Davao del Norte">Davao del Norte</option>
+							<option value="Davao del Sur">Davao del Sur</option>
+							<option value="Davao Occidental">Davao Occidental</option>
+							<option value="North Cotabato">North Cotabato</option>
+							<option value="Sultan Kudarat">Sultan Kudarat</option>
+							<option value="Sarangani">Sarangani</option>
+							<option value="Agusan del Norte">Agusan del Norte</option>
+							<option value="Agusan del Sur">Agusan del Sur</option>
+							<option value="Surigao del Sur">Surigao del Sur</option>
+							<option value="Maguindanao">Maguindanao</option>
+						</select>
+					</div>
+
+						<div class="x-col l3  x-padding">
+						<label class="">Commodity:</label>
+						<select class="FORM1_FIELD withother x-border x-select x-border" id="form_1_commodity" name="form_1_commodity"
+							required>
+							<option selected disabled value="none">Choose your option</option>
+							<option value="Coffee">Coffee</option>
+							<option value="Cacao">Cacao</option>
+							<option value="Coconut">Coconut</option>
+							<option value="PFN">PFN</option>
+						</select>
+						<input type="text" class="FORM1_FIELD hidden-textbox x-input x-border" name="form_1_commodity_others"
+							id="form_1_commodity_others" show-base="form_1_commodity" show-trigger="PFN"  placeholder="Please specify">
+					</div>
+
+
+				</div>
+
+
+
+				<!---date--->
+				<div class="x-row x-padding ">
+
+
+				
+					<div class="x-col l2  x-padding">
+						<label><span style="color: #007399;" class="tool" data-tip="Date format: month/day/Year. Indicate 01 as default day if specific day will not be recalled." tabindex="1"><i class="fa fa-info-circle"></i></span> Start date of DIP development:</label>
+						<input class="FORM1_FIELD  x-input x-border" id="form_1_for_development" name="form_1_for_development"
+							type="date" placeholder="">
+					</div>
+					<!-- <div class="x-col l3  x-padding" style="width: 30%;">	
+						<label>Date: CN Approved</label>
+						<input class="FORM1_FIELD  x-input x-border" id="form_1_cn_approved" type="date" name="form_1_cn_approved" placeholder="">
+					</div> -->
+					<div class="x-col l4  x-padding">
+						<label><span style="color: #007399;" class="tool" data-tip="Date format: month/day/Year. Indicate 01 as default day if specific date will not be recalled." tabindex="1"><i class="fa fa-info-circle"></i></span> Submission Date of Full BPs/DIPs to NPCO for Technical review:</label>
+						<input class="FORM1_FIELD  x-input x-border" id="form_1_finalized_approved" name="form_1_finalized_approved"
+							type="date" placeholder="">
+					</div>
+					
+					<div class="x-col l5  x-padding">
+						<label><span style="color: #007399;" class="tool" data-tip="Date format: month/day/Year. Indicate 01 as default day if specific date will not be recalled." tabindex="1"><i class="fa fa-info-circle"></i></span> DIP Technical/Parallel Review Date (with NPCO/RGMS/IFAD Consultant/RTWG):</label>
+						<input class="FORM1_FIELD  x-input x-border" id="form_1_date_of_parallel_review"
+							name="form_1_date_of_parallel_review" type="date" placeholder="">
+					</div>
+				
+				
+				</div>
+				<div class="x-row x-padding ">
+						<div class="x-col l7  x-padding">
+						<label><span style="color: #007399;" class="tool" data-tip="Date format: month/day/Year. Indicate 01 as default day if specific date will not be recalled." tabindex="1"><i class="fa fa-info-circle"></i></span> Submission Date of revised DIPs (based on comments during the Technical/Parallel Review) to RTWG for approval:</label>
+						<input class="FORM1_FIELD  x-input x-border" id="form_1_date_of_submission" name="form_1_date_of_submission"
+							type="date" placeholder="">
+					</div>
+						<div class="x-col l2  x-padding">
+							<label>Date of RTWG Approval:</label>
+							<input class="FORM1_FIELD  x-input x-border" id="form_1_date_of_rtwg" name="form_1_date_of_rtwg" type="date"
+							placeholder="">
+						</div>
+						<div class="x-col l3  x-padding">
+							<label><span style="color: #007399;" class="tool" data-tip="Date format: month/day/Year." tabindex="1"><i class="fa fa-info-circle"></i></span> DIP Submission Date to IFAD/NPCO for Final Approval
+							</label>
+							<input class="FORM1_FIELD  x-input x-border" id="form_1_date_of_npco_cursory" name="form_1_date_of_npco_cursory" type="date" placeholder="">
+						</div>
+						<!-- <div class="x-col l3  x-padding" style="width: 50%;">
+							<label>Date: Uploading to IFAD NOTUS c/o NPCO</label>
+							<input class="FORM1_FIELD  x-input x-border" id="form_1_date_of_uploading_to_ifad"
+							name="form_1_date_of_uploading_to_ifad" type="date" placeholder="">
+						</div>
+							<div class="x-col l3  x-padding" style="width: 50%;">
+								<label>Date: IFAD Approval/No Objection Issuance</label>
+								<input class="FORM1_FIELD  x-input x-border" id="form_1_date_of_approval_to_ifad"
+								name="form_1_date_of_approval_to_ifad" type="date" placeholder="">
+							</div> -->
+						<div class="x-col l3  x-padding"	>
+							<label>NPCO/IFAD (No Objection Issuance) Approval Date:</label>
+							<input class="FORM1_FIELD  x-input x-border" id="form_1_date_of_ifad_no_inssuance" name="form_1_date_of_ifad_no_inssuance" type="date" placeholder="">
+						</div>
+				</div>
+			</div>
+			<div class="" style="margin-top: 10px; margin-bottom: 20px;">
+				<center>
+					<h2 class=" text-white " style="background-color: #007399;">DIP Details</h2>
+				</center>
+		
+				<br><br>
+		
+				<div class="x-row  x-padding">
+		
+				<table class="x-table  x-table-border">
+					<tr>
+						<th colspan="4" style="background-color: #ADC4CE;">
+							<center>LMSMEs
+								 
+							</center>
+						</th>
+
+					</tr>
+					<tr>
+						<td>
+							<center># of Large Enterprises</center>
+						</td>
+						<td>
+							<center># of Medium Enterprises</center>
+						</td>
+						<td>
+							<center># of Small Enterprises</center>
+						</td>
+						<td>
+							<center># of Micro Enterprises</center>
+						</td>
+					</tr>
+
+					<tr>
+						<td> <input class="FORM1_FIELD x-input x-border" id="total_large_enterprise" name="total_large_enterprise" type="number" placeholder=""></td>
+						<td><input class="FORM1_FIELD  x-input x-border"
+								id="total_medium_enterprise" name="total_medium_enterprise" type="number"
+								placeholder=""></td>
+						<td><input class="FORM1_FIELD  x-input x-border" id="total_small_enterprise"
+								name="total_small_enterprise" type="number" placeholder=""></td>
+								<td><input class="FORM1_FIELD  x-input x-border" id="total_micro_enterprise"
+									name="total_micro_enterprise" type="number" placeholder=""></td>
+					</tr>
+				</table></div>
+				<br>
+				<br>
+				<div class="x-row  x-padding">
+
+				<table class="x-table  x-table-border">
+					<tr>
+						<th colspan="4" style="background-color: #ADC4CE;">
+							<center>Smallholder Farming Households
+								 
+							</center>
+						</th>
+
+					</tr>
+					
+					<tr>
+						<td>
+							<center>Total  # of Male </center>
+						</td>
+						<td>
+							<center> # of Male-Youth</center>
+						</td>
+						<td>
+							<center> # of Male - IP</center>
+						</td>
+						<td>
+							<center> # of Male - PWD</center>
+						</td>
+					</tr>
+
+					<tr>
+						<td> <input class="FORM1_FIELD x-input x-border" id="form_1_totalmale" name="form_1_totalmale" type="number" placeholder=""></td>
+						<td><input class="FORM1_FIELD  x-input x-border"
+								id="form_1_maleyouth" name="form_1_maleyouth" type="number"
+								placeholder="" ></td>
+						<td><input class="FORM1_FIELD  x-input x-border" id="form_1_maleip"
+								name="form_1_maleip" type="number" placeholder="" ></td>
+								<td><input class="FORM1_FIELD  x-input x-border" id="form_1_malepwd"
+									name="form_1_malepwd" type="number" placeholder="" ></td>
+					</tr>
+				
+	</div>
+				<div class="x-row  x-padding">
+				
+					
+					<tr>
+						<td>
+							<center>Total  # of Female </center>
+						</td>
+						<td>
+							<center> # of Female-Youth</center>
+						</td>
+						<td>
+							<center> # of Female - IP</center>
+						</td>
+						<td>
+							<center> # of Female - PWD</center>
+						</td>
+					</tr>
+
+					<tr>
+						<td> <input class="FORM1_FIELD x-input x-border" id="form_1_totalfemale" name="form_1_totalfemale" type="number" placeholder=""></td>
+						<td><input class="FORM1_FIELD  x-input x-border"
+								id="form_1_femaleyouth" name="form_1_femaleyouth" type="number"
+								placeholder="" ></td>
+						<td><input class="FORM1_FIELD  x-input x-border" id="form_1_femaleip"
+								name="form_1_femaleip" type="number" placeholder="" ></td>
+								<td><input class="FORM1_FIELD  x-input x-border" id="form_1_femalepwd"
+									name="form_1_femalepwd" type="number" placeholder="" ></td>
+					</tr>
+				</div>
+
+				<div class="x-row  x-padding">
+				
+				<table class="x-table  x-table-border">
+					<br>
+					<tr>
+						<td>
+							<center>Total # of Youth</center>
+						</td>
+						<td>
+							<center>Total # of IP</center>
+						</td>
+						<td>
+							<center>Total # of PWD</center>
+						</td>
+				
+					</tr>
+
+					<tr>
+						<td> <input class="FORM1_FIELD x-input x-border" id="form_1_totalyouth" name="form_1_totalyouth" type="number" placeholder="" readonly></td>
+						<td><input class="FORM1_FIELD  x-input x-border"
+								id="form_1_totalip" name="form_1_totalip" type="number"
+								placeholder=""readonly ></td>
+						<td><input class="FORM1_FIELD  x-input x-border" id="form_1_totalpwd"
+								name="form_1_totalpwd" type="number" placeholder=""readonly ></td>
+
+					</tr>
+				</table></div>
+				<br>
+				<br>
+				<div class="x-row  x-padding">
+				<table class="x-table  x-table-border">
+					<tr>
+						<th colspan="2" style="background-color: #ADC4CE;">
+							<center>Farmer's Organization
+								 
+							</center>
+						</th>
+
+					</tr>
+					<tr>
+						<td>
+							<center>Total # of Cooperatives</center>
+						</td>
+						<td>
+							<center>Total # of Associations</center>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td> <input class="FORM1_FIELD x-input x-border" id="form_1_totalcooperatives" name="form_1_totalcooperatives" type="number" placeholder=""></td>
+						<td><input class="FORM1_FIELD  x-input x-border"
+								id="form_1_totalassociations" name="form_1_totalassociations" type="number"
+								placeholder="" ></td>
+
+					</tr>
+				</table>
+				</div>
+				<br>
+				<br>
+		
+				<div class="x-row  x-padding">
+
+					<table class="x-table  x-table-border">
+						<tr>
+							<th colspan="3" style="background-color: #ADC4CE;">
+								<center>Projected Reach
+									 
+								</center>
+							</th>
+
+						</tr>
+
+						<tr>
+							<td>
+								<center>Total # of MSMEs</center>
+							</td>
+							<td>
+								<center>Total # of Smallholder Farming Households</center>
+							</td>
+							<td>
+								<center>Total # of FOs</center>
+							</td>
+						</tr>
+
+						<tr>
+							<td> <input class="FORM1_FIELD x-input x-border" id="form_1_totalmsme" name="form_1_totalmsme" type="number" placeholder="" readonly></td>
+							<td><input class="FORM1_FIELD x-input x-border" id="form_1_total_farmerbene" name="form_1_total_farmerbene" type="number" placeholder="" readonly></td>
+							<td><input class="FORM1_FIELD  x-input x-border" id="form_1_totalfo"
+									name="form_1_totalfo" type="number" placeholder="" readonly></td>
+						</tr>
+					</table>
+
+					</div>
+					<br>
+					<br>
+							<!-- <div class="x-col l8  x-padding">
+							<label>Input Name of FO</label>
+							<input class="FORM1_FIELD  x-input x-border" id="form_1_namefo" type="text" name="form_1_namefo" placeholder="">
+						</div> -->
+						<div class="x-row  x-padding">
+							<table class="x-table  x-table-border">
+								<tr>
+									<th colspan="5" style="background-color: #ADC4CE;">
+										<center>MG Support for Farm Rehabilitation & Expansion
+											 
+										</center>
+									</th>
+		
+								</tr>
+		
+								<tr>
+									<td>
+										<center>Hectares for Rehab</center>
+									</td>
+									<td>
+										<center>Total Cost of Rehab</center>
+									</td>
+									<td>
+										<center>Hectares for Expansion</center>
+									</td>
+									<td>
+										<center>Total Cost of Expansion</center>
+									</td>
+									<td>
+										<center>Total Hectarage Covered</center>
+									</td>
+								</tr>
+		
+								<tr>
+									<td><input class="FORM1_FIELD  x-input x-border" id="form_1_hect_rehab"
+											name="form_1_hect_rehab" type="number" placeholder=""></td>
+									<td><input class="FORM1_FIELD  x-input x-border"
+											id="form_1_total_cost_rehab" name="form_1_total_cost_rehab" type="number"
+											placeholder=""></td>
+									<td><input class="FORM1_FIELD  x-input x-border " id="form_1_hect_exp"
+											name="form_1_hect_exp" type="number" placeholder=""></td>
+											<td><input class="FORM1_FIELD  x-input x-border " id="form_1_cost_exp"
+												name="form_1_cost_exp" type="number" placeholder=""></td>
+												<td><input class="FORM1_FIELD  x-input x-border " id="form_1_totalhectarage_cov"
+													name="form_1_totalhectarage_cov" type="number" placeholder="" readonly></td>
+								</tr>
+							</table>
+						
+					</div>
+					<br>
+					<br>
+
+					<div class="x-row  x-padding">
+						<style>
+							
+							
+							table,
+							th,
+							td {
+								border: 1px solid black;
+								border-collapse: collapse;
+							}
+						</style>
+						<table class="x-table  x-table-border">
+							<tr>
+								<th colspan="3" style="background-color: #ADC4CE;">
+									<center>Total Cost of Productive Investments
+										<span style="color: #007399;" class="tool" data-tip="Please enter the total peso amount without commas." tabindex="1"><i class="fa fa-info-circle"></i></span> 
+									</center>
+								</th>
+
+							</tr>
+
+							<tr>
+								<td>
+									<center>Equipment</center>
+								</td>
+								<td>
+									<center>Facilities/Warehouse</center>
+								</td>
+								<td>
+									<center>Total</center>
+								</td>
+							</tr>
+
+							<tr>
+								<td><input class="FORM1_FIELD  x-input x-border form_1_euqipments" id="form_1_euqipment"
+										name="form_1_euqipment" type="number" placeholder=""></td>
+								<td><input class="FORM1_FIELD  x-input x-border form_1_Facilities_warehouses"
+										id="form_1_Facilities_warehouse" name="form_1_Facilities_warehouse" type="number"
+										placeholder=""></td>
+								<td><input class="FORM1_FIELD  x-input x-border form_1_total_prod_invs" id="form_1_totalcost_prodinvest"
+										name="form_1_totalcost_prodinvest" type="number" placeholder="" readonly></td>
+							</tr>
+						</table>
+					</div>
+					<br>
+					<br>
+					<div class=" x-row  x-padding">
+						<style>
+							table,
+							th,
+							td {
+								border: 1px solid black;
+								border-collapse: collapse;
+							}
+						</style>
+						<table class="x-table  x-table-border">
+							<tr>
+								<th colspan="7" style="background-color: #ADC4CE;">
+									<center>Total Matching Grant <span style="color: #007399;" class="tool" data-tip="Please enter the total peso amount without commas." tabindex="1"><i class="fa fa-info-circle"></i></span> </center>
+								</th>
+							</tr>
+
+							<tr>
+								<td>
+									<center>Total cost of Rehab</center>
+								</td>
+								<td>
+									<center>Total Cost of Expansion</center>
+								</td>
+								<td>
+									<center>Total Cost of Productive Investments</center>
+								</td>
+								<td>
+									<center>Partner's Total Counterpart</center>
+								</td>
+								
+								<td>
+									<center>Total Project Cost (Project funds)</center>
+								</td>
+								<td>
+									<center>Total MG Cost</center>
+								</td>
+							</tr>
+
+							<tr>
+								<td><input class="FORM1_FIELD x-input x-border form-1-aa" id="form_1_total_rehab"
+										name="form_1_total_rehab" type="number" placeholder="" readonly></td>
+								<td><input class="FORM1_FIELD x-input x-border form-1-ab" id="form_1_total_exp" name="form_1_total_exp"
+										type="number" placeholder="" readonly></td>
+								<td><input class="FORM1_FIELD x-input x-border form_1_totalcost_prodinvest2"
+										id="form_1_totalcost_prodinvest2" name="form_1_totalcost_prodinvest2" type="number"
+										placeholder="" readonly></td>
+										<td><input class="FORM1_FIELD x-input x-border"
+											id="form_1_partners_counterpart" name="form_1_partners_counterpart" type="number"
+											placeholder=""></td>
+											
+								<td><input class="FORM1_FIELD x-input x-border form-1-total-matching-grant-update"
+										id="form_1_total_matching_grant" name="form_1_total_matching_grant" placeholder=""
+										readonly></td>
+										<td><input class="FORM1_FIELD x-input x-border"
+											id="form1_total_mg_cost" name="form1_total_mg_cost" type="number"
+											placeholder="" readonly></td>
+							</tr>
+						</table>
+					</div>
+					<br>
+					<br>
+					<div class="x-row  x-padding">
+						<style>
+							table,
+							th,
+							td {
+								border: 1px solid black;
+								border-collapse: collapse;
+							}
+						</style>
+						<table class="x-table  x-table-border">
+							<tr>
+								<th colspan="6" style="background-color: #ADC4CE;">
+									<center>Capacity Building <span style="color: #007399;" class="tool" data-tip="Please enter the total peso amount without commas." tabindex="1"><i class="fa fa-info-circle"></i></span></center>
+								</th>
+
+							</tr>
+
+							<tr>
+								<td>
+									<center>Organizational</center>
+								</td>
+								<td>
+									<center>Technical Trainings</center>
+								</td>
+								<td>
+									<center>Post-Production</center>
+								</td>
+								<td>
+									<center>Others</center>
+								</td>
+								<td>
+									<center>Total Project Cost (Project funds)</center>
+								</td>
+								<td>
+									<center>Partner's Total Counterpart</center>
+								</td>
+							</tr>
+
+							<tr>
+								<td><input class="FORM1_FIELD  x-input x-border form1_org" id="form_1_organizational"
+										name="form_1_organizational" type="number" placeholder=""></td>
+								<td><input class="FORM1_FIELD  x-input x-border form1_tech" id="form_1_technical_trainings"
+										name="form_1_technical_trainings" type="number" placeholder=""></td>
+								<td><input class="FORM1_FIELD  x-input x-border form1_postprod" id="form_1_post_production"
+										name="form_1_post_production" type="number" placeholder=""></td>
+								<td><input class="FORM1_FIELD  x-input x-border form1_otherz" id="form_1_others" type="number"
+										name="form_1_others" placeholder=""></td>
+								<td><input class="FORM1_FIELD  x-input x-border form1_total_caps" id="form_1_total_capbuild" type="text"
+										name="form_1_total_capbuild" placeholder="" readonly></td>
+										<td><input class="FORM1_FIELD  x-input x-border" id="form_1_total_capbuild_counterpart" type="text"
+											name="form_1_total_capbuild_counterpart" placeholder=""></td>
+							</tr>
+						</table>
+					</div><br>
+					<br>
+				
+					<div class=" x-padding ">
+			
+						<table class="x-table  x-table-border">
+							<tr>
+								<th colspan="4" style="background-color: #ADC4CE;">
+									<center>Supply Chain Manager</center>
+								</th>
+							</tr>
+
+							<tr>
+								<td>
+									<center>Supply Chain Manager Project Cost</center>
+								</td>
+								<td>
+									<center>Supply Chain Manager Partner Counterpart</center>
+								</td>
+								
+							</tr>
+
+							<tr>
+								<td><input class="FORM1_FIELD x-input x-border" id="form_1_supply_chain_manager" name="form_1_supply_chain_manager" type="number"
+										placeholder=""></td>
+								<td><input class="FORM1_FIELD x-input x-border" id="supply_chain_manager_counterpart" name="supply_chain_manager_counterpart" type="number"
+										placeholder=""></td>
+						
+								
+							</tr>
+						</table>
+					</div>
+
+					<br>
+					<br>
+					<div class=" x-padding ">
+			
+						<table class="x-table  x-table-border">
+							<tr>
+								<th colspan="4" style="background-color: #ADC4CE;">
+									<center>FMI</center>
+								</th>
+							</tr>
+
+							<tr>
+								<td>
+									<center><span style="color: #007399;" class="tool" data-tip="Refers to the total cost of FMI funded by the project. Enter peso amount without comma." tabindex="1"><i class="fa fa-info-circle"></i></span> FMI Project Cost</center>
+								</td>
+								<td>
+									<center><span style="color: #007399;" class="tool" data-tip="Input total FMI length in kilometer." tabindex="1"><i class="fa fa-info-circle"></i></span> FMI KMS</center>
+								</td>
+								<td>
+									<center><span style="color: #007399;" class="tool" data-tip="Refers to the total cost of Partner's FMI counterpart. Enter peso amount without comma." tabindex="1"><i class="fa fa-info-circle"></i></span> FMI Partner Counterpart</center>
+								</td>
+							</tr>
+
+							<tr>
+								<td><input class="FORM1_FIELD x-input x-border" id="form_1_fmi" name="form_1_fmi" type="number"
+										placeholder=""></td>
+								<td><input class="FORM1_FIELD x-input x-border" id="form_1_fmi_kms" name="form_1_fmi_kms" type="number"
+										placeholder=""></td>
+								<td><input class="FORM1_FIELD x-input x-border" id="fmi_part_counter" name="fmi_part_counter" type="number"
+										placeholder=""></td>
+								
+							</tr>
+						</table>
+					</div>
+
+					<br>
+				<br>
+
+					<div class="x-row  x-padding">
+						<style>
+							table,
+							th,
+							td {
+								border: 1px solid black;
+								border-collapse: collapse;
+							}
+						</style>
+						<table class="x-table  x-table-border">
+							<tr>
+								<th colspan="5" style="background-color: #ADC4CE;">
+									<center>Total Project Cost (Project funds)</center>
+								</th>
+							</tr>
+
+							<tr>
+								<td>
+									<center>Total Matching Grant</center>
+								</td>
+								<td>
+									<center>Total Capacity Building</center>
+								</td>
+								<td>
+									<center>Supply Chain Manager</center>
+								</td>
+								<td>
+									<center>FMI</center>
+								</td>
+								<td>
+									<center>Total</center>
+								</td>
+							</tr>
+
+							<tr>
+								<td><input class="FORM1_FIELD x-input x-border form1_mg" id="form_1_y" name="form_1_y" type="number"
+										placeholder="" readonly></td>
+								<td><input class="FORM1_FIELD x-input x-border form1_cap" id="form_1_ac" name="form_1_ac" type="number"
+										placeholder="" readonly></td>
+								<td><input class="FORM1_FIELD x-input x-border form1_sup" id="form_1_ad" name="form_1_ad" type="number"
+										placeholder="" readonly></td>
+										<td><input class="FORM1_FIELD x-input x-border" id="form1_total_fmi" name="form1_total_fmi" type="number"
+											placeholder="" readonly></td>
+								<td><input class="FORM1_FIELD x-input x-border form-1-totalproject_cost" id="form_1_totalproject_cost"
+										name="form_1_totalproject_cost" placeholder="" readonly></td>
+							</tr>
+						</table>
+					</div>
+					<br>
+					<br>
+					<div class=" x-padding ">
+			
+						<table class="x-table  x-table-border">
+							<tr>
+								<th colspan="5" style="background-color: #ADC4CE;">
+									<center>Total Partner Counterpart</center>
+								</th>
+							</tr>
+
+							<tr>
+								<td>
+									<center>Matching Grants</center>
+								</td>
+								<td>
+									<center>Capacity Building</center>
+								</td>
+								<td>
+									<center>Supply Chain Manager</center>
+								</td>
+								<td>
+									<center>FMI</center>
+								</td>
+								<td>
+									<center>Total</center>
+								</td>
+							</tr>
+
+							<tr>
+								<td><input class="FORM1_FIELD x-input x-border" id="partner_counterpart_MG" name="partner_counterpart_MG" type="number"
+										placeholder="" readonly></td>
+								<td><input class="FORM1_FIELD x-input x-border" id="partner_counterpart_CB" name="partner_counterpart_CB" type="number"
+										placeholder="" readonly></td>
+								<td><input class="FORM1_FIELD x-input x-border" id="partner_counterpart_SCM" name="partner_counterpart_SCM" type="number"
+										placeholder="" readonly></td>
+										<td><input class="FORM1_FIELD x-input x-border" id="partner_counterpart_FMI" name="partner_counterpart_FMI" type="number"
+											placeholder="" readonly></td>
+											<td><input class="FORM1_FIELD x-input x-border" id="partner_counterpart_total" name="partner_counterpart_total" type="number"
+												placeholder="" readonly></td>
+											
+								
+							</tr>
+						</table>
+					</div>
+					<br>
+					<br>
+					<div class=" x-padding ">
+			
+						<table class="x-table  x-table-border">
+							<tr>
+								<th colspan="5" style="background-color: #ADC4CE;">
+									<center>Total DIP Cost (Project + Partner Counterpart)</center>
+								</th>
+							</tr>
+
+							<tr>
+								<td>
+									<center>Matching Grants</center>
+								</td>
+								<td>
+									<center>Capacity Building</center>
+								</td>
+								<td>
+									<center>Supply Chain Manager</center>
+								</td>
+								<td>
+									<center>FMI</center>
+								</td>
+								<td>
+									<center>Total</center>
+								</td>
+							</tr>
+
+							<tr>
+								<td><input readonly class="FORM1_FIELD x-input x-border" id="total_dip_cost_MG" name="total_dip_cost_MG" type="number"
+										placeholder=""></td>
+								<td><input readonly class="FORM1_FIELD x-input x-border" id="total_dip_cost_CB" name="total_dip_cost_CB" type="number"
+										placeholder=""></td>
+								<td><input readonly class="FORM1_FIELD x-input x-border" id="total_dip_cost_SCM" name="total_dip_cost_CM" type="number"
+										placeholder=""></td>
+										<td><input readonly class="FORM1_FIELD x-input x-border" id="total_dip_cost_FMI" name="total_dip_cost_FMI" type="number"
+											placeholder=""></td>
+											<td><input readonly class="FORM1_FIELD x-input x-border" id="total_dip_cost_total" name="total_dip_cost_total" type="number"
+												placeholder=""></td>
+											
+								
+							</tr>
+						</table>
+					</div>
+
+
+					<!-- Start to do list -->
+{% if benef|length !=0 %}
+					
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+	  <div class="x_title">
+		<h2>Participants&nbsp;&nbsp;&nbsp;
+				  <a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="
+				  +URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
+				  <span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants
+			  </a> </h2></h2>
+		<ul class="nav navbar-right panel_toolbox">
+		  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+		  </li>
+		  <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">Settings 1</a>
+				<a class="dropdown-item" href="#">Settings 2</a>
+			</div>
+		</li>
+		<li><a class="close-link"><i class="fa fa-close"></i></a>
+		</li>
+	</ul>
+	<div class="clearfix"></div>
+</div>
+<div class="x_content">
+  <div class="row">
+	  <div class="col-sm-12">
+		<div class="card-box table-responsive">
+			<p class=" text-muted font-13 m-b-30">
+			  Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
+		  </p>
+		  
+		  <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				<th>Name / Org Name</th>
+				<th>Sex</th>
+				<th>Birthday</th>
+				<th>Primary Crop (If Applicable)</th>
+				<th>Barangay</th>
+				<th>City/Municipality</th>
+				<th>Province</th>
+				<th>Region</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			{% for parti in benef%}
+				<tr>
+					<td>{{parti['fname']}}</td>
+					<td>{{parti['sex']}}</td>
+					<td>{{parti['farmer_bday']}}</td>
+					<td>{{parti['farmer_primary_crop']}}</td>
+					<td>{{parti['addr_brgy']}}</td>
+					<td>{{parti['addr_city']}}</td>
+					<td>{{parti['addr_prov']}}</td>
+					<td>Region {{parti['addr_region']}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endif%}
+
+
+		
+
+			</div>
+
+					
+				
+					<div class="x-row  x-padding">
+
+						<div class="x-col l8  x-padding" id="form_1_choose_files">
+							<label for="image_uploads">Choose file</label>
+							<input type="file" id="mov" name="mov" multiple />
+						</div>
+					<!-- 	<div class="x-col l4  x-padding">
+							<button data-toggle="modal" data-target="#form1_modalpart" href=""
+								style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart"
+								class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add
+								Participants</button>
+						</div> -->
+						<p class="x-right" id="submit_btn_holder">
+							
+							<button class="btn btn-primary btn-xs" type="button" onclick="submit_form('FORM1_FIELD','dcf_prep_review_aprv_status','/form1_dashboard')">Submit</button>
+						</p>
+
+					</div>
+
+				</div>
+		</div>
+
+
+
+			
+{% include 'formdata_handler.html' %}
+<script>
+	$onload(function () {
+		var record_id = URL_ARGS["id"]
+		var table = URL_ARGS["table"]
+		load_data(record_id, table, "FORM1_FIELD")
+		
+		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+	})
+
+
+
+	var x_inputs_ = $CLASS('x-input')
+	for (let index = 0; index < x_inputs_.length; index++) {
+		if (x_inputs_[index].id != 'form_1_totalproject_cost') {
+			x_inputs_[index].addEventListener('keyup', function (ee) {
+				var num1 = parseFloat($ID("form_1_y").value); 
+				var num2 = parseFloat($ID("form_1_ac").value); 
+				var num3 = parseFloat($ID("form_1_ad").value); 
+				var num4 = parseFloat($ID("form1_total_fmi").value)
+				if (isNaN(num1)) { num1 = 0 }
+				if (isNaN(num2)) { num2 = 0 }
+				if (isNaN(num3)) { num3 = 0 }
+				if (isNaN(num4)) { num4 = 0 }
+				$ID('form_1_totalproject_cost').value = num1 + num2 + num3 + num4
+
+			})
+		}
+	}
+
+
+
+		    $(document).ready(function () {
+        // Attach input event listener to form_1_total_cost_rehab
+        $('#form_1_total_cost_rehab').on('input', function () {
+            // Get the value and update form_1_total_rehab
+            var value = $(this).val();
+            $('#form_1_total_rehab').val(value);
+        });
+
+        // Attach input event listener to form_1_cost_exp
+        $('#form_1_cost_exp').on('input', function () {
+            // Get the value and update form_1_total_exp
+            var value = $(this).val();
+            $('#form_1_total_exp').val(value);
+        });
+    });
+
+
+	    var x_inputss_ = $CLASS('x-input')
+	for (let index = 0; index < x_inputss_.length; index++) {
+		if (x_inputss_[index].id != 'form_1_total_matching_grant') {
+			x_inputss_[index].addEventListener('keyup', function (ee) {
+				var nums1 = parseFloat($ID("form_1_total_rehab").value); 
+				var nums2 = parseFloat($ID("form_1_total_exp").value); 
+				var nums3 = parseFloat($ID("form_1_totalcost_prodinvest2").value); 
+
+				if (isNaN(nums1)) { nums1 = 0 }
+				if (isNaN(nums2)) { nums2 = 0 }
+				if (isNaN(nums3)) { nums3 = 0 }
+
+				$ID('form_1_total_matching_grant').value = nums1 + nums2 + nums3
+
+			})
+		}
+	}
+
+	    var x_inputsss_ = $CLASS('x-input')
+	for (let index = 0; index < x_inputss_.length; index++) {
+		if (x_inputss_[index].id != 'form_1_y') {
+			x_inputss_[index].addEventListener('keyup', function (ee) {
+				var nums1 = parseFloat($ID("form_1_total_matching_grant").value); 
+
+				if (isNaN(nums1)) { nums1 = 0 }
+
+				$ID('form_1_y').value = nums1
+
+			})
+		}
+	}
+
+	// ===============================================================================
+
+	$(document).ready(function(){
+	// var multipleCancelButton = new Choices('#form_1_msmes', {
+		CHOICES_SELECT['form_1_msmes'] = new Choices('#form_1_msmes', {
+		removeItemButton: true,
+		maxItemCount:4,
+		searchResultLimit:4,
+		renderChoiceLimit:4
+		}); 
+	});
+
+	$(document).ready(function(){
+		CHOICES_SELECT['form_1_scope_provinces'] = new Choices('#form_1_scope_provinces', {
+			removeItemButton: true,
+			maxItemCount:21,
+			searchResultLimit:21,
+			renderChoiceLimit:21,
+			delimeter : ","
+		}); 
+	});
+
+	$(document).ready(function(){
+		CHOICES_SELECT['form_1_size_of_anchor'] = new Choices('#form_1_size_of_anchor', {
+			removeItemButton: true,
+			choices: ["Large","Medium","Small","Micro"],
+			// items: ["Large","Medium","Small","Micro"],
+			searchChoices: true,
+			// maxItemCount:4,
+			// searchResultLimit:4,
+			addItems: true,
+			uniqueItemText: 'Only unique values can be added',
+			customAddItemText: 'Only values matching specific conditions can be added',
+			addItemText: (value) => {
+				// println(multipleCancelButton)
+				return `Press Enter to add <b>`+value+`</b>`;
+			},
+		}); 
+	});
+
+</script>
+
+
+
+{% endblock content %}
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+{% endblock javascripts %}

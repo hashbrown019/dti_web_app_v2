@@ -8,7 +8,6 @@
 
 {% block content %}
 <title>Form 7</title>
-<form action="/insert_form7" method="POST">
     {% include "includes/sweetalert.html" %}
     <div class="x-col l1 ">
         &nbsp;
@@ -17,6 +16,7 @@
         <center>
             <h2 class=" text-white x-container x-padding" style="background-color: #007399;">FORM 7 - TRADE PROMOTION
                 SERVICES TRACKER</h2>
+                <span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
         </center>
 
         <div class="x-container x-padding">
@@ -31,10 +31,11 @@
         </div>
 
         <div class="x-row x-container x-padding">
+            <input class="FORM7_FIELD x-input" type="hidden"  id="id">
 
             <div class="x-col l3 x-container x-padding">
                 <label class="">Implementing Unit:</label>
-                <select required class="form_data_b x-border x-select x-border" id="form_7_implementing_unit"
+                <select required class="FORM7_FIELD x-border x-select x-border" id="form_7_implementing_unit"
                     name="form_7_implementing_unit"><br>
                     <option value="">Choose your option</option>
                     <optgroup label="RCU">
@@ -77,14 +78,14 @@
 
             <div class="x-col l6 x-container x-padding">
                 <label>Title of Trade Promotion Services Provided:</label>
-                <input required class=" x-input x-border" id="form_7_title_trade_promotion"
+                <input required class="FORM7_FIELD x-input x-border" id="form_7_title_trade_promotion"
                     name="form_7_title_trade_promotion" type="text" autocomplete="on" placeholder="">
             </div>
         </div>
         <div class="x-row x-container x-padding">
             <div class="x-col l7 x-container x-padding">
                 <label class="">Type of Trade Promotion Services organized/participated :</label>
-                <select required class=" x-border x-select x-border" id="form_7_type_of_trade_promotion"
+                <select required class="FORM7_FIELD x-border x-select x-border" id="form_7_type_of_trade_promotion"
                     name="form_7_type_of_trade_promotion" required><br>
                     <option selected value="">Choose your option</option>
                     <option>Trade Fair - Provincial</option>
@@ -101,7 +102,7 @@
             </div>
             <div class="x-col l5 x-container x-padding">
                 <label>DIP (indicate NO if none):</label>
-                <input class=" x-input x-border" id="form_7_dip_indicate" name="form_7_dip_indicate" type="text"
+                <input class="FORM7_FIELD x-input x-border" id="form_7_dip_indicate" name="form_7_dip_indicate" type="text"
                     autocomplete="on" placeholder="">
             </div>
         </div>
@@ -133,9 +134,9 @@
                     </tr>
 
                     <tr>
-                        <td><input for=" x-light-grey x-input " id="form_7_start_date" type="date"
+                        <td><input class="FORM7_FIELD  x-input x-border" for=" x-light-grey x-input " id="form_7_start_date" type="date"
                                 name="form_7_start_date"></td>
-                        <td><input for=" x-light-grey x-input " id="form_7_end_date" type="date"
+                        <td><input class="FORM7_FIELD  x-input x-border" for=" x-light-grey x-input " id="form_7_end_date" type="date"
                                 name="form_7_end_date"></td>
                     </tr>
                 </table>
@@ -167,9 +168,9 @@
                     </tr>
 
                     <tr>
-                        <td><input class=" x-light-grey x-input" id="form_7_name_of_po" type="text"
+                        <td><input class="FORM7_FIELD x-light-grey x-input" id="form_7_name_of_po" type="text"
                                 name="form_7_name_of_po"></td>
-                        <td><input class=" x-light-grey x-input" id="form_7_amount" type="number" name="form_7_amount">
+                        <td><input class="FORM7_FIELD x-light-grey x-input" id="form_7_amount" type="number" name="form_7_amount">
                         </td>
                     </tr>
                 </table>
@@ -178,12 +179,12 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l5 x-container x-padding">
                 <label>Venue: </label>
-                <input class=" x-input x-border" id="form_7_venue" name="form_7_venue" type="text" autocomplete="on"
+                <input class="FORM7_FIELD x-input x-border" id="form_7_venue" name="form_7_venue" type="text" autocomplete="on"
                     placeholder="">
             </div>
             <div class="x-col l6 x-container x-padding">
                 <label>RAPID Actual Budget: </label>
-                <input class=" x-input x-border" id="form_7_rapid_actual_budget" name="form_7_rapid_actual_budget"
+                <input class="FORM7_FIELD x-input x-border" id="form_7_rapid_actual_budget" name="form_7_rapid_actual_budget"
                     type="text" autocomplete="on" placeholder="">
             </div>
         </div>
@@ -194,25 +195,25 @@
             </center>
             <div class="x-row x-container x-padding">
                 <label>Name of Beneficiary: </label>
-                <input class=" x-input x-border" id="form_7_name_of_beneficiary" name="form_7_name_of_beneficiary"
+                <input class="FORM7_FIELD x-input x-border" id="form_7_name_of_beneficiary" name="form_7_name_of_beneficiary"
                     type="text" autocomplete="on" placeholder="">
             </div>
 
             <div class="x-col l4 x-container x-padding">
                 <label class="">Commodity:</label>
-                <select class="x-border x-select x-border" id="form_7_commodity" name="form_7_commodity" required>
+                <select class="FORM7_FIELD x-border x-select x-border" id="form_7_commodity" name="form_7_commodity" required>
                     <option value="">Choose your option</option>
                     <option>Coffee</option>
                     <option>Cacao</option>
                     <option>Coconut</option>
                     <option>PFN</option>
                 </select>
-                <input type="text" class="hidden-textbox x-input x-border" name="form_7_commodity_others"
-                    id="form_7_commodity_others" placeholder="Please specify">
+                <input type="text" class="FORM7_FIELD hidden-textbox x-input x-border" name="form_7_commodity_others"
+                    id="form_7_commodity_others" show-base="form_7_commodity" show-trigger="PFN" placeholder="Please specify">
             </div>
             <div class="x-col l3 x-container x-padding">
                 <label class="">Type of Beneficiary:</label>
-                <select class=" x-border x-select x-border" id="form_7_beneficiary" name="form_7_beneficiary"
+                <select class="FORM7_FIELD x-border x-select x-border" id="form_7_beneficiary" name="form_7_beneficiary"
                     required><br>
                     <option selected value="">Choose your option</option>
                     <option>MSME</option>
@@ -223,7 +224,7 @@
 
             <div class="x-col l2 x-container x-padding">
                 <label class="">Sex:</label>
-                <select class=" x-border x-select x-border" id="form_7_sex" name="form_7_sex" required><br>
+                <select class="FORM7_FIELD x-border x-select x-border" id="form_7_sex" name="form_7_sex" required><br>
                     <option selected value="">Choose your option</option>
                     <option>Male</option>
                     <option>Female</option>
@@ -232,7 +233,7 @@
 
             <div class="x-col l3 x-container x-padding">
                 <label class="">Sector:</label>
-                <select class=" x-border x-select x-border" id="form_7_sector" name="form_7_sector" required><br>
+                <select class="FORM7_FIELD x-border x-select x-border" id="form_7_sector" name="form_7_sector" required><br>
                     <option selected value="">Choose your option</option>
                     <option>PWD</option>
                     <option>Youth</option>
@@ -294,12 +295,12 @@
         <div class="x-row x-container x-padding">
             <div class="x-col l4 x-padding x-container ">
                 <label>Type of Product(s):</label>
-                <input class=" x-input x-border" id="form_7_type_of_products" name="form_7_type_of_products" type="text"
+                <input class="FORM7_FIELD x-input x-border" id="form_7_type_of_products" name="form_7_type_of_products" type="text"
                     autocomplete="on" placeholder="">
             </div>
             <div class="x-col l8 x-container x-padding">
                 <label>Name of Buyer/Company Matched with Assisted MSMEs/FOs:</label>
-                <input class=" x-input x-border" id="form_7_name_of_buyer" name="form_7_name_of_buyer" type="text"
+                <input class="FORM7_FIELD x-input x-border" id="form_7_name_of_buyer" name="form_7_name_of_buyer" type="text"
                     autocomplete="on" placeholder="">
             </div>
             <div class="x-row x-container x-padding">
@@ -335,13 +336,13 @@
                     </tr>
 
                     <tr>
-                        <td><input class="t1 x-light-grey x-input" id="form_7_cash_sales" name="form_7_cash_sales"
+                        <td><input class="FORM7_FIELD t1 x-light-grey x-input" id="form_7_cash_sales" name="form_7_cash_sales"
                                 type="number" oninput="calculateTotal()"></td>
-                        <td><input class="t1 x-light-grey x-input" id="form_7_booked_sales" name="form_7_booked_sales"
+                        <td><input class="FORM7_FIELD t1 x-light-grey x-input" id="form_7_booked_sales" name="form_7_booked_sales"
                                 type="number" oninput="calculateTotal()"></td>
-                        <td><input class="t1 x-light-grey x-input" id="form_7_under_negotiations"
+                        <td><input class="FORM7_FIELD t1 x-light-grey x-input" id="form_7_under_negotiations"
                                 name="form_7_under_negotiations" type="number" oninput="calculateTotal()"></td>
-                        <td><input class="t1 x-light-grey x-input" id="form_7_total_autosum" name="form_7_total_autosum"
+                        <td><input class="FORM7_FIELD t1 x-light-grey x-input" id="form_7_total_autosum" name="form_7_total_autosum"
                                 type="number" readonly></td>
                     </tr>
                 </table>
@@ -361,19 +362,27 @@
                 <!-- <div class="x-col l4 x-container x-padding">	
                 <button data-toggle="modal" data-target="#form7_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
             </div> -->
-                <div class="x-right" style="margin-top: 5%;">
-                    <input class="x-blue btn " id="form_7_submit" type="submit">
-                </div>
+                 <p class="x-right" id="submit_btn_holder">
+                    <button class="btn btn-primary" type="button" onclick="submit_form('FORM7_FIELD','dcf_trade_promotion','/form7_dashboard')">Submit</button>
+                </p>
             </div>
         </div>
     </div>
 
 
+            {% include 'formdata_handler.html' %}
 
     {% include "includes/forms/form7_participants.html" %}
-</form>
 
 <script>
+        $onload(function () {
+        var record_id = URL_ARGS["id"]
+        var table = URL_ARGS["table"]
+        load_data(record_id, table, "FORM7_FIELD")
+        // submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+    })
+
+
     function calculateTotal() {
         var cash_sales = parseInt(document.getElementById('form_7_cash_sales').value) || 0;
         var booked_sales = parseInt(document.getElementById('form_7_booked_sales').value) || 0;

@@ -14,6 +14,9 @@ import base64
 from datetime import date, datetime
 from modules.Req_Brorn_util import file_from_request
 
+# from docx2pdf import convert
+# pip install docx2pdf
+
 db = mysql(*c.DB_CRED)
 db.err_page = 0
 
@@ -28,6 +31,13 @@ class _main:
 	# app.errorhandler(404)
 	# def is_on_session(): return ('USER_DATA' in session)
 
+	# ======================================================================================================
+	@app.route("/__test",methods=["POST","GET"])
+	def __test():
+		return render_template(
+			"v2_home/home.html",
+			page_data=_main.get_post()
+		)
 	# ======================================================================================================
 	@app.route("/webrep",methods=["POST","GET"])
 	def home():
@@ -51,6 +61,26 @@ class _main:
 		return render_template(
 			"home/home.html"
 		)
+
+	@app.route("/rapid/get_file_list",methods=["POST","GET"])
+	def get_file_list():
+		PATH = c.RECORDS+"../static/pdf/MEEGuide"
+		directory = os.fsencode(PATH)
+		_FILES_MEE = []
+		for file in os.listdir(directory):
+			filename = os.fsdecode(file)
+			_FILES_MEE.append("{}".format(str(filename)))
+
+		PATH = c.RECORDS+"../static/pdf/procurement"
+		directory = os.fsencode(PATH)
+		_FILES_PROC = []
+		for file in os.listdir(directory):
+			filename = os.fsdecode(file)
+			_FILES_PROC.append("{}".format(str(filename)))
+
+
+		return {"mee":_FILES_MEE,"proc":_FILES_PROC}		
+
 
 	# ===========================================================/
 	# ===========================================================/
@@ -155,7 +185,7 @@ class _main:
 
 	@app.route("/webrep/upload/get_file_download",methods=["POST","GET"])
 	def get_file_download():
-		return send_file(c.RECORDS+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
+		return send_file(c.RECORDS+"../static/"+"/objects/spreadsheets/migrated/"+excel_file, as_attachment=True,download_name=def_name)
 
 	@app.route("/webrep/article/get_post",methods=["POST","GET"])
 	def get_post():
@@ -402,7 +432,7 @@ class _main:
 				'forum/forum_discussion.html',
 				USER_DATA = session['USER_DATA'][0],
 				forum = forum[0]
-				)
+			)
 		else:
 			return redirect("/login?force_url=1")
 
@@ -468,7 +498,7 @@ class _main:
 	@app.route("/forum/get_comment/<com_id>",methods=["POST","GET"])
 	def get_comment(com_id):
 		if(_main.is_on_session()):
-			comments = db.select("SELECT `webrep_forum_comments`.*, `users`.`name` as 'commenter', `users`.`profilepic` as 'profilepic', `users`.`job` FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by`= `users`.`id` WHERE `webrep_forum_comments`.`topic_id`='{}';".format(com_id))
+			comments = db.select("SELECT `webrep_forum_comments`.*, `users`.`name` as 'commenter', `users`.`id` as 'commenter_id', `users`.`profilepic` as 'profilepic', `users`.`job` FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by`= `users`.`id` WHERE `webrep_forum_comments`.`topic_id`='{}';".format(com_id))
 			return [comments,_main.get_topic_people(com_id)]
 		else:
 			return redirect("/login?force_url=1")
@@ -498,6 +528,7 @@ class _main:
 		return render_template("error/maintenance.html")
 
 	def moderator(segment,page):
+		print("moderator init")
 		pass;
 	#sample EDIT
 

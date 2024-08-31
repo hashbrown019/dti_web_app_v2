@@ -1,0 +1,181 @@
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="/dcf_dashboard" class="site_title"><span>Data Capture Form</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+              {% if(user_data['profilepic']=="" or user_data['profilepic']==" " ): %}
+
+                <img src="\static\psalm_static\menu\img\profilepic.png" alt="..." class="img-circle profile_img">
+              {% else: %}
+              <img src="\api\user_pic\{{user_data['profilepic']}}" alt="{{user_data['profilepic']}}" class="img-circle profile_img">
+              {% endif %}
+
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>{{user_data['name']}}</h2>
+                <i style="font-size: 10px;">{{user_data['job']}} | {{user_data['rcu']}}</i>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-list-alt" aria-hidden="true"></i> Forms <span style="float: right;" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">.
+                      <li><a href="/dcf_dashboard">Main Dashboard</a></li>
+                         <li><a>Form 1 Preparation, Review and Aprroval Status<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form1_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 1 Dashboard</a>
+                        <li><a href="/dcf/form1"><i class="fa fa-edit"></i>Form 1 Fill up Form</a>
+                     
+                    </ul>
+                  </li>
+                  <li><a>Form 2 CPA Tracker<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form2_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 2 Dashboard</a>
+                        <li><a href="/dcf/form2"><i class="fa fa-edit"></i>Form 2 Fill up Form</a>
+                     
+                    </ul>
+                  </li>  
+                  <li><a>Form 3 BDSP Registry<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form3_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 3 Dashboard</a>
+                        <li><a href="/dcf/form3"><i class="fa fa-edit"></i>Form 3 Fill up Form</a>
+                     
+                    </ul>
+                  </li>
+                   <li><a>Form 4 Capacity Building for Beneficiaries<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form4_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 4 Dashboard</a>
+                        <li><a href="/dcf/form4"><i class="fa fa-edit"></i>Form 4 Fill up Form</a>
+                     
+                    </ul>
+                  </li> 
+                    <li><a>Form 5 Matching Grant Implementation Tracker<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form5_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 5 Dashboard</a>
+                        <li><a href="/dcf/form5"><i class="fa fa-edit"></i>Form 5 Fill up Form</a>
+                     
+                    </ul>
+                  </li> 
+                     <li><a>Form 6 Product Development/Enhancement Assistance Provided<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form6_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 6 Dashboard</a>
+                        <li><a href="/dcf/form6"><i class="fa fa-edit"></i>Form 6 Fill up Form</a>
+                     
+                    </ul>
+                  </li> 
+                   <li><a>Form 7 Trade Promotion Services Tracker<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form7_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 7 Dashboard</a>
+                        <li><a href="/dcf/form7"><i class="fa fa-edit"></i>Form 7 Fill up Form</a>
+                     
+                    </ul>
+                  </li> 
+                   <li><a>Form 9 Enablers' Activity Tracker<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form9_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 9 Dashboard</a>
+                        <li><a href="/dcf/form9"><i class="fa fa-edit"></i>Form 9 Fill up Form</a>
+                     
+                    </ul>
+                  </li> 
+                    <li><a>Form 10 Negosyo Center Tracker<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form10_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 10 Dashboard</a>
+                        <li><a href="/dcf/form10"><i class="fa fa-edit"></i>Form 10 Fill up Form</a>
+                     
+                    </ul>
+                  </li> 
+                  <li><a>Form 11 Access to Financing Tracker<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/form11_dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i>Form 11 Dashboard</a>
+                        <li><a href="/dcf/form11"><i class="fa fa-edit"></i>Form 11 Fill up Form</a>
+                     
+                    </ul>
+                  </li> 
+
+
+                    </ul>
+                  </li>
+            <!--       <li><a><i class="fa fa-edit"></i> Forms <span style="float: right;" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/dcf/form1">Form 1 Preparation, Review and Aprroval Status</a></li>
+                      <li><a href="/dcf/form2">Form 2 CPA Tracker</a></li>
+                      <li><a href="/dcf/form3">Form 3 BDSP Registry</a></li>
+                      <li><a href="/dcf/form4">Form 4 Capacity Building for Beneficiaries</a></li>
+                      <li><a href="/dcf/form5">Form 5 Matching Grant Implementation Tracker</a></li>
+                      <li><a href="/dcf/form6">Form 6 Product Development/Enhancement Assistance Provided</a></li>
+                      <li><a href="/dcf/form7">Form 7 Trade Promotion Services Tracker</a></li>
+                      <li><a href="/dcf/form9">Form 9 Enablers' Activity Tracker</a></li>
+                      <li><a href="/dcf/form10">Form 10 Negosyo Center Tracker</a></li>
+                      <li><a href="/dcf/form11">Form 11 Access to Financing Tracker</a></li>
+
+                    </ul>
+                  </li>
+ -->
+                   <li><a><i class="fa fa-file-excel-o" ></i>Spreadsheets<span style="float: right;" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <!-- <li><a href="/imported_file">Imported files</a></li> -->
+
+                      <li><a href="/imported_file/form1_">Form 1 Preparation, Review and Aprroval Status</a></li>
+                      <li><a href="/imported_file/form2_">Form 2 CPA Tracker</a></li>
+                      <li><a href="/imported_file/form3_">Form 3 BDSP Registry</a></li>
+                      <li><a href="/imported_file/form4_">Form 4 Capacity Building for Beneficiaries</a></li>
+                      <li><a href="/imported_file/form5_">Form 5 Matching Grant Implementation Tracker</a></li>
+                      <li><a href="/imported_file/form6_">Form 6 Product Development/Enhancement Assistance Provided</a></li>
+                      <li><a href="/imported_file/form7_">Form 7 Trade Promotion Services Tracker</a></li>
+                      <li><a href="/imported_file/form9_">Form 9 Enablers' Activity Tracker</a></li>
+                      <li><a href="/imported_file/form10_">Form 10 Negosyo Center Tracker</a></li>
+                      <li><a href="/imported_file/form11_">Form 11 Access to Financing Tracker</a></li>
+
+                    </ul>
+                  </li>
+
+
+                   <li><a><i class="fa fa-lightbulb-o"></i> Guide <span style="float: right;" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/tutorial">Tutorials</a></li>
+
+                    </ul>
+                  </li>
+
+                  
+
+                </ul>
+
+              </div>
+ 
+
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Menu" href="/menuv2">
+                <span class="fa fa-home" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="/logout" style="">
+                <span class="fa fa-sign-out" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>

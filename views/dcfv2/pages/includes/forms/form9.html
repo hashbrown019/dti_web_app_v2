@@ -1,0 +1,495 @@
+{% extends 'layouts/dcf_base.html' %}
+{% set active_page = "form9" %}
+{% set forms = "forms" %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<title>Form 9</title>
+<form action="/insert_form9" method="POST">
+	{% include "includes/sweetalert.html" %}
+
+    <div class="right_col" role="main">
+        <div class="row">
+    <div class="col-md-12 col-sm-12 x-card  x-light-grey">
+		<center>
+			<h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 9 - ENABLER'S ACTIVITY
+			TRACKER</h2>
+			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
+
+		</center>
+
+		<div class="x-container x-padding">
+			<style>
+				table,
+				th,
+				td {
+					border: 1px solid black;
+					border-collapse: collapse;
+				}
+			</style>
+		</div>
+
+		<div class="x-row x-container x-padding">
+            <input class="FORM9_FIELD x-input" type="hidden"  id="id">
+
+			<div class="x-col l3 x-padding x-container">
+				<span class="">Implementing Unit:</span>
+				<select required class="FORM9_FIELD x-border x-select x-border" id="form_9_implementing_unit"
+				name="form_9_implementing_unit"><br>
+				<option value="">Choose your option</option>
+				<optgroup label="RCU">
+					<option value="8">Region Vlll - Eastern Visayas</option>
+					<option value="9">Region lX - Zamboanga Peninsula</option>
+					<option value="10">Region X - Northern Mindanao</option>
+					<option value="11">Region Xl - Davao Region</option>
+					<option value="12">Region Xll - SOCCSKSARGEN</option>
+					<option value="13">Region Xlll - Caraga</option>
+					<option value="BARMM">BARMM</option>
+				</optgroup>
+				<optgroup label="PCU">
+
+					<option>Northern Samar</option>
+					<option>Leyte</option>
+					<option>Southern Leyte</option>
+					<option>Zamboanga del Norte</option>
+					<option>Zamboanga Sibugay</option>
+					<option>Zamboanga del Sur</option>
+					<option>Misamis Oriental</option>
+					<option>Bukidnon</option>
+					<option>Lanao del Norte</option>
+					<option>Davao de Oro</option>
+					<option>Davao Oriental</option>
+					<option>Davao del Norte</option>
+					<option>Davao del Sur</option>
+					<option>Davao Occidental</option>
+					<option>North Cotabato</option>
+					<option>Sultan Kudarat</option>
+					<option>Sarangani</option>
+					<option>Agusan del Norte</option>
+					<option>Agusan del Sur</option>
+					<option>Surigao del Sur</option>
+					<option>Maguindanao</option>
+				</optgroup>
+				<option style="font-weight: bold;">NGA Partners</option>
+			</select>
+		</div>
+
+		<div class="x-col l5">
+			<label>Activity Title:</label>
+			<input class="FORM9_FIELD x-input x-border" id="form_9_title_trade_promotion" name="form_9_title_trade_promotion"
+			type="text" autocomplete="on" placeholder="">
+		</div>
+
+
+		<div class="x-col l3 x-container x-padding">
+			<span class="">Type of Training/Activity :</span>
+			<select id="form_9_type_of_training" name="form_9_type_of_training"
+			class="FORM9_FIELD x-select x-border x-container x-padding" required>
+			<option value="" selected>Choose your option</option>
+			<option>Capbuild</option>
+			<option>Meetings</option>
+			<option>Policy issuances</option>
+			<option value="other">Others</option>
+		</select>
+		<input type="text" class="FORM9_FIELD hidden-form9training x-input x-border" name="form_9_othertypetraining"
+		id="form_9_othertypetraining" placeholder="Please specify">
+	</div>
+
+</div>
+
+<div class="x-row x-container x-padding">
+	<div class="x-col l5 x-container x-padding">
+		<style>
+			table,
+			th,
+			td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+		</style>
+		<table class="x-table x-container x-table-border">
+			<tr>
+				<th colspan="2">
+					<center>ACTIVITY DURATION<br>(Day, Month, Year)</center>
+				</th>
+
+			</tr>
+
+			<tr>
+				<td>
+					<center>Start Date</center>
+				</td>
+				<td>
+					<center>End Date</center>
+				</td>
+			</tr>
+
+			<tr>
+				<td><input class="FORM9_FIELD x-input x-border" id="form_9_start_date" type="date" name="form_9_start_date"></td>
+				<td><input class="FORM9_FIELD x-input x-border" id="form_9_end_date" type="date" name="form_9_end_date"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="x-col l4 x-container x-padding">
+		<label>Venue: </label>
+		<input class="FORM9_FIELD x-input x-border" id="form_9_venue" name="form_9_venue" type="text" autocomplete="on" placeholder="">
+	</div>
+	<div class="x-col l3 x-container x-padding">
+		<label>RAPID actual budget: </label>
+		<input class="FORM9_FIELD x-input x-border" id="form_9_rapid_actual_budget" name="form_9_rapid_actual_budget" type="text" autocomplete="on" placeholder="">
+	</div>
+	<div class="x-col l6 x-container x-padding">
+		<label>Name of Resource Person/Facilitator/BDSP: </label>
+		<input class="FORM9_FIELD x-input x-border" id="form_9_name_of_resource_person" name="form_9_name_of_resource_person" type="text" autocomplete="on" placeholder="">
+	</div>
+</div>
+<div class="x-row x-container x-padding">
+	<div class="x-col x-container x-padding">
+		<style>
+			table,
+			th,
+			td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+		</style>
+		<table id="form9table" class="x-table x-container x-table-border" style="border-color: transparent;">
+			<tr>
+				<th colspan="4">
+					<center>fully & partially funded by partners outside RAPID </center>
+				</th>
+			</tr>
+
+			<tr>
+				<td>
+					<center><button type="button" style="float: left;" class="btn btn-primary"
+						onclick="add_row()"><i
+						class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add</button>Name of
+					Partner/Organization</center>
+				</td>
+				<td>
+					<center>Counterpart Amount</center>
+				</td>
+			</tr>
+
+			<tr>
+				<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_name_of_participant_org_kapown_0"
+					name="form_9_name_of_participant_org[]" type="text"></td>
+					<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_counterpart_amount_kapown_0"
+						name="form_9_counterpart_amount[]" type="text"></td>
+					</table>
+
+					<script>
+           			 var k_counter = 1
+
+						function add_row() {
+						// $ID('main_').innerHTML += og_row
+						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+							var row = form9table.insertRow(2);
+						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+							row.insertCell(0).innerHTML = `<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_name_of_participant_org_kapown_`+k_counter+`" name="form_9_name_of_participant_org[]" type="text"></td>`
+							row.insertCell(1).innerHTML = `<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_counterpart_amount_kapown_`+k_counter+`" name="form_9_counterpart_amount[]" type="text"></td>`
+						k_counter += 1
+
+
+						// Add some text to the new cells:
+						}
+					</script>
+				</div>
+			</div>
+			<div class="x-row x-container x-padding">
+
+				<!-- <div class="x-col x-container x-padding">
+					<style>
+						table,
+						th,
+						td {
+							border: 1px solid black;
+							border-collapse: collapse;
+						}
+					</style>
+					<table id="form9table2" class="x-table x-container x-table-border" style="border-color: transparent;">
+						<tr>
+							<td>
+								<button type="button" style="float: left;" class="btn btn-primary"
+									onclick="add_row2()"><i
+									class="fa-solid fa-circle-plus"></i>&nbsp;&nbsp;Add</button><center>Name of Participant
+								</center>
+							</td>
+							<td>
+								<center>Sex</center>
+							</td>
+							<td>
+								<center>Sector</center>
+							</td>
+							<td>
+								<center>Organization</center>
+							</td>
+							<td>
+								<center>Designation</center>
+							</td>
+						</tr>
+
+						<tr>
+							
+							<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_name_of_participant_kapown_0"
+								name="form_9_name_of_participant[]" type="text"></td>
+								<td><select class="FORM9_FIELD x-border x-select x-border" id="form_9_sex_kapown_0" name="form_9_sex[]"><br>
+									<option value="">Choose your option</option>
+									<option>Male</option>
+									<option>Female</option>
+								</select></td>
+								<td><select class="FORM9_FIELD x-border x-select x-border" id="form_9_sector_kapown_0" name="form_9_sector[]"><br>
+									<option value="">Choose your option</option>
+									<option>PWD</option>
+									<option>Youth</option>
+									<option>IP</option>
+									<option>SC</option>
+									<option>Abled</option>
+									
+								</select></td>
+								<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_organization_kapown_0" name="form_9_organization[]"
+									type="text"></td>
+									<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_designation_kapown_0" name="form_9_designation[]"
+										type="text"></td>
+									</tr>
+								</table>
+								<script>
+           						 var k_counter2 = 1
+
+									function add_row2() {
+						// $ID('main_').innerHTML += og_row
+						// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
+										var row2 = form9table2.insertRow(1);
+						// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+										row2.insertCell(0).innerHTML = `<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_name_of_participant_kapown_`+k_counter2+`" name="form_9_name_of_participant[]" type="text"></td>`
+										row2.insertCell(1).innerHTML = `<td><select class="FORM9_FIELD x-border x-select x-border" id="form_9_sex_kapown_`+k_counter2+`" name="form_9_sex[]"><br>
+										<option value="">Choose your option</option>
+										<option>Male</option>
+										<option>Female</option>
+										</select></td>`
+										row2.insertCell(2).innerHTML = `<td><select class="FORM9_FIELD x-border x-select x-border" id="form_9_sector_kapown_`+k_counter2+`" name="form_9_sector[]"><br>
+										<option value="">Choose your option</option>
+										<option>PWD</option>
+										<option>Youth</option>
+										<option>IP</option>
+										<option>SC</option>
+										<option>Abled</option>
+										
+										</select></td>`
+										row2.insertCell(3).innerHTML = `<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_organization_kapown_`+k_counter2+`" name="form_9_organization[]" type="text"></td>`
+										row2.insertCell(4).innerHTML = `<td><input class="FORM9_FIELD t1 x-light-grey x-input" id="form_9_designation_kapown_`+k_counter2+`" name="form_9_designation[]" type="text"></td>`
+           			 			k_counter2 += 1
+
+
+						// Add some text to the new cells:
+									}
+								</script>
+							</div>
+						</div>
+ -->
+							<div class="x-row x-container x-padding">
+
+								<div class="x-col l3 x-container x-padding">
+									<span class="">Activity Output:</span>
+									<input class="FORM9_FIELD x-input x-border" id="form_9_activity_output" type="text" name="form_9_activity_output">
+								</div>
+
+								<div class="x-col x-container x-padding">
+									<style>
+										table,
+										th,
+										td {
+											border: 1px solid black;
+											border-collapse: collapse;
+										}
+									</style>
+									<table class="x-table x-container x-table-border" style="border-color: transparent;">
+										<tr>
+											<th colspan="2">
+												<center>Results of activity (Average, if applicable, indicate NA option)</center>
+											</th>
+											<th colspan="2">
+												<center>Client Feedback survey</center>
+											</th>
+										</tr>
+
+										<tr>
+											<td>
+												<center>Pre-test</center>
+											</td>
+											<td>
+												<center>Post-test</center>
+											</td>
+
+											<td>
+												<center>Rating</center>
+											</td>
+											<td>
+												<center>Comments/Areas of Improvement</center>
+											</td>
+
+										</tr>
+
+										<tr>
+											<td><input class="FORM9_FIELD x-light-grey x-input" id="form_9_pre_test2" type="text"
+												name="form_9_pre_test2"></td>
+												<td><input class="FORM9_FIELD x-light-grey x-input" id="form_9_post_test2" type="text"
+													name="form_9_post_test2"></td>
+
+
+													<td><input class="FORM9_FIELD x-light-grey x-input" id="form_9_rating" type="text" name="form_9_rating">
+													</td>
+													<td><input class="FORM9_FIELD x-light-grey x-input" id="form_9_comments" type="text"
+														name="form_9_comments"></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+
+
+
+					<!-- Start to do list -->
+{% if benef|length !=0 %}
+
+<div class="col-md-12 col-sm-12 ">
+	<div class="x_panel">
+	  <div class="x_title">
+		<h2>Participants&nbsp;&nbsp;&nbsp;
+				  <a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="
+				  +URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
+				  <span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants
+			  </a> </h2></h2>
+		<ul class="nav navbar-right panel_toolbox">
+		  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+		  </li>
+		  <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">Settings 1</a>
+				<a class="dropdown-item" href="#">Settings 2</a>
+			</div>
+		</li>
+		<li><a class="close-link"><i class="fa fa-close"></i></a>
+		</li>
+	</ul>
+	<div class="clearfix"></div>
+</div>
+<div class="x_content">
+  <div class="row">
+	  <div class="col-sm-12">
+		<div class="card-box table-responsive">
+			<p class=" text-muted font-13 m-b-30">
+			  Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
+		  </p>
+		  
+		  <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+			  <thead>
+				<tr>
+				<th>Name / Org Name</th>
+				<th>Sex</th>
+				<th>Birthday</th>
+				<th>Primary Crop (If Applicable)</th>
+				<th>Barangay</th>
+				<th>City/Municipality</th>
+				<th>Province</th>
+				<th>Region</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			{% for parti in benef%}
+				<tr>
+					<td>{{parti['fname']}}</td>
+					<td>{{parti['sex']}}</td>
+					<td>{{parti['farmer_bday']}}</td>
+					<td>{{parti['farmer_primary_crop']}}</td>
+					<td>{{parti['addr_brgy']}}</td>
+					<td>{{parti['addr_city']}}</td>
+					<td>{{parti['addr_prov']}}</td>
+					<td>Region {{parti['addr_region']}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+		
+
+			</div>
+{%endif%}
+			
+
+
+										<div class="x-row x-container x-padding">
+											<div class="x-col l5">
+												<div method="post" enctype="multipart/form-data">
+													<div class="x-col l3 x-container x-padding">
+														<input class="x-padding" type="file" id="form_9_image_uploads" name="form_9_image_uploads"
+														accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx" multiple />
+													</div>
+												</div>
+											</div>
+			<!-- <div class="x-col l4 x-container x-padding">	
+						<button data-toggle="modal" data-target="#form9_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
+					</div> -->
+		<p class="x-right" id="submit_btn_holder">
+            <button class="btn btn-primary" type="button" onclick="submit_form('FORM9_FIELD','dcf_enablers_activity','/form9_dashboard')">Submit</button>
+</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+		{% include 'formdata_handler.html' %}
+
+			<script>
+				$onload(function () {
+					var record_id = URL_ARGS["id"]
+					var table = URL_ARGS["table"]
+					load_data(record_id, table, "FORM9_FIELD")
+		
+		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+	})	
+
+$(document).ready(function() {
+    var select = $("#form_9_type_of_training");
+    var otherDiv = $("#showot");
+
+    select.on("change", function() {
+        if (select.val() === "Others to be specified") {
+            otherDiv.css("display", "block");
+        } else {
+            otherDiv.css("display", "none");
+        }
+    });
+});
+
+
+
+$(document).ready(function(){
+	$(".hidden-form9training").hide();
+	$("select#form_9_type_of_training").change(function(){
+	var currentVal = $(this).val();
+	if(currentVal == "other"){
+	$(".hidden-form9training").show();
+	}
+	else
+	$(".hidden-form9training").hide();
+	});  
+	});
+			</script>
+		</form>
+		{% endblock content %}
+
+		{% block javascripts %}
+
+		{% endblock javascripts %}

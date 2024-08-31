@@ -40,7 +40,9 @@
 					<dt class="col-3 mt-2">Public Download Link:</dt>
 					<dd class="col-8 border-top border-light">						
 						<p class=" mt-2 text-muted" id="fileTopic">
-							<i><span>https://dtirapid.ph/webrep/go_dl_file/<span id="fids"></span></span></i>
+							<a id="dl_link" href="" target="_blank">
+								<i><span>https://dtirapid.ph/webrep/go_dl_file/<span id="fids"></span></span></i>
+							</a>
 						<br>
 					</p>
 					</dd>
@@ -57,7 +59,7 @@
 
 				<div class="vr"></div>
 
-				<button type="button" class="btn btn-primary" data-bs-target="#confirmation" data-bs-toggle="modal" onclick="execute_action('download',$ID('file_id_modal').value,$ID('__table').value)" ><i class="fa-solid fa-download"></i>&nbspDownload</button>
+				<button type="button" class="x-hide btn btn-primary" data-bs-target="#confirmation" data-bs-toggle="modal" onclick="execute_action('download',$ID('file_id_modal').value,$ID('__table').value)" ><i class="fa-solid fa-download"></i>&nbspDownload</button>
 				
 				{% if(user_data['id']) %}
 					<div id="modify_div">
@@ -135,6 +137,7 @@
 				$ID("uploadbyemail").innerHTML = res["uploaded_by"]['email']
 				$ID("uploadbyjob").innerHTML = res["uploaded_by"]['job']
 				$ID("uploadbyrcu").innerHTML = res["uploaded_by"]['rcu'] +" | "+ res["uploaded_by"]['pcu']
+				$ID("dl_link").href = "https://dtirapid.ph/webrep/go_dl_file/" + res["upload"]
 			}
 		})
 	}

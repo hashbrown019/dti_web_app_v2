@@ -1,0 +1,91 @@
+<style type="text/css">
+	.__img{
+		object-fit: fit;
+		/* or
+		object-fit: cover; */
+	} 
+	.text_shadow_black{
+		text-shadow: 4px 4px 8px black, 0 0 50px black, 0 0 10px black;
+	}
+	.grad1 {
+		background-image: url('../../static/webrepstatic/img/footer_bg.jpg');
+/*		background: linear-gradient(to bottom right, #004450, #1c2815);*/
+	}
+	.grad2{
+		background: linear-gradient(rgba(255, 255, 255, 0.5),rgba(255, 255, 255, 0.5));
+			background-position: center;
+			background-size: cover;
+	}
+</style>
+<div class="default_padding" >
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			{% for post in page_data %}
+				{% if post["status"]=='posted'%}
+					<li data-target="#myCarousel" data-slide-to="0"></li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner"  style="">
+			<div class="item active" data-bs-interval="5000" style="width: 100vw;height: 70vh;">
+				<img src="../../static/webrepstatic/img/rapidimage/forum.jpg" class="d-block w-100 c-img __img" alt="...">	
+				<div class="carousel-caption ">
+					<h1 class="" style="font-size: 80px;">
+						RAPID Growth Project
+					</h1>
+					<p class="x-xlarge" style="margin-bottom: 30px; "><span class="x-xxlarge">R</span>esponds to specific gaps in the agricultural sector by linking farmers to MSMEs and large firms.</p>
+					<div class="show_talent justify-content-center "></div>
+				</div>
+			</div>
+
+			{% for post in page_data %}
+				{% if post["status"]=='posted'%}
+				{% set post_id = post["id"] %}
+				{% set cover_file = post['file_name'] %}
+					<div 
+						class="item grad1" 
+						data-bs-interval="5000" 
+						style="
+							width: 100vw;
+							height: 70vh;
+							background-image: url('/webrep/article/get_img/{{cover_file}}');
+							background-size: cover;
+							background-position: center;
+					">
+						{% set f_format = post['file_name'].split(".")[post['file_name'].split(".")|length-1] %}
+						<!-- {% if f_format|string in ['jpeg','jpg','gif','png'] %}
+						<img src="/webrep/article/get_img/{{post['file_name']}}" class="article-img-content  px-1 pt-1 pb-1 rounded-3" alt="...">
+						{% else %}
+						{% endif %} -->
+						<div class="carousel-caption x-padding grad2 x-round" onclick="go_to_post('{{post_id}}')">
+							<h1 class="x-xxlarge x-left-align WEBSAFE text_shadow_black"><b>{{post['postheader']}}</b></h1>
+							<p class="x-xlarge WEBSAFE text_shadow_black x-left-align" style="margin-bottom: 30px;">
+								{{post['postdescription']}} <span class="x-text">...(Show More)</span>
+							</p>
+							<!-- <div class="show_talent justify-content-center "></div> -->
+						</div>				
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+
+		<!-- Left and right controls -->
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+</div>
+<script type="text/javascript">
+	function go_to_post(id){
+		goto("/rapid/articles/articles.html?id="+id)
+		
+	}
+</script>

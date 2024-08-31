@@ -43,7 +43,6 @@
                   <th>ID</th>
                   <th>Name of NC </th>
                   <th>NC Location</th>
-                  <th>Title of RAPID Activity</th>
                   <th>Type of beneficiary</th>
                   <th>Action</th>
                   <th>Timestamp</th>
@@ -57,27 +56,36 @@
                     <td>{{ row['id'] }}</td>
                     <td>{{ row['form_10_name_of_nc'] }}</td>
                     <td>{{ row['form_10_nc_location'] }}</td>
-                    <td>{{ row['form_10_title_of_rapid_activity'] }}</td>
                     <td>{{ row['form_10_type_of_beneficiary'] }}</td>
                     <td>
-                      <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form10view{{row['id']}}"
-                        href="/updateform10/{{row['id']}}"> <span><i class="fa fa-eye" aria-hidden="true"> </i></span>
-                        View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                      {% if(row['upload_by']|string==user_data['id']|string or user_data['job']=="Super Admin"): %}
-                      <a style="color: #00cc66;" data-toggle="modal" data-target="#form10edit{{row['id']}}"
-                        href="/updateform10/{{row['id']}}"> <span><i class="fa-solid fa-pen-to-square"
-                            aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <a style="color: #ff4d4d;" href="/delete_form10/{{row['id']}}" onclick="confirmation(event)">
-                        <span><i class="fa-solid fa-trash"></i></span> Delete</a>
-                      {%endif%}
+                    {% if row['upload_by']|string == user_data['id']|string %}
+                    <a style="color: #00FFAB;" href="/dcf/form10?id={{ row['id'] }}&table=dcf_negosyo_center">
+                      <span><i class="fa-solid fa-pen-to-square"></i></span> Edit
+                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a style="color: #e6b800; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+                    +{{ row["id"] }}+"&i=dcf_negosyo_center",true)'>
+                      <span><i class="fa-solid fa-user-plus"></i></span> Add Participants
+                    </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a style="color: #ff4d4d;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+                      href="/delete_record/dcf_negosyo_center/{{ row['id'] }}">
+                      <span><i class="fa-solid fa-trash"></i></span> Delete
+                    </a>
+                    {% elif user_data['job'] == "Super Admin" %}
+                    <a style="color: #1ac6ff;" href="/dcf/form10?id={{ row['id'] }}&table=dcf_negosyo_center">
+                      <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                    </a>
+                    {% else %}
+                    <a style="color: #1ac6ff;" href="/dcf/form10?id={{ row['id'] }}&table=dcf_negosyo_center">
+                      <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                    </a>
+                    {% endif %}
 
-
-                    </td>
-                    <td class="date-cell"> {{ row['date_created'] }}<br>
-                      {% if row['date_modified'] %}
-                      <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
-                        }}</i>
-                      {% endif %}</i>
+                  </td>
+                  <td class="date-cell"> {{ row['date_created'] }}<br>
+                    {% if row['date_modified'] %}
+                    <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
+                      }}</i>
+                    {% endif %}</i>
                     </td>
 
 
@@ -95,8 +103,7 @@
         </div>
 
       </div>
-      {% include "includes/viewform_modal/viewform10.html" %}
-      {% include "includes/updateform_modal/updateform10.html" %}
+
 
       <div class="py-4">
         <div class="dropdown">
@@ -113,7 +120,44 @@
     </div>
   </div>
 </div>
+<script>
+   function showDeleteConfirmation(id) {
+                swalWithCustomButtons.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, delete it!',
+                  cancelButtonText: 'No, cancel',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = `/delete_record/dcf_negosyo_center/${id}`;
+                  } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithCustomButtons.fire(
+                      'Cancelled',
+                      'Your record is safe',
+                      'error'
+                    );
+                  }
+                });
 
+                // Prevent the default link behavior
+                return false;
+              }
+
+              const swalWithCustomButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              });
+</script>
 
 
 {% endblock content %}

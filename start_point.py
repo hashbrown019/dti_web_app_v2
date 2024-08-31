@@ -1,6 +1,13 @@
 import Configurations as c
 
-from flask import Flask, session, jsonify, request, redirect
+from flask import Flask, session, jsonify, request, redirect, Blueprint, make_response, render_template
+
+# ======FOR_LIGIN_AUTH==============
+# @c.login_auth_web()
+from modules.Req_Brorn_util import authenication
+_auth = authenication(request,redirect,session,"USER_DATA","/login")
+c.login_auth_web = _auth.login_auth_web
+
 from flask_cors import CORS,cross_origin
 from flask_minify import Minify
 from datetime import datetime, timedelta
@@ -13,13 +20,18 @@ from views.feature_0  import feature_0_sub
 from views.psalm  import bp_app as psalm
 from views.doofen  import bp_app as doofen
 from views.fund_tracker  import bp_app as fund_tracker
-from views.dcf  import bp_app as dcf
+# from views.dcf  import bp_app as dcf
+from views.dcfv2  import bp_app as dcfv2
+from views.npco_act_tracker  import npco_track as npco_tracker
 from views.fmi  import bp_app as fmi
+
+from views._tests_  import bp_app as test
 
 from modules.public_vars import public_vars
 from controllers.inbound import inbound
 from apis import api
 import json
+from jinja_templates import templates
 from controllers import Logs
 
 Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL")
@@ -41,11 +53,13 @@ app.register_blueprint(webrep.app);
 app.register_blueprint(psalm.app);
 app.register_blueprint(doofen.app);
 app.register_blueprint(fund_tracker.app);
-app.register_blueprint(dcf.app);
+app.register_blueprint(npco_tracker.app);
+# app.register_blueprint(dcf.app);
+app.register_blueprint(dcfv2.app);
 app.register_blueprint(fmi.app);
+app.register_blueprint(test.app);
 
-print(" * MIS Stat")
-
+templates(app).init()
 
 @app.route("/")
 def index():
@@ -68,6 +82,12 @@ def test_server():#NOT FOR LOCAL USE
 def before_request():
 	# print("databse = "+c.DB_CRED[3])
 	# ip_addr = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
+	pass
+
+
+# 	return redirect("/we_will_be_back_later")
+@app.after_request
+def after_request_func(response):
 	ip_addr = request.access_route[0]
 	agent = request.headers.get('User-Agent')
 	# ss = open("l_header.txt","a")
@@ -80,48 +100,23 @@ def before_request():
 			# print(" MAC ADDRESS")
 			# print(updated_mac)
 			# print(request.headers)
-	pass
-
-
-# 	return redirect("/we_will_be_back_later")
-@app.after_request
-def after_request_func(response):
 	# if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	# print(response.get_json())
+	# ===============================
+	# response.headers.set('Strict-Transport-Security', "max-age=31536000 ")
+	# # response.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'")
+	# response.headers.set('X-Frame-Options', "DENY")
+	# response.headers.set('X-Content-Type-Options', "nosniff")
+	# response.headers.set('Referrer-Policy', "same-origin'")
+	# response.headers.set('Permissions-Policy', "geolocation=(self 'none'), camera=(), microphone=()")
 	return response
 
 	
-# - Dutchmil strawberry:
 # SECRET RECIPEE COCKTAIL
+# - Dutchmil strawberry:
 # - Zafiro Premium GIN
 # - COLD- 
 
 # BE YOURSELF, TRUST UR GUTS 
 
 
-
-def format_timestamp(timestamp):
-    now = datetime.now()
-    time_difference = now - timestamp
-    if time_difference.total_seconds() < 1:
-        return "Just now"
-    elif time_difference.total_seconds() == 1:
-        return "1 second ago"
-    elif time_difference.total_seconds() < 60:
-        return f"{int(time_difference.total_seconds())} seconds ago"
-    elif time_difference.total_seconds() == 60:
-        return "1 minute ago"
-    elif time_difference.total_seconds() < 3600:
-        minutes_ago = int(time_difference.total_seconds() / 60)
-        return f"{minutes_ago} minute{'s' if minutes_ago != 1 else ''} ago"
-    elif time_difference.total_seconds() == 3600:
-        return "1 hour ago"
-    elif time_difference.total_seconds() < 86400:
-        hours_ago = int(time_difference.total_seconds() / 3600)
-        return f"{hours_ago} hour{'s' if hours_ago != 1 else ''} ago"
-    else:
-        return timestamp.strftime("%Y-%m-%d %H:%M:%S")
-
-
-# Register the custom filter on the Flask application
-app.jinja_env.filters['format_timestamp'] = format_timestamp

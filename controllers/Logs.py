@@ -14,9 +14,18 @@ def ACCESS_LOGS(addr, endpoint, session, agent):
 		user_name = session["USER_DATA"][0]['username']
 		uname = session["USER_DATA"][0]['name']
 		in_session = True
+	else:
+		user_id = "NONE"
+		user_name = "NONE"
+		uname = "none"
+		in_session = False
 
-	DATE_NOW = str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_")
+	date_ar = str(datetime.today()).split(" ")[0].split("-")
+	date_file_name = "{}_{}".format(date_ar[0],date_ar[1])
+	# print(f" * Logs stored in file : {date_file_name}")
+	DATE_NOW = str(str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_"))
 	strs = "{}||{}||{}||{}||{}||{}||{}||{}||{}\n".format(DATE_NOW, in_session, user_id,user_name, uname, addr, mac_addr,endpoint,agent)
-	file_object = open(c.RECORDS+'/objects/logs/access.logs', 'a')
-	file_object.write(str(('{}\n'.format(strs)).encode('utf-8').strip()))
+	file_object = open(c.RECORDS+'/objects/logs/'+date_file_name+'.logs', 'a')
+	file_object.write(f"{strs}")
+	# file_object.write(str(('{}\n'.format(strs)).encode('utf-8').strip()))
 	file_object.close()

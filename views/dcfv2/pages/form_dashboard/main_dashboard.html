@@ -1,0 +1,2022 @@
+<style>
+	.titlecard{
+		font-size: 20px;
+		color: #BAB8B8
+	}
+</style>
+
+<div class="right_col" role="main">
+	<!-- top tiles -->
+	{% include 'includes/dashboard/maindashboard_include/formsData.html' %}
+	<!-- /top tiles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'psalm_static/menu/css/themify-icons/themify-icons.css') }}">
+	<label for="graphFilter"><i class="ti-filter"></i> Filter Graph &nbsp&nbsp</label>
+		<select name="graphFilter" id="graphFilter" class="btn btn-secondary dropdown-toggle">
+			<option value="Select">Select Options</option>
+			<option value="All">All Graph</option>
+			<option value="Forms">Forms Monthly Entries</option>
+			<option value="DIPs">Detailed Investment Plans (DIPs) developed (Project-wide)</option>
+			<option value="BDSP">Qualified business providers able to provide business services to MSEs</option>
+			<option value="Form4">Capacities of farmers, farmers’ organizations and MEs to manage enterprises strengthened</option>
+			<option value="Form7">Access to Market</option>
+			<option value="Form9">Capacities of enablers</option>
+			<option value="Form10">Networks of Negosyo Centers</option>
+		</select>
+	<hr>
+	
+	{% include 'includes/dashboard/maindashboard_include/fme.html' %}
+	<div class="clearfix"></div>
+	<br/>
+
+
+	{% include 'includes/dashboard/maindashboard_include/dips.html' %}
+	<br/>
+
+
+	{% include 'includes/dashboard/maindashboard_include/bdsp.html' %}		
+	<br>
+	
+
+	<div class="clearfix"></div>
+	{% include 'includes/dashboard/maindashboard_include/cbp.html' %}
+    <br>
+	
+
+    {% include 'includes/dashboard/maindashboard_include/tradePromotion.html' %}
+	<div class="clearfix"></div>
+
+
+	{% include 'includes/dashboard/maindashboard_include/EnablersAct.html' %}
+	<div class="x_content"></div>
+
+
+	{% include 'includes/dashboard/maindashboard_include/NegosyoCenter.html' %}			
+	</div>
+
+
+		<div class="clearfix"></div>
+	      </div>
+	     </div>
+	    </div>
+       </div>	
+      </div>
+     </div>
+    </div>
+   </div>
+
+
+<script>
+	function init_charts() {
+		console.log('run_charts  typeof [' + typeof (Chart) + ']');
+		if (typeof (Chart) === 'undefined') { return; }
+		console.log('init_charts');
+
+		Chart.defaults.global.legend = {
+			enabled: false
+		};
+				if ($("#lineChart").length) {
+			var e = document.getElementById("lineChart");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [ {{form1_data_sep}}, {{form1_data_oct}}, {{form1_data_nov}}, {{form1_data_dec}}, {{form1_data_jan}}, {{form1_data_feb}}, {{form1_data_mar}}, {{form1_data_apr}}, {{form1_data_may}}, {{form1_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart2").length) {
+			var e = document.getElementById("lineChart2");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [ {{form2_data_sep}}, {{form2_data_oct}}, {{form2_data_nov}}, {{form2_data_dec}}, {{form2_data_jan}}, {{form2_data_feb}}, {{form2_data_mar}}, {{form2_data_apr}}, {{form2_data_may}}, {{form2_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart3").length) {
+			var e = document.getElementById("lineChart3");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [ {{form3_data_sep}}, {{form3_data_oct}}, {{form3_data_nov}}, {{form3_data_dec}}, {{form3_data_jan}}, {{form3_data_feb}}, {{form3_data_mar}}, {{form3_data_apr}}, {{form3_data_may}}, {{form3_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart4").length) {
+			var e = document.getElementById("lineChart4");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [ {{form4_data_sep}}, {{form4_data_oct}}, {{form4_data_nov}}, {{form4_data_dec}}, {{form4_data_jan}}, {{form4_data_feb}}, {{form4_data_mar}}, {{form4_data_apr}}, {{form4_data_may}}, {{form4_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart5").length) {
+			var e = document.getElementById("lineChart5");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [ {{form5_data_sep}}, {{form5_data_oct}}, {{form5_data_nov}}, {{form5_data_dec}}, {{form5_data_jan}}, {{form5_data_feb}}, {{form5_data_mar}}, {{form5_data_apr}}, {{form5_data_may}}, {{form5_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart6").length) {
+			var e = document.getElementById("lineChart6");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [ {{form6_data_sep}}, {{form6_data_oct}}, {{form6_data_nov}}, {{form6_data_dec}}, {{form6_data_jan}}, {{form6_data_feb}}, {{form6_data_mar}}, {{form6_data_apr}}, {{form6_data_may}}, {{form6_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart7").length) {
+			var e = document.getElementById("lineChart7");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [ {{form7_data_sep}}, {{form7_data_oct}}, {{form7_data_nov}}, {{form7_data_dec}}, {{form7_data_jan}}, {{form7_data_feb}}, {{form7_data_mar}}, {{form7_data_apr}}, {{form7_data_may}}, {{form7_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart8").length) {
+			var e = document.getElementById("lineChart8");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [ {{form9_data_sep}}, {{form9_data_oct}}, {{form9_data_nov}}, {{form9_data_dec}}, {{form9_data_jan}}, {{form9_data_feb}}, {{form9_data_mar}}, {{form9_data_apr}}, {{form9_data_may}}, {{form9_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart9").length) {
+			var e = document.getElementById("lineChart9");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [{{form10_data_sep}}, {{form10_data_oct}}, {{form10_data_nov}}, {{form10_data_dec}}, {{form10_data_jan}}, {{form10_data_feb}}, {{form10_data_mar}}, {{form10_data_apr}}, {{form10_data_may}}, {{form10_data_june}}]
+					}]
+				}
+			})
+		}
+
+		if ($("#lineChart10").length) {
+			var e = document.getElementById("lineChart10");
+			new Chart(e, {
+				type: "line",
+				data: {
+					labels: ["September", "October", "November", "December", "January", "February","March","April","May","June"],
+					datasets: [{
+						label: "Entries",
+						backgroundColor: "rgba(38, 185, 154, 0.31)",
+						borderColor: "rgba(38, 185, 154, 0.7)",
+						pointBorderColor: "rgba(38, 185, 154, 0.7)",
+						pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(220,220,220,1)",
+						pointBorderWidth: 1,
+						data: [{{form11_data_sep}}, {{form11_data_oct}}, {{form11_data_nov}}, {{form11_data_dec}}, {{form11_data_jan}}, {{form11_data_feb}}, {{form11_data_mar}}, {{form11_data_apr}}, {{form11_data_may}}, {{form11_data_june}}]
+					}]
+				}
+			})
+		}
+
+
+		if ($('#mybarChart').length) {
+			var _labelsrcu = [];
+			var approved_dips = [];
+			var pipeline_dips = [];
+			var ongoing_dips = [];
+			var not_started = [];
+
+			// Sample data
+			{% for dip in dips_list %}
+			var dipData = {
+				label: '{{dip}}',
+				approve: '{{dips_list[dip]["approve"]}}',
+				pipeline: '{{dips_list[dip]["pipeline"]}}',
+				ongoing: '{{dips_list[dip]["ongoing"]}}',
+				not_started: '{{dips_list[dip]["not_started"]}}',
+			};
+
+			// Add region to each data entry in _labelsrcu
+			var regions = ['RCU'];
+			regions.forEach(function(region) {
+				var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
+				_labelsrcu.push(regionData.label);
+				approved_dips.push(regionData.approve);
+				pipeline_dips.push(regionData.pipeline);
+				ongoing_dips.push(regionData.ongoing);
+				not_started.push(regionData.not_started);
+			});
+			{% endfor %}
+
+			// Calculate total counts
+			var totalApprovedDips = approved_dips.reduce(function(acc, val) {
+				return acc + parseFloat(val);
+			}, 0);
+			var totalpipelineDips = pipeline_dips.reduce(function(acc, val) {
+				return acc + parseFloat(val);
+			}, 0);
+			var totalongoingDips = ongoing_dips.reduce(function(acc, val) {
+				return acc + parseFloat(val);
+			}, 0);
+			var totalnotstartedDips = not_started.reduce(function(acc, val) {
+				return acc + parseFloat(val);
+			}, 0);
+
+			// Calculate total of all categories
+			var totalAllCategories = totalApprovedDips + totalpipelineDips + totalongoingDips + totalnotstartedDips;
+
+			// Calculate percentages
+			var percentageApproved = parseFloat((totalApprovedDips / totalAllCategories * 100).toFixed(2));
+			var percentagePipeline = parseFloat((totalpipelineDips / totalAllCategories * 100).toFixed(2));
+			var percentageOngoing = parseFloat((totalongoingDips / totalAllCategories * 100).toFixed(2));
+			var percentageNotStarted = parseFloat((totalnotstartedDips / totalAllCategories * 100).toFixed(2));
+
+			// Update total count elements
+			document.getElementById('totalApprovedDipsValue').innerText = totalApprovedDips.toFixed(0) + ' (' + percentageApproved + '%)';
+			document.getElementById('totalpipelineDipsValue').innerText = totalpipelineDips.toFixed(0) + ' (' + percentagePipeline + '%)';
+			document.getElementById('totalongoingDipsValue').innerText = totalongoingDips.toFixed(0) + ' (' + percentageOngoing + '%)';
+			document.getElementById('totalnotstartedDipsValue').innerText = totalnotstartedDips.toFixed(0) + ' (' + percentageNotStarted + '%)';
+			document.getElementById('totalAllCategoriesValue').innerText = totalAllCategories.toFixed(0);
+
+			var ctx = document.getElementById("mybarChart");
+			var mybarChart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: _labelsrcu,
+					datasets: [{
+						label: 'Approved DIPs',
+						backgroundColor: "#99e6ff",
+						data: approved_dips
+					}, {
+						label: 'Pipeline DIPs',
+						backgroundColor: "#33ccff",
+						data: pipeline_dips
+					}, {
+						label: 'Ongoing DIPs',
+						backgroundColor: "#0099cc",
+						data: ongoing_dips
+					}, {
+						label: 'Not Started',
+						backgroundColor: "#ff8080",
+						data: not_started
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
+					},
+					tooltips: {
+						callbacks: {
+							label: function(tooltipItem, data) {
+								var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var total;
+								if (datasetLabel === 'Approved DIPs') {
+									total = totalApprovedDips;
+								} else if (datasetLabel === 'Pipeline DIPs') {
+									total = totalpipelineDips;
+								} else if (datasetLabel === 'Ongoing DIPs') {
+									total = totalongoingDips;
+								} else if (datasetLabel === 'Not Started') {
+									total = totalnotstartedDips;
+								}
+								var percentage = parseFloat((value / total * 100).toFixed(2));
+								return datasetLabel + ': ' + value + ' (' + percentage + '%)';
+							}
+						}
+					}
+				}
+			});
+		};
+
+
+		if ($('#mybarChartStacked').length) {
+			var _labelsrcu = ['Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'Region 13', 'BARMM'];
+				var dipData = {
+				coffee: [],
+				cacao: [],
+				coconut: [],
+				pfn: []
+				};
+
+				// Sample data population (assuming the same logic exists)
+
+				// Calculate total counts for each crop
+				var totalCoffee = dipData.coffee.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalCacao = dipData.cacao.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalCoconut = dipData.coconut.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalPfn = dipData.pfn.reduce((acc, val) => acc + parseFloat(val), 0);
+
+				var totalCoffee = {{ dcf1_COFFEE_8[0]['coffee_8_1'] + dcf1_COFFEE_9[0]['coffee_9_1'] + dcf1_COFFEE_10[0]['coffee_10_1'] + dcf1_COFFEE_11[0]['coffee_11_1'] + dcf1_COFFEE_12[0]['coffee_12_1'] + dcf1_COFFEE_13[0]['coffee_13_1'] + dcf1_COFFEE_BARMM[0]['coffee_BARMM_1'] }};
+				var totalCacao = {{ dcf1_CACAO_8[0]['cacao_8_1'] + dcf1_CACAO_9[0]['cacao_9_1'] + dcf1_CACAO_10[0]['cacao_10_1'] + dcf1_CACAO_11[0]['cacao_11_1'] + dcf1_CACAO_12[0]['cacao_12_1'] + dcf1_CACAO_13[0]['cacao_13_1'] + dcf1_CACAO_BARMM[0]['cacao_BARMM_1'] }};
+				var totalCoconut = {{ dcf1_COCONUT_8[0]['coconut_8_1'] + dcf1_COCONUT_9[0]['coconut_9_1'] + dcf1_COCONUT_10[0]['coconut_10_1'] + dcf1_COCONUT_11[0]['coconut_11_1'] + dcf1_COCONUT_12[0]['coconut_12_1'] + dcf1_COCONUT_13[0]['coconut_13_1'] + dcf1_COCONUT_BARMM[0]['coconut_BARMM_1'] }};
+				var totalPfn = {{ dcf1_PFN_8[0]['pfn_8_1'] + dcf1_PFN_9[0]['pfn_9_1'] + dcf1_PFN_10[0]['pfn_10_1'] + dcf1_PFN_11[0]['pfn_11_1'] + dcf1_PFN_12[0]['pfn_12_1'] + dcf1_PFN_13[0]['pfn_13_1'] + dcf1_PFN_BARMM[0]['pfn_BARMM_1'] }};
+
+				var ctx = document.getElementById("mybarChartStacked");
+				var mybarChartStacked = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: _labelsrcu,
+						datasets: [{
+							label: 'Coffee',
+							backgroundColor: "#99e6ff",
+							data: [
+								{{ dcf1_COFFEE_8[0]['coffee_8_1'] }},
+								{{ dcf1_COFFEE_9[0]['coffee_9_1'] }},
+								{{ dcf1_COFFEE_10[0]['coffee_10_1'] }},
+								{{ dcf1_COFFEE_11[0]['coffee_11_1'] }},
+								{{ dcf1_COFFEE_12[0]['coffee_12_1'] }},
+								{{ dcf1_COFFEE_13[0]['coffee_13_1'] }},
+								{{ dcf1_COFFEE_BARMM[0]['coffee_BARMM_1'] }}
+							]
+						}, {
+							label: 'Cacao',
+							backgroundColor: "#33ccff",
+							data: [
+								{{ dcf1_CACAO_8[0]['cacao_8_1'] }},
+								{{ dcf1_CACAO_9[0]['cacao_9_1'] }},
+								{{ dcf1_CACAO_10[0]['cacao_10_1'] }},
+								{{ dcf1_CACAO_11[0]['cacao_11_1'] }},
+								{{ dcf1_CACAO_12[0]['cacao_12_1'] }},
+								{{ dcf1_CACAO_13[0]['cacao_13_1'] }},
+								{{ dcf1_CACAO_BARMM[0]['cacao_BARMM_1'] }}
+							]
+						}, {
+							label: 'Coconut',
+							backgroundColor: "#0099cc",
+							data: [
+								{{ dcf1_COCONUT_8[0]['coconut_8_1'] }},
+								{{ dcf1_COCONUT_9[0]['coconut_9_1'] }},
+								{{ dcf1_COCONUT_10[0]['coconut_10_1'] }},
+								{{ dcf1_COCONUT_11[0]['coconut_11_1'] }},
+								{{ dcf1_COCONUT_12[0]['coconut_12_1'] }},
+								{{ dcf1_COCONUT_13[0]['coconut_13_1'] }},
+								{{ dcf1_COCONUT_BARMM[0]['coconut_BARMM_1'] }}
+							]
+						}, {
+							label: 'PFN',
+							backgroundColor: "#ff8080",
+							data: [
+								{{ dcf1_PFN_8[0]['pfn_8_1'] }},
+								{{ dcf1_PFN_9[0]['pfn_9_1'] }},
+								{{ dcf1_PFN_10[0]['pfn_10_1'] }},
+								{{ dcf1_PFN_11[0]['pfn_11_1'] }},
+								{{ dcf1_PFN_12[0]['pfn_12_1'] }},
+								{{ dcf1_PFN_13[0]['pfn_13_1'] }},
+								{{ dcf1_PFN_BARMM[0]['pfn_BARMM_1'] }}
+							]
+						}]
+					},
+					options: {
+						scales: {
+							xAxes: [{ stacked: true }],
+							yAxes: [{ stacked: true }]
+						},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+									// Calculate percentage based on total count for current crop
+									var currentCrop = datasetLabel.toLowerCase();
+									var total = 0;
+
+									switch (currentCrop) {
+										case 'coffee':
+											total = totalCoffee;
+											break;
+										case 'cacao':
+											total = totalCacao;
+											break;
+										case 'coconut':
+											total = totalCoconut;
+											break;
+										case 'pfn':
+											total = totalPfn;
+											break;
+										default:
+											break;
+									}
+									var percentage = total !== 0 ? parseFloat((value / total * 100).toFixed(2)) : 0;
+									return datasetLabel + ': ' + value + ' (' + percentage + '%)';
+								}
+							}
+						}
+					}
+				});
+			};
+
+
+			if ($('#mybarChartStacked2').length) {
+			var _labelsrcu = ['Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'Region 13', 'BARMM'];
+				var dipData = {
+				approved: [],
+				pipeline: [],
+				ongoing: [],
+				};
+
+				// Sample data population (assuming the same logic exists)
+
+				// Calculate total counts for each crop
+				var totalApproved = dipData.approved.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalPipeline = dipData.pipeline.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalOngoing = dipData.ongoing.reduce((acc, val) => acc + parseFloat(val), 0);
+
+				var totalApproved = {{ (dcf1_TSHF_8_APPR[0]['tshf_8_appr1'] or 0) + (dcf1_TSHF_9_APPR[0]['tshf_9_appr1'] or 0) + (dcf1_TSHF_10_APPR[0]['tshf_10_appr1'] or 0) + (dcf1_TSHF_11_APPR[0]['tshf_11_appr1'] or 0) + (dcf1_TSHF_12_APPR[0]['tshf_12_appr1'] or 0) + (dcf1_TSHF_13_APPR[0]['tshf_13_appr1'] or 0) + (dcf1_TSHF_BARMM_APPR[0]['tshf_barmm_appr1'] or 0)  }};
+				var totalPipeline = {{ (dcf1_TSHF_8_PIPELINE[0]['tshf_8_pipeline1'] or 0) + (dcf1_TSHF_9_PIPELINE[0]['tshf_9_pipeline1'] or 0) + (dcf1_TSHF_10_PIPELINE[0]['tshf_10_pipeline1'] or 0) + (dcf1_TSHF_11_PIPELINE[0]['tshf_11_pipeline1'] or 0) + (dcf1_TSHF_12_PIPELINE[0]['tshf_12_pipeline1'] or 0) + (dcf1_TSHF_13_PIPELINE[0]['tshf_13_pipeline1'] or 0) + (dcf1_TSHF_BARMM_PIPELINE[0]['tshf_barmm_pipeline1'] or 0) }};
+				var totalOngoing = {{ (dcf1_TSHF_8_ONGOING[0]['tshf_8_ongoing1'] or 0) + (dcf1_TSHF_9_ONGOING[0]['tshf_9_ongoing1'] or 0) + (dcf1_TSHF_10_ONGOING[0]['tshf_10_ongoing1'] or 0) + (dcf1_TSHF_11_ONGOING[0]['tshf_11_ongoing1'] or 0) + (dcf1_TSHF_12_ONGOING[0]['tshf_12_ongoing1'] or 0) + (dcf1_TSHF_13_ONGOING[0]['tshf_13_ongoing1'] or 0) + (dcf1_TSHF_BARMM_ONGOING[0]['tshf_barmm_ongoing1'] or 0) }};
+
+				var ctx = document.getElementById("mybarChartStacked2");
+				var mybarChartStacked2 = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: _labelsrcu,
+						datasets: [{
+							label: 'Approved',
+							backgroundColor: "#99e6ff",
+							data: [
+								{{ dcf1_TSHF_8_APPR[0]['tshf_8_appr1'] }},
+								{{ dcf1_TSHF_9_APPR[0]['tshf_9_appr1'] }},
+								{{ dcf1_TSHF_10_APPR[0]['tshf_10_appr1'] }},
+								{{ dcf1_TSHF_11_APPR[0]['tshf_11_appr1'] }},
+								{{ dcf1_TSHF_12_APPR[0]['tshf_12_appr1'] }},
+								{{ dcf1_TSHF_13_APPR[0]['tshf_13_appr1'] }},
+								{{ dcf1_TSHF_BARMM_APPR[0]['tshf_barmm_appr1'] }},
+							]
+						}, {
+							label: 'Pipeline',
+							backgroundColor: "#33ccff",
+							data: [
+								{{ dcf1_TSHF_8_PIPELINE[0]['tshf_8_pipeline1'] }},
+								{{ dcf1_TSHF_9_PIPELINE[0]['tshf_9_pipeline1'] }},
+								{{ dcf1_TSHF_10_PIPELINE[0]['tshf_10_pipeline1'] }},
+								{{ dcf1_TSHF_11_PIPELINE[0]['tshf_11_pipeline1'] }},
+								{{ dcf1_TSHF_12_PIPELINE[0]['tshf_12_pipeline1'] }},
+								{{ dcf1_TSHF_13_PIPELINE[0]['tshf_13_pipeline1'] }},
+								{{ dcf1_TSHF_BARMM_PIPELINE[0]['tshf_barmm_pipeline1'] }},
+							]
+						}, {
+							label: 'Ongoing',
+							backgroundColor: "#0099cc",
+							data: [
+								{{ dcf1_TSHF_8_ONGOING[0]['tshf_8_ongoing1'] }},
+								{{ dcf1_TSHF_9_ONGOING[0]['tshf_9_ongoing1'] }},
+								{{ dcf1_TSHF_10_ONGOING[0]['tshf_10_ongoing1'] }},
+								{{ dcf1_TSHF_11_ONGOING[0]['tshf_11_ongoing1'] }},
+								{{ dcf1_TSHF_12_ONGOING[0]['tshf_12_ongoing1'] }},
+								{{ dcf1_TSHF_13_ONGOING[0]['tshf_13_ongoing1'] }},
+								{{ dcf1_TSHF_BARMM_ONGOING[0]['tshf_barmm_ongoing1'] }},
+							]
+						},]
+					},
+					options: {
+						scales: {
+							xAxes: [{ stacked: true }],
+							yAxes: [{ stacked: true }]
+						},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+									// Calculate percentage based on total count for current crop
+									var currentCrop = datasetLabel.toLowerCase();
+									var total = 0;
+
+									switch (currentCrop) {
+										case 'approved':
+											total = totalApproved;
+											break;
+										case 'pipeline':
+											total = totalPipeline;
+											break;
+										case 'ongoing':
+											total = totalOngoing;
+											break;
+										default:
+											break;
+									}
+									var percentage = total !== 0 ? parseFloat((value / total * 100).toFixed(2)) : 0;
+									return datasetLabel + ': ' + value + ' (' + percentage + '%)';
+								}
+							}
+						}
+					}
+				});
+			};
+
+
+			    if ($('#mybarChart_trainings').length) {
+
+        var ctx = document.getElementById("mybarChart_trainings");
+        var mybarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Organization Entrepreneurial Competency", "Governance", "Organizational Management","Technology and Product Development (Business Development)", "Institutional Marketing Management","Human Resource Management","Financial Management","Networking and Linkage-Building (External Relation; Business Membership Organization)","Social Environment & Climate","Managing Natural Resources","GESI","Managing Natural Resources"],
+                datasets: [{
+                    label: 'Total',
+                    backgroundColor: "#26B99A",
+                    data: [{{dcf4_GESIFO[0]['gesifo']}}, {{dcf4_GESImsme[0]['gesimsme']}}, {{dcf4_GESIif[0]['gesiif']}}]
+                }]
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    }
+
+
+
+			if ($('#mybarChartStackedBDSP').length) {
+			var _labelsrcu = ['Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'Region 13', 'BARMM'];
+				var dipData = {
+				indv: [],
+				org: [],
+				};
+				var totalIndvidual = dipData.indv.reduce((acc, val) => acc + parseFloat(val), 0);
+				var totalOrganizational = dipData.org.reduce((acc, val) => acc + parseFloat(val), 0);
+
+				var totalIndvidual = {{ dcf3_RCU8_INDIV[0]['rcu8_indiv'] + dcf3_RCU9_INDIV[0]['rcu9_indiv'] + dcf3_RCU10_INDIV[0]['rcu10_indiv'] + dcf3_RCU11_INDIV[0]['rcu11_indiv'] + dcf3_RCU12_INDIV[0]['rcu12_indiv'] + dcf3_RCU13_INDIV[0]['rcu13_indiv'] +  dcf3_BARMM_INDIV[0]['barmm_indiv'] }};
+				var totalOrganizational = {{ dcf3_RCU8_ORG[0]['rcu8_org'] + dcf3_RCU9_ORG[0]['rcu9_org'] + dcf3_RCU10_ORG[0]['rcu10_org'] + dcf3_RCU11_ORG[0]['rcu11_org'] + dcf3_RCU12_ORG[0]['rcu12_org'] + dcf3_RCU13_ORG[0]['rcu13_org'] + dcf3_BARMM_ORG[0]['barmm_org'] }};
+
+				var ctx = document.getElementById("mybarChartStackedBDSP");
+				var mybarChartStackedBDSP = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: _labelsrcu,
+						datasets: [{
+							label: 'Individual',
+							backgroundColor: "#0099cc",
+							data: [
+								{{ dcf3_RCU8_INDIV[0]['rcu8_indiv'] }},
+								{{ dcf3_RCU9_INDIV[0]['rcu9_indiv'] }},
+								{{ dcf3_RCU10_INDIV[0]['rcu10_indiv'] }},
+								{{ dcf3_RCU11_INDIV[0]['rcu11_indiv'] }},
+								{{ dcf3_RCU12_INDIV[0]['rcu12_indiv'] }},
+								{{ dcf3_RCU13_INDIV[0]['rcu13_indiv'] }},
+								{{ dcf3_BARMM_INDIV[0]['barmm_indiv'] }}
+							]
+						}, {
+							label: 'Organizational',
+							backgroundColor: "#ff8080",
+							data: [
+								{{ dcf3_RCU8_ORG[0]['rcu8_org'] }},
+								{{ dcf3_RCU9_ORG[0]['rcu9_org'] }},
+								{{ dcf3_RCU10_ORG[0]['rcu10_org'] }},
+								{{ dcf3_RCU11_ORG[0]['rcu11_org'] }},
+								{{ dcf3_RCU12_ORG[0]['rcu12_org'] }},
+								{{ dcf3_RCU13_ORG[0]['rcu13_org'] }},
+								{{ dcf3_BARMM_ORG[0]['barmm_org'] }}
+							]
+						},]
+					},
+					options: {
+						scales: {
+							xAxes: [{ stacked: true }],
+							yAxes: [{ stacked: true }]
+						},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+
+									var currentCrop = datasetLabel.toLowerCase();
+									var total = 0;
+
+									switch (currentCrop) {
+										case 'individual':
+											total = totalIndvidual;
+											break;
+										case 'organizational':
+											total = totalOrganizational;
+											break;
+										default:
+											break;
+									}
+									var percentage = total !== 0 ? parseFloat((value / total * 100).toFixed(2)) : 0;
+									return datasetLabel + ': ' + value + ' (' + percentage + '%)';
+								}
+							}
+						}
+					}
+				});
+			};
+
+
+			if ($('#pieChartM').length) {
+				var totalMale = {{ dcf_form1male_appr[0]['total_male_appr'] }};
+				var totalMaleIP = {{ dcf_form1maleip_appr[0]['total_maleip_appr'] }};
+				var totalMaleYouth = {{ dcf_form1maleyouth_appr[0]['total_maleyouth_appr'] }};
+				var totalFemale = {{ dcf_form1female_appr[0]['total_female_appr'] }};
+				var totalFemaleIP = {{ dcf_form1femaleip_appr[0]['total_femaleip_appr'] }};
+				var totalFemaleYouth = {{ dcf_form1femaleyouth_appr[0]['total_femaleyouth_appr'] }};
+
+				var totalDIPs = totalMale + totalFemale;
+
+				var totalMalePercentage = (totalMale / totalDIPs) * 100;
+				var totalFemalePercentage = (totalFemale / totalDIPs) * 100;
+
+				var maleIPPercentage = (totalMaleIP / totalMale) * totalMalePercentage;
+				var maleYouthPercentage = (totalMaleYouth / totalMale) * totalMalePercentage;
+
+				var femaleIPPercentage = (totalFemaleIP / totalFemale) * totalFemalePercentage;
+				var femaleYouthPercentage = (totalFemaleYouth / totalFemale) * totalFemalePercentage;
+
+				var xValues2 = [
+					'Male: ' + totalMale,
+					'Male IP: ' + totalMaleIP,
+					'Male Youth: ' + totalMaleYouth,
+					'Female: ' + totalFemale,
+					'Female IP: ' + totalFemaleIP,
+					'Female Youth: ' + totalFemaleYouth,
+					'Approved DIPs of smallholder farmers: ' + totalDIPs
+				];
+
+				var yValues2 = [
+					totalMalePercentage,
+					maleIPPercentage,
+					maleYouthPercentage,
+					totalFemalePercentage,
+					femaleIPPercentage,
+					femaleYouthPercentage,
+					totalMalePercentage + totalFemalePercentage
+				];
+
+				var barColors = ['#0070cc', '#0070cc', '#0070cc', '#cc00aa', '#cc00aa', '#cc00aa', '#4eeb82'];
+
+				var ctx = document.getElementById("pieChartM");
+				var data = {
+					datasets: [{
+						data: yValues2,
+						backgroundColor: barColors,
+						label: 'Total'
+					}],
+					labels: xValues2
+				};
+
+				var pieChartM = new Chart(ctx, {
+					data: data,
+					type: 'pie',
+					options: {
+						plugins: {
+							datalabels: {
+								color: 'white',
+								formatter: (value, context) => {
+									return value.toFixed(2) + '%';
+								}
+							}
+						},
+						tooltips: {
+							callbacks: {
+								label: function (tooltipItem, data) {
+									const label = data.labels[tooltipItem.index];
+									const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+									return `${label} (${value.toFixed(2)}%)`;
+								}
+							}
+						}
+					}
+				});
+			}
+
+
+		if ($('#pieChart3').length) {
+			var xValues2 = [
+				'Male: ' + {{dcf_form3male}},
+				'Female: ' + {{dcf_form3female}}
+				];
+
+			var yValues2 = [
+				{{dcf_form3male}},
+				{{dcf_form3female}},
+		// {{total_untagged}},
+				];
+			var barColors = ['#005fcc', '#eb4e97'];
+			var total = yValues2.reduce((a, b) => a + b, 0);
+			var percentageValues3 = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChart3");
+			var data = {
+				datasets: [{
+					data: yValues2,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChart3 = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValues3[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValues3[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+		
+		if ($('#pieChart7').length) {
+			var xValues2 = [
+				'Trade Fair - Provincial: ' + {{ dcf7_TFP[0]['tfp7']|int }},
+				'Trade Fair - Regional: ' + {{ dcf7_TFR[0]['tfr7']|int }},
+				'Trade Fair - National: ' + {{dcf7_TFN[0]['tfn7']|int}},
+				'Total Trade Fair - International: ' + {{dcf7_TFI[0]['tfi7']|int}},
+				'Trade/Selling Mission Province and Region: ' + {{dcf7_TSMPR[0]['tsmpr7']|int}},
+				'Trade/Selling Mission National: ' + {{dcf7_TSMN[0]['tsmn7']|int}},
+				'Trade/Selling Mission International: ' + {{dcf7_TSMI[0]['tsmi7']|int}},
+				'Business Matching Povince and Region: ' + {{dcf7_BMPR[0]['bmpr7']|int}},
+				'Business Matching National: ' + {{dcf7_BMN[0]['bmn7']|int}},
+				'Business Matching International ' + {{dcf7_BMI[0]['bmi7']|int}},
+			];
+
+			var yValues2 = [
+				{{ dcf7_TFP[0]['tfp7']|int }},
+				{{ dcf7_TFR[0]['tfr7']|int }},
+				{{dcf7_TFN[0]['tfn7']|int}},
+				{{dcf7_TFI[0]['tfi7']|int}},
+				{{dcf7_TSMPR[0]['tsmpr7']|int}},
+				{{dcf7_TSMN[0]['tsmn7']|int}},
+				{{dcf7_TSMI[0]['tsmi7']|int}},
+				{{dcf7_BMPR[0]['bmpr7']|int}},
+				{{dcf7_BMN[0]['bmn7']|int}},
+				{{dcf7_BMI[0]['bmi7']|int}},
+			];
+
+			var barColors = ['#00becc', '#eb4eaa', '#abf1ce', '#9e5400', '#4a009e', '#00719e', '#9e0022', '#949e00', '#0400ff', '#009e4f'];
+			var total = yValues2.reduce((a, b) => a + b, 0);
+			var percentageValues7 = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChart7");
+			var data = {
+				datasets: [{
+					data: percentageValues7,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChart7 = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValues7[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValues7[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+
+		if ($('#pieChartDIPS').length) {
+			var xValues2 = [
+				'Region 8: ' + {{ dcf_form2_rcu8[0]['form2_rcu8']|int }},
+				'Region 9: ' + {{ dcf_form2_rcu9[0]['form2_rcu9']|int }},
+				'Region 10: ' + {{ dcf_form2_rcu10[0]['form2_rcu10']|int}},
+				'Region 11: ' + {{ dcf_form2_rcu11[0]['form2_rcu11']|int}},
+				'Region 12: ' + {{ dcf_form2_rcu12[0]['form2_rcu12']|int}},
+				'Region 13: ' + {{ dcf_form2_rcu13[0]['form2_rcu13']|int}},
+				'Region BARMM: ' + {{ dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int}},
+			];
+
+			var yValues2 = [
+				{{ dcf_form2_rcu8[0]['form2_rcu8']|int }},
+				{{ dcf_form2_rcu9[0]['form2_rcu9']|int }},
+				{{ dcf_form2_rcu10[0]['form2_rcu10']|int}},
+				{{ dcf_form2_rcu11[0]['form2_rcu11']|int}},
+				{{ dcf_form2_rcu12[0]['form2_rcu12']|int }},
+				{{ dcf_form2_rcu13[0]['form2_rcu13']|int }},
+				{{ dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int }},
+			];
+
+			var barColors = ['#00becc', '#eb4eaa', '#abf1ce', '#9e5400', '#4a009e', '#00719e', '#9e0022', '#949e00', '#0400ff', '#009e4f'];
+			var total = yValues2.reduce((a, b) => a + b, 0);
+			var percentageValuesDIPS = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartDIPS");
+			var data = {
+				datasets: [{
+					data: percentageValuesDIPS,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartDIPS = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesDIPS[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesDIPS[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+
+
+
+			if ($('#pieChartFO').length) {
+			var xValues2 = [
+				'Organization Entrepreneurial Competency: ' + {{ dcf4_FOOEC[0]['FOOEC']|int }},
+				'Governance: ' + {{ dcf4_FOGOV[0]['FOGOV']|int }},
+				'Organizational Management: ' + {{ dcf4_FOOM[0]['FOOM']|int}},
+				'Operations: ' + {{ dcf4_FOOP[0]['FOOP']|int}},
+				'Technology and Product Development(Business Development): ' + {{ dcf4_FOTPD[0]['FOTPD']|int}},
+				'Institutional Marketing Management: ' + {{ dcf4_FOIMM[0]['FOIMM']|int}},
+				'Human Resource Management: ' + {{ dcf4_FOHRM[0]['FOHRM']|int}},
+				'Financial Management: ' + {{ dcf4_FOFM[0]['FOFM']|int}},
+				'Networking and Linkage-Building (External Relation; Business Membership Organization): ' + {{ dcf4_FONLB[0]['FONLB']|int}},
+				'GESI: ' + {{ dcf4_FOGESI[0]['FOGESI']|int}},
+				'Social Environment & Climate: ' + {{ dcf4_FOSEC[0]['FOSEC']|int}},
+				'Managing Natural Resources: ' + {{ dcf4_FOMNR[0]['FOMNR']|int}},
+
+
+
+
+
+			];
+
+			var yValues2fo = [
+				{{ dcf4_FOOEC[0]['FOOEC']|int }},
+				{{ dcf4_FOGOV[0]['FOGOV']|int }},
+				{{ dcf4_FOOM[0]['FOOM']|int}},
+				{{ dcf4_FOOP[0]['FOOP']|int}},
+				{{ dcf4_FOTPD[0]['FOTPD']|int }},
+				{{ dcf4_FOIMM[0]['FOIMM']|int }},
+				{{ dcf4_FOHRM[0]['FOHRM']|int }},
+				{{ dcf4_FOFM[0]['FOFM']|int }},
+				{{ dcf4_FONLB[0]['FONLB']|int }},
+				{{ dcf4_FOGESI[0]['FOGESI']|int }},
+				{{ dcf4_FOSEC[0]['FOSEC']|int }},
+				{{ dcf4_FOMNR[0]['FOMNR']|int }},
+
+
+
+
+
+			];
+
+			var barColors = ['#00becc', '#eb4eaa', '#abf1ce', '#9e5400', '#4a009e', '#00719e', '#9e0022', '#206020','#999900','#ccccff', '#800080','#ffbf80'];
+			var total = yValues2fo.reduce((a, b) => a + b, 0);
+			var percentageValuesfo = yValues2fo.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartFO");
+			var data = {
+				datasets: [{
+					data: percentageValuesfo,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartFO = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesfo[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesfo[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+		
+
+			if ($('#pieChartMSME').length) {
+			var xValues2 = [
+				'Entrepreneurial Competency: ' + {{ dcf4_MSMEEC[0]['MSMEEC']|int }},
+				'Operations: ' + {{ dcf4_MSMEOP[0]['MSMEOP']|int }},
+				'Management: ' + {{ dcf4_MSMEM[0]['MSMEM']|int}},
+				'Technology and Product Development: ' + {{ dcf4_MSMETPD[0]['MSMETPD']|int}},
+				'Marketing Management: ' + {{ dcf4_MSMEMM[0]['MSMEMM']|int}},
+				'Human Resource Management: ' + {{ dcf4_MSMEHRM[0]['MSMEHRM']|int}},
+				'Financial Management: ' + {{ dcf4_MSMEFM[0]['MSMEFM']|int}},
+				'Networking and Linkage-Building (External Relation; Business Membership Organization): ' + {{ dcf4_MSMENLB[0]['MSMENLB']|int}},
+				'GESI: ' + {{ dcf4_MSMEGESI[0]['MSMEGESI']|int}},
+				'Social Environment & Climate: ' + {{ dcf4_MSMESEC[0]['MSMESEC']|int}},
+				'Managing Natural Resources: ' + {{ dcf4_MSMEMNR[0]['MSMEMNR']|int}},
+
+
+
+
+
+
+			];
+
+			var yValues2msme = [
+				{{ dcf4_MSMEEC[0]['MSMEEC']|int }},
+				{{ dcf4_MSMEOP[0]['MSMEOP']|int }},
+				{{ dcf4_MSMEM[0]['MSMEM']|int}},
+				{{ dcf4_MSMETPD[0]['MSMETPD']|int}},
+				{{ dcf4_MSMEMM[0]['MSMEMM']|int }},
+				{{ dcf4_MSMEHRM[0]['MSMEHRM']|int }},
+				{{ dcf4_MSMEFM[0]['MSMEFM']|int }},
+				{{ dcf4_MSMENLB[0]['MSMENLB']|int }},
+				{{ dcf4_MSMEGESI[0]['MSMEGESI']|int }},
+				{{ dcf4_MSMESEC[0]['MSMESEC']|int }},
+				{{ dcf4_MSMEMNR[0]['MSMEMNR']|int }},
+
+
+
+
+
+			];
+
+			var barColors = ['#006666', '#6600ff', '#339966', '#993333', '#333300', '#ff9933', '#248f8f', '#e6004c','#ffff99','#cc2900', '#003300'];
+			var totalmsme = yValues2msme.reduce((a, b) => a + b, 0);
+			var percentageValuesmsme = yValues2msme.map((value) => ((value / totalmsme) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartMSME");
+			var data = {
+				datasets: [{
+					data: percentageValuesmsme,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartMSME = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesmsme[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesmsme[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+
+
+			if ($('#pieChartIF').length) {
+			var xValues2 = [
+				'Managing Natural Resources: ' + {{ dcf4_IFMNR[0]['IFMNR']|int }},
+				'Managing Finances: ' + {{ dcf4_IFMF[0]['IFMF']|int }},
+				'Marketing: ' + {{ dcf4_IFM[0]['IFM']|int}},
+				'Innovation: ' + {{ dcf4_IFI[0]['IFI']|int}},
+				'Teamwork: ' + {{ dcf4_IFT[0]['IFT']|int}},
+				'GESI: ' + {{ dcf4_IFGESI[0]['IFGESI']|int}},
+				'Social Environment & Climate: ' + {{ dcf4_IFSEC[0]['IFSEC']|int}},
+			
+
+
+
+
+
+
+			];
+
+			var yValues2IF = [
+				{{ dcf4_IFMNR[0]['IFMNR']|int }},
+				{{ dcf4_IFMF[0]['IFMF']|int }},
+				{{ dcf4_IFM[0]['IFM']|int}},
+				{{ dcf4_IFI[0]['IFI']|int}},
+				{{ dcf4_IFT[0]['IFT']|int }},
+				{{ dcf4_IFGESI[0]['IFGESI']|int }},
+				{{ dcf4_IFSEC[0]['IFSEC']|int }},
+
+
+
+
+
+
+			];
+
+			var barColors = ['#ff8c1a', '#ff6699', '#006699', '#339966', '#b30000', '#666633', '#3d5c5c'];
+			var totalIF = yValues2IF.reduce((a, b) => a + b, 0);
+			var percentageValuesIF = yValues2IF.map((value) => ((value / totalIF) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartIF");
+			var data = {
+				datasets: [{
+					data: percentageValuesIF,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartIF = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesIF[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesIF[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+		if ($('#pieChartDIPS2').length) {
+			var xValues2 = [
+				'Coffee: ' + {{ dcf1_COFFEE_FO[0]['coffee_fo']|int }},
+				'Cacao: ' + {{ dcf1_CACAO_FO[0]['cacao_fo']|int }},
+				'Coconut: ' + {{ dcf1_COCONUT_FO[0]['coconut_fo']|int }},
+				'PFN: ' + {{ dcf1_PFN_FO[0]['pfn_fo']|int }},
+			];
+
+			var yValues2 = [
+				{{ dcf1_COFFEE_FO[0]['coffee_fo']|int }},
+				{{ dcf1_CACAO_FO[0]['cacao_fo']|int }},
+				{{ dcf1_COCONUT_FO[0]['coconut_fo']|int }},
+				{{ dcf1_PFN_FO[0]['pfn_fo']|int }},
+			];
+
+			var barColors = ['#00becc', '#eb4eaa', '#abf1ce', '#9e5400', '#4a009e', '#00719e', '#9e0022', '#949e00', '#0400ff', '#009e4f'];
+			var total = yValues2.reduce((a, b) => a + b, 0);
+			var percentageValuesDIPS2 = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChartDIPS2");
+			var data = {
+				datasets: [{
+					data: percentageValuesDIPS2,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChartDIPS2 = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValuesDIPS2[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesDIPS2[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+
+		if ($('#pieChart10').length) {
+		
+			var xValues2 = [
+				'Male: ' + {{dcf_form10_male[0]['totalmale10']}},
+				'Female: ' + {{dcf_form10_female[0]['totalfemale10']}},
+				];
+
+			var yValues2 = [
+				{{dcf_form10_male[0]['totalmale10']}},
+				{{dcf_form10_female[0]['totalfemale10']}},
+				];
+			var barColors = ['#00becc', '#eb4eaa'];
+			var total = yValues2.reduce((a, b) => a + b, 0);
+			var percentageValues10 = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+			var ctx = document.getElementById("pieChart10");
+			var data = {
+				datasets: [{
+					data: yValues2,
+					backgroundColor: barColors,
+					label: 'Total'
+				}],
+				labels: xValues2
+			};
+
+			var pieChart10 = new Chart(ctx, {
+				data: data,
+				type: 'pie',
+				options: {
+					plugins: {
+						datalabels: {
+							color: 'white',
+							formatter: (value, context) => {
+								return percentageValues10[context.dataIndex] + '%';
+							}
+						}
+					},
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValues10[tooltipItem.index] + '%';
+								return `${label} (${percentage})`;
+							},
+						},
+					},
+				},
+			});
+		};
+
+		if ($("#mybarChart3").length) {
+			var e = document.getElementById("mybarChart3");
+			var xValues = ["Individual", "Organizational/Firm"];
+			var yValues = [{{form3indiv[0]['totalindiv']}}, {{form3orgfirm[0]['totalorgfirm']}}];
+			var barColors = ["#009999", "#666699"];
+
+			var total = yValues.reduce((a, b) => a + b, 0);
+			var percentageValuesB3 = yValues.map(value => ((value / total) * 100).toFixed(2));
+
+			var data = {
+				labels: xValues,
+				datasets: [{
+					label: "Total",
+					backgroundColor: barColors,
+					data: yValues
+				}]
+			};
+
+			var myBarChart3 = new Chart(e, {
+				type: "bar",
+				data: data,
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
+					},
+					tooltips: {
+						callbacks: {
+							label: function(tooltipItem, data) {
+								var label = data.labels[tooltipItem.index];
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								var percentage = percentageValuesB3[tooltipItem.index] + '%';
+								return `${value} (${percentage})`;
+							}
+						}
+					}
+				}
+			});
+		}
+
+		if ($('.canvasDoughnut1').length) {
+
+			var _labels = [];
+			var _data = [];
+
+			{% for key in over_all_commodity_count %}
+			_labels.push('{{key}}');
+			_data.push('{{over_all_commodity_count[key]}}');
+			{% endfor %}
+			var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+			var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
+			var chart_doughnut_settings = {
+				type: 'doughnut',
+				tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+				data: {
+					labels: _labels,
+					datasets: [{
+			data: normalizedData, 
+			backgroundColor: [
+			"#BDC3C7",
+			"#5c5c3d",
+			"#994d00",
+			"#331a00",
+			"#23a98c"
+			],
+			hoverBackgroundColor: [
+			"#CFD4D8",
+			"#8a8a5c",
+			"#cc6600",
+			"#663500",
+			"#56dcbf"
+			]
+			}]
+				},
+				options: {
+					legend: false,
+					responsive: false,
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var dataset = data.datasets[tooltipItem.datasetIndex];
+								var currentValue1 = _data[tooltipItem.index];
+								var percentage1 = ((currentValue1 / totalData) * 100).toFixed(2) + "%";
+								return _labels[tooltipItem.index] + ": " + percentage1;
+							}
+						}
+					}
+
+				}
+			};
+
+			$('.canvasDoughnut1').each(function () {
+				var chart_element = $(this);
+				var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+
+			});
+
+			}
+
+
+		if ($("#mybarChart7").length) e = document.getElementById("mybarChart7"), new Chart(e, {
+			type: "bar",
+			data: {
+				labels: ["Cash Sales", "Booked Sales","Under Negotiations"],
+				datasets: [{
+					label: "Total",
+					backgroundColor:  ["#884dff", "#ac7339", "#ffa31a"],
+					data: [{{dcf_form7cashsales[0]['total_cash7']}}, {{dcf_form7bookedsales[0]['total_booked7']}},{{dcf_form7undernego[0]['total_undernego']}}]
+				},]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: !0
+						}
+					}]
+				}
+			}
+		});
+
+		var ctx = document.getElementsByClassName('canvasDoughnutREG8');
+			var region8DoughnutChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: {
+				labels: ['Entrepreneurial', 'Agri-technical', 'Extension Service', 'Organizational'],
+				datasets: [{
+					data: [
+						{{ dcf3_region8_entrep[0]['dcf3_entrep8'] }},
+						{{ dcf3_region8_agri[0]['dcf3_agri8'] }},
+						{{ dcf3_region8_es[0]['dcf3_es8'] }},
+						{{ dcf3_region8_org[0]['dcf3_org8'] }}
+					],
+					backgroundColor: [
+						'#2177b1',
+						'#c2c23d',
+						'#478a09',
+						'#ff911b'
+					],
+					hoverBackgroundColor: [
+						'#2177b9',
+						'#c2c29d',
+						'#478a19',
+						'#ff918b'
+					]
+				}]
+			},
+
+			options: {
+				legend: false,
+				responsive: false,
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+								return previousValue + currentValue;
+							});
+							var currentValue = dataset.data[tooltipItem.index];
+							var percentage =((currentValue / total) * 100).toFixed(2);
+							return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+						}
+					}
+				}
+			}
+		});
+
+
+	var ctx = document.getElementsByClassName('canvasDoughnutREG9');
+    	var region8DoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Entrepreneurial', 'Agri-technical', 'Extension Service', 'Organizational'],
+            datasets: [{
+                data: [
+                    {{ dcf3_region9_entrep[0]['dcf3_entrep9'] }},
+                    {{ dcf3_region9_agri[0]['dcf3_agri9'] }},
+                    {{ dcf3_region9_es[0]['dcf3_es9'] }},
+                    {{ dcf3_region9_org[0]['dcf3_org9'] }}
+                ],
+                backgroundColor: [
+                    '#2177b1',
+                    '#c2c23d',
+                    '#478a09',
+                    '#ff911b'
+                ],
+                hoverBackgroundColor: [
+                    '#2177b9',
+                    '#c2c29d',
+                    '#478a19',
+                    '#ff918b'
+                ]
+            }]
+        },
+        options: {
+            legend: false,
+            responsive: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage =((currentValue / total) * 100).toFixed(2);
+                        return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                    }
+                }
+            }
+        }
+    });
+
+
+	var ctx = document.getElementsByClassName('canvasDoughnutREG10');
+    	var region8DoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Entrepreneurial', 'Agri-technical', 'Extension Service', 'Organizational'],
+            datasets: [{
+                data: [
+                    {{ dcf3_region10_entrep[0]['dcf3_entrep10'] }},
+                    {{ dcf3_region10_agri[0]['dcf3_agri10'] }},
+                    {{ dcf3_region10_es[0]['dcf3_es10'] }},
+                    {{ dcf3_region10_org[0]['dcf3_org10'] }}
+                ],
+                backgroundColor: [
+                    '#2177b1',
+                    '#c2c23d',
+                    '#478a09',
+                    '#ff911b'
+                ],
+                hoverBackgroundColor: [
+                    '#2177b9',
+                    '#c2c29d',
+                    '#478a19',
+                    '#ff918b'
+                ]
+            }]
+        },
+        options: {
+            legend: false,
+            responsive: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage =((currentValue / total) * 100).toFixed(2);
+                        return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                    }
+                }
+            }
+        }
+    });
+
+
+	var ctx = document.getElementsByClassName('canvasDoughnutREG11');
+    	var region8DoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Entrepreneurial', 'Agri-technical', 'Extension Service', 'Organizational'],
+            datasets: [{
+                data: [
+                    {{ dcf3_region11_entrep[0]['dcf3_entrep11'] }},
+                    {{ dcf3_region11_agri[0]['dcf3_agri11'] }},
+                    {{ dcf3_region11_es[0]['dcf3_es11'] }},
+                    {{ dcf3_region11_org[0]['dcf3_org11'] }}
+                ],
+                backgroundColor: [
+                    '#2177b1',
+                    '#c2c23d',
+                    '#478a09',
+                    '#ff911b'
+                ],
+                hoverBackgroundColor: [
+                    '#2177b9',
+                    '#c2c29d',
+                    '#478a19',
+                    '#ff918b'
+                ]
+            }]
+        },
+        options: {
+            legend: false,
+            responsive: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage =((currentValue / total) * 100).toFixed(2);
+                        return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                    }
+                }
+            }
+        }
+    });
+
+
+	var ctx = document.getElementsByClassName('canvasDoughnutREG12');
+    	var region8DoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Entrepreneurial', 'Agri-technical', 'Extension Service', 'Organizational'],
+            datasets: [{
+                data: [
+                    {{ dcf3_region12_entrep[0]['dcf3_entrep12'] }},
+                    {{ dcf3_region12_agri[0]['dcf3_agri12'] }},
+                    {{ dcf3_region12_es[0]['dcf3_es12'] }},
+                    {{ dcf3_region12_org[0]['dcf3_org12'] }}
+                ],
+                backgroundColor: [
+                    '#2177b1',
+                    '#c2c23d',
+                    '#478a09',
+                    '#ff911b'
+                ],
+                hoverBackgroundColor: [
+                    '#2177b9',
+                    '#c2c29d',
+                    '#478a19',
+                    '#ff918b'
+                ]
+            }]
+        },
+        options: {
+            legend: false,
+            responsive: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage =((currentValue / total) * 100).toFixed(2);
+                        return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                    }
+                }
+            }
+        }
+    });
+
+
+	var ctx = document.getElementsByClassName('canvasDoughnutREG13');
+    	var region8DoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Entrepreneurial', 'Agri-technical', 'Extension Service', 'Organizational'],
+            datasets: [{
+                data: [
+                    {{ dcf3_region13_entrep[0]['dcf3_entrep13'] }},
+                    {{ dcf3_region13_agri[0]['dcf3_agri13'] }},
+                    {{ dcf3_region13_es[0]['dcf3_es13'] }},
+                    {{ dcf3_region13_org[0]['dcf3_org13'] }}
+                ],
+                backgroundColor: [
+                    '#2177b1',
+                    '#c2c23d',
+                    '#478a09',
+                    '#ff911b'
+                ],
+                hoverBackgroundColor: [
+                    '#2177b9',
+                    '#c2c29d',
+                    '#478a19',
+                    '#ff918b'
+                ]
+            }]
+        },
+        options: {
+            legend: false,
+            responsive: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage = ((currentValue / total) * 100).toFixed(2);
+                        return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                    }
+                }
+            }
+        }
+    });
+
+
+	var ctx = document.getElementsByClassName('canvasDoughnutREGB');
+    	var region8DoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Entrepreneurial', 'Agri-technical', 'Extension Service', 'Organizational'],
+            datasets: [{
+                data: [
+                    {{ dcf3_regionB_entrep[0]['dcf3_entrepB'] }},
+                    {{ dcf3_regionB_agri[0]['dcf3_agriB'] }},
+                    {{ dcf3_regionB_es[0]['dcf3_esB'] }},
+                    {{ dcf3_regionB_org[0]['dcf3_orgB'] }}
+                ],
+                backgroundColor: [
+                    '#2177b1',
+                    '#c2c23d',
+                    '#478a09',
+                    '#ff911b'
+                ],
+                hoverBackgroundColor: [
+                    '#2177b9',
+                    '#c2c29d',
+                    '#478a19',
+                    '#ff918b'
+                ]
+            }]
+        },
+        options: {
+            legend: false,
+            responsive: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage = ((currentValue / total) * 100).toFixed(2);
+                        return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                    }
+                }
+            }
+        }
+    });
+
+
+	var ctx = document.getElementsByClassName('canvasDoughnutREGTOTAL');
+    	var region8DoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Entrepreneurial', 'Agri-technical', 'Extension Service', 'Organizational'],
+            datasets: [{
+                data: [
+                    {{ dcf3_total_entrep[0]['dcf3_entrepT'] }},
+                    {{ dcf3_total_agri[0]['dcf3_agriT'] }},
+                    {{ dcf3_total_es[0]['dcf3_esT'] }},
+                    {{ dcf3_total_org[0]['dcf3_orgT'] }}
+                ],
+                backgroundColor: [
+                    '#2177b1',
+                    '#c2c23d',
+                    '#478a09',
+                    '#ff911b'
+                ],
+                hoverBackgroundColor: [
+                    '#2177b9',
+                    '#c2c29d',
+                    '#478a19',
+                    '#ff918b'
+                ]
+            }]
+        },
+        options: {
+            legend: false,
+            responsive: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+						var percentage = ((currentValue / total) * 100).toFixed(2);
+                        return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                    }
+                }
+            }
+        }
+    });
+
+
+	if ($('.canvasDoughnut2').length) {
+
+		var _labels2 = []; // Changed variable name
+		var _data2 = []; // Changed variable name
+
+		// Sample data
+		{% for key in over_all_commodity_count4 %}
+		_labels2.push('{{key}}');
+		_data2.push('{{over_all_commodity_count4[key]}}');
+		{% endfor %}
+		// Calculate total for _data2
+		var totalData2 = _data2.reduce((a, b) => parseFloat(a) + parseFloat(b), 0); // Changed variable name
+
+		// Normalize _data2 to make its total equivalent to totalData2
+		var normalizedData2 = _data2.map(value => ((parseFloat(value) / totalData2) * 100).toFixed(2)); // Changed variable name
+
+		var chart_doughnut_settings2 = {
+			type: 'doughnut',
+			tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+			data: {
+				labels: _labels2,
+				datasets: [{
+					data: normalizedData2, // Use normalizedData2 here
+					backgroundColor: [
+						"#BDC3C7",
+						"#5c5c3d",
+						"#994d00",
+						"#331a00",
+						"#23a98c"
+					],
+					hoverBackgroundColor: [
+						"#CFD4D8",
+						"#8a8a5c",
+						"#cc6600",
+						"#663500",
+						"#56dcbf"
+					]
+				}]
+			},
+			options: {
+				legend: false,
+				responsive: false,
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var currentValue = _data2[tooltipItem.index];
+							var percentage = ((currentValue / totalData2) * 100).toFixed(2) + "%";
+							return _labels2[tooltipItem.index] + ": " + percentage;
+						}
+					}
+				}
+
+			}
+		};
+
+		$('.canvasDoughnut2').each(function () {
+
+			var chart_element = $(this);
+			var chart_doughnut = new Chart(chart_element, chart_doughnut_settings2);
+
+		});
+
+		}
+
+		var ctx = document.getElementsByClassName('canvasDoughnutCOM');
+			var region8DoughnutChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: {
+				labels: ['Coffee', 'Cacao', 'Cococnut', 'PFN'],
+				datasets: [{
+					data: [
+						{{ dcf2_COFFEE[0]['coffee_2'] }},
+						{{ dcf2_CACAO[0]['cacao_2'] }},
+						{{ dcf2_COCONUT[0]['coconut_2'] }},
+						{{ dcf2_PFN[0]['pfn_2'] }}
+					],
+					backgroundColor: [
+						'#5c5c3d',
+						'#994d00',
+						'#331a00',
+						'#23a98c'
+					],
+					hoverBackgroundColor: [
+						'#5c5c7d',
+						'#994d20',
+						'#331a20',
+						'#23a69c'
+					]
+				}]
+			},
+
+			options: {
+				legend: false,
+				responsive: false,
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+								return previousValue + currentValue;
+							});
+							var currentValue = dataset.data[tooltipItem.index];
+							var percentage = ((currentValue / total) * 100).toFixed(2);
+							return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+						}
+					}
+				}
+			}
+		});
+
+
+		var ctx = document.getElementsByClassName('canvasDoughnutCOMFO');
+			var region8DoughnutChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: {
+				labels: ['Coffee', 'Cacao', 'Cococnut', 'PFN'],
+				datasets: [{
+					data: [
+						{{dcf_form2_nom_coffee[0]['form2nom_coffee'] }},
+						{{dcf_form2_nom_cacao[0]['form2nom_cacao'] }},
+						{{ dcf_form2_nom_coconut[0]['form2nom_coconut'] }},
+						{{ dcf_form2_nom_PFN[0]['form2nom_PFN'] }}
+					],
+					backgroundColor: [
+						'#5c5c3d',
+						'#994d00',
+						'#331a00',
+						'#23a98c'
+					],
+					hoverBackgroundColor: [
+						'#5c5c7d',
+						'#994d20',
+						'#331a20',
+						'#23a69c'
+					]
+				}]
+			},
+
+			options: {
+				legend: false,
+				responsive: false,
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+								return previousValue + currentValue;
+							});
+							var currentValue = dataset.data[tooltipItem.index];
+							var percentage = ((currentValue / total) * 100).toFixed(2);
+							return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+						}
+					}
+				}
+			}
+		});
+
+		};
+</script>
+
+<script>
+    document.getElementById('graphFilter').addEventListener('change', function() {
+        var selectedOption = this.value;
+        if (selectedOption === 'All') {
+            var allRows = document.querySelectorAll('.row[id]');
+            allRows.forEach(function(row) {
+                row.style.display = 'flex';
+            });
+            return;
+        }
+        var allRows = document.querySelectorAll('.row[id]');
+        allRows.forEach(function(row) {
+            row.style.display = 'none';
+        });
+        switch(selectedOption) {
+            case 'Forms':
+                document.querySelectorAll('.row[id="forms"]').forEach(function(row) {
+                    row.style.display = 'flex';
+                });
+                break;
+            case 'DIPs':
+                document.getElementById('dips').style.display = 'flex';
+                break;
+            case 'BDSP':
+                document.getElementById('bdsp').style.display = 'flex';
+                break;				
+			case 'Form4':
+                document.getElementById('form4').style.display = 'flex';
+                break;
+            case 'Form7':
+                document.getElementById('form7').style.display = 'flex';
+                break;
+			case 'Form9':
+                document.getElementById('form9').style.display = 'flex';
+                break;
+            case 'Form10':
+                document.getElementById('form10').style.display = 'flex';
+                break;
+            default:
+                console.log('Invalid option');
+        }
+    });
+</script>
