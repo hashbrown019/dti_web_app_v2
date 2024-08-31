@@ -2,36 +2,36 @@
     .table-container {
       width: 100%;
       overflow-x: auto;
-    }
+  }
   
-    .ui-table {
+  .ui-table {
       width: 100%;
       border-collapse: collapse;
       border-spacing: 0;
-    }
+  }
   
-    .ui-table th,
-    .ui-table td {
+  .ui-table th,
+  .ui-table td {
       padding: 10px 13px;
       text-align: left;
       border-bottom: 1px solid #ddd;
-    }
+  }
   
-    .ui-table th {
+  .ui-table th {
       background-color: #f2f2f2;
       color: #333;
       font-weight: 600;
-    }
+  }
   
-    .ui-table tbody tr:nth-child(even) {
+  .ui-table tbody tr:nth-child(even) {
       background-color: #f9f9f9;
-    }
+  }
   
-    .ui-table tbody tr:hover {
+  .ui-table tbody tr:hover {
       background-color: #f2f2f2;
-    }
+  }
   
-  </style>
+</style>
 
 <div class="row" id="dips" style="display: none;">
     <div class="col-md-12 col-sm-12">
@@ -196,19 +196,59 @@
                 </div>
             </div>
             
-        
+            
+            <div class="clearfix"></div>
+            <div class="x_title">
+                <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+            </div>
+            <div class="x_title">
+                <span style="font-size: 18px; color: #73879C;">Farming households participating in Detailed Investment Plans (DIPs)</span>
+            </div>
+
+            <div class="col-md-6 col-sm-6">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Male & Female<small>Pie Chart</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <canvas id="pieChartM"></canvas>
+                        <div style="text-align: center;">
+                          <p>
+                            <i class="fa fa-square" style="color:#0070cc"></i> Male: {{ dcf_form1male_appr[0]['total_male_appr'] }} | &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-square" style="color:#cc00aa"></i> Female: {{ dcf_form1female_appr[0]['total_female_appr'] }} | &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-square" ></i> Ip: {{ (dcf_form1maleip_appr[0]['total_maleip_appr'] or 0) + (dcf_form1femaleip_appr[0]['total_femaleip_appr']or 0) }} | &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-square" ></i> Youth: {{ (dcf_form1maleyouth_appr[0]['total_maleyouth_appr'] or 0) + (dcf_form1femaleyouth_appr[0]['total_femaleyouth_appr']or 0) }}&nbsp;&nbsp;&nbsp;<br>
+                            <i class="fa fa-square" style="color:#4eeb82"></i> approved DIPs of smallholder farmers: {{ (dcf_form1male_appr[0]['total_male_appr'] or 0) + (dcf_form1female_appr[0]['total_female_appr']or 0) }}&nbsp;&nbsp;&nbsp;
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="clearfix"></div>
+
         <div class="x_title">
             <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
         </div>
         <div class="x_title">
-            <span style="font-size: 18px; color: #73879C;">Farming households participating in Detailed Investment Plans (DIPs)</span>
+            <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises by region</span>
         </div>
 
-        <div class="col-md-6 col-sm-6">
+        <div class="col-md-6 col-sm-6 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Male & Female<small>Pie Chart</small></h2>
+                    <span style="font-size: 16px; color: #73879C;">Types of Training: <b>GESI</b><br><small>Pie Chart</small></span>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                         <li class="dropdown">
@@ -223,61 +263,21 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <canvas id="pieChartM"></canvas>
+                    <canvas id="pieChartDIPS"></canvas>
                     <div style="text-align: center;">
-                          <p>
-                            <i class="fa fa-square" style="color:#0070cc"></i> Male: {{ dcf_form1male_appr[0]['total_male_appr'] }} | &nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-square" style="color:#cc00aa"></i> Female: {{ dcf_form1female_appr[0]['total_female_appr'] }} | &nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-square" ></i> Ip: {{ (dcf_form1maleip_appr[0]['total_maleip_appr'] or 0) + (dcf_form1femaleip_appr[0]['total_femaleip_appr']or 0) }} | &nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-square" ></i> Youth: {{ (dcf_form1maleyouth_appr[0]['total_maleyouth_appr'] or 0) + (dcf_form1femaleyouth_appr[0]['total_femaleyouth_appr']or 0) }}&nbsp;&nbsp;&nbsp;<br>
-                            <i class="fa fa-square" style="color:#4eeb82"></i> approved DIPs of smallholder farmers: {{ (dcf_form1male_appr[0]['total_male_appr'] or 0) + (dcf_form1female_appr[0]['total_female_appr']or 0) }}&nbsp;&nbsp;&nbsp;
+                        <p>
+                            <i class="fa fa-square" style="color:#00becc"></i> Region 8: {{ '{:,}'.format(dcf_form2_rcu8[0]['form2_rcu8']|int )}} |
+                            <i class="fa fa-square" style="color:#eb4eaa"></i> Region 9: {{ '{:,}'.format(dcf_form2_rcu9[0]['form2_rcu9']|int )}} | 
+                            <i class="fa fa-square" style="color:#abf1ce"></i> Region 10: {{ '{:,}'.format(dcf_form2_rcu10[0]['form2_rcu10']|int)}} | 
+                            <i class="fa fa-square" style="color:#9e5400"></i> Region 11: {{'{:,}'.format(dcf_form2_rcu11[0]['form2_rcu11']|int)}} | <br>
+                            <i class="fa fa-square" style="color:#4a009e"></i> Region 12: {{ '{:,}'.format(dcf_form2_rcu12[0]['form2_rcu12']|int)}} | 
+                            <i class="fa fa-square" style="color:#00719e"></i> Region 13: {{ '{:,}'.format(dcf_form2_rcu13[0]['form2_rcu13']|int)}} | 
+                            <i class="fa fa-square" style="color:#9e0022"></i> Region BARMM: {{ '{:,}'.format(dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int)}} <br>
+                            <h4>Total # of signed CPA from all region: {{ '{:,}'.format(dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int)}}</h4>
                         </p>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="clearfix"></div>
-
-      <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
-      </div>
-      <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises by region</span>
-      </div>
-
-      <div class="col-md-6 col-sm-6 ">
-        <div class="x_panel">
-            <div class="x_title">
-                <span style="font-size: 16px; color: #73879C;">Types of Training: <b>GESI</b><br><small>Pie Chart</small></span>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <canvas id="pieChartDIPS"></canvas>
-                <div style="text-align: center;">
-                    <p>
-                        <i class="fa fa-square" style="color:#00becc"></i> Region 8: {{ '{:,}'.format(dcf_form2_rcu8[0]['form2_rcu8']|int )}} |
-                        <i class="fa fa-square" style="color:#eb4eaa"></i> Region 9: {{ '{:,}'.format(dcf_form2_rcu9[0]['form2_rcu9']|int )}} | 
-                        <i class="fa fa-square" style="color:#abf1ce"></i> Region 10: {{ '{:,}'.format(dcf_form2_rcu10[0]['form2_rcu10']|int)}} | 
-                        <i class="fa fa-square" style="color:#9e5400"></i> Region 11: {{'{:,}'.format(dcf_form2_rcu11[0]['form2_rcu11']|int)}} | <br>
-                        <i class="fa fa-square" style="color:#4a009e"></i> Region 12: {{ '{:,}'.format(dcf_form2_rcu12[0]['form2_rcu12']|int)}} | 
-                        <i class="fa fa-square" style="color:#00719e"></i> Region 13: {{ '{:,}'.format(dcf_form2_rcu13[0]['form2_rcu13']|int)}} | 
-                        <i class="fa fa-square" style="color:#9e0022"></i> Region BARMM: {{ '{:,}'.format(dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int)}} <br>
-                        <h4>Total # of signed CPA from all region: {{ '{:,}'.format(dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int)}}</h4>
-                       </p>
-                  </div>
-                </div>
-              </div>
         </div>
         
         {% set total_signed_cpas = dcf2_RCU8_FO[0]['rcu8_fo2']|int + dcf2_RCU9_FO[0]['rcu9_fo2']|int + dcf2_RCU10_FO[0]['rcu10_fo2']|int + dcf2_RCU11_FO[0]['rcu11_fo2']|int + dcf2_RCU12_FO[0]['rcu12_fo2']|int + dcf2_RCU13_FO[0]['rcu13_fo2']|int + dcf2_RCUBARMM_FO[0]['rcubarmm_fo2']|int %}   
@@ -285,216 +285,216 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Number of FO members/Smallholder Farmers  per region<br>and its percentage versus the total number of members/<br>smallholder farmers of the FOs who signed CPAs</h2>
-                <div class="clearfix"></div>
-            </div>
+                    <div class="clearfix"></div>
+                </div>
                 <div class="top_tiles">                                              
-                <div class="table-container">
-                    <table class="ui-table">
-                        <thead>
-                            <tr>
-                                <th>Region</th>
-                                <th>total # of FO members</th>
-                                <th>Percentage of FOs signing CPAs</th>
-                            </tr>
-                        </thead>
-                     <tbody>
-                        <tr>
-                            <td>Region 8</td>
-                            <td class="text-center">{{ dcf2_RCU8_FO[0]['rcu8_fo2'] }}</td>
-                    <td class="text-center">
-                            {% if total_signed_cpas != 0 %}
-                                {{ ((dcf2_RCU8_FO[0]['rcu8_fo2'] | int) / total_signed_cpas * 100) | float | round(2) }}%
-                            {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 9</td>
-                            <td class="text-center">{{ dcf2_RCU9_FO[0]['rcu9_fo2'] }}</td>
-                            <td class="text-center">
-                                {% if total_signed_cpas != 0 %}
-                            {{ (dcf2_RCU9_FO[0]['rcu9_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
-                         {% else %}
-                                0.00%
-                            {% endif %}</td>
-                        </tr>
-                        <tr>
-                            <td>Region 10</td>
-                            <td class="text-center">{{ dcf2_RCU10_FO[0]['rcu10_fo2'] }}</td>
-                            <td class="text-center">
-                                {% if total_signed_cpas != 0 %}
+                    <div class="table-container">
+                        <table class="ui-table">
+                            <thead>
+                                <tr>
+                                    <th>Region</th>
+                                    <th>total # of FO members</th>
+                                    <th>Percentage of FOs signing CPAs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Region 8</td>
+                                    <td class="text-center">{{ dcf2_RCU8_FO[0]['rcu8_fo2'] }}</td>
+                                    <td class="text-center">
+                                        {% if total_signed_cpas != 0 %}
+                                        {{ ((dcf2_RCU8_FO[0]['rcu8_fo2'] | int) / total_signed_cpas * 100) | float | round(2) }}%
+                                        {% else %}
+                                        0.00%
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Region 9</td>
+                                    <td class="text-center">{{ dcf2_RCU9_FO[0]['rcu9_fo2'] }}</td>
+                                    <td class="text-center">
+                                        {% if total_signed_cpas != 0 %}
+                                        {{ (dcf2_RCU9_FO[0]['rcu9_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                        {% else %}
+                                        0.00%
+                                    {% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <td>Region 10</td>
+                                    <td class="text-center">{{ dcf2_RCU10_FO[0]['rcu10_fo2'] }}</td>
+                                    <td class="text-center">
+                                        {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf2_RCU10_FO[0]['rcu10_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
-                         {% else %}
-                                0.00%
-                            {% endif %}</td>
-                        </tr>
-                        <tr>
-                            <td>Region 11</td>
-                            <td class="text-center">{{ dcf2_RCU11_FO[0]['rcu11_fo2'] }}</td>
-                            <td class="text-center">
-                                {% if total_signed_cpas != 0 %}
-                            {{ (dcf2_RCU11_FO[0]['rcu11_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 12</td>
-                            <td class="text-center">{{ dcf2_RCU12_FO[0]['rcu12_fo2'] }}</td>
-                            <td class="text-center">
-                                {% if total_signed_cpas != 0 %}
+                                        {{ (dcf2_RCU10_FO[0]['rcu10_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                        {% else %}
+                                        0.00%
+                                    {% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <td>Region 11</td>
+                                    <td class="text-center">{{ dcf2_RCU11_FO[0]['rcu11_fo2'] }}</td>
+                                    <td class="text-center">
+                                        {% if total_signed_cpas != 0 %}
+                                        {{ (dcf2_RCU11_FO[0]['rcu11_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                        {% else %}
+                                        0.00%
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Region 12</td>
+                                    <td class="text-center">{{ dcf2_RCU12_FO[0]['rcu12_fo2'] }}</td>
+                                    <td class="text-center">
+                                        {% if total_signed_cpas != 0 %}
 
-                            {{ ( dcf2_RCU12_FO[0]['rcu12_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                 {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 13</td>
-                            <td class="text-center">{{ dcf2_RCU13_FO[0]['rcu13_fo2'] }}</td>
-                            <td class="text-center">
-                                {% if total_signed_cpas != 0 %}
+                                        {{ ( dcf2_RCU12_FO[0]['rcu12_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                        {% else %}
+                                        0.00%
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Region 13</td>
+                                    <td class="text-center">{{ dcf2_RCU13_FO[0]['rcu13_fo2'] }}</td>
+                                    <td class="text-center">
+                                        {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf2_RCU13_FO[0]['rcu13_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                  {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>BARMM</td>
-                            <td class="text-center">{{ dcf2_RCUBARMM_FO[0]['rcubarmm_fo2'] }}</td>
-                            <td class="text-center">
-                                {% if total_signed_cpas != 0 %}
+                                        {{ (dcf2_RCU13_FO[0]['rcu13_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                        {% else %}
+                                        0.00%
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>BARMM</td>
+                                    <td class="text-center">{{ dcf2_RCUBARMM_FO[0]['rcubarmm_fo2'] }}</td>
+                                    <td class="text-center">
+                                        {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf2_RCUBARMM_FO[0]['rcubarmm_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
-   {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                        {{ (dcf2_RCUBARMM_FO[0]['rcubarmm_fo2']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                        {% else %}
+                                        0.00%
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="clearfix"></div>
+        <div class="clearfix"></div>
 
         
-      {% set total_signed_cpas = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %} 
+        {% set total_signed_cpas = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %} 
         <div class="col-md-6 col-sm-6 ">    
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Number of <b>Anchor Firms</b> signed CPAs<br>per region and its percentage versus the<br>total number of signed CPAs from all regions</h2>
-                <div class="clearfix"></div>
-            </div>
+                    <div class="clearfix"></div>
+                </div>
                 <div class="top_tiles">                                              
-                <div class="table-container">
-                    <table class="ui-table">
-                        <thead>
-                            <tr>
-                                <th>Region</th>
-                                <th>total # of anchor firms</th>
-                                <th>percentage of total # signed cpa</th>
-                            </tr>
-                        </thead>
-                     <tbody>
-                        <tr>
-                            <td>Region 8</td>
-                            <td class="text-center">{{ dcf_form2_rcu8_nom[0]['form2_rcu8_nom'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
-                            {{ (dcf_form2_rcu8_nom[0]['form2_rcu8_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
-                              {% else %}
-                                0.00%
-                            {% endif %}
+                    <div class="table-container">
+                        <table class="ui-table">
+                            <thead>
+                                <tr>
+                                    <th>Region</th>
+                                    <th>total # of anchor firms</th>
+                                    <th>percentage of total # signed cpa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Region 8</td>
+                                    <td class="text-center">{{ dcf_form2_rcu8_nom[0]['form2_rcu8_nom'] }}</td>
+                                    <td class="text-center">
+                                       {% if total_signed_cpas != 0 %}
+                                       {{ (dcf_form2_rcu8_nom[0]['form2_rcu8_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                       {% else %}
+                                       0.00%
+                                       {% endif %}
 
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 9</td>
-                            <td class="text-center">{{ dcf_form2_rcu9_nom[0]['form2_rcu9_nom'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                                   </td>
+                               </tr>
+                               <tr>
+                                <td>Region 9</td>
+                                <td class="text-center">{{ dcf_form2_rcu9_nom[0]['form2_rcu9_nom'] }}</td>
+                                <td class="text-center">
+                                   {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu9_nom[0]['form2_rcu9_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
-                             {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
+                                   {{ (dcf_form2_rcu9_nom[0]['form2_rcu9_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                                   {% else %}
+                                   0.00%
+                                   {% endif %}
+                               </td>
+                           </tr>
+                           <tr>
                             <td>Region 10</td>
                             <td class="text-center">{{ dcf_form2_rcu10_nom[0]['form2_rcu10_nom'] }}</td>
                             <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                               {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu10_nom[0]['form2_rcu10_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
-                            {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 11</td>
-                            <td class="text-center">{{ dcf_form2_rcu11_nom[0]['form2_rcu11_nom'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                               {{ (dcf_form2_rcu10_nom[0]['form2_rcu10_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                               {% else %}
+                               0.00%
+                               {% endif %}
+                           </td>
+                       </tr>
+                       <tr>
+                        <td>Region 11</td>
+                        <td class="text-center">{{ dcf_form2_rcu11_nom[0]['form2_rcu11_nom'] }}</td>
+                        <td class="text-center">
+                           {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu11_nom[0]['form2_rcu11_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
-                             {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 12</td>
-                            <td class="text-center">{{ dcf_form2_rcu12_nom[0]['form2_rcu12_nom'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                           {{ (dcf_form2_rcu11_nom[0]['form2_rcu11_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                           {% else %}
+                           0.00%
+                           {% endif %}
+                       </td>
+                   </tr>
+                   <tr>
+                    <td>Region 12</td>
+                    <td class="text-center">{{ dcf_form2_rcu12_nom[0]['form2_rcu12_nom'] }}</td>
+                    <td class="text-center">
+                       {% if total_signed_cpas != 0 %}
 
-                            {{ ( dcf_form2_rcu12_nom[0]['form2_rcu12_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 13</td>
-                            <td class="text-center">{{ dcf_form2_rcu13_nom[0]['form2_rcu13_nom'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                       {{ ( dcf_form2_rcu12_nom[0]['form2_rcu12_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                       {% else %}
+                       0.00%
+                       {% endif %}
+                   </td>
+               </tr>
+               <tr>
+                <td>Region 13</td>
+                <td class="text-center">{{ dcf_form2_rcu13_nom[0]['form2_rcu13_nom'] }}</td>
+                <td class="text-center">
+                   {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu13_nom[0]['form2_rcu13_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                 {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>BARMM</td>
-                            <td class="text-center">{{ dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                   {{ (dcf_form2_rcu13_nom[0]['form2_rcu13_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+                   {% else %}
+                   0.00%
+                   {% endif %}
+               </td>
+           </tr>
+           <tr>
+            <td>BARMM</td>
+            <td class="text-center">{{ dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom'] }}</td>
+            <td class="text-center">
+               {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                  {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+               {{ (dcf_form2_rcuBARMM_nom[0]['form2_rcuBARMM_nom']|int / total_signed_cpas * 100)|float|round(2) }}%
+               {% else %}
+               0.00%
+               {% endif %}
+           </td>
+       </tr>
+   </tbody>
+</table>
 </div>
-                     
+</div>
+</div>
+</div>
+
 {% set total_signed_cpas = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %}   
 <div class="col-md-6 col-sm-6 ">    
     <div class="x_panel">
@@ -517,248 +517,248 @@
                             <td>Region 8</td>
                             <td class="text-center">{{ dcf_form2_rcu8_fo[0]['form2_rcu8_fo'] }}</td>
                             <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                               {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu8_fo[0]['form2_rcu8_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                  {% else %}
-                                0.00%
-                            {% endif %}
-                                </td>
-                        </tr>
-                        <tr>
-                            <td>Region 9</td>
-                            <td class="text-center">{{ dcf_form2_rcu9_fo[0]['form2_rcu9_fo'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                               {{ (dcf_form2_rcu8_fo[0]['form2_rcu8_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                               {% else %}
+                               0.00%
+                               {% endif %}
+                           </td>
+                       </tr>
+                       <tr>
+                        <td>Region 9</td>
+                        <td class="text-center">{{ dcf_form2_rcu9_fo[0]['form2_rcu9_fo'] }}</td>
+                        <td class="text-center">
+                           {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu9_fo[0]['form2_rcu9_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                 {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 10</td>
-                            <td class="text-center">{{ dcf_form2_rcu10_fo[0]['form2_rcu10_fo'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                           {{ (dcf_form2_rcu9_fo[0]['form2_rcu9_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                           {% else %}
+                           0.00%
+                           {% endif %}
+                       </td>
+                   </tr>
+                   <tr>
+                    <td>Region 10</td>
+                    <td class="text-center">{{ dcf_form2_rcu10_fo[0]['form2_rcu10_fo'] }}</td>
+                    <td class="text-center">
+                       {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu10_fo[0]['form2_rcu10_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                 {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 11</td>
-                            <td class="text-center">{{ dcf_form2_rcu11_fo[0]['form2_rcu11_fo'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                       {{ (dcf_form2_rcu10_fo[0]['form2_rcu10_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                       {% else %}
+                       0.00%
+                       {% endif %}
+                   </td>
+               </tr>
+               <tr>
+                <td>Region 11</td>
+                <td class="text-center">{{ dcf_form2_rcu11_fo[0]['form2_rcu11_fo'] }}</td>
+                <td class="text-center">
+                   {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu11_fo[0]['form2_rcu11_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                  {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 12</td>
-                            <td class="text-center">{{ dcf_form2_rcu12_fo[0]['form2_rcu12_fo'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+                   {{ (dcf_form2_rcu11_fo[0]['form2_rcu11_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+                   {% else %}
+                   0.00%
+                   {% endif %}
+               </td>
+           </tr>
+           <tr>
+            <td>Region 12</td>
+            <td class="text-center">{{ dcf_form2_rcu12_fo[0]['form2_rcu12_fo'] }}</td>
+            <td class="text-center">
+               {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu12_fo[0]['form2_rcu12_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                 {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>Region 13</td>
-                            <td class="text-center">{{ dcf_form2_rcu13_fo[0]['form2_rcu13_fo'] }}</td>
-                            <td class="text-center">
-                                 {% if total_signed_cpas != 0 %}
+               {{ (dcf_form2_rcu12_fo[0]['form2_rcu12_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+               {% else %}
+               0.00%
+               {% endif %}
+           </td>
+       </tr>
+       <tr>
+        <td>Region 13</td>
+        <td class="text-center">{{ dcf_form2_rcu13_fo[0]['form2_rcu13_fo'] }}</td>
+        <td class="text-center">
+           {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcu13_fo[0]['form2_rcu13_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
-                                {% else %}
-                                0.00%
-                            {% endif %}
+           {{ (dcf_form2_rcu13_fo[0]['form2_rcu13_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+           {% else %}
+           0.00%
+           {% endif %}
 
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>BARMM</td>
-                            <td class="text-center">{{ dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo'] }}</td>
-                            <td class="text-center">
+       </td>
+   </tr>
+   <tr>
+    <td>BARMM</td>
+    <td class="text-center">{{ dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo'] }}</td>
+    <td class="text-center">
 
-                                 {% if total_signed_cpas != 0 %}
+       {% if total_signed_cpas != 0 %}
 
-                            {{ (dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
+       {{ (dcf_form2_rcuBARMM_fo[0]['form2_rcuBARMM_fo']|int / total_signed_cpas * 100)|float|round(2) }}%
 
-                                {% else %}
-                                0.00%
-                            {% endif %}
-                        </td>
-                        </tr>
-                    </tbody>
-                </table>
+       {% else %}
+       0.00%
+       {% endif %}
+   </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="x_title">
+    <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+</div>
+<div class="x_title">
+    <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises</span>
+</div>
+
+
+{% set total_signed_pie = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %}
+<div class="col-md-6 col-sm-6 bg-white">
+    <div class="x_content">
+        <div class="top_tiles">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div style="font-size: 12px; color: #73879C; font-weight: bold; text-align: center; margin-top: 10px;">Total number of CPAs signed and its percentage versus the 100 end of project targets</div>
+                        <hr>
+                        <h3 class="titlecard"><i class=></i>Total # of signed CPA from all region: <b style="color:#00becc">{{ total_signed_pie }} ({{ ((total_signed_pie / 100) * 100)|round(2) }}%)</b></h3>
+                        <h3 class="titlecard"><i class=></i>Project targets: <b style="color:#4eeb70">100</b></h3>
+                        <p> &nbsp&nbsp </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-sm-6 bg-white">
+    <div class="x_content">
+        <div class="top_tiles">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div class="count _money_tag">{{dcf2_FO_MEMBERS[0]['fomember_2']}}</div>
+                        <h3 class="titlecard"><i class=></i> Number of FO-members/smallholder farmers benefitting the CPAs</h3>
+                        <p> &nbsp&nbsp </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="clearfix"></div>
 
-
-        <div class="x_title">
-            <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
-          </div>
-          <div class="x_title">
-            <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises</span>
-          </div>
-
-
-            {% set total_signed_pie = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %}
-            <div class="col-md-6 col-sm-6 bg-white">
-                <div class="x_content">
-                    <div class="top_tiles">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="tile-stats" style="margin-bottom: 10px;">
-                                    <div style="font-size: 12px; color: #73879C; font-weight: bold; text-align: center; margin-top: 10px;">Total number of CPAs signed and its percentage versus the 100 end of project targets</div>
-                                    <hr>
-                                    <h3 class="titlecard"><i class=></i>Total # of signed CPA from all region: <b style="color:#00becc">{{ total_signed_pie }} ({{ ((total_signed_pie / 100) * 100)|round(2) }}%)</b></h3>
-                                    <h3 class="titlecard"><i class=></i>Project targets: <b style="color:#4eeb70">100</b></h3>
-                                    <p> &nbsp&nbsp </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-sm-6 bg-white">
-                <div class="x_content">
-                    <div class="top_tiles">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="tile-stats" style="margin-bottom: 10px;">
-                                    <div class="count _money_tag">{{dcf2_FO_MEMBERS[0]['fomember_2']}}</div>
-                                    <h3 class="titlecard"><i class=></i> Number of FO-members/smallholder farmers benefitting the CPAs</h3>
-                                    <p> &nbsp&nbsp </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <div class="clearfix"></div>
-
-        <div class="col-md-6 col-sm-6 bg-white">
-            <div class="x_content">
-                <div class="top_tiles">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="tile-stats" style="margin-bottom: 10px;">
-                                <div class="count _money_tag">{{dcf2_CPAs[0]['cpas_2']}}</div>
-                                <h3 class="titlecard"><i class=></i> Number of renewed CPAs</h3>
-                                <p> &nbsp&nbsp </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-sm-6 bg-white">
-            <div class="x_content">
-                <div class="top_tiles">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="tile-stats" style="margin-bottom: 10px;">
-                                <div class="count _money_tag">{{dcf2_CPAs_FOs[0]['cpasfos_2']}}</div>
-                                <h3 class="titlecard"><i class=></i> Number of anchor firms signed CPAs with FOs</h3>
-                                <p> &nbsp&nbsp </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-sm-6 bg-white">
-            <div class="x_content">
-                <div class="top_tiles">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="tile-stats" style="margin-bottom: 10px;">
-                                <div class="count _money_tag">{{dcf2_FOs_CPAs[0]['foscpas_2']}}</div>
-                                <h3 class="titlecard"><i class=></i> Number of FOs signed CPAs with Anchor Firms</h3>
-                                <p> &nbsp&nbsp </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-      <div class="clearfix"></div>
-      <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
-      </div>
-      <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises by commodity</span>
-      </div>
-
-      <div class="col-md-6 col-sm-6 bg-white">
-        <div class="x_panel">
-            <div class="x_title">
-                <span style="font-size: 16px; color: #73879C;">Number of signed CPAs per region and its percentage versus the total number of signed CPAs (from all regions)<br><small>Pie Chart</small></span>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <canvas id="pieChartDIPS2"></canvas>
-                <div style="text-align: center;">
-                    <p>
-                        <i class="fa fa-square" style="color:#00becc"></i> Coffee: {{'{:,}'.format(dcf1_COFFEE_FO[0]['coffee_fo']|int)}} |
-                        <i class="fa fa-square" style="color:#eb4eaa"></i> Cacao: {{ '{:,}'.format(dcf1_CACAO_FO[0]['cacao_fo']|int )}} | 
-                        <i class="fa fa-square" style="color:#abf1ce"></i> Coconut: {{ '{:,}'.format(dcf1_COCONUT_FO[0]['coconut_fo']|int)}} | 
-                        <i class="fa fa-square" style="color:#9e5400"></i> PFN: {{ '{:,}'.format(dcf1_PFN_FO[0]['pfn_fo']|int)}} | <br>
-                        <h4>Total: {{'{:,}'.format( dcf1_COFFEE_FO[0]['coffee_fo']|int + dcf1_CACAO_FO[0]['cacao_fo']|int + dcf1_COCONUT_FO[0]['coconut_fo']|int + dcf1_PFN_FO[0]['pfn_fo']|int )}}</h4>
-                       </p>
-                  </div>
-                </div>
-              </div>
-    </div>
-
-    <div class="col-md-6 col-sm-6  ">
-        <div class="x_panel tile overflow_hidden">
-          <div class="x_title">
-              <h2>Number of anchor firms signed CPAs per commodity<br>(from all regions)</h2>
-              <ul class="nav navbar-right panel_toolbox">
-                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                  <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                      </div>
-                  </li>
-                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-              </ul>
-              <div class="clearfix"></div>
-          </div>
+<div class="col-md-6 col-sm-6 bg-white">
     <div class="x_content">
+        <div class="top_tiles">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div class="count _money_tag">{{dcf2_CPAs[0]['cpas_2']}}</div>
+                        <h3 class="titlecard"><i class=></i> Number of renewed CPAs</h3>
+                        <p> &nbsp&nbsp </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-sm-6 bg-white">
+    <div class="x_content">
+        <div class="top_tiles">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div class="count _money_tag">{{dcf2_CPAs_FOs[0]['cpasfos_2']}}</div>
+                        <h3 class="titlecard"><i class=></i> Number of anchor firms signed CPAs with FOs</h3>
+                        <p> &nbsp&nbsp </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-sm-6 bg-white">
+    <div class="x_content">
+        <div class="top_tiles">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div class="count _money_tag">{{dcf2_FOs_CPAs[0]['foscpas_2']}}</div>
+                        <h3 class="titlecard"><i class=></i> Number of FOs signed CPAs with Anchor Firms</h3>
+                        <p> &nbsp&nbsp </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="x_title">
+    <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+</div>
+<div class="x_title">
+    <span style="font-size: 18px; color: #73879C;">Partnership agreements entered into by FAs/ Coops, MSMEs or large enterprises by commodity</span>
+</div>
+
+<div class="col-md-6 col-sm-6 bg-white">
+    <div class="x_panel">
+        <div class="x_title">
+            <span style="font-size: 16px; color: #73879C;">Number of signed CPAs per region and its percentage versus the total number of signed CPAs (from all regions)<br><small>Pie Chart</small></span>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <canvas id="pieChartDIPS2"></canvas>
+            <div style="text-align: center;">
+                <p>
+                    <i class="fa fa-square" style="color:#00becc"></i> Coffee: {{'{:,}'.format(dcf1_COFFEE_FO[0]['coffee_fo']|int)}} |
+                    <i class="fa fa-square" style="color:#eb4eaa"></i> Cacao: {{ '{:,}'.format(dcf1_CACAO_FO[0]['cacao_fo']|int )}} | 
+                    <i class="fa fa-square" style="color:#abf1ce"></i> Coconut: {{ '{:,}'.format(dcf1_COCONUT_FO[0]['coconut_fo']|int)}} | 
+                    <i class="fa fa-square" style="color:#9e5400"></i> PFN: {{ '{:,}'.format(dcf1_PFN_FO[0]['pfn_fo']|int)}} | <br>
+                    <h4>Total: {{'{:,}'.format( dcf1_COFFEE_FO[0]['coffee_fo']|int + dcf1_CACAO_FO[0]['cacao_fo']|int + dcf1_COCONUT_FO[0]['coconut_fo']|int + dcf1_PFN_FO[0]['pfn_fo']|int )}}</h4>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-sm-6  ">
+    <div class="x_panel tile overflow_hidden">
+      <div class="x_title">
+          <h2>Number of anchor firms signed CPAs per commodity<br>(from all regions)</h2>
+          <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Settings 1</a>
+                      <a class="dropdown-item" href="#">Settings 2</a>
+                  </div>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+          </ul>
+          <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
         <table style="width:100%">
             <tr>
                 <th>
@@ -803,11 +803,11 @@
 </div>
 <div class="clearfix"></div>
 
-        <div class="col-md-6 col-sm-6 ">
-            <div class="x_panel tile overflow_hidden">
-            <div class="x_title">
-                <h2>Number of signed CPAs per commodity</h2>
-                <ul class="nav navbar-right panel_toolbox">
+<div class="col-md-6 col-sm-6 ">
+    <div class="x_panel tile overflow_hidden">
+        <div class="x_title">
+            <h2>Number of signed CPAs per commodity</h2>
+            <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
                 <li class="dropdown">
@@ -824,41 +824,41 @@
         </div>
         <div class="x_content">
             <table class="" style="width:100%">
-            <tr>
-                <th>
-                <p>Pie Chart Percentage</p>
-            </th>
-            <th>
-                <p class="">Commodities</p>
-                
-            </th>
-            
-        </tr>
-        <tr>
-            <td>
-            <canvas class="canvasDoughnut2" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-        </td>
-        <td>
-            <table class="tile_info">
-                {% for key in over_all_commodity_count4 %}
+                <tr>
+                    <th>
+                        <p>Pie Chart Percentage</p>
+                    </th>
+                    <th>
+                        <p class="">Commodities</p>
+                        
+                    </th>
+                    
+                </tr>
                 <tr>
                     <td>
-                        {% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
-                        {% set color_index = loop.index0 % square_colors|length %}
-                        <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count4[key] }}</p>
+                        <canvas class="canvasDoughnut2" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
                     </td>
+                    <td>
+                        <table class="tile_info">
+                            {% for key in over_all_commodity_count4 %}
+                            <tr>
+                                <td>
+                                    {% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
+                                    {% set color_index = loop.index0 % square_colors|length %}
+                                    <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count4[key] }}</p>
+                                </td>
 
-                </tr>
-                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tr>
+                        
+                    </table>
+                </td>
+
             </tr>
-            
         </table>
-        </td>
-
-        </tr>
-         </table>
-        </div>
     </div>
+</div>
 </div>
 
 <div class="col-md-6 col-sm-6  ">
@@ -878,501 +878,501 @@
           </ul>
           <div class="clearfix"></div>
       </div>
-<div class="x_content">
-    <table style="width:100%">
-        <tr>
-            <th>
-                <p>Pie Chart Percentage</p>
-            </th>
-            <th>
-                <p class=""></p>    
-            </th>   
-        </tr>
-        <tr>
-            <td>
-                <canvas class="canvasDoughnutCOMFO" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-            </td>
-            <td>
-                <table class="tile_info">
-                    <tr>
-                        <td>
-                            <p><i class="fa fa-square" style="color: #5c5c3d"></i> Coffee: {{'{:,}'.format(dcf_form2_nom_coffee[0]['form2nom_coffee'] )}}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><i class="fa fa-square" style="color: #994d00;"></i> Cacao: {{'{:,}'.format(dcf_form2_nom_cacao[0]['form2nom_cacao'] )}}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><i class="fa fa-square" style="color: #331a00;"></i> Coconut: {{'{:,}'.format( dcf_form2_nom_coconut[0]['form2nom_coconut'] )}}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><i class="fa fa-square" style="color: #23a98c;"></i> PFN: {{'{:,}'.format( dcf_form2_nom_PFN[0]['form2nom_PFN'] )}}</p>
-                        </td>
-                    </tr>
-                </table>
-            </td>           
-        </tr>
-    </table>
+      <div class="x_content">
+        <table style="width:100%">
+            <tr>
+                <th>
+                    <p>Pie Chart Percentage</p>
+                </th>
+                <th>
+                    <p class=""></p>    
+                </th>   
+            </tr>
+            <tr>
+                <td>
+                    <canvas class="canvasDoughnutCOMFO" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
+                </td>
+                <td>
+                    <table class="tile_info">
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #5c5c3d"></i> Coffee: {{'{:,}'.format(dcf_form2_nom_coffee[0]['form2nom_coffee'] )}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #994d00;"></i> Cacao: {{'{:,}'.format(dcf_form2_nom_cacao[0]['form2nom_cacao'] )}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #331a00;"></i> Coconut: {{'{:,}'.format( dcf_form2_nom_coconut[0]['form2nom_coconut'] )}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><i class="fa fa-square" style="color: #23a98c;"></i> PFN: {{'{:,}'.format( dcf_form2_nom_PFN[0]['form2nom_PFN'] )}}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>           
+            </tr>
+        </table>
+    </div>
 </div>
 </div>
+
+<div class="clearfix"></div>
+<div class="x_title">
+    <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+</div>
+<div class="x_title">
+    <span style="font-size: 18px; color: #73879C;">Farming households participating in Approved Detailed Investment Plans (DIPs) by commodity</span>
 </div>
 
-        <div class="clearfix"></div>
-        <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
-        </div>
-        <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;">Farming households participating in Approved Detailed Investment Plans (DIPs) by commodity</span>
-        </div>
-
-        {% set total_signed_cpas = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %}   
-        <div class="col-md-12 col-sm-12 ">    
-            <div class="x_panel">
-                <div class="top_tiles">                                              
-                    <div class="table-container">
-                        <table class="ui-table">
-                            <thead>
-                                <tr>
-                                    <th>Farming Households</th>
-                                    <th class="text-center">Cacao</th>
-                                    <th class="text-center">Coffee</th>
-                                    <th class="text-center">Coconut</th>
-                                    <th class="text-center">PFN</th>
-                                    <th class="text-center">Total smallholder farmers percentage</th>
-                                </tr>
-                                 <!-- TOTAL MALE (CCCF) -->
-                                 {% set total_cacao = dcf_TOTALMALE_CACAO_APPR[0]['totalmale_cacao1'] %}
-                                 {% set total_coffee = dcf_TOTALMALE_COFFEE_APPR[0]['totalmale_coffee1'] %}
-                                 {% set total_coconut = dcf_TOTALMALE_COCONUT_APPR[0]['totalmale_coconut1'] %}
-                                 {% set total_pfn = dcf_TOTALMALE_PFN_APPR[0]['totalmale_pfn1'] %}
-                                 {% set total_farmers = (total_cacao or 0) + (total_coffee or 0) + (total_coconut or 0) + (total_pfn or 0) %}
-                                <!-- TOTAL MALE_IP (CCCF) -->
-                                 {% set total_cacaoIP = dcf_MALEIP_CACAO_APPR[0]['maleip_cacao1'] if dcf_MALEIP_CACAO_APPR else 0 %}
-                                 {% set total_coffeeIP = dcf_MALEIP_COFFEE_APPR[0]['maleip_coffee1'] if dcf_MALEIP_COFFEE_APPR else 0 %}
-                                 {% set total_coconutIP = dcf_MALEIP_COCONUT_APPR[0]['maleip_coconut1'] if dcf_MALEIP_COCONUT_APPR else 0 %}
-                                 {% set total_pfnIP = dcf_MALEIP__PFN_APPR[0]['maleip_pfn1'] if dcf_MALEIP__PFN_APPR else 0 %}
-                                 {% set total_farmersIP = (total_cacaoIP or 0)+ (total_coffeeIP or 0) + (total_coconutIP or 0) + (total_pfnIP or 0) %}
-                                 <!-- TOTAL MALE_YOUTH (CCCF) -->
-                                 {% set total_cacaoYOUTH = dcf_MALEYOUTH_CACAO_APPR[0]['maleyouth_cacao1'] %}
-                                 {% set total_coffeeYOUTH = dcf_MALEYOUTH_COFFEE_APPR[0]['maleyouth_coffee1'] %}
-                                 {% set total_coconutYOUTH = dcf_MALEYOUTH_COCONUT_APPR[0]['maleyouth_coconut1'] %}
-                                 {% set total_pfnYOUTH = dcf_MALEYOUTH_PFN_APPR[0]['maleyouth_pfn1'] %}
-                                 {% set total_farmersYOUTH = (total_cacaoYOUTH or 0)+ (total_coffeeYOUTH or 0) + (total_coconutYOUTH or 0) + (total_pfnYOUTH or 0) %}
-                                 <!-- TOTAL FEMALE (CCCF) -->
-                                 {% set total_cacaoF = dcf_TOTALFEMALE_CACAO_APPR[0]['totalfemale_cacao1'] %}
-                                 {% set total_coffeeF = dcf_TOTALFEMALE_COFFEE_APPR[0]['totalfemale_coffee1'] %}
-                                 {% set total_coconutF = dcf_TOTALFEMALE_COCONUT_APPR[0]['totalfemale_coconut1'] %}
-                                 {% set total_pfnF = dcf_TOTALFEMALE_PFN_APPR[0]['totalfemale_pfn1'] %}
-                                 {% set total_farmersF = (total_cacaoF or 0)+ (total_coffeeF or 0) + (total_coconutF or 0) + (total_pfnF or 0) %}
-                                 <!-- TOTAL FEMALE_IP (CCCF) -->
-                                 {% set total_cacaoFIP = dcf_FEMALEIP_CACAO_APPR[0]['femaleip_cacao1'] %}
-                                 {% set total_coffeeFIP = dcf_FEMALEIP_COFFEE_APPR[0]['femaleip_coffee1'] %}
-                                 {% set total_coconutFIP = dcf_FEMALEIP_COCONUT_APPR[0]['femaleip_coconut1'] %}
-                                 {% set total_pfnFIP = dcf_FEMALEIP_PFN_APPR[0]['femaleip_pfn1'] %}
-                                 {% set total_farmersFIP = (total_cacaoFIP or 0) + (total_coffeeFIP or 0) + (total_coconutFIP or 0) + (total_pfnFIP or 0) %}
-                                 <!-- TOTAL FEMALE_YOUTH (CCCF) -->
-                                 {% set total_cacaoFYOUTH = dcf_FEMALEYOUTH_CACAO_APPR[0]['femaleyouth_cacao1'] %}
-                                 {% set total_coffeeFYOUTH = dcf_FEMALEYOUTH_COFFEE_APPR[0]['femaleyouth_coffee1'] %}
-                                 {% set total_coconutFYOUTH = dcf_FEMALEYOUTH_COCONUT_APPR[0]['femaleyouth_coconut1'] %}
-                                 {% set total_pfnFYOUTH = dcf_FEMALEYOUTH_PFN_APPR[0]['femaleyouth_pfn1'] %}
-                                 {% set total_farmersFYOUTH = (total_cacaoFYOUTH or 0) + (total_coffeeFYOUTH or 0) + (total_coconutFYOUTH or 0) + (total_pfnFYOUTH or 0) %}
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Male</td>
-                                    <td class="text-center">{{ total_cacao }} ({{ (total_cacao or 0  / total_farmers * 100)|round(2) }}%)</td>
-                                    <td class="text-center">{{ total_coffee }} ({{ (total_coffee or 0  / total_farmers * 100)|round(2) }}%)</td>
-                                    <td class="text-center">{{ total_coconut }} ({{ (total_coconut or 0  / total_farmers * 100)|round(2) }}%)</td>
-                                    <td class="text-center">{{ total_pfn }} ({{ (total_pfn or 0 / total_farmers * 100)|round(2) }}%)</td>
-                                    <td class="text-center">{{ total_farmers }} ({{ (( (total_cacao or 0) + (total_coconut or 0) + (total_coffee or 0) + (total_pfn or 0)) / (dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)</td>
-                                </tr>
-                                <tr>
-                                    <td>Male IP</td>
-                                    <td class="text-center">
-                                    {{ total_cacaoIP }} 
-                                    {% if total_farmersIP != 0 %}
-                                        ({{ (total_cacaoIP / total_farmersIP * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                   <td class="text-center">
-                                   {{ total_coffeeIP }}
-{% if total_coffeeIP is not none and total_farmersIP is not none and total_farmersIP != 0 %}
-    ({{ (total_coffeeIP / total_farmersIP * 100) | round(2) }}%)
-{% else %}
-    (N/A%)
-{% endif %}
-                                </td>
-                                    <td class="text-center">
-                                    {{ total_coconutIP }} 
-                                    {% if total_farmersIP != 0 %}
-                                        ({{ (total_coconutIP / total_farmersIP * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                    <td class="text-center">
-                                    {{ total_pfnIP }} 
-                                    {% if total_farmersIP != 0 %}
-                                        ({{ (total_pfnIP / total_farmersIP * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                       
-
-                                    <td class="text-center" role="cell" aria-label="Total Farmers and Percentage">
-                            
-
-                                        {{ total_farmersYOUTH }}
-                                 {% set total_cacao = total_cacaoIP | default(0) %}
-                                 {% set total_coconut = total_coconutIP | default(0) %}
-                                 {% set total_coffee = total_coffeeIP | default(0) %}
-                                 {% set total_pfn = total_pfnIP | default(0) %}
-                                 {% set total_youth = (total_cacao or 0 )+ (total_coconut or 0) + (total_coffee or 0) + (total_pfn or 0) %}
-                                 {% set total_male_appr = dcf_form1male_appr[0]['total_male_appr'] | default(0) %}
-                                 {% set total_female_appr = dcf_form1female_appr[0]['total_female_appr'] | default(0) %}
-                                 {% set total_appr = (total_male_appr or 0) + (total_female_appr or 0) %}
-                                 {% if total_appr != 0 %}
-                                     ({{ (total_youth / total_appr * 100) | round(2) }}%)
-                                 {% else %}
-                                     (N/A%)
-                                 {% endif %}  
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Male Youth</td>
-                                    <td class="text-center">
-                                      {{ total_cacaoYOUTH }}
-    {% if total_cacaoYOUTH is not none and total_farmersYOUTH is not none and total_farmersYOUTH != 0 %}
-        ({{ (total_cacaoYOUTH / total_farmersYOUTH * 100) | round(2) }}%)
-    {% else %}
-    (N/A%)
-    {% endif %}
-                                </td>
-                                   <td class="text-center">
-                                    {{ total_coffeeYOUTH }}
-                                    {% if total_farmersYOUTH != 0 %}
-                                        ({{ (total_coffeeYOUTH or 0 / total_farmersYOUTH * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                    <td class="text-center">
-                                    {{ total_coconutYOUTH }}
-                                    {% if total_farmersYOUTH != 0 %}
-                                        ({{ (total_coconutYOUTH or 0 / total_farmersYOUTH * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                    <td class="text-center">
-                                    {{ total_pfnYOUTH }}
-                                    {% if total_farmersYOUTH != 0 %}
-                                        ({{ (total_pfnYOUTH or 0 / total_farmersYOUTH * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                   <td class="text-center">
-                                    {{ total_farmersYOUTH }}
-                                 {% set total_cacao = total_cacaoYOUTH | default(0) %}
-                                 {% set total_coconut = total_coconutYOUTH | default(0) %}
-                                 {% set total_coffee = total_coffeeYOUTH | default(0) %}
-                                 {% set total_pfn = total_pfnYOUTH | default(0) %}
-                                 {% set total_youth = (total_cacao or 0 )+ (total_coconut or 0) + (total_coffee or 0) + (total_pfn or 0) %}
-                                 {% set total_male_appr = dcf_form1male_appr[0]['total_male_appr'] | default(0) %}
-                                 {% set total_female_appr = dcf_form1female_appr[0]['total_female_appr'] | default(0) %}
-                                 {% set total_appr = (total_male_appr or 0) + (total_female_appr or 0) %}
-                                 {% if total_appr != 0 %}
-                                     ({{ (total_youth / total_appr * 100) | round(2) }}%)
-                                 {% else %}
-                                     (N/A%)
-                                 {% endif %}                                
-                             </td>
-                                </tr>
-                              <tr>
-                                <td>Female</td>
-                                <td class="text-center">
-                                    {{ total_cacaoF }} 
-{% if total_cacaoF is not none and total_farmersF is not none and total_farmersF != 0 %}
-    ({{ (total_cacaoF / total_farmersF * 100)|round(2) }}%)
-{% else %}
-    (N/A%)
-{% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {{ total_coffeeF }} 
-                                    {% if total_farmersF %}
-                                        ({{ (total_coffeeF or 0 / total_farmersF * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {{ total_coconutF }} 
-                                    {% if total_farmersF %}
-                                        ({{ (total_coconutF or 0 / total_farmersF * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                {{ total_pfnF }} 
-                                {% if total_pfnF is not none and total_farmersF is not none and total_farmersF != 0 %}
-                                    ({{ (total_pfnF / total_farmersF * 100)|round(2) }}%)
+{% set total_signed_cpas = dcf_form2_rcu8[0]['form2_rcu8']|int + dcf_form2_rcu9[0]['form2_rcu9']|int + dcf_form2_rcu10[0]['form2_rcu10']|int + dcf_form2_rcu11[0]['form2_rcu11']|int + dcf_form2_rcu12[0]['form2_rcu12']|int + dcf_form2_rcu13[0]['form2_rcu13']|int + dcf_form2_rcuBARMM[0]['form2_rcuBARMM']|int %}   
+<div class="col-md-12 col-sm-12 ">    
+    <div class="x_panel">
+        <div class="top_tiles">                                              
+            <div class="table-container">
+                <table class="ui-table">
+                    <thead>
+                        <tr>
+                            <th>Farming Households</th>
+                            <th class="text-center">Cacao</th>
+                            <th class="text-center">Coffee</th>
+                            <th class="text-center">Coconut</th>
+                            <th class="text-center">PFN</th>
+                            <th class="text-center">Total smallholder farmers percentage</th>
+                        </tr>
+                        <!-- TOTAL MALE (CCCF) -->
+                        {% set total_cacao = dcf_TOTALMALE_CACAO_APPR[0]['totalmale_cacao1'] %}
+                        {% set total_coffee = dcf_TOTALMALE_COFFEE_APPR[0]['totalmale_coffee1'] %}
+                        {% set total_coconut = dcf_TOTALMALE_COCONUT_APPR[0]['totalmale_coconut1'] %}
+                        {% set total_pfn = dcf_TOTALMALE_PFN_APPR[0]['totalmale_pfn1'] %}
+                        {% set total_farmers = (total_cacao or 0) + (total_coffee or 0) + (total_coconut or 0) + (total_pfn or 0) %}
+                        <!-- TOTAL MALE_IP (CCCF) -->
+                        {% set total_cacaoIP = dcf_MALEIP_CACAO_APPR[0]['maleip_cacao1'] if dcf_MALEIP_CACAO_APPR else 0 %}
+                        {% set total_coffeeIP = dcf_MALEIP_COFFEE_APPR[0]['maleip_coffee1'] if dcf_MALEIP_COFFEE_APPR else 0 %}
+                        {% set total_coconutIP = dcf_MALEIP_COCONUT_APPR[0]['maleip_coconut1'] if dcf_MALEIP_COCONUT_APPR else 0 %}
+                        {% set total_pfnIP = dcf_MALEIP__PFN_APPR[0]['maleip_pfn1'] if dcf_MALEIP__PFN_APPR else 0 %}
+                        {% set total_farmersIP = (total_cacaoIP or 0)+ (total_coffeeIP or 0) + (total_coconutIP or 0) + (total_pfnIP or 0) %}
+                        <!-- TOTAL MALE_YOUTH (CCCF) -->
+                        {% set total_cacaoYOUTH = dcf_MALEYOUTH_CACAO_APPR[0]['maleyouth_cacao1'] %}
+                        {% set total_coffeeYOUTH = dcf_MALEYOUTH_COFFEE_APPR[0]['maleyouth_coffee1'] %}
+                        {% set total_coconutYOUTH = dcf_MALEYOUTH_COCONUT_APPR[0]['maleyouth_coconut1'] %}
+                        {% set total_pfnYOUTH = dcf_MALEYOUTH_PFN_APPR[0]['maleyouth_pfn1'] %}
+                        {% set total_farmersYOUTH = (total_cacaoYOUTH or 0)+ (total_coffeeYOUTH or 0) + (total_coconutYOUTH or 0) + (total_pfnYOUTH or 0) %}
+                        <!-- TOTAL FEMALE (CCCF) -->
+                        {% set total_cacaoF = dcf_TOTALFEMALE_CACAO_APPR[0]['totalfemale_cacao1'] %}
+                        {% set total_coffeeF = dcf_TOTALFEMALE_COFFEE_APPR[0]['totalfemale_coffee1'] %}
+                        {% set total_coconutF = dcf_TOTALFEMALE_COCONUT_APPR[0]['totalfemale_coconut1'] %}
+                        {% set total_pfnF = dcf_TOTALFEMALE_PFN_APPR[0]['totalfemale_pfn1'] %}
+                        {% set total_farmersF = (total_cacaoF or 0)+ (total_coffeeF or 0) + (total_coconutF or 0) + (total_pfnF or 0) %}
+                        <!-- TOTAL FEMALE_IP (CCCF) -->
+                        {% set total_cacaoFIP = dcf_FEMALEIP_CACAO_APPR[0]['femaleip_cacao1'] %}
+                        {% set total_coffeeFIP = dcf_FEMALEIP_COFFEE_APPR[0]['femaleip_coffee1'] %}
+                        {% set total_coconutFIP = dcf_FEMALEIP_COCONUT_APPR[0]['femaleip_coconut1'] %}
+                        {% set total_pfnFIP = dcf_FEMALEIP_PFN_APPR[0]['femaleip_pfn1'] %}
+                        {% set total_farmersFIP = (total_cacaoFIP or 0) + (total_coffeeFIP or 0) + (total_coconutFIP or 0) + (total_pfnFIP or 0) %}
+                        <!-- TOTAL FEMALE_YOUTH (CCCF) -->
+                        {% set total_cacaoFYOUTH = dcf_FEMALEYOUTH_CACAO_APPR[0]['femaleyouth_cacao1'] %}
+                        {% set total_coffeeFYOUTH = dcf_FEMALEYOUTH_COFFEE_APPR[0]['femaleyouth_coffee1'] %}
+                        {% set total_coconutFYOUTH = dcf_FEMALEYOUTH_COCONUT_APPR[0]['femaleyouth_coconut1'] %}
+                        {% set total_pfnFYOUTH = dcf_FEMALEYOUTH_PFN_APPR[0]['femaleyouth_pfn1'] %}
+                        {% set total_farmersFYOUTH = (total_cacaoFYOUTH or 0) + (total_coffeeFYOUTH or 0) + (total_coconutFYOUTH or 0) + (total_pfnFYOUTH or 0) %}
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Male</td>
+                            <td class="text-center">{{ total_cacao }} ({{ (total_cacao or 0  / total_farmers * 100)|round(2) }}%)</td>
+                            <td class="text-center">{{ total_coffee }} ({{ (total_coffee or 0  / total_farmers * 100)|round(2) }}%)</td>
+                            <td class="text-center">{{ total_coconut }} ({{ (total_coconut or 0  / total_farmers * 100)|round(2) }}%)</td>
+                            <td class="text-center">{{ total_pfn }} ({{ (total_pfn or 0 / total_farmers * 100)|round(2) }}%)</td>
+                            <td class="text-center">{{ total_farmers }} ({{ (( (total_cacao or 0) + (total_coconut or 0) + (total_coffee or 0) + (total_pfn or 0)) / (dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)</td>
+                        </tr>
+                        <tr>
+                            <td>Male IP</td>
+                            <td class="text-center">
+                                {{ total_cacaoIP }} 
+                                {% if total_farmersIP != 0 %}
+                                ({{ (total_cacaoIP / total_farmersIP * 100) | round(2) }}%)
                                 {% else %}
-                                    (N/A%)
+                                (N/A%)
                                 {% endif %}
                             </td>
-                                <td class="text-center">
-                                    {{ total_farmersF }} 
-                                    {% if total_farmersF and dcf_form1male_appr[0]['total_male_appr'] and dcf_form1female_appr[0]['total_female_appr'] and total_cacaoF is not none and total_coconutF is not none and total_coffeeF is not none and total_pfnF is not none %}
-                                        ({{ ((total_cacaoF + total_coconutF + total_coffeeF + total_pfnF) / (dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Female IP</td>
-                                <td class="text-center">
-                                   {{ total_cacaoFIP }}
-                                    {% if total_cacaoFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
-                                        ({{ (total_cacaoFIP or 0 / total_farmersFIP * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}                                
-                                </td>
-                                <td class="text-center">
-                                    {{ total_coffeeFIP }}
-                                    {% if total_coffeeFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
-                                        ({{ (total_coffeeFIP or 0 / total_farmersFIP * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {{ total_coconutFIP }} 
-                                    {% if total_farmersFIP %}
-                                        ({{ (total_coconutFIP or 0 / total_farmersFIP * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {{ total_pfnFIP }}
-                                    {% if total_pfnFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
-                                        ({{ (total_pfnFIP or 0 / total_farmersFIP * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
+                            <td class="text-center">
+                             {{ total_coffeeIP }}
+                             {% if total_coffeeIP is not none and total_farmersIP is not none and total_farmersIP != 0 %}
+                             ({{ (total_coffeeIP / total_farmersIP * 100) | round(2) }}%)
+                             {% else %}
+                             (N/A%)
+                             {% endif %}
+                         </td>
+                         <td class="text-center">
+                            {{ total_coconutIP }} 
+                            {% if total_farmersIP != 0 %}
+                            ({{ (total_coconutIP / total_farmersIP * 100) | round(2) }}%)
+                            {% else %}
+                            (N/A%)
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {{ total_pfnIP }} 
+                            {% if total_farmersIP != 0 %}
+                            ({{ (total_pfnIP / total_farmersIP * 100) | round(2) }}%)
+                            {% else %}
+                            (N/A%)
+                            {% endif %}
+                        </td>
+                        
 
-                                    </td>
-                                    <td class="text-center">
-                                     {{ total_farmersFIP }}
-                                    {% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
-                                       {% set total_crop = 0 %}
-                                    {% if total_cacaoFIP is not none %}
-                                        {% set total_crop = total_crop + total_cacaoFIP %}
-                                    {% endif %}
-                                    {% if total_coconutFIP is not none %}
-                                        {% set total_crop = total_crop + total_coconutFIP %}
-                                    {% endif %}
-                                    {% if total_coffeeFIP is not none %}
-                                        {% set total_crop = total_crop + total_coffeeFIP %}
-                                    {% endif %}
-                                    {% if total_pfnFIP is not none %}
-                                        {% set total_crop = total_crop + total_pfnFIP %}
-                                    {% endif %}
+                        <td class="text-center" role="cell" aria-label="Total Farmers and Percentage">
+                            
 
-                                    {{ total_crop }}
+                            {{ total_farmersYOUTH }}
+                            {% set total_cacao = total_cacaoIP | default(0) %}
+                            {% set total_coconut = total_coconutIP | default(0) %}
+                            {% set total_coffee = total_coffeeIP | default(0) %}
+                            {% set total_pfn = total_pfnIP | default(0) %}
+                            {% set total_youth = (total_cacao or 0 )+ (total_coconut or 0) + (total_coffee or 0) + (total_pfn or 0) %}
+                            {% set total_male_appr = dcf_form1male_appr[0]['total_male_appr'] | default(0) %}
+                            {% set total_female_appr = dcf_form1female_appr[0]['total_female_appr'] | default(0) %}
+                            {% set total_appr = (total_male_appr or 0) + (total_female_appr or 0) %}
+                            {% if total_appr != 0 %}
+                            ({{ (total_youth / total_appr * 100) | round(2) }}%)
+                            {% else %}
+                            (N/A%)
+                            {% endif %}  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Male Youth</td>
+                        <td class="text-center">
+                          {{ total_cacaoYOUTH }}
+                          {% if total_cacaoYOUTH is not none and total_farmersYOUTH is not none and total_farmersYOUTH != 0 %}
+                          ({{ (total_cacaoYOUTH / total_farmersYOUTH * 100) | round(2) }}%)
+                          {% else %}
+                          (N/A%)
+                          {% endif %}
+                      </td>
+                      <td class="text-center">
+                        {{ total_coffeeYOUTH }}
+                        {% if total_farmersYOUTH != 0 %}
+                        ({{ (total_coffeeYOUTH or 0 / total_farmersYOUTH * 100) | round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {{ total_coconutYOUTH }}
+                        {% if total_farmersYOUTH != 0 %}
+                        ({{ (total_coconutYOUTH or 0 / total_farmersYOUTH * 100) | round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {{ total_pfnYOUTH }}
+                        {% if total_farmersYOUTH != 0 %}
+                        ({{ (total_pfnYOUTH or 0 / total_farmersYOUTH * 100) | round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {{ total_farmersYOUTH }}
+                        {% set total_cacao = total_cacaoYOUTH | default(0) %}
+                        {% set total_coconut = total_coconutYOUTH | default(0) %}
+                        {% set total_coffee = total_coffeeYOUTH | default(0) %}
+                        {% set total_pfn = total_pfnYOUTH | default(0) %}
+                        {% set total_youth = (total_cacao or 0 )+ (total_coconut or 0) + (total_coffee or 0) + (total_pfn or 0) %}
+                        {% set total_male_appr = dcf_form1male_appr[0]['total_male_appr'] | default(0) %}
+                        {% set total_female_appr = dcf_form1female_appr[0]['total_female_appr'] | default(0) %}
+                        {% set total_appr = (total_male_appr or 0) + (total_female_appr or 0) %}
+                        {% if total_appr != 0 %}
+                        ({{ (total_youth / total_appr * 100) | round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}                                
+                    </td>
+                </tr>
+                <tr>
+                    <td>Female</td>
+                    <td class="text-center">
+                        {{ total_cacaoF }} 
+                        {% if total_cacaoF is not none and total_farmersF is not none and total_farmersF != 0 %}
+                        ({{ (total_cacaoF / total_farmersF * 100)|round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {{ total_coffeeF }} 
+                        {% if total_farmersF %}
+                        ({{ (total_coffeeF or 0 / total_farmersF * 100)|round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {{ total_coconutF }} 
+                        {% if total_farmersF %}
+                        ({{ (total_coconutF or 0 / total_farmersF * 100)|round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {{ total_pfnF }} 
+                        {% if total_pfnF is not none and total_farmersF is not none and total_farmersF != 0 %}
+                        ({{ (total_pfnF / total_farmersF * 100)|round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {{ total_farmersF }} 
+                        {% if total_farmersF and dcf_form1male_appr[0]['total_male_appr'] and dcf_form1female_appr[0]['total_female_appr'] and total_cacaoF is not none and total_coconutF is not none and total_coffeeF is not none and total_pfnF is not none %}
+                        ({{ ((total_cacaoF + total_coconutF + total_coffeeF + total_pfnF) / (dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr']) * 100)|round(2) }}%)
+                        {% else %}
+                        (N/A%)
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Female IP</td>
+                    <td class="text-center">
+                     {{ total_cacaoFIP }}
+                     {% if total_cacaoFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+                     ({{ (total_cacaoFIP or 0 / total_farmersFIP * 100)|round(2) }}%)
+                     {% else %}
+                     (N/A%)
+                     {% endif %}                                
+                 </td>
+                 <td class="text-center">
+                    {{ total_coffeeFIP }}
+                    {% if total_coffeeFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+                    ({{ (total_coffeeFIP or 0 / total_farmersFIP * 100) | round(2) }}%)
+                    {% else %}
+                    (N/A%)
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {{ total_coconutFIP }} 
+                    {% if total_farmersFIP %}
+                    ({{ (total_coconutFIP or 0 / total_farmersFIP * 100)|round(2) }}%)
+                    {% else %}
+                    (N/A%)
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {{ total_pfnFIP }}
+                    {% if total_pfnFIP is not none and total_farmersFIP is not none and total_farmersFIP != 0 %}
+                    ({{ (total_pfnFIP or 0 / total_farmersFIP * 100) | round(2) }}%)
+                    {% else %}
+                    (N/A%)
+                    {% endif %}
 
-                                    {% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
-                                        {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
-                                        {% if total_approvers != 0 %}
-                                            ({{ (total_crop or 0 / total_approvers * 100) | round(2) }}%)
-                                        {% else %}
-                                            (N/A%)
-                                        {% endif %}
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                        {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
-                                        {% if total_approvers != 0 %}
-                                            ({{ (total_crop or 0 / total_approvers * 100) | round(2) }}%)
-                                        {% else %}
-                                            (N/A%)
-                                        {% endif %}
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                                                
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Female Youth</td>
-                                <td class="text-center">
-                                   {{ total_cacaoFYOUTH }}
-                                    {% if total_cacaoFYOUTH is not none and total_farmersFYOUTH is not none and total_farmersFYOUTH != 0 %}
-                                        ({{ (total_cacaoFYOUTH or 0/ total_farmersFYOUTH * 100) | round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {{ total_coffeeFYOUTH }} 
-                                    {% if total_farmersFYOUTH %}
-                                        ({{ (total_coffeeFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {{ total_coconutFYOUTH }} 
-                                    {% if total_farmersFYOUTH %}
-                                        ({{ (total_coconutFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {{ total_pfnFYOUTH }} 
-                                    {% if total_farmersFYOUTH %}
-                                        ({{ (total_pfnFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
-                                    {% else %}
-                                        (N/A%)
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {{ total_farmersFYOUTH }}
-{% if total_farmersFYOUTH is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
-    {% set total_crop = (total_cacaoFYOUTH or 0) + (total_coconutFYOUTH or 0) + (total_coffeeFYOUTH or 0) + (total_pfnFYOUTH or 0) %}
-    {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
-    {% if total_approvers != 0 %}
-        ({{ (total_crop / total_approvers * 100) | round(2) }}%)
-    {% else %}
-        (N/A%)
-    {% endif %}
-{% else %}
-    (N/A%)
-{% endif %}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                </td>
+                <td class="text-center">
+                   {{ total_farmersFIP }}
+                   {% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
+                   {% set total_crop = 0 %}
+                   {% if total_cacaoFIP is not none %}
+                   {% set total_crop = total_crop + total_cacaoFIP %}
+                   {% endif %}
+                   {% if total_coconutFIP is not none %}
+                   {% set total_crop = total_crop + total_coconutFIP %}
+                   {% endif %}
+                   {% if total_coffeeFIP is not none %}
+                   {% set total_crop = total_crop + total_coffeeFIP %}
+                   {% endif %}
+                   {% if total_pfnFIP is not none %}
+                   {% set total_crop = total_crop + total_pfnFIP %}
+                   {% endif %}
+
+                   {{ total_crop }}
+
+                   {% if total_farmersFIP is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
+                   {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
+                   {% if total_approvers != 0 %}
+                   ({{ (total_crop or 0 / total_approvers * 100) | round(2) }}%)
+                   {% else %}
+                   (N/A%)
+                   {% endif %}
+                   {% else %}
+                   (N/A%)
+                   {% endif %}
+                   {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
+                   {% if total_approvers != 0 %}
+                   ({{ (total_crop or 0 / total_approvers * 100) | round(2) }}%)
+                   {% else %}
+                   (N/A%)
+                   {% endif %}
+                   {% else %}
+                   (N/A%)
+                   {% endif %}
+                   
+               </td>
+           </tr>
+           <tr>
+            <td>Female Youth</td>
+            <td class="text-center">
+             {{ total_cacaoFYOUTH }}
+             {% if total_cacaoFYOUTH is not none and total_farmersFYOUTH is not none and total_farmersFYOUTH != 0 %}
+             ({{ (total_cacaoFYOUTH or 0/ total_farmersFYOUTH * 100) | round(2) }}%)
+             {% else %}
+             (N/A%)
+             {% endif %}
+         </td>
+         <td class="text-center">
+            {{ total_coffeeFYOUTH }} 
+            {% if total_farmersFYOUTH %}
+            ({{ (total_coffeeFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
+            {% else %}
+            (N/A%)
+            {% endif %}
+        </td>
+        <td class="text-center">
+            {{ total_coconutFYOUTH }} 
+            {% if total_farmersFYOUTH %}
+            ({{ (total_coconutFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
+            {% else %}
+            (N/A%)
+            {% endif %}
+        </td>
+        <td class="text-center">
+            {{ total_pfnFYOUTH }} 
+            {% if total_farmersFYOUTH %}
+            ({{ (total_pfnFYOUTH or 0 / total_farmersFYOUTH * 100)|round(2) }}%)
+            {% else %}
+            (N/A%)
+            {% endif %}
+        </td>
+        <td class="text-center">
+            {{ total_farmersFYOUTH }}
+            {% if total_farmersFYOUTH is not none and dcf_form1male_appr[0]['total_male_appr'] is not none and dcf_form1female_appr[0]['total_female_appr'] is not none %}
+            {% set total_crop = (total_cacaoFYOUTH or 0) + (total_coconutFYOUTH or 0) + (total_coffeeFYOUTH or 0) + (total_pfnFYOUTH or 0) %}
+            {% set total_approvers = dcf_form1male_appr[0]['total_male_appr'] + dcf_form1female_appr[0]['total_female_appr'] %}
+            {% if total_approvers != 0 %}
+            ({{ (total_crop / total_approvers * 100) | round(2) }}%)
+            {% else %}
+            (N/A%)
+            {% endif %}
+            {% else %}
+            (N/A%)
+            {% endif %}
+        </td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="col-md-12 col-sm-12 bg-white">
+    <div class="x_content">
+        <div class="top_tiles">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div class="count _money_tag" style="color:#00becc;">{{dcf1_IP_apprfm[0]['total_IP_appr']}}</div>
+                        <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>IP Farmers (Male+Female)</b>  in the <b>Coconut</b> approved DIPs.</p>
+                        <p> &nbsp&nbsp </p>
+                        
                     </div>
                 </div>
-            </div>
-        </div>
 
 
-
-                <div class="col-md-12 col-sm-12 bg-white">
-            <div class="x_content">
-                <div class="top_tiles">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <div class="tile-stats" style="margin-bottom: 10px;">
-                                <div class="count _money_tag" style="color:#00becc;">{{dcf1_IP_apprfm[0]['total_IP_appr']}}</div>
-                                <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>IP Farmers (Male+Female)</b>  in the <b>Coconut</b> approved DIPs.</p>
-                                <p> &nbsp&nbsp </p>
-                              
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <div class="tile-stats" style="margin-bottom: 10px;">
-                                <div class="count _money_tag" style="color:#00becc;">{{dcf1_youth_apprfm[0]['total_youth_appr']}}</div>
-                                <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>YOUTH Farmers (Male+Female)</b>  in the <b>Coconut</b> approved DIPs.</p>
-                                <p> &nbsp&nbsp </p>
-                               
-                            </div>
-                        </div>
-
-                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <div class="tile-stats" style="margin-bottom: 10px;">
-                                <div class="count _money_tag" style="color:#00becc;">{{dcf1_IP_apprfmcoffee[0]['total_IP_apprcoffee']}}</div>
-                                <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>IP Farmers (Male+Female)</b>  in the <b>Coffee</b> approved DIPs.</p>
-                                <p> &nbsp&nbsp </p>
-                               
-                            </div>
-                        </div>
-
-                         <div class="col-lg-3 col-md-3 col-sm-3">
-                            <div class="tile-stats" style="margin-bottom: 10px;">
-                                <div class="count _money_tag" style="color:#00becc;">{{dcf1_youth_apprfmcoffee[0]['total_youth_apprcoffee']}}</div>
-                                <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>YOUTH Farmers (Male+Female)</b>  in the <b>Coffee</b> approved DIPs.</p>
-                                <p> &nbsp&nbsp </p>
-                               
-                            </div>
-                        </div>
-
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div class="count _money_tag" style="color:#00becc;">{{dcf1_youth_apprfm[0]['total_youth_appr']}}</div>
+                        <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>YOUTH Farmers (Male+Female)</b>  in the <b>Coconut</b> approved DIPs.</p>
+                        <p> &nbsp&nbsp </p>
+                        
                     </div>
                 </div>
 
-
-            </div>
-        </div>
-        
-      <div class="clearfix"></div>
-
-
-
-
-
-        <div class="clearfix"></div>
-        <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
-        </div>
-        <div class="x_title">
-        <span style="font-size: 18px; color: #73879C;">Farming households participating in Approved Detailed Investment Plans (DIPs) by region</span>
-        </div>
-
-          <div class="col-md-6 col-sm-6">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Number of DIPs per commodity by region <small>Bar Chart</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Settings 1</a>
-                                    <a class="dropdown-item" href="#">Settings 2</a>
-                                </div>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <canvas id="mybarChartStacked2"></canvas>
-                        <div style="text-align: center;">
-                            <p>
-                                <i class="fa fa-square" style="color:#99e6ff "></i> Approved: {{'{:,}'.format ( (dcf1_TSHF_8_APPR[0]['tshf_8_appr1'] or 0) + (dcf1_TSHF_9_APPR[0]['tshf_9_appr1'] or 0) + (dcf1_TSHF_10_APPR[0]['tshf_10_appr1'] or 0) + (dcf1_TSHF_11_APPR[0]['tshf_11_appr1'] or 0) + (dcf1_TSHF_12_APPR[0]['tshf_12_appr1'] or 0) + (dcf1_TSHF_13_APPR[0]['tshf_13_appr1'] or 0) + (dcf1_TSHF_BARMM_APPR[0]['tshf_barmm_appr1'] or 0) )}} &nbsp;&nbsp;&nbsp;
-                                <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i> Pipeline: {{'{:,}'.format ( (dcf1_TSHF_8_PIPELINE[0]['tshf_8_pipeline1'] or 0) + (dcf1_TSHF_9_PIPELINE[0]['tshf_9_pipeline1'] or 0) + (dcf1_TSHF_10_PIPELINE[0]['tshf_10_pipeline1'] or 0) + (dcf1_TSHF_11_PIPELINE[0]['tshf_11_pipeline1'] or 0) + (dcf1_TSHF_12_PIPELINE[0]['tshf_12_pipeline1'] or 0) + (dcf1_TSHF_13_PIPELINE[0]['tshf_13_pipeline1'] or 0) + (dcf1_TSHF_BARMM_PIPELINE[0]['tshf_barmm_pipeline1'] or 0) )}}&nbsp;&nbsp;&nbsp;
-                                <i class="fa fa-square" style="color:#0099cc "></i> Ongoing: {{'{:,}'.format ( (dcf1_TSHF_8_ONGOING[0]['tshf_8_ongoing1'] or 0) + (dcf1_TSHF_9_ONGOING[0]['tshf_9_ongoing1'] or 0) + (dcf1_TSHF_10_ONGOING[0]['tshf_10_ongoing1'] or 0) + (dcf1_TSHF_11_ONGOING[0]['tshf_11_ongoing1'] or 0) + (dcf1_TSHF_12_ONGOING[0]['tshf_12_ongoing1'] or 0) + (dcf1_TSHF_13_ONGOING[0]['tshf_13_ongoing1'] or 0) + (dcf1_TSHF_BARMM_ONGOING[0]['tshf_barmm_ongoing1'] or 0) )}} &nbsp;&nbsp;&nbsp;
-                               
-                            </p>
-                        </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div class="count _money_tag" style="color:#00becc;">{{dcf1_IP_apprfmcoffee[0]['total_IP_apprcoffee']}}</div>
+                        <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>IP Farmers (Male+Female)</b>  in the <b>Coffee</b> approved DIPs.</p>
+                        <p> &nbsp&nbsp </p>
+                        
                     </div>
                 </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="tile-stats" style="margin-bottom: 10px;">
+                        <div class="count _money_tag" style="color:#00becc;">{{dcf1_youth_apprfmcoffee[0]['total_youth_apprcoffee']}}</div>
+                        <p style="font-size: 17px; margin-left: 10px;" class="titlecard"><i class=></i>Total number <b>YOUTH Farmers (Male+Female)</b>  in the <b>Coffee</b> approved DIPs.</p>
+                        <p> &nbsp&nbsp </p>
+                        
+                    </div>
+                </div>
+
             </div>
-
-      <div class="clearfix"></div>
-
-
-
+        </div>
 
 
     </div>
-  </div>
+</div>
+
+<div class="clearfix"></div>
+
+
+
+
+
+<div class="clearfix"></div>
+<div class="x_title">
+    <span style="font-size: 18px; color: #73879C;"> &nbsp; </span>
+</div>
+<div class="x_title">
+    <span style="font-size: 18px; color: #73879C;">Farming households participating in Approved Detailed Investment Plans (DIPs) by region</span>
+</div>
+
+<div class="col-md-6 col-sm-6">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Number of DIPs per commodity by region <small>Bar Chart</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <canvas id="mybarChartStacked2"></canvas>
+            <div style="text-align: center;">
+                <p>
+                    <i class="fa fa-square" style="color:#99e6ff "></i> Approved: {{'{:,}'.format ( (dcf1_TSHF_8_APPR[0]['tshf_8_appr1'] or 0) + (dcf1_TSHF_9_APPR[0]['tshf_9_appr1'] or 0) + (dcf1_TSHF_10_APPR[0]['tshf_10_appr1'] or 0) + (dcf1_TSHF_11_APPR[0]['tshf_11_appr1'] or 0) + (dcf1_TSHF_12_APPR[0]['tshf_12_appr1'] or 0) + (dcf1_TSHF_13_APPR[0]['tshf_13_appr1'] or 0) + (dcf1_TSHF_BARMM_APPR[0]['tshf_barmm_appr1'] or 0) )}} &nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i> Pipeline: {{'{:,}'.format ( (dcf1_TSHF_8_PIPELINE[0]['tshf_8_pipeline1'] or 0) + (dcf1_TSHF_9_PIPELINE[0]['tshf_9_pipeline1'] or 0) + (dcf1_TSHF_10_PIPELINE[0]['tshf_10_pipeline1'] or 0) + (dcf1_TSHF_11_PIPELINE[0]['tshf_11_pipeline1'] or 0) + (dcf1_TSHF_12_PIPELINE[0]['tshf_12_pipeline1'] or 0) + (dcf1_TSHF_13_PIPELINE[0]['tshf_13_pipeline1'] or 0) + (dcf1_TSHF_BARMM_PIPELINE[0]['tshf_barmm_pipeline1'] or 0) )}}&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-square" style="color:#0099cc "></i> Ongoing: {{'{:,}'.format ( (dcf1_TSHF_8_ONGOING[0]['tshf_8_ongoing1'] or 0) + (dcf1_TSHF_9_ONGOING[0]['tshf_9_ongoing1'] or 0) + (dcf1_TSHF_10_ONGOING[0]['tshf_10_ongoing1'] or 0) + (dcf1_TSHF_11_ONGOING[0]['tshf_11_ongoing1'] or 0) + (dcf1_TSHF_12_ONGOING[0]['tshf_12_ongoing1'] or 0) + (dcf1_TSHF_13_ONGOING[0]['tshf_13_ongoing1'] or 0) + (dcf1_TSHF_BARMM_ONGOING[0]['tshf_barmm_ongoing1'] or 0) )}} &nbsp;&nbsp;&nbsp;
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+
+
+
+
+</div>
+</div>
 </div>

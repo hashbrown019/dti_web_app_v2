@@ -101,4 +101,24 @@ class templates:
 		self.app.jinja_env.filters['cpa_status'] = templates.cpa_status
 		self.app.jinja_env.filters['get_cpa'] = templates.get_cpa
 		self.app.jinja_env.filters['trancuate_text'] = templates.trancuate_text
-	# Register the custom filter on the Flask application
+	# Register the custom filter on the Flask application\
+
+	#
+	# Plans 
+	# 	- Hire a IT (2)
+	# 	- Train It in to Months
+	#	- Discuss Pending MIS task
+	#	- Prepare 2 month Turnover Plan
+
+	# Things to Turn-over
+	# 	- Rapid Properties
+	# 	- Credentials
+	# 		- Server Key
+	# 		- Server access
+	# 		- Server Permission
+	# 	- Source Code
+	# 		- Github Repositories
+	# 		- Database Credentials
+	# 		- Code Documentation
+	#
+
