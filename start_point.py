@@ -23,6 +23,8 @@ from views.fund_tracker  import bp_app as fund_tracker
 # from views.dcf  import bp_app as dcf
 from views.dcfv2  import bp_app as dcfv2
 from views.npco_act_tracker  import npco_track as npco_tracker
+from views.form_a_v2 import main_backend as a_v2
+
 from views.fmi  import bp_app as fmi
 
 from views._tests_  import bp_app as test
@@ -58,6 +60,7 @@ app.register_blueprint(npco_tracker.app);
 app.register_blueprint(dcfv2.app);
 app.register_blueprint(fmi.app);
 app.register_blueprint(test.app);
+app.register_blueprint(a_v2.app);
 
 templates(app).init()
 
