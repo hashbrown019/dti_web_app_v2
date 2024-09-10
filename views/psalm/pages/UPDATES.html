@@ -1,0 +1,44 @@
+<script type="text/javascript">
+	$onload(profiling_update_modal)
+  	function profiling_update_modal(){
+		// swal.fire({
+		// 	title:"Module Update Soon",
+		// 	text: `
+		// 		Profiling Forms will have a huge update on September 12-13 <br>
+		// 		At this time, profiling forms may accessible for VIEWING Only 
+
+		// 	`,
+		// 	icon: "warning"
+		// })
+  		var update_dialog = $dialog({
+  			title : "Module Update Coming Soon",
+  			subtitle : "Some Module May not be available during update",
+  			type : "done",
+  			content : (`
+  				<span>
+  				Profiling Forms will have a huge update on September 12-13 <br>
+		 		At this time, profiling forms may accessible for <i>VIEWING Only</i> 
+		 		</span>
+		 		<hr>
+		 		<b>Bug/Error Fixes during the upcoming update: <br></b>
+		 		<span class='fa fa-bug'></span> Data Traffic (Error 504*5*6)  <br>
+		 		<span class='fa fa-bug'></span> Missing Data // Data uploaded/encode not displaying  <br>
+		 		<span class='fa fa-bug'></span> Profiling and DCF Export/Import Errors  <br>
+		 		<span class='fa fa-bug'></span> Data Integration between Profiling Forms and Data Capture Forms  <br>
+		 		<span class='fa fa-bug'></span> Backend-end fixes <br>
+		 		<span class='fa fa-bug'></span> UI/UX Front-end fixes <br>
+		 		<span class='fa fa-bug'></span> Data entry Audit <br>
+		 		<hr>
+		 		These Updates where based on the previous re-occurring bugs, errors and challenges discussed and raised during the previous M&E Sessions,
+		 		<hr>
+		 		Updates are deployed as package (All fixes are deployed all at once) instead of Patches (One update per fix per issue)
+		 		<hr>
+				<img src="../static/img/ERROR_CAT.gif" style="width:30%;height:auto">
+  			`),
+  			footer_content : "Thank you for your patience"
+  		})
+  		update_dialog.dialog.style.width='40%'
+		update_dialog.show()		
+  	}
+
+</script>
