@@ -190,12 +190,12 @@ class user_management:
 		msg = "on process"
 		if(user_management.is_on_session()):
 			prof_a_e = len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a` WHERE `user_id` = '{}';".format(user_id)))
-			prof_a = len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id)))
+			# prof_a = len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id)))
 
 			try:
 				data['profiling_a'] = {
 				'total' : len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a`;")) + len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles`;")),
-				'inputed':int(prof_a_e) + int(prof_a)
+				'inputed':int(prof_a_e)
 				}
 			except:pass
 			try:
@@ -303,10 +303,10 @@ class user_management:
 				user_id = user['id']
 				print(user['name'])
 				prof_a_e =rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `excel_import_form_a` WHERE `user_id` = '{}';".format(user_id))[0]['count']
-				prof_a =rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
+				# prof_a =rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
 				data[user['name'] ] = {}
 				total_input_all = 0
-				total_input_all += int(prof_a_e) + int(prof_a)
+				total_input_all += int(prof_a_e)
 				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_b` WHERE `uploaded_by` = '{}';".format(user_id))[0]['count']
 				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_c` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
 				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
