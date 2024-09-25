@@ -64,6 +64,14 @@ class _main:
 		return render_template("feature_0_home.html",USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
 
 
+	@app.route("/profiling_form_a/e",methods=["POST","GET"])
+	@c.login_auth_web()
+	def profiling_form_a():
+		# return render_template("SITE_OFF.html") # MAINTENANCE
+		Filter.position_data_filter() # initialize restrictions
+		return render_template("embed_a.html",page=request.args['page'],USER_DATA = session["USER_DATA"][0], dash_data_=_main.dashboard_home_sql_driven())
+
+
 
 	@c.login_auth_web()
 	@app.route("/settings",methods=["POST","GET"])

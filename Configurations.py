@@ -72,7 +72,8 @@ _DATABASE = "not initialized";
 
 # =======for login auth===================================
 login_auth_web = None
-
+jinja_func = None
+FLASK_APP = None
 
 
 # =====Data CLEANING===========================================================

@@ -1,0 +1,28 @@
+<div class="pagetitle">
+	<h1>My Forms</h1>
+	<nav>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+			<li class="breadcrumb-item active">Personal</li>
+			<li class="breadcrumb-item active">My Forms</li>
+		</ol>
+	</nav>
+</div>
+		<!-- End Page Title -->
+
+
+{% if 'form-add' in URL_ARGS%}
+	{% include '/chunks/personal-forms/personal-forms-add-page.html'%}
+{% else %}
+
+	<!-- Left side columns -->
+	{% include '/chunks/personal-forms/personal-forms-main-content.html'%}
+	<!-- End Left side columns -->
+
+	<!-- Right side columns -->
+	{% include '/chunks/personal-forms/personal-forms-sub-left-content.html'%}
+	{% include '/chunks/personal-forms/personal-forms-modal-add-form.html'%}
+
+{% endif %}
+<!-- End Right side columns -->
+

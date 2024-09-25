@@ -1,0 +1,207 @@
+
+
+<section class="section">
+	<div class="row">
+		<div class="col-lg-6">
+
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Form Information</h5>
+					<form>
+						<div class="row mb-3">
+							<label class="col-sm-2 col-form-label">Floating labels</label>
+							<div class="col-sm-10">
+								<div class="form-floating mb-3">
+									<input type="text" class="FORM_DETAILS form-control" id="form_name" onkeyup="set_f_info(this)">
+									<label for="form_name">Form Name</label>
+								</div>
+								<div class="form-floating mb-3">
+									<textarea class="FORM_DETAILS form-control" placeholder="Leave a comment here" id="form_desc" onkeyup="set_f_info(this)" style="height: 100px;"></textarea>
+									<label for="form_desc">Form Description</label>
+								</div>
+								<div class="form-floating mb-3">
+									<select class="FORM_DETAILS form-select" id="form_nature" aria-label="Floating label select example">
+										<option value="form" selected>Form Only</option>
+										<option value="tracker">Tracker</option>
+									</select>
+									<label for="form_nature">Form Nature</label>
+								</div>
+								<div class="form-floating mb-3">
+									<select class="FORM_DETAILS form-select" id="form_access" aria-label="Floating label select example">
+										<option value="open" selected>Open to anyone</option>
+										<option value="mis_account">For MIS accounts only</option>
+									</select>
+									<label for="form_access">Accessibility</label>
+								</div>
+								<div class="form-floating mb-3">
+									<select class="FORM_DETAILS form-select" id="form_shareable" aria-label="Floating label select example">
+										<option value="open" selected>Any can use this form</option>
+										<option value="private">For Personal Usage</option>
+									</select>
+									<label for="form_shareable">Form Share</label>
+								</div>
+								<div class="form-floating mb-3">
+									<select class="FORM_DETAILS form-select" id="form_group" aria-label="Floating label select example">
+										<option value="all">Generic</option>
+										<option value="pf">Profiling Forms</option>
+										<option value="dcf">Data Capture Forms</option>
+										<option value="km">Knowledge Management</option>
+										<option value="fin">Finance</option>
+										<option value="proc">Procurement</option>
+									</select>
+									<label for="form_group">Form Group</label>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- ========================================= -->
+					<hr>
+					<h5 class="card-title">General Form Elements</h5>
+					<form>
+						<div class="row mb-3">
+							<label for="" class="col-sm-2 col-form-label">Field Name</label>
+							<div class="col-sm-10">
+								<input id="field_name" name="field_name" type="text" class="TEMPLATE_FILEDS form-control" onkeyup="set_f_id(this.value)" value="First Field-Name">
+							</div>
+						</div>
+						<script type="text/javascript">
+							function set_f_id(val){
+								$ID('field_id').value = val.toLowerCase().replace(/[^a-zA-Z ]/g, "").replaceAll(" ","")
+							}
+							$onload(function(){set_f_id($ID('field_name').value)})
+							
+						</script>
+						<div class="row mb-3">
+							<label for="" class="col-sm-2 col-form-label">Field ID</label>
+							<div class="col-sm-10">
+								<input id="field_id" name="field_id" type="text" class="TEMPLATE_FILEDS form-control" onkeyup="set_f_id(this.value)">
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="" class="col-sm-2 col-form-label">Field Type</label>
+							<div class="col-sm-10">
+								<select id="field_type" name="field_type" class="TEMPLATE_FILEDS form-control" onchange="set_f_settings(this.value)">
+									<option value="sdv">Self Defined Values (Manual Input)</option>
+									<option value="ds">Defined Selection (Dropdown)</option>
+									<option value="db">From Databases (Dropdown)</option>
+								</select>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="" class="col-sm-2 col-form-label">Field Data</label>
+							<div class="col-sm-10">
+								<select id="field_datatype" name="field_datatype" class="TEMPLATE_FILEDS form-control">
+									<option value="text">Text</option>
+									<option value="number">Number/Currency</option>
+									<option value="date">Date</option>
+									<option value="time">time</option>
+								</select>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="" class="col-sm-2 col-form-label">Field Selection</label>
+							<div class="col-sm-10">
+								<input id="field_selection" name="field_selection" type="text" class="TEMPLATE_FILEDS form-control" placeholder="selection1,selection2, ... ,selectionN" disabled>
+							</div>
+						</div>
+						<button type="button" class="btn btn-primary" onclick="add_to_template()">Add to preview Template</button>
+					</form><!-- End General Form Elements -->
+					<script type="text/javascript">
+
+						function set_f_settings(val){
+							if(val=="sdv"){
+								$ID('field_datatype').disabled = 0
+								$ID('field_datatype').value = 'text'
+								$ID('field_selection').disabled = 1
+								$ID('field_selection').value = ""
+							}else{
+								$ID('field_selection').disabled = 0
+								$ID('field_datatype').value = 'text'
+								$ID('field_datatype').disabled = 1
+								$ID('field_selection').value = ""
+							}
+						}
+						function add_to_template(){
+							var temp_data = input_to_json('TEMPLATE_FILEDS')
+							var field_holder = (`
+							<div class="form-floating mb-3">
+								||IF_TYPE|| 
+								<a class='btn text-primary' onclick="this.parentNode.innerHTML = '';">remove <span class='x-tiny'>(this is not be shown on your form)</span></a>
+								<label for="floatingSelect">${temp_data['field_name']}</label>
+							</div>
+							`)
+							var i_type = ""
+							if(temp_data['field_type']=='sdv'){
+								i_type = (`<input id="${temp_data['field_id']}" name="${temp_data['field_id']}" type="${temp_data['field_datatype']}" class="form-control" id="floatingInput">`)
+							}else{
+								var _sel = temp_data['field_selection'].split(",");var opt = ""
+								for (var i = 0; i < _sel.length; i++) {
+									opt += (`<option>${_sel[i]}</option>`)
+								}
+								i_type = (`
+									<select class="form-select" id="${temp_data['field_id']}" name="${temp_data['field_id']}">
+										${opt}
+									</select>
+								`)
+							}
+							$ID('form_preview').innerHTML += field_holder.replaceAll('||IF_TYPE||',i_type)
+						}
+					</script>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-lg-6" >
+
+			<div id="save_form_holder">
+				
+				<div class="card">
+					<div class="card-body">
+						<h5 id="form_name_f" class="card-title">Form Title (Preview)</h5>
+						<p id="form_desc_f">This part describes the form you will create</p>
+						<!-- Advanced Form Elements -->
+						<form id="form_preview">
+						</form>
+						<!-- End General Form Elements -->
+
+					</div>
+				</div>
+			</div>
+			<div class="x-padding">
+				<button class="btn btn-primary" onclick="create_template_save($ID('save_form_holder'))">
+					save Template
+				</button>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function create_template_save(template){
+			var form_details = input_to_json('FORM_DETAILS')
+			var gen_form = {
+					"user_id":"{{USER_DATA['id']}}",
+					"form_code" : `${generate_code(40)}`,
+					"form_design" : template.innerHTML.replaceAll("\n","").replaceAll("\t","").replaceAll('"',"~")
+				}
+
+			for (key in gen_form){
+				form_details[key] = gen_form[key]
+			}
+
+			println(form_details)
+			$send({
+				action : "/mis-v4/personal-forms/save-temp",
+				data : $DATA(form_details),
+				methood : POST,
+				func : function (r){
+					var res = JSON.parse(r)
+					println(res)
+				}
+			})
+		}
+
+		function set_f_info(elem){
+			$ID(elem.id+"_f").innerHTML = elem.value 
+		}
+	</script>
+</section>

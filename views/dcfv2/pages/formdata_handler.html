@@ -145,31 +145,36 @@
 	var value_to_add = {}
 
 	function set_multi_table_row(){
-		println(Object.keys(button_to_click).length)
-		println("button_to_click.length")
-		var _len_iter = (value_to_add[Object.keys(value_to_add)[0]])
-		if(Object.keys(button_to_click).length==0){
-			for (let index = 0; index < _len_iter.length-1; index++) {
-				button_to_click.click()
-			// println(index)
-			} 
-		}else{
-			for(keys in button_to_click){
+		// println(Object.keys(button_to_click).length)
+		try{
+			println("button_to_click.length")
+			var _len_iter = (value_to_add[Object.keys(value_to_add)[0]])
+			if(Object.keys(button_to_click).length==0){
 				for (let index = 0; index < _len_iter.length-1; index++) {
-					button_to_click[keys].click()
+					button_to_click.click()
 				// println(index)
 				} 
+			}else{
+				for(keys in button_to_click){
+					for (let index = 0; index < _len_iter.length-1; index++) {
+						button_to_click[keys].click()
+					// println(index)
+					} 
+				}
+			}
+
+
+
+			for(key in value_to_add){
+				var _val = (value_to_add[key])
+				for (let index = 0; index < _val.length; index++) {
+					const data_value = _val[index];
+					$ID(key+"_kapown_"+index).value = data_value
+				}
 			}
 		}
-
-
-
-		for(key in value_to_add){
-			var _val = (value_to_add[key])
-			for (let index = 0; index < _val.length; index++) {
-				const data_value = _val[index];
-				$ID(key+"_kapown_"+index).value = data_value
-			}
+		catch(e){
+			warnprintln(e)
 		}
 	}
 

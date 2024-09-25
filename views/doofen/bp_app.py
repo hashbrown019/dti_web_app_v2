@@ -38,6 +38,11 @@ def dashboard():
 	return dashboardv2()
 	# return render_template('index.html',USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
 
+@app.route("/formbembed/e",methods=["GET"])
+@c.login_auth_web()
+def embed():
+	return render_template('embed_b.html',page=request.args['page'],USER_DATA=session["USER_DATA"][0],num_fo_sex=get_num_fo_sex())
+
 @app.route("/formb/dashboardv2")
 @c.login_auth_web()
 def dashboardv2():

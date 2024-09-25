@@ -257,7 +257,6 @@ class _main:
 		key = [];val = [];args=""
 		data["USER_ID"] = session["USER_DATA"][0]['id']
 
-
 		__f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
 		data["file_name"] = __f["file_arr_str"]
 
@@ -430,6 +429,18 @@ class _main:
 			forum = db.select("SELECT `webrep_forum_topics`.*, `users`.`name` as 'uploader', `users`.`profilepic`, `users`.`job` FROM `webrep_forum_topics` INNER JOIN `users` ON `webrep_forum_topics`.`created_by`= `users`.`id` WHERE `webrep_forum_topics`.`id`='{}';".format(f_id))
 			return render_template(
 				'forum/forum_discussion.html',
+				USER_DATA = session['USER_DATA'][0],
+				forum = forum[0]
+			)
+		else:
+			return redirect("/login?force_url=1")
+
+	@app.route("/embed_forum_talks/<f_id>",methods=["POST","GET"])
+	def embed_forum_talks(f_id):
+		if(_main.is_on_session()):
+			forum = db.select("SELECT `webrep_forum_topics`.*, `users`.`name` as 'uploader', `users`.`profilepic`, `users`.`job` FROM `webrep_forum_topics` INNER JOIN `users` ON `webrep_forum_topics`.`created_by`= `users`.`id` WHERE `webrep_forum_topics`.`id`='{}';".format(f_id))
+			return render_template(
+				'forum/embed_forum.html',
 				USER_DATA = session['USER_DATA'][0],
 				forum = forum[0]
 			)

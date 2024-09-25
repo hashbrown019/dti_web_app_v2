@@ -20,6 +20,11 @@ class _main:
 
 	def is_on_session(): return ('USER_DATA' in session)
 
+	@app.route("/logintest",methods=["POST","GET"])
+	def logintest():
+		return render_template("loginv4.html")
+
+
 	@app.route("/login",methods=["POST","GET"])
 	def login():
 		_attemp =""
@@ -40,7 +45,7 @@ class _main:
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		# return render_template("login_v2.html")
 		if(_main.is_on_session()):
-			return redirect("/menuv2")
+			return redirect("/mis-v4/core-main")
 		else:
 			return _main.nlog()
 
@@ -52,7 +57,8 @@ class _main:
 	@app.route("/nlog",methods=["POST","GET"])
 	def nlog():
 		# return render_template("SITE_OFF.html") # MAINTENANCE
-		return render_template("loginv3.html",DB_STAT=c.DB_CRED[3])
+		return render_template("loginv4.html",DB_STAT=c.DB_CRED[3])
+		# return render_template("loginv3.html",DB_STAT=c.DB_CRED[3])
 		# return render_template("loginv2.html",DB_STAT=c.DB_CRED[3])
 
 
@@ -81,13 +87,21 @@ class _main:
 			log_res[0]['password'] = "********";
 			log_res[0]["PRIV_TYPE"] = priv_type
 			session["USER_DATA"] = log_res
-			return jsonify({"success":True,"user":session["USER_DATA"]});
+			print(session['USER_DATA'])
+			sg = rapid_mysql.select("SELECT * FROM `mis_2023`.`_securitygroup` WHERE `id`={};".format(log_res[0]['security_group']))[0]
+			session['USER_DATA'][0]['sg_info'] = sg 
+			if(log_res[0]['security_group']==0):
+				return jsonify({"success":True,"url":"/warning?type=user-no-role","user":session["USER_DATA"]});
+			else:
+				return jsonify({"success":True,"url":"/mis-v4/core-main","user":session["USER_DATA"]});
 		else:
-			return jsonify({"success":False});
+			return jsonify({"success":False,"url":"/mis-v4/core-main"});
 
 	@app.route("/logout")
 	def logout():
 		session.clear()
+		if 'urlvisit' in request.args:
+			return redirect("/login_v2023?ver=dti_rapidgrowth_mis_2023&urlvisit="+request.args['urlvisit'])
 		return redirect("/webrep")
 		# return jsonify(session )
 

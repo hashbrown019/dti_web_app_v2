@@ -35,10 +35,6 @@ class data_handlers:
 		# return objh.txt_file_dl("skkrt.sql",content)
 		# return objh.obj_file_dl("skkrt.objdmp",content)
 
-	@app.route("/api/user_pic/<file_name>")
-	def get_user_pic(file_name):
-		return send_file(c.RECORDS+"objects/userpics/"+file_name, as_attachment=False,download_name=file_name)
-
 class user_management:
 	def is_on_session(): return ('USER_DATA' in session)
 

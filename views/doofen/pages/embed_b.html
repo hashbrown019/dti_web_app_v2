@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+{% include 'head.html' %}
+	<body>
+		<div id="dash_conso" class="page_content x-animate-left">
+			<br>{% include 'dash_conso.html' %}
+		</div>
+		<div id="list_data_table" class="page_content x-animate-left" style="display:none;height: 100vh;">
+			<br>{% include 'list_data_table.html' %}
+		</div>
+		<div id="forms" class="page_content x-animate-left" style="display:none;">
+			<br>{% include 'forms.html' %}
+		</div>
+
+		<script type="text/javascript">
+			show_view('{{page}}','page_content');
+			$onload(
+				showing_table_ls_farmer
+			)
+
+			
+
+			var TYPES_ORG = [
+				"None",
+				"Farmers’/ Growers’ Association",
+				"Farmers’ Cooperative Type of Cooperative",
+				"Others"
+				]
+			var REG_AGENCIES = [
+				"None",
+				"Cooperative Development Authority ",
+				"Department of Labor and Employment",
+				"Securities and Exchange Commission",
+				"Department of Agriculture",
+				"Others"
+				]
+
+			document.title = "DTI RAPID | Form B"
+		</script>
+	</body>
+</html>

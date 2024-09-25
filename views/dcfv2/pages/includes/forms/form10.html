@@ -60,8 +60,19 @@
 			</div>
 			<div class="x-col l3 x-container x-padding">
 				<label>Date: </label>
-				<input class="FORM10_FIELD x-input x-border" id="form_10_date" name="form_10_date" type="date" autocomplete="on"
+				<input class="FORM10_FIELD x-input x-border" id="form_10_date" name="form_10_date" type="text" autocomplete="on"
 					placeholder="">
+
+          <script>
+              $onload(function() {
+                  alert("---")
+                $('input[name="form_10_date"]').daterangepicker({
+                  opens: 'left'
+                }, function(start, end, label) {
+                  console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                });
+              });
+          </script>
 			</div>
 		</div>
 

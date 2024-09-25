@@ -226,9 +226,6 @@ def update_prof():
 			sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
 			result=db.do(sql)
 			flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
-			
-
-
 	return redirect("/logout")
 
 @app.route('/dcfweb')

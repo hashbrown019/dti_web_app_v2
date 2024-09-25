@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'a_v2_head.html'%}
+
+<body>
+
+	<main>
+		<div class="container">
+
+			<section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+							<div class="d-flex justify-content-center py-4">
+									<img class="img-fluid" src="../static/img/banner.png" style="width:50%">
+							</div><!-- End Logo -->
+
+							<div class="card mb-3">
+
+								<div class="card-body">
+
+									<div class="pt-4 pb-2">
+										<h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+										<p class="text-center small">Enter your username & password to login</p>
+									</div>
+
+									<div class="row g-3 ">
+
+										<div class="col-12">
+											<label for="username" class="form-label">Username</label>
+											<div class="input-group has-validation">
+												<span class="input-group-text" id="inputGroupPrepend">
+													<img id="userprof" class="img-fluid" src="../static/img/user_neutral.png" style="max-width:40px">
+												</span>
+												<input type="text" name="username" class="login_field form-control" id="username" required>
+												<div class="invalid-feedback">Please enter your username.</div>
+											</div>
+										</div>
+
+										<div class="col-12">
+											<label for="yourPassword" class="form-label">Password</label>
+											<input type="password" name="password" class="login_field form-control" id="yourPassword" required>
+											<div class="invalid-feedback">Please enter your password!</div>
+										</div>
+
+										<div class="col-12">
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+												<label class="form-check-label" for="rememberMe">Remember me <span class="fw-lighter">(one-day validity)</span></label>
+											</div>
+											<hr>
+											<span  id="error_msg">
+												
+											</span>
+										</div>
+										<div class="col-12">
+											<button id="submit-btn" class="btn btn-primary w-100" onclick="login()">
+												Login
+											</button>
+										</div>
+										<div class="col-12">
+											<p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="credits">
+								<!-- All the links in the footer should remain intact. -->
+								<!-- You can delete the links only if you purchased the pro version. -->
+								<!-- Licensing information: https://bootstrapmade.com/license/ -->
+								<!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+								<!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</section>
+
+		</div>
+	</main><!-- End #main -->
+
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+	<!-- Vendor JS Files -->
+
+	<!-- Template Main JS File -->
+
+	<script type="text/javascript">
+		document.body.click()
+
+		$onload(function(){
+		let uname = $ID("username").value
+			if_stop_typing("username",function(){
+				check_user_name()
+			})
+
+			if($ID("username").value.length >0){
+				println($ID("username").value.length )
+				check_user_name()
+			}
+		})
+
+		function check_user_name(){
+			var fields = $CLASS('login_field')
+			var cred = {"user_name" :fields[0].value}
+			$send({
+				action : '/check_username',
+				method : POST,
+				data : $DATA(cred),
+				func : function (__) {
+					var res = JSON.parse(__)
+					if(res.success){
+						var img_src = "/api/user_pic/"+res.profilepic
+						if(res.profilepic==""|| res.profilepic==" " || res.profilepic==undefined){
+							img_src = "/static/psalm_static/menu/img/profilepic.png"
+						}
+						$ID('userprof').src = img_src
+					}
+					else{
+						$ID('userprof').src = "/static/img/notfound.png"
+					}
+				}
+			})
+		}
+
+
+		function login(){
+			var fields = $CLASS('login_field')
+			var cred = {
+				"user_name" :fields[0].value,
+				"password" :fields[1].value
+			}
+
+			$ID('submit-btn').innerHTML = (`
+				Logging in 
+				<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+				<span class="visually-hidden">Loading...</span>
+			`)
+
+			$ID('submit-btn').disabled=1
+
+			$send({
+				action : '/login_auth',
+				method : POST,
+				data : $DATA(cred),
+				func : function (__) {
+					var login = JSON.parse(__).success
+					var url = JSON.parse(__).url
+					println(login)
+					if(login){
+						if(JSON.parse(__)['user'][0]['status']=="halt"){
+							redirectto("/acct_dis") 
+						}else{
+							println(JSON.parse(__)['user'])
+						    if("urlvisit" in URL_ARGS){
+						        redirectto(URL_ARGS['urlvisit'])
+						    }else{
+								redirectto(url) // NEW VERSION
+						    }
+						}
+					}
+					
+					else{
+						timeout(function(){$ID('submit-btn').innerHTML = "Try logginng in again";$ID('submit-btn').disabled=0},2000);
+						$ID("error_msg").innerHTML=(`
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Login failed. keep trying!
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+						`)
+					}
+				}
+			})
+		}
+
+	</script>
+</body>
+
+</html>

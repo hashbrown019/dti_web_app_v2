@@ -1,0 +1,48 @@
+
+
+
+<!-- End Page Title -->
+<div class="col-lg-9">
+	<section class="section profile">
+		<iframe 
+			loading="lazy" 
+			id="embed_page" 
+			src="#" 
+			frameborder="0" 
+			scrolling="no" 
+			style="width: 100%;min-height: 80vh;" 
+			onload="EMBED__SCRIPT(this,formcdashboard)" 
+			onloadstart="EMBED_LOAD_START(this)"
+			onwaiting="alert()" 
+		--EMBED_IFRAME>
+			Loading ....
+		</iframe>
+
+		<script>
+			$ID("embed_page").src = "/"+URL_ARGS['u']
+			let a_export = function(){alert('PFA not Selected')}
+			let a_import = function(){alert('PFA not Selected')}
+
+
+			function formcdashboard(_BODY_,obj){
+				try{
+					var in_url =  (urls)=> {return obj.src.split("/").indexOf(urls)>0}
+					if(in_url("formcdashboard") || in_url("cform") || in_url("spreadsheet")){
+						_BODY_.getElementsByClassName("main-content")[0].style['margin-left'] = "0px" 
+					}
+					else if(in_url("profiling_form_a")){
+						obj.contentWindow.load_excel_cols()
+						a_import = obj.contentWindow.import_farmer_excel
+						a_export = obj.contentWindow.export_farmer_excel
+					}
+				}catch(e){
+					warnprintln(e)
+				}
+			}
+		</script>
+	</section>
+</div>
+
+
+
+

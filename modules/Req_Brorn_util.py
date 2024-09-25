@@ -5,6 +5,7 @@ import rsa
 import base64
 import Configurations as c
 from functools import wraps
+from flask import session
 
 class file_from_request:
 	"""docstring for file_from_request"""
@@ -141,9 +142,18 @@ class base64_sec:
 		else:
 			return "CONFIDENTIAL"
 
+# ===============================================================================
+# ===============================================================================
+# ===============================================================================
+# ===============================================================================
+# ===============================================================================
+# ===============================================================================
 class authenication:
 	"""docstring for file_from_request"""
-	# _auth = authenication(app,session)
+	###### Declare first a global in config (c)
+	###### from modules.Req_Brorn_util import authenication
+	# _auth = authenication(FLASK.request,FLASK.redirect,FLASK.session,"USER_DATA","/login")
+	# c.login_auth_web = _auth.login_auth_web
 
 	def __init__(
 			self, # SELF
@@ -165,7 +175,6 @@ class authenication:
 			@wraps(caller_func)
 			def exec_caller_func(*arg1,**arg2):
 				# print(caller_func)
-				print(self.web_app_request_func.url)
 				if(self.find_in_session not in self.session):
 					return self.web_app_redirect_func("{}?urlvisit={}".format(self.url_if_not_found,self.web_app_request_func.url))
 				else:

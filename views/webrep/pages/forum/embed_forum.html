@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-890" lang="en-us">
+	<script src="../../static/js/Brorn.min.js"></script>
+	<script src="../../static/webrepstatic/js/global_webrep.js"></script>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="../../static/webrepstatic/css/autofill.css">
+	<link rel="icon" href="../static/img/icon.png">
+	<link rel="stylesheet" href="../../static/webrepstatic/css/style.css"><!-- fontawesomeCDN -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />     
+	<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&display=swap" rel="stylesheet">
+
+	<!-- fontawesomeCDN -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>		
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+	<!-- CSS only -->
+	<link href="../../static/webrepstatic/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- JavaScript Bundle with Popper -->
+	<script defer src="../../static/webrepstatic/js/bs@5.2.3/bootstrap.bundle.min.js"></script>
+	<script src="../../static/webrepstatic/js/bootstrap-autocomplete.min.js"></script>
+
+	<link href="../static/a_v2_static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../static/a_v2_static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="../static/a_v2_static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="../static/a_v2_static/vendor/quill/quill.snow.css" rel="stylesheet">
+	<link href="../static/a_v2_static/vendor/quill/quill.bubble.css" rel="stylesheet">
+	<link href="../static/a_v2_static/vendor/remixicon/remixicon.css" rel="stylesheet">
+	<link href="../static/a_v2_static/vendor/simple-datatables/style.css" rel="stylesheet">
+
+	<!-- Template Main CSS File -->
+	<link href="../static/a_v2_static/css/style.css" rel="stylesheet">
+
+	<!-- =======================================================
+	* Template Name: NiceAdmin
+	* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+	* Updated: Apr 20 2024 with Bootstrap v5.3.3
+	* Author: BootstrapMade.com
+	* License: https://bootstrapmade.com/license/
+	======================================================== -->
+	<script src="../static/a_v2_static/vendor/apexcharts/apexcharts.min.js"></script>
+	<script src="../static/a_v2_static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../static/a_v2_static/vendor/chart.js/chart.umd.js"></script>
+	<script src="../static/a_v2_static/vendor/echarts/echarts.min.js"></script>
+	<script src="../static/a_v2_static/vendor/quill/quill.js"></script>
+	<script src="../static/a_v2_static/vendor/simple-datatables/simple-datatables.js"></script>
+	<script src="../static/a_v2_static/vendor/tinymce/tinymce.min.js"></script>
+	<script src="../static/a_v2_static/vendor/php-email-form/validate.js"></script>
+	<title>MIS Forum | {{forum['topic']}}</title>
+</head>
+
+<body>
+	<div class=" tab-content" id="nav-tabContent">
+		<div class=" tab-pane fade show active" id="nav-discussion" role="tabpanel" aria-labelledby="nav-discussion-tab" tabindex="0"><div class="bg-light pb-5" style=" background-color: #ffffff !important;">
+			<div class="texttheme">
+				<!-- {{forum}} -->
+				<!-- <h1 class="">{{forum['topic']}}</h1>			 -->
+				<div class="EMBED_EXCLUDE rounded-1 " style="background-color:#F1F7E5;">
+					<div class="EMBED_EXCLUDE d-flex justify-content-between pt-3 container text-white">
+						<div>
+							<p class="small"><i class="fa-solid fa-users"></i></i>&nbsp; <b id="num_participants"></b> people</p>	
+						</div>
+					</div>
+					<div class="EMBED_EXCLUDE container" hidden>
+						<i id="participants" class="xs-text"></i>
+					</div>
+					<div class="container mt-3 pb-5">
+						<p class="">
+							{{forum['description']}}
+						</p>
+					</div>
+				</div>
+				<div class="EMBED_EXCLUDE mt-1 d-flex gap-3">				
+					<p class="small "><i class="fa-solid fa-message"></i>&nbsp;<b id="com_count"></b> comment/s</p>
+				</div>
+				<!-- Reply -->
+				<div id="reply_container" style="overflow-y: scroll;height:50vh;">
+					<div class="">
+						<div class="">
+							<i class="fa-solid">Loading. . .</i>
+						</div>
+					</div>
+				</div>
+				<div id="input_rep_container" class="">
+					<div class="mt-2">
+						<b class=""><span id="edit_com" class="">Your</span> comment</b>
+						<br>
+						<input type="text" id="id" hidden>
+						<textarea type="text" id="comment" name="comment" class="REPLY_DATA input form-control" rows="2" placeholder="Input your comment/Reply"></textarea>
+					</div>
+					<div class="d-flex justify-content-between">
+						<div class="mb-2" >
+							<button id="send_btn" type="submit" class="btn btn-primary float-end mt-3 " onclick="send_comment()">Reply</i></button>					
+						</div>
+
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+	<div class="container tab-pane fade mb-5 mt-3 d-flex justify-content-center" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+		<div id="card_participants" class=" d-flex gap-4 row row-cols-2" style="width: 1000px; min-height: 100px;">
+			<!-- CARD FOR PARTICIPANTS -->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	
+	function send_comment(){
+		var REPLY_DATA_INP = $DATA({"comment" : $ID("comment").value,"topic_id" : "{{forum['id']}}","comment_by" : "{{USER_DATA['id']}}","id":$ID("id").value})
+		$send({
+			action : "/forum/send_comment",
+			data : REPLY_DATA_INP,
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)
+				$ID("comment").value = ""
+				$ID("id").value = ""
+				$ID("edit_com").innerHTML = "Your"
+				$ID("send_btn").innerHTML = "Reply"
+				load_comments()
+			}
+		})
+	}
+
+	function edit_comment(ids,comm_edt){
+		// $ID('input_rep_container').scrollIntoView()
+		// println($ID('input_rep_container'))
+		$ID("comment").value = comm_edt;
+		$ID("id").value = ids;
+		$ID("edit_com").innerHTML = "Editing";
+		$ID("send_btn").innerHTML = "Save";
+
+	}
+
+	$onload(load_comments,function(){
+		window.setInterval(load_comments,5000)
+	})
+
+	function load_comments(){
+		$send({
+			action : "/forum/get_comment/{{forum['id']}}",
+			func : function(r){
+				var com_cards = ""
+				var card_participants = []
+				var ls_comments = JSON.parse(r)[0]
+				var ls_participants = JSON.parse(r)[1]
+				$ID("participants").innerHTML = ""
+				for (var i = 0; i < ls_participants.length; i++) {
+					$ID("participants").innerHTML +=(`
+						<span>`+ls_participants[i]['commenter']+`, </span>
+						`)
+				}
+
+				$ID("num_participants").innerHTML= ls_participants.length
+				$ID("com_count").innerHTML = ls_comments.length
+				$ID("reply_container").innerHTML="Loading"
+				for (var i = 0; i < ls_comments.length; i++) {
+					var com = ls_comments[i]
+					// println(com)
+					var edit_btn = "" ;
+					var rm_conts = "none" ; var com_conts = "block"
+					var commenter = "someone"
+					{% if USER_DATA['job']=="Admin" or USER_DATA['job']=="Super Admin" %}
+					/**/if(true){
+						commenter = com['commenter']
+					{% else %}
+					/**/if(com['comment_by']=="{{USER_DATA['id']}}"){
+					commenter = "You"
+					{% endif %}
+					edit_btn = (`
+						<a type="button" class='social_btn_del small' style="cursor: pointer;" onclick="del_comment('`+com['id']+`')"><i class="fa-solid fa-trash-can" ></i> Delete</a>&nbsp; &nbsp;
+						<a type="button" class='social_btn_edit small'  style="cursor: pointer;" onclick="edit_comment('`+com['id']+`','`+com['comment']+`')"><i class="fa-solid fa-pen-to-square"></i> Edit</a>&nbsp; &nbsp;
+						
+						`)
+					}else{
+						commenter = com['commenter']
+						if(com['edit']=="1"){
+							edit_btn ="<span class='small text-secondary'>Edited comment</span>&nbsp; | &nbsp;"
+						}else{
+							edit_btn =""
+						}
+					}
+
+					if(com['removed']=="1"){
+						rm_conts = "<span class='text-danger fst-italic'> removed a comment</span";
+						com_conts = "";
+					}else{
+						rm_conts = "replied";
+						com_conts = (`
+							<div class="">
+								<div class="container pb-3 mb-2 rounded-1" style="background-color: #FBFBFB;">
+									<p class="pt-2">`+urlify(com['comment'])+` </p>
+								</div>
+									<div class="container text-end d-flex">
+											`+edit_btn+`
+										<span class="small ">
+											<i id="lk_btn" class="text-danger bi bi-hand-thumbs-up" style="color: #1F4F5A; cursor: pointer;" onclick="send_com_likes('`+(com['id'])+`')"></i>
+											&nbsp;`+com['likes']+`
+									</span>
+									</div>
+							</div>
+							`)
+					}
+					var date_diffs = date_diff((com['date_created']))
+
+					prof_pic = '<img src="/static/psalm_static/menu/img/profilepic.png" style="width: 50px; height: 50px;">'
+					if(com['profilepic'].length>0){
+						prof_pic = "<img class='rounded-circle' src='/api/user_pic/"+com['profilepic']+"' alt='"+com['profilepic'] +"' style='width: 50px; height: 50px;'>"
+					}
+
+					com_cards +=(`
+						<div class=" d-flex">
+							<div class="container bg-light rounded-2" >
+								<div class="d-flex justify-content-between pt-3  text-white">
+									<a style="cursor" href="/viewprofile?_id=${com['commenter_id']}" target="_blank">
+										<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
+												<p>`+prof_pic+`</p>
+												<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
+												<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+com['date_created'] +`</p>
+										</div>
+									</a>
+								</div>
+								`+com_conts+`
+							</div>
+						</div><br> `)
+
+					card_participants.push(`
+						<div class="border border-light rounded-3 d-flex" style=" height: 100px;">
+							<a style="cursor" href="/viewprofile?_id=${com['commenter_id']}" target="_blank">
+								<div class="d-flex align-self-center">
+									<div>							
+										<p class="fs-1 mt-3">
+											`+prof_pic+`
+										</p>						
+									</div>
+									<div class="mt-3 ms-4 lh-sm">
+										<span>`+commenter+`</span><br>
+										<span class="text-muted small">`+com['job']+`</span><br>
+
+									</div>
+								</div>
+							</a>
+						</div>
+					`)
+				}
+				var uniq =arr_rem_dup(card_participants) ;
+				var final_par = ""
+				for (var i = 0; i < uniq.length; i++) {final_par += uniq[i]}
+				$ID('card_participants').innerHTML = final_par
+				$ID("reply_container").innerHTML=com_cards
+			}
+		})
+	}
+
+	function del_comment(ids){
+		$send({
+			action : "/forum/delete_comment/"+ids,
+			func : function(r){
+				var res = JSON.parse(r)
+				println(res)
+				load_comments()
+			}
+		})
+	}
+	function send_com_likes(ids){
+		$send({
+			action : "/forum/send_comment_like/"+ids,
+			func : function(r){
+				var res = JSON.parse(r)
+				// println(res)
+			}
+		})
+	}
+
+	function urlify(text) {
+		var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+		return text.replace(urlRegex, function(url) {
+			return `<a href="#"  target="_blank" onclick="goto('`+ url +`')">`+ url +`</a>`;
+		})
+		// or alternatively
+		// return text.replace(urlRegex, '<a href="$1">$1</a>')
+	}
+</script>
+</body>
+</html>

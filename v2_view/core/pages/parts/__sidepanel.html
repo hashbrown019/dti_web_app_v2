@@ -1,0 +1,486 @@
+<aside id="sidebar" class="sidebar">
+
+		<ul class="sidebar-nav" id="sidebar-nav">
+
+			<li class="nav-item">
+				<a class="nav-link " href="/mis-v4/core-main">
+					<i class="bi bi-grid"></i>
+					<span>Dashboard</span>
+				</a>
+			</li>
+			<!-- End Dashboard Nav -->
+
+
+			<li class="nav-item">
+				<a class="nav-link " href="/mis-v4/core-system-control">
+					<i class="bi bi-gear"></i>
+					<span>Control</span>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link " href="#">
+					<i class="bi bi-bar-chart-line"></i>
+					<span>My Trackers</span>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link " href="/mis-v4/core-personal-forms">
+					<i class="bi bi-pencil-square"></i>
+					<span>My Forms</span>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link " href="#">
+					<i class="bi bi-archive"></i>
+					<span>My Files</span>
+				</a>
+			</li>
+			<!-- <li class="nav-item">
+				<a class="nav-link"  href="/mis-v4/core-page-embed?u=embed_forum_talks/10&h=Chats&t=dashboard">
+					<i class="bi bi-gear"></i>
+					<span>Forum/Chats</span>
+				</a>
+			</li> -->
+
+			<hr>
+			<li class="nav-heading">Profiling</li>
+
+			<!-- ================PROFILING FORM A SIDE=============== -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#pfa-nav" data-bs-toggle="collapse" href="#">
+					<i class="bx bxs-user"></i>
+					<span>
+						<span class="card-title">PF-A <span>| Farmers</span></span>	
+					</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="pfa-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="/mis-v4/core-page-embed?u=profiling_form_a/e?page=lists&h=profiling_form_a&t=dashboard">
+							<i class="bi bi-circle"></i><span>Records</span>
+						</a>
+					</li>
+					<li>
+						<a href="/mis-v4/core-page-embed?u=profiling_form_a/e?page=data_cleaning&h=profiling_form_a&t=dashboard">
+							<i class="bi bi-circle"></i><span>Data Cleaning</span>
+						</a>
+					</li>
+					<li>
+						<a onclick="a_export()">
+							<i class="bi bi-circle"></i><span>Export</span>
+						</a>
+					</li>
+					<li>
+						<a onclick="a_import()">
+							<i class="bi bi-circle"></i><span>Import</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<!-- ================PROFILING FORM B SIDE=============== -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#pfb-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-people"></i>
+					<span>
+						<span class="card-title">PF-B <span>| Farmers' Org</span></span>	
+					</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="pfb-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="/mis-v4/core-page-embed?u=formbembed/e?page=list_data_table&h=profiling_form_b&t=dashboard">
+							<i class="bi bi-circle"></i><span>Records</span>
+						</a>
+					</li>
+					<li>
+						<a href="/mis-v4/core-page-embed?u=formbembed/e?page=forms&h=profiling_form_b&t=dashboard">
+
+							<i class="bi bi-circle"></i><span>Forms</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<!-- ================PROFILING FORM C SIDE=============== -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#pfc-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-basket"></i>
+					<span>
+						<span class="card-title">PF-C <span>| MSME</span></span>	
+					</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="pfc-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="/mis-v4/core-page-embed?u=formcdashboard&h=profiling_form_b&t=dashboard">
+							<i class="bi bi-circle"></i><span>Dashboard</span>
+						</a>
+					</li>
+					<li>
+						<a href="/mis-v4/core-page-embed?u=cform&h=profiling_form_b&t=form">
+							<i class="bi bi-circle"></i><span>Form/Fields</span>
+						</a>
+					</li>
+					<li>
+						<a href="/mis-v4/core-page-embed?u=spreadsheet&h=profiling_form_b&t=spreadsheet">
+							<i class="bi bi-circle"></i><span>Spreadsheet Management</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+
+			<!-- ============================================ -->
+			<!-- ============================================ -->
+			<!-- ============================================ -->
+			<!-- ============================================ -->
+			<!-- ============================================ -->
+
+
+
+			<hr>
+			<li class="nav-heading">Data Capture Form</li>
+
+			<!-- ================PROFILING FORM A SIDE=============== -->
+			<div class="container x-padding">				
+				<i class="bi bi-menu-button-wide"></i>
+					<span>
+						<span class="card-title" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="true" aria-controls="flush-collapseThree">DCF Lists</span></span>	
+					</span>
+				<i class="bi bi-chevron-down ms-auto"></i>
+			</div>
+			<div class="accordion accordion-flush" id="accordionFlushExample">
+				<div class="accordion-item">
+					<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample" style="">
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf1_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F1 <span>| DIP Prep</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf1_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form1_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form1&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf2_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F2 <span>| CPA Tracker</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf2_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form2_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form2&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf3_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F3 <span>| BDSP</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf3_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form3_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form3&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf4_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F4 <span>| CapBuild</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf4_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form4_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form4&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf5_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F5 <span>| Matching Grant</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf5_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form5_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form5&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf6_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F6 <span>| Product Dev</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf6_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form6_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form6&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf7_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F7 <span>| Trade Promotion</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf7_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form7_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form7&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+
+						<li class="nav-item danger">
+							<a class="nav-link collapsed" data-bs-target="#dcf8_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F8 <span>| ....</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf8_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form8_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form8&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf9_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F9 <span>| Enablers ACtivity</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf9_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form9_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form9&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf10_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F10 <span>| Negosyo Center</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf10_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form10_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form10&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+						<li class="nav-item">
+							<a class="nav-link collapsed" data-bs-target="#dcf11_nav" data-bs-toggle="collapse" href="#">
+								<i class="bi bi-menu-button-wide"></i>
+								<span>
+									<span class="card-title">F11 <span>| Access to Finance</span></span>	
+								</span>
+								<i class="bi bi-chevron-down ms-auto"></i>
+							</a>
+							<ul id="dcf11_nav" class="nav-content collapse " data-bs-parent="flush-collapseThree">
+								<li>
+									<a href="/mis-v4/core-page-embed?u=form11_dashboard&h=data_capture_forms&t=dashboard">
+										<i class="bi bi-circle"></i><span>Records</span>
+									</a>
+								</li>
+								<li>
+									<a href="/mis-v4/core-page-embed?u=dcf/form11&h=data_capture_forms&t=form">
+										<i class="bi bi-circle"></i><span>Forms</span>
+									</a>
+								</li>
+							</ul>
+						</li><!-- ------------------------- -->
+
+					</div>
+				</div>
+			</div>
+
+			<hr>
+			<li class="nav-heading">Other Forms and Trackers</li>
+
+			<!-- ================PROFILING FORM A SIDE=============== -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#gesi-nav" data-bs-toggle="collapse" href="#">
+					<i class="bx bxs-flag"></i>
+					<span>
+						<span class="card-title">GESI<span></span></span>	
+					</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="gesi-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="#COMING_SOON">
+							<i class="bi bi-circle"></i><span>Records</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#finance-nav" data-bs-toggle="collapse" href="#">
+					<i class="bx bi-piggy-bank"></i>
+					<span>
+						<span class="card-title">Finance<span></span></span>	
+					</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="finance-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="#COMING_SOON">
+							<i class="bi bi-circle"></i><span>Records</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#procurement-nav" data-bs-toggle="collapse" href="#">
+					<i class="bx bi-shop-window"></i>
+					<span>
+						<span class="card-title">Procurement<span></span></span>	
+					</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="procurement-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="#COMING_SOON">
+							<i class="bi bi-circle"></i><span>Records</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#admin-nav" data-bs-toggle="collapse" href="#">
+					<i class="bx bi-person-badge"></i>
+					<span>
+						<span class="card-title">HR/Admin<span></span></span>	
+					</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="admin-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="#COMING_SOON">
+							<i class="bi bi-circle"></i><span>Records</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<hr>
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#grs-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-exclamation-diamond"></i>
+
+					<span>
+						<span class="card-title">Grievance<span></span></span>	
+					</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="grs-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="#COMING_SOON">
+							<i class="bi bi-circle"></i><span>Records</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<hr>
+		<span class="x-hide">
+			<i><span class="x-tiny x-text-orange">*</span> - Using Old MIS Engine, May experience lags and bugs</i><br>
+			<i><span class="x-tiny x-text-yellow">**</span> - Beta Version, Under Development</i><br>
+			<i><span class="x-tiny x-text-red">***</span> - Module not yet available</i>
+		</span>
+	</aside>

@@ -69,6 +69,14 @@ def dcf_dashboard():
 	form_disp = display_dataform.displayform()
 	return render_template("dcf_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
+@app.route('/dcf_dashboard_embed')
+@c.login_auth_web()
+def dcf_dashboard_embed():
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	count = displayCount.display__()
+	form_disp = display_dataform.displayform()
+	return render_template("dcf_dashboard_embed.html",user_data=session["USER_DATA"][0],**count,**form_disp)
+
 
 
 @app.route('/form1_dashboard')

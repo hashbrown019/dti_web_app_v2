@@ -23,7 +23,7 @@ from views.fund_tracker  import bp_app as fund_tracker
 # from views.dcf  import bp_app as dcf
 from views.dcfv2  import bp_app as dcfv2
 from views.npco_act_tracker  import npco_track as npco_tracker
-from views.form_a_v2 import main_backend as a_v2
+from v2_view.core import _backend_main as dash
 
 from views.fmi  import bp_app as fmi
 
@@ -39,6 +39,7 @@ from controllers import Logs
 Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL")
 
 app = Flask(__name__)
+c.FLASK_APP = app
 # Minify(app=app, html=True, js=True, cssless=True)
 app.config['JSON_SORT_KEYS'] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
@@ -60,7 +61,8 @@ app.register_blueprint(npco_tracker.app);
 app.register_blueprint(dcfv2.app);
 app.register_blueprint(fmi.app);
 app.register_blueprint(test.app);
-app.register_blueprint(a_v2.app);
+
+app.register_blueprint(dash.app);
 
 templates(app).init()
 

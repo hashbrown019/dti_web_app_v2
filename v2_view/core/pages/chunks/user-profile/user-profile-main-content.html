@@ -1,0 +1,297 @@
+
+
+
+<!-- End Page Title -->
+
+<section class="section profile">
+	<div class="row">
+		<div class="col-xl-4">
+
+			<div class="card">
+				<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+					{% if(USER_DATA['profilepic']=="" or USER_DATA['profilepic']==" " ): %}
+						<img src="\static\psalm_static\menu\img\profilepic.png" alt="Profile" class="rounded-circle">
+					{% else: %}
+						<img src="\api\user_pic\{{USER_DATA['profilepic']}}" alt="Profile" class="rounded-circle">
+					{%endif%}
+					<h2>{{USER_DATA['name']}}</h2>
+					<h3>{{USER_DATA['job']}}</h3>
+					<div class="social-links mt-2">
+						<a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+						<a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+						<a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+						<a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-xl-8">
+
+			<div class="card">
+				<div class="card-body pt-3">
+					<!-- Bordered Tabs -->
+					<ul class="nav nav-tabs nav-tabs-bordered">
+
+						<li class="nav-item">
+							<button id="edit_prof_info_tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+						</li>
+
+						<li class="nav-item">
+							<button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
+						</li>
+
+						<li class="nav-item">
+							<button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+						</li>
+
+					</ul>
+					<script type="text/javascript">
+						$onload(function(){
+							$ID('edit_prof_info_tab').click()
+							println("clicked")
+						})
+					</script>
+
+
+					<div class="tab-content pt-2">
+
+						<div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+							<!-- Profile Edit Form -->
+							<form action="/mis-v4/user-management/editpic" method="POST" enctype="multipart/form-data">
+								<input style="display: none;" value="{{USER_DATA['id']}}" type="text" class="form-control" id="id" name="id">
+
+								<div class="row mb-3">
+									<label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+									<div class="col-md-8 col-lg-9">
+										<div class="pt-2">
+											<input type="file" class="btn btn-primary btn-sm" name="profilepic" id="proflepic" title="Upload new profile image" onchange="this.form.submit()">
+										</div>
+									</div>
+								</div>
+							</form>
+
+							<form action="/mis-v4/user-management/edit" method="POST">
+								<input style="display: none;" value="{{USER_DATA['id']}}" type="text" class="form-control" id="id" name="id">
+
+								<div class="row mb-3">
+									<label for="fullName" class="col-md-4 col-lg-3 col-form-label">Username</label>
+									<div class="input-group mb-3">
+										<span class="input-group-text" id="basic-addon1">@</span>
+										<input value="{{USER_DATA['username']}}" type="text" class="USER_INFO form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="username" id="username">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+									<div class="col-md-8 col-lg-9">
+										<input value="{{USER_DATA['name']}}" type="text" class="USER_INFO form-control" name="name" id="name" placeholder="Kevin Anderson">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label for="Job" class="col-md-4 col-lg-3 col-form-label">Staff Position</label>
+									<div class="col-md-8 col-lg-9">
+										<input value="{{USER_DATA['job']}}" type="text" class="USER_INFO form-control" name="job" id="job" placeholder="Web Designer">
+									</div>
+								</div>
+								
+								<div class="row mb-3">
+									<label for="rcu" class="col-md-4 col-lg-3 col-form-label">RCU/Office</label>
+									<div class="col-md-8 col-lg-9">
+										<select value="{{USER_DATA['rcu']}}" type="text" class="USER_INFO form-control" name="rcu" id="rcu" >
+											<option value="none" disabled>None</option>
+											<option value="RCU 8">RCU 8</option>
+											<option value="RCU 9">RCU 9</option>
+											<option value="RCU 10">RCU 10</option>
+											<option value="RCU 11">RCU 11</option>
+											<option value="RCU 12">RCU 12</option>
+											<option value="RCU 13">RCU 13</option>
+											<option value="BARMM">BARMM</option>
+											<option value="NPCO">NPCO</option>
+										</select>
+									</div>
+
+										
+								</div>
+								<div class="row mb-3">
+									<label for="pcu" class="col-md-4 col-lg-3 col-form-label">pcu</label>
+									<div class="col-md-8 col-lg-9">
+										<select value="{{USER_DATA['pcu']}}" type="text" class="USER_INFO form-control" name="pcu" id="pcu" >
+											<option value="none" disabled>None</option>
+											<optgroup label="RCU 8">
+												<option value="Leyte">Leyte</option>
+												<option value="Northern Samar">Northern Samar</option>
+												<option value="Southern Leyte">Southern Leyte</option>
+											</optgroup>
+											<optgroup label="RCU 9">
+												<option value="Zamboanga del Norte">Zamboanga del Norte</option>
+												<option value="Zamboanga del Sur">Zamboanga del Sur</option>
+												<option value="Zamboanga del Sibugay">Zamboanga del Sibugay</option>
+											</optgroup>
+											<optgroup label="RCU 10">
+												<option value="Bukidnon">Bukidnon</option>
+												<option value="Lanao del Norte">Lanao del Norte</option>
+												<option value="Misamis Oriental">Misamis Oriental</option>
+											</optgroup>
+											<optgroup label="RCU 11">
+												<option value="Davao de Oror">Davao de Oror</option>
+												<option value="Davao del Norte">Davao del Norte</option>
+												<option value="Davao del Sur">Davao del Sur</option>
+												<option value="Davao Occidental">Davao Occidental</option>
+												<option value="Davao Oriental">Davao Oriental</option>
+											</optgroup>
+											<optgroup label="RCU 12">
+												<option value="North Cotabato">North Cotabato</option>
+												<option value="Sarangani">Sarangani</option>
+												<option value="Sultan Kudarat">Sultan Kudarat</option>
+											</optgroup>
+											<optgroup label="RCU 13">
+												<option value="Agusan del Norte">Agusan del Norte</option>
+												<option value="Agusan del">Agusan del</option>
+												<option value="Surigao del Sur">Surigao del Sur</option>
+											</optgroup>
+											<optgroup label="BARMM">
+												<option value="Maguindanao">Maguindanao</option>
+											</optgroup>
+										</select>
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+									<div class="col-md-8 col-lg-9">
+										<input value="{{USER_DATA['address']}}" type="text" class="USER_INFO form-control" name="address" id="address" placeholder="A108 Adam Street, New York, NY 535022">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label for="mobile" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+									<div class="col-md-8 col-lg-9">
+										<input value="{{USER_DATA['mobile']}}" type="text" class="USER_INFO form-control" name="mobile" id="mobile" placeholder="(436) 486-3538 x29071">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+									<div class="col-md-8 col-lg-9">
+										<input value="{{USER_DATA['email']}}" type="email" class="USER_INFO form-control" name="email" id="email" placeholder="k.anderson@example.com">
+									</div>
+								</div>
+
+								<div class="text-center">
+									<button type="submit" class="btn btn-primary">Save Changes and Logout</button>
+								</div>
+								<script type="text/javascript">
+									$onload(function(){
+										$ID("rcu").value = "{{USER_DATA['rcu']}}"
+										$ID("pcu").value = "{{USER_DATA['pcu']}}"
+									})
+								</script>
+							</form><!-- End Profile Edit Form -->
+
+						</div>
+
+						<div class="tab-pane fade pt-3" id="profile-settings">
+
+							<!-- Settings Form -->
+							<form>
+
+								<div class="row mb-3">
+									<label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+									<div class="col-md-8 col-lg-9">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="changesMade" checked>
+											<label class="form-check-label" for="changesMade">
+												Changes made to your account
+											</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="newProducts" checked>
+											<label class="form-check-label" for="newProducts">
+												Information on new products and services
+											</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="proOffers">
+											<label class="form-check-label" for="proOffers">
+												Marketing and promo offers
+											</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+											<label class="form-check-label" for="securityNotify">
+												Security alerts
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="text-center">
+									<button type="submit" class="btn btn-primary">Save Changes and Logout</button>
+								</div>
+							</form>
+							<!-- End settings Form -->
+
+						</div>
+
+						<div class="tab-pane fade pt-3" id="profile-change-password">
+							<!-- Change Password Form -->
+							<form action="/mis-v4/user-management/editpass" method="POST">
+								<input style="display: none;" value="{{USER_DATA['id']}}" type="text" class="form-control" id="id" name="id">
+
+								<div class="row mb-3">
+									<label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+									<div class="col-md-8 col-lg-9">
+										<input name="current_pass" type="password" class="form-control" id="current_pass" onkeyup="check_values_pass()">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+									<div class="col-md-8 col-lg-9">
+										<input name="password" type="password" class="form-control" id="password" onkeyup="check_values_pass()">
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+									<div class="col-md-8 col-lg-9">
+										<input name="match_pass" type="password" class="form-control" id="match_pass" onkeyup="check_values_pass()">
+									</div>
+								</div>
+
+								<div class="text-center">
+									<button id="paswd_sbnmit_btn" disabled type="submit" class="btn btn-primary">Change Password and Logout</button>
+								</div>
+
+								<script type="text/javascript">
+									function check_values_pass(){
+										var current_pass = $ID("current_pass").value
+										var password = $ID("password").value
+										var match_pass = $ID("match_pass").value
+
+										if(current_pass.length > 0 &&password.length > 0 && match_pass.length > 0 && password==match_pass){
+											$ID('paswd_sbnmit_btn').disabled=0
+											println("yes :"+[current_pass,password,match_pass])
+										}else{
+											$ID('paswd_sbnmit_btn').disabled=1
+											println("no :"+[current_pass,password,match_pass])
+										}
+
+									}
+								</script>
+							</form><!-- End Change Password Form -->
+
+						</div>
+
+					</div><!-- End Bordered Tabs -->
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
