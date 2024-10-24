@@ -1,4 +1,5 @@
 import Configurations as c 
+from flask import render_template, render_template_string
 from datetime import datetime, timedelta
 from modules.Connections import mysql
 db = mysql(*c.DB_CRED)
@@ -89,6 +90,12 @@ class templates:
 			return text
 		return f"{str(text)[:lngth]}{elipse}{word_tranc}"
 
+	def get_save_template(file):
+		temp_src = c.RECORDS + "objects/save_templates/"+file+".html"
+		temps = open(temp_src,"r")
+		HTML = temps.read()
+		temps.close()
+		return render_template_string(HTML)
 	# ===========================================================================================================
 	# ===========================================================================================================
 	# ===========================================================================================================
@@ -103,6 +110,7 @@ class templates:
 		self.app.jinja_env.filters['cpa_status'] = templates.cpa_status
 		self.app.jinja_env.filters['get_cpa'] = templates.get_cpa
 		self.app.jinja_env.filters['trancuate_text'] = templates.trancuate_text
+		self.app.jinja_env.filters['get_save_template'] = templates.get_save_template
 	# Register the custom filter on the Flask application\
 
 	#

@@ -37,7 +37,7 @@ class _main:
 			USER_DATA = session["USER_DATA"][0],
 			staff_list=dash_api.get_area_staff(),
 			security_group_ls=dash_api.get_security_group(),
-			# personal_forms=dash_api.get_forms()
+			personal_forms=dash_api.get_personal_forms()
 
 
 		);

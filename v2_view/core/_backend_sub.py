@@ -85,7 +85,8 @@ class system_settings:
 class personal_forms:
 	def save_template(req):
 		datas = dict(req.form)
-		temp_src = c.RECORDS + "objects/save_templates/"+req.form['form_code']+".html"
+		# temp_src = c.RECORDS + "objects/save_templates/"+req.form['form_code']+".html"
+		temp_src = c.RECORDS + "../v2_view/core/pages/chunks/__templates__/"+req.form['form_code']+".html"
 		temps = open(temp_src,"w")
 		temps.write(datas['form_design'].replace("~",'"'))
 		temps.close()

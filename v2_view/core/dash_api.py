@@ -22,6 +22,11 @@ def get_security_group():
 	return rapid_mysql.select("SELECT `_securitygroup`.*, `users`.`id` as 'by' , `users`.`name` FROM `_securitygroup` INNER JOIN `users` ON `_securitygroup`.`created_by`= `users`.`id` ;" )
 
 
+def get_personal_forms():
+	return rapid_mysql.select("SELECT `_form_templates`.*, `users`.`id` as 'by' , `users`.`name` FROM `_form_templates` INNER JOIN `users` ON `_form_templates`.`user_id`= `users`.`id` ;" )
+
+
+
 # ================================================
 # ================================================
 # ================================================
