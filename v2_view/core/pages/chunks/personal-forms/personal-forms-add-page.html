@@ -9,8 +9,7 @@
 					<h5 class="card-title">Form Information</h5>
 					<form>
 						<div class="row mb-3">
-							<label class="col-sm-2 col-form-label">Floating labels</label>
-							<div class="col-sm-10">
+							<div class="col-sm-12">
 								<div class="form-floating mb-3">
 									<input type="text" class="FORM_DETAILS form-control" id="form_name" onkeyup="set_f_info(this)">
 									<label for="form_name">Form Name</label>
@@ -35,7 +34,8 @@
 								</div>
 								<div class="form-floating mb-3">
 									<select class="FORM_DETAILS form-select" id="form_shareable" aria-label="Floating label select example">
-										<option value="open" selected>Any can use this form</option>
+										<option value="open" selected>Anyone can use this form</option>
+										<option value="fill" >Anyone can only fill-up this form</option>
 										<option value="private">For Personal Usage</option>
 									</select>
 									<label for="form_shareable">Form Share</label>
@@ -43,11 +43,20 @@
 								<div class="form-floating mb-3">
 									<select class="FORM_DETAILS form-select" id="form_group" aria-label="Floating label select example">
 										<option value="all">Generic</option>
-										<option value="pf">Profiling Forms</option>
-										<option value="dcf">Data Capture Forms</option>
-										<option value="km">Knowledge Management</option>
-										<option value="fin">Finance</option>
-										<option value="proc">Procurement</option>
+										<optgroup label="MIS Mainstream modules">
+											<option value="pf">Profiling Forms</option>
+											<option value="dcf">Data Capture Forms</option>
+											<option value="km">Knowledge Management</option>
+											<option value="fin">Finance</option>
+											<option value="proc">Procurement</option>
+										</optgroup>
+										<optgroup label="Other Tools/modules">
+											<option value="edt">EDT</option>
+											<option value="aos">AOS</option>
+											<option value="gesi">GESI</option>
+											<option value="admin">Admin/Property/HR</option>
+
+										</optgroup>
 									</select>
 									<label for="form_group">Form Group</label>
 								</div>
@@ -59,7 +68,33 @@
 					<h5 class="card-title">General Form Elements</h5>
 					<form>
 						<div class="row mb-3">
-							<label for="" class="col-sm-2 col-form-label">Field Name</label>
+							<label for="" class="col-sm-2 col-form-label">Field Type</label>
+							<div class="col-sm-10">
+								<select id="field_type" name="field_type" class="TEMPLATE_FILEDS form-control" onchange="set_f_settings(this.value)">
+									<optgroup label="Title/Dividers/Breakers/Note">
+										<option value="title">Title</option>
+										<option value="note">Note</option>
+										<option value="hr">Horizontal Breaker</option>
+									</optgroup>
+									<optgroup label="Self Defined Values (Manual Input)">
+										<option value="sdv_text" selected>text</option>
+										<option value="sdv_number">Number/Currency</option>
+										<option value="sdv_date">Date</option>
+										<option value="sdv_time">time</option>
+										<option value="sdv_password">password</option>
+										<option value="sdv_range">range</option>
+										<option value="lngtxt">long text</option>
+										
+									</optgroup>
+									<optgroup label="Pre-Defined Values">
+										<option value="ds">Defined Selection (Dropdown)</option>
+										<option value="db">From Databases (Dropdown)</option>
+									</optgroup>
+								</select>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="" class="col-sm-2 col-form-label">Name/ Description</label>
 							<div class="col-sm-10">
 								<input id="field_name" name="field_name" type="text" class="TEMPLATE_FILEDS form-control" onkeyup="set_f_id(this.value)" value="First Field-Name">
 							</div>
@@ -72,30 +107,9 @@
 							
 						</script>
 						<div class="row mb-3">
-							<label for="" class="col-sm-2 col-form-label">Field ID</label>
+							<label for="" class="col-sm-2 col-form-label">Field ID <span class="x-text-yellow">**</span></label>
 							<div class="col-sm-10">
-								<input id="field_id" name="field_id" type="text" class="TEMPLATE_FILEDS form-control" onkeyup="set_f_id(this.value)">
-							</div>
-						</div>
-						<div class="row mb-3">
-							<label for="" class="col-sm-2 col-form-label">Field Type</label>
-							<div class="col-sm-10">
-								<select id="field_type" name="field_type" class="TEMPLATE_FILEDS form-control" onchange="set_f_settings(this.value)">
-									<option value="sdv">Self Defined Values (Manual Input)</option>
-									<option value="ds">Defined Selection (Dropdown)</option>
-									<option value="db">From Databases (Dropdown)</option>
-								</select>
-							</div>
-						</div>
-						<div class="row mb-3">
-							<label for="" class="col-sm-2 col-form-label">Field Data</label>
-							<div class="col-sm-10">
-								<select id="field_datatype" name="field_datatype" class="TEMPLATE_FILEDS form-control">
-									<option value="text">Text</option>
-									<option value="number">Number/Currency</option>
-									<option value="date">Date</option>
-									<option value="time">time</option>
-								</select>
+								<input id="field_id" name="field_id" type="text" class="TEMPLATE_FILEDS form-control x-border-yellow" onkeyup="set_f_id(this.value)">
 							</div>
 						</div>
 						<div class="row mb-3">
@@ -104,46 +118,88 @@
 								<input id="field_selection" name="field_selection" type="text" class="TEMPLATE_FILEDS form-control" placeholder="selection1,selection2, ... ,selectionN" disabled>
 							</div>
 						</div>
+						<span class="x-small">
+							<i><span class="x-text-yellow">**</span> Careful modifying this field as it is use by the database for unique identification of data sets, duplication of this may result inconsistency in data</i>
+						</span>
+						<hr>
 						<button type="button" class="btn btn-primary" onclick="add_to_template()">Add to preview Template</button>
 					</form><!-- End General Form Elements -->
 					<script type="text/javascript">
 
 						function set_f_settings(val){
+							var field_selection = $ID('field_selection')
+							var field_id = $ID('field_id')
+							var field_name = $ID('field_name')
 							if(val=="sdv"){
-								$ID('field_datatype').disabled = 0
-								$ID('field_datatype').value = 'text'
-								$ID('field_selection').disabled = 1
-								$ID('field_selection').value = ""
+								field_selection.disabled = 1
+								field_selection.value = ""
+							}else if (val=="hr"){
+								field_name.disabled = 1
+								field_name.value = ""
+								field_id.disabled = 1
+								field_id.value = ""
+								field_selection.disabled = 1
+								field_selection.value = ""
+							}else if (val=="note" || val=="title"){
+								field_id.disabled = 1
+								field_id.value = ""
+								field_selection.disabled = 1
+								field_selection.value = ""
+							}else if (val=="ds" || val=="db"){
+								field_selection.disabled = 0
 							}else{
-								$ID('field_selection').disabled = 0
-								$ID('field_datatype').value = 'text'
-								$ID('field_datatype').disabled = 1
-								$ID('field_selection').value = ""
+								field_selection.disabled = 1
+								field_selection.value = ""
+								field_id.disabled = 0
+								field_name.disabled = 0
 							}
 						}
+						
 						function add_to_template(){
 							var temp_data = input_to_json('TEMPLATE_FILEDS')
+							var field_label = (`<label class="f_name" for="floatingSelect">${temp_data['field_name']}</label>`)
 							var field_holder = (`
 							<div class="form-floating mb-3">
 								||IF_TYPE|| 
 								<a class='btn text-primary' onclick="this.parentNode.innerHTML = '';">remove <span class='x-tiny'>(this is not be shown on your form)</span></a>
-								<label for="floatingSelect">${temp_data['field_name']}</label>
 							</div>
 							`)
+
 							var i_type = ""
-							if(temp_data['field_type']=='sdv'){
-								i_type = (`<input id="${temp_data['field_id']}" name="${temp_data['field_id']}" type="${temp_data['field_datatype']}" class="form-control" id="floatingInput">`)
+							if(temp_data['field_type']=='sdv_text'){
+								i_type = (`<input id="${temp_data['field_id']}" name="${temp_data['field_id']}" type="text" class="form-control">${field_label}`)
+							}
+							else if(temp_data['field_type']=='sdv_number'){
+								i_type = (`<input id="${temp_data['field_id']}" name="${temp_data['field_id']}" type="number" class="form-control">${field_label}`)
+							}
+							else if(temp_data['field_type']=='sdv_date'){
+								i_type = (`<input id="${temp_data['field_id']}" name="${temp_data['field_id']}" type="date" class="form-control">${field_label}`)
+							}
+							else if(temp_data['field_type']=='sdv_time'){
+								i_type = (`<input id="${temp_data['field_id']}" name="${temp_data['field_id']}" type="time" class="form-control">${field_label}`)
+							}
+							else if(temp_data['field_type']=='sdv_password'){
+								i_type = (`<input id="${temp_data['field_id']}" name="${temp_data['field_id']}" type="password" class="form-control">${field_label}`)
+							}
+							else if(temp_data['field_type']=='hr'){
+								i_type = (`<hr>`)
+							}
+							else if(temp_data['field_type']=='title'){
+								i_type = (`<h3>${temp_data['field_name']}</h3>`)
+							}
+							else if(temp_data['field_type']=='sdv_range'){
+								i_type = (`<input id="${temp_data['field_id']}" name="${temp_data['field_id']}" type="range" class="form-control form-range" step="0.1" value="0" oninput="personal_form_range_action(this,'${temp_data['field_name']}')">${field_label}`)
+							}
+
+
+							else if(temp_data['field_type']=='lngtxt'){
+								i_type = (`<textarea class="form-control" placeholder="Leave a comment here" id="${temp_data['field_id']}" name="${temp_data['field_id']}" style="height: 149px;"></textarea>${field_label}`)
 							}else{
 								var _sel = temp_data['field_selection'].split(",");var opt = ""
-								for (var i = 0; i < _sel.length; i++) {
-									opt += (`<option>${_sel[i]}</option>`)
-								}
-								i_type = (`
-									<select class="form-select" id="${temp_data['field_id']}" name="${temp_data['field_id']}">
-										${opt}
-									</select>
-								`)
+								for (var i = 0; i < _sel.length; i++) {opt += (`<option>${_sel[i]}</option>`)}
+								i_type = (`<select class="form-select" id="${temp_data['field_id']}" name="${temp_data['field_id']}">${opt}</select>${field_label}`)
 							}
+
 							$ID('form_preview').innerHTML += field_holder.replaceAll('||IF_TYPE||',i_type)
 						}
 					</script>
@@ -161,8 +217,8 @@
 						<h5 id="form_name_f" class="card-title">Form Title (Preview)</h5>
 						<p id="form_desc_f">This part describes the form you will create</p>
 						<!-- Advanced Form Elements -->
-						<form id="form_preview">
-						</form>
+						<div id="form_preview">
+						</div>
 						<!-- End General Form Elements -->
 
 					</div>

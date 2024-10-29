@@ -2,6 +2,7 @@ from modules.Connections import mysql,sqlite
 import Configurations as c
 from flask import session
 from modules.Req_Brorn_util import file_from_request
+import json
 # from v2_view.core import _socketIO
 
 
@@ -94,13 +95,40 @@ class personal_forms:
 		key = [];val = [];args=""
 		for datum in datas:
 			_VAL = datas[datum]
-
 			key.append("`{}`".format(datum))
 			val.append("'{}'".format(_VAL) )
 
 		sql = ('''INSERT INTO `_form_templates` ({}) VALUES ({});'''.format(", ".join(key),", ".join(val)))
 		print(rapid_mysql.do(sql))
 		return datas
+
+	def save_data(req):
+		datas = dict(req.form)
+		datas['__data'] = {}; key_to_rem=[];
+
+		for datum in datas:
+			if("__" not in datum):
+				datas['__data'][datum] = datas[datum]
+				key_to_rem.append(datum)
+		for key in key_to_rem: datas.pop(key,None)
+		datas['__data']  = json.dumps(datas['__data'] )
+		key = [];val = [];args=""
+		for datum in datas:
+			_VAL = datas[datum]
+			key.append("`{}`".format(datum))
+			val.append("'{}'".format(_VAL) )
+
+		sql = ('''INSERT INTO `_form_templates_data` ({}) VALUES ({});'''.format(", ".join(key),", ".join(val)))
+		print(sql)
+		print(rapid_mysql.do(sql))
+		return datas
+
+	def get_template(req):
+		temp_src = c.RECORDS + "../v2_view/core/pages/chunks/__templates__/"+req.form['form_code']+".html"
+		temps = open(temp_src,"r")
+		html = temps.read()
+		temps.close()
+		return html
 
 # ================================================
 # ================================================

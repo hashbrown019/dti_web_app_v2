@@ -26,6 +26,12 @@ function show_container_by_class(clname){
 	}
 }
 
+
+function personal_form_range_action(elem,field_name){
+	elem.parentNode.querySelectorAll("label.f_name")[0].innerHTML=field_name + "<i> Current Value: <b>" +elem.value + "</b></i>";
+}
+
+
 // ================================
 function EMBED__SCRIPT(obj,func=function(args,arg2){}) {
 	var EMBED_STACK = obj.contentWindow

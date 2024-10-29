@@ -1,50 +1,98 @@
-{% set S_FORM = personal_forms[URL_ARGS['lpi']|int] %}
+{% set S_FORM = personal_forms[URL_ARGS['lpi']|int-1] %}
 
-	<div class="row">
-	
-
-
-		<section class="section">
-			<div class="row">
-				<div class="col-lg-6">
-
+<div class="row">
+	<section class="section">
+		<div class="row">
+			<div id="c_created_template" class="col-lg-4">
+				<form method="POST" action = "/mis-v4/personal-forms/save-data">
+					<input type="hidden" name="__form_id" value="{{S_FORM['id']}}">
+					<input type="hidden" name="__form_name" value="{{S_FORM['form_name']}}">
+					<input type="hidden" name="__form_code" value="{{S_FORM['form_code']}}">
+					<input type="hidden" name="__form_createdby_id" value="{{S_FORM['by']}}">
+					<input type="hidden" name="__form_createdby_name" value="{{S_FORM['name']}}">
+					<input type="hidden" name="__form_filledby_id" value="{{USER_DATA['id']}}">
+					<input type="hidden" name="__form_filledby_name" value="{{USER_DATA['name']}}">
+					<input type="hidden" name="__url_referrer" id="__url_referrer" >
+					{% include '/chunks/__templates__/'+S_FORM['form_code']+'.html' %}
+					<button type="submit" class="btn btn-primary">Submit Form</button>
+				</form>
+			</div>
+			<div class="col-lg-8" >
+				<div id="save_form_holder">
 					<div class="card">
 						<div class="card-body">
-
 							<h5 class="card-title">
-								{{S_FORM['form_name']}}<br>
-								<span>{{S_FORM['form_desc']}}</span><br>
-								<span>{{S_FORM['form_code']}}</span>
+								Inputs from {{S_FORM['form_name']}}<br>
+								<span>Table for inpured data in this form</span>
 							</h5>
-							<form>
-
-								<!-- {{ S_FORM['form_code'] | get_save_template }} -->
-
-								
-								
-							</form>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="col-lg-6" >
-
-					<div id="save_form_holder">
-						
-						<div class="card">
-							<div class="card-body">
-								<h5 id="form_name_f" class="card-title">Form Title (Preview)</h5>
-								<p id="form_desc_f">This part describes the form you will create</p>
-								<!-- Advanced Form Elements -->
-								<form id="form_preview">
-								</form>
-								<!-- End General Form Elements -->
-
+							<div id="entries_data">
 							</div>
+							<span class="x-hides"></span>
+							
+							<hr>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript">
+	$onload(get_temp_data,function(){
+		var i_nc_temps = document.querySelectorAll("a.btn")
+		for (var i = 0; i < i_nc_temps.length; i++) {
+			i_nc_temps[i].style.display = "none"
+		}
+		$ID('__url_referrer').value = window.location.pathname + window.location.search
+	})
+
+	function get_temp_data(){
+		$send({
+			action : "/mis-v4/personal-forms/get-data",
+			method : POST,
+			data : $DATA({
+				"form_id" : "{{S_FORM['form_code']}}",
+				"current_user_group" : "{{USER_DATA['sg_info']['user_group']}}",
+				"current_user" : "{{USER_DATA['id']}}"
+			}),
+			func : function(r){
+				var res = JSON.parse(r)
+				println(res)
+				var arr_to_be_tble = []
+				for (var i = 0; i < res.length; i++) {
+					var item_to_be_push = {}
+					item_to_be_push["#"] = res[i]['__id']
+					for(key in res[i]['__data']){
+						item_to_be_push[key] = res[i]['__data'][key]
+					}
+					// item_to_be_push["entry_by_id"] = res[i]['__form_filledby_id']
+					item_to_be_push["Inputed"] = res[i]['__form_filledby_name']
+					arr_to_be_tble.push(item_to_be_push)
+				}
+				println(arr_to_be_tble)
+
+
+				var theaders = ""
+				for(key in arr_to_be_tble[0]){
+					label = key
+					try{label = $ID(key).parentElement.querySelectorAll("label")[0].innerText}
+					catch(e){}
+					theaders += `<th id="${key}" scope="col">${label.replaceAll("Current Value: 0","")}</th>`
+				}
+				theaders = `<thead><tr>${theaders}</tr></thead>`
+
+				var tdata = ""
+				for (var i = 0; i < arr_to_be_tble.length; i++) {
+					var td = ""
+					for(key in arr_to_be_tble[i]){
+						td += `<td>${arr_to_be_tble[i][key]}</td>`
+					}
+					tdata += `<tr>${td}</tr>`
+				}
+				tdata = `<tbody>${tdata}</tbody>`
+
+				$ID("entries_data").innerHTML = `<table class="table table-hover">${theaders}${tdata}</table>`
+			}
+		})
+	}
+</script>

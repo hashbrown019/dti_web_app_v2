@@ -30,16 +30,15 @@ class _main:
 		if(session["USER_DATA"][0]['security_group']==0): return redirect("/warning?type=user-no-role");
 		module = f'chunks{"/"+"-".join(module.split("-")[1:])}/{module}.html'
 		# return (f" - Loading Moule : {module}")
+		print("Current Module ["+module+"]")
 		return render_template(
 			f"chunks/core.html",
 			module=module,
 			URL_ARGS=request.args,
 			USER_DATA = session["USER_DATA"][0],
 			staff_list=dash_api.get_area_staff(),
-			security_group_ls=dash_api.get_security_group(),
-			personal_forms=dash_api.get_personal_forms()
-
-
+			security_group_ls=dash_api.get_security_group() if "core-system-control" in module else None ,
+			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None 
 		);
 
 	@app.route("/warning",methods=["GET"])
@@ -52,7 +51,7 @@ class _main:
 	# ==========================================================================================	
 	# ==========================================================================================	
 
-
+	
 
 	# =======================================
 	# =======================================
@@ -92,10 +91,12 @@ class _main:
 	@app.route("/mis-v4/personal-forms/<task>",methods=["POST","GET"])
 	@c.login_auth_web()
 	def personal_forms(task):
+		if(task=='get-template'): res = _backend_sub.personal_forms.get_template(request)
 		if(task=='save-temp'): res = _backend_sub.personal_forms.save_template(request)
+		if(task=='save-data'): res = redirect(_backend_sub.personal_forms.save_data(request)["__url_referrer"])
+		if(task=='get-data'): res = dash_api.get_temp_data(request)
+		if(task=='add-collection'): res = dash_api.add_to_collection(request)
 		return res
-
-
 
 	# =======================================
 	# =========GET-SESSION===================
