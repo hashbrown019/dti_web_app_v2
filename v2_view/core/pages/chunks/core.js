@@ -31,6 +31,51 @@ function personal_form_range_action(elem,field_name){
 	elem.parentNode.querySelectorAll("label.f_name")[0].innerHTML=field_name + "<i> Current Value: <b>" +elem.value + "</b></i>";
 }
 
+// $onload(check_DD_FROM_DB)
+function remove_DD_FROM_DB_opt(){
+	var DD_FROM_DB = $CLASS("DD_FROM_DB")
+	for (var i = 0; i < DD_FROM_DB.length; i++) {
+		DD_FROM_DB[i].innerHTML = ""
+	}
+}
+function check_DD_FROM_DB(){
+	var DD_FROM_DB = $CLASS("DD_FROM_DB")
+	var reqs = []
+	for (var i = 0; i < DD_FROM_DB.length; i++) {
+		reqs.push([
+			DD_FROM_DB[i].getAttribute('_db_table'),
+			DD_FROM_DB[i].getAttribute('_db_col'),
+			DD_FROM_DB[i].id
+		]);
+	}
+	gettable_data(reqs,reqs.length-1)
+}
+
+function gettable_data(reqs,l_index){
+	$send({
+		action : "/mis-v4/personal-forms/get-db-col",
+		method : POST,
+		data : $DATA({"_db_table":reqs[l_index][0] ,"_db_col":reqs[l_index][1]}),
+		func : function(r){
+			var opt = ""
+			var res = JSON.parse(r);
+			for (var i = 0; i < res.length; i++) {
+				var opt_str = ""+res[i]['col']
+				if(opt_str.length >0){
+					opt +=(`<option value="${res[i]['col']}||R-ID${res[i]['id']}">${res[i]['col']}</option>`)
+				}
+			}
+			$ID(reqs[l_index][2]).innerHTML = opt
+
+			if(l_index <=0  ){
+			}else{
+				l_index -=1
+				gettable_data(reqs,l_index) // CALL ITS SELF
+			}
+		}
+	})
+}
+
 
 // ================================
 function EMBED__SCRIPT(obj,func=function(args,arg2){}) {

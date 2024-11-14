@@ -1,4 +1,4 @@
-{% set S_FORM = personal_forms[URL_ARGS['lpi']|int-1] %}
+{% set S_FORM = personal_forms['all_forms'][URL_ARGS['lpi']|int-1] %}
 
 <div class="row">
 	<section class="section">
@@ -21,15 +21,26 @@
 				<div id="save_form_holder">
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">
-								Inputs from {{S_FORM['form_name']}}<br>
-								<span>Table for inpured data in this form</span>
-							</h5>
-							<div id="entries_data">
+							<div>
+								<h5 class="card-title x-left">
+									Inputs from {{S_FORM['form_name']}}<br>
+									<span>Table for inpured data in this form</span>
+								</h5>
+								<h5 class="card-title x-right x-right-align">
+									<button type="button" class="btn btn-primary mb-2">
+										<i class="bi bi-plus-square-fill"></i> Dashboard
+									</button>
+									<button type="button" class="btn btn-primary mb-2">
+										<i class="bi bi-plus-square-fill"></i> Tracker
+									</button>
+									<!-- <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#template-custom-dash">
+										Create Dashboard
+									</button> -->
+
+								</h5>
 							</div>
+							<div id="entries_data"></div>
 							<span class="x-hides"></span>
-							
-							<hr>
 						</div>
 					</div>
 				</div>
@@ -37,6 +48,7 @@
 		</div>
 	</section>
 </div>
+{% include '/chunks/personal-forms/personal-forms-modal-add-dash.html'%}
 <script type="text/javascript">
 	$onload(get_temp_data,function(){
 		var i_nc_temps = document.querySelectorAll("a.btn")
@@ -85,14 +97,22 @@
 				for (var i = 0; i < arr_to_be_tble.length; i++) {
 					var td = ""
 					for(key in arr_to_be_tble[i]){
-						td += `<td>${arr_to_be_tble[i][key]}</td>`
+						var row_data = ""+arr_to_be_tble[i][key]
+						row_data = row_data.split("||")
+						println(row_data)
+						println(typeof(row_data))
+						td += `<td record_id=${row_data[1]}>
+									${row_data[0]}
+								</td>`
 					}
 					tdata += `<tr>${td}</tr>`
 				}
 				tdata = `<tbody>${tdata}</tbody>`
 
 				$ID("entries_data").innerHTML = `<table class="table table-hover">${theaders}${tdata}</table>`
+				check_DD_FROM_DB() // THIS WILL CALL THE DROPDOWN FROM DATABASE API
 			}
 		})
 	}
 </script>
+

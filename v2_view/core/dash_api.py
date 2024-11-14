@@ -10,6 +10,15 @@ rapid_mysql = mysql(*c.DB_CRED)
 def farmer_count_per_area():
 	return
 
+def get_databases():
+	tbl = {}
+	res = rapid_mysql.select("SELECT TABLE_SCHEMA , TABLE_NAME ,  COLUMN_NAME FROM   INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'mis_2023';")
+	for tables in res:
+		# tbl.append(tables['TABLE_NAME'])
+		if tables['TABLE_NAME'] not in tbl : tbl[tables['TABLE_NAME']] = []
+		tbl[tables['TABLE_NAME']].append(tables['COLUMN_NAME'])
+	return tbl
+
 
 def get_area_staff():
 	# return session["USER_DATA"]
@@ -50,7 +59,12 @@ def add_to_collection(req):
 	rapid_mysql.do("INSERT INTO `_form_templates_collection`(`user_id`, `form_code`) VALUES ('{}','{}');".format(req.form['user_id'],req.form['form_code'] ) )
 	return req.form['url_referrer']
 
-
+def get_get_db_col(req):
+	_db_table = req.form["_db_table"]
+	_db_col = req.form["_db_col"]
+	# res = rapid_mysql.select("SELECT `id`,`{}` as 'col' FROM `{}` WHERE {};".format(_db_col,_db_table,position_data_filter("id")))
+	res = rapid_mysql.select("SELECT `id`,`{}` as 'col' FROM `{}`;".format(_db_col,_db_table))
+	return res
 # ================================================
 # ================================================
 # ================================================
@@ -67,7 +81,7 @@ def position_data_filter(row_id):
 		_filter = " 1 "
 	else:
 		session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-		_filter = " {} in ( SELECT id from users WHERE rcu='{}' )".format(row_id,session["USER_DATA"][0]["rcu"])
+		_filter = " `{}` in ( SELECT `id` from `users` WHERE `rcu`='{}' )".format(row_id,session["USER_DATA"][0]["rcu"])
 	return _filter
 
 

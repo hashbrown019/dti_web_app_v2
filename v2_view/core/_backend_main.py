@@ -10,6 +10,7 @@ from v2_view.core import dash_api
 from v2_view.core import dash_script
 from v2_view.core import _backend_sub
 
+
 app = Blueprint("form_a_v2",__name__,template_folder='pages')
 
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
@@ -37,6 +38,7 @@ class _main:
 			URL_ARGS=request.args,
 			USER_DATA = session["USER_DATA"][0],
 			staff_list=dash_api.get_area_staff(),
+			databases=dash_api.get_databases(),
 			security_group_ls=dash_api.get_security_group() if "core-system-control" in module else None ,
 			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None 
 		);
@@ -95,6 +97,7 @@ class _main:
 		if(task=='save-temp'): res = _backend_sub.personal_forms.save_template(request)
 		if(task=='save-data'): res = redirect(_backend_sub.personal_forms.save_data(request)["__url_referrer"])
 		if(task=='get-data'): res = dash_api.get_temp_data(request)
+		if(task=='get-db-col'): res = dash_api.get_get_db_col(request)
 		if(task=='add-collection'): res = dash_api.add_to_collection(request)
 		return res
 
