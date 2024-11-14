@@ -42,6 +42,11 @@ def get_personal_forms(user_id):
 	all_forms =  rapid_mysql.select("SELECT `_form_templates`.*, `users`.`id` as 'by' , `users`.`name` FROM `_form_templates` INNER JOIN `users` ON `_form_templates`.`user_id`= `users`.`id`;" )
 	return {"all_forms":all_forms,"collection":collection}
 
+def get_public_form(ids):
+	sql = "SELECT * FROM `_form_templates` WHERE `form_code`='{}' ;".format(ids)
+	print(sql)
+	return rapid_mysql.select(sql)
+
 def get_temp_data(req):
 	sql = "SELECT * FROM `_form_templates_data` WHERE {} AND`__form_code`='{}';".format(position_data_filter("__form_filledby_id"),req.form['form_id'])
 	print(sql)

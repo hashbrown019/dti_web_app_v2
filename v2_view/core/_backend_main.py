@@ -43,6 +43,7 @@ class _main:
 			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None 
 		);
 
+
 	@app.route("/warning",methods=["GET"])
 	def system_page():
 		_type = request.args['type']
@@ -66,7 +67,8 @@ class _main:
 		elif(task=='editpic'):res =  _backend_sub.user_pofile.edit_user_profilepic(request)
 		elif(task=='editpass'):res =  _backend_sub.user_pofile.edit_user_profilepass(request)
 		# return res
-		return redirect("/logout?urlvisit=/mis-v4/core-user-profile")
+		# return redirect("/logout?urlvisit=/mis-v4/core-user-profile")
+		return redirect("/mis-v4/core-system-control")
 
 	@app.route("/api/user_pic/<file_name>")
 	@app.route("/mis-v4/user-management/user_pic/<file_name>")
@@ -100,6 +102,16 @@ class _main:
 		if(task=='get-db-col'): res = dash_api.get_get_db_col(request)
 		if(task=='add-collection'): res = dash_api.add_to_collection(request)
 		return res
+
+	@app.route("/public/<module>",methods=["POST","GET"])
+	def public_form(module):
+		return render_template(
+			"/chunks/public-form/core-public-form.html",
+			form=module,
+			personal_forms=dash_api.get_public_form(module)[0],
+			USER_DATA = {"id":"9999999","name":"Guest"}
+			# URL_ARGS=request.args,
+			)
 
 	# =======================================
 	# =========GET-SESSION===================

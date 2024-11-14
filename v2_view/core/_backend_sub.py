@@ -138,8 +138,8 @@ class personal_forms:
 def position_data_filter():
 	_filter = "WHERE 1 "
 	JOB = session["USER_DATA"][0]["job"].lower()
-
-	if(JOB in "admin" or JOB in "super admin"):
+	print(session["USER_DATA"][0]['sg_info']['user_group'])
+	if(JOB in "admin" or JOB in "super admin" or session["USER_DATA"][0]['sg_info']['user_group']=="NATIONAL" or session["USER_DATA"][0]['sg_info']['user_group']=="ALL_OVERVIEW"):
 		session["USER_DATA"][0]["office"] = "NPCO"
 		_filter = "WHERE 1 "
 	else:
