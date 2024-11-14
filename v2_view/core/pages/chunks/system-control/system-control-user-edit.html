@@ -24,12 +24,13 @@
 				<select type="text" class="STAFF_INFO form-control" name="security_group" id="security_group" >
 					<option value="none" disabled selected>None</option>
 					{% for sg_item in security_group_ls:%}
+						{% if sg_item['id'] >= 26 or USER_DATA['sg_info']['user_group'] in ['NATIONAL']%}
 						<option value="{{sg_item['id']}}">SGID:{{sg_item['id']}}::-{{sg_item['security_group_name']}} :: by {{sg_item['name']}}
 						</option>
+						{% endif %}
 					{% endfor %}
 				</select>
 			</div>
-
 			<script type="text/javascript">
 				$onload(function(){
 					$ID('security_group').value="{{USER_DATA['id']}}"
