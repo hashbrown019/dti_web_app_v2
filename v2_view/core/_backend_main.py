@@ -47,7 +47,10 @@ class _main:
 	@app.route("/warning",methods=["GET"])
 	def system_page():
 		_type = request.args['type']
-		return render_template("/chunks/system-pages/core-system-pages.html",type=_type, USER_DATA = session["USER_DATA"][0],)
+		sql = 'SELECT * FROM `users` WHERE `rcu` = "{}" AND `security_group` = "26";'.format(session["USER_DATA"][0]['rcu'])
+		print(sql)
+		res = rapid_mysql.select(sql)
+		return render_template("/chunks/system-pages/core-system-pages.html",type=_type, USER_DATA = session["USER_DATA"][0],_admin=res)
 	# ==========================================================================================	
 	# ==========================================================================================	
 	# ==========================================================================================	
