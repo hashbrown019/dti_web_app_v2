@@ -12,9 +12,11 @@
 				<span class="input-group-text" id="basic-addon1"><span class="bi bi-grid-3x3-gap"></span></span>
 				<select type="text" class="SECURITYGROUP_DATA form-control" name="user_group" id="user_group" >
 					<option value="GUEST">GUEST</option>
+					{% if USER_GROUP in ["NATIONAL"] %}
 					<option value="ALL_OVERVIEW">ALL_OVERVIEW</option>
 					<option value="NATIONAL-ADMIN">NATIONAL-ADMIN</option>
 					<option value="REGIONAL-ADMIN">REGIONAL-ADMIN</option>
+					{% endif %}
 					<option value="REGIONAL">REGIONAL</option>
 					<option value="PROVINCIAL">PROVINCIAL</option>
 					<option value="PROVINCIAL-ADMIN">PROVINCIAL-ADMIN</option>
