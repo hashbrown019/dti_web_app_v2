@@ -15,7 +15,8 @@ def get_databases():
 	res = rapid_mysql.select("SELECT TABLE_SCHEMA , TABLE_NAME ,  COLUMN_NAME FROM   INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'mis_2023';")
 	for tables in res:
 		# tbl.append(tables['TABLE_NAME'])
-		if tables['TABLE_NAME'] not in tbl : tbl[tables['TABLE_NAME']] = []
+		if tables['TABLE_NAME'] not in tbl : 
+			tbl[tables['TABLE_NAME']] = []
 		tbl[tables['TABLE_NAME']].append(tables['COLUMN_NAME'])
 	return tbl
 
