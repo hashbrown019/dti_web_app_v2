@@ -13,7 +13,8 @@
 </div>
 <div class="ctrl_user_edit_placeholder" style="display:none;">
 	<form action="/mis-v4/user-management/edit" method="POST">
-		<input style="display: snone;" type="text" class="STAFF_INFO form-control" id="id" name="id">
+		<span>ID:<b>MIS-USER-<span id="disp_id"></span></b></span>
+		<input type="hidden" class="STAFF_INFO form-control" id="id" name="id">
 
 		<div class="row mb-3">
 			<label for="security_group_name" class="col-md-4 col-lg-3 col-form-label">Security-Group Assignment</label>
@@ -141,6 +142,17 @@
 			</div>
 		</div>
 
+		<div class="row mb-3">
+			<label for="status" class="col-md-4 col-lg-3 col-form-label">Status</label>
+			<div class="col-md-8 col-lg-9">
+				<select type="text" class="STAFF_INFO form-control" name="status" id="status" >
+					<option value="none" disabled selected>None</option>
+					<option value="active" >Active</option>
+					<option value="halt" >Deactivate</option>
+				</select>
+			</div>
+		</div>
+
 		<div class="text-center">
 			<a href="#" onclick="clear_staf_field()">Clear all Fields</a> | 
 			<button type="submit" class="btn btn-primary">Save Changes and Logout</button>
@@ -154,6 +166,7 @@
 			})
 
 			function get_staff_info(ids){
+				$ID("disp_id").innerHTML = ids
 				__cards.show(1)
 				$send({
 					action : "/mis-v4/system-control/get-staff-info",
@@ -168,6 +181,7 @@
 			}
 			
 			function clear_staf_field(){
+				$ID("disp_id").innerHTML = "NEW"
 				var STAFF_INFO = $CLASS("STAFF_INFO")
 				for (var i = 0; i < STAFF_INFO.length; i++) {
 					STAFF_INFO[i].value = ""
