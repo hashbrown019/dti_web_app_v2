@@ -39,6 +39,8 @@ def get_security_group():
 
 
 # ====================================================
+
+
 def get_personal_forms(user_id):
 	res = rapid_mysql.select("SELECT `form_code` FROM `_form_templates_collection` WHERE `user_id`={};".format(user_id))
 	collection = []

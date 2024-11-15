@@ -102,7 +102,7 @@
 								<select id="dd_db_name" name="dd_db_name" class="TEMPLATE_FILEDS form-control" onchange="set_col_opt(this.value)">
 									<option selected disabled value="none">Select Database</option>
 									{% for table in databases%}
-										<option>{{table}}</option>
+										<option>{{table|replace("bytearray(b'","")|replace("')","")}}</option>
 									{% endfor %}
 								</select>
 								<span class="input-group-text">@</span>
