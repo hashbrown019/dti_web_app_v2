@@ -18,7 +18,12 @@ def get_databases():
 		TBLN = str(tables['TABLE_NAME'])
 		if TBLN not in tbl : 
 			tbl[TBLN] = []
-		tbl[TBLN].append(tables['COLUMN_NAME'])
+
+		try:
+			tbl[TBLN].append(tables['COLUMN_NAME'].decode("utf-8"))
+		except:
+			tbl[TBLN].append(tables['COLUMN_NAME'])
+		
 	return tbl
 
 
