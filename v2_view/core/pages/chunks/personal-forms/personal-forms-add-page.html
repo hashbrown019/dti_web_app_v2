@@ -110,7 +110,8 @@
 									<option selected disabled value="none">Select Column</option>
 									{% for table in databases%}
 										{% for cols in databases[table] %}
-										<option class="{{table}} COL_OPT" style="display:none;">{{ cols }}</option>
+											{% set __table = table|replace("bytearray(b'","")|replace("')","") %}
+											<option class='{{__table}} COL_OPT' style="display:none;">{{ cols }}</option>
 										{% endfor %}
 									{% endfor %}
 								</select>
@@ -127,7 +128,7 @@
 									}
 								}
 							</script>
-							
+
 						</div>
 						<div class="row mb-3">
 							<label for="" class="col-sm-2 col-form-label">Name/ Description</label>
