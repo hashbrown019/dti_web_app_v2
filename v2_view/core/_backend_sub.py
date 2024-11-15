@@ -125,10 +125,11 @@ class personal_forms:
 
 	def get_template(req):
 		temp_src = c.RECORDS + "../v2_view/core/pages/chunks/__templates__/"+req.form['form_code']+".html"
-		temps = open(temp_src,"r")
+		temps = open(temp_src,"r",)
 		html = temps.read()
 		temps.close()
-		return html
+		return "--"
+		# return html.encode('cp1252')
 
 # ================================================
 # ================================================
