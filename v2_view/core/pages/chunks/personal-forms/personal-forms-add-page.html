@@ -39,6 +39,7 @@
 									</select>
 									<label for="form_shareable">Form Share</label>
 								</div>
+								{% if USER_GROUP in ["NATIONAL"] %}
 								<div class="form-floating mb-3">
 									<select class="FORM_DETAILS form-select" id="form_group" aria-label="Floating label select example">
 										<option value="all">Generic</option>
@@ -50,6 +51,7 @@
 											<option value="proc">Procurement</option>
 										</optgroup>
 										<optgroup label="Other Tools/modules">
+											<option value="mg">mg</option>
 											<option value="edt">EDT</option>
 											<option value="aos">AOS</option>
 											<option value="gesi">GESI</option>
@@ -59,6 +61,7 @@
 									</select>
 									<label for="form_group">Form Group</label>
 								</div>
+								{% endif %}
 							</div>
 						</div>
 					</form>

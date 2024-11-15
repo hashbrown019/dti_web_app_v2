@@ -1,39 +1,12 @@
 <div class="col-lg-8">
 	<div class="row">
 		<!-- Sales Card -->
-		<div class="pagetitle">
+		<!-- <div class="pagetitle">
 			<h5 class="card-title">My Forms <span>/Create your own Forms here</span></h5>
-		</div>
-		<div class="col-xxl-2 col-md-2">
-			<div class="card info-card sales-card">
-				<a href="/mis-v4/core-personal-forms?form-add">
-					<div class="card-body">
-						<div class="x-center">
-							<h5 class="card-title">Add Forms</h5>
-						</div>
-						<div class="x-center">
-							<i class="ri-add-circle-line x-xxlarge x-text-green"></i>
-						</div>
-					</div>
-				</a>
-			</div>
-			<br>
-			<!-- <div class="card info-card sales-card">
-				<a href="/mis-v4/core-personal-forms?form-add">
-					<div class="card-body x-center align-items-center  justify-content-center">
-						<h5 class="card-title">Add Forms</h5>
+		</div> -->
+		{% for _form in specific_forms['all_forms'] %}
+			{% if _form['form_group'] == URL_ARGS['m'] %}
 
-						<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-							<i class="bi bi-file-earmark-plus-fill"></i>
-						</div>
-					</div>
-				</a>
-			</div> -->
-
-
-		</div>
-		{% for _form in personal_forms['all_forms'] %}
-			{% if _form['by'] == USER_DATA['id'] or _form['form_code'] in personal_forms['collection']  %}
 			<div _collection="{{_form['form_code']}}" class="COLLECTION col-xxl-3 col-md-3" onclick="open_form_records({{_form['id']}},{{loop.index}})">
 				<div class="card info-card sales-card">
 					<div class="card-body">
@@ -65,40 +38,6 @@
 		<!-- End Sales Card -->
 		<!-- End Customers Card -->
 		<hr>
-		<div class="pagetitle">
-			<h5 class="card-title">Discover! <span> Add other forms to your collection</span></h5>
-		</div>
-
-		{% for _form in personal_forms['all_forms'] %}
-			{% if _form['form_group'] == "all" %}
-				<div id="{{_form['form_code']}}" class="col-xxl-3 col-md-3" onclick="show_template_form('{{_form['form_code']}}');check_DD_FROM_DB();">
-					<div class="card info-card sales-card">
-						<div class="card-body">
-							<h5 class="card-title x-small">{{_form['form_name']}} <br>
-								<span>{{_form['form_nature']}} | {{_form['form_group']}}</span>
-							</h5>
-							<div class="d-flex align-items-center">
-								<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-									{% if _form['form_nature'] == "form"%}
-										<i class="bi bi-pencil-square"></i>
-									{%elif _form['form_nature'] == "tracker"%}
-										<i class="bi bi-bar-chart-line"></i>
-									{% else %}
-										<i class="bi bi-pen-fill"></i>
-									{% endif %}
-								</div>
-								<div class="ps-3 x-small">
-									<!-- <h6>$3,264</h6> -->
-									<span class="text-muted small pt-2 ps-1">By</span>
-									<span class="text-success small pt-1 fw-bold">{{_form['name']}}</span>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			{% endif %}
-		{% endfor %}
 	</div>
 	
 </div>

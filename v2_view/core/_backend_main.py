@@ -40,7 +40,8 @@ class _main:
 			staff_list=dash_api.get_area_staff(),
 			databases=dash_api.get_databases(),
 			security_group_ls=dash_api.get_security_group() if "core-system-control" in module else None ,
-			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None 
+			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None ,
+			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "tools-trackers-specific" in module else None 
 		);
 
 
