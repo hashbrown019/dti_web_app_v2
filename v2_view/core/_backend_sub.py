@@ -2,9 +2,9 @@ from modules.Connections import mysql,sqlite
 import Configurations as c
 from flask import session
 from modules.Req_Brorn_util import file_from_request
-import json
+import json, os
+from flask import redirect
 # from v2_view.core import _socketIO
-
 
 rapid_mysql = mysql(*c.DB_CRED)
 FILE_REQ = file_from_request(c.FLASK_APP)
@@ -130,6 +130,13 @@ class personal_forms:
 		temps.close()
 		return "--"
 		# return html.encode('cp1252')
+
+	def save_dip_rep(req):
+		excel_ = req.files
+		UPLOAD_NAME = "{}_DIP_TRACKER.xlsx".format(session["USER_DATA"][0]["id"])
+		__f = FILE_REQ.save_file_from_request(req,"demoA",c.RECORDS+"/objects/spreadsheets_dcf",False,False,UPLOAD_NAME)
+
+		return redirect("/mis-v4/core-tools-trackers-specific?panel&m=fn")
 
 # ================================================
 # ================================================

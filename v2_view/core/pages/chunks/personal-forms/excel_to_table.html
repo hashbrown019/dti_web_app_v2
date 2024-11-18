@@ -1,0 +1,49 @@
+// (B) ON FINISH LOADING
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script type="text/javascript">
+
+
+
+	document.getElementById("demoA").onchange = (evt) => {
+		// (A) NEW FILE READER
+		var table = document.getElementById("demoB");
+		var reader = new FileReader();
+	 
+		// (B) ON FINISH LOADING
+		reader.addEventListener("loadend", evt => {
+			// (B1) GET DIV CONTAINER
+			var div = document.getElementById("demoB");
+			div.innerHTML = "";
+			// (B2) LOOP THROUGH ALL WORKSHEETS
+			var workbook = XLSX.read(evt.target.result, {type: "binary"});
+			for (let worksheet of Object.values(workbook.Sheets)) {
+				// (B2-1) CREATE TABLE & APPEND TO DIV CONTAINER
+				var table = document.createElement("table");
+				table.classList.add("x-tiny");
+				table.classList.add("x-table-all");
+				table.classList.add("ALL_TABLES");
+				table.style.display="none"
+				div.appendChild(table);
+		 
+				// (B2-2) READ EXCEL CELLS & INSERT ROWS/COLUMNS
+				var range = XLSX.utils.decode_range(worksheet["!ref"]);
+				for (let row=range.s.r; row<=range.e.r; row++) {
+					let r = table.insertRow();
+					for (let col=range.s.c; col<=range.e.c; col++) {
+						let c = r.insertCell(),
+						xcell = worksheet[XLSX.utils.encode_cell({r:row, c:col})];
+						try{
+							c.innerHTML = xcell.v;
+						}catch(e){
+
+						}
+					}
+				}
+			}
+		});
+	 
+		// (C) START - READ SELECTED EXCEL FILE
+		reader.readAsArrayBuffer(evt.target.files[0]);
+		// table.ajax.reload();
+	};
+</script>

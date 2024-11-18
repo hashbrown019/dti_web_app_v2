@@ -105,6 +105,7 @@ class _main:
 		if(task=='get-data'): res = dash_api.get_temp_data(request)
 		if(task=='get-db-col'): res = dash_api.get_get_db_col(request)
 		if(task=='add-collection'): res = dash_api.add_to_collection(request)
+		if(task=='save-dip-report'): res = _backend_sub.personal_forms.save_dip_rep(request)
 		return res
 
 	@app.route("/public/<module>",methods=["POST","GET"])
