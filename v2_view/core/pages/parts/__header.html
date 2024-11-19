@@ -93,3 +93,40 @@
 		</nav><!-- End Icons Navigation -->
 
 	</header><!-- End Header -->
+
+
+	<script type="text/javascript">
+	function module_restricted(){
+		$ID("module_msg_holder").innerHTML = (`
+			<div
+				class="alert alert-danger alert-dismissible fade show" 
+				role="alert"
+				style="
+					position: fixed;
+					bottom: 50px;
+					right: 10px;
+				"
+				>
+				The module you're trying to access is restricted to your account. Contact your area admin to enable this module
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		`)
+	}
+
+	function no_orient(){
+		$ID("module_msg_holder").innerHTML = (`
+			<div
+				class="alert alert-warning alert-dismissible fade show" 
+				role="alert"
+				style="
+					position: fixed;
+					bottom: 70px;
+					right: 10px;
+				"
+				>
+				Orientation for this module has not been started. contatct your MIS Staff for more information
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		`)
+	}
+</script>

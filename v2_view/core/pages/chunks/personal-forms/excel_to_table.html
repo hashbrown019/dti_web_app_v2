@@ -1,4 +1,4 @@
-// (B) ON FINISH LOADING
+// END OF TABLE
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script type="text/javascript">
 
@@ -16,13 +16,14 @@
 			div.innerHTML = "";
 			// (B2) LOOP THROUGH ALL WORKSHEETS
 			var workbook = XLSX.read(evt.target.result, {type: "binary"});
+			loop_ind = 0
 			for (let worksheet of Object.values(workbook.Sheets)) {
 				// (B2-1) CREATE TABLE & APPEND TO DIV CONTAINER
 				var table = document.createElement("table");
 				table.classList.add("x-tiny");
 				table.classList.add("x-table-all");
 				table.classList.add("ALL_TABLES");
-				table.style.display="none"
+				if(loop_ind > 0){table.style.display="none"}
 				div.appendChild(table);
 		 
 				// (B2-2) READ EXCEL CELLS & INSERT ROWS/COLUMNS
@@ -39,6 +40,7 @@
 						}
 					}
 				}
+				loop_ind += 1
 			}
 		});
 	 

@@ -136,7 +136,7 @@ class personal_forms:
 		UPLOAD_NAME = "{}_DIP_TRACKER.xlsx".format(session["USER_DATA"][0]["id"])
 		__f = FILE_REQ.save_file_from_request(req,"demoA",c.RECORDS+"/objects/spreadsheets_dcf",False,False,UPLOAD_NAME)
 
-		return redirect("/mis-v4/core-tools-trackers-specific?panel&m=fn")
+		return redirect("/mis-v4/core-tools-trackers-specific?panel&m=mg")
 
 # ================================================
 # ================================================
