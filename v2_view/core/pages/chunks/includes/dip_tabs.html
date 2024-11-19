@@ -5,7 +5,7 @@
 			<a class=""><span class="bi bi-cloud-download"></span> Download Template</a>
 		<!-- Bordered Tabs -->
 		<div class="row mb-3">
-			<form action="/mis-v4/personal-forms/save-dip-report" method="POST" enctype="multipart/form-data">
+			<form class="form" action="/mis-v4/personal-forms/save-dip-report" method="POST" enctype="multipart/form-data">
 				<div class="col-sm-10">
 					<input class="form-control" type="file" name="demoA" id="demoA" accept=".xls,.xlsx">
 				</div>
@@ -30,11 +30,19 @@
 			<a class="btn x-text-blue" onclick="st(10)">Prod. Investment</a>
 			<a class="btn x-text-blue" onclick="st(10)">FMI</a>
 
-			<div id="demoB"></div>
+			<div id="demoB" style="overflow-x: scroll;height: 80vh;"></div>
 			<!-- <table class="x-table-all x-tiny" id="demoB"></table> -->
 		</div>
 
 	</div>
+	<style type="text/css">
+		tbody{
+		  height:20px;
+		  overflow:auto;
+		  overflow-x:hidden;
+		  border: 1px solid black;
+		}
+	</style>
 	<script type="text/javascript">
 		function st(tbl){
 			var ALL_TABLES = $CLASS('ALL_TABLES')
@@ -46,7 +54,31 @@
 				}
 			}
 		}
-	</script>
-	{% include '/chunks/personal-forms/excel_to_table.html'%}
 
+
+		$onload(function(){
+			fetch("/dip/getfile?file={{USER_DATA['id']}}_DIP_TRACKER.xlsx")
+				.then(res => res.blob()) // Gets the response and returns it as a blob
+				.then(blob => {
+					// Here's where you get access to the blob
+					// And you can use it for whatever you want
+					// Like calling ref().put(blob)
+
+					// Here, I use it to make an image appear on the page
+					let objectURL = URL.createObjectURL(blob);
+					let myImage = new Blob();
+					println(myImage)
+					// myImage.src = objectURL;
+			});
+		})
+
+
+	</script>
+
+
+
+<!-- ========================================================= -->
+
+
+	{% include '/chunks/personal-forms/excel_to_table.html'%}
 {% endif %}

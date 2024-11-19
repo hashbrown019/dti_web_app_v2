@@ -1,7 +1,8 @@
 // END OF TABLE
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script type="text/javascript">
-	
+
 	document.getElementById("demoA").onchange = (evt) => {
 		// (A) NEW FILE READER
 		var table = document.getElementById("demoB");
@@ -25,18 +26,32 @@
 				div.appendChild(table);
 		 
 				// (B2-2) READ EXCEL CELLS & INSERT ROWS/COLUMNS
+				var row_count = 0
 				var range = XLSX.utils.decode_range(worksheet["!ref"]);
 				for (let row=range.s.r; row<=range.e.r; row++) {
 					let r = table.insertRow();
+
+					if(row_count <5 ){
+						r.style['background-color']="teal"
+						r.style["height"]="10px"
+					}
+
 					for (let col=range.s.c; col<=range.e.c; col++) {
 						let c = r.insertCell(),
 						xcell = worksheet[XLSX.utils.encode_cell({r:row, c:col})];
 						try{
-							c.innerHTML = xcell.v;
+							// println(xcell)
+							if(row_count <5 ){
+								c.innerHTML = `<b class="x-medium">${xcell.v}</b>`;
+							}else{
+								c.innerHTML = xcell.v;
+							}
+							c.style.height="10px"
 						}catch(e){
 
 						}
 					}
+					row_count+=1
 				}
 				loop_ind += 1
 			}

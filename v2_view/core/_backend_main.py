@@ -118,8 +118,21 @@ class _main:
 			# URL_ARGS=request.args,
 			)
 
+	@app.route("/dip/getfile",methods=["POST","GET"])
+	def get_file():
+		file_ = request.args['file']
+		print(file_)
+		return send_file(c.RECORDS+"/objects/spreadsheets_dcf/"+file_, as_attachment=True,download_name="download")
+
+
+
 	# =======================================
 	# =========GET-SESSION===================
+
+
+
+
+
 	@app.route("/mis-v4/get-session",methods=["POST","GET"])
 	@c.login_auth_web()
 	def test():
