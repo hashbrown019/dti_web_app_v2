@@ -4,33 +4,36 @@
 		<!-- <div class="pagetitle">
 			<h5 class="card-title">My Forms <span>/Create your own Forms here</span></h5>
 		</div> -->
+		{% set loop_index = 0 %}
 		{% for _form in specific_forms['all_forms'] %}
 			{% if _form['form_group'] == URL_ARGS['m'] %}
 
-			<div _collection="{{_form['form_code']}}" class="COLLECTION col-xxl-3 col-md-3" onclick="open_form_records({{_form['id']}},{{loop.index}})">
-				<div class="card info-card sales-card">
-					<div class="card-body">
-						<h5 class="card-title x-small">{{_form['form_name']}} <br>
-							<span>{{_form['form_nature']}} | {{_form['form_group']}}</span>
-						</h5>
-						<div class="d-flex ">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-								{% if _form['form_nature'] == "form"%}
-									<i class="bi bi-pencil-square"></i>
-								{%elif _form['form_nature'] == "tracker"%}
-									<i class="bi bi-bar-chart-line"></i>
-								{% else %}
-									<i class="bi bi-pen-fill"></i>
-								{% endif %}
-							</div>
-							<div class="ps-3 x-small">
-								<span class="text-muted x-tiny pt-2 ps-1">Form Created By</span><br>
-								<span class="text-success small pt-1 fw-bold">{{_form['name']}}</span>
+				<div _collection="{{_form['form_code']}}" class="COLLECTION col-xxl-3 col-md-3" onclick="open_form_records({{_form['id']}},{{loop.index}})">
+					<div class="card info-card sales-card">
+						<div class="card-body">
+							<h5 class="card-title x-small">{{_form['form_name']}} <br>
+								<span>{{_form['form_nature']}} | {{_form['form_group']}}</span>
+							</h5>
+							<div class="d-flex ">
+								<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+									{% if _form['form_nature'] == "form"%}
+										<i class="bi bi-pencil-square"></i>
+									{%elif _form['form_nature'] == "tracker"%}
+										<i class="bi bi-bar-chart-line"></i>
+									{% else %}
+										<i class="bi bi-pen-fill"></i>
+									{% endif %}
+								</div>
+								<div class="ps-3 x-small">
+									{{loop_index}}
+									<span class="text-muted x-tiny pt-2 ps-1">Form Created By</span><br>
+									<span class="text-success small pt-1 fw-bold">{{_form['name']}}</span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+				{% set loop_index = loop_index + 1 %}
 			{% endif %}
 		{% endfor %}
 		<!-- End Sales Card -->
@@ -43,15 +46,20 @@
 	
 </div>
 <script type="text/javascript">
+
+
+	$onload(no_orient)
+
+
 	function open_form_records(ids,l_ind){
 		goto('/mis-v4/core-personal-forms?form-data&fid='+ids+'&lpi='+l_ind)
 	}
-	$onload(function(){
-		var collection = $CLASS("COLLECTION")
-		for (var i = 0; i < collection.length; i++) {
-			$ID(collection[i].getAttribute('_collection')).style.display = "none"
-		}
-	})
+	// $onload(function(){
+	// 	var collection = $CLASS("COLLECTION")
+	// 	for (var i = 0; i < collection.length; i++) {
+	// 		$ID(collection[i].getAttribute('_collection')).style.display = "none"
+	// 	}
+	// })
 
 	function show_template_form(form_code){
 		$send({
