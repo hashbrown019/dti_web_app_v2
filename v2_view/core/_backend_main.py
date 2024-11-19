@@ -121,14 +121,14 @@ class _main:
 	@app.route("/dip/getfile",methods=["POST","GET"])
 	def get_file():
 		file_ = request.args['file']
+		file_ = send_file(c.RECORDS+"/objects/spreadsheets_dcf/"+file_, as_attachment=True,download_name="download")
 		print(file_)
-		return send_file(c.RECORDS+"/objects/spreadsheets_dcf/"+file_, as_attachment=True,download_name="download")
+		return file_
 
 
 
 	# =======================================
 	# =========GET-SESSION===================
-
 
 
 
