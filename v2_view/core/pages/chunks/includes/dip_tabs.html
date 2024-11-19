@@ -1,14 +1,17 @@
 {% if URL_ARGS['m'] == "mg" %}
 
 	<div class="card-body">
-		<h5 class="card-title">DIP Implementation Tracker Records</h5>
-			<a class=""><span class="bi bi-cloud-download"></span> Download Template</a>
+		<div class="x-container">
+			<h5 class="x-left card-title">DIP Implementation Tracker Records</h5>
+			<a class="x-right x-padding" onclick="download__('DIP.xlsx')"><br><span class="bi bi-cloud-download"></span> Download Template</a>
+		</div>
 		<!-- Bordered Tabs -->
 		<div class="row mb-3">
 			<form class="form" action="/mis-v4/personal-forms/save-dip-report" method="POST" enctype="multipart/form-data">
 				<div class="col-sm-10">
 					<input class="form-control" type="file" name="demoA" id="demoA" accept=".xls,.xlsx">
 				</div>
+				<br>
 				<button type="submit" class="btn btn-primary col-sm-2 "><span class="bi bi-cloud-upload"></span> Save</button>
 			</form>
 		</div>
@@ -60,19 +63,26 @@
 			fetch("/dip/getfile?file={{USER_DATA['id']}}_DIP_TRACKER.xlsx")
 				.then(res => res.blob()) // Gets the response and returns it as a blob
 				.then(blob => {
+					var sr = $ID('demoA')
 					// Here's where you get access to the blob
 					// And you can use it for whatever you want
 					// Like calling ref().put(blob)
 
 					// Here, I use it to make an image appear on the page
 					let objectURL = URL.createObjectURL(blob);
+					println(objectURL)
 					let myImage = new Blob();
 					println(myImage)
-					// myImage.src = objectURL;
+					sr.filename = objectURL;
 			});
 		})
 
-
+		function download__(fff){
+			let a= document.createElement('a');
+			a.target= '_blank';
+			a.href= '/login/download_file/'+fff;
+			a.click();
+		}
 	</script>
 
 
