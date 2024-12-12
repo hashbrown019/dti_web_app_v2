@@ -117,7 +117,7 @@ class personal_forms:
 			_VAL = datas[datum]
 			key.append("`{}`".format(datum))
 			val.append("'{}'".format(_VAL) )
-
+		
 		sql = ('''INSERT INTO `_form_templates_data` ({}) VALUES ({});'''.format(", ".join(key),", ".join(val)))
 		print(sql)
 		print(rapid_mysql.do(sql))
