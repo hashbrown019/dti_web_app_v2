@@ -3,6 +3,9 @@
 		<hr>
 		Please select user on the right side panel
 		<hr>
+		<button class="btn btn-primary" onclick="__cards.show(2)">
+			Or create user <span class="bi bi-person-plus-fill"></span>
+		</button>
 	</h3>
 </div><div class="ctrl_user_edit_placeholder" style="display:none;">
 	<h3 class="x-center">
@@ -13,7 +16,18 @@
 </div>
 <div class="ctrl_user_edit_placeholder" style="display:none;">
 	<form action="/mis-v4/user-management/edit" method="POST">
-		<span>ID:<b>MIS-USER-<span id="disp_id"></span></b></span>
+		<div class="x-row">
+			<div class="row x-container x-left">
+				<span >ID:<b>MIS-USER-<span id="disp_id">NEW</span></b></span>
+			</div>
+
+			<div class="row x-container x-right" onclick="clear_staf_field()">
+				<span class="btn btn-primary">
+					Clear all field and create user
+					<span class="bi bi-person-plus-fill"></span>
+				</span>
+			</div>
+		</div>
 		<input type="hidden" class="STAFF_INFO form-control" id="id" name="id">
 
 		<div class="row mb-3">
@@ -57,6 +71,7 @@
 			<label for="Job" class="col-md-4 col-lg-3 col-form-label">Staff Position</label>
 			<div class="col-md-8 col-lg-9">
 				<input type="text" class="STAFF_INFO form-control" name="job" id="job" placeholder="Web Designer">
+				<i>Staff positions are the roles of the user in the MIS and does not reflect the position and staff position of the user in RAPID Growth Project</i>
 			</div>
 		</div>
 		
@@ -91,7 +106,7 @@
 					<optgroup label="RCU 9">
 						<option value="Zamboanga del Norte">Zamboanga del Norte</option>
 						<option value="Zamboanga del Sur">Zamboanga del Sur</option>
-						<option value="Zamboanga del Sibugay">Zamboanga del Sibugay</option>
+						<option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
 					</optgroup>
 					<optgroup label="RCU 10">
 						<option value="Bukidnon">Bukidnon</option>
@@ -99,7 +114,7 @@
 						<option value="Misamis Oriental">Misamis Oriental</option>
 					</optgroup>
 					<optgroup label="RCU 11">
-						<option value="Davao de Oror">Davao de Oror</option>
+						<option value="Davao de Oro">Davao de Oro</option>
 						<option value="Davao del Norte">Davao del Norte</option>
 						<option value="Davao del Sur">Davao del Sur</option>
 						<option value="Davao Occidental">Davao Occidental</option>
@@ -112,7 +127,7 @@
 					</optgroup>
 					<optgroup label="RCU 13">
 						<option value="Agusan del Norte">Agusan del Norte</option>
-						<option value="Agusan del">Agusan del</option>
+						<option value="Agusan del Sur">Agusan del Sur</option>
 						<option value="Surigao del Sur">Surigao del Sur</option>
 					</optgroup>
 					<optgroup label="BARMM">
@@ -156,7 +171,7 @@
 
 		<div class="text-center">
 			<a href="#" onclick="clear_staf_field()">Clear all Fields</a> | 
-			<button type="submit" class="btn btn-primary">Save Changes and Logout</button>
+			<button type="submit" class="btn btn-primary">Save Changes and refresh page</button>
 		</div>
 		<script type="text/javascript">
 			var __cards = show_container_by_class("ctrl_user_edit_placeholder")

@@ -1,5 +1,5 @@
 import Configurations as c
-
+import requests
 from flask import Flask, session, jsonify, request, redirect, Blueprint, make_response, render_template
 
 # ======FOR_LIGIN_AUTH==============
@@ -82,6 +82,18 @@ def test_server():#NOT FOR LOCAL USE
 		return redirect("http://18.138.151.175/webrep") #NOT FOR LOCAL USE
 	else:#NOT FOR LOCAL USE
 		return redirect("http://{}:5000/webrep".format(c.IP_address))#NOT FOR LOCAL USE
+
+
+@app.route("/proxy") #NOT FOR LOCAL USE
+def proxy():#NOT FOR LOCAL USE
+
+	url = request.args['proxy']
+	data = dict(request.json)
+	response = requests.post(url, data=data)
+
+	print(response.status_code)
+	print(response.content)
+	return response.content
 
 @app.before_request
 def before_request():
