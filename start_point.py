@@ -93,7 +93,7 @@ def proxy():#NOT FOR LOCAL USE
 	print(" == data from proxy")
 	print(data)
 	print(" == send data from proxy")
-	response = requests.post(url, data=data)
+	response = requests.post(url, data=data,headers = {'Content-type': 'application/json'})
 
 	print(response.status_code)
 	print(response.content)
