@@ -88,11 +88,17 @@ def test_server():#NOT FOR LOCAL USE
 def proxy():#NOT FOR LOCAL USE
 	print(request.headers)
 	url = request.headers['X-Proxy-Url']
+	print(f" == Proxy Url [{url}]")
 	data = dict(request.get_json())
+	print(" == data from proxy")
+	print(data)
+	print(" == send data from proxy")
 	response = requests.post(url, data=data)
 
 	print(response.status_code)
 	print(response.content)
+
+	print(" == Returning")
 	return response.content
 
 @app.before_request
