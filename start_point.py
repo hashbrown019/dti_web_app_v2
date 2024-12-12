@@ -87,7 +87,7 @@ def test_server():#NOT FOR LOCAL USE
 @app.route("/proxy",methods=['POST','GET']) #NOT FOR LOCAL USE
 def proxy():#NOT FOR LOCAL USE
 
-	url = request.args['proxy']
+	url = request.headers['proxy_url']
 	data = dict(request.json)
 	response = requests.post(url, data=data)
 
