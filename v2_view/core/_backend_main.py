@@ -72,7 +72,8 @@ class _main:
 
 	@app.route("/mis-v4/user-registration-submit",methods=["POST","GET"])
 	def user_registration_submit():
-		return _backend_sub.user_pofile.user_registration_submit(request)
+		# return _backend_sub.user_pofile.user_registration_submit(request)
+		return redirect("/login")
 
 	@app.route("/api/user_pic/<file_name>")
 	@app.route("/mis-v4/user-management/user_pic/<file_name>")
