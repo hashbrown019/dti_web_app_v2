@@ -1,0 +1,139 @@
+<html lang="en">
+	{% include 'a_v2_head.html'%}
+	<body>
+		<main>
+			<div class="container">
+				<section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-lg-8 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+								<div class="d-flex justify-content-center py-4">
+									<img class="img-fluid" src="../static/img/banner.png" style="width:50%">
+								</div><!-- End Logo -->
+								<div class="card mb-3">
+									<div class="card-body">
+										<div class="pt-4 pb-2">
+											<h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+											<p class="text-center small">Enter your personal details to create account</p>
+										</div>
+										<!-- ======FORM======= -->
+										<form action="/mis-v4/user-registration-submit" class="row g-3 needs-validation" method="POST" novalidate>
+											<div id="form_preview">
+												<div class="form-floating mb-3">
+													<input id="name" name="name" type="text" class="form-control"required="">
+													<label class="f_name" for="floatingSelect">Name</label>
+												</div>
+												<div class="form-floating mb-3">
+													<input id="address" name="address" type="text" class="form-control"required="">
+													<label class="f_name" for="floatingSelect">Home Address</label>
+												</div>
+												<div class="form-floating mb-3">
+													<input id="email" name="email" type="text"class="form-control" type="email" required="">
+													<label class="f_name" for="floatingSelect">Email</label>
+												</div>
+												<div class="form-floating mb-3">
+													<input id="job" name="job" class="form-control" required="">
+													<label class="f_name" for="floatingSelect">Designation/Position</label>
+												</div>
+												<div class="form-floating mb-3">
+													<input id="number" name="number" type="number" class="form-control" required="">
+													<label class="f_name" for="floatingSelect">Contact Number</label>
+												</div>
+												<div class="form-floating mb-3">
+													<select class="form-select" id="rcu" name="rcu" required="">
+														<option value="none" disabled>None</option>
+														<option value="RCU 8">RCU 8</option>
+														<option value="RCU 9">RCU 9</option>
+														<option value="RCU 10">RCU 10</option>
+														<option value="RCU 11">RCU 11</option>
+														<option value="RCU 12">RCU 12</option>
+														<option value="RCU 13">RCU 13</option>
+														<option value="BARMM">BARMM</option>
+														<option value="NPCO">NPCO</option>
+													</select>
+													<label class="f_name" for="floatingSelect">RCU</label>
+												</div>
+												<div class="form-floating mb-3">
+													<select class="form-select" id="pcu" name="pcu" required="">
+														<option value="none">None / Assigned at RCU</option>
+														<optgroup label="RCU 8">
+															<option value="Leyte">Leyte</option>
+															<option value="Northern Samar">Northern Samar</option>
+															<option value="Southern Leyte">Southern Leyte</option>
+														</optgroup>
+														<optgroup label="RCU 9">
+															<option value="Zamboanga del Norte">Zamboanga del Norte</option>
+															<option value="Zamboanga del Sur">Zamboanga del Sur</option>
+															<option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+														</optgroup>
+														<optgroup label="RCU 10">
+															<option value="Bukidnon">Bukidnon</option>
+															<option value="Lanao del Norte">Lanao del Norte</option>
+															<option value="Misamis Oriental">Misamis Oriental</option>
+														</optgroup>
+														<optgroup label="RCU 11">
+															<option value="Davao de Oro">Davao de Oro</option>
+															<option value="Davao del Norte">Davao del Norte</option>
+															<option value="Davao del Sur">Davao del Sur</option>
+															<option value="Davao Occidental">Davao Occidental</option>
+															<option value="Davao Oriental">Davao Oriental</option>
+														</optgroup>
+														<optgroup label="RCU 12">
+															<option value="North Cotabato">North Cotabato</option>
+															<option value="Sarangani">Sarangani</option>
+															<option value="Sultan Kudarat">Sultan Kudarat</option>
+														</optgroup>
+														<optgroup label="RCU 13">
+															<option value="Agusan del Norte">Agusan del Norte</option>
+															<option value="Agusan del Sur">Agusan del Sur</option>
+															<option value="Surigao del Sur">Surigao del Sur</option>
+														</optgroup>
+														<optgroup label="BARMM">
+															<option value="Maguindanao">Maguindanao</option>
+														</optgroup>
+													</select>
+													<label class="f_name" for="floatingSelect">PCU (If applicable)</label>
+												</div>
+												<div class="form-floating mb-3">
+													<hr> 
+												</div>
+												<div class="form-floating mb-3">
+													<input id="username" name="username" type="text" class="form-control" required="">
+													<label class="f_name" for="floatingSelect">Username</label>
+												</div>
+												<div class="form-floating mb-3">
+													<input id="password" name="password" type="password" class="form-control" required="">
+													<label class="f_name" for="floatingSelect">Password</label>
+												</div>
+
+												<div class="form-floating mb-3 d-grid gap-2 mt-3">
+													<button type="submit" class="btn btn-primary" type="button">
+														Request an account
+													</button>
+												</div>
+											</div>
+										</form>
+										<!-- ================= -->
+									</div>
+								</div>
+
+								<div class="credits">
+									<div class="copyright">
+										&copy; Copyright <strong><span>DTI RAPID Growth Project - Management Information System</span></strong>. All Rights Reserved
+									</div>
+									<div class="credits">
+										Designed by <a href="#">DTI-RAPID M&E IT Team</a>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</section>
+
+			</div>
+		</main><!-- End #main -->
+	</body>
+</html>

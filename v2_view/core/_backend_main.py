@@ -24,8 +24,6 @@ class _main:
 		super(_main, self).__init__()
 		self.arg = arg
 
-
-
 	def is_on_session(): return ('USER_DATA' in session)
 	@app.route("/mis-v4/<module>",methods=["POST","GET"])
 	@c.login_auth_web()
@@ -46,7 +44,6 @@ class _main:
 			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "tools-trackers-specific" in module else None 
 		);
 
-
 	@app.route("/warning",methods=["GET"])
 	def system_page():
 		_type = request.args['type']
@@ -54,15 +51,6 @@ class _main:
 		print(sql)
 		res = rapid_mysql.select(sql)
 		return render_template("/chunks/system-pages/core-system-pages.html",type=_type, USER_DATA = session["USER_DATA"][0],_admin=res)
-
-
-	# ==============================----------------------======================================	
-	# ==========================================================================================	
-	# ==============================----------------------======================================	
-	# ==========================================================================================	
-	# ==============================----------------------======================================	
-
-	
 
 	# =======================================
 	# =======================================
@@ -77,6 +65,14 @@ class _main:
 		# return res
 		# return redirect("/logout?urlvisit=/mis-v4/core-user-profile")
 		return redirect("/mis-v4/core-system-control")
+
+	@app.route("/mis-v4/user-registration",methods=["POST","GET"])
+	def user_registration():
+		return render_template("/chunks/system-control/system-control-user-reg.html")
+
+	@app.route("/mis-v4/user-registration-submit",methods=["POST","GET"])
+	def user_registration_submit():
+		return _backend_sub.user_pofile.user_registration_submit(request)
 
 	@app.route("/api/user_pic/<file_name>")
 	@app.route("/mis-v4/user-management/user_pic/<file_name>")
@@ -100,6 +96,7 @@ class _main:
 	# =======================================
 	# =======================================
 	# =========PERSONAL-FORM=================
+
 	@app.route("/mis-v4/personal-forms/<task>",methods=["POST","GET"])
 	@c.login_auth_web()
 	def personal_forms(task):

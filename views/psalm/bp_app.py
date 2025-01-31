@@ -359,6 +359,8 @@ def viewprofile():
 def menuv2():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	if(is_on_session()):
+		return redirect("/mis-v4/core-main")
+		# DEPRICATED MENU
 		sesh = session["USER_DATA"][0]
 		user_rank=user_management.user_rankings(sesh['id'])
 		prof_a_inputed_data = user_rank['profiling_a']['inputed']

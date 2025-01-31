@@ -55,30 +55,14 @@
 
 <body>
 	<div class=" tab-content" id="nav-tabContent">
-		<div class=" tab-pane fade show active" id="nav-discussion" role="tabpanel" aria-labelledby="nav-discussion-tab" tabindex="0"><div class="bg-light pb-5" style=" background-color: #ffffff !important;">
+		<div class=" tab-pane fade show active" id="nav-discussion" role="tabpanel" aria-labelledby="nav-discussion-tab" tabindex="0">
+			<!-- <div class="bg-light pb-5" style=" background-color: #ffffff !important;"> -->
 			<div class="texttheme">
-				<!-- {{forum}} -->
-				<!-- <h1 class="">{{forum['topic']}}</h1>			 -->
-				<div class="EMBED_EXCLUDE rounded-1 " style="background-color:#F1F7E5;">
-					<div class="EMBED_EXCLUDE d-flex justify-content-between pt-3 container text-white">
-						<div>
-							<p class="small"><i class="fa-solid fa-users"></i></i>&nbsp; <b id="num_participants"></b> people</p>	
-						</div>
-					</div>
-					<div class="EMBED_EXCLUDE container" hidden>
-						<i id="participants" class="xs-text"></i>
-					</div>
-					<div class="container mt-3 pb-5">
-						<p class="">
-							{{forum['description']}}
-						</p>
-					</div>
-				</div>
 				<div class="EMBED_EXCLUDE mt-1 d-flex gap-3">				
 					<p class="small "><i class="fa-solid fa-message"></i>&nbsp;<b id="com_count"></b> comment/s</p>
 				</div>
 				<!-- Reply -->
-				<div id="reply_container" style="overflow-y: scroll;height:50vh;">
+				<div id="reply_container" style="overflow-y: scroll;height: 700px;">
 					<div class="">
 						<div class="">
 							<i class="fa-solid">Loading. . .</i>
@@ -102,190 +86,185 @@
 			</div>
 		</div>
 	</div>
-	<div class="container tab-pane fade mb-5 mt-3 d-flex justify-content-center" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-		<div id="card_participants" class=" d-flex gap-4 row row-cols-2" style="width: 1000px; min-height: 100px;">
-			<!-- CARD FOR PARTICIPANTS -->
-		</div>
-	</div>
-</div>
 
-<script type="text/javascript">
-	
-	function send_comment(){
-		var REPLY_DATA_INP = $DATA({"comment" : $ID("comment").value,"topic_id" : "{{forum['id']}}","comment_by" : "{{USER_DATA['id']}}","id":$ID("id").value})
-		$send({
-			action : "/forum/send_comment",
-			data : REPLY_DATA_INP,
-			method : POST,
-			func : function(r){
-				var res = JSON.parse(r)
-				$ID("comment").value = ""
-				$ID("id").value = ""
-				$ID("edit_com").innerHTML = "Your"
-				$ID("send_btn").innerHTML = "Reply"
-				load_comments()
-			}
-		})
-	}
-
-	function edit_comment(ids,comm_edt){
-		// $ID('input_rep_container').scrollIntoView()
-		// println($ID('input_rep_container'))
-		$ID("comment").value = comm_edt;
-		$ID("id").value = ids;
-		$ID("edit_com").innerHTML = "Editing";
-		$ID("send_btn").innerHTML = "Save";
-
-	}
-
-	$onload(load_comments,function(){
-		window.setInterval(load_comments,5000)
-	})
-
-	function load_comments(){
-		$send({
-			action : "/forum/get_comment/{{forum['id']}}",
-			func : function(r){
-				var com_cards = ""
-				var card_participants = []
-				var ls_comments = JSON.parse(r)[0]
-				var ls_participants = JSON.parse(r)[1]
-				$ID("participants").innerHTML = ""
-				for (var i = 0; i < ls_participants.length; i++) {
-					$ID("participants").innerHTML +=(`
-						<span>`+ls_participants[i]['commenter']+`, </span>
-						`)
+	<script type="text/javascript">
+		
+		function send_comment(){
+			var REPLY_DATA_INP = $DATA({"comment" : $ID("comment").value,"topic_id" : "{{forum['id']}}","comment_by" : "{{USER_DATA['id']}}","id":$ID("id").value})
+			$send({
+				action : "/forum/send_comment",
+				data : REPLY_DATA_INP,
+				method : POST,
+				func : function(r){
+					var res = JSON.parse(r)
+					$ID("comment").value = ""
+					$ID("id").value = ""
+					$ID("edit_com").innerHTML = "Your"
+					$ID("send_btn").innerHTML = "Reply"
+					load_comments()
 				}
+			})
+		}
 
-				$ID("num_participants").innerHTML= ls_participants.length
-				$ID("com_count").innerHTML = ls_comments.length
-				$ID("reply_container").innerHTML="Loading"
-				for (var i = 0; i < ls_comments.length; i++) {
-					var com = ls_comments[i]
-					// println(com)
-					var edit_btn = "" ;
-					var rm_conts = "none" ; var com_conts = "block"
-					var commenter = "someone"
-					{% if USER_DATA['job']=="Admin" or USER_DATA['job']=="Super Admin" %}
-					/**/if(true){
-						commenter = com['commenter']
-					{% else %}
-					/**/if(com['comment_by']=="{{USER_DATA['id']}}"){
-					commenter = "You"
-					{% endif %}
-					edit_btn = (`
-						<a type="button" class='social_btn_del small' style="cursor: pointer;" onclick="del_comment('`+com['id']+`')"><i class="fa-solid fa-trash-can" ></i> Delete</a>&nbsp; &nbsp;
-						<a type="button" class='social_btn_edit small'  style="cursor: pointer;" onclick="edit_comment('`+com['id']+`','`+com['comment']+`')"><i class="fa-solid fa-pen-to-square"></i> Edit</a>&nbsp; &nbsp;
-						
-						`)
-					}else{
-						commenter = com['commenter']
-						if(com['edit']=="1"){
-							edit_btn ="<span class='small text-secondary'>Edited comment</span>&nbsp; | &nbsp;"
-						}else{
-							edit_btn =""
-						}
-					}
+		function edit_comment(ids,comm_edt){
+			// $ID('input_rep_container').scrollIntoView()
+			// println($ID('input_rep_container'))
+			$ID("comment").value = comm_edt;
+			$ID("id").value = ids;
+			$ID("edit_com").innerHTML = "Editing";
+			$ID("send_btn").innerHTML = "Save";
 
-					if(com['removed']=="1"){
-						rm_conts = "<span class='text-danger fst-italic'> removed a comment</span";
-						com_conts = "";
-					}else{
-						rm_conts = "replied";
-						com_conts = (`
-							<div class="">
-								<div class="container pb-3 mb-2 rounded-1" style="background-color: #FBFBFB;">
-									<p class="pt-2">`+urlify(com['comment'])+` </p>
-								</div>
-									<div class="container text-end d-flex">
-											`+edit_btn+`
-										<span class="small ">
-											<i id="lk_btn" class="text-danger bi bi-hand-thumbs-up" style="color: #1F4F5A; cursor: pointer;" onclick="send_com_likes('`+(com['id'])+`')"></i>
-											&nbsp;`+com['likes']+`
-									</span>
-									</div>
-							</div>
+		}
+
+		$onload(load_comments,function(){
+			window.setInterval(load_comments,5000)
+		})
+
+		function load_comments(){
+			$send({
+				action : "/forum/get_comment/{{forum['id']}}",
+				func : function(r){
+					var com_cards = ""
+					var card_participants = []
+					var ls_comments = JSON.parse(r)[0]
+					var ls_participants = JSON.parse(r)[1]
+					// $ID("participants").innerHTML = ""
+					// for (var i = 0; i < ls_participants.length; i++) {
+					// 	$ID("participants").innerHTML +=(`
+					// 		<span>`+ls_participants[i]['commenter']+`, </span>
+					// 		`)
+					// }
+
+					// $ID("num_participants").innerHTML= ls_participants.length
+					$ID("com_count").innerHTML = ls_comments.length
+					$ID("reply_container").innerHTML="Loading"
+					for (var i = 0; i < ls_comments.length; i++) {
+						var com = ls_comments[i]
+						// println(com)
+						var edit_btn = "" ;
+						var rm_conts = "none" ; var com_conts = "block"
+						var commenter = "someone"
+						{% if USER_DATA['job']=="Admin" or USER_DATA['job']=="Super Admin" %}
+						/**/if(true){
+							commenter = com['commenter']
+						{% else %}
+						/**/if(com['comment_by']=="{{USER_DATA['id']}}"){
+						commenter = "You"
+						{% endif %}
+						edit_btn = (`
+							<a type="button" class='social_btn_del small' style="cursor: pointer;" onclick="del_comment('`+com['id']+`')"><i class="fa-solid fa-trash-can" ></i> Delete</a>&nbsp; &nbsp;
+							<a type="button" class='social_btn_edit small'  style="cursor: pointer;" onclick="edit_comment('`+com['id']+`','`+com['comment']+`')"><i class="fa-solid fa-pen-to-square"></i> Edit</a>&nbsp; &nbsp;
+							
 							`)
-					}
-					var date_diffs = date_diff((com['date_created']))
+						}else{
+							commenter = com['commenter']
+							if(com['edit']=="1"){
+								edit_btn ="<span class='small text-secondary'>Edited comment</span>&nbsp; | &nbsp;"
+							}else{
+								edit_btn =""
+							}
+						}
 
-					prof_pic = '<img src="/static/psalm_static/menu/img/profilepic.png" style="width: 50px; height: 50px;">'
-					if(com['profilepic'].length>0){
-						prof_pic = "<img class='rounded-circle' src='/api/user_pic/"+com['profilepic']+"' alt='"+com['profilepic'] +"' style='width: 50px; height: 50px;'>"
-					}
-
-					com_cards +=(`
-						<div class=" d-flex">
-							<div class="container bg-light rounded-2" >
-								<div class="d-flex justify-content-between pt-3  text-white">
-									<a style="cursor" href="/viewprofile?_id=${com['commenter_id']}" target="_blank">
-										<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
-												<p>`+prof_pic+`</p>
-												<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
-												<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+com['date_created'] +`</p>
+						if(com['removed']=="1"){
+							rm_conts = "<span class='text-danger fst-italic'> removed a comment</span";
+							com_conts = "";
+						}else{
+							rm_conts = "replied";
+							com_conts = (`
+								<div class="">
+									<div class="container pb-3 mb-2 rounded-1" style="background-color: #FBFBFB;">
+										<p class="pt-2">`+urlify(com['comment'])+` </p>
+									</div>
+										<div class="container text-end d-flex">
+												`+edit_btn+`
+											<span class="small ">
+												<i id="lk_btn" class="text-danger bi bi-hand-thumbs-up" style="color: #1F4F5A; cursor: pointer;" onclick="send_com_likes('`+(com['id'])+`')"></i>
+												&nbsp;`+com['likes']+`
+										</span>
 										</div>
-									</a>
 								</div>
-								`+com_conts+`
+								`)
+						}
+						var date_diffs = date_diff((com['date_created']))
+
+						prof_pic = '<img src="/static/psalm_static/menu/img/profilepic.png" style="width: 50px; height: 50px;">'
+						if(com['profilepic'].length>0){
+							prof_pic = "<img class='rounded-circle' src='/api/user_pic/"+com['profilepic']+"' alt='"+com['profilepic'] +"' style='width: 50px; height: 50px;'>"
+						}
+
+						com_cards +=(`
+							<div class=" d-flex">
+								<div class="container bg-light rounded-2" >
+									<div class="d-flex justify-content-between pt-3  text-white">
+										<a style="cursor" href="/viewprofile?_id=${com['commenter_id']}" target="_blank">
+											<div class="d-flex gap-2 align-items-center" style="cursor:pointer;">
+													<p>`+prof_pic+`</p>
+													<p class=" me-1">`+commenter+` `+rm_conts+`&nbsp |</p>
+													<p class="xs-text align-self-center" title=" `+date_readable(com['date_created'])+`">`+com['date_created'] +`</p>
+											</div>
+										</a>
+									</div>
+									`+com_conts+`
+								</div>
+							</div><br> `)
+
+						card_participants.push(`
+							<div class="border border-light rounded-3 d-flex" style=" height: 100px;">
+								<a style="cursor" href="/viewprofile?_id=${com['commenter_id']}" target="_blank">
+									<div class="d-flex align-self-center">
+										<div>							
+											<p class="fs-1 mt-3">
+												`+prof_pic+`
+											</p>						
+										</div>
+										<div class="mt-3 ms-4 lh-sm">
+											<span>`+commenter+`</span><br>
+											<span class="text-muted small">`+com['job']+`</span><br>
+
+										</div>
+									</div>
+								</a>
 							</div>
-						</div><br> `)
-
-					card_participants.push(`
-						<div class="border border-light rounded-3 d-flex" style=" height: 100px;">
-							<a style="cursor" href="/viewprofile?_id=${com['commenter_id']}" target="_blank">
-								<div class="d-flex align-self-center">
-									<div>							
-										<p class="fs-1 mt-3">
-											`+prof_pic+`
-										</p>						
-									</div>
-									<div class="mt-3 ms-4 lh-sm">
-										<span>`+commenter+`</span><br>
-										<span class="text-muted small">`+com['job']+`</span><br>
-
-									</div>
-								</div>
-							</a>
-						</div>
-					`)
+						`)
+					}
+					var uniq =arr_rem_dup(card_participants) ;
+					var final_par = ""
+					for (var i = 0; i < uniq.length; i++) {final_par += uniq[i]}
+					// $ID('card_participants').innerHTML = final_par
+					$ID("reply_container").innerHTML=com_cards
+					$ID("reply_container").scrollTo(0, document.body.scrollHeight);
 				}
-				var uniq =arr_rem_dup(card_participants) ;
-				var final_par = ""
-				for (var i = 0; i < uniq.length; i++) {final_par += uniq[i]}
-				$ID('card_participants').innerHTML = final_par
-				$ID("reply_container").innerHTML=com_cards
-			}
-		})
-	}
+			})
+		}
 
-	function del_comment(ids){
-		$send({
-			action : "/forum/delete_comment/"+ids,
-			func : function(r){
-				var res = JSON.parse(r)
-				println(res)
-				load_comments()
-			}
-		})
-	}
-	function send_com_likes(ids){
-		$send({
-			action : "/forum/send_comment_like/"+ids,
-			func : function(r){
-				var res = JSON.parse(r)
-				// println(res)
-			}
-		})
-	}
+		function del_comment(ids){
+			$send({
+				action : "/forum/delete_comment/"+ids,
+				func : function(r){
+					var res = JSON.parse(r)
+					println(res)
+					load_comments()
+				}
+			})
+		}
+		function send_com_likes(ids){
+			$send({
+				action : "/forum/send_comment_like/"+ids,
+				func : function(r){
+					var res = JSON.parse(r)
+					// println(res)
+				}
+			})
+		}
 
-	function urlify(text) {
-		var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-		return text.replace(urlRegex, function(url) {
-			return `<a href="#"  target="_blank" onclick="goto('`+ url +`')">`+ url +`</a>`;
-		})
-		// or alternatively
-		// return text.replace(urlRegex, '<a href="$1">$1</a>')
-	}
-</script>
-</body>
+		function urlify(text) {
+			var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+			return text.replace(urlRegex, function(url) {
+				return `<a href="#"  target="_blank" onclick="goto('`+ url +`')">`+ url +`</a>`;
+			})
+			// or alternatively
+			// return text.replace(urlRegex, '<a href="$1">$1</a>')
+		}
+	</script>
+	</body>
 </html>

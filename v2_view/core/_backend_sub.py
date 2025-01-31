@@ -27,8 +27,7 @@ class user_pofile:
 				# print(datum)
 				key.append("`{}`".format(datum))
 				val.append("'{}'".format(data[datum]))
-			sql = ('''INSERT INTO `users` ({}) VALUES ({},'pending');'''.format(", ".join(key),", ".join(val)))
-		
+			sql = ('''INSERT INTO `users` ({},`status`) VALUES ({},'pending');'''.format(", ".join(key),", ".join(val)))
 		else:
 			for datum in data:
 				args += ",`{}`='{}'".format(datum,data[datum])
@@ -36,7 +35,19 @@ class user_pofile:
 		last_row_id = rapid_mysql.do(sql)
 		return last_row_id
 		# return redirect("/logout")
-
+		
+	def user_registration_submit(req):
+		data = dict(req.form)
+		key = [];val = [];args="";
+		res_email = len(rapid_mysql.do("SELECT * FROM `users` WHERE `email`='{}';".format(req.form['email']) ))
+		res_name = len(rapid_mysql.do("SELECT * FROM `name` WHERE `email`='{}';".format(req.form['name']) ))
+		
+		for datum in data:
+			# print(datum)
+			key.append("`{}`".format(datum))
+			val.append("'{}'".format(data[datum]))
+		sql = ('''INSERT INTO `users` ({},`status`) VALUES ({},'pending');'''.format(", ".join(key),", ".join(val)))
+		return sql
 
 	def edit_user_profilepic(req):
 		__f = FILE_REQ.save_file_from_request(req,"profilepic",c.RECORDS+"/objects/userpics/",False,True)

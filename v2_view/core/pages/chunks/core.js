@@ -38,6 +38,8 @@ function remove_DD_FROM_DB_opt(){
 		DD_FROM_DB[i].innerHTML = ""
 	}
 }
+
+
 function check_DD_FROM_DB(){
 	var DD_FROM_DB = $CLASS("DD_FROM_DB")
 	var reqs = []
