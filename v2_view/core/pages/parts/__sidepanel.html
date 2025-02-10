@@ -63,8 +63,10 @@
 					<li>
 						<a onclick="a_export()">
 							<i class="bi bi-circle"></i><span>Export</span>
+
 							<select onchange="open_dl_pfa(this.value)">
 								<option value="none" disabled selected>Select RCU</option>
+								{% if USER_DATA['security_group']|int <= 25 %}
 								<option value="RCU 8">Region 8</option>
 								<option value="RCU 9">Region 9</option>
 								<option value="RCU 10">Region 10</option>
@@ -72,7 +74,12 @@
 								<option value="RCU 12">Region 12</option>
 								<option value="RCU 13">Region 13</option>
 								<option value="barmm">BARMM</option>
+								{% else %}
+								<option value="{{USER_DATA['rcu']}}">{{USER_DATA['rcu']}}</option>
+
+								{% endif %}
 							</select>
+
 							<script type="text/javascript">
 								function open_dl_pfa(val){
 									window.open("/mis-v4/file/dl_page/excel_import_form_a?rcu="+val, '_blank').focus();

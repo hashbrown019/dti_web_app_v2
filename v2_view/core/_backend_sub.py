@@ -99,7 +99,6 @@ class file_handling:
 		_sql = "SELECT * FROM `{}` WHERE {} ;".format(obj,where_rcu_is(req.args['rcu']))
 		print(_sql)
 		ls_arr = rapid_mysql.select(_sql)
-
 		return ls_arr
 
 		

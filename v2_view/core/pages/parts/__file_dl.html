@@ -59,7 +59,7 @@
 			<div class="container">
 				<section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
 					<img src="../../../static/a_v2_static/img/dl.gif" class="x-small img-fluid py-5" style="max-width: 20%;">
-					<h1 class="x-jumbo">Downloading</h1>
+					<h1 class="x-jumbo" id="status_dl">Downloading</h1>
 					<h2>Thank you for your patience. While we are processing your download, please do not close this window.</h2>
 					<h3>Kindly check the upper right ccorner of your browser for download status</h3>
 					<hr>
@@ -97,9 +97,16 @@
 					csv.unshift(fields.join(',')) // add header column
 					csv = csv.join('\r\n');
 					// console.log(csv)
-					
-					var encodedUri = encodeURI(csv);
-					window.open(encodedUri);
+
+					var element = document.createElement('a');
+					element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
+					element.setAttribute('download', "{{db}}_{{rcu}}.csv");
+					element.style.display = 'none';
+					document.body.appendChild(element);
+					element.click();
+					document.body.removeChild(element);
+
+					$ID("status_dl").innerHTML = "File has been Loaded"
 				}
 			})
 		})

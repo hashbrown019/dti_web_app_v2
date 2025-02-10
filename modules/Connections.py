@@ -81,9 +81,6 @@ class mysql:
 				return {"response":"error","message":str(e), "sql":sql}
 
 	def select(self,sql,dict_=True):
-		if(dict_):
-			pass
-
 		if(self.err_page==1):
 			conn = mysql.init_db(self)
 			cur = conn.cursor(dictionary=dict_)
