@@ -60,16 +60,31 @@
 							<i class="bi bi-circle"></i><span>Data Cleaning</span>
 						</a>
 					</li>
-					<!-- <li>
+					<li>
 						<a onclick="a_export()">
 							<i class="bi bi-circle"></i><span>Export</span>
+							<select onchange="open_dl_pfa(this.value)">
+								<option value="none" disabled selected>Select RCU</option>
+								<option value="RCU 8">Region 8</option>
+								<option value="RCU 9">Region 9</option>
+								<option value="RCU 10">Region 10</option>
+								<option value="RCU 11">Region 11</option>
+								<option value="RCU 12">Region 12</option>
+								<option value="RCU 13">Region 13</option>
+								<option value="barmm">BARMM</option>
+							</select>
+							<script type="text/javascript">
+								function open_dl_pfa(val){
+									window.open("/mis-v4/file/download_db/excel_import_form_a?rcu="+val, '_blank').focus();
+								}
+							</script>
 						</a>
 					</li>
 					<li>
 						<a onclick="a_import()">
 							<i class="bi bi-circle"></i><span>Import</span>
 						</a>
-					</li> -->
+					</li>
 				</ul>
 			</li>
 			<!-- ================PROFILING FORM B SIDE=============== -->

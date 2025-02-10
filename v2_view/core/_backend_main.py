@@ -130,6 +130,21 @@ class _main:
 
 
 	# =======================================
+	# =======================================
+	# =======================================
+	# =========FiLe Handlers===================
+
+	@app.route("/mis-v4/file/<task>/<obj>",methods=["POST","GET"])
+	@c.login_auth_web()
+	def file_handling(task,obj):
+		if(task=='download_db_pfa'): 
+			res = _backend_sub.file_handling.download_db_pfa(request,obj)
+		elif(task=='dl_page'):
+			res = render_template("/parts/__file_dl.html",db=obj,rcu=request.args["rcu"])
+		return res
+	# =======================================
+	# =======================================
+	# =======================================
 	# =========GET-SESSION===================
 
 
