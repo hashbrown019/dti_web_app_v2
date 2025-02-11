@@ -12,12 +12,8 @@ from v2_view.core import _backend_sub
 
 
 app = Blueprint("_micro",__name__,template_folder='pages')
-
-# rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
-# rapid= sqlite("assets\\db\\dti_rapidxi.db")
-# rapid= sqlite(c.SQLITE_DB)
-
 rapid_mysql = mysql(*c.DB_CRED)
+
 class _main:
 	def __init__(self, arg):
 		super(_main, self).__init__()
