@@ -27,7 +27,6 @@ class _main:
 	@c.login_auth_web()
 	def micro_index():
 		return {"status":"test auth","session":session["USER_DATA"][0]}
-		
 
 	@app.route("/micro_test",methods=["GET"])
 	def micro_test():
