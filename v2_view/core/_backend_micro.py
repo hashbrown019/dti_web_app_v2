@@ -18,17 +18,15 @@ app = Blueprint("_micro",__name__,template_folder='pages')
 # rapid= sqlite(c.SQLITE_DB)
 
 rapid_mysql = mysql(*c.DB_CRED)
-CURRENT_USER = None
 class _main:
 	def __init__(self, arg):
 		super(_main, self).__init__()
-		CURRENT_USER = session["USER_DATA"][0]
 		self.arg = arg
 
 	@app.route("/mis-v4-micro/test",methods=["POST","GET"])
 	@c.login_auth_web()
-	def micro_index(module):
-		return {"status":"test auth","session":CURRENT_USER}
+	def micro_index():
+		return {"status":"test auth","session":session["USER_DATA"][0]}
 		
 
 	@app.route("/micro_test",methods=["GET"])
