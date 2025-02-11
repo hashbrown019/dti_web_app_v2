@@ -5,9 +5,9 @@
 		<div class="card-body">
 			<div class="accordion accordion-flush" id="accordionFlushExample">
 				<!-- ====================================================== -->
-				<div class="accordion-item">
+				<div id="all_staff" class="accordion-item">
 					<h2 class="accordion-header" id="flush-headingOne">
-						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-USERS" aria-expanded="false" aria-controls="flush-USERS">
+						<button id="btn_all_user" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-USERS" aria-expanded="false" aria-controls="flush-USERS">
 							<h5 class="card-title">The Team 
 								<span>| 
 									{% if USER_DATA['mis_role']==1%}
@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<!-- ====================================================== -->
-				<div class="accordion-item">
+				<div id="chat_panel" class="accordion-item">
 					<h2 class="accordion-header" id="flush-headingTwo">
 						<button id="chat_btn" class="accordion-button " type="button" data-bs-toggle="show" data-bs-target="#flush-CHATS" aria-expanded="true" aria-controls="flush-CHATS">
 							<h5 class="card-title">chats <span>| Visible to All</span></h5>
@@ -79,5 +79,15 @@
 		</div>
 		{% include '/parts/__chats.html'%}
 	</div><!-- End Recent Activity -->
-
+	<script type="text/javascript">
+		$onload(function(){
+			var url_path = (window.location.pathname).split("/")
+			if(url_path.indexOf("core-system-control") < 0){
+				$ID("all_staff").style.display = "none";
+			}else{
+				$ID("chat_panel").style.display = "none";
+				$ID("btn_all_user").click()
+			}
+		})
+	</script>
 </div>
