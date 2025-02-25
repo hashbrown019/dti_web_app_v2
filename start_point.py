@@ -41,7 +41,7 @@ Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL")
 
 app = Flask(__name__)
 c.FLASK_APP = app
-# Minify(app=app, html=True, js=True, cssless=True)
+
 app.config['JSON_SORT_KEYS'] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 app.secret_key=c.SECRET_KEY
@@ -136,7 +136,8 @@ def after_request_func(response):
 	# response.headers.set('Permissions-Policy', "geolocation=(self 'none'), camera=(), microphone=()")
 	return response
 
-	
+
+Minify(app=app, html=True, js=True, cssless=True)
 # SECRET RECIPEE COCKTAIL
 # - Dutchmil strawberry:
 # - Zafiro Premium GIN

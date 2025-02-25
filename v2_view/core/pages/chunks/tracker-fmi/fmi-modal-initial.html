@@ -1,73 +1,117 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
 	Add FMI
 </button>
-<div class="modal fade hide" id="basicModal" tabindex="-1" aria-modal="true" role="dialog">
+<div class="modal fade show" style="display: block;" id="basicModal" tabindex="-1" aria-modal="true" role="dialog">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">FMI/R Project Profile</h5>
+				<h4 class="modal-title">FMI/R Project Profile</h4>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<div class="col-lg-6">
-					<div class="row mb-3">
-						<label for="inputEmail3" class="col-sm-2 col-form-label">FMI/R</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputText" placeholder=" FMI/R Project Name">
+				<div class="container">
+					
+					<div class="col-lg-12">
+						<div class="row mb-3">
+							<label for="inputEmail3" class="col-sm-2 col-form-label">FMI/R</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputText" placeholder=" FMI/R Project Name">
+							</div>
 						</div>
+						<div class="form-floating mb-3">
+							<select class="form-select" id="rcu" name="rcu" required="">
+								<option value="none" disabled>None</option>
+								<option value="RCU 8">RCU 8</option>
+								<option value="RCU 9">RCU 9</option>
+								<option value="RCU 10">RCU 10</option>
+								<option value="RCU 11">RCU 11</option>
+								<option value="RCU 12">RCU 12</option>
+								<option value="RCU 13">RCU 13</option>
+								<option value="BARMM">BARMM</option>
+							</select>
+							<label class="f_name" for="floatingSelect">Region</label>
+						</div>
+						<div class="form-floating mb-3">
+							<select class="form-select" id="pcu" name="pcu" required="">
+								<optgroup label="RCU 8">
+									<option value="Leyte">Leyte</option>
+									<option value="Northern Samar">Northern Samar</option>
+									<option value="Southern Leyte">Southern Leyte</option>
+								</optgroup>
+								<optgroup label="RCU 9">
+									<option value="Zamboanga del Norte">Zamboanga del Norte</option>
+									<option value="Zamboanga del Sur">Zamboanga del Sur</option>
+									<option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+								</optgroup>
+								<optgroup label="RCU 10">
+									<option value="Bukidnon">Bukidnon</option>
+									<option value="Lanao del Norte">Lanao del Norte</option>
+									<option value="Misamis Oriental">Misamis Oriental</option>
+								</optgroup>
+								<optgroup label="RCU 11">
+									<option value="Davao de Oro">Davao de Oro</option>
+									<option value="Davao del Norte">Davao del Norte</option>
+									<option value="Davao del Sur">Davao del Sur</option>
+									<option value="Davao Occidental">Davao Occidental</option>
+									<option value="Davao Oriental">Davao Oriental</option>
+								</optgroup>
+								<optgroup label="RCU 12">
+									<option value="North Cotabato">North Cotabato</option>
+									<option value="Sarangani">Sarangani</option>
+									<option value="Sultan Kudarat">Sultan Kudarat</option>
+								</optgroup>
+								<optgroup label="RCU 13">
+									<option value="Agusan del Norte">Agusan del Norte</option>
+									<option value="Agusan del Sur">Agusan del Sur</option>
+									<option value="Surigao del Sur">Surigao del Sur</option>
+								</optgroup>
+								<optgroup label="BARMM">
+									<option value="Maguindanao">Maguindanao</option>
+								</optgroup>
+							</select>
+							<label class="f_name" for="floatingSelect">Province</label>
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text">Length</span>
+							<input type="number" class="form-control x-right-align" aria-label="Amount (to the nearest dollar)">
+							<span class="input-group-text">.Km</span>
+	                    </div>
+	                    <div class="input-group mb-3">
+	                    	<span>Approved Budget Contract (<b>ABC</b>)</span>
+	                    </div>
+						<div class="input-group mb-3">
+							<span class="input-group-text">Pesos</span>
+							<input type="number" class="form-control x-right-align" aria-label="Amount (to the nearest dollar)">
+							<span class="input-group-text">IFAD Loan Proceeds</span>
+	                    </div>
+						<div class="input-group mb-3">
+							<span class="input-group-text">Pesos</span>
+							<input type="number" class="form-control x-right-align" aria-label="Amount (to the nearest dollar)">
+							<span class="input-group-text">LGU Counterpart (5% of ABC)</span>
+	                    </div>
 					</div>
-					<div class="form-floating mb-3">
-						<select class="form-select" id="rcu" name="rcu" required="">
-							<option value="none" disabled>None</option>
-							<option value="RCU 8">RCU 8</option>
-							<option value="RCU 9">RCU 9</option>
-							<option value="RCU 10">RCU 10</option>
-							<option value="RCU 11">RCU 11</option>
-							<option value="RCU 12">RCU 12</option>
-							<option value="RCU 13">RCU 13</option>
-							<option value="BARMM">BARMM</option>
-						</select>
-						<label class="f_name" for="floatingSelect">Region</label>
-					</div>
-					<div class="form-floating mb-3">
-						<select class="form-select" id="pcu" name="pcu" required="">
-							<optgroup label="RCU 8">
-								<option value="Leyte">Leyte</option>
-								<option value="Northern Samar">Northern Samar</option>
-								<option value="Southern Leyte">Southern Leyte</option>
-							</optgroup>
-							<optgroup label="RCU 9">
-								<option value="Zamboanga del Norte">Zamboanga del Norte</option>
-								<option value="Zamboanga del Sur">Zamboanga del Sur</option>
-								<option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
-							</optgroup>
-							<optgroup label="RCU 10">
-								<option value="Bukidnon">Bukidnon</option>
-								<option value="Lanao del Norte">Lanao del Norte</option>
-								<option value="Misamis Oriental">Misamis Oriental</option>
-							</optgroup>
-							<optgroup label="RCU 11">
-								<option value="Davao de Oro">Davao de Oro</option>
-								<option value="Davao del Norte">Davao del Norte</option>
-								<option value="Davao del Sur">Davao del Sur</option>
-								<option value="Davao Occidental">Davao Occidental</option>
-								<option value="Davao Oriental">Davao Oriental</option>
-							</optgroup>
-							<optgroup label="RCU 12">
-								<option value="North Cotabato">North Cotabato</option>
-								<option value="Sarangani">Sarangani</option>
-								<option value="Sultan Kudarat">Sultan Kudarat</option>
-							</optgroup>
-							<optgroup label="RCU 13">
-								<option value="Agusan del Norte">Agusan del Norte</option>
-								<option value="Agusan del Sur">Agusan del Sur</option>
-								<option value="Surigao del Sur">Surigao del Sur</option>
-							</optgroup>
-							<optgroup label="BARMM">
-								<option value="Maguindanao">Maguindanao</option>
-							</optgroup>
-						</select>
-						<label class="f_name" for="floatingSelect">Province</label>
+				</div>
+				<hr>
+				<div class="container">
+					<div class="col-lg-12">
+						<div class="input-group mb-3">
+							<span>Map/Location/Points of FMI</span>
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text">Longitude,Latitude</span>
+							<input onkeyup="set_init_loc(this.value)" type="text" class="form-control" placeholder="9,123123,0.12313" aria-label="longlat">
+
+	                    </div>
+						{% include '/chunks/tracker-fmi/fmi-modal-initial-map.html'%}
+						<div class="mb-3">
+							<h5>Map Action</h5>
+							<button class="btn btn-primary" onclick="points_undo()"> Undo</button>
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text">Points</span>
+							<input id="map_points" disabled type="text" class="form-control" placeholder="[9,123123,0.12313]..." aria-label="longlat">
+
+	                    </div>
 					</div>
 				</div>
 			</div>
