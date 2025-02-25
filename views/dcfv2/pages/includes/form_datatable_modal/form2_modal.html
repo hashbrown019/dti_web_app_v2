@@ -31,7 +31,6 @@
 
                 <tbody>
                   <tr>
-                    <div>
                       {% for row in form2_datatable %}
                       <td>{{ row['id'] }}</td>
                       <td>{{ row['form_2_name_owner_manager'] }}</td>
@@ -47,6 +46,7 @@
                               aria-hidden="true"> </i></span> Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a style="color: #ff4d4d;" href="/delete_form2/{{row['id']}}" onclick="confirmation(event)">
                           <span><i class="fa-solid fa-trash"></i></span> Delete</a>&nbsp;&nbsp;&nbsp; &nbsp;
+                    <div>
                         {% endif %}
 
                         <a style="color: #1ac6ff; " data-toggle="modal" data-target="#form2view{{row['id']}}"
@@ -56,7 +56,7 @@
 
 
                   </tr>
-
+                  
                   {% endfor %}
                 </tbody>
               </table>
