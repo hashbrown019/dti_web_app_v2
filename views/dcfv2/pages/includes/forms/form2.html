@@ -138,7 +138,7 @@
                     id="form_2_commodity_others" show-base="form_2_commodity" show-trigger="PFN"  placeholder="Please specify">
             </div>
 
-                <div class="x-col l3 x-container x-padding">
+                <div class="x-col l3 x-container x-padding x-hide">
                     <label class=""><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (ex. R8_SC Global)" tabindex="1"><i class="fa fa-info-circle"></i></span>   DIP Alignment:
                     </label>
                         <select class="FORM2_FIELD withother x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
@@ -186,10 +186,18 @@
         <div class="x-row x-container x-padding">
 
             <div class="x-col l6 x-container x-padding">
-                <label class=""><span style="color: #007399;" class="tool" data-tip="Indicate full  Business name of Anchor Firm/MSMEs based on official registration." tabindex="1"><i class="fa fa-info-circle"></i></span> Business Name:</label>
-                <input class="FORM2_FIELD x-input x-border" id="form_2_businessname" name="form_2_businessname"
-                    type="text" autocomplete="on" placeholder="">
+                <label class=""><span style="color: #007399;" class="tool" data-tip="Indicate full Business name of Anchor Firm/MSMEs based on official registration." tabindex="1"><i class="fa fa-info-circle"></i></span> Business Name:</label>
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_businessname" name="form_2_businessname" required>
+                    <option value="">Choose your options.</option>
+                    {% for entry in form_c_db %}
+                        <option>
+                            {{ entry['reg_businessname'] if entry['reg_businessname'] else (entry['name'] if entry['name'] else entry['business_addr']) }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
+
+
 
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa fa-info-circle"></i></span>   Business Address of Owner or manager of the anchor firm/MSMEs:</label>
@@ -494,7 +502,7 @@
             <div class="x-col l5">
 
                 <div class="x-col l3 x-container x-padding" style="width: 10px">
-                    <input class=" x-padding" type="file" id="form_2_image_uploads" name="image_uploads"
+                    <input class="btn" type="file" id="form_2_image_uploads" name="image_uploads"
                         accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx" multiple />
                 </div>
 

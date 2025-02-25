@@ -1,0 +1,399 @@
+<style>
+  .tile_stats_count {
+    background: #dee2e6;
+    padding: 10px;
+    text-align: left;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    vertical-align: top;
+    box-shadow: 0 4px 8px rgba(128, 128, 128, 0.1);
+    border: 1px solid #d7dbdf;
+  }
+  .count_top small {
+    font-size: 12px;
+    color: #6C757D;
+    font-weight: bold;
+    display: block;
+  }
+  .count {
+    font-size: 25px;
+    font-weight: bold;
+    color: #73879C;
+  }
+  .count_bottom {
+    font-size: 10px;
+    color: #6C757D;
+  }
+  .tile_count {
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  @media (min-width: 576px) {
+    .tile_stats_count {
+      width: 48%;
+    }
+  }
+  @media (min-width: 768px) {
+    .tile_stats_count {
+      width: 31%;
+    }
+  }
+  @media (min-width: 992px) {
+    .tile_stats_count {
+      width: 23%;
+    }
+  }
+  @media (min-width: 1200px) {
+    .tile_stats_count {
+      width: 16%;
+    }
+  }
+</style>
+
+<div class="tile_count">
+  <div class="tile_stats_count">
+    <span class="count_top"><small>Male</small></span>
+    <div class="count" id="totalMales">0</div>
+    <span class="count_bottom">Total # of Male</span>
+  </div>
+
+  <div class="tile_stats_count">
+    <span class="count_top"><small>Female</small></span>
+    <div class="count" id="totalFemales">0</div>
+    <span class="count_bottom">Total # of Female</span>
+  </div>
+
+  <div class="tile_stats_count">
+    <span class="count_top"><small>Indigenous People</small></span>
+    <div class="count" id="totalFeMalesIP">0</div>
+    <span class="count_bottom">Total # of IP</span>
+  </div>
+
+  <div class="tile_stats_count">
+    <span class="count_top"><small>PWD</small></span>
+    <div class="count" id="totalpwd">0</div>
+    <span class="count_bottom">Total # of PWD</span>
+  </div>
+
+  <div class="tile_stats_count">
+    <span class="count_top"><small>Cooperatives</small></span>
+    <div class="count" id="totalcoop">0</div>
+    <span class="count_bottom">Total # of Cooperatives</span>
+  </div>
+
+  <div class="tile_stats_count">
+    <span class="count_top"><small>Associations</small></span>
+    <div class="count" id="totalast">0</div>
+    <span class="count_bottom">Total # of Associations</span>
+  </div>
+
+  <div class="tile_stats_count">
+    <span class="count_top"><small>Farmer Beneficiaries</small></span>
+    <div class="count" id="totalfbene">0</div>
+    <span class="count_bottom">Total # of Beneficiaries</span>
+  </div>
+
+  <div class="tile_stats_count">
+    <span class="count_top"><small>MSME's</small></span>
+    <div class="count" id="totalmsme">0</div>
+    <span class="count_bottom">Total # of MSME</span>
+  </div>
+
+  <div class="tile_stats_count">
+    <span class="count_top"><small>Farmer Org.</small></span>
+    <div class="count" id="totalfo">0</div>
+    <span class="count_bottom">Total # of Organization</span>
+  </div>
+</div>
+
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Enterprises</h5>
+      <canvas id="barChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 260px; width: 420px;" width="420" height="260"></canvas>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          fetch('/view-tracker-dip-main-content')
+            .then(response => response.json())
+            .then(data => {
+              const totalLargeEnterprise = data.reduce((total, entry) => total + entry.total_large_enterprise, 0);
+              const totalMediumEnterprise = data.reduce((total, entry) => total + entry.total_medium_enterprise, 0);
+              const totalSmallEnterprise = data.reduce((total, entry) => total + entry.total_small_enterprise, 0);
+              const totalMicroEnterprise = data.reduce((total, entry) => total + entry.total_micro_enterprise, 0);
+
+              new Chart(document.querySelector('#barChart'), {
+                type: 'bar',
+                data: {
+                  labels: ['Large Enterprises', 'Medium Enterprises', 'Small Enterprises', 'Micro Enterprises'],
+                  datasets: [{
+                    label: 'Data',
+                    data: [totalLargeEnterprise, totalMediumEnterprise, totalSmallEnterprise, totalMicroEnterprise],
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(125, 205, 46, 0.2)',
+                      'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(255, 159, 64)',
+                      'rgb(125, 205, 86)',
+                      'rgb(75, 192, 192)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            });
+        });
+      </script>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Commodity</h5>
+      <canvas id="commodityPieChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 260px; width: 420px;" width="420" height="260"></canvas>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          fetch('/view-tracker-dip-main-content')
+            .then(response => response.json())
+            .then(data => {
+              const commodityCount = {
+                'Others': 0,
+                'Coffee': 0,
+                'Cacao': 0,
+                'Coconut': 0,
+                'PFN': 0
+              };
+              data.forEach(entry => {
+                const commodity = entry.form_1_commodity;
+                if (commodityCount.hasOwnProperty(commodity)) {
+                  commodityCount[commodity]++;
+                } else {
+                  commodityCount['Others']++;
+                }
+              });
+
+              const totalCommodities = Object.values(commodityCount).reduce((a, b) => a + b, 0);
+              const ctx = document.getElementById('commodityPieChart').getContext('2d');
+              new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                  labels: Object.keys(commodityCount),
+                  datasets: [{
+                    data: Object.values(commodityCount),
+                    backgroundColor: ['#BDC3C7', '#5c5c3d', '#994d00', '#331a00', '#23a98c'],
+                    hoverBackgroundColor: ['#CFD4D8', '#737373', '#B36B00', '#4D2600', '#2EB8A3']
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: 'top',
+                    },
+                    tooltip: {
+                      callbacks: {
+                        label: function(context) {
+                          let label = context.label || '';
+                          if (label) {
+                            label += ': ';
+                          }
+                          label += context.raw.toLocaleString();
+                          const percentage = ((context.raw / totalCommodities) * 100).toFixed(2);
+                          label += ` (${percentage}%)`;
+                          return label;
+                        }
+                      }
+                    }
+                  }
+                }
+              });
+            });
+        });
+      </script>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">DIP TABLE</h5>
+      <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+        <div class="datatable-container">
+          <table class="table datatable datatable-table" id="dipTrackerTable" class="table table-dark">
+            <thead>
+              <tr>
+                <th data-sortable="true">Name</th>
+                <th data-sortable="true">Region</th>
+                <th data-sortable="true">Province</th>
+                <th data-sortable="true">Commodity</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch('/view-tracker-dip-main-content')
+        .then(response => response.json())
+        .then(data => {
+            create_dip_tracker_table(data);
+            const totalFemales = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalfemale || 0), 0);
+            const totalMales = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalmale || 0), 0);
+            const totalFeMalesIP = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalip || 0), 0);
+            const totalpwd = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalpwd || 0), 0);
+            const totalcoop = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalcooperatives || 0), 0);
+            const totalast = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalassociations || 0), 0);
+            const totalfbene = data.reduce((total, entry) => total + parseFloat(entry.form_1_total_farmerbene || 0), 0);
+            const totalmsme = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalmsme || 0), 0);
+            const totalfo = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalfo || 0), 0);
+            document.getElementById('totalFemales').innerText = numberWithCommas(totalFemales);
+            document.getElementById('totalMales').innerText = numberWithCommas(totalMales);
+            document.getElementById('totalFeMalesIP').innerText = numberWithCommas(totalFeMalesIP);
+            document.getElementById('totalpwd').innerText = numberWithCommas(totalpwd);
+            document.getElementById('totalcoop').innerText = numberWithCommas(totalcoop);
+            document.getElementById('totalast').innerText = numberWithCommas(totalast);
+            document.getElementById('totalfbene').innerText = numberWithCommas(totalfbene);
+            document.getElementById('totalmsme').innerText = numberWithCommas(totalmsme);
+            document.getElementById('totalfo').innerText = numberWithCommas(totalfo);
+        });
+
+    function numberWithCommas(x) {
+        if (isNaN(x)) return x; // Check if x is a number
+        return parseFloat(x).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+});
+
+  function create_dip_tracker_table(data) {
+      let filteredData = data.filter(entry => entry.form_1_name_dip);
+      const table = document.querySelector('#dipTrackerTable tbody');
+      let rowsPerPage = 10;
+      let currentPage = 1;
+      let totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+      function renderTable(page) {
+          table.innerHTML = "";
+          let start = (page - 1) * rowsPerPage;
+          let end = start + rowsPerPage;
+          let paginatedData = filteredData.slice(start, end);
+
+          paginatedData.forEach(entry => {
+              const row = table.insertRow();
+              row.innerHTML = `
+                  <td>${entry.form_1_name_dip}</td>
+                  <td>${entry.form_1_rcus}</td>
+                  <td>${entry.form_1_scope_provinces}</td>
+                  <td>${entry.form_1_commodity}</td>
+              `;
+          });
+          renderPagination(); // Update pagination UI
+      }
+
+      function renderPagination() {
+        let paginationContainer = document.getElementById("pagination");
+
+        if (!paginationContainer) {
+            paginationContainer = document.createElement("nav");
+            paginationContainer.id = "pagination";
+            paginationContainer.classList.add("d-flex", "justify-content-center", "mt-3");
+            document.querySelector("#dipTrackerTable").parentNode.appendChild(paginationContainer);
+        }
+
+        paginationContainer.innerHTML = ""; // Clear previous pagination
+
+        let ul = document.createElement("ul");
+        ul.classList.add("pagination");
+
+        // Previous Button
+        let prevButton = document.createElement("li");
+        prevButton.classList.add("page-item");
+        if (currentPage === 1) {
+            prevButton.classList.add("disabled");
+        }
+        prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">«</span>
+                                </a>`;
+        prevButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable(currentPage);
+            }
+        });
+        ul.appendChild(prevButton);
+
+        // Page Number Buttons (Dynamic)
+        let maxVisiblePages = 3;
+        let startPage = Math.max(1, currentPage - 1);
+        let endPage = Math.min(totalPages, currentPage + 1);
+
+        if (currentPage === totalPages && totalPages > 2) {
+            startPage = totalPages - 2;
+        }
+
+        if (currentPage === 1 && totalPages > 2) {
+            endPage = 3;
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            let pageButton = document.createElement("li");
+            pageButton.classList.add("page-item");
+            if (i === currentPage) {
+                pageButton.classList.add("active");
+            }
+            pageButton.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            pageButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentPage = i;
+                renderTable(currentPage);
+            });
+            ul.appendChild(pageButton);
+        }
+
+        // Next Button
+        let nextButton = document.createElement("li");
+        nextButton.classList.add("page-item");
+        if (currentPage === totalPages) {
+            nextButton.classList.add("disabled");
+        }
+        nextButton.innerHTML = `<a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">»</span>
+                                </a>`;
+        nextButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable(currentPage);
+            }
+        });
+        ul.appendChild(nextButton);
+        paginationContainer.appendChild(ul);
+    }
+
+      renderTable(currentPage); // Show the first page initially
+  }
+</script>

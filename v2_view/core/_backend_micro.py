@@ -27,3 +27,12 @@ class _main:
 	@app.route("/micro_test",methods=["GET"])
 	def micro_test():
 		return {"status":"test no auth"}
+
+	@app.route("/tracker-dip-main-content", methods=["GET"])
+	def tracker_dip_main_content():
+		return render_template("tracker-dip-main-content.html")
+
+	@app.route("/view-tracker-dip-main-content")
+	def view_tracker_dip_main_content():
+		dipData = rapid_mysql.select("SELECT * FROM dcf_prep_review_aprv_status")
+		return jsonify(dipData)

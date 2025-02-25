@@ -560,10 +560,20 @@ def delete(filename_):
 			print(str(delete))
 	return redirect("/spreadsheet")
 
-@app.route('/download/<string:filename_>', methods=['GET'], endpoint='download_file')
+@app.route('/download_file/<filename_>', methods=['GET'], endpoint='download_file')
+@app.route('/download/<filename_>', methods=['GET'], endpoint='download_file')
 def download_file(filename_):
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	path = "assets/objects/spreadsheets_c/queued/" + filename_
+	print(path)
+	return send_file(path, as_attachment=True)
+
+@app.route('/download_file_/<filename_>', methods=['GET'], endpoint='download_file_')
+@app.route('/download_/<filename_>', methods=['GET'], endpoint='download_file_')
+def download_file_(filename_):
+	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	path = "assets/objects/spreadsheets_c/queued/" + filename_.replace("@@","#")
+	print(path)
 	return send_file(path, as_attachment=True)
 
 

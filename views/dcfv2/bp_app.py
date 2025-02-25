@@ -54,6 +54,21 @@ app = Blueprint("dcfv2",__name__,template_folder="pages")
 
 def is_on_session(): return ('USER_DATA' in session)
 
+@app.route('/api/get_commodities', methods=['GET'])
+def get_commodities():
+    try:
+        query = "SELECT DISTINCT cbb_commodity FROM dcf_capacity_building WHERE cbb_commodity IS NOT NULL AND cbb_commodity != '' ORDER BY cbb_commodity ASC"
+        result = db.select(query)
+        commodities = []
+        for row in result:
+            # Handle cases where cbb_commodity might have comma-separated values:
+            for commodity in row['cbb_commodity'].split(','):
+                commodities.append(commodity.strip()) # strip whitespace if any
+        return jsonify(commodities)
+    except Exception as e:
+        print(f"Error fetching commodities: {e}")
+        return jsonify({"error": "Error fetching commodities"}), 500
+
 
 @app.route('/sample/<item>')
 @c.login_auth_web()
@@ -77,7 +92,17 @@ def dcf_dashboard_embed():
 	form_disp = display_dataform.displayform()
 	return render_template("dcf_dashboard_embed.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
-
+@app.route('/api/get_dip_names', methods=['GET'])
+def get_dip_names():
+    try:
+        query = "SELECT form_1_name_dip FROM dcf_prep_review_aprv_status WHERE form_1_name_dip IS NOT NULL AND form_1_name_dip != '' GROUP BY form_1_name_dip ORDER BY form_1_name_dip ASC"
+        result = db.select(query)
+        dip_names = [dict(form_1_name_dip=row['form_1_name_dip']) for row in result]
+        return jsonify(dip_names)
+    except Exception as e:
+        print(f"Error fetching DIP names: {e}")
+        return jsonify({"error": "Error fetching DIP names"}), 500
+		
 
 @app.route('/form1_dashboard')
 @c.login_auth_web()
@@ -94,7 +119,11 @@ def form2_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
 	count = displayCount.display__()
-	return render_template("form_dashboard/form2_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
+	form_c = db.select("SELECT * FROM form_c")
+	return render_template("form_dashboard/form2_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp,form_c=form_c)
+
+
+
 
 @app.route('/form3_dashboard')
 @c.login_auth_web()
@@ -303,11 +332,12 @@ def form1(form):
 		
 
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
-	return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0],benef=benf,all_form_data=all_form_data)
+	return render_template('includes/forms/{}.html'.format(form),user_data=session["USER_DATA"][0],benef=benf,all_form_data=all_form_data,form_c_db=display_dataform.display()['form_c_datatable'])
 
 @app.route('/dcf/<viewform>')
 def viewform1(viewform):
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+	print(viewform)
 	return render_template('includes/viewform_modal/{}.html'.format(viewform),user_data=session["USER_DATA"][0])
 
 @app.route('/dcf_spreadsheet')

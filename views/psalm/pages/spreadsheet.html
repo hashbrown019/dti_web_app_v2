@@ -72,7 +72,7 @@
                             a.click();
                         }
     </script>
-<!--     <div class="card" style="width:60%;  margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="card" style="width:60%;  margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
         <div class="card-header" style="background-color: #334257;">
             <h3 style="color: white;">Imported Files</h3>
@@ -95,11 +95,31 @@
                                     <th>Action</th>
                                     </tr>
                                 </thead>
+                                                {% for row in uploaded_file_by_user %}
                             
                                 <tbody class=" bg-dark">
                                   <tr>
+                                     <td>{{ row['name'] }}</td>
+                                    <td>{{ row['filename'] }}</td>
+                                    <td>
+                                                    <!-- {{row['upload_by']}} === {{user_data['id']}} -->
+                                                    <a style="color: #71dada;"  href="/download_/{{row['filename']| string | websafe_filename}}" target="_blank">
+
+
+                                                        <span><i class="fa fa-cloud-download"></i></span> Download
+                                                    </a>&nbsp;&nbsp;&nbsp;
+
+                                                    <a style="color: #ff704d;" onclick="confirmation(event)"  href="/delete/{{row['filename'] | string | websafe_filename}}">
+                                                        <span><i class="fa fa-trash"></i></span> Delete
+                                                    </a>
+                                                    
+
+
+                                                </td>
+                                  </tr>
                                  <div>
-                                
+                                    {% endfor %}
+
                                   </tbody>
                         </table>
                         
@@ -118,7 +138,7 @@
     
         </div>
         
-    </div> -->
+    </div>
     
 
 

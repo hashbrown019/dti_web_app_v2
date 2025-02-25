@@ -36,6 +36,7 @@ def updateform2(request):
         form_2_sector_chairperson_manager = request.form.get('form_2_sector_chairperson_manager')
         form_2_office_address_province = request.form.get('form_2_office_address_province')
         form_2_total_number_fo = request.form.get('form_2_total_number_fo')
+        # form_2_cpa_incentives = request.form.get('form_2_cpa_incentives')
         form_2_male = request.form.get('form_2_male')
         form_2_female = request.form.get('form_2_female')
         form_2_pwde = request.form.get('form_2_pwde')
