@@ -54,22 +54,6 @@ app = Blueprint("dcfv2",__name__,template_folder="pages")
 
 def is_on_session(): return ('USER_DATA' in session)
 
-@app.route('/api/get_commodities', methods=['GET'])
-def get_commodities():
-    try:
-        query = "SELECT DISTINCT cbb_commodity FROM dcf_capacity_building WHERE cbb_commodity IS NOT NULL AND cbb_commodity != '' ORDER BY cbb_commodity ASC"
-        result = db.select(query)
-        commodities = []
-        for row in result:
-            # Handle cases where cbb_commodity might have comma-separated values:
-            for commodity in row['cbb_commodity'].split(','):
-                commodities.append(commodity.strip()) # strip whitespace if any
-        return jsonify(commodities)
-    except Exception as e:
-        print(f"Error fetching commodities: {e}")
-        return jsonify({"error": "Error fetching commodities"}), 500
-
-
 @app.route('/sample/<item>')
 @c.login_auth_web()
 def sample(item):

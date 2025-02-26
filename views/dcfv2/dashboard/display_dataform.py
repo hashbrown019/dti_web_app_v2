@@ -256,8 +256,6 @@ def displayform():
 
 
 
-
-
     form6_data_sep = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)".format(position_data_filter()))
     form6_data_oct = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
     form6_data_nov =db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
