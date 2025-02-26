@@ -313,7 +313,6 @@
                         <td>
                             <center>Female</center>
                         </td>
-
                         <!---SectorG---->
                         <td>
                             <center>PWD</center>
@@ -383,7 +382,6 @@
            
         </div>
         <div class="x-row x-container x-padding">
-
             <div class="x-col l2 x-container x-padding">
                 <label class="">Notable CPA incentives(Optional entry):</label>
                 <input class="FORM2_FIELD x-input x-border" id="form_2_notable_cpa_incentives" name="form_2_notable_cpa_incentives"
@@ -433,7 +431,6 @@
                                 Implementation</center>
                         </th>
                     </tr>
-
                     <tr>
                         <td>
                             <center>Activity/Agreements (Outputs vis-à-vis signed CPA)</center>
@@ -455,95 +452,83 @@
                     <!-- Start to do list -->
 {% if benef|length !=0 %}
 
-<div class="col-md-12 col-sm-12 ">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Participants&nbsp;&nbsp;&nbsp;
-                  <a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="
-                  +URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
-                  <span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants
-              </a> </h2></h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Settings 1</a>
-                <a class="dropdown-item" href="#">Settings 2</a>
+        <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Participants&nbsp;&nbsp;&nbsp;
+                                <a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="
+                                +URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
+                                <span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants
+                            </a> </h2></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+                            <p class=" text-muted font-13 m-b-30">
+                            Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
+                        </p>   
+                        <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                    <th>Name / Org Name</th>
+                                    <th>Sex</th>
+                                    <th>Birthday</th>
+                                    <th>Primary Crop (If Applicable)</th>
+                                    <th>Barangay</th>
+                                    <th>City/Municipality</th>
+                                    <th>Province</th>
+                                    <th>Region</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for parti in benef%}
+                                    <tr>
+                                        <td>{{parti['fname']}}</td>
+                                        <td>{{parti['sex']}}</td>
+                                        <td>{{parti['farmer_bday']}}</td>
+                                        <td>{{parti['farmer_primary_crop']}}</td>
+                                        <td>{{parti['addr_brgy']}}</td>
+                                        <td>{{parti['addr_city']}}</td>
+                                        <td>{{parti['addr_prov']}}</td>
+                                        <td>Region {{parti['addr_region']}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </li>
-        <li><a class="close-link"><i class="fa fa-close"></i></a>
-        </li>
-    </ul>
-    <div class="clearfix"></div>
-</div>
-<div class="x_content">
-  <div class="row">
-      <div class="col-sm-12">
-        <div class="card-box table-responsive">
-            <p class=" text-muted font-13 m-b-30">
-              Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
-          </p>
-          
-          <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                <th>Name / Org Name</th>
-                <th>Sex</th>
-                <th>Birthday</th>
-                <th>Primary Crop (If Applicable)</th>
-                <th>Barangay</th>
-                <th>City/Municipality</th>
-                <th>Province</th>
-                <th>Region</th>
-             </tr>
-         </thead>
-         <tbody>
-            {% for parti in benef%}
-                <tr>
-                    <td>{{parti['fname']}}</td>
-                    <td>{{parti['sex']}}</td>
-                    <td>{{parti['farmer_bday']}}</td>
-                    <td>{{parti['farmer_primary_crop']}}</td>
-                    <td>{{parti['addr_brgy']}}</td>
-                    <td>{{parti['addr_city']}}</td>
-                    <td>{{parti['addr_prov']}}</td>
-                    <td>Region {{parti['addr_region']}}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-
-        
-
-            </div>
+        </div>
+    </div>
+ </div>
 
 {% endif %}
 
             <div class="x-col l5">
-
                 <div class="x-col l3 x-container x-padding" style="width: 10px">
                     <input class="btn" type="file" id="form_2_image_uploads" name="image_uploads"
                         accept=".jpg, .jpeg, .png, .mp4, .mov, .xlsx, .pdf, .docx, .pptx" multiple />
                 </div>
-
-
             </div>
             <!-- <div class="x-col l4 x-container x-padding">	
             <button data-toggle="modal" data-target="#form2_modalpart" href="" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart" class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
         </div> -->
-</div>
-
+    </div>
         <script>
             var k_counter = 1
             function add_row() {
@@ -557,18 +542,14 @@
                 // Add some text to the new cells:
             }
         </script>
-
-<p class="x-right" id="submit_btn_holder">
-            <button class="btn btn-primary btn-xs" type="button" onclick="submit_form('FORM2_FIELD','dcf_implementing_unit','/form2_dashboard')">Submit</button>
-</p>
+            <p class="x-right" id="submit_btn_holder">
+                <button class="btn btn-primary btn-xs" type="button" onclick="submit_form('FORM2_FIELD','dcf_implementing_unit','/form2_dashboard')">Submit</button>
+            </p>
         </div>
-</div>
-
+    </div>
 </div>
 
     {% include 'formdata_handler.html' %}
-
-
 
 
 <script type="text/javascript">
@@ -576,10 +557,8 @@
 		var record_id = URL_ARGS["id"]
 		var table = URL_ARGS["table"]
 		load_data(record_id, table, "FORM2_FIELD")
-		
 		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
 	})
-
 
     function getDropDown(sel) {
         hideAll();
