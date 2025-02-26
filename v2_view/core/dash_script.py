@@ -27,4 +27,3 @@ def position_data_filter():
 	return _filter
 
 
-

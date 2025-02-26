@@ -40,6 +40,13 @@ class sqlite:
 
 class mysql:
 	def __init__(self, host,user,password,database,use_pure=False):
+		'''
+			@params: host = Hostname of the database
+			@params: user = Username of the database
+			@params: password = Password of the database
+			@params: database = Database name
+			@params: use_pure = Use pure python connection
+		'''
 		super(mysql, self).__init__()
 		self.host=host
 		self.user=user
@@ -76,7 +83,7 @@ class mysql:
 				cur.execute(sql)
 				conn.commit()
 				return {"response":"done","message":cur.lastrowid, "sql":sql}
-				return cur.lastrowid
+				# return cur.lastrowid
 			except Exception as e:
 				return {"response":"error","message":str(e), "sql":sql}
 
@@ -97,6 +104,33 @@ class mysql:
 			except Exception as e:
 				return {"response":"error","message":str(e), "sql":sql}
 
+
+	def insert_or_add_to_db(self,req,table,ids):
+		'''
+			Insert or Update data to the database
+			@params: req = Json data from the request
+			@params: table = Table name to insert or update
+			@params: ids = ColName of the ID of the table
+		'''
+		status = 'uknown'
+		data = dict(req.form)
+		key = [];val = [];args=""
+		is_exist = len(self.select("SELECT * FROM `{}` WHERE `{}` ='{}' ;".format(table, ids, req.form[ids])))
+		if(is_exist==0):
+			for datum in data:
+				# print(datum)
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(data[datum]))
+			sql = ('''INSERT INTO `{}` ({}) VALUES ({});'''.format(table, ", ".join(key),", ".join(val)))
+			status = "inserted"
+		else:
+			for datum in data:
+				args += ",`{}`='{}'".format(datum,data[datum])
+			sql = "UPDATE `{}` SET  {}  WHERE `{}`='{}';".format(table, args[1:], ids, req.form[ids])
+			status = "updated"
+			
+		last_row_id = self.do(sql)
+		return {"lastrowid":last_row_id, "status":status}
 
 	# ==========FUNCTION ON MULTIPLE SIMULTANEUS TRANSACTION==========================================
 	# function(sql, mysql.init_db(self) )

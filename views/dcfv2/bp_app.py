@@ -102,6 +102,24 @@ def get_dip_names():
     except Exception as e:
         print(f"Error fetching DIP names: {e}")
         return jsonify({"error": "Error fetching DIP names"}), 500
+
+@app.route('/api/get_msme_names', methods=['GET'])
+def get_msme_names():
+    query = "SELECT reg_businessname FROM form_c ;"
+    result = db.select(query)
+    print(result)
+    # dip_names = [dict(form_1_name_dip=row['form_1_name_dip']) for row in result]
+    dip_names = result
+    return jsonify(dip_names)
+
+@app.route('/api/get_fo_names', methods=['GET'])
+def get_fo_names():
+    query = "SELECT organization_registered_name FROM form_b ;"
+    result = db.select(query)
+    print(result)
+    # dip_names = [dict(form_1_name_dip=row['form_1_name_dip']) for row in result]
+    dip_names = result
+    return jsonify(dip_names)
 		
 
 @app.route('/form1_dashboard')
@@ -121,8 +139,6 @@ def form2_dashboard():
 	count = displayCount.display__()
 	form_c = db.select("SELECT * FROM form_c")
 	return render_template("form_dashboard/form2_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp,form_c=form_c)
-
-
 
 
 @app.route('/form3_dashboard')
