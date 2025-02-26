@@ -1341,10 +1341,13 @@ def displayform():
     dcf4_IFT=db.select("SELECT COUNT(cbb_types_of_training) AS IFT FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Teamwork';".format(position_data_filter()))
     dcf4_IFGESI=db.select("SELECT COUNT(cbb_types_of_training) AS IFGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-GESI';".format(position_data_filter()))
     dcf4_IFSEC=db.select("SELECT COUNT(cbb_types_of_training) AS IFSEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Social Environment & Climate';".format(position_data_filter()))
+    
+    DIPnames=db.select("SELECT  FROM dcf_prep_review_aprv_status ;")
 
 
 
     return {
+        'DIPnames' : DIPnames,
         'dcf4_FOOEC':dcf4_FOOEC,
         'dcf4_FOGOV':dcf4_FOGOV,
         'dcf4_FOOM':dcf4_FOOM,
@@ -2003,10 +2006,8 @@ def displayform():
         'form9_data_july':form9_data_july,
         'form10_data_july':form10_data_july,
         'form11_data_july':form11_data_july,
-
         'dips_listdcf1':dips_listdcf1,
-        'form1_datatabledip': form1_datatabledip
-
+        'form1_datatabledip': form1_datatablediip,
     }
 
 

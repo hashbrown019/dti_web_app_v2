@@ -127,8 +127,19 @@ class _main:
 		print(file_)
 		return file_
 
+	# =======================================
+	# =======================================
+	# ============Tracker-FMI===============
+
+	@app.route("/mis-v4/tracker-fmi/<task>",methods=["POST","GET"])
+	@c.login_auth_web()
+	def tracker_fmi(task):
+		if(task=='add-update'): res = _backend_sub.fmi_tracker.update_add(request)
+		# elif(task=='get-fmi-data'): res = _backend_sub.fmi_tracker.get_staff_info(request)
+		return res
 
 
+	
 	# =======================================
 	# =======================================
 	# =======================================

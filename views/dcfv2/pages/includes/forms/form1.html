@@ -52,15 +52,90 @@
 						</div> -->
 					<div class="x-col l4  x-padding">
 						<label><span style="color: #007399;" class="tool" data-tip="DIP name format: Region<space>DIP Name (ex. R8 SC Global)" tabindex="1"><i class="fa fa-info-circle"></i></span>  Name of DIP:</label>
-						<input class="FORM1_FIELD  x-input x-border " id="form_1_name_dip" type="text" name="form_1_name_dip"
-							placeholder="" required x-required>
+						<!-- <input class="FORM1_FIELD  x-input x-border " id="form_1_name_dip" type="text" name="form_1_name_dip"
+							placeholder="" required x-required> -->
+						
+						<!-- <select onchange="renewal_field(this)" class="FORM1_FIELD x-border x-select x-border" id="form_1_name_dip" name="form_1_name_dip" required><br>
+		                    <option value="initial">DIP</option>
+		                    {% for entry in all_form_data %}
+		                        <option value="{{entry['id']}}">RAPID_CPA_{{entry['id']}} | {{entry['form_2_businessname']}}</option>
+		                    {% endfor %}
+		                </select> -->
+		                <select class="FORM1_FIELD x-input x-border" name="form_1_name_dip" id="form_1_name_dip">
+							<option value="">Choose your option</option>
+						</select>
 					</div>
+					<script>
+						function populateDipNames() {
+							return fetch('/api/get_dip_names')
+								.then(response => {
+									if (!response.ok) {
+										return response.text().then(text => { throw new Error(text) });
+									}
+									return response.json();
+								})
+								.then(data => {
+									const selectElement = document.getElementById('form_1_name_dip');
+					
+									// Clear existing options to prevent duplication
+									selectElement.innerHTML = '<option value="">Choose your option</option>';
+				
+									data.forEach(item => {
+										const option = document.createElement('option');
+										option.value = item.form_1_name_dip;
+										option.textContent = item.form_1_name_dip;
+										selectElement.appendChild(option);
+									});
+								})
+								.catch(error => console.error('Error fetching DIP names:', error));
+						}
+					
+						// Wait for the full page load before executing the script
+						populateDipNames().then(() => {});
+					</script>
 					<div class="x-col l4  x-padding">
 						<label><span style="color: #007399;" class="tool" data-tip="Full Name of Main Anchor Firm based on official business registration (ex. SC Global Coco Products Inc. ) Add comma and <space> for multiple entries (ex. SC Global Coco Products Inc., Nestle Philippines " tabindex="1"><i class="fa fa-info-circle"></i></span> Anchor Firm:</label>
-						<input class="FORM1_FIELD  x-input x-border" id="form_1_anchor_firm" type="text" name="form_1_anchor_firm"
-							placeholder="">
+						<!-- <input class="FORM1_FIELD  x-input x-border" id="form_1_anchor_firm" type="text" name="form_1_anchor_firm"
+							placeholder=""> -->
+
+						<select class="FORM1_FIELD x-input x-border" name="form_1_anchor_firm" id="form_1_anchor_firm">
+							<option value="">Choose your option</option>
+						</select>
 					</div>
 
+
+					<script>
+
+						function populateMSMENames() {
+							return fetch('/api/get_msme_names')
+								.then(response => {
+									if (!response.ok) {
+										return response.text().then(text => { throw new Error(text) });
+									}
+									return response.json();
+								})
+								.then(data => {
+									const selectElement = document.getElementById('form_1_anchor_firm');
+									println(data)
+									// Clear existing options to prevent duplication
+									selectElement.innerHTML = '<option value="">Choose your option</option>';
+				
+									data.forEach(item => {
+										const option = document.createElement('option');
+										if(item.reg_businessname != "" || item.reg_businessname != " " || item.reg_businessname != undefined ){
+											option.value = item.reg_businessname;
+											option.textContent = item.reg_businessname;
+											selectElement.appendChild(option);
+										}
+										
+									});
+								})
+								.catch(error => console.error('Error fetching DIP names:', error));
+						}
+					
+						// Wait for the full page load before executing the script
+						populateMSMENames().then(() => {});
+				</script>
 				</div>
 
 				<div class="x-row x-padding ">
