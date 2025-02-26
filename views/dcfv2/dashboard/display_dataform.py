@@ -2009,7 +2009,7 @@ def displayform():
         'form10_data_july':form10_data_july,
         'form11_data_july':form11_data_july,
         'dips_listdcf1':dips_listdcf1,
-        'form1_datatabledip': form1_datatablediip,
+        'form1_datatabledip': form1_datatabledip,
     }
 
 
