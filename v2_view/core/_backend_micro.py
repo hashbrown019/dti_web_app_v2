@@ -6,6 +6,7 @@ import Configurations as c
 import os
 import json
 
+
 from v2_view.core import dash_api
 from v2_view.core import dash_script
 from v2_view.core import _backend_sub
@@ -36,3 +37,7 @@ class _main:
 	def view_tracker_dip_main_content():
 		dipData = rapid_mysql.select("SELECT * FROM dcf_prep_review_aprv_status")
 		return jsonify(dipData)
+	
+	@app.route("/core-tracker-sales", methods=["GET"])
+	def core_tracker_sales():
+		return render_template("/chunks/tracker-sales/core-tracker-sales.html")
