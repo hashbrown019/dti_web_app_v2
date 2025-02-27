@@ -13,11 +13,17 @@
 </div>
 
 <script type="text/javascript">
-     var map = L.map('map').setView([7.045859, 125.599205], 17);
-     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          // maxZoom: 17,
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-     }).addTo(map);
+     var map = undefined
+
+     function show_fmi_init_map(){
+          map = L.map('map').setView([7.045859, 125.599205], 17);
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+               // maxZoom: 17,
+               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(map);
+          map.on('click', onMapClick);
+     }
+
 </script>
 
 <script type="text/javascript">
@@ -45,7 +51,7 @@
           map.setView(init_ponits[init_ponits.length-1], 17);
           set_init_map_points()
      }
-     map.on('click', onMapClick);
+     
      function get_coordinate(){
 
       }
