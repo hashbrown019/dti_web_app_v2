@@ -30,9 +30,25 @@
 	})
 
 
-
 	function populate_form(data_from_api){
-		$ID('nameFO').value = data_from_api['form_2_partner_fo_engaged']
+		$send({
+			action : "/micro/get_formB_data",
+			method : POST,
+			data : $DATA({condition :"WHERE `organization_registered_name` LIKE '%"+data_from_api['form_2_partner_fo_engaged']+"%'; "}),
+			func : function (r){
+				var form_b = JSON.parse(r)[0]
+				
+				$ID('nameFO').value = data_from_api['form_2_partner_fo_engaged']
+				$ID('nameRCU').value = data_from_api['form_2_rcus']
+				$ID('namePCU').value = data_from_api['form_2_pcu']
+				$ID('nameCOMMODITY').value = data_from_api['form_2_commodity']
+
+				$ID('nameDIP').value = form_b['']
+				$ID('addressFO').value = form_b['office_business_adrress']
+				$ID('af-msme').value = data_from_api['form_2_businessname']
+			}
+		})
+
 
 	}
 </script>

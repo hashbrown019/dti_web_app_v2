@@ -44,3 +44,9 @@ class _main:
 		tbl = request.form['tbl']
 		cpa = rapid_mysql.select(f"SELECT * FROM `{tbl}` WHERE `id`={ids};")
 		return jsonify(cpa)
+
+	@app.route("/micro/get_formB_data", methods=["GET","POST"])
+	def get_formB_data():
+		condition = request.form['condition']
+		formBData = rapid_mysql.select(f"SELECT * FROM `form_b` {condition};")
+		return jsonify(formBData)
