@@ -11,7 +11,7 @@
 			frameborder="0" 
 			scrolling="no" 
 			style="width: 100%;min-height: 80vh;" 
-			onload="EMBED__SCRIPT(this,formcdashboard)" 
+			onload="iframe_load(this)" 
 			onloadstart="EMBED_LOAD_START(this)"
 			onwaiting="alert()" 
 		--EMBED_IFRAME>
@@ -23,6 +23,10 @@
 			let a_export = function(){alert('PFA not Selected')}
 			let a_import = function(){alert('PFA not Selected')}
 
+			function iframe_load (iframe_content){
+				EMBED__SCRIPT(iframe_content,formcdashboard)
+				EMBED__SCRIPT(iframe_content,form2_sales_tracker_button_redirect)
+			}
 
 			function formcdashboard(_BODY_,obj){
 				try{
@@ -37,6 +41,13 @@
 					}
 				}catch(e){
 					warnprintln(e)
+				}
+			}
+
+			function form2_sales_tracker_button_redirect(_BODY_,obj){
+				var sales_btn = _BODY_.getElementsByClassName("EMBED_SALES_TRACKER_ROUTE")[0]
+				sales_btn.onclick = function(){
+					goto(sales_btn.getAttribute('outer_href'))
 				}
 			}
 		</script>
