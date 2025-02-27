@@ -11,3 +11,28 @@
 {% include '/chunks/tracker-sales/tracker-sales-main-content.html'%}
 
 {% include '/chunks/system-control/system-control-sub-left-content.html'%}
+
+<script type="text/javascript">
+	$onload(function(){
+		$send({
+			action : "/micro/tabl-get-data",
+			method : POST,
+			data : $DATA({
+				id : URL_ARGS['id'],
+				tbl : URL_ARGS['tbl']
+			}),
+			func : function (r){
+				var res = JSON.parse(r)[0]
+				println(res)
+				populate_form(res)
+			}
+		})
+	})
+
+
+
+	function populate_form(data_from_api){
+		$ID('nameFO').value = data_from_api['form_2_partner_fo_engaged']
+
+	}
+</script>

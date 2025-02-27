@@ -38,10 +38,9 @@ class _main:
 		dipData = rapid_mysql.select("SELECT * FROM dcf_prep_review_aprv_status")
 		return jsonify(dipData)
 	
-	@app.route("/core-tracker-sales", methods=["GET","POST"])
+	@app.route("/micro/tabl-get-data", methods=["GET","POST"])
 	def core_tracker_sales():
-		tbl = request.args["tbl"]
-		ids = request.args["id"]
-		print("====================================")
-		print(tbl,ids)
-		return render_template("/chunks/tracker-sales/core-tracker-sales.html")
+		ids = request.form['id']
+		tbl = request.form['tbl']
+		cpa = rapid_mysql.select(f"SELECT * FROM `{tbl}` WHERE `id`={ids};")
+		return jsonify(cpa)
