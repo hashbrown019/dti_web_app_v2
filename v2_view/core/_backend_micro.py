@@ -50,3 +50,45 @@ class _main:
 		condition = request.form['condition']
 		formBData = rapid_mysql.select(f"SELECT * FROM `form_b` {condition};")
 		return jsonify(formBData)
+	
+	@app.route("/micro/insert_sales_tracker", methods=["POST"])
+	def insert_sales_tracker():
+		try:
+			field_mapping = {
+				"nameID": "ST_id",
+				"nameRCU": "ST_rcu",
+				"namePCU": "ST_pcu",
+				"nameCOMMODITY": "ST_commodity",
+				"nameDIP": "ST_nameofdip",
+				"nameFO": "ST_nameof_fo",
+				"af-msme": "ST_af_msme",
+				"addressFO": "ST_address_fo",
+				"productType": "ST_product_type",
+				"vs": "ST_vol_supplied",
+				"aveP": "ST_ave_price",
+				"totalTransaction": "ST_total_transaction",
+				"incentives": "ST_incentives_provided"
+			}
+			columns = []
+			values = []
+			for form_field, db_column in field_mapping.items():
+				if form_field in request.form:
+					columns.append(f"`{db_column}`")
+					values.append(f"'{request.form[form_field]}'")
+			if not columns:
+				return jsonify({"status": "error", "message": "No valid data provided"}), 400
+			query = f"INSERT INTO `sales_tracker` ({', '.join(columns)}) VALUES ({', '.join(values)})"
+			res = rapid_mysql.do(query)  
+			return jsonify({"status": "success", "message": "Data inserted successfully", "result": res})
+		except Exception as e:
+			return jsonify({"status": "error", "message": str(e)}), 500
+
+
+	@app.route("/sales-tracker-table", methods=["GET"])
+	def sales_tracker_table():
+		return render_template("sales-tracker-table.html")
+
+	@app.route("/view-sales-tracker-table", methods=["GET","POST"])
+	def view_sales_tracker_table():
+		stData = rapid_mysql.select("SELECT * FROM sales_tracker")
+		return jsonify(stData)
