@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <div class="pagetitle">
 	<h1>Sales Tracker</h1>
 	<nav>
@@ -9,8 +11,8 @@
 </div>
 
 {% include '/chunks/tracker-sales/tracker-sales-main-content.html'%}
-
 {% include '/chunks/system-control/system-control-sub-left-content.html'%}
+
 
 <script type="text/javascript">
 	$onload(function(){
@@ -30,9 +32,25 @@
 	})
 
 
-
 	function populate_form(data_from_api){
-		$ID('nameFO').value = data_from_api['form_2_partner_fo_engaged']
+		$send({
+			action : "/micro/get_formB_data",
+			method : POST,
+			data : $DATA({condition :"WHERE `organization_registered_name` LIKE '%"+data_from_api['form_2_partner_fo_engaged']+"%'; "}),
+			func : function (r){
+				var form_b = JSON.parse(r)[0]
+				
+				$ID('nameID').value = data_from_api['id']
 
+				$ID('nameFO').value = data_from_api['form_2_partner_fo_engaged']
+				$ID('nameRCU').value = data_from_api['form_2_rcus']
+				$ID('namePCU').value = data_from_api['form_2_pcu']
+				$ID('nameCOMMODITY').value = data_from_api['form_2_commodity']
+				$ID('af-msme').value = data_from_api['form_2_businessname']
+
+				$ID('nameDIP').value = form_b['']
+				$ID('addressFO').value = form_b['office_business_adrress']
+			}
+		})
 	}
 </script>

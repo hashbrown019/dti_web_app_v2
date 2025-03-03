@@ -1,0 +1,134 @@
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">SALES TRACKER TABLE</h5>
+      <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+        <div class="datatable-container">
+          <table class="table datatable datatable-table table-dark" id="salesTrackerTable">
+            <thead>
+              <tr>
+                <th data-sortable="true">ID</th>
+                <th data-sortable="true">RCU</th>
+                <th data-sortable="true">PCU</th>
+                <th data-sortable="true">Commodity</th>
+                <th data-sortable="true">DIP</th>
+                <th data-sortable="true">F.O</th>
+                <th data-sortable="true">Address(F.O)</th>
+                <th data-sortable="true">Anchor Firm/MSME</th>
+                <th data-sortable="true">Product Type</th>
+                <th data-sortable="true">Vol. Sup</th>
+                <th data-sortable="true">Ave Price</th>
+                <th data-sortable="true">Total Transaction</th>
+                <th data-sortable="true">Incentives Provided</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #salesTrackerTable tbody tr td {
+    background-color: rgb(170, 170, 170);
+  }
+</style>
+
+<script>
+  async function fetchData() {
+    try {
+      const response = await fetch('/view-sales-tracker-table');
+      const data = await response.json();
+      create_sales_tracker_table(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  fetchData();
+
+  function create_sales_tracker_table(data) {
+    const filteredData = data.filter(entry => entry.ST_id);
+    const table = document.querySelector('#salesTrackerTable tbody');
+    const rowsPerPage = 10;
+    let currentPage = 1;
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+    function renderTable(page) {
+      table.innerHTML = "";
+      const start = (page - 1) * rowsPerPage;
+      const paginatedData = filteredData.slice(start, start + rowsPerPage);
+
+      paginatedData.forEach(entry => {
+        const row = table.insertRow();
+        row.innerHTML = `
+          <td>${entry.ST_id}</td>
+          <td>${entry.ST_rcu}</td>
+          <td>${entry.ST_pcu}</td>
+          <td>${entry.ST_commodity}</td>
+          <td>${entry.ST_nameofdip}</td>
+          <td>${entry.ST_nameof_fo}</td>
+          <td>${entry.ST_address_fo}</td>
+          <td>${entry.ST_af_msme}</td>
+          <td>${entry.ST_product_type}</td>
+          <td>${entry.ST_vol_supplied}</td>
+          <td>${entry.ST_ave_price}</td>
+          <td>${entry.ST_total_transaction}</td>
+          <td>${entry.ST_incentives_provided}</td>
+        `;
+      });
+      renderPagination();
+    }
+
+    function renderPagination() {
+    let paginationContainer = document.getElementById("pagination");
+    if (!paginationContainer) {
+      paginationContainer = document.createElement("nav");
+      paginationContainer.id = "pagination";
+      paginationContainer.classList.add("d-flex", "justify-content-center", "mt-3");
+      document.querySelector("#salesTrackerTable").parentNode.appendChild(paginationContainer);
+    }
+
+    paginationContainer.innerHTML = "";
+    const ul = document.createElement("ul");
+    ul.classList.add("pagination");
+
+    const createPageItem = (label, disabled, onClick) => {
+      const li = document.createElement("li");
+      li.classList.add("page-item");
+      if (disabled) li.classList.add("disabled");
+      li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+      li.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!disabled) onClick();
+      });
+      return li;
+    };
+    ul.appendChild(createPageItem("«", currentPage === 1, () => {
+      if (currentPage > 1) renderTable(--currentPage);
+    }));
+
+    const maxVisiblePages = 3;
+    const startPage = Math.max(1, currentPage - 1);
+    const endPage = Math.min(totalPages, currentPage + 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      const pageItem = createPageItem(i, false, () => {
+        currentPage = i;
+        renderTable(currentPage);
+      });
+      if (i === currentPage) {
+        pageItem.classList.add("active");
+      }
+      ul.appendChild(pageItem);
+    }
+    ul.appendChild(createPageItem("»", currentPage === totalPages, () => {
+      if (currentPage < totalPages) renderTable(++currentPage);
+    }));
+    paginationContainer.appendChild(ul);
+  }
+    renderTable(currentPage);
+  }
+</script>

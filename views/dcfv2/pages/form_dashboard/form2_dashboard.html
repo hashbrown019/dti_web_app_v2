@@ -13,7 +13,6 @@
 	<!-- top tiles -->
 	<div class="row" style="display: inline-block;" >
 
-
 		<div class="top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
@@ -155,15 +154,14 @@
 	</div>
 <br />
 
-	<div class="row">
-		<script>// Replace this with your actual variable or value
+				<div class="row">
+					<script>
 						function init_chart_doughnut() {
 							if (typeof (Chart) === 'undefined') { return; }
 							console.log('init_chart_doughnut');
 							if ($('.canvasDoughnut').length) {
 								var _labels = [];
 								var _data = [];	
-								// Sample data
 								{% for key in over_all_commodity_count2 %}
 								_labels.push('{{key}}');
 								_data.push('{{over_all_commodity_count2[key]}}');
@@ -211,7 +209,6 @@
 
 									}
 								};
-
 								$('.canvasDoughnut').each(function () {
 									var chart_element = $(this);
 									var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
@@ -291,7 +288,6 @@
 									},
 									buttonsStyling: false
 								});
-
 								function download_login_start(fff){
 									let a= document.createElement('a');
 									a.target= '_blank';
@@ -376,16 +372,21 @@
 																<a style="color: #00e673;" href="/dcf/form2?id={{ row['id'] }}&table=dcf_implementing_unit">
 																	<span><i class="fa fa-pencil-square-o"></i></span> Edit
 																</a>&nbsp;&nbsp;&nbsp;
+
 																<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="+{{ row["id"] }}+"&i=dcf_implementing_unit",true)'>
 																	<span><i class="fa fa-user-plus"></i></span> Add Participants
 																</a> &nbsp;&nbsp;&nbsp;&nbsp; 
+
 																<br>
+
 																<a class="EMBED_SALES_TRACKER_ROUTE" style="color: yellow; cursor: pointer;" alt="/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&id={{row['id']}}">
 																	<span><i class="fa fa-pencil-square-o"></i></span> Sales Tracker
-																</a>&nbsp;&nbsp;&nbsp;&nbsp;																																																
+																</a>&nbsp;&nbsp;&nbsp;&nbsp;	
+
 																<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"href="/delete_record/dcf_implementing_unit/{{ row['id'] }}">
 																	<span><i class="fa fa-trash"></i></span> Delete 
 																</a> 
+																
 																{% elif user_data['job'] == "Super Admin" %}
 																<a style="color: #33cccc;" href="/dcf/form2?id={{ row['id'] }}&table=dcf_implementing_unit">
 																	<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
@@ -410,7 +411,7 @@
 									</div>
 								</div>
 							</div>
-				</div>
+						</div>
 
 				<div class="col-md-12 col-sm-12 ">
 					<div class="x_panel tile">
@@ -486,11 +487,5 @@
 	</div>
 
 	{% endblock content %}
-
-	<!-- Specific JS goes HERE -->
-
 	{% block javascripts %}
-
-
-
 	{% endblock javascripts %}
