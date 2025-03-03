@@ -1,0 +1,53 @@
+<table class="table datatable hover">
+	<thead>
+		<th>FMI/R Project Name</th>
+		<th>Region</th>
+		<th>Province</th>
+		<th>Length</th>
+		<th>ABC</th>
+		<th>Status</th>
+	</thead>
+	<tbody>
+		{% for fmi in fmi_list %}
+		<tr>
+			<td>{{fmi['fmi_name']}}</td>
+			<td>{{fmi['rcu']}}</td>
+			<td>{{fmi['pcu']}}</td>
+			<td>{{fmi['fmi_length']}} Km</td>
+			<td class="x-small">
+				IFAD : <b class="_money_tag">{{fmi['abc_ifad']}}</b><br>
+				LGU : <b class="_money_tag">{{fmi['abc_lgu']}}</b>
+			</td>
+			<td>status</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<script type="text/javascript">
+	var fmis = JSON.parse("{{fmi_list}}".replaceAll("&#39;",'"'))
+	$onload(function(){
+		for (var i = 0; i < fmis.length; i++) {
+			fmis[i]
+			var points = fmis[i]['map_points'].replaceAll("LatLng(","").replaceAll(")","").replaceAll(" ","").split(',')
+			var temp = 0.0
+			var counter = 1
+			var point_temp = []
+			for (var xx = 0; xx < points.length; xx++) {
+				if(counter%2==0){
+					point_temp.push([temp,points[xx]]);
+				}
+				temp=points[xx];
+				counter ++
+			}
+			set_init_map_points(point_temp)
+		}
+	})
+
+
+	function set_init_map_points(point){
+		// try{map.removeLayer(polyline)}catch(e){};
+		polyline = L.polyline(point).addTo(map);
+		println(polyline)
+		// $ID("map_points").value = [...init_ponits];
+	}
+</script>

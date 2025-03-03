@@ -41,7 +41,8 @@ class _main:
 			databases=dash_api.get_databases(),
 			security_group_ls=dash_api.get_security_group() if "core-system-control" in module else None ,
 			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None ,
-			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "tools-trackers-specific" in module else None 
+			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "tools-trackers-specific" in module else None ,
+			fmi_list=dash_api.fmi_list(session["USER_DATA"][0]['id']) if "tracker-fmi" in module else None 
 		);
 
 	@app.route("/warning",methods=["GET"])

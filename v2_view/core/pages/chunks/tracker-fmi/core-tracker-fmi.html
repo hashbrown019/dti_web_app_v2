@@ -11,7 +11,11 @@
 
 <!-- End Page Title -->
 <!-- Left side columns -->
-{% include '/chunks/tracker-fmi/fmi-dashboard.html'%}
+{% if 'fmi-add-basic' in URL_ARGS%}
+	{% include '/chunks/tracker-fmi/fmi-add-basic.html'%}
+{% else %}
+	{% include '/chunks/tracker-fmi/fmi-dashboard.html'%}
+{% endif %}
 <!-- End Left side columns -->
 
 <!-- Right side columns -->
