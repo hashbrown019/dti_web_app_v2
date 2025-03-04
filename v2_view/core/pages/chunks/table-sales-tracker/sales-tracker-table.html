@@ -25,6 +25,7 @@
                 <th data-sortable="true">Ave Price</th>
                 <th data-sortable="true">Total Transaction</th>
                 <th data-sortable="true">Incentives Provided</th>
+                <th data-sortable="true">Date</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -48,7 +49,7 @@
 
   async function fetchData() {
     try {
-      const response = await fetch('/view-sales-tracker-table');
+      const response = await fetch('/view-sales-tracker-table/'+URL_ARGS['id']);
       const data = await response.json();
       originalData = data.filter(entry => entry.ST_id); // Store full data
       filteredData = [...originalData]; // Copy for display
@@ -67,30 +68,40 @@
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
     function renderTable(page) {
-      table.innerHTML = "";
-      const start = (page - 1) * rowsPerPage;
-      const paginatedData = filteredData.slice(start, start + rowsPerPage);
+  table.innerHTML = "";
+  const start = (page - 1) * rowsPerPage;
+  const paginatedData = filteredData.slice(start, start + rowsPerPage);
 
-      paginatedData.forEach(entry => {
-        const row = table.insertRow();
-        row.innerHTML = `
-          <td>${entry.ST_id}</td>
-          <td>${entry.ST_rcu}</td>
-          <td>${entry.ST_pcu}</td>
-          <td>${entry.ST_commodity}</td>
-          <td>${entry.ST_nameofdip}</td>
-          <td>${entry.ST_nameof_fo}</td>
-          <td>${entry.ST_address_fo}</td>
-          <td>${entry.ST_af_msme}</td>
-          <td>${entry.ST_product_type}</td>
-          <td>${entry.ST_vol_supplied}</td>
-          <td>${entry.ST_ave_price}</td>
-          <td>${entry.ST_total_transaction}</td>
-          <td>${entry.ST_incentives_provided}</td>
-        `;
-      });
-      renderPagination();
+  paginatedData.forEach(entry => {
+    const row = table.insertRow();
+
+    // Format the date to YYYY/MM/DD
+    let formattedDate = "";
+    if (entry.ST_date) {
+      const dateObj = new Date(entry.ST_date);
+      formattedDate = `${dateObj.getFullYear()}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getDate().toString().padStart(2, '0')}`;
     }
+
+    row.innerHTML = `
+      <td>${entry.CPA_id}</td>
+      <td>${entry.ST_rcu}</td>
+      <td>${entry.ST_pcu}</td>
+      <td>${entry.ST_commodity}</td>
+      <td>${entry.ST_nameofdip}</td>
+      <td>${entry.ST_nameof_fo}</td>
+      <td>${entry.ST_address_fo}</td>
+      <td>${entry.ST_af_msme}</td>
+      <td>${entry.ST_product_type}</td>
+      <td>${entry.ST_vol_supplied}</td>
+      <td>${entry.ST_ave_price}</td>
+      <td>${entry.ST_total_transaction}</td>
+      <td>${entry.ST_incentives_provided}</td>
+      <td>${formattedDate}</td>
+    `;
+  });
+
+  renderPagination();
+}
 
     function renderPagination() {
       let paginationContainer = document.getElementById("pagination");

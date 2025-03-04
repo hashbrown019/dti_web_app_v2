@@ -55,7 +55,8 @@ class _main:
 	def insert_sales_tracker():
 		try:
 			field_mapping = {
-				"nameID": "ST_id",
+				"nameSTID": "ST_id",
+				"nameID": "CPA_id",
 				"nameRCU": "ST_rcu",
 				"namePCU": "ST_pcu",
 				"nameCOMMODITY": "ST_commodity",
@@ -67,7 +68,8 @@ class _main:
 				"vs": "ST_vol_supplied",
 				"aveP": "ST_ave_price",
 				"totalTransaction": "ST_total_transaction",
-				"incentives": "ST_incentives_provided"
+				"incentives": "ST_incentives_provided",
+				"date": "ST_date",
 			}
 			columns = []
 			values = []
@@ -89,6 +91,12 @@ class _main:
 		return render_template("sales-tracker-table.html")
 
 	@app.route("/view-sales-tracker-table", methods=["GET","POST"])
-	def view_sales_tracker_table():
-		stData = rapid_mysql.select("SELECT * FROM sales_tracker")
-		return jsonify(stData)
+	@app.route("/view-sales-tracker-table/<ids>", methods=["GET","POST"])
+	def view_sales_tracker_table(ids):
+		print(ids)
+		if(ids):
+			stData = rapid_mysql.select(f"SELECT * FROM sales_tracker WHERE `CPA_id`={ids}")
+			return jsonify(stData)
+		else:
+			stData = rapid_mysql.select("SELECT * FROM sales_tracker")
+			return jsonify(stData)
