@@ -1,10 +1,9 @@
 {% extends 'layouts/dcf_base.html' %}
 {% block title %} Dashboard {% endblock title %}
-
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
+
 <title>Form 2</title>
     {% include "includes/sweetalert.html" %}
     <script type="text/javascript">
@@ -12,43 +11,33 @@
         var ls_data = JSON.parse(all_data)
     </script>
 
-
     <div class="right_col" role="main">
         <div class="row">
     <div class="col-md-12 col-sm-12 x-card  x-light-grey">
-
         <center>
             <h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 2 - CPA TRACKER</h2>
 			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
         </center>
 
-        <span style="font-weight: bold; font-size: medium; color:#999999;" id="cpa_track">
-           
-        </span>
+        <span style="font-weight: bold; font-size: medium; color:#999999;" id="cpa_track"></span>
         <script type="text/javascript">
-
             SAM_FUNC_KAMOWN(get_recent_cpa)
             function get_recent_cpa(dd){
                 println("---formdata oyeah")
                 println(ls_data)
                 println(dd['form_2_recent_cpa'])
-
                 for (var i = 0; i < ls_data.length; i++) {
                     if(parseInt(ls_data[i]["id"])==parseInt(dd['form_2_recent_cpa'])){
                         var notes = ` <span><i class="ti-bookmark"></i></span> CPA Track #: RAPID_CPA_${ls_data[i]['id']} | ${ls_data[i]['form_2_businessname']}`
                         $ID("cpa_track").innerHTML = notes
-                    }
-                    
+                    } 
                 }
             }
         </script>
-        <!---text--->
+
         <div class="x-row x-container x-padding">
-
             <input class="FORM2_FIELD x-input" type="hidden"  id="id">
-
             <div id="cpa_select" class="x-col l3 x-container x-padding">
-
                 <label class="">Renewal for prev. CPA Track#</label>
                 <select onchange="renewal_field(this)" class="FORM2_FIELD x-border x-select x-border" id="form_2_recent_cpa" name="form_2_recent_cpa" required><br>
                     <option value="initial">New CPA</option>
@@ -63,7 +52,6 @@
                             if(ls_data[i]["id"]==form_id.value){
                                 // println(ls_data[i]["id"])
                                 json_to_input("FORM2_FIELD",ls_data[i],false,function(ie,key){
-
                                     return (key!='form_2_recent_cpa')
                                 })
                             }
@@ -80,7 +68,6 @@
                         }
                     })
                 </script>
-
             </div>
 
             <div class="x-col l3 x-container x-padding">
@@ -184,7 +171,6 @@
             
            
         <div class="x-row x-container x-padding">
-
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Indicate full Business name of Anchor Firm/MSMEs based on official registration." tabindex="1"><i class="fa fa-info-circle"></i></span> Business Name:</label>
                 <select class="FORM2_FIELD x-border x-select x-border" id="form_2_businessname" name="form_2_businessname" required>
@@ -196,8 +182,6 @@
                     {% endfor %}
                 </select>
             </div>
-
-
 
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa fa-info-circle"></i></span>   Business Address of Owner or manager of the anchor firm/MSMEs:</label>
@@ -241,50 +225,46 @@
                     populateFONames().then(() => {});
                 </script>
             </div>
+
             <div class="x-col l6 x-container x-padding">
                 <label class="">Chairperson or Manager of Partner FO:</label>
                 <input class="FORM2_FIELD x-input x-border" id="form_2_chairperson_manager" name="form_2_chairperson_manager"
                     type="text" placeholder="">
             </div>
-          
         </div>
-
         <div class="x-row x-container x-padding">
-
-  <div class="x-col l3 x-container x-padding">
+            <div class="x-col l3 x-container x-padding">
                 <label class="">Sex of the Chairperson or Manager of Partner FO:</label>
-                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sex_chairperson_manager"
-                    name="form_2_sex_chairperson_manager"><br>
-                    <option value="">Choose Sex</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                </select>
+                    <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sex_chairperson_manager"
+                        name="form_2_sex_chairperson_manager"><br>
+                        <option value="">Choose Sex</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
             </div>
 
             <div class="x-col l3 x-container x-padding">
                 <label class="">Sector of Chairperson or Manager of Partner FO:</label>
-                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sector_chairperson_manager"
-                    name="form_2_sector_chairperson_manager"><br>
-                    <option value="">Choose Sector</option>
-                    <option>PWD</option>
-                    <option>Youth</option>
-                    <option>IP</option>
-                    <option>SC</option>
-                    <option>Abled</option>
-                </select>
+                    <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sector_chairperson_manager"
+                        name="form_2_sector_chairperson_manager"><br>
+                        <option value="">Choose Sector</option>
+                        <option>PWD</option>
+                        <option>Youth</option>
+                        <option>IP</option>
+                        <option>SC</option>
+                        <option>Abled</option>
+                    </select>
             </div>
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa fa-info-circle"></i></span> Office Address of FO:</label>
-                <input class="FORM2_FIELD x-input x-border" id="form_2_office_address_province" type="text"
-                    name="form_2_office_address_province" placeholder="">
+                <input class="FORM2_FIELD x-input x-border" id="form_2_office_address_province" type="text" name="form_2_office_address_province" placeholder="">
             </div>
         </div>
 
         <div class="x-row x-container x-padding">
             <div class="x-col l2 x-container x-padding">
                 <label class="">Total number of FO members:</label>
-                <input class="FORM2_FIELD x-input x-border" id="form_2_total_number_fo" name="form_2_total_number_fo" type="number"
-                    placeholder="">
+                <input class="FORM2_FIELD x-input x-border" id="form_2_total_number_fo" name="form_2_total_number_fo" type="number" placeholder="">
             </div>
             <div class="x-container x-padding">
                 <style>
@@ -355,32 +335,26 @@
             </div> -->
             <div class="x-col l3 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool"  data-tip="Input number of hectares with four decimal places. (example: 143.1433)" tabindex="1"><i class="fa fa-info-circle"></i></span> Hectares Covered:</label>
-                <input class="FORM2_FIELD x-input x-border" id="form_2_hectares_covered" name="form_2_hectares_covered"
-                    placeholder="">
+                <input class="FORM2_FIELD x-input x-border" id="form_2_hectares_covered" name="form_2_hectares_covered"placeholder="">
             </div>
             <div class="x-col l2 x-container x-padding">
                 <label for="form_2_cpa_date_signing">Date of CPA Signing:</label>
-                <input class="FORM2_FIELD x-input x-border" type="date" id="form_2_cpa_date_signing" style="width: 100%;"
-                    name="form_2_cpa_date_signing" onchange="computeDaysRemaining()">
+                <input class="FORM2_FIELD x-input x-border" type="date" id="form_2_cpa_date_signing" style="width: 100%;"name="form_2_cpa_date_signing" onchange="computeDaysRemaining()">
             </div>
             <div class="x-col l2 x-container x-padding">
                 <label for="form_2_cpa_date_expiration">CPA Expiration Date:</label>
-                <input class="FORM2_FIELD x-input x-border" type="date" id="form_2_cpa_date_expiration" style="width: 100%"
-                    name="form_2_cpa_date_expiration" onchange="computeDaysRemaining()">
+                <input class="FORM2_FIELD x-input x-border" type="date" id="form_2_cpa_date_expiration" style="width: 100%"name="form_2_cpa_date_expiration" onchange="computeDaysRemaining()">
             </div>
             <div class="x-col l2 x-container x-padding">
                 <label for="form_2_days_remaining">Days Remaining:</label>
-                <input oninput="alert('sdsads')" class="FORM2_FIELD x-input x-border" type="number" id="form_2_days_remaining" style="width: 100%;"
-                    name="form_2_days_remaining" readonly>
+                <input oninput="alert('sdsads')" class="FORM2_FIELD x-input x-border" type="number" id="form_2_days_remaining" style="width: 100%;" name="form_2_days_remaining" readonly>
             </div>
             <div class="x-col l2 x-container x-padding x-hide">
                 <label class="">Date Renewed:</label>
-                <input class="FORM2_FIELD x-input x-border" id="form_2_date_renewed" name="form_2_date_renewed" type="date"
-                    placeholder="">
+                <input class="FORM2_FIELD x-input x-border" id="form_2_date_renewed" name="form_2_date_renewed" type="date" placeholder="">
             </div>
-
-           
         </div>
+
         <div class="x-row x-container x-padding">
             <div class="x-col l2 x-container x-padding">
                 <label class="">Notable CPA incentives(Optional entry):</label>
@@ -451,7 +425,6 @@
 
                     <!-- Start to do list -->
 {% if benef|length !=0 %}
-
         <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
@@ -480,8 +453,8 @@
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
                             <p class=" text-muted font-13 m-b-30">
-                            Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
-                        </p>   
+                                Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
+                            </p>   
                         <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
@@ -497,16 +470,16 @@
                             </thead>
                             <tbody>
                                 {% for parti in benef%}
-                                    <tr>
-                                        <td>{{parti['fname']}}</td>
-                                        <td>{{parti['sex']}}</td>
-                                        <td>{{parti['farmer_bday']}}</td>
-                                        <td>{{parti['farmer_primary_crop']}}</td>
-                                        <td>{{parti['addr_brgy']}}</td>
-                                        <td>{{parti['addr_city']}}</td>
-                                        <td>{{parti['addr_prov']}}</td>
-                                        <td>Region {{parti['addr_region']}}</td>
-                                    </tr>
+                                <tr>
+                                    <td>{{parti['fname']}}</td>
+                                    <td>{{parti['sex']}}</td>
+                                    <td>{{parti['farmer_bday']}}</td>
+                                    <td>{{parti['farmer_primary_crop']}}</td>
+                                    <td>{{parti['addr_brgy']}}</td>
+                                    <td>{{parti['addr_city']}}</td>
+                                    <td>{{parti['addr_prov']}}</td>
+                                    <td>Region {{parti['addr_region']}}</td>
+                                </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -517,8 +490,7 @@
     </div>
  </div>
 
-{% endif %}
-
+    {% endif %}
             <div class="x-col l5">
                 <div class="x-col l3 x-container x-padding" style="width: 10px">
                     <input class="btn" type="file" id="form_2_image_uploads" name="image_uploads"
@@ -551,58 +523,56 @@
 
     {% include 'formdata_handler.html' %}
 
+    <script type="text/javascript">
+            $onload(function () {
+            var record_id = URL_ARGS["id"]
+            var table = URL_ARGS["table"]
+            load_data(record_id, table, "FORM2_FIELD")
+            // submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
+        })
 
-<script type="text/javascript">
-    	$onload(function () {
-		var record_id = URL_ARGS["id"]
-		var table = URL_ARGS["table"]
-		load_data(record_id, table, "FORM2_FIELD")
-		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
-	})
+        function getDropDown(sel) {
+            hideAll();
+            document.getElementById(sel.options[sel.selectedIndex].value).style.display
+                = 'block';
+        }
 
-    function getDropDown(sel) {
-        hideAll();
-        document.getElementById(sel.options[sel.selectedIndex].value).style.display
-            = 'block';
-    }
+        function hideAll() {
+            document.getElementById("yes").style.display = 'none';
 
-    function hideAll() {
-        document.getElementById("yes").style.display = 'none';
+        }
 
-    }
+        $(document).ready(function() {
+                // Attach change event handlers to the date inputs
+                $('#form_2_cpa_date_signing, #form_2_cpa_date_expiration').change(function() {
+                    computeDaysRemaining();
+                });
 
-       $(document).ready(function() {
-            // Attach change event handlers to the date inputs
-            $('#form_2_cpa_date_signing, #form_2_cpa_date_expiration').change(function() {
-                computeDaysRemaining();
+                function computeDaysRemaining() {
+                    // Get values from input fields
+                    var signingDateStr = $('#form_2_cpa_date_signing').val();
+                    var expirationDateStr = $('#form_2_cpa_date_expiration').val();
+
+                    // Parse dates
+                    var signingDate = new Date(signingDateStr);
+                    var expirationDate = new Date(expirationDateStr);
+
+                    // Get today's date
+                    var today = new Date();
+
+                    // Calculate time difference in milliseconds
+                    var timeDiff = expirationDate.getTime() - today.getTime();
+
+                    // Calculate days remaining
+                    var daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                    // Update days remaining input field
+                    $('#form_2_days_remaining').val(daysRemaining);
+                }
             });
+    </script>
 
-            function computeDaysRemaining() {
-                // Get values from input fields
-                var signingDateStr = $('#form_2_cpa_date_signing').val();
-                var expirationDateStr = $('#form_2_cpa_date_expiration').val();
-
-                // Parse dates
-                var signingDate = new Date(signingDateStr);
-                var expirationDate = new Date(expirationDateStr);
-
-                // Get today's date
-                var today = new Date();
-
-                // Calculate time difference in milliseconds
-                var timeDiff = expirationDate.getTime() - today.getTime();
-
-                // Calculate days remaining
-                var daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-                // Update days remaining input field
-                $('#form_2_days_remaining').val(daysRemaining);
-            }
-        });
-</script>
 {% endblock content %}
-
 <!-- Specific JS goes HERE -->
 {% block javascripts %}
-
 {% endblock javascripts %}

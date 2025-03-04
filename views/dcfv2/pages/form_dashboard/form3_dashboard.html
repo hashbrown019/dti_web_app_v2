@@ -63,41 +63,38 @@
                 </div>
               </div>
             </div>
-
-</div>
-<!-- /top tiles -->
-
-<br />
+		</div>
+	<!-- /top tiles -->
+	<br />
 
 <div class="row">
- <div class="col-md-6 col-sm-6  ">
-	<div class="x_panel">
-		<div class="x_title">
-			<h2>Philgeps Registered <small>Pie Chart</small></h2>
-			<ul class="nav navbar-right panel_toolbox">
-				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">Settings 1</a>
-						<a class="dropdown-item" href="#">Settings 2</a>
-					</div>
-				</li>
-				<li><a class="close-link"><i class="fa fa-close"></i></a>
-				</li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>
-		<div class="x_content">
-			<canvas id="pieChart3"></canvas>
-			<div style="text-align: center;">
-				<p><i class="fa fa-square" style="color:#cc3300 "></i> Red: {{form3red[0]['totalred']}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#cfccc9 "></i> Platinum: {{form3plat[0]['totalplat']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-square" style="color:#669999 "></i> Unregistered: {{form3unreg[0]['totalunreg']}}
+ 	<div class="col-md-6 col-sm-6  ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Philgeps Registered <small>Pie Chart</small></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a>
+							<a class="dropdown-item" href="#">Settings 2</a>
+						</div>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<canvas id="pieChart3"></canvas>
+				<div style="text-align: center;">
+					<p><i class="fa fa-square" style="color:#cc3300 "></i> Red: {{form3red[0]['totalred']}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#cfccc9 "></i> Platinum: {{form3plat[0]['totalplat']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-square" style="color:#669999 "></i> Unregistered: {{form3unreg[0]['totalunreg']}}
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 	<div class="col-md-6 col-sm-6  ">
 		<div class="x_panel">
@@ -121,31 +118,27 @@
 			<div class="x_content">
 				<canvas id="mybarChart3"></canvas>
 			</div>
-
 			<div style="text-align: center;">
 				<p>Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp; Organizational/Firm: {{form3orgfirm[0]['totalorgfirm']}}</p>
 			</div>
 		</div>
 	</div>
 	
-
-	
-		<script>// Replace this with your actual variable or value						
+		<script>						
 			function init_chart_doughnut() {
 				if (typeof (Chart) === 'undefined') { return; }
 					console.log('init_chart_doughnut');
 					if ($('.canvasDoughnut').length) {
 						var _labels = [];
 						var _data = [];				
-						// Sample data
+							// Sample data
 							{% for key in over_all_commodity_count %}
 							_labels.push('{{key}}');
 							_data.push('{{over_all_commodity_count[key]}}');
 							{% endfor %}
 							// Calculate total for _data
 							var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-
-								// Normalize _data to make its total equivalent to totalData
+							// Normalize _data to make its total equivalent to totalData
 							var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
 							var chart_doughnut_settings = {
 								type: 'doughnut',
@@ -153,39 +146,38 @@
 								data: {
 									labels: _labels,
 									datasets: [{
-						data: normalizedData, // Use normalizedData here
-						backgroundColor: [
-							"#BDC3C7",
-							"#5c5c3d",
-							"#994d00",
-							"#331a00",
-							"#23a98c"
-							],
-						hoverBackgroundColor: [
-							"#CFD4D8",
-							"#8a8a5c",
-							"#cc6600",
-							"#663500",
-							"#56dcbf"
-							]
-						}]
-					},
-					options: {
-						legend: false,
-						responsive: false,
-						tooltips: {
-						callbacks: {
-							label: function (tooltipItem, data) {
-							var dataset = data.datasets[tooltipItem.datasetIndex];
-							var currentValue = _data[tooltipItem.index];
-							var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
-							return _labels[tooltipItem.index] + ": " + percentage;
+									data: normalizedData, // Use normalizedData here
+									backgroundColor: [
+										"#BDC3C7",
+										"#5c5c3d",
+										"#994d00",
+										"#331a00",
+										"#23a98c"
+										],
+									hoverBackgroundColor: [
+										"#CFD4D8",
+										"#8a8a5c",
+										"#cc6600",
+										"#663500",
+										"#56dcbf"
+										]
+									}]
+								},
+								options: {
+									legend: false,
+									responsive: false,
+									tooltips: {
+									callbacks: {
+										label: function (tooltipItem, data) {
+										var dataset = data.datasets[tooltipItem.datasetIndex];
+										var currentValue = _data[tooltipItem.index];
+										var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
+										return _labels[tooltipItem.index] + ": " + percentage;
+										}
+									}
+								}
 							}
-						}
-					}
-
-				}
-			};
+						};
 
 				$('.canvasDoughnut').each(function () {
 					var chart_element = $(this);
@@ -229,7 +221,6 @@
 								'Platinum: ' + {{form3plat[0]['totalplat']}},
 								'Unregistered: ' + {{form3unreg[0]['totalunreg']}}
 								];
-
 								var yValues2 = [
 								{{form3red[0]['totalred']}},
 								{{form3plat[0]['totalplat']}},
@@ -237,11 +228,8 @@
 								// {{total_untagged}},
 								];
 									var barColors = ['#cc3300', '#cfccc9', '#669999'];
-
 									var total = yValues2.reduce((a, b) => a + b, 0);
-
 									var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
-
 									var ctx = document.getElementById("pieChart3");
 									var data = {
 										datasets: [{
@@ -278,6 +266,21 @@
 								}
 							}
 
+							function showLoadingAndRedirect(id, table, form) {
+								Swal.fire({
+									title: 'Loading...',
+									text: 'Please wait while we redirect you.',
+									allowOutsideClick: false,
+									allowEscapeKey: false,
+									showConfirmButton: false,
+									didOpen: () => {
+										Swal.showLoading();
+										setTimeout(() => {
+											window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
+										}, 1500); // Simulate a short delay
+									}
+								});
+							}
 
 							function showDeleteConfirmation(id) {
 								swalWithCustomButtons.fire({
@@ -370,7 +373,8 @@
 																<td>
 																	<!-- {{row['upload_by']}} === {{user_data['id']}} -->
 																	{% if row['upload_by']|string == user_data['id']|string %}
-																	<a style="color: #00e673;" href="/dcf/form3?id={{ row['id'] }}&table=dcf_bdsp_reg">
+																	
+																	<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_bdsp_reg', 'form3');">
 																		<span><i class="fa fa-pencil-square-o"></i></span> Edit
 																	</a>&nbsp;&nbsp;&nbsp;
 
@@ -391,13 +395,12 @@
 																	</a>
 																	{% endif %}
 																</td>
-														<td class="date-cell"> {{ row['date_created'] }}<br>
-															{% if row['date_modified'] %}
-															<i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
-															}}</i>
-														{% endif %}</i>
-													</td>
-												</tr>
+															<td class="date-cell"> {{ row['date_created'] }}<br>
+																{% if row['date_modified'] %}
+																	<i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp}}</i>
+																{% endif %}</i>
+															</td>
+														</tr>
 												{% endfor %}
 											</tbody>
 										</table>
@@ -436,7 +439,6 @@
 												</select>
 											</div>
 										</div>
-
 										<div class="form-row">
 											<div class="col">
 												<strong>
@@ -453,7 +455,6 @@
 									{% include "includes/sweetalert.html" %}
 									<div class="form-group">
 										<div class="form-row">
-
 											<div class="col">
 												<strong>
 													<label for="position">Import Data:</label>
@@ -465,7 +466,6 @@
 														<input multiple type="file"
 														accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
 														name="chooseFile" id="chooseFile" required>
-
 													</div>
 												</div>
 												<br>
@@ -485,11 +485,6 @@
 		</div>
 
 		{% endblock content %}
-
 		<!-- Specific JS goes HERE -->
-
 		{% block javascripts %}
-
-
-
 		{% endblock javascripts %}

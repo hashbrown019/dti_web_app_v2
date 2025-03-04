@@ -57,9 +57,6 @@
 
 
 	<div class="row" style="display: inline-block;" >
-
-
-
 			<div class="top_tiles">
               <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 ">
                 <div class="tile-stats">
@@ -73,7 +70,6 @@
                   <div class="count _money_tag">{{dcf_form10male[0]['total_male10']}}</div>
                   <h3>Total Male</h3>
                   <p>Total # of Assisted Beneficiary by Sex.</p>
-
                 </div>
               </div>
               <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 ">
@@ -81,7 +77,6 @@
                   <div class="count _money_tag">{{dcf_form10female[0]['total_female10']}}</div>
                   <h3>Total Female</h3>
                   <p>Total # of Assisted Beneficiary by Sex.</p>
-
                 </div>
               </div>
        <!--        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
@@ -112,20 +107,10 @@
                   <p>Field of Expertise.</p>
                 </div>
               </div> -->
-              
             </div>
-
-
-
 </div>
 
 	  <div class="row">
-
-
-
-
-		    
-
 			<div class="col-md-4 col-sm-4 ">
 			  <br>
 			  <div class="x_panel tile overflow_hidden">
@@ -153,10 +138,8 @@
 						<p>Pie Chart Percentage</p>
 					  </th>
 					  <th>
-						  <p class="">Commodities</p>
-						  
+						  <p class="">Commodities</p>	  
 					  </th>
-				 
 					</tr>
 					<tr>
 					  <td>
@@ -171,14 +154,11 @@
 							  {% set color_index = loop.index0 % square_colors|length %}
 							  <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count10[key] }}</p>
 							</td>
-
 						  </tr>
 						{% endfor %}
 						  </tr>
-						  
 						</table>
 					  </td>
-					 
 					</tr>
 				  </table>
 				</div>
@@ -186,104 +166,91 @@
 		  </div>
 
 			<script>// Replace this with your actual variable or value
-
-  // Convert the float to an integer before formatting
-
-			function init_chart_doughnut() {
-
-
-				if (typeof (Chart) === 'undefined') { return; }
-
-
-				console.log('init_chart_doughnut');
-
-				if ($('.canvasDoughnut').length) {
-
-					var _labels = [];
-					var _data = [];
-					
-		// Sample data
-					{% for key in over_all_commodity_count10 %}
-					_labels.push('{{key}}');
-					_data.push('{{over_all_commodity_count10[key]}}');
-					{% endfor %}
-		// Calculate total for _data
-					var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-
-// Normalize _data to make its total equivalent to totalData
-					var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
-
-					var chart_doughnut_settings = {
-						type: 'doughnut',
-						tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-						data: {
-							labels: _labels,
-							datasets: [{
-			data: normalizedData, // Use normalizedData here
-			backgroundColor: [
-				"#BDC3C7",
-				"#5c5c3d",
-				"#994d00",
-				"#331a00",
-				"#23a98c"
-				],
-			hoverBackgroundColor: [
-				"#CFD4D8",
-				"#8a8a5c",
-				"#cc6600",
-				"#663500",
-				"#56dcbf"
-				]
-		}]
-						},
-						options: {
-							legend: false,
-							responsive: false,
-							tooltips: {
-								callbacks: {
-									label: function (tooltipItem, data) {
-										var dataset = data.datasets[tooltipItem.datasetIndex];
-										var currentValue = _data[tooltipItem.index];
-										var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
-										return _labels[tooltipItem.index] + ": " + percentage;
+				function init_chart_doughnut() {
+					if (typeof (Chart) === 'undefined') { return; }
+					console.log('init_chart_doughnut');
+					if ($('.canvasDoughnut').length) {
+						var _labels = [];
+						var _data = [];
+						// Sample data
+						{% for key in over_all_commodity_count10 %}
+						_labels.push('{{key}}');
+						_data.push('{{over_all_commodity_count10[key]}}');
+						{% endfor %}
+						// Calculate total for _data
+						var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+						// Normalize _data to make its total equivalent to totalData
+						var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
+						var chart_doughnut_settings = {
+							type: 'doughnut',
+							tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+							data: {
+								labels: _labels,
+								datasets: [{
+				data: normalizedData, // Use normalizedData here
+				backgroundColor: [
+					"#BDC3C7",
+					"#5c5c3d",
+					"#994d00",
+					"#331a00",
+					"#23a98c"
+					],
+				hoverBackgroundColor: [
+					"#CFD4D8",
+					"#8a8a5c",
+					"#cc6600",
+					"#663500",
+					"#56dcbf"
+					]
+				}]
+							},
+							options: {
+								legend: false,
+								responsive: false,
+								tooltips: {
+									callbacks: {
+										label: function (tooltipItem, data) {
+											var dataset = data.datasets[tooltipItem.datasetIndex];
+											var currentValue = _data[tooltipItem.index];
+											var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
+											return _labels[tooltipItem.index] + ": " + percentage;
+										}
 									}
 								}
+
 							}
-
-						}
-					};
-
-					$('.canvasDoughnut').each(function () {
-
-						var chart_element = $(this);
-						var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
-
-					});
-
+						};
+						$('.canvasDoughnut').each(function () {
+							var chart_element = $(this);
+							var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+						});
+					}
 				}
 
-			}
-
 			function init_charts() {
-
 				console.log('run_charts  typeof [' + typeof (Chart) + ']');
-
 				if (typeof (Chart) === 'undefined') { return; }
-
 				console.log('init_charts');
-
-
 				Chart.defaults.global.legend = {
 					enabled: false
-				};
+				};// Radar 
+			}
 
-
-
-
-
-	// Radar 
+		function showLoadingAndRedirect(id, table, form) {
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait while we redirect you.',
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+				showConfirmButton: false,
+				didOpen: () => {
+					Swal.showLoading();
+					setTimeout(() => {
+						window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
+					}, 1500); // Simulate a short delay
+				}
+			});
 		}
-
 
 		function showDeleteConfirmation(id) {
 			swalWithCustomButtons.fire({
@@ -309,10 +276,8 @@
 			  );
 		}
 	});
-
 		return false;
 	}
-
 	const swalWithCustomButtons = Swal.mixin({
 		customClass: {
 		  confirmButton: 'btn btn-success',
@@ -321,15 +286,12 @@
 	  buttonsStyling: false
   });
 
-
 	function download_login_start(fff){
 	  let a= document.createElement('a');
 	  a.target= '_blank';
 	  a.href= '/login/download_file/'+fff;
 	  a.click();
   }
-
-
 </script>
 
 
@@ -361,8 +323,7 @@
 		<div class="card-box table-responsive">
 			<p class=" text-muted font-13 m-b-30">
 			  All entries of Form 10 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
-		  </p>
-		  
+			</p>
 		  <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 			  <thead>
 				<tr>
@@ -372,7 +333,6 @@
 				  <th>Type of beneficiary</th>
 				  <th>Action</th>
 				  <th>Timestamp</th>
-
 			  </tr>
 		  </thead>
 		  <tbody>
@@ -385,59 +345,48 @@
 				<td>{{ row['form_10_type_of_beneficiary'] }}</td>
 				<td>
 				  <!-- {{row['upload_by']}} === {{user_data['id']}} -->
-				  
-
-				  {% if row['upload_by']|string == user_data['id']|string %}
-				  <a style="color: #00e673;" href="/dcf/form10?id={{ row['id'] }}&table=dcf_negosyo_center">
-					  <span><i class="fa fa-pencil-square-o"></i></span> Edit
-				  </a>&nbsp;&nbsp;&nbsp;
-				  <a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
-				  +{{ row["id"] }}+"&i=dcf_negosyo_center",true)'>
-				  <span><i class="fa fa-user-plus"></i></span> Add Participants
-			  </a> &nbsp;&nbsp;&nbsp;&nbsp;
-			  <a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
-			  href="/delete_record/dcf_negosyo_center/{{ row['id'] }}">
-			  <span><i class="fa fa-trash"></i></span> Delete
-		  </a>
-		  {% elif user_data['job'] == "Super Admin" %}
-		  <a style="color: #33cccc;" href="/dcf/form10?id={{ row['id'] }}&table=dcf_negosyo_center">
-			<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-		</a>
-		{% else %}
-		<a style="color: #33cccc;" href="/dcf/form10?id={{ row['id'] }}&table=dcf_negosyo_center">
-			<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-		</a>
-		{% endif %}
-
-	</td>
-	<td class="date-cell"> {{ row['date_created'] }}<br>
-	  {% if row['date_modified'] %}
-	  <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
-	  }}</i>
-  {% endif %}</i>
-</td>
-
-
-</tr>
-
-{% endfor %}
-</tbody>
+				  	{% if row['upload_by']|string == user_data['id']|string %}
+					<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_negosyo_center', 'form10');">
+						<span><i class="fa fa-pencil-square-o"></i></span> Edit
+					</a>&nbsp;&nbsp;&nbsp;
+				  	<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
+				  		+{{ row["id"] }}+"&i=dcf_negosyo_center",true)'>
+				  		<span><i class="fa fa-user-plus"></i></span> Add Participants
+			  		</a> &nbsp;&nbsp;&nbsp;&nbsp;
+			  		<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
+			  			href="/delete_record/dcf_negosyo_center/{{ row['id'] }}">
+			  			<span><i class="fa fa-trash"></i></span> Delete
+		  			</a>
+					{% elif user_data['job'] == "Super Admin" %}
+					<a style="color: #33cccc;" href="/dcf/form10?id={{ row['id'] }}&table=dcf_negosyo_center">
+						<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+					</a>
+					{% else %}
+					<a style="color: #33cccc;" href="/dcf/form10?id={{ row['id'] }}&table=dcf_negosyo_center">
+						<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+					</a>
+					{% endif %}
+				</td>
+				<td class="date-cell"> {{ row['date_created'] }}<br>
+					{% if row['date_modified'] %}
+						<i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp}}</i>
+					{% endif %}</i>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
 </table>
-
-
 </div>
 </div>
 </div>
 </div>
 </div>
-
-
 
 <div class="col-md-12 col-sm-12 ">
   <div class="x_panel tile">
 	<div class="x_title">
-	  <h2>FORM 10 NEGOSYO CENTER TRACKER <small>SPREADSHEET MANAGEMENT</small></h2>
-	  <ul class="nav navbar-right panel_toolbox">
+	<h2>FORM 10 NEGOSYO CENTER TRACKER <small>SPREADSHEET MANAGEMENT</small></h2>
+	<ul class="nav navbar-right panel_toolbox">
 		<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 		</li>
 		<li class="dropdown">
@@ -446,10 +395,9 @@
 			  <a class="dropdown-item" href="#">Settings 1</a>
 			  <a class="dropdown-item" href="#">Settings 2</a>
 		  </div>
-	  </li>
-	  <li><a class="close-link"><i class="fa fa-close"></i></a>
-	  </li>
-  </ul>
+	  	</li>
+	  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+  	</ul>
   <div class="clearfix"></div>
 </div>
 <div class="x_content">
@@ -462,15 +410,13 @@
 		  </select>
 	  </div>
   </div>
-
   <div class="form-row">
-	  <div class="col">
+	<div class="col">
 		<strong>
 		  <label for="position">Export Data:</label>
-	  </strong><br>
-	  <button type="submit" class="btn btn-md btn-dark"><span><i class="fa fa-cloud-download"></i></span>
-	  Export</button>
-  </div>
+	  	</strong><br>
+	  	<button type="submit" class="btn btn-md btn-dark"><span><i class="fa fa-cloud-download"></i></span>Export</button>
+  	</div>
 </div>
 </div>
 </form>
@@ -479,47 +425,35 @@
   {% include "includes/sweetalert.html" %}
   <div class="form-group">
 	<div class="form-row">
-
-	  <div class="col">
+	<div class="col">
 		<strong>
 		  <label for="position">Import Data:</label>
 	  </strong><br>
-	  <div class="file-upload">
-		  <div class="file-select">
+	  	<div class="file-upload">
+		  	<div class="file-select">
 			<div class="file-select-button" id="fileName">Choose File</div>
 			<div class="file-select-name" id="noFile">No file chosen...</div>
 			<input multiple type="file"
 			accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
 			name="chooseFile" id="chooseFile" required>
-
 		</div>
+		</div>
+		<br>
+		<button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
+		<span style="cursor: pointer;" onclick="download_login_start('DCF_Form_10.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download form 10 excel template</span>
 	</div>
-	<br>
-	<button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
-
-	<span style="cursor: pointer;" onclick="download_login_start('DCF_Form_10.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download form 10 excel template</span>
-</div>
-</div>
+	</div>
 </form>
-
-
 </div>
 </div>
 </div>
 <!-- End to do list -->
-
 <!-- end of weather widget -->
 </div>
 </div>
 </div>
 </div>
-
 {% endblock content %}
-
 <!-- Specific JS goes HERE -->
-
 {% block javascripts %}
-
-
-
 {% endblock javascripts %}

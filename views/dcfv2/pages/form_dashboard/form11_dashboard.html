@@ -11,82 +11,58 @@
 
 <div class="right_col" role="main">
   <!-- top tiles -->
-          <div class="row" style="display: inline-block;" >
-
-
-          	   	<div class="top_tiles">
+        <div class="row" style="display: inline-block;" >
+          	<div class="top_tiles">
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
                 <div class="tile-stats">
                   <div class="count _money_tag">{{dcf_form11}}</div>
                   <h3>Total Entries</h3>
-                  <p>Total # of Entries.</p>
+                 	<p>Total # of Entries.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
                 <div class="tile-stats">
                   <div class="count _money_tag">{{dcf_form11male[0]['total_male11']}} </div>
                   <h3>Total Male</h3>
-                  <p>Total # of MSME/FO by sex.</p>
-
+                  	<p>Total # of MSME/FO by sex.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
                 <div class="tile-stats">
                   <div class="count _money_tag">{{dcf_form11female[0]['total_female11']}} </div>
                   <h3>Total Female</h3>
-                  <p>Total # of MSME/FO by sex.</p>
-
+                  	<p>Total # of MSME/FO by sex.</p>
                 </div>
               </div>
-
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
                 <div class="tile-stats">
                   <div class="count _money_tag">{{dcf_form11pwd[0]['total_pwd11']}}</div>
                   <h3>PWD</h3>
-                  <p>Total # of MSME/FO by sector.</p>
-
+                  	<p>Total # of MSME/FO by sector.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
                 <div class="tile-stats">
                   <div class="count _money_tag">{{dcf_form11youth[0]['total_youth11']}} </div>
                   <h3>Youth</h3>
-               <p>Total # of MSME/FO by sector.</p>
-
-
+               		<p>Total # of MSME/FO by sector.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
                 <div class="tile-stats">
                   <div class="count _money_tag">{{dcf_form11ip[0]['total_ip11']}} </div>
                   <h3>IP</h3>
-               <p>Total # of MSME/FO by sector.</p>
-
-
+               		<p>Total # of MSME/FO by sector.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
                 <div class="tile-stats">
                   <div class="count _money_tag">{{dcf_form11sc[0]['total_sc11']}} </div>
                   <h3>SC</h3>
-               <p>Total # of MSME/FO by sector.</p>
-
-
+               		<p>Total # of MSME/FO by sector.</p>
                 </div>
               </div>
-           
-				 
-             
             </div>
-
-
-
-
-
-
-
-
-
 <!-- 
 		  <div class="tile_count">
 			 <div class="col-md-2 col-sm-4  tile_stats_count">
@@ -131,15 +107,7 @@
 	  </div>
 	  <!-- /top tiles -->
 
-
-
 	  <div class="row">
-
-
-
-
-		    
-
 			<div class="col-md-4 col-sm-4 ">
 			  <br>
 			  <div class="x_panel tile overflow_hidden">
@@ -167,10 +135,8 @@
 						<p>Pie Chart Percentage</p>
 					  </th>
 					  <th>
-						  <p class="">Commodities</p>
-						  
+						  <p class="">Commodities</p> 
 					  </th>
-				 
 					</tr>
 					<tr>
 					  <td>
@@ -185,70 +151,55 @@
 							  {% set color_index = loop.index0 % square_colors|length %}
 							  <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count11[key] }}</p>
 							</td>
-
 						  </tr>
 						{% endfor %}
 						  </tr>
-						  
 						</table>
 					  </td>
-					 
 					</tr>
 				  </table>
 				</div>
 			  </div>
 		  </div>
 
-			<script>// Replace this with your actual variable or value
-
-
-			
+		<script>// Replace this with your actual variable or value
 			function init_chart_doughnut() {
-
-
 				if (typeof (Chart) === 'undefined') { return; }
-
-
 				console.log('init_chart_doughnut');
-
 				if ($('.canvasDoughnut11').length) {
-
 					var _labels = [];
 					var _data = [];
-					
-		// Sample data
+					// Sample data
 					{% for key in over_all_commodity_count11 %}
 					_labels.push('{{key}}');
 					_data.push('{{over_all_commodity_count11[key]}}');
 					{% endfor %}
-		// Calculate total for _data
+					// Calculate total for _data
 					var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-
-// Normalize _data to make its total equivalent to totalData
+					// Normalize _data to make its total equivalent to totalData
 					var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
-
 					var chart_doughnut_settings = {
 						type: 'doughnut',
 						tooltipFillColor: "rgba(51, 51, 51, 0.55)",
 						data: {
 							labels: _labels,
 							datasets: [{
-			data: normalizedData, // Use normalizedData here
-			backgroundColor: [
-				"#BDC3C7",
-				"#5c5c3d",
-				"#994d00",
-				"#331a00",
-				"#23a98c"
-				],
-			hoverBackgroundColor: [
-				"#CFD4D8",
-				"#8a8a5c",
-				"#cc6600",
-				"#663500",
-				"#56dcbf"
-				]
-		}]
+							data: normalizedData, // Use normalizedData here
+							backgroundColor: [
+								"#BDC3C7",
+								"#5c5c3d",
+								"#994d00",
+								"#331a00",
+								"#23a98c"
+								],
+							hoverBackgroundColor: [
+								"#CFD4D8",
+								"#8a8a5c",
+								"#cc6600",
+								"#663500",
+								"#56dcbf"
+								]
+						}]
 						},
 						options: {
 							legend: false,
@@ -263,47 +214,31 @@
 									}
 								}
 							}
-
 						}
 					};
-
 					$('.canvasDoughnut11').each(function () {
-
 						var chart_element = $(this);
 						var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
-
 					});
-
 				}
-
 			}
 
 			function init_charts() {
-
 				console.log('run_charts  typeof [' + typeof (Chart) + ']');
-
 				if (typeof (Chart) === 'undefined') { return; }
-
 				console.log('init_charts');
-
-
 				Chart.defaults.global.legend = {
 					enabled: false
 				};
 
-
-
-	// Bar chart
-
+				// Bar chart
 				if ($('#mybarChart').length) {
-
 					var _labelsrcu = [];
 					var approved_dips = [];
 					var pipeline_dips = [];
 					var ongoing_dips = [];
 					var not_started = [];
-					
-	// Sample data
+					// Sample data
 					{% for dip in dips_list %}
 					var dipData = {
 						label: '{{dip}}',
@@ -313,7 +248,7 @@
 						not_started: '{{dips_list[dip]["not_started"]}}',
 					};
 					
-	  // Add region to each data entry in _labelsrcu
+	  				// Add region to each data entry in _labelsrcu
 					var regions = ['RCU'];
 					regions.forEach(function(region) {
 						var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
@@ -337,7 +272,6 @@
 						return acc + parseFloat(val);
 					}, 0);
 
-
 					var ctx = document.getElementById("mybarChart");
 					var mybarChart = new Chart(ctx, {
 						type: 'bar',
@@ -351,20 +285,16 @@
 								label: 'Pipeline DIPs',
 								backgroundColor: "#33ccff",
 								data: pipeline_dips
-
 							},{
 								label: 'Ongoing DIPs',
 								backgroundColor: "#0099cc",
 								data: ongoing_dips
-
 							},{
 								label: 'Not Started',
 								backgroundColor: "#ff8080",
 								data: not_started
-
 							}]
 						},
-
 						options: {
 							scales: {
 								yAxes: [{
@@ -375,32 +305,27 @@
 							}
 						}
 					});
-
 				}
 
 
 				if ($('#mybarChart2').length) {
-
 				  var tooltips = [];
 				  var xValuesbar = [];
 				  var yValuesbar = [];
 				  var label_ = [];
 				  var all_perc = []
 				  var barColorsbar = ["red", "green", "blue", "orange", "brown", "yellow", "violet", "black"];
-				  
-				  var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}')
-				  
-	// Sample data
+				  var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}') 
+				// Sample data
 				  {% for dip in dip_sex_group_per_region %}
 				  xValuesbar.push('RCU: ' + '{{dip}}');
 				  var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["total_bene"]}}')
-	// var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
+				// var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
 				  var perc = ((rcu_total / over_all) * 100).toFixed(2)
-	// yValuesbar.push(perc);
+				// yValuesbar.push(perc);
 				  all_perc.push(perc);
 				  yValuesbar.push(rcu_total);
 				  label_.push(rcu_total)
-
 				  tooltips.push([
 					  'Total with sex/tagged: ' +'{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}',
 					  'Total: ' +money('{{dip_sex_group_per_region[dip]["total_bene"]|int}}'),
@@ -423,7 +348,6 @@
 					  'PWD: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_pwd"]}}',
 					  ])
 				  {% endfor %}
-
 				  var ctx = document.getElementById("mybarChart2");
 				  var mybarChart2 = new Chart(ctx, {
 					type: 'bar',
@@ -436,37 +360,36 @@
 							labels : label_
 						}]
 					},
-
 					options: {
-					   
 						tooltips: {
 							callbacks: {
 								label: function (tooltipItem, data) {
 				// Display only the percentage value without .00 in the tooltip
 								  println(tooltipItem)
-
 								  return data.tooltip_label[tooltipItem.index];
 							  },
 						  },
-		displayColors: false, // Set to false to hide the color squares in the tooltip
-	},
-
-},
-});
-
-			  }
-
-
-
-
-
-	// Doughnut chart
-
-
-
-	// Radar 
+						displayColors: false, // Set to false to hide the color squares in the tooltip
+					},
+				},
+			});
+		} 
+	}
+		function showLoadingAndRedirect(id, table, form) {
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait while we redirect you.',
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+				showConfirmButton: false,
+				didOpen: () => {
+					Swal.showLoading();
+					setTimeout(() => {
+						window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
+					}, 1500); // Simulate a short delay
+				}
+			});
 		}
-
 
 		function showDeleteConfirmation(id) {
 			swalWithCustomButtons.fire({
@@ -492,7 +415,6 @@
 			  );
 		}
 	});
-
 		return false;
 	}
 
@@ -504,15 +426,12 @@
 	  buttonsStyling: false
   });
 
-
 	function download_login_start(fff){
 	  let a= document.createElement('a');
 	  a.target= '_blank';
 	  a.href= '/login/download_file/'+fff;
 	  a.click();
   }
-
-
 </script>
 
 
@@ -544,8 +463,7 @@
 		<div class="card-box table-responsive">
 			<p class=" text-muted font-13 m-b-30">
 			  All entries of Form 11 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
-		  </p>
-		  
+		  </p>  
 		  <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 			  <thead>
 				<tr>
@@ -556,7 +474,6 @@
 				  <th>Province</th>
 				  <th>Action</th>
 				  <th>Timestamp</th>
-
 			  </tr>
 		  </thead>
 		  <tbody>
@@ -570,53 +487,41 @@
 				<td>{{ row['form_11_msme_province'] }}</td>
 				<td>
 				  <!-- {{row['upload_by']}} === {{user_data['id']}} -->
-				  
-
-				  {% if row['upload_by']|string == user_data['id']|string %}
-				  <a style="color: #00e673;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
-					  <span><i class="fa fa-pencil-square-o"></i></span> Edit
-				  </a>&nbsp;&nbsp;&nbsp;
-				  <a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
-				  +{{ row["id"] }}+"&i=dcf_access_financing",true)'>
-				  <span><i class="fa fa-user-plus"></i></span> Add Participants
-			  </a> &nbsp;&nbsp;&nbsp;&nbsp;
-			  <a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
-			  href="/delete_record/dcf_access_financing/{{ row['id'] }}">
-			  <span><i class="fa fa-trash"></i></span> Delete
-		  </a>
-		  {% elif user_data['job'] == "Super Admin" %}
-		  <a style="color: #33cccc;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
-			<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-		</a>
-		{% else %}
-		<a style="color: #33cccc;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
-			<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-		</a>
-		{% endif %}
-
-	</td>
-	<td class="date-cell"> {{ row['date_created'] }}<br>
-	  {% if row['date_modified'] %}
-	  <i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp
-	  }}</i>
-  {% endif %}</i>
-</td>
-
-
-</tr>
-
-{% endfor %}
-</tbody>
+				  	{% if row['upload_by']|string == user_data['id']|string %}
+				  	<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_access_financing', 'form11');">
+						<span><i class="fa fa-pencil-square-o"></i></span> Edit
+					</a>&nbsp;&nbsp;&nbsp;
+				  	<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="+{{ row["id"] }}+"&i=dcf_access_financing",true)'>
+				  		<span><i class="fa fa-user-plus"></i></span> Add Participants
+			  		</a> &nbsp;&nbsp;&nbsp;&nbsp;
+			  		<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"href="/delete_record/dcf_access_financing/{{ row['id'] }}">
+			  			<span><i class="fa fa-trash"></i></span> Delete
+		  			</a>
+		  			{% elif user_data['job'] == "Super Admin" %}
+		  			<a style="color: #33cccc;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
+						<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+					</a>
+					{% else %}
+					<a style="color: #33cccc;" href="/dcf/form11?id={{ row['id'] }}&table=dcf_access_financing">
+						<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+					</a>
+					{% endif %}
+				</td>
+				<td class="date-cell"> {{ row['date_created'] }}<br>
+					{% if row['date_modified'] %}
+						<i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp}}</i>
+					{% endif %}</i>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
 </table>
 
-
 </div>
 </div>
 </div>
 </div>
 </div>
-
-
 
 <div class="col-md-12 col-sm-12 ">
   <div class="x_panel tile">
@@ -647,7 +552,6 @@
 		  </select>
 	  </div>
   </div>
-
   <div class="form-row">
 	  <div class="col">
 		<strong>
@@ -659,52 +563,40 @@
 </div>
 </div>
 </form>
-
 <form action="/importcsvform11" method="POST" enctype="multipart/form-data">
   {% include "includes/sweetalert.html" %}
   <div class="form-group">
 	<div class="form-row">
-
 	  <div class="col">
-		<strong>
-		  <label for="position">Import Data:</label>
-	  </strong><br>
-	  <div class="file-upload">
-		  <div class="file-select">
-			<div class="file-select-button" id="fileName">Choose File</div>
-			<div class="file-select-name" id="noFile">No file chosen...</div>
-			<input multiple type="file"
-			accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-			name="chooseFile" id="chooseFile" required>
-
+			<strong>
+				<label for="position">Import Data:</label>
+			</strong><br>
+			<div class="file-upload">
+				<div class="file-select">
+					<div class="file-select-button" id="fileName">Choose File</div>
+					<div class="file-select-name" id="noFile">No file chosen...</div>
+					<input multiple type="file"
+					accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+					name="chooseFile" id="chooseFile" required>
+				</div>
+			</div>
+			<br>
+				<button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
+				<span style="cursor: pointer;" onclick="download_login_start('DCF_Form_11.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download form 11 excel template</span>
 		</div>
 	</div>
-	<br>
-	<button type="submit" class="btn btn-info btn-xs"><span><i class="fa fa-upload"></i></span> Import</button>
-
-	<span style="cursor: pointer;" onclick="download_login_start('DCF_Form_11.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download form 11 excel template</span>
-</div>
-</div>
 </form>
-
 
 </div>
 </div>
 </div>
 <!-- End to do list -->
-
 <!-- end of weather widget -->
 </div>
 </div>
 </div>
 </div>
-
 {% endblock content %}
-
 <!-- Specific JS goes HERE -->
-
 {% block javascripts %}
-
-
-
 {% endblock javascripts %}

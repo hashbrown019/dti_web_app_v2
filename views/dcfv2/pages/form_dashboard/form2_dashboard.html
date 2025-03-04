@@ -7,12 +7,11 @@
 
 {% block content %}
 {% include "includes/sweetalert.html" %}
-<title>Form 2 Dashboard</title>
 
+<title>Form 2 Dashboard</title>
 <div class="right_col" role="main">
 	<!-- top tiles -->
 	<div class="row" style="display: inline-block;" >
-
 		<div class="top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
@@ -70,7 +69,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 	<!-- /top tiles -->
 
@@ -255,6 +253,22 @@
 						
 						// Radar 
 						
+						function showLoadingAndRedirect(id, table, form) {
+							Swal.fire({
+								title: 'Loading...',
+								text: 'Please wait while we redirect you.',
+								allowOutsideClick: false,
+								allowEscapeKey: false,
+								showConfirmButton: false,
+								didOpen: () => {
+									Swal.showLoading();
+									setTimeout(() => {
+										window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
+									}, 1500); // Simulate a short delay
+								}
+							});
+						}
+
 						function showDeleteConfirmation(id) {
 							swalWithCustomButtons.fire({
 								title: 'Are you sure?',
@@ -369,7 +383,7 @@
 																<!-- {{row['upload_by']}} === {{user_data['id']}} -->
 																
 																{% if row['upload_by']|string == user_data['id']|string %}
-																<a style="color: #00e673;" href="/dcf/form2?id={{ row['id'] }}&table=dcf_implementing_unit">
+																<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_implementing_unit', 'form2');">
 																	<span><i class="fa fa-pencil-square-o"></i></span> Edit
 																</a>&nbsp;&nbsp;&nbsp;
 

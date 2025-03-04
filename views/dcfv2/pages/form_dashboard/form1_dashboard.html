@@ -5,12 +5,11 @@
 {% block stylesheets %}{% endblock stylesheets %}
 {% block content %}
 {% include "includes/sweetalert.html" %}
-<title>Form 1 Dashboard</title>
 
+<title>Form 1 Dashboard</title>
 <div class="right_col" role="main">
 	<!-- top tiles -->
 	<div class="row" style="display: inline-block;" >
-
 		<div class="top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
@@ -76,7 +75,6 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12 ">
 						<div class="dashboard_graph">
-
 							<div class="col-md-6 col-sm-6  ">
 								<div class="x_panel">
 									<div class="x_title">
@@ -99,7 +97,6 @@
 									<div class="x_content">
 										<canvas id="mybarChart"></canvas>
 									</div>
-
 									<div style="text-align: center;">
 										<p><i class="fa fa-square" style="color:#99e6ff "></i> Approved DIPs: <span id="totalApprovedDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i>Pipeline DIPs: <span id="totalpipelineDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc "></i> Ongoing DIPs: <span id="totalongoingDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ff8080 "></i> Not Started: <span id="totalnotstartedDipsValue"></span></p>
 									</div>
@@ -108,7 +105,6 @@
 								<div class="x_content">
 								</div>
 							</div>
-
 
 							<div class="col-md-6 col-sm-6  bg-white">
 								<div class="table-responsive">
@@ -125,7 +121,6 @@
 												<th>Pipeline DIPs</th>
 												<th>Ongoing DIPs</th>
 												<th>Not Started</th>
-
 											</tr>
 										</thead>
 										<tbody>
@@ -142,18 +137,14 @@
 									</table>
 								</div>
 							</div>
-
 							<div class="clearfix"></div>
 						</div>
 						</div>
 					</div>
-
 				</div>
 				<br />
 
 				<div class="row">
-
-
 					<div class="col-md-12 col-sm-12 ">
 						<div class="dashboard_graph">
 							<div class="col-md-6 col-sm-6  ">
@@ -183,7 +174,6 @@
 								<div class="x_content">
 								</div>
 							</div>
-
 							<div class="col-md-6 col-sm-6 bg-white">
 								<div class="x_title">
 									<h2>Smallholder Farming Households By Region<small>Table</small></h2>
@@ -224,13 +214,12 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="clearfix"></div>
-						</div>
+						<div class="clearfix"></div>
 					</div>
+				</div>
 
-					<div class="col-md-6 col-sm-6  ">
-						<br>
+				<div class="col-md-6 col-sm-6  ">
+					<br>
 						<div class="x_panel">
 							<div class="x_title">
 								<h2>Overall Total Smallholder Farming Households <small>Pie Chart</small></h2>
@@ -257,7 +246,6 @@
 								</div>
 							</div>
 						</div>
-
 
 						<div class="col-md-4 col-sm-4 ">
 							<br>
@@ -287,7 +275,6 @@
 											</th>
 											<th>
 												<p class="">Commodities</p>
-
 											</th>
 										</tr>
 										<tr>
@@ -303,7 +290,6 @@
 															{% set color_index = loop.index0 % square_colors|length %}
 															<p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count[key] }}</p>
 														</td>
-
 													</tr>
 													{% endfor %}
 												</tr>
@@ -315,10 +301,7 @@
 						</div>
 					</div>
 
-
-						<script>// Replace this with your actual variable or value
-
-	// Convert the float to an integer before formatting
+					<script>
 						var formattedTotal = Math.floor({{total_untagged}}).toLocaleString();
 						document.getElementById('formatedtotal').innerText = formattedTotal;
 						var formattedovrTotal = Math.floor({{dcf_form1sextotal[0]['total_sex'] }}).toLocaleString();
@@ -329,14 +312,14 @@
 							if ($('.canvasDoughnut').length) {
 								var _labels = [];
 								var _data = [];		
-				// Sample data
+								// Sample data
 								{% for key in over_all_commodity_count %}
 								_labels.push('{{key}}');
 								_data.push('{{over_all_commodity_count[key]}}');
 								{% endfor %}
-				// Calculate total for _data
+								// Calculate total for _data
 								var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-// Normalize _data to make its total equivalent to totalData
+								// Normalize _data to make its total equivalent to totalData
 								var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
 								var chart_doughnut_settings = {
 									type: 'doughnut',
@@ -344,22 +327,22 @@
 									data: {
 										labels: _labels,
 										datasets: [{
-						data: normalizedData, // Use normalizedData here
-						backgroundColor: [
-							"#BDC3C7",
-							"#5c5c3d",
-							"#994d00",
-							"#331a00",
-							"#23a98c"
-							],
-						hoverBackgroundColor: [
-							"#CFD4D8",
-							"#8a8a5c",
-							"#cc6600",
-							"#663500",
-							"#56dcbf"
-							]
-									}]
+										data: normalizedData, // Use normalizedData here
+										backgroundColor: [
+											"#BDC3C7",
+											"#5c5c3d",
+											"#994d00",
+											"#331a00",
+											"#23a98c"
+											],
+										hoverBackgroundColor: [
+											"#CFD4D8",
+											"#8a8a5c",
+											"#cc6600",
+											"#663500",
+											"#56dcbf"
+											]
+										}]
 									},
 									options: {
 										legend: false,
@@ -374,7 +357,6 @@
 												}
 											}
 										}
-
 									}
 								};
 								$('.canvasDoughnut').each(function () {
@@ -398,7 +380,7 @@
 								var pipeline_dips = [];
 								var ongoing_dips = [];
 								var not_started = [];	
-						// Sample data
+								// Sample data
 								{% for dip in dips_list %}
 								var dipData = {
 									label: '{{dip}}',
@@ -407,7 +389,7 @@
 									ongoing: '{{dips_list[dip]["ongoing"]}}',
 									not_started: '{{dips_list[dip]["not_started"]}}',
 								};		
-						// Add region to each data entry in _labelsrcu
+								// Add region to each data entry in _labelsrcu
 								var regions = ['RCU'];
 								regions.forEach(function(region) {
 									var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
@@ -447,12 +429,10 @@
 											label: 'Pipeline DIPs',
 											backgroundColor: "#33ccff",
 											data: pipeline_dips
-
 										},{
 											label: 'Ongoing DIPs',
 											backgroundColor: "#0099cc",
 											data: ongoing_dips
-
 										},{
 											label: 'Not Started',
 											backgroundColor: "#ff8080",
@@ -480,13 +460,13 @@
 								var all_perc = []
 								var barColorsbar = ["red", "green", "blue", "orange", "brown", "yellow", "violet", "black"];
 								var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}')
-							// Sample data
+								// Sample data
 								{% for dip in dip_sex_group_per_region %}
 								xValuesbar.push('RCU: ' + '{{dip}}');
 								var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["total_bene"]}}')
-							// var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
+								// var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
 								var perc = ((rcu_total / over_all) * 100).toFixed(2)
-							// yValuesbar.push(perc);
+								// yValuesbar.push(perc);
 								all_perc.push(perc);
 								yValuesbar.push(rcu_total);
 								label_.push(rcu_total)
@@ -528,20 +508,16 @@
 										tooltips: {
 											callbacks: {
 												label: function (tooltipItem, data) {
-								// Display only the percentage value without .00 in the tooltip
+												// Display only the percentage value without .00 in the tooltip
 													println(tooltipItem)
 													return data.tooltip_label[tooltipItem.index];
 												},
 											},
-				displayColors: false, // Set to false to hide the color squares in the tooltip
-			},
-		},
-	});
-}
-
-
-
-
+								displayColors: false, // Set to false to hide the color squares in the tooltip
+									},
+								},
+							});
+						}
 
 						// Doughnut chart
 							if ($('#canvasDoughnut').length) {
@@ -570,7 +546,6 @@
 											"#36CAAB",
 											"#49A9EA"
 											]
-
 									}]
 								};
 								var canvasDoughnut = new Chart(ctx, {
@@ -588,7 +563,7 @@
 								var yValues2 = [
 									{{dcf_form1male[0]['total_male']}},
 									{{dcf_form1female[0]['total_female']}},
-				// {{total_untagged}},
+								// {{total_untagged}},
 									];
 								var barColors = ['#0099cc', '#cc0066'];
 								var total = yValues2.reduce((a, b) => a + b, 0);
@@ -627,9 +602,23 @@
 									},
 								});
 							}
-						// Radar 
 						}
 
+						function showLoadingAndRedirect(id, table, form) {
+							Swal.fire({
+								title: 'Loading...',
+								text: 'Please wait while we redirect you.',
+								allowOutsideClick: false,
+								allowEscapeKey: false,
+								showConfirmButton: false,
+								didOpen: () => {
+									Swal.showLoading();
+									setTimeout(() => {
+										window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
+									}, 1500); // Simulate a short delay
+								}
+							});
+						}
 
 						function showDeleteConfirmation(id) {
 							swalWithCustomButtons.fire({
@@ -652,7 +641,7 @@
 										'Cancelled',
 										'Your record is safe',
 										'error'
-										);
+									);
 								}
 							});
 							return false;
@@ -670,7 +659,6 @@
 							a.href= '/login/download_file/'+fff;
 							a.click();
 						}
-						
 					</script>
 
 					<!-- Start to do list -->
@@ -700,7 +688,6 @@
 											<p class=" text-muted font-13 m-b-30">
 												All entries of Form 1 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
 											</p>
-											
 											<table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 												<thead>
 													<tr>
@@ -734,7 +721,7 @@
 															<td>
 																<!-- {{row['upload_by']}} === {{user_data['id']}} -->
 																{% if row['upload_by']|string == user_data['id']|string %}
-																<a style="color: #00e673;" href="/dcf/form1?id={{ row['id'] }}&table=dcf_prep_review_aprv_status">
+																<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_prep_review_aprv_status', 'form1');">
 																	<span><i class="fa fa-pencil-square-o"></i></span> Edit
 																</a>&nbsp;&nbsp;&nbsp;
 																<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
@@ -770,8 +757,6 @@
 						</div>
 					</div>
 				</div>
-
-
 
 				<div class="col-md-12 col-sm-12 ">
 					<div class="x_panel tile">
@@ -817,7 +802,6 @@
 								{% include "includes/sweetalert.html" %}
 								<div class="form-group">
 									<div class="form-row">
-
 										<div class="col">
 											<strong>
 												<label for="position">Import Data:</label>
@@ -829,7 +813,6 @@
 													<input multiple type="file"
 													accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
 													name="chooseFile" id="chooseFile" required>
-
 												</div>
 											</div>
 											<br>

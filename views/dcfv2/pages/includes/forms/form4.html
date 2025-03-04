@@ -195,7 +195,6 @@
 							position: relative;
 							width: 100%;
 						}
-						
 						.dropdown-check-list .anchor {
 							position: relative;
 							cursor: pointer;
@@ -209,7 +208,6 @@
 							white-space: nowrap;
 							overflow: hidden;
 						}
-						
 						.dropdown-check-list .anchor:after {
 							position: absolute;
 							content: "";
@@ -219,8 +217,7 @@
 							right: 10px;
 							top: 50%;
 							transform: translateY(-50%) rotate(-135deg);
-						}
-						
+						}	
 						.dropdown-check-list .items {
 							display: none;
 							position: absolute;
@@ -231,25 +228,21 @@
 							overflow-y: auto;
 							z-index: 1000;
 							padding: 5px;
-						}
-						
+						}						
 						.dropdown-check-list .items li {
 							list-style: none;
 							padding: 5px;
-						}
-						
+						}						
 						.dropdown-check-list .items li strong {
 							display: block;
 							padding: 5px;
 							background-color: #f2f2f2;
 							font-weight: bold;
-						}
-						
+						}						
 						.dropdown-check-list.visible .items {
 							display: block;
 						}
-						</style>
-					
+					</style>	
 			</div>
 
 			<!---2--->
@@ -257,8 +250,7 @@
 				<div class="x-col l4 x-container x-padding">
 					<label>Topic Of Training: <span style="color: #007399;" class="tool" data-tip="Choose topic of training in options (you can select multiple). If you select 'GESI,' 'Social Environment & Climate,' or 'Managing Natural Resources' in Types of Training, you can type the topic of training and press 'Enter' ." tabindex="1"><i class="fa fa-info-circle"></i></span>  </label>
 						<!-- <input type="text" id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple> -->
-						<select class="FORM4_FIELD" id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple>
-						</select>
+						<select class="FORM4_FIELD" id="cbb_topic_of_training" name="cbb_topic_of_training[]" multiple></select>
 				</div>
 				<div class="x-col l4 x-container x-padding">
 					<label class="">DIP-approved alignment:</label>
@@ -293,10 +285,8 @@
 							})
 							.then(data => {
 								const selectElement = document.getElementById('cbb_name_of_dip');
-				
 								// Clear existing options to prevent duplication
 								selectElement.innerHTML = '<option value="">Choose your option</option>';
-			
 								data.forEach(item => {
 									const option = document.createElement('option');
 									option.value = item.form_1_name_dip;
@@ -306,7 +296,6 @@
 							})
 							.catch(error => console.error('Error fetching DIP names:', error));
 					}
-				
 					// Wait for the full page load before executing the script
 					populateDipNames().then(() => {
 						var record_id = URL_ARGS["id"];
@@ -334,7 +323,6 @@
 								<center>ACTIVITY DURATION<br>(Day, Month, Year)</center>
 							</th>
 						</tr>
-
 						<tr>
 							<td>
 								<center>Start Date</center>
@@ -343,7 +331,6 @@
 								<center>End Date</center>
 							</td>
 						</tr>
-
 						<tr>
 							<td><input class="FORM4_FIELD x-input x-border" name="cbb_date_start" id="cbb_date_start" type="date" placeholder=""></td>
 							<td><input class="FORM4_FIELD x-input x-border" name="cbb_date_end" id="cbb_date_end" type="date" placeholder=""></td>
@@ -417,7 +404,7 @@
 						checkboxes.forEach(function (checkbox) {
 						checkbox.addEventListener("change", updateDropdownText);
 						});
-				
+			
 						// Call preselection on page load
 						preselectCheckboxes();
 					});
@@ -434,7 +421,6 @@
 						}
 					</style>
 					<table id="form4_table" class="x-table x-container x-table-border">
-					
 							<tr>
 								<th>
 									<center><button type="button" style="float: left;" class="btn btn-primary"
@@ -463,7 +449,7 @@
 								// $ID('main_').innerHTML += og_row
 								// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 								var row = form4_table.insertRow(1);
-							
+						
 								// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
 								row.insertCell(0).innerHTML = `<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_venue_kapown_`+k_counter+`" type="text" name="cbb_venue[]"></td>`
 								row.insertCell(1).innerHTML = `<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_name_of_resource_person_kapown_`+k_counter+`" type="text" name="cbb_name_of_resource_person[]"></td>`
@@ -483,14 +469,14 @@
 					</style>
 					<table class="x-table x-container x-table-border">
 						<tr>
-							<th>
-								<center><span style="color: #007399;" class="tool" data-tip="Enter amount utilized for the conduct of activities without comma (ex. 500000)." tabindex="1"><i class="fa fa-info-circle"></i></span> RAPID Actual Budget</center>
-							</th>
-							<th colspan="2">
-								<center>DIP Capbuild Activities fully & partially funded by partners outside RAPID
-								</center>
-							</th>
+						<th>
+							<center><span style="color: #007399;" class="tool" data-tip="Enter amount utilized for the conduct of activities without comma (ex. 500000)." tabindex="1"><i class="fa fa-info-circle"></i></span> RAPID Actual Budget</center>
+						</th>
+						<th colspan="2">
+							<center>DIP Capbuild Activities fully & partially funded by partners outside RAPID</center>
+						</th>
 						</tr>
+
 						<td>
 							<center>Actual</center>
 						</td>
@@ -572,23 +558,15 @@
 
 						<tr>
 							<!---gender--->
-							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_male"
-									type="number" name="cbb_total_number_per_gender_male"></td>
-							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_female"
-									type="number" name="cbb_total_number_per_gender_female"></td>
-							<td><input readonly class="FORM4_FIELD x-input" id="cbb_total_number_per_gender_total"
-									type="text" name="cbb_total_number_per_gender_total"></td>
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_male"type="number" name="cbb_total_number_per_gender_male"></td>
+							<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_total_number_per_gender_female"type="number" name="cbb_total_number_per_gender_female"></td>
+							<td><input readonly class="FORM4_FIELD x-input" id="cbb_total_number_per_gender_total"type="text" name="cbb_total_number_per_gender_total"></td>
 							<!--sector--->
-							<td><input readonly  class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_pwd"
-									type="number" name="cbb_total_number_per_sector_pwd"></td>
-							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_youth"
-									type="number" name="cbb_total_number_per_sector_youth"></td>
-							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_ip"
-									type="number" name="cbb_total_number_per_sector_ip"></td>
-							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_sc"
-									type="number" name="cbb_total_number_per_sector_sc"></td>
-							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_total"
-									type="text" name="cbb_total_number_per_sector_total"></td>
+							<td><input readonly  class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_pwd"type="number" name="cbb_total_number_per_sector_pwd"></td>
+							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_youth"type="number" name="cbb_total_number_per_sector_youth"></td>
+							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_ip"type="number" name="cbb_total_number_per_sector_ip"></td>
+							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_sc"type="number" name="cbb_total_number_per_sector_sc"></td>
+							<td><input readonly class="FORM4_FIELD  x-input" id="cbb_total_number_per_sector_total"type="text" name="cbb_total_number_per_sector_total"></td>
 						</tr>
 					</table>
 				</div>
@@ -707,27 +685,25 @@
 					</table>
 				</div>
 
-
 <!-- Start to do list -->
 {% if benef|length !=0 %}
 <div class="col-md-12 col-sm-12 ">
 	<div class="x_panel">
 	  <div class="x_title">
 		<h2>Participants &nbsp;&nbsp;&nbsp;
-				  <a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="
-				  +URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
-				  <span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants</a> </h2>
-		<ul class="nav navbar-right panel_toolbox">
-			<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">Settings 1</a>
-						<a class="dropdown-item" href="#">Settings 2</a>
-					</div>
-				</li>
-			<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-		</ul>
+				<a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="+URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
+				<span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants</a> </h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a>
+							<a class="dropdown-item" href="#">Settings 2</a>
+						</div>
+					</li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
 		<div class="clearfix"></div>
 	</div>
 <div class="x_content">
@@ -784,7 +760,6 @@
 				Participants</button>
 			</div> -->
 		</div>
-
 				<p class="x-right" id="submit_btn_holder">
 					<button class="btn btn-primary" type="button" onclick="submit_form('FORM4_FIELD','dcf_capacity_building','/form4_dashboard')">Submit</button>
 				</p>
@@ -804,154 +779,154 @@
 		})
 		function changecbb_types_of_training(val_){
 	
-	var dyn_choices ={
-		"FO-Organization Entrepreneurial Competency" : [
-			{ value: 'Formulating strategies', label: 'Formulating strategies', },
-			{ value: 'Identifying business opportunities', label: 'Identifying business opportunities', },
-			{ value: 'Business networking', label: 'Business networking' },
-			{ value: 'Innovation', label: 'Innovation' },
-		],
-		"FO-Governance" : [
-			{ value: 'Democratic elections', label: 'Democratic elections', },
-			{ value: 'Group decision-making', label: 'Group decision-making', },
-			{ value: 'Formulating internal policies', label: 'Formulating internal policies' },
-			{ value: 'Establishing organizational structure', label: 'Establishing organizational structure' },
+		var dyn_choices ={
+			"FO-Organization Entrepreneurial Competency" : [
+				{ value: 'Formulating strategies', label: 'Formulating strategies', },
+				{ value: 'Identifying business opportunities', label: 'Identifying business opportunities', },
+				{ value: 'Business networking', label: 'Business networking' },
+				{ value: 'Innovation', label: 'Innovation' },
+			],
+			"FO-Governance" : [
+				{ value: 'Democratic elections', label: 'Democratic elections', },
+				{ value: 'Group decision-making', label: 'Group decision-making', },
+				{ value: 'Formulating internal policies', label: 'Formulating internal policies' },
+				{ value: 'Establishing organizational structure', label: 'Establishing organizational structure' },
 
-		],
-		"FO-Organizational Management" : [
-			{ value: 'Identifying competitive advantage', label: 'Identifying competitive advantage', },
-			{ value: 'Recording transactions', label: 'Recording transactions', },
-			{ value: 'Complying with government regulations', label: 'Complying with government regulations' },
-		],
-		"FO-Operations" : [
-			{ value: 'Meeting quality specifications', label: 'Meeting quality specifications', },
-			{ value: 'Meeting volume requirements', label: 'Meeting volume requirements', },
-			{ value: 'Meeting delivery commitments', label: 'Meeting delivery commitments' },
-			{ value: 'Consolidating products', label: 'Consolidating products' },
-			{ value: 'Forecasting', label: 'Forecasting' },
-			{ value: 'Business planning', label: 'Business planning' },
-			{ value: 'Making a Business Plan', label: 'Making a Business Plan' },
-		],
-		"FO-Technology and Product Development (Business Development)" : [
-			{ value: 'Strategy formulation', label: 'Strategy formulation', },
-			{ value: 'Product development', label: 'Product development', },
-			{ value: 'Quality control measures', label: 'Quality control measures' },
-		],
-		"FO-Institutional Marketing Management" : [
-			{ value: 'Market development', label: 'Market development', },
-			{ value: 'Formulating value proposition', label: 'Formulating value proposition', },
-			{ value: 'Identifying institutional buyers', label: 'Identifying institutional buyers' },
-			{ value: 'Securing supply agreements', label: 'Securing supply agreements' },
-			{ value: 'Digital marketing', label: 'Digital marketing' },
-		],
-		"FO-Human Resource Management" : [
-			{ value: 'Staff hiring', label: 'Staff hiring', },
-			{ value: 'Staff training', label: 'Staff training', },
-			{ value: 'Providing technical assistance to members', label: 'Providing technical assistance to members' },
-			{ value: 'Continuous education', label: 'Continuous education' },
-			{ value: 'Selecting members', label: 'Selecting members' },
-			{ value: 'Handling grievances', label: 'Handling grievances' },
-		],
-		"FO-Financial Management" : [
-			{ value: 'Meeting working capital requirements', label: 'Meeting working capital requirements', },
-			{ value: 'Knowledge of financial services', label: 'Knowledge of financial services', },
-			{ value: 'Availing financial services', label: 'Availing financial services' },
-			{ value: 'Recording financial transactions', label: 'Recording financial transactions' },
-		],
-		"FO-Networking and Linkage-Building (External Relation; Business Membership Organization)" : [
-			{ value: 'Working with stakeholders', label: 'Working with stakeholders', },
-			{ value: 'Coordinating with institutions for assistance', label: 'Coordinating with institutions for assistance', },
-			{ value: 'Working with other organizations', label: 'Working with other organizations' },
-			{ value: 'Complying with commitments', label: 'Complying with commitments' },
-		],
-		"MSME-Entrepreneurial Competency" : [
-			{ value: 'Strategic planning', label: 'Strategic planning', },
-			{ value: 'Commitment', label: 'Commitment', },
-			{ value: 'Decision making', label: 'Decision making' },
-			{ value: 'Identifying business opportunities', label: 'Identifying business opportunities' },
-			{ value: 'Business networking', label: 'Business networking' },
-			{ value: 'Innovation', label: 'Innovation' },
-		],
-		"MSME-Operations" : [
-			{ value: 'Meeting quality specifications', label: 'Meeting quality specifications', },
-			{ value: 'Meeting volume requirements', label: 'Meeting volume requirements', },
-			{ value: 'Meeting delivery commitments', label: 'Meeting delivery commitments' },
-			{ value: 'Forecasting', label: 'Forecasting' },
-			{ value: 'Business planning', label: 'Business planning' },
-			{ value: 'Making a Business Plan', label: 'Making a Business Plan' },
-		],
-		"MSME-Management" : [
-			{ value: 'Identifying competitive advantage', label: 'Identifying competitive advantage', },
-			{ value: 'Recording transactions', label: 'Recording transactions', },
-			{ value: 'Complying with government regulations', label: 'Complying with government regulations' },
-		],
-		"MSME-Technology and Product Development" : [
-			{ value: 'Strategy formulation', label: 'Strategy formulation', },
-			{ value: 'Product development', label: 'Product development', },
-			{ value: 'Transaction automation', label: 'Transaction automation' },
-			{ value: 'Quality control measures', label: 'Quality control measures' },
-		],
-		"MSME-Marketing Management" : [
-			{ value: 'Market development', label: 'Market development', },
-			{ value: 'Formulating value proposition', label: 'Formulating value proposition', },
-			{ value: 'Securing supply agreements', label: 'Securing supply agreements' },
-			{ value: 'Digital marketing', label: 'Digital marketing' },
-		],
-		"MSME-Human Resource Management" : [
-			{ value: 'Staff hiring', label: 'Staff hiring', },
-			{ value: 'Staff training', label: 'Staff training', },
-		],
-		"MSME-Financial Management" : [
-			{ value: 'Meeting working capital requirements', label: 'Meeting working capital requirements', },
-			{ value: 'Knowledge of financial services', label: 'Knowledge of financial services', },
-			{ value: 'Availing financial services', label: 'Availing financial services' },
-			{ value: 'Recording financial transactions', label: 'Recording financial transactions' },
-		],
-		"MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)" : [
-			{ value: 'Working with stakeholders', label: 'Working with stakeholders', },
-			{ value: 'Coordinating with institutions for assistance', label: 'Coordinating with institutions for assistance', },
-			{ value: 'Working with other organizations', label: 'Working with other organizations' },
-			{ value: 'Complying with commitments', label: 'Complying with commitments' },
-		],
-		"Individual Farmer-Managing Natural Resources" : [
-			{ value: 'Production skills', label: 'Production skills', },
-			{ value: 'Soil management', label: 'Soil management', },
-			{ value: 'Water management', label: 'Water management' },
-			{ value: 'Composting and use of fertilizers and chemicals', label: 'Composting and use of fertilizers and chemicals' },
-			{ value: 'Mechanical skills', label: 'Mechanical skills' },
-		],
-		"Individual Farmer-Managing Finances" : [
-			{ value: 'Keeping financial records', label: 'Keeping financial records', },
-			{ value: 'Managing personal and business budgets', label: 'Managing personal and business budgets', },
-			{ value: 'Effective use of debts and loans', label: 'Effective use of debts and loans' },
-			{ value: 'Risk management skills', label: 'Risk management skills' },
-		],
-		"Individual Farmer-Marketing" : [
-			{ value: 'Farming as a business', label: 'Farming as a business', },
-			{ value: 'Business plan', label: 'Business plan', },
-			{ value: 'Procurement and selling skills', label: 'Procurement and selling skills' },
-			{ value: 'Collective marketing', label: 'Collective marketing' },
-		],
-		"Individual Farmer-Innovation" : [
-			{ value: 'Product development', label: 'Product development', },
-			{ value: 'Crop and product diversification', label: 'Crop and product diversification', },
-			{ value: 'Technological advancements', label: 'Technological advancements' },
-			{ value: 'Adaptability and problem-solving', label: 'Adaptability and problem-solving' },
-			{ value: 'Data collection and analysis', label: 'Data collection and analysis' },
-		],
-		"Individual Farmer-Teamwork" : [
-			{ value: 'Leadership skills', label: 'Leadership skills', },
-			{ value: 'Personnel management skills', label: 'Personnel management skills', },
-			{ value: 'Communication skills', label: 'Communication skills' },
-			{ value: 'Effective team player', label: 'Effective team player' },
-		],
-	}
-	CHOICES_SELECT['cbb_topic_of_training'].clearChoices()
-	CHOICES_SELECT['cbb_topic_of_training'].setChoices(dyn_choices[val_],
-		'value',
-		'label',
-		false,
-	);
+			],
+			"FO-Organizational Management" : [
+				{ value: 'Identifying competitive advantage', label: 'Identifying competitive advantage', },
+				{ value: 'Recording transactions', label: 'Recording transactions', },
+				{ value: 'Complying with government regulations', label: 'Complying with government regulations' },
+			],
+			"FO-Operations" : [
+				{ value: 'Meeting quality specifications', label: 'Meeting quality specifications', },
+				{ value: 'Meeting volume requirements', label: 'Meeting volume requirements', },
+				{ value: 'Meeting delivery commitments', label: 'Meeting delivery commitments' },
+				{ value: 'Consolidating products', label: 'Consolidating products' },
+				{ value: 'Forecasting', label: 'Forecasting' },
+				{ value: 'Business planning', label: 'Business planning' },
+				{ value: 'Making a Business Plan', label: 'Making a Business Plan' },
+			],
+			"FO-Technology and Product Development (Business Development)" : [
+				{ value: 'Strategy formulation', label: 'Strategy formulation', },
+				{ value: 'Product development', label: 'Product development', },
+				{ value: 'Quality control measures', label: 'Quality control measures' },
+			],
+			"FO-Institutional Marketing Management" : [
+				{ value: 'Market development', label: 'Market development', },
+				{ value: 'Formulating value proposition', label: 'Formulating value proposition', },
+				{ value: 'Identifying institutional buyers', label: 'Identifying institutional buyers' },
+				{ value: 'Securing supply agreements', label: 'Securing supply agreements' },
+				{ value: 'Digital marketing', label: 'Digital marketing' },
+			],
+			"FO-Human Resource Management" : [
+				{ value: 'Staff hiring', label: 'Staff hiring', },
+				{ value: 'Staff training', label: 'Staff training', },
+				{ value: 'Providing technical assistance to members', label: 'Providing technical assistance to members' },
+				{ value: 'Continuous education', label: 'Continuous education' },
+				{ value: 'Selecting members', label: 'Selecting members' },
+				{ value: 'Handling grievances', label: 'Handling grievances' },
+			],
+			"FO-Financial Management" : [
+				{ value: 'Meeting working capital requirements', label: 'Meeting working capital requirements', },
+				{ value: 'Knowledge of financial services', label: 'Knowledge of financial services', },
+				{ value: 'Availing financial services', label: 'Availing financial services' },
+				{ value: 'Recording financial transactions', label: 'Recording financial transactions' },
+			],
+			"FO-Networking and Linkage-Building (External Relation; Business Membership Organization)" : [
+				{ value: 'Working with stakeholders', label: 'Working with stakeholders', },
+				{ value: 'Coordinating with institutions for assistance', label: 'Coordinating with institutions for assistance', },
+				{ value: 'Working with other organizations', label: 'Working with other organizations' },
+				{ value: 'Complying with commitments', label: 'Complying with commitments' },
+			],
+			"MSME-Entrepreneurial Competency" : [
+				{ value: 'Strategic planning', label: 'Strategic planning', },
+				{ value: 'Commitment', label: 'Commitment', },
+				{ value: 'Decision making', label: 'Decision making' },
+				{ value: 'Identifying business opportunities', label: 'Identifying business opportunities' },
+				{ value: 'Business networking', label: 'Business networking' },
+				{ value: 'Innovation', label: 'Innovation' },
+			],
+			"MSME-Operations" : [
+				{ value: 'Meeting quality specifications', label: 'Meeting quality specifications', },
+				{ value: 'Meeting volume requirements', label: 'Meeting volume requirements', },
+				{ value: 'Meeting delivery commitments', label: 'Meeting delivery commitments' },
+				{ value: 'Forecasting', label: 'Forecasting' },
+				{ value: 'Business planning', label: 'Business planning' },
+				{ value: 'Making a Business Plan', label: 'Making a Business Plan' },
+			],
+			"MSME-Management" : [
+				{ value: 'Identifying competitive advantage', label: 'Identifying competitive advantage', },
+				{ value: 'Recording transactions', label: 'Recording transactions', },
+				{ value: 'Complying with government regulations', label: 'Complying with government regulations' },
+			],
+			"MSME-Technology and Product Development" : [
+				{ value: 'Strategy formulation', label: 'Strategy formulation', },
+				{ value: 'Product development', label: 'Product development', },
+				{ value: 'Transaction automation', label: 'Transaction automation' },
+				{ value: 'Quality control measures', label: 'Quality control measures' },
+			],
+			"MSME-Marketing Management" : [
+				{ value: 'Market development', label: 'Market development', },
+				{ value: 'Formulating value proposition', label: 'Formulating value proposition', },
+				{ value: 'Securing supply agreements', label: 'Securing supply agreements' },
+				{ value: 'Digital marketing', label: 'Digital marketing' },
+			],
+			"MSME-Human Resource Management" : [
+				{ value: 'Staff hiring', label: 'Staff hiring', },
+				{ value: 'Staff training', label: 'Staff training', },
+			],
+			"MSME-Financial Management" : [
+				{ value: 'Meeting working capital requirements', label: 'Meeting working capital requirements', },
+				{ value: 'Knowledge of financial services', label: 'Knowledge of financial services', },
+				{ value: 'Availing financial services', label: 'Availing financial services' },
+				{ value: 'Recording financial transactions', label: 'Recording financial transactions' },
+			],
+			"MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)" : [
+				{ value: 'Working with stakeholders', label: 'Working with stakeholders', },
+				{ value: 'Coordinating with institutions for assistance', label: 'Coordinating with institutions for assistance', },
+				{ value: 'Working with other organizations', label: 'Working with other organizations' },
+				{ value: 'Complying with commitments', label: 'Complying with commitments' },
+			],
+			"Individual Farmer-Managing Natural Resources" : [
+				{ value: 'Production skills', label: 'Production skills', },
+				{ value: 'Soil management', label: 'Soil management', },
+				{ value: 'Water management', label: 'Water management' },
+				{ value: 'Composting and use of fertilizers and chemicals', label: 'Composting and use of fertilizers and chemicals' },
+				{ value: 'Mechanical skills', label: 'Mechanical skills' },
+			],
+			"Individual Farmer-Managing Finances" : [
+				{ value: 'Keeping financial records', label: 'Keeping financial records', },
+				{ value: 'Managing personal and business budgets', label: 'Managing personal and business budgets', },
+				{ value: 'Effective use of debts and loans', label: 'Effective use of debts and loans' },
+				{ value: 'Risk management skills', label: 'Risk management skills' },
+			],
+			"Individual Farmer-Marketing" : [
+				{ value: 'Farming as a business', label: 'Farming as a business', },
+				{ value: 'Business plan', label: 'Business plan', },
+				{ value: 'Procurement and selling skills', label: 'Procurement and selling skills' },
+				{ value: 'Collective marketing', label: 'Collective marketing' },
+			],
+			"Individual Farmer-Innovation" : [
+				{ value: 'Product development', label: 'Product development', },
+				{ value: 'Crop and product diversification', label: 'Crop and product diversification', },
+				{ value: 'Technological advancements', label: 'Technological advancements' },
+				{ value: 'Adaptability and problem-solving', label: 'Adaptability and problem-solving' },
+				{ value: 'Data collection and analysis', label: 'Data collection and analysis' },
+			],
+			"Individual Farmer-Teamwork" : [
+				{ value: 'Leadership skills', label: 'Leadership skills', },
+				{ value: 'Personnel management skills', label: 'Personnel management skills', },
+				{ value: 'Communication skills', label: 'Communication skills' },
+				{ value: 'Effective team player', label: 'Effective team player' },
+			],
+		}
+		CHOICES_SELECT['cbb_topic_of_training'].clearChoices()
+		CHOICES_SELECT['cbb_topic_of_training'].setChoices(dyn_choices[val_],
+			'value',
+			'label',
+			false,
+		);
 
 	$ID("cbb_topic_of_training").parentNode.querySelectorAll(".choices__input")[1].addEventListener("keyup",function(e){
 		var cg_len = 0
@@ -1042,9 +1017,6 @@
     });
   });   
 
-
-
-
   var x_inputs_ = $CLASS('x-input')
 	for (let index = 0; index < x_inputs_.length; index++) {
 		if (x_inputs_[index].id != 'cbb_total_number_per_sector_total') {
@@ -1064,9 +1036,6 @@
 	</script>
 
 {% endblock content %}
-
 <!-- Specific JS goes HERE -->
-
 {% block javascripts %}
-
 {% endblock javascripts %}

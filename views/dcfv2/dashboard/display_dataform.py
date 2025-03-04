@@ -171,6 +171,12 @@ def displayform():
     form3_data_july=len(form3_data_july)
 
 
+
+
+
+
+
+
     form4_data_sep = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)".format(position_data_filter()))
     form4_data_oct = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
     form4_data_nov = db.select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE -  INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE -INTERVAL 8 MONTH)".format(position_data_filter()))
@@ -206,6 +212,13 @@ def displayform():
     form4_data_june=len(form4_data_june)
     form4_data_july=len(form4_data_july)
 
+
+
+
+
+
+
+
     form5_data_sep = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)".format(position_data_filter()))
     form5_data_oct = db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
     form5_data_nov =db.select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
@@ -240,6 +253,9 @@ def displayform():
     form5_data_june=len(form5_data_june)
     form5_data_july=len(form5_data_july)
 
+
+
+
     form6_data_sep = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)".format(position_data_filter()))
     form6_data_oct = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
     form6_data_nov =db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
@@ -251,6 +267,8 @@ def displayform():
     form6_data_may = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)".format(position_data_filter()))
     form6_data_june = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
     form6_data_july = db.select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
+
+
 
     form6_thismonth=len(form6_data_july)
     form6_lastmonth=len(form6_data_june)

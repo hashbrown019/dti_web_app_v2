@@ -1,7 +1,12 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">SALES TRACKER TABLE</h5>
+      <h5 class="card-title d-flex justify-content-between align-items-center">SALES TRACKER TABLE
+        <div class="d-flex">
+          <input type="text" id="searchInput" class="form-control form-control-sm me-2" placeholder="Search...">
+          <button id="sortButton" class="btn btn-sm btn-dark">SORT ▲</button>
+        </div>
+      </h5>
       <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
         <div class="datatable-container">
           <table class="table datatable datatable-table table-dark" id="salesTrackerTable">
@@ -37,11 +42,17 @@
 </style>
 
 <script>
+  let isAscending = true;
+  let originalData = []; // Stores unfiltered data
+  let filteredData = []; // Stores displayed data
+
   async function fetchData() {
     try {
       const response = await fetch('/view-sales-tracker-table');
       const data = await response.json();
-      create_sales_tracker_table(data);
+      originalData = data.filter(entry => entry.ST_id); // Store full data
+      filteredData = [...originalData]; // Copy for display
+      create_sales_tracker_table();
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -49,8 +60,7 @@
 
   fetchData();
 
-  function create_sales_tracker_table(data) {
-    const filteredData = data.filter(entry => entry.ST_id);
+  function create_sales_tracker_table() {
     const table = document.querySelector('#salesTrackerTable tbody');
     const rowsPerPage = 10;
     let currentPage = 1;
@@ -83,52 +93,71 @@
     }
 
     function renderPagination() {
-    let paginationContainer = document.getElementById("pagination");
-    if (!paginationContainer) {
-      paginationContainer = document.createElement("nav");
-      paginationContainer.id = "pagination";
-      paginationContainer.classList.add("d-flex", "justify-content-center", "mt-3");
-      document.querySelector("#salesTrackerTable").parentNode.appendChild(paginationContainer);
-    }
-
-    paginationContainer.innerHTML = "";
-    const ul = document.createElement("ul");
-    ul.classList.add("pagination");
-
-    const createPageItem = (label, disabled, onClick) => {
-      const li = document.createElement("li");
-      li.classList.add("page-item");
-      if (disabled) li.classList.add("disabled");
-      li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
-      li.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (!disabled) onClick();
-      });
-      return li;
-    };
-    ul.appendChild(createPageItem("«", currentPage === 1, () => {
-      if (currentPage > 1) renderTable(--currentPage);
-    }));
-
-    const maxVisiblePages = 3;
-    const startPage = Math.max(1, currentPage - 1);
-    const endPage = Math.min(totalPages, currentPage + 1);
-
-    for (let i = startPage; i <= endPage; i++) {
-      const pageItem = createPageItem(i, false, () => {
-        currentPage = i;
-        renderTable(currentPage);
-      });
-      if (i === currentPage) {
-        pageItem.classList.add("active");
+      let paginationContainer = document.getElementById("pagination");
+      if (!paginationContainer) {
+        paginationContainer = document.createElement("nav");
+        paginationContainer.id = "pagination";
+        paginationContainer.classList.add("d-flex", "justify-content-center", "mt-3");
+        document.querySelector("#salesTrackerTable").parentNode.appendChild(paginationContainer);
       }
-      ul.appendChild(pageItem);
+      paginationContainer.innerHTML = "";
+      const ul = document.createElement("ul");
+      ul.classList.add("pagination");
+
+      const createPageItem = (label, disabled, onClick) => {
+        const li = document.createElement("li");
+        li.classList.add("page-item");
+        if (disabled) li.classList.add("disabled");
+        li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+        li.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (!disabled) onClick();
+        });
+        return li;
+      };
+
+      ul.appendChild(createPageItem("«", currentPage === 1, () => {
+        if (currentPage > 1) renderTable(--currentPage);
+      }));
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageItem = createPageItem(i, false, () => {
+          currentPage = i;
+          renderTable(currentPage);
+        });
+        if (i === currentPage) {
+          pageItem.classList.add("active");
+        }
+        ul.appendChild(pageItem);
+      }
+
+      ul.appendChild(createPageItem("»", currentPage === totalPages, () => {
+        if (currentPage < totalPages) renderTable(++currentPage);
+      }));
+
+      paginationContainer.appendChild(ul);
     }
-    ul.appendChild(createPageItem("»", currentPage === totalPages, () => {
-      if (currentPage < totalPages) renderTable(++currentPage);
-    }));
-    paginationContainer.appendChild(ul);
-  }
-    renderTable(currentPage);
+
+    document.getElementById("sortButton").addEventListener("click", function () {
+      isAscending = !isAscending;
+      filteredData.sort((a, b) => isAscending ? a.ST_id - b.ST_id : b.ST_id - a.ST_id);
+      this.innerText = isAscending ? "Sort ▲" : "Sort ▼";
+      renderTable(1);
+    });
+
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const searchTerm = this.value.toLowerCase();
+      if (searchTerm === "") {
+        filteredData = [...originalData];
+      } else {
+        filteredData = originalData.filter(entry =>
+          Object.values(entry).some(value =>
+            value.toString().toLowerCase().includes(searchTerm)
+          )
+        );
+      }
+      renderTable(1);
+    });
+    renderTable(1);
   }
 </script>
