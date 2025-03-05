@@ -2,12 +2,19 @@
 <div class="container">
 	<input type="hidden" class="FMI_BASIC form-control" id="id" name="id" placeholder="ID if already Exist">
 	
-	<div class="col-lg-12">
+	<div class="x-col l6 x-padding">
+		<h2>FMI Basic Information</h2>
 		<div class="row mb-3">
 			<div class="col-sm-10">
-				<input type="text" class="FMI_BASIC form-control" id="fmi_name" name="fmi_name" placeholder=" FMI/R Project Name">
+				<input type="text" class="FMI_BASIC form-control" id="fmi_name" name="fmi_name" placeholder=" FMI/R Name">
 			</div>
-			<label for="fmi_name" class="col-sm-2 col-form-label">FMI/R</label>
+			<label for="fmi_name" class="col-sm-2 col-form-label">FMI/R Name</label>
+		</div>
+		<div class="row mb-3">
+			<div class="col-sm-10">
+				<input type="text" class="FMI_BASIC form-control" id="fmi_proj_name" name="fmi_proj_name" placeholder=" FMI/R Project Title">
+			</div>
+			<label for="fmi_proj_name" class="col-sm-2 col-form-label">Project Title</label>
 		</div>
 		<div class="form-floating mb-3">
 			<select class="FMI_BASIC form-select" id="rcu" name="rcu" required="">
@@ -23,7 +30,7 @@
 			<label class="f_name" for="floatingSelect">Region</label>
 		</div>
 		<div class="form-floating mb-3">
-			<select class="FMI_BASIC form-select" id="pcu" name="pcu" required="">
+			<select class="FMI_BASIC form-select" id="pcu" name="pcu" required="" onchange="search_on_map(this.value)">
 				<optgroup label="RCU 8">
 					<option value="Leyte">Leyte</option>
 					<option value="Northern Samar">Northern Samar</option>
@@ -66,25 +73,21 @@
 			<span class="input-group-text">Length</span>
 			<input type="number" class="FMI_BASIC form-control x-right-align" id="fmi_length" name="fmi_length" aria-label="Amount (to the nearest dollar)">
 			<span class="input-group-text">.Km</span>
-        </div>
-        <div class="input-group mb-3">
-        	<span>Approved Budget Contract (<b>ABC</b>)</span>
-        </div>
+		</div>
+		<div class="input-group mb-3">
+			<span>Approved Budget Contract (<b>ABC</b>)</span>
+		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">Pesos</span>
 			<input type="number" class="FMI_BASIC form-control x-right-align" id="abc_ifad" name="abc_ifad" aria-label="Amount (to the nearest dollar)">
 			<span class="input-group-text">IFAD Loan Proceeds</span>
-        </div>
+		</div>
 		<div class="input-group mb-3">
 			<span class="input-group-text">Pesos</span>
 			<input type="number" class="FMI_BASIC form-control x-right-align" id="abc_lgu" name="abc_lgu" aria-label="Amount (to the nearest dollar)">
 			<span class="input-group-text">LGU Counterpart (5% of ABC)</span>
-        </div>
-	</div>
-</div>
-<hr>
-<div class="container">
-	<div class="col-lg-12">
+		</div>
+		<hr>
 		<div class="input-group mb-3">
 			<span>Map/Location/Points of FMI</span>
 		</div>
@@ -92,7 +95,10 @@
 			<span class="input-group-text">Longitude,Latitude</span>
 			<input onkeyup="set_init_loc(this.value)" type="text" class="FMI_BASIC form-control" placeholder="9,123123,0.12313" aria-label="longlat">
 
-        </div>
+		</div>
+	</div>
+	<div class="x-col l6 x-padding">
+		<h2>FMI Location</h2>
 		{% include '/chunks/tracker-fmi/fmi-initial-map.html'%}
 		<div class="mb-3">
 			<h5>Map Action</h5>
@@ -101,9 +107,13 @@
 		<div class="input-group mb-3">
 			<span class="input-group-text">Points</span>
 			<input id="map_points" disabled type="text" class="FMI_BASIC form-control" placeholder="[[9.123123,0.12313]...]" aria-label="longlat">
-        </div>
+		</div>
 	</div>
+
 </div>
+<div class="container">
+</div>
+
 <button type="submit" class="btn btn-primary" onclick="save_basic_fmi()">Submit Form</button>
 <script type="text/javascript">
 	function save_basic_fmi(){
@@ -155,4 +165,18 @@
      $onload(function(){
 		  map.on('click', onMapClick);
 	 })
+
+
+     function search_on_map(search){
+		var url = "https://nominatim.openstreetmap.org/search?format=json&q="+search
+		$send({
+			action : url,
+			method :GET,
+			func : function(r){
+				var res = JSON.parse(r)
+				var coords = [res[0].lat,res[0].lon]
+				map.setView(coords, 12);
+			}
+		})
+	}
 </script>

@@ -1,28 +1,38 @@
 <table class="table datatable hover">
 	<thead>
-		<th>FMI/R Project Name</th>
+		<th>FMI/R Name</th>
+		<th>FMI/R Project Title</th>
 		<th>Region</th>
 		<th>Province</th>
 		<th>Length</th>
-		<th>ABC</th>
+		<th>ABC - IFAD</th>
+		<th>ABC - LGU</th>
 		<th>Status</th>
+		<th>Trackers</th>
 	</thead>
 	<tbody>
 		{% for fmi in fmi_list %}
 		<tr>
 			<td>{{fmi['fmi_name']}}</td>
+			<td>{{fmi['fmi_proj_name']}}</td>
 			<td>{{fmi['rcu']}}</td>
 			<td>{{fmi['pcu']}}</td>
 			<td>{{fmi['fmi_length']}} Km</td>
-			<td class="x-small">
-				IFAD : <b class="_money_tag">{{fmi['abc_ifad']}}</b><br>
-				LGU : <b class="_money_tag">{{fmi['abc_lgu']}}</b>
-			</td>
+			<td>P <span class="_money_tag">{{fmi['abc_ifad']}}</span></td>
+			<td>P <span class="_money_tag">{{fmi['abc_lgu']}}</span></td>
 			<td>status</td>
+			<td>
+				<div class="btn-group" role="group" aria-label="Basic outlined example">
+					<button type="button" class="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#MODAL_PROC">Procurement(0)</button>
+					<button type="button" class="btn btn-outline-primary">Physical Status(0)</button>
+					<button type="button" class="btn btn-outline-danger">Delete</button>
+				</div>
+			</td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
+{% include '/chunks/tracker-fmi/fmi-modal-form-proc.html'%}
 <script type="text/javascript">
 	var fmis = JSON.parse("{{fmi_list}}".replaceAll("&#39;",'"'))
 	$onload(function(){
