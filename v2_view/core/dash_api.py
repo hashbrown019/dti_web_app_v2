@@ -30,7 +30,7 @@ def get_databases():
 def get_area_staff():
 	# return session["USER_DATA"]
 	if(session["USER_DATA"][0]["security_group"] in [1,19]):
-		return rapid_mysql.select("SELECT * FROM `users` WHERE `status`='active' ;")
+		return rapid_mysql.select("SELECT * FROM `users` ;")
 
 	return rapid_mysql.select("SELECT * FROM `users` WHERE `rcu`='{}' AND `status`='active' ;".format(session["USER_DATA"][0]['rcu']) )
 
