@@ -61,18 +61,18 @@
 
   fetchData();
 
-  function create_sales_tracker_table() {
+    function create_sales_tracker_table() {
     const table = document.querySelector('#salesTrackerTable tbody');
     const rowsPerPage = 10;
     let currentPage = 1;
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
     function renderTable(page) {
-  table.innerHTML = "";
-  const start = (page - 1) * rowsPerPage;
-  const paginatedData = filteredData.slice(start, start + rowsPerPage);
+    table.innerHTML = "";
+    const start = (page - 1) * rowsPerPage;
+    const paginatedData = filteredData.slice(start, start + rowsPerPage);
 
-  paginatedData.forEach(entry => {
+    paginatedData.forEach(entry => {
     const row = table.insertRow();
 
     // Format the date to YYYY/MM/DD
