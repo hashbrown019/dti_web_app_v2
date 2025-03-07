@@ -1,3 +1,72 @@
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Line Chart</h5>
+
+      <!-- Line Chart -->
+      <canvas id="lineChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 400px; width: 934px;" width="622" height="266"></canvas>
+      <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+        const ctx = document.querySelector("#lineChart").getContext("2d");
+
+        async function fetchChartData() {
+          try {
+            const response = await fetch('/view-sales-tracker-table/' + URL_ARGS['id']);
+            const data = await response.json();
+            return data;
+          } catch (error) {
+            console.error("Error fetching chart data:", error);
+            return [];
+          }
+        }
+
+        function processChartData(data) {
+          const labels = data.map(entry => entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "");
+          const avePrice = data.map(entry => entry.ST_ave_price || 0);
+          const volSupplied = data.map(entry => entry.ST_vol_supplied || 0);
+
+          return { labels, avePrice, volSupplied };
+        }
+
+        const rawData = await fetchChartData();
+        const { labels, avePrice, volSupplied } = processChartData(rawData);
+
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'Average Price',
+                data: avePrice,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1,
+                fill: false
+              },
+              {
+                label: 'Volume Supplied',
+                data: volSupplied,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1,
+                fill: false
+              }
+            ]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true }
+            }
+          }
+        });
+      });
+      </script>
+      <!-- End Line CHart -->
+
+    </div>
+  </div>
+</div>
+
+
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
@@ -12,20 +81,20 @@
           <table class="table datatable datatable-table table-dark" id="salesTrackerTable">
             <thead>
               <tr>
-                <th data-sortable="true">ID</th>
-                <th data-sortable="true">RCU</th>
-                <th data-sortable="true">PCU</th>
-                <th data-sortable="true">Commodity</th>
-                <th data-sortable="true">DIP</th>
-                <th data-sortable="true">F.O</th>
-                <th data-sortable="true">Address(F.O)</th>
-                <th data-sortable="true">Anchor Firm/MSME</th>
-                <th data-sortable="true">Product Type</th>
-                <th data-sortable="true">Vol. Sup</th>
-                <th data-sortable="true">Ave Price</th>
-                <th data-sortable="true">Total Transaction</th>
-                <th data-sortable="true">Incentives Provided</th>
-                <th data-sortable="true">Date</th>
+                <th>ID</th>
+                <th>RCU</th>
+                <th>PCU</th>
+                <th>Commodity</th>
+                <th>DIP</th>
+                <th>F.O</th>
+                <th>Address(F.O)</th>
+                <th>Anchor Firm/MSME</th>
+                <th>Product Type</th>
+                <th>Vol. Sup</th>
+                <th>Ave Price</th>
+                <th>Total Transaction</th>
+                <th>Incentives Provided</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -35,6 +104,7 @@
     </div>
   </div>
 </div>
+
 
 <style>
   #salesTrackerTable tbody tr td {

@@ -54,6 +54,10 @@
       width: 16%;
     }
   }
+
+  #dipTrackerTable tbody tr td {
+    background-color: rgb(170, 170, 170);
+  }
 </style>
 
 <div class="tile_count">
@@ -164,6 +168,8 @@
   </div>
 </div>
 
+
+
 <div class="col-lg-6">
   <div class="card">
     <div class="card-body">
@@ -235,20 +241,25 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">DIP TABLE</h5>
+      <h5 class="card-title d-flex justify-content-between align-items-center">
+        DIP TABLE
+        <div class="d-flex">
+          <input type="text" id="dipSearchInput" class="form-control form-control-sm me-2" placeholder="Search...">
+          <button id="dipSortButton" class="btn btn-sm btn-dark">SORT ▲</button>
+        </div>
+      </h5>
       <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
         <div class="datatable-container">
-          <table class="table datatable datatable-table" id="dipTrackerTable" class="table table-dark">
+          <table class="table datatable datatable-table table-dark" id="dipTrackerTable">
             <thead>
               <tr>
-                <th data-sortable="true">Name</th>
-                <th data-sortable="true">Region</th>
-                <th data-sortable="true">Province</th>
-                <th data-sortable="true">Commodity</th>
+                <th>Name</th>
+                <th>Region</th>
+                <th>Province</th>
+                <th>Commodity</th>
               </tr>
             </thead>
-            <tbody>
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
@@ -257,143 +268,139 @@
 </div>
 
 <script>
+  let isDipAscending = true;
+  let dipOriginalData = [];
+  let dipFilteredData = [];
+  let currentPage = 1;
+  const rowsPerPage = 10;
+
   document.addEventListener("DOMContentLoaded", function () {
-    fetch('/view-tracker-dip-main-content')
-        .then(response => response.json())
-        .then(data => {
-            create_dip_tracker_table(data);
-            const totalFemales = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalfemale || 0), 0);
-            const totalMales = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalmale || 0), 0);
-            const totalFeMalesIP = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalip || 0), 0);
-            const totalpwd = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalpwd || 0), 0);
-            const totalcoop = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalcooperatives || 0), 0);
-            const totalast = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalassociations || 0), 0);
-            const totalfbene = data.reduce((total, entry) => total + parseFloat(entry.form_1_total_farmerbene || 0), 0);
-            const totalmsme = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalmsme || 0), 0);
-            const totalfo = data.reduce((total, entry) => total + parseFloat(entry.form_1_totalfo || 0), 0);
-            document.getElementById('totalFemales').innerText = numberWithCommas(totalFemales);
-            document.getElementById('totalMales').innerText = numberWithCommas(totalMales);
-            document.getElementById('totalFeMalesIP').innerText = numberWithCommas(totalFeMalesIP);
-            document.getElementById('totalpwd').innerText = numberWithCommas(totalpwd);
-            document.getElementById('totalcoop').innerText = numberWithCommas(totalcoop);
-            document.getElementById('totalast').innerText = numberWithCommas(totalast);
-            document.getElementById('totalfbene').innerText = numberWithCommas(totalfbene);
-            document.getElementById('totalmsme').innerText = numberWithCommas(totalmsme);
-            document.getElementById('totalfo').innerText = numberWithCommas(totalfo);
-        });
+    fetchDipData();
+  });
 
-    function numberWithCommas(x) {
-        if (isNaN(x)) return x; // Check if x is a number
-        return parseFloat(x).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  async function fetchDipData() {
+    try {
+      const response = await fetch('/view-tracker-dip-main-content');
+      const data = await response.json();
+      dipOriginalData = data.filter(entry => entry.form_1_name_dip);
+      dipFilteredData = [...dipOriginalData];
+      
+      createDipTrackerTable();
+      updateTotals(data);
+    } catch (error) {
+      console.error('Error fetching DIP data:', error);
     }
-});
+  }
 
-  function create_dip_tracker_table(data) {
-      let filteredData = data.filter(entry => entry.form_1_name_dip);
-      const table = document.querySelector('#dipTrackerTable tbody');
-      let rowsPerPage = 10;
-      let currentPage = 1;
-      let totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  function updateTotals(data) {
+    const totals = {
+      totalFemales: data.reduce((total, entry) => total + parseFloat(entry.form_1_totalfemale || 0), 0),
+      totalMales: data.reduce((total, entry) => total + parseFloat(entry.form_1_totalmale || 0), 0),
+      totalFeMalesIP: data.reduce((total, entry) => total + parseFloat(entry.form_1_totalip || 0), 0),
+      totalpwd: data.reduce((total, entry) => total + parseFloat(entry.form_1_totalpwd || 0), 0),
+      totalcoop: data.reduce((total, entry) => total + parseFloat(entry.form_1_totalcooperatives || 0), 0),
+      totalast: data.reduce((total, entry) => total + parseFloat(entry.form_1_totalassociations || 0), 0),
+      totalfbene: data.reduce((total, entry) => total + parseFloat(entry.form_1_total_farmerbene || 0), 0),
+      totalmsme: data.reduce((total, entry) => total + parseFloat(entry.form_1_totalmsme || 0), 0),
+      totalfo: data.reduce((total, entry) => total + parseFloat(entry.form_1_totalfo || 0), 0),
+    };
+    for (const key in totals) {
+      document.getElementById(key).innerText = numberWithCommas(totals[key]);
+    }
+  }
+  function numberWithCommas(x) {
+    return x.toLocaleString();
+  }
 
-      function renderTable(page) {
-          table.innerHTML = "";
-          let start = (page - 1) * rowsPerPage;
-          let end = start + rowsPerPage;
-          let paginatedData = filteredData.slice(start, end);
+  function createDipTrackerTable() {
+    const table = document.querySelector('#dipTrackerTable tbody');
 
-          paginatedData.forEach(entry => {
-              const row = table.insertRow();
-              row.innerHTML = `
-                  <td>${entry.form_1_name_dip}</td>
-                  <td>${entry.form_1_rcus}</td>
-                  <td>${entry.form_1_scope_provinces}</td>
-                  <td>${entry.form_1_commodity}</td>
-              `;
-          });
-          renderPagination(); // Update pagination UI
+    function renderTable(page) {
+      table.innerHTML = "";
+      const start = (page - 1) * rowsPerPage;
+      const paginatedData = dipFilteredData.slice(start, start + rowsPerPage);
+
+      paginatedData.forEach(entry => {
+        const row = table.insertRow();
+        row.innerHTML = `
+          <td>${entry.form_1_name_dip}</td>
+          <td>${entry.form_1_rcus}</td>
+          <td>${entry.form_1_scope_provinces}</td>
+          <td>${entry.form_1_commodity}</td>
+        `;
+      });
+
+      renderPagination();
+    }
+
+    function renderPagination() {
+      const paginationContainer = document.getElementById("dipPagination") || createPaginationContainer();
+      paginationContainer.innerHTML = "";
+      const totalPages = Math.ceil(dipFilteredData.length / rowsPerPage);
+      const ul = document.createElement("ul");
+      ul.classList.add("pagination");
+
+      const createPageItem = (label, disabled, onClick) => {
+        const li = document.createElement("li");
+        li.classList.add("page-item");
+        if (disabled) li.classList.add("disabled");
+        li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+        li.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (!disabled) onClick();
+        });
+        return li;
+      };
+      ul.appendChild(createPageItem("«", currentPage === 1, () => {
+        if (currentPage > 1) renderTable(--currentPage);
+      }));
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageItem = createPageItem(i, false, () => {
+          currentPage = i;
+          renderTable(currentPage);
+        });
+        if (i === currentPage) {
+          pageItem.classList.add("active");
+        }
+        ul.appendChild(pageItem);
       }
 
-      function renderPagination() {
-        let paginationContainer = document.getElementById("pagination");
-
-        if (!paginationContainer) {
-            paginationContainer = document.createElement("nav");
-            paginationContainer.id = "pagination";
-            paginationContainer.classList.add("d-flex", "justify-content-center", "mt-3");
-            document.querySelector("#dipTrackerTable").parentNode.appendChild(paginationContainer);
-        }
-
-        paginationContainer.innerHTML = ""; // Clear previous pagination
-
-        let ul = document.createElement("ul");
-        ul.classList.add("pagination");
-
-        // Previous Button
-        let prevButton = document.createElement("li");
-        prevButton.classList.add("page-item");
-        if (currentPage === 1) {
-            prevButton.classList.add("disabled");
-        }
-        prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                </a>`;
-        prevButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            if (currentPage > 1) {
-                currentPage--;
-                renderTable(currentPage);
-            }
-        });
-        ul.appendChild(prevButton);
-
-        // Page Number Buttons (Dynamic)
-        let maxVisiblePages = 3;
-        let startPage = Math.max(1, currentPage - 1);
-        let endPage = Math.min(totalPages, currentPage + 1);
-
-        if (currentPage === totalPages && totalPages > 2) {
-            startPage = totalPages - 2;
-        }
-
-        if (currentPage === 1 && totalPages > 2) {
-            endPage = 3;
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-            let pageButton = document.createElement("li");
-            pageButton.classList.add("page-item");
-            if (i === currentPage) {
-                pageButton.classList.add("active");
-            }
-            pageButton.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-            pageButton.addEventListener("click", (e) => {
-                e.preventDefault();
-                currentPage = i;
-                renderTable(currentPage);
-            });
-            ul.appendChild(pageButton);
-        }
-
-        // Next Button
-        let nextButton = document.createElement("li");
-        nextButton.classList.add("page-item");
-        if (currentPage === totalPages) {
-            nextButton.classList.add("disabled");
-        }
-        nextButton.innerHTML = `<a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
-                                </a>`;
-        nextButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderTable(currentPage);
-            }
-        });
-        ul.appendChild(nextButton);
-        paginationContainer.appendChild(ul);
+      ul.appendChild(createPageItem("»", currentPage === totalPages, () => {
+        if (currentPage < totalPages) renderTable(++currentPage);
+      }));
+      paginationContainer.appendChild(ul);
     }
 
-      renderTable(currentPage); // Show the first page initially
+    function createPaginationContainer() {
+      const paginationContainer = document.createElement("nav");
+      paginationContainer.id = "dipPagination";
+      paginationContainer.classList.add("d-flex", "justify-content-center", "mt-3");
+      document.querySelector("#dipTrackerTable").parentNode.appendChild(paginationContainer);
+      return paginationContainer;
+    }
+
+    document.getElementById("dipSortButton").addEventListener("click", function () {
+      isDipAscending = !isDipAscending;
+      dipFilteredData.sort((a, b) => 
+        isDipAscending 
+          ? a.form_1_name_dip.localeCompare(b.form_1_name_dip) 
+          : b.form_1_name_dip.localeCompare(a.form_1_name_dip)
+      );
+      this.innerText = isDipAscending ? "SORT ▲" : "SORT ▼";
+      renderTable(1);
+    });
+
+    document.getElementById("dipSearchInput").addEventListener("input", function () {
+      const searchTerm = this.value.trim().toLowerCase();
+      dipFilteredData = dipOriginalData.filter(entry =>
+        (entry.form_1_name_dip && entry.form_1_name_dip.toLowerCase().includes(searchTerm)) ||
+        (entry.form_1_rcus && entry.form_1_rcus.toLowerCase().includes(searchTerm)) ||
+        (entry.form_1_scope_provinces && entry.form_1_scope_provinces.toLowerCase().includes(searchTerm)) ||
+        (entry.form_1_commodity && entry.form_1_commodity.toLowerCase().includes(searchTerm))
+      );
+      renderTable(1);
+    });
+    renderTable(1);
   }
 </script>
