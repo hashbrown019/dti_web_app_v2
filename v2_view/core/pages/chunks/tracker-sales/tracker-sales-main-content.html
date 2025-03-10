@@ -83,71 +83,78 @@
         buttonsStyling: false
       });
       
-      function submitSalesTracker(recordId) {
+      function submitSalesTracker() {
         const trackerInputs = document.querySelectorAll("#yearlySalesTrackerForm .TRACKING_FORM");
         let isValid = true;
 
-        // Check only the Yearly Sales Tracker fields
         trackerInputs.forEach(input => {
-          if (!input.value.trim()) {
-            input.style.border = "2px solid red";
-            isValid = false;
-          } else {
-            input.style.border = "2px solid #c2bfbf"; // Restore original border
-          }
+            if (!input.value.trim()) {
+                input.style.border = "2px solid red";
+                isValid = false;
+            } else {
+                input.style.border = "2px solid #c2bfbf";
+            }
         });
 
         if (!isValid) {
-          swalWithCustomButtons.fire({
-            title: "Error!",
-            text: "Please fill in all required fields before submitting.",
-            icon: "error",
-            confirmButtonText: "OK"
-          });
-          return; // Stop submission if validation fails
+            swalWithCustomButtons.fire({
+                title: "Error!",
+                text: "Please fill in all required fields before submitting.",
+                icon: "error",
+                confirmButtonText: "OK"
+            });
+            return;
         }
 
         let formData = new FormData();
-        formData.append("record_id", recordId);
 
-        const allInputs = document.querySelectorAll(".TRACKING_FORM"); 
+        // Extract CPA ID from the hidden input field
+        const cpaId = document.getElementById("nameID").value;
+        formData.append("record_id", cpaId);
+
+        const allInputs = document.querySelectorAll(".TRACKING_FORM");
         allInputs.forEach(input => {
-          formData.append(input.id, input.value);
+            formData.append(input.id, input.value);
         });
 
         fetch("/micro/insert_sales_tracker", {
-          method: "POST",
-          body: formData
+            method: "POST",
+            body: formData
         })
         .then(response => response.json())
-        .then(data => {
-          if (data.status === "success") {
-            swalWithCustomButtons.fire({
-              title: "Success!",
-              text: "Your record has been successfully submitted.",
-              icon: "success",
-              confirmButtonText: "OK"
-            }).then(() => {
-              document.getElementById("yearlySalesTrackerForm").reset();
-              trackerInputs.forEach(input => (input.style.border = "2px solid #c2bfbf"));
-            });
-          } else {
-            swalWithCustomButtons.fire({
-              title: "Error!",
-              text: data.message,
-              icon: "error",
-              confirmButtonText: "OK"
-            });
-          }
+          .then(data => {
+            if (data.status === "success") {
+                const newId = data.id || cpaId;  // Ensure fallback to CPA ID if server doesn't return ID
+                
+                // Clear the form before redirecting
+                document.getElementById('yearlySalesTrackerForm').reset();
+
+                swalWithCustomButtons.fire({
+                    title: "Success!",
+                    text: "Your record has been successfully submitted.",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                }).then(() => {
+                    window.location.href = `/mis-v4/core-table-sales-tracker?tbl=dcf_implementing_unit&id=${newId}`;
+                });
+            } else {
+                swalWithCustomButtons.fire({
+                    title: "Error!",
+                    text: data.message,
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            }
         })
         .catch(error => {
-          console.error("Error:", error);
-          swalWithCustomButtons.fire({
-            title: "Error!",
-            text: "Something went wrong. Please try again.",
-            icon: "error",
-            confirmButtonText: "OK"
-          });
+            console.error("Error:", error);
+            swalWithCustomButtons.fire({
+                title: "Error!",
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                confirmButtonText: "OK"
+            });
         });
-      }
+    }
+
     </script>
