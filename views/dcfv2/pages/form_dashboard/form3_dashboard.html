@@ -386,11 +386,11 @@
 																		<span><i class="fa fa-trash"></i></span> Delete
 																	</a>
 																	{% elif user_data['job'] == "Super Admin" %}
-																	<a style="color: #33cccc;" href="/dcf/form3?id={{ row['id'] }}&table=dcf_bdsp_reg">
+																	<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_bdsp_reg', 'form3');">
 																		<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-																	/a>
+																	</a>
 																	{% else %}
-																	<a style="color: #33cccc;" href="/dcf/form3?id={{ row['id'] }}&table=dcf_bdsp_reg">
+																	<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_bdsp_reg', 'form3');">
 																		<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 																	</a>
 																	{% endif %}
