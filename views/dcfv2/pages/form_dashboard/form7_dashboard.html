@@ -540,11 +540,11 @@
 													<span><i class="fa fa-trash"></i></span> Delete
 												</a>
 												{% elif user_data['job'] == "Super Admin" %}
-												<a style="color: #33cccc;" href="/dcf/form7?id={{ row['id'] }}&table=dcf_trade_promotion">
+												<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_trade_promotion', 'form7');">
 													<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 												</a>
 												{% else %}
-												<a style="color: #33cccc;" href="/dcf/form7?id={{ row['id'] }}&table=dcf_trade_promotion">
+												<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_trade_promotion', 'form7');">
 													<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 												</a>
 												{% endif %}

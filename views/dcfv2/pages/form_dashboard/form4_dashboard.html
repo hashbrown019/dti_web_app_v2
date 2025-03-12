@@ -633,11 +633,11 @@
 							<span><i class="fa fa-trash"></i></span> Delete
 						</a>
 						{% elif user_data['job'] == "Super Admin" %}
-						<a style="color: #33cccc;" href="/dcf/form4?id={{ row['id'] }}&table=dcf_capacity_building">
+						<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_capacity_building', 'form4');">
 							<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 						</a>
 						{% else %}
-						<a style="color: #33cccc;" href="/dcf/form4?id={{ row['id'] }}&table=dcf_capacity_building">
+						<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_capacity_building', 'form4');">
 							<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 						</a>
 						{% endif %}

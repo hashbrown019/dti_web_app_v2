@@ -1,117 +1,222 @@
-<div class="col-lg-12">
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title d-flex justify-content-between align-items-center">SALES TRACKER TABLE
-        <div class="d-flex">
-          <input type="text" id="searchInput" class="form-control form-control-sm me-2" placeholder="Search...">
-          <button id="sortButton" class="btn btn-sm btn-dark">SORT ▲</button>
-        </div>
-      </h5>
-      <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
-        <div class="datatable-container">
-          <table class="table datatable datatable-table table-dark" id="salesTrackerTable">
-            <thead>
-              <tr>
-                <th data-sortable="true">ID</th>
-                <th data-sortable="true">RCU</th>
-                <th data-sortable="true">PCU</th>
-                <th data-sortable="true">Commodity</th>
-                <th data-sortable="true">DIP</th>
-                <th data-sortable="true">F.O</th>
-                <th data-sortable="true">Address(F.O)</th>
-                <th data-sortable="true">Anchor Firm/MSME</th>
-                <th data-sortable="true">Product Type</th>
-                <th data-sortable="true">Vol. Sup</th>
-                <th data-sortable="true">Ave Price</th>
-                <th data-sortable="true">Total Transaction</th>
-                <th data-sortable="true">Incentives Provided</th>
-                <th data-sortable="true">Date</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+  <style>
+    .tile_stats_count {
+      background: #dee2e6;
+      padding: 10px;
+      text-align: left;
+      display: inline-block;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      vertical-align: top;
+      box-shadow: 0 4px 8px rgba(128, 128, 128, 0.1);
+      border: 1px solid #d7dbdf;
+    }
+    .count_top small {
+      font-size: 12px;
+      color: #6C757D;
+      font-weight: bold;
+      display: block;
+    }
+    .count {
+      font-size: 25px;
+      font-weight: bold;
+      color: #73879C;
+    }
+    .count_bottom {
+      font-size: 10px;
+      color: #6C757D;
+    }
+    .tile_count {
+      padding: 20px;
+      border-radius: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    @media (min-width: 576px) {
+      .tile_stats_count {
+        width: 48%;
+      }
+    }
+    @media (min-width: 768px) {
+      .tile_stats_count {
+        width: 31%;
+      }
+    }
+    @media (min-width: 992px) {
+      .tile_stats_count {
+        width: 23%;
+      }
+    }
+    @media (min-width: 1200px) {
+      .tile_stats_count {
+        width: 16%;
+      }
+    }
+    #salesTrackerTable tbody tr td {
+      background-color: rgb(170, 170, 170);
+    }
+  </style>
+
+  <div class="tile_count">
+    <div class="tile_stats_count">
+      <span class="count_top"><small>Ave Price</small></span>
+      <div class="count" id="totalAvePrice">0</div>
+      <span class="count_bottom">Total # of Ave Price</span>
+    </div>
+    <div class="tile_stats_count">
+      <span class="count_top"><small>Vol. Supply</small></span>
+      <div class="count" id="totalVolSup">0</div>
+      <span class="count_bottom">Total # of Vol Supply</span>
+    </div>
+    <div class="tile_stats_count">
+      <span class="count_top"><small>Transaction</small></span>
+      <div class="count" id="totalTransaction">0</div>
+      <span class="count_bottom">Total # of Transaction</span>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-between align-items-center">
+          Volume Supply - Average Price
+          <div class="d-flex">
+            <select id="filterType" class="form-select form-select-sm me-2">
+              <option value="all">All</option>
+              <option value="year">Filter by Year</option>
+              <option value="month">Filter by Month</option>
+            </select>
+            <select id="filterValue" class="form-select form-select-sm"></select>
+          </div>
+        </h5>
+        <canvas id="lineChart" style="max-height: 400px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-between align-items-center">
+          Total Transaction
+          <div class="d-flex">
+            <select id="transactionFilterType" class="form-select form-select-sm me-2">
+              <option value="all">All</option>
+              <option value="year">Filter by Year</option>
+              <option value="month">Filter by Month</option>
+            </select>
+            <select id="transactionFilterValue" class="form-select form-select-sm"></select>
+          </div>
+        </h5>
+        <canvas id="transactionChart" style="max-height: 400px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-between align-items-center">SALES TRACKER TABLE
+          <div class="d-flex">
+            <input type="text" id="searchInput" class="form-control form-control-sm me-2" placeholder="Search...">
+            <button id="sortButton" class="btn btn-sm btn-dark">SORT ▲</button>
+          </div>
+        </h5>
+        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+          <div class="datatable-container">
+            <table class="table datatable datatable-table table-dark" id="salesTrackerTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>RCU</th>
+                  <th>PCU</th>
+                  <th>Commodity</th>
+                  <th>DIP</th>
+                  <th>F.O</th>
+                  <th>Address(F.O)</th>
+                  <th>Anchor Firm/MSME</th>
+                  <th>Product Type</th>
+                  <th>Vol. Sup</th>
+                  <th>Ave Price</th>
+                  <th>Total Transaction</th>
+                  <th>Incentives Provided</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<style>
-  #salesTrackerTable tbody tr td {
-    background-color: rgb(170, 170, 170);
-  }
-</style>
+  <script>
+    const URL = '/view-sales-tracker-table/';
+    const URL_ID = URL_ARGS['id'];
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let isAscending = true, originalData = [], filteredData = [];
 
-<script>
-  let isAscending = true;
-  let originalData = []; // Stores unfiltered data
-  let filteredData = []; // Stores displayed data
-
-  async function fetchData() {
-    try {
-      const response = await fetch('/view-sales-tracker-table/'+URL_ARGS['id']);
-      const data = await response.json();
-      originalData = data.filter(entry => entry.ST_id); // Store full data
-      filteredData = [...originalData]; // Copy for display
-      create_sales_tracker_table();
-    } catch (error) {
-      console.error('Error fetching data:', error);
+    async function fetchData() {
+      try {
+        const response = await fetch(URL + URL_ID);
+        originalData = await response.json();
+        filteredData = [...originalData];
+        updateTotals(originalData);
+        renderTable();
+        setupCharts();
+      } catch (error) { console.error('Error fetching data:', error); }
     }
-  }
 
-  fetchData();
+    function updateTotals(data) {
+      const totals = {
+        totalAvePrice: data.reduce((t, e) => t + parseFloat(e.ST_ave_price || 0), 0),
+        totalVolSup: data.reduce((t, e) => t + parseFloat(e.ST_vol_supplied || 0), 0),
+        totalTransaction: data.reduce((t, e) => t + parseFloat(e.ST_total_transaction || 0), 0),
+      };
+      Object.entries(totals).forEach(([id, value]) => document.getElementById(id).innerText = value.toLocaleString());
+    }
 
-  function create_sales_tracker_table() {
+    function renderTable(page = 1, rowsPerPage = 15) {
     const table = document.querySelector('#salesTrackerTable tbody');
-    const rowsPerPage = 10;
-    let currentPage = 1;
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    table.innerHTML = "";
+    const start = (page - 1) * rowsPerPage;
+    const paginatedData = filteredData.slice(start, start + rowsPerPage);
+    paginatedData.forEach(entry => {
+      const row = table.insertRow();
+      const date = entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "";
+      row.innerHTML = `
+        <td>${entry.CPA_id}</td>
+        <td>${entry.ST_rcu}</td>
+        <td>${entry.ST_pcu}</td>
+        <td>${entry.ST_commodity}</td>
+        <td>${entry.ST_nameofdip}</td>
+        <td>${entry.ST_nameof_fo}</td>
+        <td>${entry.ST_address_fo}</td>
+        <td>${entry.ST_af_msme}</td>
+        <td>${entry.ST_product_type}</td>
+        <td>${entry.ST_vol_supplied}</td>
+        <td>${entry.ST_ave_price}</td>
+        <td>${entry.ST_total_transaction}</td>
+        <td>${entry.ST_incentives_provided}</td>
+        <td>${date}</td>
+      `;
+    });
+    renderPagination(page, rowsPerPage);
+  }
 
-    function renderTable(page) {
-  table.innerHTML = "";
-  const start = (page - 1) * rowsPerPage;
-  const paginatedData = filteredData.slice(start, start + rowsPerPage);
-
-  paginatedData.forEach(entry => {
-    const row = table.insertRow();
-
-    // Format the date to YYYY/MM/DD
-    let formattedDate = "";
-    if (entry.ST_date) {
-      const dateObj = new Date(entry.ST_date);
-      formattedDate = `${dateObj.getFullYear()}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getDate().toString().padStart(2, '0')}`;
-    }
-
-    row.innerHTML = `
-      <td>${entry.CPA_id}</td>
-      <td>${entry.ST_rcu}</td>
-      <td>${entry.ST_pcu}</td>
-      <td>${entry.ST_commodity}</td>
-      <td>${entry.ST_nameofdip}</td>
-      <td>${entry.ST_nameof_fo}</td>
-      <td>${entry.ST_address_fo}</td>
-      <td>${entry.ST_af_msme}</td>
-      <td>${entry.ST_product_type}</td>
-      <td>${entry.ST_vol_supplied}</td>
-      <td>${entry.ST_ave_price}</td>
-      <td>${entry.ST_total_transaction}</td>
-      <td>${entry.ST_incentives_provided}</td>
-      <td>${formattedDate}</td>
-    `;
-  });
-
-  renderPagination();
-}
-
-    function renderPagination() {
-      let paginationContainer = document.getElementById("pagination");
-      if (!paginationContainer) {
-        paginationContainer = document.createElement("nav");
-        paginationContainer.id = "pagination";
-        paginationContainer.classList.add("d-flex", "justify-content-center", "mt-3");
-        document.querySelector("#salesTrackerTable").parentNode.appendChild(paginationContainer);
+    function renderPagination(currentPage, rowsPerPage) {
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      let nav = document.getElementById("pagination");
+      if (!nav) {
+        nav = document.createElement("nav");
+        nav.id = "pagination";
+        nav.classList.add("d-flex", "justify-content-center", "mt-3");
+        document.querySelector("#salesTrackerTable").parentNode.appendChild(nav);
       }
-      paginationContainer.innerHTML = "";
+      nav.innerHTML = "";
       const ul = document.createElement("ul");
       ul.classList.add("pagination");
 
@@ -127,48 +232,102 @@
         return li;
       };
 
-      ul.appendChild(createPageItem("«", currentPage === 1, () => {
-        if (currentPage > 1) renderTable(--currentPage);
-      }));
-
+      ul.appendChild(createPageItem("«", currentPage === 1, () => renderTable(currentPage - 1, rowsPerPage)));
       for (let i = 1; i <= totalPages; i++) {
-        const pageItem = createPageItem(i, false, () => {
-          currentPage = i;
-          renderTable(currentPage);
-        });
-        if (i === currentPage) {
-          pageItem.classList.add("active");
-        }
+        const pageItem = createPageItem(i, false, () => renderTable(i, rowsPerPage));
+        if (i === currentPage) pageItem.classList.add("active");
         ul.appendChild(pageItem);
       }
-
-      ul.appendChild(createPageItem("»", currentPage === totalPages, () => {
-        if (currentPage < totalPages) renderTable(++currentPage);
-      }));
-
-      paginationContainer.appendChild(ul);
+      ul.appendChild(createPageItem("»", currentPage === totalPages, () => renderTable(currentPage + 1, rowsPerPage)));
+      nav.appendChild(ul);
     }
 
-    document.getElementById("sortButton").addEventListener("click", function () {
+    document.getElementById("sortButton").addEventListener("click", () => {
       isAscending = !isAscending;
       filteredData.sort((a, b) => isAscending ? a.ST_id - b.ST_id : b.ST_id - a.ST_id);
-      this.innerText = isAscending ? "Sort ▲" : "Sort ▼";
-      renderTable(1);
+      document.getElementById("sortButton").innerText = isAscending ? "Sort ▲" : "Sort ▼";
+      renderTable();
     });
 
-    document.getElementById("searchInput").addEventListener("input", function () {
-      const searchTerm = this.value.toLowerCase();
-      if (searchTerm === "") {
-        filteredData = [...originalData];
-      } else {
-        filteredData = originalData.filter(entry =>
-          Object.values(entry).some(value =>
-            value.toString().toLowerCase().includes(searchTerm)
-          )
-        );
-      }
-      renderTable(1);
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      filteredData = searchTerm
+        ? originalData.filter(entry => Object.values(entry).some(val => val.toString().toLowerCase().includes(searchTerm)))
+        : [...originalData];
+      renderTable();
     });
-    renderTable(1);
-  }
-</script>
+
+    async function setupCharts() {
+      setupLineChart("lineChart", "filterType", "filterValue", ["Average Price", "Volume Supplied"], ["rgb(75, 192, 192)", "rgb(255, 99, 132)"], entry => [entry.ST_ave_price || 0, entry.ST_vol_supplied || 0]);
+      setupLineChart("transactionChart", "transactionFilterType", "transactionFilterValue", ["Total Transaction"], ["rgb(255, 105, 97)"], entry => [entry.ST_total_transaction || 0]);
+    }
+
+    async function setupLineChart(canvasId, filterTypeId, filterValueId, labels, colors, dataExtractor) {
+      const ctx = document.querySelector(`#${canvasId}`).getContext("2d");
+      const chart = new Chart(ctx, { type: 'line', data: { labels: [], datasets: [] }, options: { scales: { y: { beginAtZero: true } } } });
+
+      function processData(data) {
+        const chartLabels = data.map(entry => entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "");
+        const chartData = data.map(entry => dataExtractor(entry));
+        return { labels: chartLabels, data: chartData };
+      }
+
+      function populateFilters(data, filterType, filterValue) {
+        const years = [...new Set(data.map(entry => new Date(entry.ST_date).getFullYear()))];
+        const months = [...new Set(data.map(entry => `${new Date(entry.ST_date).getFullYear()}-${(new Date(entry.ST_date).getMonth() + 1).toString().padStart(2, '0')}`))]
+
+        const filterDropdown = document.getElementById(filterValue);
+        filterDropdown.innerHTML = '<option value="all">All</option>';
+
+        const options = filterType === "year" ? years : months;
+        options.forEach(option => {
+          const display = filterType === "year" ? option : `${option.split('-')[0]} - ${monthNames[parseInt(option.split('-')[1]) - 1]}`;
+          filterDropdown.innerHTML += `<option value="${option}">${display}</option>`;
+        });
+      }
+
+      function filterData(data, filterType, filterValue) {
+        if (filterType === "year") return data.filter(entry => new Date(entry.ST_date).getFullYear().toString() === filterValue);
+        if (filterType === "month") return data.filter(entry => `${new Date(entry.ST_date).getFullYear()}-${(new Date(entry.ST_date).getMonth() + 1).toString().padStart(2, '0')}` === filterValue);
+        return data;
+      }
+
+      function updateChart(data) {
+        const filteredData = document.getElementById(filterValueId).value === "all"
+          ? originalData // Use original data when "All" is selected
+          : data;
+
+        const { labels: chartLabels, data: chartData } = processData(filteredData);
+
+        chart.data.labels = chartLabels;
+        chart.data.datasets = labels.map((label, index) => ({
+          label: label,
+          data: chartData.map(d => d[index] || 0),
+          borderColor: colors[index],
+          tension: 0.1,
+          fill: false,
+        }));
+        
+        chart.update();
+      }
+
+      const { labels: initialLabels, data: initialData } = processData(originalData);
+      chart.data.labels = initialLabels;
+      chart.data.datasets = labels.map((label, index) => ({ label, data: initialData.map(d => d[index] || 0), borderColor: colors[index], tension: 0.1, fill: false }));
+      chart.update();
+
+      populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
+
+      document.getElementById(filterTypeId).addEventListener("change", () => {
+        populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
+        updateChart(originalData);
+      });
+
+      document.getElementById(filterValueId).addEventListener("change", () => {
+        const filtered = filterData(originalData, document.getElementById(filterTypeId).value, document.getElementById(filterValueId).value);
+        updateChart(filtered);
+      });
+    }
+
+    fetchData();
+  </script>
