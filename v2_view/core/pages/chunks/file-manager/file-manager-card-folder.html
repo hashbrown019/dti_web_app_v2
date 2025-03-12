@@ -1,7 +1,7 @@
-<div class="col-xxl-3 col-md-4">
+<div class="CONTAINER_HOLDER col-xxl-3 col-md-4">
 	<div class="card info-card folder-card">
 
-		<div class="filter">
+		<!-- <div class="filter">
 			<a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
 			<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 				<li class="dropdown-header text-start">
@@ -11,7 +11,15 @@
 				<li><a class="dropdown-item" href="#">Download</a></li>
 				<li><a class="dropdown-item" href="#" onclick="rename_folder('folder_{{folder_id}}')">rename</a></li>
 			</ul>
-		</div>
+		</div> -->
+
+		{% if URL_ARGS['path'] %}
+			{% set pathbyid = URL_ARGS['path']|string()+"/"+folder['id']|string()%}
+			{% set pathbyname = URL_ARGS['fname']+"/"+folder['folder_name']%}
+		{% else %}
+			{% set pathbyid = "/"+folder['id']|string()%}
+			{% set pathbyname = "/"+folder['folder_name']%}
+		{% endif %}
 
 		<div class="card-body">
 			{% if folder['date_modified'] %}
@@ -21,7 +29,7 @@
 			{% endif %}
 
 			<div class="d-flex align-items-center">
-				<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}`)">
+				<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
 					<i class="bi bi-folder-fill"></i>
 				</div>
 				<h5 class="card-title">
