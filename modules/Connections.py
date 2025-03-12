@@ -128,7 +128,7 @@ class mysql:
 				args += ",`{}`='{}'".format(datum,data[datum])
 			sql = "UPDATE `{}` SET  {}  WHERE `{}`='{}';".format(table, args[1:], ids, req.form[ids])
 			status = "updated"
-			
+		print(sql)
 		last_row_id = self.do(sql)
 		return {"lastrowid":last_row_id, "status":status}
 

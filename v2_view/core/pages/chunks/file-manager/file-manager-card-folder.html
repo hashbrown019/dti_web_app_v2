@@ -1,0 +1,35 @@
+<div class="col-xxl-3 col-md-4">
+	<div class="card info-card folder-card">
+
+		<div class="filter">
+			<a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+			<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+				<li class="dropdown-header text-start">
+					<h6>option</h6>
+				</li>
+				<li><a class="dropdown-item text-danger" href="#">Delete</a></li>
+				<li><a class="dropdown-item" href="#">Download</a></li>
+				<li><a class="dropdown-item" href="#" onclick="rename_folder('folder_{{folder_id}}')">rename</a></li>
+			</ul>
+		</div>
+
+		<div class="card-body">
+			{% if folder['date_modified'] %}
+				<h5 class="card-title text-primary"><span>created {{folder['date_modified']|format_timestamp}}</span></h5>
+			{% else %}
+				<h5 class="card-title"><span>modified {{folder['date_created']|format_timestamp}}</span></h5>
+			{% endif %}
+
+			<div class="d-flex align-items-center">
+				<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}`)">
+					<i class="bi bi-folder-fill"></i>
+				</div>
+				<h5 class="card-title">
+					<input id="folder_{{folder_id}}" type="text" class="form-control" value="{{folder['folder_name']}}" style="border-color: white;border: 0px;background-color: white;" disabled onfocusout="save_folder_name(this.id,this.value)">
+					<span>| {{folder['description']}}</span>
+				</h5>
+			</div>
+		</div>
+
+	</div>
+</div>

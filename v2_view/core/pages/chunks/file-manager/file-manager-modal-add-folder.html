@@ -1,0 +1,58 @@
+<!-- ---------MODAL------------ -->
+<div class="modal fade" id="modal_add_folder" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Create file folder</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="card-body">
+					<h5 class="card-title">Folder </h5>
+						<input id="id" name="id" type="hidden" class="ADD_FOLDER form-control" placeholder="id">
+						<input id="folder_path" name="folder_path" type="hidden" class="ADD_FOLDER form-control" placeholder="folder_path" value="{{URL_ARGS['folder']}}">
+						<input id="created_by" name="created_by" type="hidden" class="ADD_FOLDER form-control" placeholder="created_by" value="{{USER_DATA['id']}}">
+
+						<div class="col-md-12">
+							<input id="folder_name" name="folder_name" type="text" class="ADD_FOLDER form-control" placeholder="folder name">
+						</div>
+						<div class="col-12">
+							<textarea id="description" name="description" class="ADD_FOLDER form-control" placeholder="Leave a comment here" style="height: 100px;"></textarea>
+						</div>
+						<div class="col-md-12">
+							<label>Share to</label>
+							<select id="perm" name="perm" class="ADD_FOLDER form-select">
+								<option value="all">All</option>
+								<option value="personal">personal</option>
+								<option value="link">With link only</option>
+							</select>
+						</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary" onclick="add_folder()">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function add_folder(){
+		var f_data = input_to_json("ADD_FOLDER")
+		println(f_data)
+		$send({
+			action : "/mis-v4/file-manager/add-folder",
+			method : "POST",
+			data : $DATA(f_data),
+			func : function(r){
+				var res = JSON.parse(r)
+				console.log(res)
+				// alert()
+				goto(`/mis-v4/core-file-manager?folder=${res['lastrowid']}`)
+			}
+
+		})
+	}
+</script>

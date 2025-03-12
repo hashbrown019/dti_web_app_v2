@@ -1,0 +1,76 @@
+<div class="col-lg-12">
+	<div class="row">
+		<!-- Sales Card -->
+		<div class="pagetitle">
+			<h5 class="card-title">Files and Folders</h5>
+
+			<ol class="breadcrumb">
+				{% for folder in folder_list %}
+				{% endfor %}
+				<li class="breadcrumb-item active"><a href="index.html">Drive</a></li>
+			</ol>
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_add_folder">
+				Create Folder <span class="bi bi-folder-plus"></span>
+			</button>
+			<button type="button" class="btn btn-success" onclick="">
+				Add Files <span class="bi bi-file-earmark-plus"></span>
+			</button>
+		</div>
+		<section class="section dashboard">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="row">
+						<!-- ======================================================= -->
+						{% for folder in folder_list %}
+							{% set folder_id = folder['id'] %}
+							{% if 'folder' not in URL_ARGS %}
+								{% if folder['folder_path'] %}
+								{% else %}
+									{% include '/chunks/file-manager/file-manager-card-folder.html' %}
+								{% endif %}
+							{% elif folder['folder_path'] == URL_ARGS['folder']%}
+								{% include '/chunks/file-manager/file-manager-card-folder.html' %}
+							{%endif%}
+						{%endfor%}
+						<!-- ======================================================= -->
+
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="row">
+						Empty container
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row">
+						Sample
+					</div>
+				</div>
+				<!-- <div class="col-lg-2">
+					<div class="row">
+						SMAPLE
+					</div>
+				</div> -->
+			</div>
+		</section>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function rename_folder(folder_id) {
+		// alert(folder_id);
+		println(folder_id);
+
+		var folder_name = document.getElementById(folder_id).value;
+		$ID(folder_id).disabled = false;
+		$ID(folder_id).select();
+	}
+
+	function save_folder_name(elem_id,elem_value){
+		$ID(elem_id).disabled = true;
+		$ID(elem_id).value = elem_value;
+		alert(elem_value);
+	}
+</script>
