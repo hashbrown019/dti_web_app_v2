@@ -267,11 +267,14 @@
       const chart = new Chart(ctx, { type: 'line', data: { labels: [], datasets: [] }, options: { scales: { y: { beginAtZero: true } } } });
 
       function processData(data) {
-        const chartLabels = data.map(entry => entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "");
-        const chartData = data.map(entry => dataExtractor(entry));
+        const sortedData = [...data].sort((a, b) => new Date(a.ST_date) - new Date(b.ST_date));
+        const chartLabels = sortedData.map(entry =>
+          entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : ""
+        );
+        const chartData = sortedData.map(entry => dataExtractor(entry));
         return { labels: chartLabels, data: chartData };
       }
-
+      
       function populateFilters(data, filterType, filterValue) {
         const years = [...new Set(data.map(entry => new Date(entry.ST_date).getFullYear()))];
         const months = [...new Set(data.map(entry => `${new Date(entry.ST_date).getFullYear()}-${(new Date(entry.ST_date).getMonth() + 1).toString().padStart(2, '0')}`))]

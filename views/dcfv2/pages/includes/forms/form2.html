@@ -197,10 +197,11 @@
                 <select class="FORM2_FIELD x-border x-select x-border" id="form_2_businessname" name="form_2_businessname" required>
                     <option value="">Choose your options.</option>
                     {% for entry in form_c_db %}
-                        <option>
-                            {{ entry['reg_businessname'] if entry['reg_businessname'] else (entry['name'] if entry['name'] else entry['business_addr']) }}
-                        </option>
-                    {% endfor %}
+                        {% set business_name = entry['reg_businessname'] or entry['name'] or entry['business_addr'] %}
+                        {% if business_name %}
+                            <option>{{ business_name }}</option>
+                    {% endif %}
+                {% endfor %}    
                 </select>
             </div>
 
