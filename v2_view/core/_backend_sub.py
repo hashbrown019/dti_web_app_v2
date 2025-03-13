@@ -93,6 +93,18 @@ class system_settings:
 # ================================================
 # ================================================
 # ================================================
+class file_manager:
+	def add_modify_folder(req):
+		for ids in req.form:
+			print(f"{ids} : {req.form[ids]}")
+		sql_ress = rapid_mysql.insert_or_add_to_db(req,"file_manager_folders","id")
+		print(sql_ress)
+		return sql_ress
+
+# ================================================
+# ================================================
+# ================================================
+# ================================================
 
 class file_handling:
 	def download_db_pfa(req,obj):
