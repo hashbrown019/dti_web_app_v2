@@ -1,4 +1,4 @@
-<div class="CONTAINER_HOLDER FILE_CARD col-xxl-3 col-md-4" data-bs-toggle="tooltip" data-bs-placement="top" title="{{file['file_name']}}">
+<div class="CONTAINER_HOLDER FILE_CARD col-xxl-4 col-md-4" data-bs-toggle="tooltip" data-bs-placement="top" title="{{file['file_name']}}">
 	<div class="card-deck">
 		<div class="card">
 			{% set fpath = "/mis-v4/file-manager/get-file?file="+file['file_name'] %}
@@ -9,10 +9,10 @@
 				<video src="{{fpath}}" style="width:290px;height: 200px;"></video>
 			{% elif file['file_name']|file_ext == 'pdf'%}
 				<iframe src="{{fpath}}" style="width:290px;height: 200px; border: 0px;"></iframe>
-			{% elif file['file_name']|file_ext == 'docx'%}
-				<iframe class="IFRAMES" src='{{fpath}}' style="width:290px;height: 200px; border: 0px;">This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Online</a>.</iframe>
+			{% elif file['file_name']|file_ext_type in ['slide','sheet','text']%}
+				<img class="card-img-top" src="../static/img/file_type/all.png" style="width:290px;height: 200px;">
 			{% endif %}
-			<div class="card-body">
+			<div class="card-body" onclick="goto('{{fpath}}',true)">
 				<h5 class="card-title">{{file['file_name'].split('.')[0:-1]|join(".")}}</h5>
 				<p class="card-text">
 					<span>Size: <b>{{file['size']/1000000}} <i>Mib</i></b></span><br>
@@ -36,5 +36,4 @@
 	</div>
 </div>
 
-<!-- <iframe src="https://docs.google.com/gview?url=http://remote.url.tld/path/to/document.doc&embedded=true"></iframe> -->
 

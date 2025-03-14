@@ -11,63 +11,80 @@
 	}
 </style>
 
-<div class="col-lg-12">
+<div class="col-lg-12" id="dropContainer" style="min-height: 60vh;">
 	<div class="row">
 		<!-- Sales Card -->
 		<div class="pagetitle">
 			
 		</div>
-		<section class="section dashboard">
+		<section class="section dashboard" >
 			<div class="row">
 				<h5 class="">
 					<strong class="bi bi-folder"></strong>
 					<strong id="FOLDER_NAME">Home</strong>
 
-					<div class="btn-group x-right" role="group" aria-label="Basic mixed styles example">
-						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal_add_folder">Create folder</button>
-						<label for="file-upload" class="custom-file-upload btn btn-primary">
-							Add files
-						</label>
-						<input id="fileInput" type="file" class="btn btn-primary" multiple>
-					</div>
+					
+				</h5>
 			</div>
 			<div class="">
-				<span class="x-xlarge">Folders (<b id="_folder_num">0</b>)</span> |
-				<span class="x-xlarge">Files (<b id="_file_num">0</b>)</span>
+				{% if URL_ARGS['path'] %}
+					<span>You can add files here by dragging one or multiple files from your folder to this page</span>
+				{%else%}
+					<span>This is the root directory of the MIS drive. You can create a folder by clicking the button but you cannot add a files here</span>
+				{% endif %}
+				<input id="fileInput" type="file" multiple><!-- FOR DRAGFILE  -->
 			</div>
-			<div id="dropContainer" class="row">
+			<div class="row">
 				<div class="col-lg-8">
 					<hr>
 					<div class="row">
 						<!-- ======================================================= -->
-						{% for folder in folder_list %}
-							{% if folder['status']  != 0%}
-								{% set folder_id = folder['id'] %}
-								{% if 'folder' not in URL_ARGS %}
-									{% if folder['folder_path'] %}
-										{{pass}}
-									{% else %}
-										{% include '/chunks/file-manager/file-manager-card-folder.html' %}
-									{% endif %}
-								{% elif folder['folder_path'] == URL_ARGS['folder']%}
-									{% include '/chunks/file-manager/file-manager-card-folder.html'%}
-								{%endif%}
-							{%endif%}
-						{%endfor%}
+						<div class="col-lg-3 x-leftbar container">
+							<span class="x-xlarge x-row">
+								Folders (<b id="_folder_num">0</b>)
+								<button type="button" class="btn btn-success x-right" data-bs-toggle="modal" data-bs-target="#modal_add_folder">Create folder</button><br>
+							</span><br>
+							<div class="row">
+								{% for folder in folder_list %}
+									{% if folder['status']  != 0%}
+										{% set folder_id = folder['id'] %}
+										{% if 'folder' not in URL_ARGS %}
+											{% if folder['folder_path'] %}
+												{{pass}}
+											{% else %}
+												{% include '/chunks/file-manager/file-manager-card-folder.html' %}
+											{% endif %}
+										{% elif folder['folder_path'] == URL_ARGS['folder']%}
+											{% include '/chunks/file-manager/file-manager-card-folder.html'%}
+										{%endif%}
+									{%endif%}
+								{%endfor%}
+							</div>
+						</div>
 
-						{% for file in file_list %}
-							{% if 'folder' in URL_ARGS %}
-								{% if file['folder']|int == URL_ARGS['folder']|int%}
-									{% include '/chunks/file-manager/file-manager-card-file.html' %}
-								{%endif%}
+						<div class="col-lg-9 x-leftbar">
+							{% if URL_ARGS['path'] %}
+							<span class="x-xlarge">
+								Files (<b id="_file_num">0</b>)<br>
+								<span class="x-medium">You can drag multiple files here for uploading</span>
+							</span><br>
+							<div class="row">
+								{% for file in file_list %}
+									{% if 'folder' in URL_ARGS %}
+										{% if file['folder']|int == URL_ARGS['folder']|int%}
+											{% include '/chunks/file-manager/file-manager-card-file.html' %}
+										{%endif%}
+									{%endif%}
+								{%endfor%}
+							</div>
 							{%endif%}
-						{%endfor%}
+						</div>
 						<!-- ======================================================= -->
 					</div>
 				</div>
 				<div class="col-lg-2">
 					<div class="row">
-						Empty ---
+						---
 					</div>
 				</div>
 			</div>
@@ -75,7 +92,7 @@
 
 				<div class="col-lg-12">
 					<div class="row">
-						Sample--
+						---
 					</div>
 				</div>
 				<!-- <div class="col-lg-2">
@@ -168,7 +185,7 @@
 
 <!-- ==== FOR DRAG AND DROP UPLOAD FILE ======= -->
 <script type="text/javascript">
-	{% if URL_ARGS['path'] %}
+	
 		var dropContainer = $ID('dropContainer')
 		var fileInput = $ID('fileInput')
 		dropContainer.ondragover = dropContainer.ondragenter = function(evt) {
@@ -196,7 +213,11 @@
 			println(fileInput.files);
 			println(_file_chunk)
 			evt.preventDefault();
-			save_file(_file_chunk)
+			{% if URL_ARGS['path'] %}
+				save_file(_file_chunk)
+			{% else %}
+				alert("You cant upload a file to the root directory. try creating a folder first and upload the file there")
+			{% endif %}
 		};
 
 		function save_file(_file_chunk){
@@ -215,18 +236,6 @@
 				}
 			})
 		}
-	{% endif %}
-
-</script>
-
-<script type="text/javascript">
 	
-	$onload(function(){
-		var IFRAMES = $CLASS('IFRAMES')
-		var domain = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`
-		println(domain)
-		for (var i = 0; i < IFRAMES.length; i++) {
-			IFRAMES[i].src = `https://view.officeapps.live.com/op/embed.aspx?src=${domain}/`+IFRAMES[i].src
-		}
-	})
+
 </script>
