@@ -25,7 +25,7 @@
 
 			function iframe_load (iframe_content){
 				EMBED__SCRIPT(iframe_content,formcdashboard)
-				EMBED__SCRIPT(iframe_content,form2_sales_tracker_button_redirect)
+				EMBED__SCRIPT(iframe_content,EMBED_OUTER_LINK_IFRAME)
 			}
 
 			function formcdashboard(_BODY_,obj){
@@ -44,8 +44,8 @@
 				}
 			}
 
-			function form2_sales_tracker_button_redirect(_BODY_,obj){
-				var sales_btn = _BODY_.getElementsByClassName("EMBED_SALES_TRACKER_ROUTE")
+			function EMBED_OUTER_LINK_IFRAME(_BODY_,obj){
+				var sales_btn = _BODY_.getElementsByClassName("EMBED_OUTER_LINK")
 				for (var i = 0; i < sales_btn.length; i++) {
 					sales_btn[i].onclick = function(el){
 						goto(el.target.attributes['alt'].nodeValue)
