@@ -10,7 +10,7 @@
 			{% elif file['file_name']|file_ext == 'pdf'%}
 				<iframe src="{{fpath}}" style="width:290px;height: 200px; border: 0px;"></iframe>
 			{% elif file['file_name']|file_ext == 'docx'%}
-				<iframe class="IFRAMES" src='' style="width:290px;height: 200px; border: 0px;">This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Online</a>.</iframe>
+				<iframe class="IFRAMES" src='{{fpath}}' style="width:290px;height: 200px; border: 0px;">This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Online</a>.</iframe>
 			{% endif %}
 			<div class="card-body">
 				<h5 class="card-title">{{file['file_name'].split('.')[0:-1]|join(".")}}</h5>
