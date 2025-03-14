@@ -1,0 +1,11 @@
+{% if folder['perm'] == 'personal'%}
+	{% if folder['inputed_by_id']|int == USER_DATA['id']|int %}
+		{% include '/chunks/file-manager/file-manager-card-folder.html' %}
+	{% endif %}
+{% elif folder['perm'] == 'area'%}
+	{% if folder['inputed_rcu'] == USER_DATA['rcu'] %}
+		{% include '/chunks/file-manager/file-manager-card-folder.html' %}
+	{% endif %}
+{% elif folder['perm'] == 'all'%}
+	{% include '/chunks/file-manager/file-manager-card-folder.html' %}
+{% endif %}

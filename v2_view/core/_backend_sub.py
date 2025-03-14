@@ -128,12 +128,6 @@ class file_manager:
 
 # ================================================
 # ================================================
-class AttrDict(dict):
-	def __init__(self, *args, **kwargs):
-		super(AttrDict, self).__init__(*args, **kwargs)
-		self.__dict__ = self
-# ================================================
-# ================================================
 
 class file_handling:
 	def download_db_pfa(req,obj):
@@ -141,6 +135,13 @@ class file_handling:
 		print(_sql)
 		ls_arr = rapid_mysql.select(_sql)
 		return ls_arr
+		
+# ================================================
+# ================================================
+class AttrDict(dict):
+	def __init__(self, *args, **kwargs):
+		super(AttrDict, self).__init__(*args, **kwargs)
+		self.__dict__ = self
 # ================================================
 # ================================================
 # ================================================

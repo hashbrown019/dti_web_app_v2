@@ -91,7 +91,16 @@ def fmi_list(sesh):
 # ================================================
 
 def folder_list(sesh):
-	return rapid_mysql.select("SELECT * FROM `file_manager_folders` ;")
+	return rapid_mysql.select('''
+		SELECT 
+			`users`.`id` as 'inputed_by_id',
+			`users`.`name` as 'inputed_by_name',
+			`users`.`rcu` as 'inputed_rcu',
+			`users`.`pcu` as 'inputed_pcu',
+			`file_manager_folders`.* 
+		FROM `file_manager_folders`
+		INNER JOIN `users` ON `file_manager_folders`.`created_by` = `users`.`id`
+	''')
 
 def file_list(sesh):
 	return rapid_mysql.select("SELECT * FROM `file_manager_files` ;")

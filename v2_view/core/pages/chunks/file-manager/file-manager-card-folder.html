@@ -8,7 +8,6 @@
 <div class="CONTAINER_HOLDER FOLDER_CARD " >
 	<div class="card-deck" >
 		<div class="card" data-bs-toggle="tooltip" data-bs-placement="top" title="{{folder['folder_name']}}">
-
 			<div class="row">
 				<img class="col-lg-4" style="max-width: 100px" src="../static/img/folder.png" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
 				<h5 class="col-lg-7 card-title">
@@ -19,8 +18,9 @@
 			<p class="card-text x-padding" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
 				{{folder['description']}}
 			</p>
-			<div class="x-padding x-pale-yellow" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
-				<small class="text-muted">
+			<div class="x-padding x-pale-yellow">
+				created by: <span class="text-primary">{{folder['inputed_by_name']}}</span><br>
+				<small class="text-muted" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
 					{% if folder['date_modified'] %}
 						<span class="card-title text-primary"><span>created {{folder['date_modified']|format_timestamp}}</span></span>
 					{% else %}
