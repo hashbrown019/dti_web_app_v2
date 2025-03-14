@@ -43,7 +43,9 @@ class _main:
 			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None ,
 			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "tools-trackers-specific" in module else None ,
 			fmi_list=dash_api.fmi_list(session["USER_DATA"][0]['id']) if "tracker-fmi" in module else None ,
-			folder_list=dash_api.folder_list(session["USER_DATA"][0]['id']) if "file-manager" in module else None 
+			folder_list=dash_api.folder_list(session["USER_DATA"][0]['id']) if "file-manager" in module else None ,
+			file_list=dash_api.file_list(session["USER_DATA"][0]['id']) if "file-manager" in module else None 
+			
 		);
 
 	@app.route("/warning",methods=["GET"])
@@ -98,17 +100,6 @@ class _main:
 
 	# =======================================
 	# =======================================
-	# ============USER-CONTROL===============
-
-	@app.route("/mis-v4/file-manager/<task>",methods=["POST","GET"])
-	@c.login_auth_web()
-	def file_manager(task):
-		if(task=='add-folder'): res = _backend_sub.file_manager.add_modify_folder(request)
-		elif(task=='add-file'): res = _backend_sub.file_manager.add_file(request)
-		return res
-
-	# =======================================
-	# =======================================
 	# =========PERSONAL-FORM=================
 
 	@app.route("/mis-v4/personal-forms/<task>",methods=["POST","GET"])
@@ -152,12 +143,20 @@ class _main:
 		return res
 
 
-	
-	# =======================================
-	# =======================================
-	# =======================================
-	# =========FiLe Handlers===================
 
+	# =======================================
+	# =======================================
+	# ============FILE-MANAGER===============
+
+	@app.route("/mis-v4/file-manager/<task>",methods=["POST","GET"])
+	@c.login_auth_web()
+	def file_manager(task):
+		if(task=='add-folder'): res = _backend_sub.file_manager.add_modify_folder(request)
+		elif(task=='add-file'): res = _backend_sub.file_manager.add_file(request)
+		elif(task=='get-file'): res = _backend_sub.file_manager.get_file(request)
+		return res
+
+	# =========FiLe Handlers===================
 	@app.route("/mis-v4/file/<task>/<obj>",methods=["POST","GET"])
 	@c.login_auth_web()
 	def file_handling(task,obj):
@@ -166,6 +165,7 @@ class _main:
 		elif(task=='dl_page'):
 			res = render_template("/parts/__file_dl.html",db=obj,rcu=request.args["rcu"])
 		return res
+
 	# =======================================
 	# =======================================
 	# =======================================

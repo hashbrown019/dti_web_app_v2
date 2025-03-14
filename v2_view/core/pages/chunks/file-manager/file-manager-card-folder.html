@@ -1,43 +1,47 @@
-<div class="CONTAINER_HOLDER col-xxl-3 col-md-4">
-	<div class="card info-card folder-card">
+{% if URL_ARGS['path'] %}
+	{% set pathbyid = URL_ARGS['path']|string()+"/"+folder['id']|string()%}
+	{% set pathbyname = URL_ARGS['fname']+"/"+folder['folder_name']%}
+{% else %}
+	{% set pathbyid = "/"+folder['id']|string()%}
+	{% set pathbyname = "/"+folder['folder_name']%}
+{% endif %}
+<div class="CONTAINER_HOLDER FOLDER_CARD col-xxl-3 col-md-4" >
+	<div class="card-deck" >
+		<div class="card" data-bs-toggle="tooltip" data-bs-placement="top" title="{{folder['folder_name']}}">
 
-		<!-- <div class="filter">
-			<a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-			<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-				<li class="dropdown-header text-start">
-					<h6>option</h6>
-				</li>
-				<li><a class="dropdown-item text-danger" href="#">Delete</a></li>
-				<li><a class="dropdown-item" href="#">Download</a></li>
-				<li><a class="dropdown-item" href="#" onclick="rename_folder('folder_{{folder_id}}')">rename</a></li>
-			</ul>
-		</div> -->
-
-		{% if URL_ARGS['path'] %}
-			{% set pathbyid = URL_ARGS['path']|string()+"/"+folder['id']|string()%}
-			{% set pathbyname = URL_ARGS['fname']+"/"+folder['folder_name']%}
-		{% else %}
-			{% set pathbyid = "/"+folder['id']|string()%}
-			{% set pathbyname = "/"+folder['folder_name']%}
-		{% endif %}
-
-		<div class="card-body">
-			{% if folder['date_modified'] %}
-				<h5 class="card-title text-primary"><span>created {{folder['date_modified']|format_timestamp}}</span></h5>
-			{% else %}
-				<h5 class="card-title"><span>modified {{folder['date_created']|format_timestamp}}</span></h5>
-			{% endif %}
-
-			<div class="d-flex align-items-center">
-				<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
-					<i class="bi bi-folder-fill"></i>
-				</div>
-				<h5 class="card-title">
+			<div class="row">
+				<img class="col-lg-4" style="max-width: 100px" src="../static/img/folder.png" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
+				<h5 class="col-lg-7 card-title">
 					<input id="folder_{{folder_id}}" type="text" class="form-control" value="{{folder['folder_name']}}" style="border-color: white;border: 0px;background-color: white;" disabled onfocusout="save_folder_name(this.id,this.value)">
-					<span>| {{folder['description']}}</span>
+
 				</h5>
 			</div>
+			<p class="card-text x-padding" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
+				{{folder['description']}}
+			</p>
+			<div class="x-padding x-pale-yellow" onclick="goto(`/mis-v4/core-file-manager?folder={{folder_id}}&path={{pathbyid}}&fname={{pathbyname}}`)">
+				<small class="text-muted">
+					{% if folder['date_modified'] %}
+						<span class="card-title text-primary"><span>created {{folder['date_modified']|format_timestamp}}</span></span>
+					{% else %}
+						<span class="card-title"><span>modified {{folder['date_created']|format_timestamp}}</span></span>
+					{% endif %}
+				</small>
+				<div class="filter">
+					<a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+					<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+						<li class="dropdown-header text-start">
+							<h6>option</h6>
+						</li>
+						<li>
+							<a class="dropdown-item text-danger" href="#"  onclick="_confirmation(del_folder,'warning','Are you sure to removed this folder?',[{{folder_id}}])">Delete</a>
+						</li>
+						<li><a class="dropdown-item" href="#">Download</a></li>
+						<li><a class="dropdown-item" href="#" onclick="rename_folder('folder_{{folder_id}}')">rename</a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
-
 	</div>
 </div>
+<!-- ============================================================================= -->

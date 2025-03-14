@@ -1,4 +1,5 @@
 import Configurations as c 
+import __variables as const
 from flask import render_template, render_template_string
 from datetime import datetime, timedelta
 from modules.Connections import mysql
@@ -96,6 +97,14 @@ class templates:
 		HTML = temps.read()
 		temps.close()
 		return render_template_string(HTML)
+
+	def file_ext_type(file):
+		_EXT = const.FILE_EXT[file.split(".")[-1]][0]
+		return _EXT
+
+	def file_ext(file):
+		_EXT = file.split(".")[-1]
+		return _EXT
 	# ===========================================================================================================
 	# ===========================================================================================================
 	# ===========================================================================================================
@@ -111,6 +120,8 @@ class templates:
 		self.app.jinja_env.filters['get_cpa'] = templates.get_cpa
 		self.app.jinja_env.filters['trancuate_text'] = templates.trancuate_text
 		self.app.jinja_env.filters['get_save_template'] = templates.get_save_template
+		self.app.jinja_env.filters['file_ext_type'] = templates.file_ext_type
+		self.app.jinja_env.filters['file_ext'] = templates.file_ext
 	# Register the custom filter on the Flask application\
 
 	#

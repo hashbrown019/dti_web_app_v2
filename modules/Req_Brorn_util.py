@@ -14,7 +14,13 @@ class file_from_request:
 		self.flaskapp = flaskapp
 
 	def save_file_from_request(self,request,idfield,pathtosave="",raise_error=False,timestamp=False,custom_name=""):
-		file_arr_str = "";file_arr = [];files_count = 0;status ="unfinished";msg ="unfinished"
+		'''
+			@params: request = flask request
+			@params: idfield = id of the field
+
+			
+		'''
+		file_arr_str = "";file_arr = [];files_count = 0;status ="unfinished";msg ="unfinished";
 		try:
 			files = request.files.getlist(idfield)
 			for f in files:

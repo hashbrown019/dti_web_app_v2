@@ -115,7 +115,9 @@ class mysql:
 		status = 'uknown'
 		data = dict(req.form)
 		key = [];val = [];args=""
-		is_exist = len(self.select("SELECT * FROM `{}` WHERE `{}` ='{}' ;".format(table, ids, req.form[ids])))
+		is_ex_ssql = "SELECT * FROM `{}` WHERE `{}` ='{}' ;".format(table, ids, data[ids])
+		print(is_ex_ssql)
+		is_exist = len(self.select(is_ex_ssql))
 		if(is_exist==0):
 			for datum in data:
 				# print(datum)
@@ -126,7 +128,7 @@ class mysql:
 		else:
 			for datum in data:
 				args += ",`{}`='{}'".format(datum,data[datum])
-			sql = "UPDATE `{}` SET  {}  WHERE `{}`='{}';".format(table, args[1:], ids, req.form[ids])
+			sql = "UPDATE `{}` SET  {}  WHERE `{}`='{}';".format(table, args[1:], ids, data[ids])
 			status = "updated"
 		print(sql)
 		last_row_id = self.do(sql)

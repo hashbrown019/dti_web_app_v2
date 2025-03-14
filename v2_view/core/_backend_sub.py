@@ -1,7 +1,8 @@
 from modules.Connections import mysql,sqlite
 import Configurations as c
-from flask import session
+from flask import session, send_file
 from modules.Req_Brorn_util import file_from_request
+from werkzeug.datastructures import MultiDict 
 import json, os
 from flask import redirect
 # from v2_view.core import _socketIO
@@ -101,8 +102,36 @@ class file_manager:
 		print(sql_ress)
 		return sql_ress
 
+	def add_file(req):
+		_files = json.loads(f"[{req.form['files_arr']}]")
+		sql_res = []
+		for _f in _files:
+			__req = AttrDict({'form':_f})
+			print(__req.form)
+			sql_ress = rapid_mysql.insert_or_add_to_db(__req,"file_manager_files","id")
+			sql_res.append(sql_ress)
+		res = FILE_REQ.save_file_from_request(
+			req,
+			"fileInput",
+			pathtosave=c.RECORDS+"objects/mis_drive",
+			raise_error=True,
+			timestamp=False,
+			custom_name="")
+		return {"sql_note":sql_res, "file_handling_msg":res}
+
+
+	def get_file(req):
+		file = req.args['file']
+		print(file)
+		return send_file(c.RECORDS+"/objects/mis_drive/_"+file.replace(' ','_'))
+		# img = img.replace('C:fakepath', '').replace(" ","_").replace(")","").replace("(","")
+
 # ================================================
 # ================================================
+class AttrDict(dict):
+	def __init__(self, *args, **kwargs):
+		super(AttrDict, self).__init__(*args, **kwargs)
+		self.__dict__ = self
 # ================================================
 # ================================================
 

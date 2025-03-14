@@ -1,3 +1,16 @@
+<style type="text/css">
+	input[type="file"] {
+		display: none;
+	}
+
+	.custom-file-upload {
+		border: 1px solid #ccc;
+		display: inline-block;
+		padding: 6px 12px;
+		cursor: pointer;
+	}
+</style>
+
 <div class="col-lg-12">
 	<div class="row">
 		<!-- Sales Card -->
@@ -9,33 +22,44 @@
 				<h5 class="">
 					<strong class="bi bi-folder"></strong>
 					<strong id="FOLDER_NAME">Home</strong>
-					<strong">|</strong>
 
-					<span type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_add_folder">
-						Create Folder <span class="bi bi-folder-plus"></span>
-					</span>
-					<span type="button" class="btn btn-success" onclick="">
-						Add Files <span class="bi bi-file-earmark-plus"></span>
-					</span>
-				</h5>
+					<div class="btn-group x-right" role="group" aria-label="Basic mixed styles example">
+						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal_add_folder">Create folder</button>
+						<label for="file-upload" class="custom-file-upload btn btn-primary">
+							Add files
+						</label>
+						<input id="fileInput" type="file" class="btn btn-primary" multiple>
+					</div>
 			</div>
-			<div class="row">
+			<div class="">
+				<span class="x-xlarge">Folders (<b id="_folder_num">0</b>)</span> |
+				<span class="x-xlarge">Files (<b id="_file_num">0</b>)</span>
 			</div>
-			<div class="row">
+			<div id="dropContainer" class="row">
 				<div class="col-lg-8">
+					<hr>
 					<div class="row">
 						<!-- ======================================================= -->
 						{% for folder in folder_list %}
-							{% set folder_id = folder['id'] %}
-							{% if 'folder' not in URL_ARGS %}
-								{% if folder['folder_path'] %}
-									{{pass}}
-								{% else %}
-									{% include '/chunks/file-manager/file-manager-card-folder.html' %}
-								{% endif %}
-							{% elif folder['folder_path'] == URL_ARGS['folder']%}
-								{% include '/chunks/file-manager/file-manager-card-folder.html'%}
+							{% if folder['status']  != 0%}
+								{% set folder_id = folder['id'] %}
+								{% if 'folder' not in URL_ARGS %}
+									{% if folder['folder_path'] %}
+										{{pass}}
+									{% else %}
+										{% include '/chunks/file-manager/file-manager-card-folder.html' %}
+									{% endif %}
+								{% elif folder['folder_path'] == URL_ARGS['folder']%}
+									{% include '/chunks/file-manager/file-manager-card-folder.html'%}
+								{%endif%}
+							{%endif%}
+						{%endfor%}
 
+						{% for file in file_list %}
+							{% if 'folder' in URL_ARGS %}
+								{% if file['folder']|int == URL_ARGS['folder']|int%}
+									{% include '/chunks/file-manager/file-manager-card-file.html' %}
+								{%endif%}
 							{%endif%}
 						{%endfor%}
 						<!-- ======================================================= -->
@@ -48,6 +72,7 @@
 				</div>
 			</div>
 			<div class="row">
+
 				<div class="col-lg-12">
 					<div class="row">
 						Sample--
@@ -62,8 +87,26 @@
 		</section>
 	</div>
 </div>
+{% include '/parts/__modals.html'%}
 
 <script type="text/javascript">
+	function del_folder(folder_id){
+		alert(folder_id)
+		$send({
+			action : "/mis-v4/file-manager/add-folder",
+			method : "POST",
+			data : $DATA({'id':folder_id,'status':0}),
+			func : function(r){
+				var res = JSON.parse(r)
+				console.log(res)
+				// alert()
+				// goto(`/mis-v4/core-file-manager?folder=${res['lastrowid']}`)
+				location.reload();
+			}
+
+		})
+	}
+
 	function rename_folder(folder_id) {
 		var folder_name = document.getElementById(folder_id).value;
 		$ID(folder_id).disabled = false;
@@ -73,7 +116,20 @@
 	function save_folder_name(elem_id,elem_value){
 		$ID(elem_id).disabled = true;
 		$ID(elem_id).value = elem_value;
-		alert(elem_value);
+		// alert(`${elem_id} ==>${elem_value}`);
+		$send({
+			action : "/mis-v4/file-manager/add-folder",
+			method : "POST",
+			data : $DATA({'id':elem_id.split("_")[1],'folder_name':elem_value}),
+			func : function(r){
+				var res = JSON.parse(r)
+				console.log(res)
+				// alert()
+				// goto(`/mis-v4/core-file-manager?folder=${res['lastrowid']}`)
+				location.reload();
+			}
+
+		})
 	}
 
 	{% if URL_ARGS['path'] %}
@@ -102,7 +158,75 @@
 	{% endif %}
 
 	$onload(function(){
-		var CONTAINER_HOLDER = $CLASS("CONTAINER_HOLDER")
-		println(CONTAINER_HOLDER.length)
+		var FOLDER_CARD = $CLASS("FOLDER_CARD")
+		$ID('_folder_num').innerHTML = (FOLDER_CARD.length)
+		var FILE_CARD = $CLASS("FILE_CARD")
+		$ID('_file_num').innerHTML = (FILE_CARD.length)
+	})
+</script>
+
+
+<!-- ==== FOR DRAG AND DROP UPLOAD FILE ======= -->
+<script type="text/javascript">
+	{% if URL_ARGS['path'] %}
+		var dropContainer = $ID('dropContainer')
+		var fileInput = $ID('fileInput')
+		dropContainer.ondragover = dropContainer.ondragenter = function(evt) {
+			evt.preventDefault();
+		};
+
+		dropContainer.ondrop = function(evt) {
+			fileInput.files = evt.dataTransfer.files;
+			const dT = new DataTransfer();
+			var __files_dragged = evt.dataTransfer.files
+			var _file_chunk=[]
+			for (var i = 0; i < __files_dragged.length; i++) {
+				dT.items.add(__files_dragged[i]);
+				var _file_ = {
+					"file_name": __files_dragged[i].name,
+					"folder": URL_ARGS['folder'],
+					"size":  __files_dragged[i].size,
+					"ext":  __files_dragged[i].type,
+					"uploaded_by":  {{USER_DATA['id']}},
+					"id":  ""
+				}
+				_file_chunk.push(JSON.stringify(_file_))
+			}
+			fileInput.files = dT.files;
+			println(fileInput.files);
+			println(_file_chunk)
+			evt.preventDefault();
+			save_file(_file_chunk)
+		};
+
+		function save_file(_file_chunk){
+			$send({
+				action : "/mis-v4/file-manager/add-file",
+				method : POST,
+				data : $DATA({
+					'files_arr':_file_chunk
+				}).appendFileArr(fileInput),
+				func : function(r){
+					var res = JSON.parse(r)
+					console.log(res)
+					// alert()
+					// goto(`/mis-v4/core-file-manager?folder=${res['lastrowid']}`)
+					location.reload();
+				}
+			})
+		}
+	{% endif %}
+
+</script>
+
+<script type="text/javascript">
+	
+	$onload(function(){
+		var IFRAMES = $CLASS('IFRAMES')
+		var domain = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`
+		println(domain)
+		for (var i = 0; i < IFRAMES.length; i++) {
+			IFRAMES[i].src = `https://view.officeapps.live.com/op/embed.aspx?src=${domain}`
+		}
 	})
 </script>

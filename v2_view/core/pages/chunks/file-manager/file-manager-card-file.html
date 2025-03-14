@@ -1,0 +1,40 @@
+<div class="CONTAINER_HOLDER FILE_CARD col-xxl-3 col-md-4" data-bs-toggle="tooltip" data-bs-placement="top" title="{{file['file_name']}}">
+	<div class="card-deck">
+		<div class="card">
+			{% set fpath = "/mis-v4/file-manager/get-file?file="+file['file_name'] %}
+
+			{% if file['file_name']|file_ext_type == 'image' %}
+				<img class="card-img-top" src="{{fpath}}" style="width:290px;height: 200px;">
+			{% elif file['file_name']|file_ext_type == 'video' %}
+				<video src="{{fpath}}" style="width:290px;height: 200px;"></video>
+			{% elif file['file_name']|file_ext == 'pdf'%}
+				<iframe src="{{fpath}}" style="width:290px;height: 200px; border: 0px;"></iframe>
+			{% elif file['file_name']|file_ext == 'docx'%}
+				<iframe class="IFRAMES" src='' style="width:290px;height: 200px; border: 0px;">This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Online</a>.</iframe>
+			{% endif %}
+			<div class="card-body">
+				<h5 class="card-title">{{file['file_name'].split('.')[0:-1]|join(".")}}</h5>
+				<p class="card-text">
+					<span>Size: <b>{{file['size']/1000000}} <i>Mib</i></b></span><br>
+					<span>Extension: <b>{{file['file_name']|file_ext}}</b></span><br>
+					<span>type: <b>{{file['file_name']|file_ext_type}}</b></span><br>
+					<span>File Details: <b class="x-small">{{file['ext']}}</b></span>
+				</p>
+			</div>
+			<div class="card-footer">
+				{% if file['date_modified'] %}
+					<small class="text-muted">
+						created {{file['date_modified']|format_timestamp}}
+					</small>
+				{% else %}
+					<small class="text-muted">
+						modified {{file['date_added']|format_timestamp}}
+					</small>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <iframe src="https://docs.google.com/gview?url=http://remote.url.tld/path/to/document.doc&embedded=true"></iframe> -->
+

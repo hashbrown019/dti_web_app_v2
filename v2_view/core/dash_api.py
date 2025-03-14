@@ -39,6 +39,8 @@ def get_security_group():
 
 
 # ====================================================
+# ====================================================
+# ====================================================
 
 
 def get_personal_forms(user_id):
@@ -85,8 +87,14 @@ def get_get_db_col(req):
 def fmi_list(sesh):
 	return rapid_mysql.select("SELECT * FROM `fmi_basic_info` ;")
 
+# ================================================
+# ================================================
+
 def folder_list(sesh):
 	return rapid_mysql.select("SELECT * FROM `file_manager_folders` ;")
+
+def file_list(sesh):
+	return rapid_mysql.select("SELECT * FROM `file_manager_files` ;")
 
 # ================================================
 # ================================================
