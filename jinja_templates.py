@@ -99,11 +99,11 @@ class templates:
 		return render_template_string(HTML)
 
 	def file_ext_type(file):
-		_EXT = const.FILE_EXT[file.split(".")[-1]][0]
+		_EXT = const.FILE_EXT[file.split(".")[-1].lower()][0]
 		return _EXT
 
 	def file_ext(file):
-		_EXT = file.split(".")[-1]
+		_EXT = file.split(".")[-1].lower()
 		return _EXT
 	# ===========================================================================================================
 	# ===========================================================================================================
