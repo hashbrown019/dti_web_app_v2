@@ -719,28 +719,30 @@
 															<td>{{ row['form_1_scope_provinces'] }}</td>
 															<td>{{ row['form_1_commodity'] }} {{ row['form_1_commodity_others'] }}</td>
 															<td>
-																<!-- {{row['upload_by']}} === {{user_data['id']}} -->
-																{% if row['upload_by']|string == user_data['id']|string %}
-																<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_prep_review_aprv_status', 'form1');">
-																	<span><i class="fa fa-pencil-square-o"></i></span> Edit
-																</a>&nbsp;&nbsp;&nbsp;
-																<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="
-																+{{ row["id"] }}+"&i=dcf_prep_review_aprv_status",true)'>
+															<!-- {{row['upload_by']}} === {{user_data['id']}} -->
+														{% if row['upload_by']|string == user_data['id']|string %}
+															<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_prep_review_aprv_status', 'form1');">
+																<span><i class="fa fa-pencil-square-o"></i></span> Edit
+															</a>&nbsp;&nbsp;&nbsp;
+															<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="+{{ row["id"] }}+"&i=dcf_prep_review_aprv_status",true)'>
 																<span><i class="fa fa-user-plus"></i></span> Add Participants
 															</a> &nbsp;&nbsp;&nbsp;&nbsp;
-															<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"
-															href="/delete_record/dcf_prep_review_aprv_status/{{ row['id'] }}">
-															<span><i class="fa fa-trash"></i></span> Delete
-														</a>
+															<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"href="/delete_record/dcf_prep_review_aprv_status/{{ row['id'] }}">
+																<span><i class="fa fa-trash"></i></span> Delete
+															</a>
 														{% elif user_data['job'] == "Super Admin" %}
 															<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_prep_review_aprv_status', 'form1');">
 																<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 															</a>
+															
 														{% else %}
 															<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_prep_review_aprv_status', 'form1');">
 																<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 															</a>
 														{% endif %}
+														<a class="EMBED_SALES_TRACKER_ROUTE" style="color: #ffc34d; cursor: pointer;" alt="/mis-v4/core-file-manager?dbtbl=NAME_DB_TABLE&r_id=ID_OF_ENTRY">
+															<span><i class="fa fa-user-plus"></i></span> Mov
+														</a>
 													</td>
 													<td class="date-cell"> {{ row['date_created'] }}<br>
 														{% if row['date_modified'] %}

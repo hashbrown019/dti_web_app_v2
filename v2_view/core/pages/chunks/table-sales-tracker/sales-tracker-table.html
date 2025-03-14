@@ -291,7 +291,19 @@
 
     async function setupLineChart(canvasId, filterTypeId, filterValueId, labels, colors, dataExtractor) {
       const ctx = document.querySelector(`#${canvasId}`).getContext("2d");
-      const chart = new Chart(ctx, { type: 'line', data: { labels: [], datasets: [] }, options: { scales: { y: { beginAtZero: true } } } });
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: { labels: [], datasets: [] },
+        options: {
+          scales: { y: { beginAtZero: true } },
+          elements: {
+            point: {
+              radius: 6,    // Increase point size
+              hoverRadius: 8 // Increase hover size for better visibility
+            }
+          }
+        }
+      });
 
       function processData(data) {
         const sortedData = [...data].sort((a, b) => new Date(a.ST_date) - new Date(b.ST_date));
@@ -324,7 +336,7 @@
 
       function updateChart(data) {
         const filteredData = document.getElementById(filterValueId).value === "all"
-          ? originalData // Use original data when "All" is selected
+          ? originalData
           : data;
 
         const { labels: chartLabels, data: chartData } = processData(filteredData);
@@ -336,14 +348,24 @@
           borderColor: colors[index],
           tension: 0.1,
           fill: false,
+          pointRadius: 6,      // Custom point size
+          pointHoverRadius: 8, // Custom hover size
         }));
-        
+
         chart.update();
       }
 
       const { labels: initialLabels, data: initialData } = processData(originalData);
       chart.data.labels = initialLabels;
-      chart.data.datasets = labels.map((label, index) => ({ label, data: initialData.map(d => d[index] || 0), borderColor: colors[index], tension: 0.1, fill: false }));
+      chart.data.datasets = labels.map((label, index) => ({
+        label,
+        data: initialData.map(d => d[index] || 0),
+        borderColor: colors[index],
+        tension: 0.1,
+        fill: false,
+        pointRadius: 6,      // Custom point size
+        pointHoverRadius: 8, // Custom hover size
+      }));
       chart.update();
 
       populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
