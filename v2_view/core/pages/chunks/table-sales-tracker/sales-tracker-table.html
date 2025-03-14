@@ -61,6 +61,11 @@
 
   <div class="tile_count">
     <div class="tile_stats_count">
+      <span class="count_top"><small>Sales</small></span>
+      <div class="count" id="totalSales">0</div>
+      <span class="count_bottom">Total # of Sales</span>
+    </div>
+    <div class="tile_stats_count">
       <span class="count_top"><small>Ave Price</small></span>
       <div class="count" id="totalAvePrice">0</div>
       <span class="count_bottom">Total # of Ave Price</span>
@@ -81,7 +86,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title d-flex justify-content-between align-items-center">
-          Volume Supply - Average Price
+          Sales
           <div class="d-flex">
             <select id="filterType" class="form-select form-select-sm me-2">
               <option value="all">All</option>
@@ -92,6 +97,25 @@
           </div>
         </h5>
         <canvas id="lineChart" style="max-height: 400px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-between align-items-center">
+          Volume Supplied
+          <div class="d-flex">
+            <select id="VPfilterType" class="form-select form-select-sm me-2">
+              <option value="all">All</option>
+              <option value="year">Filter by Year</option>
+              <option value="month">Filter by Month</option>
+            </select>
+            <select id="VPfilterValue" class="form-select form-select-sm"></select>
+          </div>
+        </h5>
+        <canvas id="VPlineChart" style="max-height: 400px;"></canvas>
       </div>
     </div>
   </div>
@@ -175,6 +199,8 @@
         totalAvePrice: data.reduce((t, e) => t + parseFloat(e.ST_ave_price || 0), 0),
         totalVolSup: data.reduce((t, e) => t + parseFloat(e.ST_vol_supplied || 0), 0),
         totalTransaction: data.reduce((t, e) => t + parseFloat(e.ST_total_transaction || 0), 0),
+        totalSales: data.reduce((t, e) => t + (parseFloat(e.ST_ave_price || 0) * parseFloat(e.ST_total_transaction || 0)), 
+        0)
       };
       Object.entries(totals).forEach(([id, value]) => document.getElementById(id).innerText = value.toLocaleString());
     }
@@ -258,7 +284,8 @@
     });
 
     async function setupCharts() {
-      setupLineChart("lineChart", "filterType", "filterValue", ["Average Price", "Volume Supplied"], ["rgb(75, 192, 192)", "rgb(255, 99, 132)"], entry => [entry.ST_ave_price || 0, entry.ST_vol_supplied || 0]);
+      setupLineChart("lineChart", "filterType", "filterValue", ["Sales", "Average Price"], ["rgb(75, 192, 192)", "#a7c957"], entry => [(entry.ST_ave_price || 0) * (entry.ST_total_transaction || 0), entry.ST_ave_price || 0]);
+      setupLineChart("VPlineChart", "VPfilterType", "VPfilterValue", ["Volume Supply"], ["rgb(255, 111, 233)"], entry => [entry.ST_vol_supplied || 0]);
       setupLineChart("transactionChart", "transactionFilterType", "transactionFilterValue", ["Total Transaction"], ["rgb(255, 105, 97)"], entry => [entry.ST_total_transaction || 0]);
     }
 
@@ -267,11 +294,14 @@
       const chart = new Chart(ctx, { type: 'line', data: { labels: [], datasets: [] }, options: { scales: { y: { beginAtZero: true } } } });
 
       function processData(data) {
-        const chartLabels = data.map(entry => entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "");
-        const chartData = data.map(entry => dataExtractor(entry));
+        const sortedData = [...data].sort((a, b) => new Date(a.ST_date) - new Date(b.ST_date));
+        const chartLabels = sortedData.map(entry =>
+          entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : ""
+        );
+        const chartData = sortedData.map(entry => dataExtractor(entry));
         return { labels: chartLabels, data: chartData };
       }
-
+      
       function populateFilters(data, filterType, filterValue) {
         const years = [...new Set(data.map(entry => new Date(entry.ST_date).getFullYear()))];
         const months = [...new Set(data.map(entry => `${new Date(entry.ST_date).getFullYear()}-${(new Date(entry.ST_date).getMonth() + 1).toString().padStart(2, '0')}`))]

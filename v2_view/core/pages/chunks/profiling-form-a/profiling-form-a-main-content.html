@@ -1,0 +1,1365 @@
+<div class="section dashboard">
+  <div id="sidePanel" class="side-panel">
+      <ul>
+          <li onclick="showForm('farmerProfile')">
+            Farmer Profile
+          </li>
+          <li onclick="showForm('farmInfo')">
+            Farm Information
+          </li>
+          <li onclick="showForm('hp')">
+            Household Profile
+          </li>
+          <li onclick="showForm('pcpCROP')">
+            Production Cost Per Crop/Commodity
+          </li>
+          <li onclick="showForm('FWL')">
+            Farm Workers and Laborers
+          </li>
+          <li onclick="showForm('SPC')">
+            Post Harvest / Semu Processing Capacity
+          </li>
+          <li onclick="showForm('marketsales')">
+            Marketing Sales
+          </li>
+          <li onclick="showForm('afsp')">
+            Access to Financial Services
+          </li>
+          <li onclick="showForm('cif')">
+            Competency & Industry Feedback
+          </li>
+          <li onclick="showForm('aif')">
+            Additional Information Field
+          </li>
+      </ul>
+  </div>
+
+  <div class="content">
+      <div id="farmerProfile" class="form-section">
+          <div id="farmerProfile">
+            <h1 class="card-title" style="text-align: center; font-size: 25px;">Farmer Profile</h1>
+
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Farmer Basic Info</h5>
+                  <form class="row g-3">
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" id="frmer_prof_@_basic_Info_@_First_name" placeholder="First Name">
+                    </div>
+                    <div class="col-md-2">
+                      <input type="text" class="form-control" id="frmer_prof_@_basic_Info_@_Middle_name" placeholder="Middle Name">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" id="frmer_prof_@_basic_Info_@_Last_name" placeholder="Last Name">
+                    </div>
+                    <div class="col-md-2">
+                      <input type="text" class="form-control" id="frmer_prof_@_basic_Info_@_Extension_name" placeholder="Extention Name (ex. Jr. Sr. III)">
+                    </div>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control" id="frmer_prof_@_basic_Info_@_Mobile_number" placeholder="Mobile Number">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="email" class="form-control" id="frmer_prof_@_basic_Info_@_email_address" placeholder="Email">
+                    </div>
+                    <div class="col-md-2">
+                      <select class="form-select" id="frmer_prof_@_basic_Info_@_Sex">
+                        <option selected="" disabled>Sex</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">Birthday
+                      <input type="date" id="frmer_prof_@_basic_Info_@_birthday" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                      <select  class="form-select" id="frmer_prof_@_basic_Info_@_bday_not_sure">
+                        <option selected="" disabled>Bday not sure</option>
+                        <option>Yes</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <select  class="form-select" id="frmer_prof_@_basic_Info_@_civil_status">
+                        <option selected="">Civil Status</option>
+                        <option>Single</option>
+                        <option>Married</option>
+                        <option>Widowed</option>
+                        <option>Separated</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Household Head Info</h5>
+                  <form class="row g-3">
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_hh_Head_Info_@_is_head_og_household">
+                        <option selected="" disabled>Is head of household</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Name of head of household (Full Name)" id="frmer_prof_@_hh_Head_Info_@_name_head_household">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Head hh name" id="frmer_prof_@_hh_Head_Info_@_head_hh_name">
+                    </div>
+                    <div class="col-md-3">
+                      <select  class="form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_relationship">
+                        <option selected="" disabled>Head hh relationship</option>
+                        <option>Spouse</option>
+                        <option>Parent</option>
+                        <option>Sibling</option>
+                        <option>Child</option>
+                        <option>Cousin</option>
+                        <option>Non-Blood Relative</option>
+                        <option></option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <select class="form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_sex">
+                        <option selected="">Head hh sex</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_pwd">
+                        <option selected="" disabled>Head hh pwd</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_ofw">
+                        <option selected="" disabled>Head hh ofw</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-3"><!-- ----to be followed---- -->
+                      <select class="form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_ip">
+                        <option selected="" disabled>Head hh ip</option>
+                        <option>...</option>
+                        <option>...</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Farmer Address</h5>
+                  <form class="row g-3">
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Longitude" id="frmer_prof_@_frmer_addr_@_longitude">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Latitude" id="frmer_prof_@_frmer_addr_@_latitude">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Region" id="frmer_prof_@_frmer_addr_@_region">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Rrovince" id="frmer_prof_@_frmer_addr_@_province">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="City Municipality" id="frmer_prof_@_frmer_addr_@_city_municipality">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Brgy" id="frmer_prof_@_frmer_addr_@_brgy">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Purok/sitio/street" id="frmer_prof_@_frmer_addr_@_purok_sitio_street">
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Farming Basic Info</h5>
+                  <form class="row g-3">
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_Farming_Basic_Info_@_primary_crop">
+                        <option selected="" disabled>Primary crop</option>
+                        <option>Cacao</option>
+                        <option>Coconut</option>
+                        <option>Coffee</option>
+                        <option>Banana</option>
+                        <option>Calamansi</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="DIP name (ex. R8 SC Global)" id="frmer_prof_@_Farming_Basic_Info_@_DIP_name">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_Farming_Basic_Info_@_Farmer_pwd">
+                        <option selected="" disabled>Farmer pwd</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_Farming_Basic_Info_@_Farmer_ofw">
+                        <option selected="" disabled>Farmer ofw</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3"><!-- ----to be followed---- -->
+                      <select class="form-select" id="frmer_prof_@_Farming_Basic_Info_@_farmer_ip">
+                        <option selected="" disabled>Farmer ip</option>
+                        <option>...</option>
+                        <option>...</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Years of farming" id="frmer_prof_@_Farming_Basic_Info_@_years_farming">
+                    </div>
+                    <div class="col-md-3"><!-- ----to be followed---- -->
+                      <input type="text" class="form-control" placeholder="Name of coop" id="frmer_prof_@_Farming_Basic_Info_@_Name_coop">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_Farming_Basic_Info_@_position_in_coop">
+                        <option selected="" disabled>position/Designation in coop/FO</option>
+                        <option>Member</option>
+                        <option>Officer</option>
+                        <option></option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Coop member since" id="frmer_prof_@_Farming_Basic_Info_@_coop_mem_since">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_Farming_Basic_Info_@_is_listed_in_RSBSA">
+                        <option selected="" disabled>Is listed in RSBSA</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                          <option>No Idea</option>
+                      </select>
+                    </div>
+                  </form>
+                  <h5 class="card-title">Education</h5>
+                  <form class="row g-3">
+                    <div class="col-md-3">
+                      <select class="form-select" id="frmer_prof_@_educ_@_highest_educational_attainment">
+                        <option selected="" disabled>Highest educational attainment</option>
+                          <option>College Graduate</option>
+                          <option>Undergraduate</option>
+                          <option>High School Graduate</option>
+                          <option>High School Undergraduate</option>
+                          <option>Elementary Graduate</option>
+                          <option>Elementary Undergraduate</option>
+                          <option>No Formal Education</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Vocational Skills" id="frmer_prof_@_educ_@_Vocational_Skills">
+                    </div>
+                  </form>
+                </div>
+              </div>
+          </div>
+      </div>
+
+   <!-- ----------------------------------------------------------------------------------------------- -->
+
+      <div id="farmInfo" class="form-section hidden">
+        <h1 class="card-title" style="text-align: center; font-size: 25px;">Farmer Information</h1>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Farmer Basic Info</h5>
+                  <form class="row g-3">
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Longitude" id="farm_info@_Farm_Basic_Info_@_Longitude">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Latitude" id="farm_info@_Farm_Basic_Info_@_Latitude">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Region" id="farm_info@_Farm_Basic_Info_@_region">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Province" id="farm_info@_Farm_Basic_Info_@_province">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="City Municipality" id="farm_info@_Farm_Basic_Info_@_municipality">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Brgy" id="farm_info@_Farm_Basic_Info_@_Brgy">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Purok sitio street" id="farm_info@_Farm_Basic_Info_@_street_purok_sitio">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Declared area" id="farm_info@_Farm_Basic_Info_@_declared_area_Ha">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control" placeholder="Is intercroping" id="	farm_info@_Farm_Basic_Info_@_is_intercroping">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="farm_info@_Farm_Basic_Info_@_Primary_crop">
+                        <option selected="" disabled>Primary crop</option>
+                        <option>Cacao</option>
+                        <option>Coconut</option>
+                        <option>Coffee</option>
+                        <option>Banana</option>
+                        <option>Calamansi</option>
+                      </select>
+                    </div>
+                  </form>
+                  <form class="row g-3">
+                    <fieldset class="col-md-6">
+                        <legend class="card-title">Topography</legend>
+                        <input type="number" class="form-control" placeholder="Sloping area in hectares (greater than 18 degrees)" id="farm_info@_Topography_@_slop_area_in_ha_greater_18_degrees">
+                        <input type="number" class="form-control mt-2" placeholder="Flat/plain area in hectares" id="farm_info@_Topography_@_flat_lain_area_in_hectares">
+                    </fieldset>
+                    
+                    <fieldset class="col-md-6">
+                        <legend class="card-title">Trees</legend>
+                        <input type="number" class="form-control" placeholder="No. bearing trees planted" id="farm_info@_Trees_@_No_bearing_trees_planted">
+                        <input type="number" class="form-control mt-2" placeholder="No. bearing non-trees planted" id="farm_info@_Trees_@_No_bearing_non_trees_planted">
+                    </fieldset>
+                </form>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Land Tenurial Status in (Ha.)</h5>
+                  <form class="row g-3">
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Sole ownership" id="farm_info@_Land_Tenurial_Status_in_Ha_@_Sole_ownership">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Co-ownership" id="farm_info@_Land_Tenurial_Status_in_Ha_@_co_ownership">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="CLOA/individual EP" id="farm_info@_Land_Tenurial_Status_in_Ha_@_CLOA_individual_EP">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Stewardship" id="farm_info@_Land_Tenurial_Status_in_Ha_@_stewardship">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Usufruct" id="farm_info@_Land_Tenurial_Status_in_Ha_@_usufruct">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Tenancy" id="farm_info@_Land_Tenurial_Status_in_Ha_@_tenancy">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="number" class="form-control" placeholder="Others" id="farm_info@_Land_Tenurial_Status_in_Ha_@_others">
+                    </div>
+                  </form>
+
+                  <form class="row g-3">
+                    <fieldset class="col-md-4">
+                        <legend class="card-title">Primary Crop Info</legend>
+                        <input type="number" class="form-control" placeholder="Primary crop Ave. Production volume (w018-2019) (kg/cycle)" id="farm_info@_Primary_Crop_Info_@_Ave_Prod_vol_w018_2019_kg_cycle">
+                        <input type="number" class="form-control mt-2" placeholder="Primary Crop total land area covered (Ha.)" id="farm_info@_Primary_Crop_Info_@_Crop_total_land_area_covered_Ha">
+                        <input type="number" class="form-control mt-2" placeholder="Primary Crop No of Cycle " id="farm_info@_Primary_Crop_Info_@_Crop_No_Cycle_">
+                    </fieldset>
+                    
+                    <fieldset class="col-md-8">
+                      <legend class="card-title">Secondary Crop Info</legend>
+                      <div class="row g-3">
+                          <div class="col-md-6">
+                            <select class="form-select" id="farm_info@_Secondary_Crop_Info_@_Secondary_Crop_if_Any">
+                              <option selected="" disabled>Secondary Crop if Any</option>
+                              <option>Cacao</option>
+                              <option>Coconut</option>
+                              <option>Coffee</option>
+                              <option>Banana</option>
+                              <option>Calamansi</option>
+                              <option></option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                              <input type="number" class="form-control" placeholder="Secondary crop Ave. Production volume (2018-2019) (kg/cycle)" id="farm_info@_Secondary_Crop_Info_@_Ave_Prod_vol_w018_2019_kg_cycle">
+                          </div>
+                          <div class="col-md-6">
+                              <input type="number" class="form-control" placeholder="Secondary Crop total land area covered (Ha.)" id="farm_info@_Secondary_Crop_Info_@_Crop_total_land_area_covered_Ha">
+                          </div>
+                          <div class="col-md-6">
+                              <input type="number" class="form-control" placeholder="Secondary Crop No of Cycle" id="farm_info@_Secondary_Crop_Info_@_Crop_No_Cycle_">
+                          </div>
+                      </div>
+                    </fieldset>                  
+                </form>
+                <form class="row g-3">
+                  <fieldset class="col-md-6">
+                      <legend class="card-title">Area of land for Expansion</legend>
+                      <input type="number" class="form-control" placeholder="Sloping" id="farm_info@_Area_land_for_Expansion_@_Sloping_">
+                      <input type="number" class="form-control mt-2" placeholder="Flat/Plain" id="farm_info@_Area_land_for_Expansion_@_Flat_Plain">
+                  </fieldset>
+                  
+                  <fieldset class="col-md-6">
+                    <legend class="card-title">area of land for rehabilitation</legend>
+                    <input type="number" class="form-control" placeholder="Sloping" id="farm_info@_area_land_for_rehabilitation_@_Sloping">
+                    <input type="number" class="form-control mt-2" placeholder="Flat/plain" id="farm_info@_area_land_for_rehabilitation_@_flat_plain">
+                </fieldset>                 
+              </form>
+                </div>
+              </div>
+        </div>
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+
+      <div id="hp" class="form-section hidden">
+        <h1 class="card-title" style="text-align: center; font-size: 25px;">Household Profile</h1>
+        <div class="card">
+          <div class="card-body">
+            <form class="row g-3">
+            <fieldset class="col-md-6">
+              <legend class="card-title">Number HH member Age (0-14) per Gender</legend>
+              <input type="number" class="form-control" placeholder="No. Male" id="farm_info@_num_HH_mem_Age_0_14_per_Gender_@_No_Male">
+              <input type="number" class="form-control mt-2" placeholder="No. Female" id="farm_info@_num_HH_mem_Age_0_14_per_Gender_@_no_Female">
+            </fieldset>
+
+            <fieldset class="col-md-6">
+              <legend class="card-title">Number HH member Age (15-30) per Gender</legend>
+              <input type="number" class="form-control" placeholder="No. Male" id="farm_info@_num_HH_mem_Age_15_30_per_Gender_@_No_Male">
+              <input type="number" class="form-control mt-2" placeholder="No. Female" id="	farm_info@_num_HH_mem_Age_15_30_per_Gender_@_no_Female">
+            </fieldset>  
+
+            <fieldset class="col-md-6">
+              <legend class="card-title">Number HH member Age (31-59) per Gender</legend>
+              <input type="number" class="form-control" placeholder="No. Male" id="farm_info@_num_HH_mem_Age_31_59_per_Gender_@_No_Male">
+              <input type="number" class="form-control mt-2" placeholder="No. Female" id="farm_info@_num_HH_mem_Age_31_59_per_Gender_@_no_Female">
+            </fieldset>
+
+            <fieldset class="col-md-6">
+              <legend class="card-title">Number HH member Age (60 above) per Gender</legend>
+              <input type="number" class="form-control" placeholder="No. Male" id="farm_info@_num_HH_mem_Age_60_above_per_Gender_@_No_Male">
+              <input type="number" class="form-control mt-2" placeholder="No. Female" id="farm_info@_num_HH_mem_Age_60_above_per_Gender_@_no_Female">
+            </fieldset>
+
+            <fieldset class="col-md-6">
+              <legend class="card-title">Number of PWD HH Member</legend>
+              <input type="number" class="form-control" placeholder="No. Male" id="farm_info@_num_PWD_HH_Mem_@_No_Male">
+              <input type="number" class="form-control mt-2" placeholder="No. Female" id="farm_info@_num_PWD_HH_Mem_@_no_Female">
+            </fieldset>
+
+            <fieldset class="col-md-6">
+              <legend class="card-title">Number of OFW HH Member</legend>
+              <input type="number" class="form-control" placeholder="No. Male" id="farm_info@_num_OFW_HH_Mem_@_No_Male">
+              <input type="number" class="form-control mt-2" placeholder="No. Female" id="	farm_info@_num_OFW_HH_Mem_@_no_Female">
+            </fieldset>
+
+            <fieldset class="col-md-6">
+              <legend class="card-title">Number of PWD IP Member</legend>
+              <input type="number" class="form-control" placeholder="No. Male" id="	farm_info@_num_PWD_IP_Mem_@_No_Male">
+              <input type="number" class="form-control mt-2" placeholder="No. Female" id="farm_info@_num_PWD_IP_Mem_@_no_Female">
+            </fieldset>
+
+            <fieldset class="col-md-6">
+              <input type="text" class="form-control mt-2" placeholder="List of IP group Presentt in the HH" id="farm_info@_num_PWD_IP_Mem_@_List_IP_in_HH">
+            </fieldset>
+          </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <legend class="card-title">Household Income (Farming)</legend>
+           <form class="row g-3">
+            <div class="col-md-4">
+              <input type="number" class="form-control" placeholder="Estimated Total Annual Income (Php) - Primary Crop" id="farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Primary_Crop_">
+            </div>
+            <div class="col-md-4">
+              <input type="number" class="form-control" placeholder="Estimated Total Annual Income (Php) - Secondary Crop" id="farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Secondary_Crop_">
+            </div>
+            <div class="col-md-4">
+              <input type="number" class="form-control" placeholder="Estimated Total Annual Income (Php) - Livestock/Fishing etc" id="farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Lvstock_Fish_etc">
+            </div>
+          </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <legend class="card-title">Household Income (Non-Farming)</legend>
+           <form class="row g-3">
+            <div class="col-md-3">
+              <input type="number" class="form-control" placeholder="Family Remittnaces" id="farm_info@_Household_Income_Non_Farming_@_fam_Remittnaces">
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" placeholder="Employment" id="farm_info@_Household_Income_Non_Farming_@_Employment">
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" placeholder="Skilled Labor" id="farm_info@_Household_Income_Non_Farming_@_Skilled_Labor">
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" placeholder="Business" id="farm_info@_Household_Income_Non_Farming_@_Business">
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" placeholder="Social Pension" id="	farm_info@_Household_Income_Non_Farming_@_Social_Pension">
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" placeholder="Pantawid Beneficary" id="farm_info@_Household_Income_Non_Farming_@_Pantawid_Beneficary">
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" placeholder="Other Subsidies" id="farm_info@_Household_Income_Non_Farming_@_Other_Subsidies">
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" placeholder="If Others, Please specify" id="farm_info@_Household_Income_Non_Farming_@_If_Others_specify">
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+      
+      <div id="pcpCROP" class="form-section">
+        <h1 class="card-title text-center" style="font-size: 25px;">Production Cost Per Crop/Commodity</h1>
+          <div class="card">
+              <div class="card-body">
+                  <form class="row g-3">
+                      <fieldset class="col-md-12">
+                          <legend class="card-title">Farmer Farm Info</legend>
+                          <div class="row g-3">
+                              <div class="col-md-6">
+                                <select class="form-select" id="prod_Cost_Per_Crop_@_Farmer_farm_info_@_Does_Farmer_Keep_Records">
+                                  <option selected="" disabled>Does Farmer Keep Records</option>
+                                  <option>Yes</option>
+                                  <option>No</option>
+                                </select>
+                              </div>
+                              <div class="col-md-6"> <!-- ----to be followed---- -->
+                                  <input type="text" class="form-control" placeholder="Crop Cycle Per Year" id="prod_Cost_Per_Crop_@_Farmer_farm_info_@_Crop_Cycle_Per_year">
+                              </div>
+                          </div>
+                      </fieldset>
+
+                      <fieldset class="col-md-12">
+                          <legend class="card-title">Labor Cost Per Cycle</legend>
+                          <div class="row g-3">
+                              <div class="col-md-6">
+                                  <input type="number" class="form-control" placeholder="Land Development Preparation" id="prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Land_Dev_Prep">
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="number" class="form-control" placeholder="Crop Maintenance Activities" id="prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Crop_Maintenance_Acts">
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="number" class="form-control" placeholder="Crop Harvesting" id="prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Crop_Harvesting">
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="number" class="form-control" placeholder="Post-Harvest Activities" id="prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Post_Harvest_Acts">
+                              </div>
+                          </div>
+                      </fieldset>
+
+                      <fieldset class="col-md-12">
+                          <legend class="card-title">Cost of Materials/Inputs Per Cycle</legend>
+                          <div class="row g-3">
+                              <div class="col-md-6">
+                                  <input type="number" class="form-control" placeholder="Land Development Preparation" id="prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Land_Dev_Prep">
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="number" class="form-control" placeholder="Crop Maintenance Activities" id="prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Mntnce_Acts">
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="number" class="form-control" placeholder="Crop Harvesting" id="	prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Harvesting">
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="number" class="form-control" placeholder="Post-Harvest Activities" id="prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Post_Harv_Acts">
+                              </div>
+                          </div>
+                      </fieldset>
+                  </form>
+              </div>
+          </div>
+      </div>
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+
+      <div id="FWL" class="form-section hidden">
+        <h1 class="card-title text-center" style="font-size: 25px;">Farm Workers and Laborers</h1>
+        <div class="card">
+            <div class="card-body">
+              <form class="row g-3">
+                <div class="col-md-6">
+                    <fieldset class="col-md-12">
+                        <legend class="card-title">Number Male Family Workers</legend>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Youth" id="Workers_Laborers_@_num_Male_fam_Workers_@_Youth">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Senior Citizen" id="Workers_Laborers_@_num_Male_fam_Workers_@_Senior_Citizen">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="PWD" id="Workers_Laborers_@_num_Male_fam_Workers_@_PWD">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="OFW" id="Workers_Laborers_@_num_Male_fam_Workers_@_OFW">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="IP" id="Workers_Laborers_@_num_Male_fam_Workers_@_IP">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            
+                <div class="col-md-6">
+                    <fieldset class="col-md-12">
+                        <legend class="card-title">Number Female Family Workers</legend>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Youth" id="Workers_Laborers_@_num_Fem_fam_Workers_@_Youth">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Senior Citizen" id="Workers_Laborers_@_num_Fem_fam_Workers_@_Senior_Citizen">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="PWD" id="Workers_Laborers_@_num_Fem_fam_Workers_@_PWD">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="OFW" id="Workers_Laborers_@_num_Fem_fam_Workers_@_OFW">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="IP" id="Workers_Laborers_@_num_Fem_fam_Workers_@_IP">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            
+                <div class="col-md-6">
+                    <fieldset class="col-md-12">
+                        <legend class="card-title">Number Male Non-Family Workers</legend>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Youth" id="Workers_Laborers_@_num_Male_Non_fam_Workers_@_Youth">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Senior Citizen" id="	Workers_Laborers_@_num_Male_Non_fam_Workers_@_Senior_Citizen">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="PWD" id="Workers_Laborers_@_num_Male_Non_fam_Workers_@_PWD">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="OFW" id="Workers_Laborers_@_num_Male_Non_fam_Workers_@_OFW">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="IP" id="	Workers_Laborers_@_num_Male_Non_fam_Workers_@_IP">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            
+                <div class="col-md-6">
+                    <fieldset class="col-md-12">
+                        <legend class="card-title">Number Female Non-Family Workers</legend>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Youth" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_Youth">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Senior Citizen" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_Sr_Citizen">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="PWD" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_PWD">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="OFW" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_OFW">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="IP" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_IP">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+        <form class="row g-3">
+          <div class="col-md-6">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">IP WORKERS</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="List of IP group Present for FAMILY Workers" id="Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_fam_Workers">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="List of IP group Present for NON-FAMILY Workers" id="Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_NON_fam_Workers">
+                      </div>
+                  </div>
+              </fieldset>
+          </div>
+      
+          <div class="col-md-6">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Worker Income</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" placeholder="Male Family Income (Yearly)" id="Workers_Laborers_@_Worker_Income_@_Male_fam_Income_Yearly">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" placeholder="Female Family Income (Yearly)" id="Workers_Laborers_@_Worker_Income_@_Fem_fam_Income_Yearly">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" placeholder="Male NON-Family Income (Yearly)" id="Workers_Laborers_@_Worker_Income_@_Male_NON_fam_Income_Yearly">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" placeholder="Female NON-Family Income (Yearly)" id="Workers_Laborers_@_Worker_Income_@_Fem_NON_fam_Income_Yearly">
+                      </div>
+                  </div>
+              </fieldset>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+
+      <div id="SPC" class="form-section hidden">
+        <h1 class="card-title text-center" style="font-size: 25px;">Post Harvest / Semu Processing Capacity</h1>
+        <div class="card">
+            <div class="card-body">
+              <form class="row g-3">  
+                <div class="col-md-6">
+                    <fieldset class="col-md-12">
+                        <legend class="card-title">PH Facility/Equipment Addresses</legend>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Longitude" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Longitude">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Latitude" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Latitude">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Region" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Region">
+                            </div>
+                            <div class="col-md-6">
+                              <input type="text" class="form-control" placeholder="Province" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Province">
+                          </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="City/Municipality" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_City_Muni">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Street/purok/sitio" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_st_prkk_sitio">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            
+                <div class="col-md-6">
+                    <fieldset class="col-md-12">
+                        <legend class="card-title">PH Product Output</legend>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="PH Product Form" id="Post_Harv_@_PH_Prod_Out_@_PH_Product_Form">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="PH Capacity (qty)" id="Post_Harv_@_PH_Prod_Out_@_Cap_qty">
+                            </div>
+                            <div class="col-md-6"><!-- ----to be followed---- -->
+                                <input type="number" class="form-control" placeholder="PH Capacity unit (kg/metric_tons/sac/crate/box)" id="Post_Harv_@_PH_Prod_Out_@_Cap_unit_kg_metric_tons_sac_crate_box">
+                            </div>
+                            <div class="col-md-6"><!-- ----to be followed---- -->
+                                <input type="number" class="form-control" placeholder="PH Capacity Frequency (hr, day,month, year, cycle/harvest)" id="Post_Harv_@_PH_Prod_Out_@_Cap_Freq_hr_daymonth_year_cyc_harv">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="col-md-6">
+                  <fieldset class="col-md-12">
+                      <legend class="card-title">PH Facility/Equipment</legend>
+                      <div class="row g-3">
+                          <div class="col-md-6">
+                            <select class="form-select" id="Post_Harv_@_PH_Faci_Equipnt_@_Type_PH_Faci_Equipnt">
+                              <option selected="" disabled>Type of PH Facility/Equipment</option>
+                              <option>Mechanized</option>
+                              <option>Manual</option>
+                              <option>Both Mechanized & Manual</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                              <input type="text" class="form-control" placeholder="Name of Equipment/Facility" id="Post_Harv_@_PH_Faci_Equipnt_@_Name_Equipnt_Faci">
+                          </div>
+                      </div>
+                  </fieldset>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+
+      <div id="marketsales" class="form-section hidden">
+        <h1 class="card-title text-center" style="font-size: 25px;">Market Sales</h1>
+        <div class="card">
+          <div class="card-body">
+            <form class="row g-3">  
+              <div class="col-md-6">
+                  <fieldset class="col-md-12">
+                      <legend class="card-title">Name of Primary Crop Distribution Point (if any/have)</legend>
+                      <div class="row g-3">
+                          <div class="col-md-6">
+                            <select class="form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Farmers_Org">
+                              <option selected="" disabled>Farmers Org</option>
+                              <option>Yes</option>
+                              <option>No</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <select class="form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_SME">
+                              <option selected="" disabled>SME</option>
+                              <option>Yes</option>
+                              <option>No</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <select class="form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Anchor_Firm">
+                              <option selected="" disabled>Anchor Firm</option>
+                              <option>Yes</option>
+                              <option>No</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <select class="form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Negosyo_Center">
+                              <option selected="" disabled>Negosyo Center</option>
+                              <option>Yes</option>
+                              <option>No</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <select class="form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Others">
+                              <option selected="" disabled>Others</option>
+                              <option>Yes</option>
+                              <option>No</option>
+                            </select>
+                        </div>
+                      </div>
+                  </fieldset>
+              </div>
+
+              <div class="col-md-6">
+                <fieldset class="col-md-12">
+                    <legend class="card-title">Market</legend>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                          <select class="form-select" id="Mrktng_Sales_@_Mrkt_@_Payterms_Cnsgnmnt_Cash_Cred_Other">
+                            <option selected="" disabled>Payment Terms (Consignment, Cash, Credit, Others)</option>
+                            <option>Consignment</option>
+                            <option>Cash</option>
+                            <option>Credit</option>
+                            <option>Others</option><!-- ----to be followed---- -->
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <select class="form-select" id="Mrktng_Sales_@_Mrkt_@_Buyer_Type_Trdr_Conso_Processor_Other">
+                            <option selected="" disabled>Buyer Type (Trader, Consolidator, Processor. Others)</option>
+                            <option>Trader</option>
+                            <option>Consolidator</option>
+                            <option>Processor</option>
+                            <option>Others</option><!-- ----to be followed---- -->
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" placeholder="Farm Gate Price (FGP) on Php" id="Mrktng_Sales_@_Mrkt_@_Farm_Gate_Price_FGP_on_Php">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" placeholder="Unit (Kg, Metric_tons, Sack/box)" id="Mrktng_Sales_@_Mrkt_@_Unit_Kg_Metric_tons_Sack_box">
+                        </div>
+                    </div>
+                </fieldset>
+              </div>
+
+              <div class="col-md-6">
+                <fieldset class="col-md-12">
+                    <legend class="card-title">Primary crop/Product</legend>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Primary crop/Product Type" id="Mrktng_Sales_@_Primary_crop_Prod_@_Primary_crop_Prod_Type">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" placeholder="Primary crop/Product Delivery" id="Mrktng_Sales_@_Primary_crop_Prod_@_Primary_crop_Product_Dlvry">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+          </form>
+      </div>
+    </div>
+    </div>
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+
+      <div id="afsp" class="form-section hidden">
+        <h1 class="card-title text-center" style="font-size: 25px;">Access to Finacial Services and Products</h1>
+        <div class="card">
+          <div class="card-body">
+            <form class="row g-3"> 
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                    <fieldset class="col-md-12">
+                        <legend class="card-title">Remittances (OFW)</legend>
+                        <input type="text" class="form-control" placeholder="Name of Non Bank FSP" id="Acs_to_Finc_@_Remittances_OFW_@_Name_Non_Bank_FSP">
+                    </fieldset>
+                </div>
+                <div class="col-md-6">
+                    <fieldset class="col-md-12">
+                        <legend class="card-title">Loan : Bank</legend>
+                        <input type="text" class="form-control mb-2" placeholder="Name of Govt. Bank (LBP. DBP) if any" id="cs_to_Finc_@_Loan_Bank_@_Name_Govt_Bank_LBP_DBP_if_any">
+                        <input type="text" class="form-control" placeholder="Type of Loan" id="Acs_to_Finc_@_Loan_Bank_@_Type_Loan">
+                    </fieldset>
+                </div>
+              </div> 
+
+              <div class="col-md-6">
+                <fieldset class="col-md-12">
+                    <legend class="card-title">Loan : Non-Bank</legend>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Name of Private Bank if any" id="Acs_to_Finc_@_Loan_Non_Bank_@_Name_Private_Bank_if_any">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Type of Loan" id="Acs_to_Finc_@_Loan_Non_Bank_@_Type_Loan">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-md-6">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Loan : Others</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Loan Initiative (Relatives, Informal Lenders)" id="Acs_to_Finc_@_Loan_Others_@_Loan_Init_Rltives_Informal_Lndrs">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Type of Loan" id="Acs_to_Finc_@_Loan_Others_@_Type_Loan">
+                      </div>
+                  </div>
+              </fieldset>
+            </div>
+
+            <div class="col-md-6">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Deposits</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Type of Deposits if any" id="Acs_to_Finc_@_Depo_@_Type_Depo_if_any">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Name of bank if the  FSP is Bank" id="Acs_to_Finc_@_Depo_@_Name_bank_if_the_FSP_is_Bank">
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Depo_@_Name_non_bank_if_the_FSP_is_non_Bank">
+                    </div>
+                  </div>
+              </fieldset>
+            </div>
+
+            <div class="col-md-6">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Insurance</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Type of Insurance if any" id="Acs_to_Finc_@_Insurance_@_Type_Insurance_if_any">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Name of bank if the  FSP is Bank" id="Acs_to_Finc_@_Insurance_@_Name_bank_if_the_FSP_is_Bank">
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Insurance_@_Name_non_bank_if_the_FSP_is_non_Bank">
+                    </div>
+                  </div>
+              </fieldset>
+            </div>
+
+            <div class="col-md-6">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Payments (Utilities)</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Type of Insurance if any" id="Acs_to_Finc_@_Paymnts_Util_@_Type_Payments_if_any">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Name of bank if the  FSP is Bank" id="	Acs_to_Finc_@_Paymnts_Util_@_Name_bank_if_the_FSP_is_Bank">
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Paymnts_Util_@_Name_non_bank_if_FSP_is_non_Bank">
+                    </div>
+                  </div>
+              </fieldset>
+            </div>
+
+            <div class="col-md-6">
+            <div class="row g-3">
+              <div class="col-md-6">
+                  <fieldset class="col-md-12">
+                      <legend class="card-title">Crop Insurance</legend>
+                      <select class="form-select" id="Acs_to_Finc_@_Crop_Insurance_@_Crop_Insurance_yes_No">
+                        <option selected="" disabled>Crop Insurance</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
+                  </fieldset>
+              </div>
+              <div class="col-md-6">
+                  <fieldset class="col-md-12">
+                      <legend class="card-title">Others</legend>
+                      <input type="text" class="form-control mb-2" placeholder="Name of bank if the FSP is Bank" id="Acs_to_Finc_@_Others_@_Name_bank_if_the_FSP_is_Bank">
+                      <input type="text" class="form-control" placeholder="Name of non-bank if the FSP is non-Bank" id="Acs_to_Finc_@_Others_@_Name_non_bank_if_the_FSP_is_non_Bank">
+                  </fieldset>
+              </div>
+            </div>  
+            </div>          
+          </form>
+        </div>
+      </div>
+      </div>
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+
+      <div id="cif" class="form-section hidden">
+        <h1 class="card-title text-center" style="font-size: 25px;">Competency and Industry Feedback</h1>
+        <div class="card">
+          <div class="card-body">
+            <form class="row g-3"> 
+
+              <div class="col-md-6">
+                <fieldset class="col-md-12">
+                    <legend class="card-title">Core Competency</legend>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" placeholder="Number of Farm-Related Trainings attended in the last 2-3 years" id="Competency_@_Core_@_num_Farm_Relate_Trainings_last_2_3_years">
+                        </div>
+                        <div class="col-md-6"><!-- ----to be followed---- -->
+                            <input type="text" class="form-control" placeholder="List of Value Chain" id="Competency_@_Core_@_List_Value_Chain">
+                        </div>
+                        <div class="col-md-6"><!-- ----to be followed---- -->
+                          <input type="text" class="form-control" placeholder="Farm Certification Acquired if any" id="Competency_@_Core_@_Farm_Certification_Acquired_if_any">
+                      </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-md-6">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Source of Information</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6"><!-- ----to be followed---- -->
+                          <input type="text" class="form-control" placeholder="List of Medium/source of information" id="Competency_@_src_info@_ls_Medium_source_information">
+                      </div>
+                      <div class="col-md-6"><!-- ----to be followed---- -->
+                          <input type="text" class="form-control" placeholder="List of  frequency of Medium/source of information" id="Competency_@_src_info@_ls_frequency_Medium_source_info_">
+                      </div>
+                  </div>
+              </fieldset>
+            </div>
+
+            <div class="col-md-12">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Others</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                        <select class="form-select" id="Competency_@_Others_@_Owns_what_Type_Mobile_Phone">
+                          <option selected="" disabled>Owns what Type of Mobile Phone (None, Smartphone, Legacy_phone)</option>
+                          <option>Smartphone</option>
+                          <option>Legacy Phone</option>
+                          <option>None</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                          <input type="text" class="form-control" placeholder="Support Needed to improve farm productivity" id="Competency_@_Others_@_Support_Needed_to_improve_farm_prodcvty">
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Farmer Comments about Rapid" id="Competency_@_Others_@_Farmer_Comments_about_Rapid">
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Enumerator Remarks" id="Others_@_Others_@_Enumerator_Remarks">
+                      </div>
+                  </div>
+              </fieldset>
+            </div>        
+          </form>
+        </div>
+      </div>
+    </div>
+
+  <!-- ----------------------------------------------------------------------------------------------- -->
+
+    <div id="aif" class="form-section hidden">
+      <h1 class="card-title text-center" style="font-size: 25px;">Additional Information Field</h1>
+        <div class="card">
+          <div class="card-body">
+            <form class="row g-3"> 
+
+              <div class="col-md-6">
+                <fieldset class="col-md-12">
+                    <legend class="card-title">Enumerator</legend>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                          <input type="date" class="form-control" id="v2_date_enum">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Name of Enumerator" id="v2_name_enum">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-md-6">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Number of Workers</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" placeholder="Total Female family workers" id="v2_workers_total_fam_female">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" placeholder="Total Male family workers" id="v2_workers_total_fam_male">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" placeholder="Total female non-family workers" id="	v2_workers_total_nonfam_female">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" placeholder="Total male non-family workers" id="v2_workers_total_nonfam_male">
+                      </div>
+                  </div>
+              </fieldset>
+            </div>
+
+            <div class="col-md-12">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Access to Crop Insurance</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6"><!-- ----to be followed---- -->
+                          <input type="text" class="form-control" placeholder="Name of FSP accessed for crop insurance" id="v2_access_crop_insur_name_fsp_access">
+                      </div>
+                  </div>
+              </fieldset>
+            </div>
+            
+            <div class="col-md-12">
+              <fieldset class="col-md-12">
+                  <legend class="card-title">Type of Intervention Received /accessed by beneficiaries based on approved DIPs</legend>
+                  <div class="row g-3">
+                      <div class="col-md-6">
+                        <select class="form-select" id="v2_interv_capbuild">
+                          <option selected="" disabled>Capbuild</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <select class="form-select" id="v2_interv_expansion">
+                          <option selected="" disabled>Expansion</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <select class="form-select" id="v2_interv_rehab">
+                          <option selected="" disabled>Rehabilitation</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <select class="form-select" id="v2_interv_prod_inv">
+                          <option selected="" disabled>Productive Investments (Equipment, facilities)</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <select class="form-select" id="v2_interv_fmi">
+                          <option selected="" disabled>FMI</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </div>
+                  </div>
+              </fieldset>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<style>
+  .section.dashboard {
+      display: flex;
+      height: 100vh;
+      background-color: #f5f7fa;
+  }
+
+  .side-panel {
+      width: 250px;
+      background-color: #ffffff;
+      color: #ffffff;
+      padding: 20px;
+  }
+
+  .side-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .side-panel li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      cursor: pointer;
+      background-color: #374151;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      transition: background 0.3s ease, transform 0.2s ease;
+      font-weight: 500;
+  }
+
+  .side-panel li i {
+      font-size: 18px;
+  }
+
+  .side-panel li:hover {
+      background-color: #475569;
+      transform: translateX(5px);
+  }
+
+  .side-panel li.active {
+      background-color: #3b82f6;
+      color: #ffffff;
+      font-weight: 600;
+  }
+
+  .content {
+      flex: 1;
+      padding: 20px;
+      background-color: #ffffff;
+      border-left: 3px solid #4b5563;
+  }
+
+  .form-section {
+      display: none;
+  }
+
+  .form-section.active {
+      display: block;
+  }
+  
+  .form-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 0 auto;
+  }
+  
+  .form-title {
+      text-align: center;
+      font-size: 26px;
+      color: #1f2937;
+      margin-bottom: 20px;
+      font-weight: 600;
+  }
+
+  .form-select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      outline: none;
+      transition: border 0.3s ease;
+      background-color: #f3f4f6;
+  }
+  
+  .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      outline: none;
+      transition: border 0.3s ease;
+      background-color: #f3f4f6;
+  }
+  
+  .form-control:focus {
+      border-color: #3b82f6;
+      background-color: #ffffff;
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
+  
+  .btn-primary:hover {
+      background-color: #2563eb;
+      transform: translateY(-2px);
+  }
+  
+  @media (max-width: 600px) {
+      .form-card {
+          padding: 20px;
+      }
+  }
+</style>
+
+<script>
+  function showForm(formId) {
+      const sections = document.querySelectorAll('.form-section');
+      sections.forEach(section => section.classList.remove('active'));
+
+      const selectedForm = document.getElementById(formId);
+      if (selectedForm) selectedForm.classList.add('active');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const sections = document.querySelectorAll('.form-section');
+    const sidePanelLinks = document.querySelectorAll('.side-panel li');
+
+    // Load saved form from localStorage or default to 'farmerProfile'
+    const savedFormId = localStorage.getItem('activeForm') || 'farmerProfile';
+    showForm(savedFormId);
+
+    // Add click event listeners for all side panel links
+    sidePanelLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            const formId = link.getAttribute('onclick').match(/showForm\('(.+?)'\)/)[1];
+            showForm(formId);
+        });
+    });
+});
+
+function showForm(formId) {
+    // Hide all sections and remove active state from side panel links
+    document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+    document.querySelectorAll('.side-panel li').forEach(item => item.classList.remove('active'));
+
+    // Show the selected form and highlight the corresponding side panel link
+    const selectedForm = document.getElementById(formId);
+    const selectedLink = [...document.querySelectorAll('.side-panel li')].find(item =>
+        item.getAttribute('onclick').includes(formId)
+    );
+
+    if (selectedForm) selectedForm.classList.add('active');
+    if (selectedLink) selectedLink.classList.add('active');
+
+    // Save active tab in localStorage for persistence
+    localStorage.setItem('activeForm', formId);
+}
+
+</script>
+  

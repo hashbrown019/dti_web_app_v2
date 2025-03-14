@@ -41,9 +41,34 @@
     <div class="card-body">
       <h5 class="card-title">Yearly Sales Tracker</h5>
       <form class="row g-3" id="yearlySalesTrackerForm">
-      <div class="col-md-6">
+      <div class="col-md-3">
         <label for="productType" class="form-label">Product Type</label>
-        <input type="text" class="TRACKING_FORM form-control" id="productType" required="" placeholder="Input product type" style="border: 2px solid #c2bfbf; padding: 10px;">
+        <select class="TRACKING_FORM form-control" id="productType" required style="border: 2px solid #c2bfbf; padding: 10px;">
+          <option value="">Choose your option</option>
+  
+          <optgroup label="Coconut">
+              <option value="Coconut - Whole Nuts">Whole Nuts</option>
+              <option value="Coconut - Copra">Copra</option>
+              <option value="Coconut - White Copra">White Copra</option>
+          </optgroup>
+  
+          <optgroup label="Cacao">
+              <option value="Cacao - Wet Beans">Wet Beans</option>
+              <option value="Cacao - Dried Beans">Dried Beans</option>
+              <option value="Cacao - Dried Fermented Beans">Dried Fermented Beans</option>
+          </optgroup>
+  
+          <optgroup label="Coffee">
+              <option value="Coffee - Red Cherries">Red Cherries</option>
+              <option value="Coffee - Green Coffee Beans">Green Coffee Beans</option>
+          </optgroup>
+  
+          <optgroup label="Banana">
+              <option value="Banana - Green Cardava Banana">Green Cardava Banana</option>
+              <option value="Banana - Banana Chips">Banana Chips</option>
+              <option value="Banana - Vacuum Sealed Banana">Vacuum Sealed Banana</option>
+          </optgroup>
+      </select>
       </div>
       <div class="col-md-3">
         <label for="vs" class="form-label">Vol. Supplied</label>
@@ -55,7 +80,7 @@
       </div>
       <div class="col-md-3">
         <label for="totalTransaction" class="form-label">Total Transaction</label>
-        <input type="number" class="TRACKING_FORM form-control" id="totalTransaction" required="" placeholder="Input total transaction" style="border: 2px solid #c2bfbf; padding: 10px;">
+        <input type="number" class="TRACKING_FORM form-control" id="totalTransaction" required="" placeholder="Input Total transaction" style="border: 2px solid #c2bfbf; padding: 10px;">
       </div>
       <div class="col-md-4">
         <label for="incentives" class="form-label">Incentives Provided</label>
@@ -69,7 +94,7 @@
       <br>
       <div class="text-center">
       <button type="button" class="btn btn-primary" onclick="submitSalesTracker()">Submit</button>
-      <button type="reset" class="btn btn-secondary" onclick="document.getElementById('yearlySalesTrackerForm').reset();">Reset</button>
+      <button type="reset" class="btn btn-secondary" onclick="document.getElementById('yearlySalesTrackerForm').reset();">Clear</button>
       </div>
     </div>
     </div>
