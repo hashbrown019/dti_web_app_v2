@@ -27,6 +27,7 @@
 						<span class="card-title"><span>modified {{folder['date_created']|format_timestamp}}</span></span>
 					{% endif %}
 				</small>
+				{% if folder['inputed_by_id']|int == USER_DATA['id']|int %}
 				<div class="filter">
 					<a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
 					<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -40,6 +41,7 @@
 						<li><a class="dropdown-item" href="#" onclick="rename_folder('folder_{{folder_id}}')">rename</a></li>
 					</ul>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
