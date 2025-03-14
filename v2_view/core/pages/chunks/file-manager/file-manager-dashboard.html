@@ -113,6 +113,7 @@
 
 <script type="text/javascript">
 	function del_folder(folder_id){
+		_wait()
 		println(folder_id)
 		$send({
 			action : "/mis-v4/file-manager/add-folder",
@@ -130,7 +131,7 @@
 	}
 
 	function del_file(file_id){
-		println(file_id)
+		_wait()
 		$send({
 			action : "/mis-v4/file-manager/modify-file",
 			method : "POST",
@@ -153,6 +154,7 @@
 	}
 
 	function save_folder_name(elem_id,elem_value){
+		_wait()
 		$ID(elem_id).disabled = true;
 		$ID(elem_id).value = elem_value;
 		// alert(`${elem_id} ==>${elem_value}`);
@@ -215,6 +217,8 @@
 		};
 
 		dropContainer.ondrop = function(evt) {
+			_wait()
+
 			fileInput.files = evt.dataTransfer.files;
 			const dT = new DataTransfer();
 			var __files_dragged = evt.dataTransfer.files
