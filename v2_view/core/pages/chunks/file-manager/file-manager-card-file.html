@@ -22,6 +22,7 @@
 				</p>
 			</div>
 			<div class="card-footer">
+				created by: <span class="text-primary">{{file['inputed_by_name']}}</span><br>
 				{% if file['date_modified'] %}
 					<small class="text-muted">
 						created {{file['date_modified']|format_timestamp}}
@@ -32,6 +33,19 @@
 					</small>
 				{% endif %}
 			</div>
+			{% if file['inputed_by_id']|int == USER_DATA['id']|int %}
+				<div class="filter">
+					<a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots  x-text-black"></i></a>
+					<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+						<li class="dropdown-header text-start">
+							<h6>option</h6>
+						</li>
+						<li>
+							<a class="dropdown-item text-danger" href="#"  onclick="_confirmation(del_file,'warning','Are you sure to removed this file?',[{{file_id}}])">Delete</a>
+						</li>
+					</ul>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

@@ -103,7 +103,16 @@ def folder_list(sesh):
 	''')
 
 def file_list(sesh):
-	return rapid_mysql.select("SELECT * FROM `file_manager_files` ;")
+	return rapid_mysql.select('''
+		SELECT
+			`users`.`id` as 'inputed_by_id',
+			`users`.`name` as 'inputed_by_name',
+			`users`.`rcu` as 'inputed_rcu',
+			`users`.`pcu` as 'inputed_pcu', 
+			`file_manager_files`.* 
+		FROM `file_manager_files` 
+		INNER JOIN `users` ON `file_manager_files`.`uploaded_by` = `users`.`id`
+	;''')
 
 # ================================================
 # ================================================

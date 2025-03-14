@@ -70,10 +70,16 @@
 							</span><br>
 							<div class="row">
 								{% for file in file_list %}
-									{% if 'folder' in URL_ARGS %}
-										{% if file['folder']|int == URL_ARGS['folder']|int%}
-											{% include '/chunks/file-manager/file-manager-card-file.html' %}
+
+									{% if file['status']  != 0%}
+
+										{% set file_id = file['id'] %}
+										{% if 'folder' in URL_ARGS %}
+											{% if file['folder']|int == URL_ARGS['folder']|int%}
+												{% include '/chunks/file-manager/file-manager-card-file.html' %}
+											{%endif%}
 										{%endif%}
+
 									{%endif%}
 								{%endfor%}
 							</div>
@@ -107,11 +113,28 @@
 
 <script type="text/javascript">
 	function del_folder(folder_id){
-		alert(folder_id)
+		println(folder_id)
 		$send({
 			action : "/mis-v4/file-manager/add-folder",
 			method : "POST",
 			data : $DATA({'id':folder_id,'status':0}),
+			func : function(r){
+				var res = JSON.parse(r)
+				console.log(res)
+				// alert()
+				// goto(`/mis-v4/core-file-manager?folder=${res['lastrowid']}`)
+				location.reload();
+			}
+
+		})
+	}
+
+	function del_file(file_id){
+		println(file_id)
+		$send({
+			action : "/mis-v4/file-manager/modify-file",
+			method : "POST",
+			data : $DATA({'id':file_id,'status':0}),
 			func : function(r){
 				var res = JSON.parse(r)
 				console.log(res)

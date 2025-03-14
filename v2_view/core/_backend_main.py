@@ -154,6 +154,7 @@ class _main:
 		if(task=='add-folder'): res = _backend_sub.file_manager.add_modify_folder(request)
 		elif(task=='add-file'): res = _backend_sub.file_manager.add_file(request)
 		elif(task=='get-file'): res = _backend_sub.file_manager.get_file(request)
+		elif(task=='modify-file'): res = _backend_sub.file_manager.modify_file(request)
 		return res
 
 	# =========FiLe Handlers===================

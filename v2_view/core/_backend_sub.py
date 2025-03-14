@@ -119,6 +119,10 @@ class file_manager:
 			custom_name="")
 		return {"sql_note":sql_res, "file_handling_msg":res}
 
+	def modify_file(req):
+		sql_ress = rapid_mysql.insert_or_add_to_db(req,"file_manager_files","id")
+		return {"sql_note":sql_ress}
+
 
 	def get_file(req):
 		file = req.args['file']
@@ -135,7 +139,7 @@ class file_handling:
 		print(_sql)
 		ls_arr = rapid_mysql.select(_sql)
 		return ls_arr
-		
+
 # ================================================
 # ================================================
 class AttrDict(dict):
