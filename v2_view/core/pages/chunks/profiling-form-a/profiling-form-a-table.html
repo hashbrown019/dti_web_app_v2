@@ -1,0 +1,81 @@
+
+<div class="col-lg-12" id="dropContainer" style="min-height: 60vh;">
+	<div class="row">
+		<!-- Sales Card -->
+		<div class="pagetitle">
+			
+		</div>
+		<section class="section dashboard" >
+			<div class="row">
+				<h5 class="">
+					<strong class="bi bi-folder"></strong>
+					<strong id="FOLDER_NAME">Home</strong>
+				</h5>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<hr>
+					<div class="row">
+						<table class="datatable table table-striped table-bordered ">
+							<thead>
+								<th>MIS ID</th>
+								<th>First Name</th>
+								<th>Middle Name</th>
+								<th>Last Name</th>
+								<th>Ext name</th>
+								<th>Sex</th>
+								<th>Primary<br>Crop</th>
+								<th>Farmers Org</th>
+								<th>DIP</th>
+								<th>Region</th>
+								<th>Province</th>
+								<th>City/Municipality</th>
+								<th>Reference File</th>
+							</thead>
+							<tbody>
+								{% for a_profile in pfa_profiles %}
+								<tr class="x-hover-blue" onclick="dialog_pfa(
+									{{a_profile['id']}}
+								)">
+									<td class="x-tiny">PFA_ID_{{a_profile['id']}}</td>
+									<td>{{a_profile['fname']}}</td>
+									<td>{{a_profile['mname']}}</td>
+									<td>{{a_profile['lname']}}</td>
+									<td>{{a_profile['xname']}}</td>
+									<td>{{a_profile['sex']}}</td>
+									<td>{{a_profile['primary_crop']}}</td>
+									<td class="x-tiny">{{a_profile['fo']}}</td>
+									<td>{{a_profile['dip']}}</td>
+									<td>{{a_profile['region']}}</td>
+									<td>{{a_profile['prov']}}</td>
+									<td>{{a_profile['city']}}</td>
+									<td class="x-tiny">{{a_profile['ref']}}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+<script type="text/javascript">
+	// $onload(get_profile)
+	function get_profile() {
+		$http({
+			action : "/mis-v4/profiling-form-a/get-profiles",
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)
+				println(res)
+			}
+		})
+	}
+
+	function dialog_pfa(ids){
+		goto(`/mis-v4/core-profiling-form-a?fields=${ids}`)
+	}
+
+
+</script>

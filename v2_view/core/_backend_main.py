@@ -9,6 +9,7 @@ import json
 from v2_view.core import dash_api
 from v2_view.core import dash_script
 from v2_view.core import _backend_sub
+from v2_view.core import _backend_pfa
 
 
 app = Blueprint("form_a_v2",__name__,template_folder='pages')
@@ -30,21 +31,32 @@ class _main:
 	def core_home_page(module):
 		if(session["USER_DATA"][0]['security_group']==0): return redirect("/warning?type=user-no-role");
 		module = f'chunks{"/"+"-".join(module.split("-")[1:])}/{module}.html'
+
+		_title = module.split("/")[-1].replace("core-","").replace(".html","").replace("-"," ").upper()
+		if 'core-page-embed' in module:
+			_title = request.args['h'].replace("_"," ").replace("-"," ").upper()
 		# return (f" - Loading Moule : {module}")
-		print("Current Module ["+module+"]")
+		print("Current Module: "+module+"")
 		return render_template(
 			f"chunks/core.html",
 			module=module,
+			__TITLE__=_title,
 			URL_ARGS=request.args,
 			USER_DATA = session["USER_DATA"][0],
 			staff_list=dash_api.get_area_staff(),
 			databases=dash_api.get_databases(),
 			security_group_ls=dash_api.get_security_group() if "core-system-control" in module else None ,
+			# =====FOR PERSONAL FORMS========
 			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None ,
-			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "tools-trackers-specific" in module else None ,
-			fmi_list=dash_api.fmi_list(session["USER_DATA"][0]['id']) if "tracker-fmi" in module else None ,
-			folder_list=dash_api.folder_list(session["USER_DATA"][0]['id']) if "file-manager" in module else None ,
-			file_list=dash_api.file_list(session["USER_DATA"][0]['id']) if "file-manager" in module else None 
+			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-tools-trackers-specific" in module else None ,
+			# =====FOR FMI========
+			fmi_list=dash_api.fmi_list(session["USER_DATA"][0]['id']) if "core-tracker-fmi" in module else None ,
+			# =====FOR FILE-MANAGER========
+			folder_list=dash_api.folder_list(session["USER_DATA"][0]['id']) if "core-file-manager" in module else None ,
+			file_list=dash_api.file_list(session["USER_DATA"][0]['id']) if "core-file-manager" in module else None ,
+			# =====FOR PFA========
+			pfa_profiles=_main.profiling_form_a('get-profiles') if 'table' in request.args else None,
+			pfa_profile_info=_main.profiling_form_a('get-profiles-info') if 'fields' in request.args else None
 			
 		);
 
@@ -96,6 +108,17 @@ class _main:
 	def add_sec_group(task):
 		if(task=='add-security-group'): res = _backend_sub.system_settings.add_user_group(request)
 		elif(task=='get-staff-info'): res = _backend_sub.system_settings.get_staff_info(request)
+		return res
+
+	# =======================================
+	# =======================================
+	# ============Profiling Form A===============
+
+	@app.route("/mis-v4/profiling-form-a/<task>",methods=["POST","GET"])
+	@c.login_auth_web()
+	def profiling_form_a(task):
+		if(task=='get-profiles'): res = _backend_pfa.get_profiling_form_a(request)
+		elif(task=='get-profiles-info'): res = _backend_pfa.get_pfa_profile(request)
 		return res
 
 	# =======================================
