@@ -4,7 +4,7 @@
 			{% set fpath = "/mis-v4/file-manager/get-file?file="+file['file_name'] %}
 
 			{% if file['file_name']|file_ext_type == 'image' %}
-				<img class="card-img-top" src="{{fpath}}" style="width:290px;height: 200px;">
+				<img class="card-img-top" src="{{fpath}}" style="max-width:100%">
 			{% elif file['file_name']|file_ext_type == 'video' %}
 				<video src="{{fpath}}" style="width:290px;height: 200px;"></video>
 			{% elif file['file_name']|file_ext == 'pdf'%}
