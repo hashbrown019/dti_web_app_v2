@@ -60,13 +60,9 @@
 	}
 </style>
 
-
-
 <div class="col-lg-12" id="dropContainer" style="min-height: 60vh;">
-
 	<div class="row">
 		<div class="pagetitle"></div>
-
 		<section class="section dashboard">
 			<div class="row">
 				<h5>
@@ -162,17 +158,6 @@
 			fragment.appendChild(row);
 		});
 		profileBody.appendChild(fragment);
-		renderPagination(data);
-	}
-
-	function renderTable(data, page) {
-		const profileBody = document.getElementById("profileBody");
-		profileBody.innerHTML = data.slice((page - 1) * rowsPerPage, page * rowsPerPage)
-			.map(p => `
-				<tr class="x-hover-blue" onclick="dialog_pfa(${p.id})">
-					${Object.values(p).map(value => `<td>${value || ''}</td>`).join('')}
-				</tr>`
-			).join('');
 		renderPagination(data);
 	}
 
