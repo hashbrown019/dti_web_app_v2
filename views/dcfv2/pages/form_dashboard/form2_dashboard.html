@@ -336,7 +336,7 @@
 											<p class="text-muted font-13 m-b-30">
 												All entries of Form 2 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
 											</p>
-											<table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+											<table id="datatable-responsive" class="table table-dark table-striped table-bordered" cellspacing="0" width="100%">
 												<thead>
 													<tr>
 														<th>ID</th>
@@ -385,20 +385,20 @@
 																{% if row['upload_by']|string == user_data['id']|string %}
 																<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_implementing_unit', 'form2');">
 																	<span><i class="fa fa-pencil-square-o"></i></span> Edit
-																</a>&nbsp;&nbsp;&nbsp;
+																</a>&nbsp;&nbsp;
 
 																<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="+{{ row["id"] }}+"&i=dcf_implementing_unit",true)'>
 																	<span><i class="fa fa-user-plus"></i></span> Add Participants
-																</a> &nbsp;&nbsp;&nbsp;&nbsp; 
+																</a> &nbsp;&nbsp;
 
 																<br>
 
 																<a class="EMBED_OUTER_LINK" style="color: yellow; cursor: pointer;" alt="/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&id={{row['id']}}">
 																	<span><i class="fa fa-pencil-square-o"></i></span> Add Sales
-																</a>&nbsp;&nbsp;&nbsp;&nbsp;
+																</a>&nbsp;&nbsp;
 
 																<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"href="/delete_record/dcf_implementing_unit/{{ row['id'] }}">
-																	<span><i class="fa fa-trash"></i></span> Delete &nbsp;&nbsp;&nbsp;&nbsp;
+																	<span><i class="fa fa-trash"></i></span> Delete &nbsp;&nbsp;
 																</a> 
 																
 																{% elif user_data['job'] == "Super Admin" %}
@@ -408,11 +408,11 @@
 																{% else %}
 																<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_implementing_unit', 'form2');">
 																	<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-																</a>&nbsp;&nbsp;&nbsp;&nbsp;
+																</a>&nbsp;&nbsp;
 																{% endif %}
 																<a class="EMBED_OUTER_LINK" style="color: #ede7e3; cursor: pointer;" alt="/mis-v4/core-file-manager?dbtbl=dcf_implementing_unit&r_id={{ row['id'] }}">
 																	<span><i class="fa fa-user-plus"></i></span> Mov
-																</a>&nbsp;&nbsp;&nbsp;&nbsp;
+																</a>&nbsp;&nbsp;
 																<a class="EMBED_OUTER_LINK" style="color: #33cccc; cursor: pointer;" alt="/mis-v4/core-table-sales-tracker?tbl=dcf_implementing_unit&id={{row['id']}}">
 																	<span><i class="fa fa-pencil-square-o"></i></span> View Sales
 																</a>
