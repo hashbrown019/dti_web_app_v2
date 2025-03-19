@@ -18,7 +18,7 @@
 		background-color: white;
 		}
 
-    #pagination {
+	#pagination {
 		display: flex;
 		justify-content: center;
 		gap: 5px;
@@ -47,69 +47,72 @@
 	}
 
 
-    #profileTable tbody tr {
-        cursor: pointer;
-    }
+	#profileTable tbody tr {
+		cursor: pointer;
+	}
 
-    #profileTable thead th {
-        padding: 12px;
-        text-align: center;
-        border: 1px solid #ffffff;
+	#profileTable thead th {
+		padding: 12px;
+		text-align: center;
+		border: 1px solid #ffffff;
 		background: #343a40; 
-        color: #ffffff; 
-    }
+		color: #ffffff; 
+	}
 </style>
 
 
 
 <div class="col-lg-12" id="dropContainer" style="min-height: 60vh;">
 
-    <div class="row">
-        <div class="pagetitle"></div>
+	<div class="row">
+		<div class="pagetitle"></div>
 
-        <section class="section dashboard">
-            <div class="row">
-                <h5>
-                    <strong class="bi bi-folder"></strong>
-                    <strong id="FOLDER_NAME">Home</strong>
-                </h5>
-            </div>
+		<section class="section dashboard">
+			<div class="row">
+				<h5>
+					<strong class="bi bi-folder"></strong>
+					<strong id="FOLDER_NAME">Home</strong>
+				</h5>
+			</div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <hr>
-                    <div class="row">
-                        <div class="d-flex gap-2 mb-3">
-                            <input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
-                            <button id="pfaSortButton" class="btn btn-sm btn-dark">SORT ▲</button>
-                        </div>
-                        <table id="profileTable" class="datatable table table-striped table-bordered">
-                            <thead>
-                                <th>MIS ID</th>
-                                <th>First Name</th>
-                                <th>Middle Name</th>
-                                <th>Last Name</th>
-                                <th>Ext name</th>
-                                <th>Sex</th>
-                                <th>Primary<br>Crop</th>
-                                <th>Farmers Org</th>
-                                <th>DIP</th>
-                                <th>Region</th>
-                                <th>Province</th>
-                                <th>City/Municipality</th>
-                                <th>Reference File</th>
-                            </thead>
-                            <tbody id="profileBody">
-                                <!-- Data will be dynamically injected here -->
-                            </tbody>
-                        </table>
+			<div class="row">
+				<div class="col-lg-12">
+					<hr>
+					<div class="row">
+						<div class="d-flex gap-2 mb-3">
+							<input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
+							<button id="pfaSortButton" class="btn btn-sm btn-dark">SORT ▲</button>
+							<button type="button" class="btn btn-primary mb-2" onclick="fnExcelReport()">
+								<i class="ri-file-excel-2-fill x-xlarge"></i> Open With Spreadsheet App
+							</button>
+						</div>
+						<table id="profileTable" class="datatable table table-striped table-bordered">
+							<thead>
+								<th>MIS ID</th>
+								<th>First Name</th>
+								<th>Middle Name</th>
+								<th>Last Name</th>
+								<th>Ext name</th>
+								<th>Sex</th>
+								<th>Primary<br>Crop</th>
+								<th>Farmers Org</th>
+								<th>DIP</th>
+								<th>Region</th>
+								<th>Province</th>
+								<th>City/Municipality</th>
+								<th>Reference File</th>
+							</thead>
+							<tbody id="profileBody">
+								<!-- Data will be dynamically injected here -->
+							</tbody>
+						</table>
 
-                        <div id="pagination" class="mt-3"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+						<div id="pagination" class="mt-3"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -117,15 +120,15 @@
    const rowsPerPage = 100;
 
    function get_profile() {
-        $http({
-            action: "/mis-v4/profiling-form-a/get-profiles",
-            method: "POST",
-            func: (r) => {
-                profiles = JSON.parse(r);
-                renderTable(profiles, currentPage);
-            }
-        });
-    }
+		$http({
+			action: "/mis-v4/profiling-form-a/get-profiles",
+			method: "POST",
+			func: (r) => {
+				profiles = JSON.parse(r);
+				renderTable(profiles, currentPage);
+			}
+		});
+	}
 
 	function renderTable(data, page) {
 		const profileBody = document.getElementById("profileBody");
@@ -155,6 +158,7 @@
 				<td>${a_profile.city}</td>
 				<td>${a_profile.ref}</td>
 			`;
+			println(row.innerHTML)
 			fragment.appendChild(row);
 		});
 		profileBody.appendChild(fragment);
@@ -162,17 +166,17 @@
 	}
 
 	function renderTable(data, page) {
-        const profileBody = document.getElementById("profileBody");
-        profileBody.innerHTML = data.slice((page - 1) * rowsPerPage, page * rowsPerPage)
-            .map(p => `
-                <tr class="x-hover-blue" onclick="dialog_pfa(${p.id})">
-                    ${Object.values(p).map(value => `<td>${value || ''}</td>`).join('')}
-                </tr>`
-            ).join('');
-        renderPagination(data);
-    }
+		const profileBody = document.getElementById("profileBody");
+		profileBody.innerHTML = data.slice((page - 1) * rowsPerPage, page * rowsPerPage)
+			.map(p => `
+				<tr class="x-hover-blue" onclick="dialog_pfa(${p.id})">
+					${Object.values(p).map(value => `<td>${value || ''}</td>`).join('')}
+				</tr>`
+			).join('');
+		renderPagination(data);
+	}
 
-    function renderPagination(data) {
+	function renderPagination(data) {
 		const pagination = document.getElementById("pagination");
 		pagination.innerHTML = "";
 		const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -211,24 +215,61 @@
 		pagination.appendChild(ul);
 		}
 
-    document.getElementById("pfaSortButton").addEventListener("click", function () {
-        profiles.reverse();
-        this.innerText = this.innerText.includes("▲") ? "SORT ▼" : "SORT ▲";
-        renderTable(profiles, 1);
-    });
+	document.getElementById("pfaSortButton").addEventListener("click", function () {
+		profiles.reverse();
+		this.innerText = this.innerText.includes("▲") ? "SORT ▼" : "SORT ▲";
+		renderTable(profiles, 1);
+	});
 
-    document.getElementById("searchInput").addEventListener("input", function () {
-        const searchTerm = this.value.toLowerCase();
-        const filteredProfiles = profiles.filter(profile =>
-            Object.values(profile).some(value =>
-                value && value.toString().toLowerCase().includes(searchTerm)
-            )
-        );
-        renderTable(filteredProfiles, 1);
-    });
+	document.getElementById("searchInput").addEventListener("input", function () {
+		const searchTerm = this.value.toLowerCase();
+		const filteredProfiles = profiles.filter(profile =>
+			Object.values(profile).some(value =>
+				value && value.toString().toLowerCase().includes(searchTerm)
+			)
+		);
+		renderTable(filteredProfiles, 1);
+	});
 
-    function dialog_pfa(ids) {
-        goto(`/mis-v4/core-profiling-form-a?fields=${ids}`);
-    }
-    window.onload = get_profile;
+	function dialog_pfa(ids) {
+		goto(`/mis-v4/core-profiling-form-a?fields=${ids}`);
+	}
+	window.onload = get_profile;
+</script>
+
+
+<!-- /////////////////////FOR EXPORT BUTTON///////////////////// -->
+<script type="text/javascript">
+	function fnExcelReport() {
+		var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+		var j = 0;
+		var tab = document.getElementById('profileTable'); // id of table
+
+		for (j = 0; j < tab.rows.length; j++) {
+			tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+			//tab_text=tab_text+"</tr>";
+		}
+
+		tab_text = tab_text + "</table>";
+		tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+		tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
+		tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+		var msie = window.navigator.userAgent.indexOf("MSIE ");
+
+		// If Internet Explorer
+		if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+			txtArea1.document.open("txt/html", "replace");
+			txtArea1.document.write(tab_text);
+			txtArea1.document.close();
+			txtArea1.focus();
+
+			sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
+		} else {
+			// other browser not tested on IE 11
+			sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+		}
+
+		return sa;
+	}
 </script>
