@@ -1,81 +1,234 @@
+<style>
+	.input {
+		border: 2px solid transparent;
+		height: 2.5em;
+		padding-left: 0.8em;
+		outline: none;
+		overflow: hidden;
+		background-color: #ffffff;
+		border-radius: 10px;
+		transition: all 0.2s;
+		border-color: #6c757d;
+		}
+
+	.input:hover,
+	.input:focus {
+		border: 2px solid #4a9dec;
+		box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+		background-color: white;
+		}
+
+    #pagination {
+		display: flex;
+		justify-content: center;
+		gap: 5px;
+		}
+
+	#pagination button {
+		background-color: #fff;
+		border: 1px solid #ddd;
+		color: #007bff;
+		padding: 5px 12px;
+		border-radius: 5px;
+		cursor: pointer;
+		transition: background 0.3s, color 0.3s;
+	}
+
+	#pagination button.active {
+		background-color: #007bff;
+		color: #fff;
+		border-color: #007bff;
+	}
+
+	#pagination button:disabled {
+		background-color: #f8f9fa;
+		color: #6c757d;
+		cursor: not-allowed;
+	}
+
+
+    #profileTable tbody tr {
+        cursor: pointer;
+    }
+
+    #profileTable thead th {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ffffff;
+		background: #343a40; 
+        color: #ffffff; 
+    }
+</style>
+
+
 
 <div class="col-lg-12" id="dropContainer" style="min-height: 60vh;">
-	<div class="row">
-		<!-- Sales Card -->
-		<div class="pagetitle">
-			
-		</div>
-		<section class="section dashboard" >
-			<div class="row">
-				<h5 class="">
-					<strong class="bi bi-folder"></strong>
-					<strong id="FOLDER_NAME">Home</strong>
-				</h5>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<hr>
-					<div class="row">
-						<table class="datatable table table-striped table-bordered ">
-							<thead>
-								<th>MIS ID</th>
-								<th>First Name</th>
-								<th>Middle Name</th>
-								<th>Last Name</th>
-								<th>Ext name</th>
-								<th>Sex</th>
-								<th>Primary<br>Crop</th>
-								<th>Farmers Org</th>
-								<th>DIP</th>
-								<th>Region</th>
-								<th>Province</th>
-								<th>City/Municipality</th>
-								<th>Reference File</th>
-							</thead>
-							<tbody>
-								{% for a_profile in pfa_profiles %}
-								<tr class="x-hover-blue" onclick="dialog_pfa(
-									{{a_profile['id']}}
-								)">
-									<td class="x-tiny">PFA_ID_{{a_profile['id']}}</td>
-									<td>{{a_profile['fname']}}</td>
-									<td>{{a_profile['mname']}}</td>
-									<td>{{a_profile['lname']}}</td>
-									<td>{{a_profile['xname']}}</td>
-									<td>{{a_profile['sex']}}</td>
-									<td>{{a_profile['primary_crop']}}</td>
-									<td class="x-tiny">{{a_profile['fo']}}</td>
-									<td>{{a_profile['dip']}}</td>
-									<td>{{a_profile['region']}}</td>
-									<td>{{a_profile['prov']}}</td>
-									<td>{{a_profile['city']}}</td>
-									<td class="x-tiny">{{a_profile['ref']}}</td>
-								</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>
+
+    <div class="row">
+        <div class="pagetitle"></div>
+
+        <section class="section dashboard">
+            <div class="row">
+                <h5>
+                    <strong class="bi bi-folder"></strong>
+                    <strong id="FOLDER_NAME">Home</strong>
+                </h5>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <hr>
+                    <div class="row">
+                        <div class="d-flex gap-2 mb-3">
+                            <input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
+                            <button id="pfaSortButton" class="btn btn-sm btn-dark">SORT ▲</button>
+                        </div>
+                        <table id="profileTable" class="datatable table table-striped table-bordered">
+                            <thead>
+                                <th>MIS ID</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Ext name</th>
+                                <th>Sex</th>
+                                <th>Primary<br>Crop</th>
+                                <th>Farmers Org</th>
+                                <th>DIP</th>
+                                <th>Region</th>
+                                <th>Province</th>
+                                <th>City/Municipality</th>
+                                <th>Reference File</th>
+                            </thead>
+                            <tbody id="profileBody">
+                                <!-- Data will be dynamically injected here -->
+                            </tbody>
+                        </table>
+
+                        <div id="pagination" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
+
 <script type="text/javascript">
-	// $onload(get_profile)
-	function get_profile() {
-		$http({
-			action : "/mis-v4/profiling-form-a/get-profiles",
-			method : POST,
-			func : function(r){
-				var res = JSON.parse(r)
-				println(res)
+   let profiles = [], currentPage = 1;
+   const rowsPerPage = 100;
+
+   function get_profile() {
+        $http({
+            action: "/mis-v4/profiling-form-a/get-profiles",
+            method: "POST",
+            func: (r) => {
+                profiles = JSON.parse(r);
+                renderTable(profiles, currentPage);
+            }
+        });
+    }
+
+	function renderTable(data, page) {
+		const profileBody = document.getElementById("profileBody");
+		profileBody.innerHTML = "";
+
+		const fragment = document.createDocumentFragment();
+		const start = (page - 1) * rowsPerPage;
+		const end = start + rowsPerPage;
+		const paginatedData = data.slice(start, end);
+
+		paginatedData.forEach(a_profile => {
+			const row = document.createElement("tr");
+			row.className = "x-hover-blue";
+			row.onclick = () => dialog_pfa(a_profile.id);
+			row.innerHTML = `
+				<td>PFA_ID_${a_profile.id}</td>
+				<td>${a_profile.fname}</td>
+				<td>${a_profile.mname}</td>
+				<td>${a_profile.lname}</td>
+				<td>${a_profile.xname}</td>
+				<td>${a_profile.sex}</td>
+				<td>${a_profile.primary_crop}</td>
+				<td>${a_profile.fo}</td>
+				<td>${a_profile.dip}</td>
+				<td>${a_profile.region}</td>
+				<td>${a_profile.prov}</td>
+				<td>${a_profile.city}</td>
+				<td>${a_profile.ref}</td>
+			`;
+			fragment.appendChild(row);
+		});
+		profileBody.appendChild(fragment);
+		renderPagination(data);
+	}
+
+	function renderTable(data, page) {
+        const profileBody = document.getElementById("profileBody");
+        profileBody.innerHTML = data.slice((page - 1) * rowsPerPage, page * rowsPerPage)
+            .map(p => `
+                <tr class="x-hover-blue" onclick="dialog_pfa(${p.id})">
+                    ${Object.values(p).map(value => `<td>${value || ''}</td>`).join('')}
+                </tr>`
+            ).join('');
+        renderPagination(data);
+    }
+
+    function renderPagination(data) {
+		const pagination = document.getElementById("pagination");
+		pagination.innerHTML = "";
+		const totalPages = Math.ceil(data.length / rowsPerPage);
+		if (totalPages <= 1) return;
+		const ul = document.createElement("ul");
+		ul.classList.add("pagination", "justify-content-center");
+
+		const createPageItem = (text, page, isDisabled = false) => {
+			const li = document.createElement("li");
+			li.classList.add("page-item");
+			if (page === currentPage) li.classList.add("active");
+			if (isDisabled) li.classList.add("disabled");
+			const link = document.createElement("a");
+			link.classList.add("page-link");
+			link.href = "#";
+			link.innerText = text;
+			link.onclick = function (e) {
+				e.preventDefault();
+				if (!isDisabled) {
+					currentPage = page;
+					renderTable(data, currentPage);
+				}
+			};
+		li.appendChild(link);
+		return li;
+		};
+			if (currentPage > 1) ul.appendChild(createPageItem("«", currentPage - 1));
+			if (currentPage > 2) ul.appendChild(createPageItem("1", 1));
+			if (currentPage > 3) ul.appendChild(createPageItem("...", currentPage - 2, true));
+			for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {
+				ul.appendChild(createPageItem(i, i));
 			}
-		})
-	}
+			if (currentPage < totalPages - 2) ul.appendChild(createPageItem("...", currentPage + 2, true));
+			if (currentPage < totalPages) ul.appendChild(createPageItem(totalPages, totalPages));
+			if (currentPage < totalPages) ul.appendChild(createPageItem("»", currentPage + 1));
+		pagination.appendChild(ul);
+		}
 
-	function dialog_pfa(ids){
-		goto(`/mis-v4/core-profiling-form-a?fields=${ids}`)
-	}
+    document.getElementById("pfaSortButton").addEventListener("click", function () {
+        profiles.reverse();
+        this.innerText = this.innerText.includes("▲") ? "SORT ▼" : "SORT ▲";
+        renderTable(profiles, 1);
+    });
 
+    document.getElementById("searchInput").addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase();
+        const filteredProfiles = profiles.filter(profile =>
+            Object.values(profile).some(value =>
+                value && value.toString().toLowerCase().includes(searchTerm)
+            )
+        );
+        renderTable(filteredProfiles, 1);
+    });
 
+    function dialog_pfa(ids) {
+        goto(`/mis-v4/core-profiling-form-a?fields=${ids}`);
+    }
+    window.onload = get_profile;
 </script>

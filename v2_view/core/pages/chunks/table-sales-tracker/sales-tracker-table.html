@@ -54,8 +54,12 @@
         width: 16%;
       }
     }
-    #salesTrackerTable tbody tr td {
-      background-color: rgb(170, 170, 170);
+
+    #salesTrackerTable thead th {
+        padding: 12px;
+        border: 1px solid #ffffff;
+		    background: #343a40; 
+        color: #ffffff; 
     }
   </style>
 
@@ -150,7 +154,7 @@
         </h5>
         <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
           <div class="datatable-container">
-            <table class="table datatable datatable-table table-dark" id="salesTrackerTable">
+            <table class="datatable table table-striped table-bordered" id="salesTrackerTable">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -284,102 +288,125 @@
     });
 
     async function setupCharts() {
-      setupLineChart("lineChart", "filterType", "filterValue", ["Sales", "Average Price"], ["rgb(75, 192, 192)", "#a7c957"], entry => [(entry.ST_ave_price || 0) * (entry.ST_total_transaction || 0), entry.ST_ave_price || 0]);
-      setupLineChart("VPlineChart", "VPfilterType", "VPfilterValue", ["Volume Supply"], ["rgb(255, 111, 233)"], entry => [entry.ST_vol_supplied || 0]);
-      setupLineChart("transactionChart", "transactionFilterType", "transactionFilterValue", ["Total Transaction"], ["rgb(255, 105, 97)"], entry => [entry.ST_total_transaction || 0]);
-    }
+    setupLineChart("lineChart", "filterType", "filterValue", ["Sales", "Average Price"], ["rgb(75, 192, 192)", "#a7c957"], entry => [(entry.ST_ave_price || 0) * (entry.ST_total_transaction || 0), entry.ST_ave_price || 0]);
+    setupLineChart("VPlineChart", "VPfilterType", "VPfilterValue", ["Volume Supply"], ["rgb(255, 111, 233)"], entry => [entry.ST_vol_supplied || 0]);
+    setupLineChart("transactionChart", "transactionFilterType", "transactionFilterValue", ["Total Transaction"], ["rgb(255, 105, 97)"], entry => [entry.ST_total_transaction || 0]);
+}
 
-    async function setupLineChart(canvasId, filterTypeId, filterValueId, labels, colors, dataExtractor) {
-      const ctx = document.querySelector(`#${canvasId}`).getContext("2d");
-      const chart = new Chart(ctx, {
-        type: 'line',
-        data: { labels: [], datasets: [] },
-        options: {
-          scales: { y: { beginAtZero: true } },
-          elements: {
-            point: {
-              radius: 6,    // Increase point size
-              hoverRadius: 8 // Increase hover size for better visibility
-            }
-          }
+async function setupLineChart(canvasId, filterTypeId, filterValueId, labels, colors, dataExtractor) {
+  const ctx = document.querySelector(`#${canvasId}`).getContext("2d");
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: [], datasets: [] },
+    options: {
+      scales: { y: { beginAtZero: true } },
+      elements: {
+        point: {
+          radius: 6,
+          hoverRadius: 8
         }
-      });
-
-      function processData(data) {
-        const sortedData = [...data].sort((a, b) => new Date(a.ST_date) - new Date(b.ST_date));
-        const chartLabels = sortedData.map(entry =>
-          entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : ""
-        );
-        const chartData = sortedData.map(entry => dataExtractor(entry));
-        return { labels: chartLabels, data: chartData };
       }
-      
-      function populateFilters(data, filterType, filterValue) {
-        const years = [...new Set(data.map(entry => new Date(entry.ST_date).getFullYear()))];
-        const months = [...new Set(data.map(entry => `${new Date(entry.ST_date).getFullYear()}-${(new Date(entry.ST_date).getMonth() + 1).toString().padStart(2, '0')}`))]
+    }
+  });
 
-        const filterDropdown = document.getElementById(filterValue);
-        filterDropdown.innerHTML = '<option value="all">All</option>';
+  function processData(data) {
+    const chartLabels = data.map(entry =>
+      entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : ""
+    );
+    const chartData = data.map(entry => dataExtractor(entry));
+    return { labels: chartLabels, data: chartData };
+  }
 
-        const options = filterType === "year" ? years : months;
-        options.forEach(option => {
-          const display = filterType === "year" ? option : `${option.split('-')[0]} - ${monthNames[parseInt(option.split('-')[1]) - 1]}`;
-          filterDropdown.innerHTML += `<option value="${option}">${display}</option>`;
-        });
-      }
+  function populateFilters(data, filterType, filterValueId) {
+    const years = [...new Set(data.map(entry => new Date(entry.ST_date).getFullYear().toString()))];
+    const months = [...new Set(data.map(entry => {
+      const date = new Date(entry.ST_date);
+      return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+    }))];
 
-      function filterData(data, filterType, filterValue) {
-        if (filterType === "year") return data.filter(entry => new Date(entry.ST_date).getFullYear().toString() === filterValue);
-        if (filterType === "month") return data.filter(entry => `${new Date(entry.ST_date).getFullYear()}-${(new Date(entry.ST_date).getMonth() + 1).toString().padStart(2, '0')}` === filterValue);
-        return data;
-      }
+    const filterDropdown = document.getElementById(filterValueId);
+    filterDropdown.innerHTML = '<option value="all">All</option>';
 
-      function updateChart(data) {
-        const filteredData = document.getElementById(filterValueId).value === "all"
-          ? originalData
-          : data;
+    const options = filterType === "year" ? years : months;
+    options.forEach(option => {
+      const display = filterType === "year" ? option : `${option.split('-')[0]} - ${monthNames[parseInt(option.split('-')[1]) - 1]}`;
+      filterDropdown.innerHTML += `<option value="${option}">${display}</option>`;
+    });
+  }
 
-        const { labels: chartLabels, data: chartData } = processData(filteredData);
-
-        chart.data.labels = chartLabels;
-        chart.data.datasets = labels.map((label, index) => ({
-          label: label,
-          data: chartData.map(d => d[index] || 0),
-          borderColor: colors[index],
-          tension: 0.1,
-          fill: false,
-          pointRadius: 6,      // Custom point size
-          pointHoverRadius: 8, // Custom hover size
-        }));
-
-        chart.update();
-      }
-
-      const { labels: initialLabels, data: initialData } = processData(originalData);
-      chart.data.labels = initialLabels;
-      chart.data.datasets = labels.map((label, index) => ({
-        label,
-        data: initialData.map(d => d[index] || 0),
-        borderColor: colors[index],
-        tension: 0.1,
-        fill: false,
-        pointRadius: 6,      // Custom point size
-        pointHoverRadius: 8, // Custom hover size
-      }));
-      chart.update();
-
-      populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
-
-      document.getElementById(filterTypeId).addEventListener("change", () => {
-        populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
-        updateChart(originalData);
-      });
-
-      document.getElementById(filterValueId).addEventListener("change", () => {
-        const filtered = filterData(originalData, document.getElementById(filterTypeId).value, document.getElementById(filterValueId).value);
-        updateChart(filtered);
+  function filterData(data, filterType, filterValue) {
+    if (filterType === "year") {
+      return data.filter(entry => new Date(entry.ST_date).getFullYear().toString() === filterValue);
+    }
+    if (filterType === "month") {
+      return data.filter(entry => {
+        const date = new Date(entry.ST_date);
+        return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}` === filterValue;
       });
     }
+    return data;
+  }
 
-    fetchData();
+  function getCurrentMonthData(data) {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = (now.getMonth() + 1).toString().padStart(2, '0');
+    const currentMonthString = `${currentYear}-${currentMonth}`;
+    return data.filter(entry => {
+      if (entry.ST_date) {
+        const entryDate = new Date(entry.ST_date);
+        return `${entryDate.getFullYear()}-${(entryDate.getMonth() + 1).toString().padStart(2, '0')}` === currentMonthString;
+      }
+      return false;
+    });
+  }
+
+  function updateChart(data) {
+    const filteredData = document.getElementById(filterValueId).value === "all"
+      ? data
+      : filterData(data, document.getElementById(filterTypeId).value, document.getElementById(filterValueId).value);
+
+    const { labels: chartLabels, data: chartData } = processData(filteredData);
+    chart.data.labels = chartLabels;
+    chart.data.datasets = labels.map((label, index) => ({
+      label: label,
+      data: chartData.map(d => d[index] || 0),
+      borderColor: colors[index],
+      tension: 0.1,
+      fill: false,
+      pointRadius: 6,
+      pointHoverRadius: 8,
+    }));
+
+    chart.update();
+  }
+
+  let currentData = getCurrentMonthData(originalData);
+  const { labels: initialLabels, data: initialData } = processData(currentData);
+  chart.data.labels = initialLabels;
+  chart.data.datasets = labels.map((label, index) => ({
+    label,
+    data: initialData.map(d => d[index] || 0),
+    borderColor: colors[index],
+    tension: 0.1,
+    fill: false,
+    pointRadius: 6,
+    pointHoverRadius: 8,
+  }));
+  chart.update();
+
+  populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
+
+  document.getElementById(filterTypeId).addEventListener("change", () => {
+    populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
+    updateChart(originalData);
+  });
+
+  document.getElementById(filterValueId).addEventListener("change", () => {
+    updateChart(originalData);
+  });
+}
+
+fetchData();
+
   </script>
