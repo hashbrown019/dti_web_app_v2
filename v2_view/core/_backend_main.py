@@ -145,7 +145,7 @@ class _main:
 			personal_forms=dash_api.get_public_form(module)[0],
 			USER_DATA = {"id":"9999999","name":"Guest"}
 			# URL_ARGS=request.args,
-			)
+		);
 
 	@app.route("/dip/getfile",methods=["POST","GET"])
 	def get_file():
@@ -164,7 +164,6 @@ class _main:
 		if(task=='add-update'): res = _backend_sub.fmi_tracker.update_add(request)
 		# elif(task=='get-fmi-data'): res = _backend_sub.fmi_tracker.get_staff_info(request)
 		return res
-
 
 	# =======================================
 	# =======================================
@@ -190,12 +189,9 @@ class _main:
 		return res
 
 	# =======================================
-	# =======================================
-	# =======================================
 	# =========GET-SESSION===================
-
-
-
+	# =======================================
+	# =======================================
 
 	@app.route("/mis-v4/get-session",methods=["POST","GET"])
 	@c.login_auth_web()

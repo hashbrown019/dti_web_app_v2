@@ -78,16 +78,42 @@
 			<span>Approved Budget Contract (<b>ABC</b>)</span>
 		</div>
 		<div class="input-group mb-3">
+			<span class="input-group-text">Total ABC</span>
+			<input type="number" class="FMI_BASIC form-control x-right-align" id="abc_total" name="abc_total" aria-label="Amount (to the nearest dollar)" onkeyup="compute_abc(this.value)">
 			<span class="input-group-text">Pesos</span>
-			<input type="number" class="FMI_BASIC form-control x-right-align" id="abc_ifad" name="abc_ifad" aria-label="Amount (to the nearest dollar)">
-			<span class="input-group-text">IFAD Loan Proceeds</span>
 		</div>
 		<div class="input-group mb-3">
+			<span class="input-group-text">IFAD Loan Proceeds</span>
+			<input type="number" class="FMI_BASIC form-control x-right-align" id="abc_ifad" name="abc_ifad" aria-label="Amount (to the nearest dollar)">
 			<span class="input-group-text">Pesos</span>
-			<input type="number" class="FMI_BASIC form-control x-right-align" id="abc_lgu" name="abc_lgu" aria-label="Amount (to the nearest dollar)">
+		</div>
+		<div class="input-group mb-3">
 			<span class="input-group-text">LGU Counterpart (5% of ABC)</span>
+			<input type="number" class="FMI_BASIC form-control x-right-align" id="abc_lgu" name="abc_lgu" aria-label="Amount (to the nearest dollar)">
+			<span class="input-group-text">Pesos</span>
+		</div>
+		<script type="text/javascript">
+			function compute_abc(total_abc){
+				$ID('abc_ifad').value = (total_abc - (total_abc * 0.05)).toFixed(2)
+				$ID('abc_lgu').value = (total_abc * 0.05).toFixed(1)
+			}
+		</script>
+		<div class="input-group mb-3">
+			<span class="input-group-text">FMI/R Tag</span>
+			<input class="FMI_BASIC form-control" list="tag_fmi" id="fmi_tag" name='fmi_tag'>
+			<datalist id="tag_fmi">
+				<option value="Pilot FMR/I's"></option>
+				<option value="Batch 1"></option>
+				<option value="Batch 2"></option>
+				<option value="Batch 3"></option>
+				<option value="Batch 4"></option>
+				<option value="Batch 5"></option>
+			</datalist>
 		</div>
 		<hr>
+	</div>
+	<div class="x-col l6 x-padding">
+		<h2>FMI Location</h2>
 		<div class="input-group mb-3">
 			<span>Map/Location/Points of FMI</span>
 		</div>
@@ -96,9 +122,6 @@
 			<input onkeyup="set_init_loc(this.value)" type="text" class="FMI_BASIC form-control" placeholder="9,123123,0.12313" aria-label="longlat">
 
 		</div>
-	</div>
-	<div class="x-col l6 x-padding">
-		<h2>FMI Location</h2>
 		{% include '/chunks/tracker-fmi/fmi-initial-map.html'%}
 		<div class="mb-3">
 			<h5>Map Action</h5>
