@@ -26662,7 +26662,7 @@
         editor.selection.setRng(rng);
       }
     };
-    const hasImage = dataTransfer => exists(dataTransfer.files, file => /^image\//.test(file.type));
+    const hasImage = dataTransfer => exists(dataTransfer.files, file => (/^image\//).test(file.type));
     const needsCustomInternalDrop = (dom, schema, target, dropContent) => {
       const parentTransparent = dom.getParent(target, node => isTransparentBlock(schema, node));
       const inSummary = !isNull(dom.getParent(target, 'summary'));

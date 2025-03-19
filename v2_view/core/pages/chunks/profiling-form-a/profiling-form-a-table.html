@@ -50,14 +50,6 @@
 	#profileTable tbody tr {
 		cursor: pointer;
 	}
-
-	#profileTable thead th {
-		padding: 12px;
-		text-align: center;
-		border: 1px solid #ffffff;
-		background: #343a40; 
-		color: #ffffff; 
-	}
 </style>
 
 <div class="col-lg-12" id="dropContainer" style="min-height: 60vh;">
@@ -77,26 +69,26 @@
 					<div class="row">
 						<div class="d-flex gap-2 mb-3">
 							<input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
-							<button id="pfaSortButton" class="btn btn-sm btn-dark">SORT ▲</button>
+							<button id="pfaSortButton" class="btn btn-sm">SORT ▲</button>
 							<button type="button" class="btn btn-primary mb-2" onclick="fnExcelReport()">
 								<i class="ri-file-excel-2-fill x-xlarge"></i> Open With Spreadsheet App
 							</button>
 						</div>
-						<table id="profileTable" class="datatable table table-striped table-bordered">
+						<table id="profileTable" class="table table-stripped table-dark table-hover table-sm">
 							<thead>
-								<th>MIS ID</th>
-								<th>First Name</th>
-								<th>Middle Name</th>
-								<th>Last Name</th>
-								<th>Ext name</th>
-								<th>Sex</th>
-								<th>Primary<br>Crop</th>
-								<th>Farmers Org</th>
-								<th>DIP</th>
-								<th>Region</th>
-								<th>Province</th>
-								<th>City/Municipality</th>
-								<th>Reference File</th>
+								<th><b>MIS ID</b></th>
+								<th><b>First Name</b></th>
+								<th><b>Middle Name</b></th>
+								<th><b>Last Name</b></th>
+								<th><b>Ext name</b></th>
+								<th><b>Sex</b></th>
+								<th><b>Primary<br>Crop</b></th>
+								<th><b>Farmers Org</b></th>
+								<th><b>DIP</b></th>
+								<th><b>Region</b></th>
+								<th><b>Province</b></th>
+								<th><b>City/Municipality</b></th>
+								<th><b>Reference File</b></th>
 							</thead>
 							<tbody id="profileBody">
 								<!-- Data will be dynamically injected here -->
@@ -114,8 +106,8 @@
 <script type="text/javascript">
    let profiles = [], currentPage = 1;
    const rowsPerPage = 100;
-
-   function get_profile() {
+	$onload(get_profile);
+	function get_profile() {
 		$http({
 			action: "/mis-v4/profiling-form-a/get-profiles",
 			method: "POST",
@@ -128,6 +120,7 @@
 
 	function renderTable(data, page) {
 		const profileBody = document.getElementById("profileBody");
+		println(profileBody)
 		profileBody.innerHTML = "";
 
 		const fragment = document.createDocumentFragment();
@@ -154,7 +147,6 @@
 				<td>${a_profile.city}</td>
 				<td>${a_profile.ref}</td>
 			`;
-			println(row.innerHTML)
 			fragment.appendChild(row);
 		});
 		profileBody.appendChild(fragment);
@@ -219,7 +211,6 @@
 	function dialog_pfa(ids) {
 		goto(`/mis-v4/core-profiling-form-a?fields=${ids}`);
 	}
-	window.onload = get_profile;
 </script>
 
 
