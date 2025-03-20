@@ -50,6 +50,12 @@
 	#profileTable tbody tr {
 		cursor: pointer;
 	}
+
+	#profileTable thead th {
+		border: 1px solid #ffffff;
+		background: #343a40; 
+		color: #ffffff; 
+	}
 </style>
 
 <div class="col-lg-12" id="dropContainer" style="min-height: 60vh;">
@@ -71,13 +77,13 @@
 							<div class="x-padding">
 								
 								<input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
-								<button id="pfaSortButton" class="btn btn-sm">SORT ▲</button>
+								<button id="pfaSortButton" class="btn btn-sm" style="border-color: #3f464d;">SORT ▲</button>
 								<button type="button" class="btn btn-primary mb-2 x-right" onclick="fnExcelReport()">
 									<i class="ri-file-excel-2-fill x-xlarge"></i> Open With Spreadsheet App
 								</button>
 							</div>
 						</div>
-						<table id="profileTable" class="table table-stripped table-hover">
+						<table id="profileTable" class="table table-striped table-hover table-bordered">
 							<thead>
 								<th><b>MIS ID</b></th>
 								<th><b>First Name</b></th>
@@ -107,7 +113,7 @@
 </div>
 <script type="text/javascript">
    let profiles = [], currentPage = 1;
-   const rowsPerPage = 100;
+   const rowsPerPage = 200;
 	$onload(get_profile);
 	function get_profile() {
 		$http({
@@ -218,36 +224,68 @@
 
 <!-- /////////////////////FOR EXPORT BUTTON///////////////////// -->
 <script type="text/javascript">
-	function fnExcelReport() {
-		var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
-		var j = 0;
-		var tab = document.getElementById('profileTable'); // id of table
+    function fnExcelReport() {
+        // Start building the table HTML
+        var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+        tab_text += `
+            <th><b>MIS ID</b></th>
+            <th><b>First Name</b></th>
+            <th><b>Middle Name</b></th>
+            <th><b>Last Name</b></th>
+            <th><b>Ext name</b></th>
+            <th><b>Sex</b></th>
+            <th><b>Primary Crop</b></th>
+            <th><b>Farmers Org</b></th>
+            <th><b>DIP</b></th>
+            <th><b>Region</b></th>
+            <th><b>Province</b></th>
+            <th><b>City/Municipality</b></th>
+            <th><b>Reference File</b></th>
+        </tr>`;
 
-		for (j = 0; j < tab.rows.length; j++) {
-			tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
-			//tab_text=tab_text+"</tr>";
-		}
+        // Loop through the entire dataset (profiles) to build rows
+        profiles.forEach(profile => {
+            tab_text += `
+                <tr>
+                    <td>PFA_ID_${profile.id}</td>
+                    <td>${profile.fname}</td>
+                    <td>${profile.mname}</td>
+                    <td>${profile.lname}</td>
+                    <td>${profile.xname}</td>
+                    <td>${profile.sex}</td>
+                    <td>${profile.primary_crop}</td>
+                    <td>${profile.fo}</td>
+                    <td>${profile.dip}</td>
+                    <td>${profile.region}</td>
+                    <td>${profile.prov}</td>
+                    <td>${profile.city}</td>
+                    <td>${profile.ref}</td>
+                </tr>`;
+        });
 
-		tab_text = tab_text + "</table>";
-		tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
-		tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
-		tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+        // Close the table
+        tab_text += "</table>";
 
-		var msie = window.navigator.userAgent.indexOf("MSIE ");
+        // Remove unwanted elements
+        tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, ""); // Remove links
+        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // Remove images
+        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // Remove input elements
 
-		// If Internet Explorer
-		if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-			txtArea1.document.open("txt/html", "replace");
-			txtArea1.document.write(tab_text);
-			txtArea1.document.close();
-			txtArea1.focus();
-
-			sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
-		} else {
-			// other browser not tested on IE 11
-			sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
-		}
-
-		return sa;
-	}
+        // Check for Internet Explorer
+        var msie = window.navigator.userAgent.indexOf("MSIE ");
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+            txtArea1.document.open("txt/html", "replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus();
+            sa = txtArea1.document.execCommand("SaveAs", true, "PFA_Profiles.xls");
+        } else {
+            // For other browsers
+            var blob = new Blob([tab_text], { type: "application/vnd.ms-excel" });
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "Profiles.xls";
+            link.click();
+        }
+    }
 </script>
