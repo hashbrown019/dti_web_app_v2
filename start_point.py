@@ -115,12 +115,14 @@ def before_request():
 def after_request_func(response):
 	ip_addr = request.access_route[0]
 	agent = request.headers.get('User-Agent')
+	agent = request.headers.get('User-Agent')
+	referer = request.headers.get('referer')
 	# ss = open("l_header.txt","a")
 	# ss.write("{}\n".format(json.dumps((request))))
 	# ss.close()
 	if( request.endpoint != "static" and "get_notif_unseen" not in str(request.endpoint).split(".")):
 		if(request.endpoint != "index"):
-			Logs.ACCESS_LOGS(ip_addr, request.endpoint, session, agent)
+			Logs.ACCESS_LOGS(ip_addr, request.endpoint, session, agent, referer)
 			# updated_mac = get_mac_address(ip=ip_addr)
 			# print(" MAC ADDRESS")
 			# print(updated_mac)

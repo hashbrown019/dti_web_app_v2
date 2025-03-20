@@ -3,7 +3,7 @@ import Configurations as c
 
 from getmac import get_mac_address
 
-def ACCESS_LOGS(addr, endpoint, session, agent):
+def ACCESS_LOGS(addr, endpoint, session, agent, referer):
 	in_session = False
 	user_id = "null"
 	user_name = "null"
@@ -24,7 +24,7 @@ def ACCESS_LOGS(addr, endpoint, session, agent):
 	date_file_name = "{}_{}".format(date_ar[0],date_ar[1])
 	# print(f" * Logs stored in file : {date_file_name}")
 	DATE_NOW = str(str(datetime.today()).replace("-","_").replace(" ","_").replace(":","_").replace(".","_"))
-	strs = "{}||{}||{}||{}||{}||{}||{}||{}||{}\n".format(DATE_NOW, in_session, user_id,user_name, uname, addr, mac_addr,endpoint,agent)
+	strs = "{}||{}||{}||{}||{}||{}||{}||{}||{}||{}\n".format(DATE_NOW, in_session, user_id,user_name, uname, addr, mac_addr,endpoint,agent, referer)
 	file_object = open(c.RECORDS+'/objects/logs/'+date_file_name+'.logs', 'a')
 	file_object.write(f"{strs}")
 	# file_object.write(str(('{}\n'.format(strs)).encode('utf-8').strip()))
