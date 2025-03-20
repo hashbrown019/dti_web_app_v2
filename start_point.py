@@ -37,7 +37,7 @@ import json
 from jinja_templates import templates
 from controllers import Logs
 
-Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL")
+Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL","APACE_RESTART")
 
 app = Flask(__name__)
 c.FLASK_APP = app
@@ -130,12 +130,12 @@ def after_request_func(response):
 	# if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	# print(response.get_json())
 	# ===============================
-	# response.headers.set('Strict-Transport-Security', "max-age=31536000 ")
-	# # response.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'")
+	response.headers.set('Strict-Transport-Security', "max-age=31536000 ")
+	# response.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'")
 	# response.headers.set('X-Frame-Options', "DENY")
-	# response.headers.set('X-Content-Type-Options', "nosniff")
-	# response.headers.set('Referrer-Policy', "same-origin'")
-	# response.headers.set('Permissions-Policy', "geolocation=(self 'none'), camera=(), microphone=()")
+	response.headers.set('X-Content-Type-Options', "nosniff")
+	response.headers.set('Referrer-Policy', "same-origin'")
+	response.headers.set('Permissions-Policy', "geolocation=(self 'none'), camera=(), microphone=()")
 	return response
 
 
