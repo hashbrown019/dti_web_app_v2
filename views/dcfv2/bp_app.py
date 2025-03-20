@@ -1394,15 +1394,15 @@ _FORM_NAME={
 #     app.run(debug=True)
 
 def position_data_filter():
-	_filter = "WHERE 1 "
+	_filter = " 1 "
 	JOB = session["USER_DATA"][0]["job"].lower()
-
+	print(session["USER_DATA"][0]['sg_info']['user_group'])
 	if(JOB in "admin" or JOB in "super admin" or session["USER_DATA"][0]['sg_info']['user_group']=="NATIONAL" or session["USER_DATA"][0]['sg_info']['user_group']=="ALL_OVERVIEW"):
 		session["USER_DATA"][0]["office"] = "NPCO"
-		_filter = "WHERE 1 "
+		_filter = " 1 "
 	else:
 		session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-		_filter = "WHERE  upload_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"]) 
+		_filter = " USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
 	return _filter
 
 def strct_dic(dict_):
