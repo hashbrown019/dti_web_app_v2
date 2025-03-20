@@ -59,8 +59,25 @@
 			<!-- <div class="bg-light pb-5" style=" background-color: #ffffff !important;"> -->
 			<div class="texttheme">
 				<div class="EMBED_EXCLUDE mt-1 d-flex gap-3">				
-					<p class="small "><i class="fa-solid fa-message"></i>&nbsp;<b id="com_count"></b> comment/s</p>
+					<p class="small "><i class="fa-solid fa-message"></i>&nbsp;<b id="com_count"></b> Message/s</p>
 				</div>
+				<div id="input_rep_container" class="">
+					<div class="mt-2">
+						<!-- <b class=""><span id="edit_com" class="">Your</span> message</b> -->
+						<br>
+						<input type="text" id="id" hidden>
+						<textarea type="text" id="comment" name="comment" class="REPLY_DATA input form-control" rows="2" placeholder="Input your msg/Reply"></textarea>
+					</div>
+					<span>
+						Note: Newest message are on the top
+					</span>
+					<div class="d-flex justify-content-between">
+						<div class="mb-2" >
+							<button id="send_btn" type="submit" class="btn btn-primary float-end mt-3 " onclick="send_comment()">Reply</i></button>					
+						</div>
+
+					</div>
+				</div>	
 				<!-- Reply -->
 				<div id="reply_container" style="overflow-y: scroll;height: 700px;">
 					<div class="">
@@ -69,20 +86,6 @@
 						</div>
 					</div>
 				</div>
-				<div id="input_rep_container" class="">
-					<div class="mt-2">
-						<b class=""><span id="edit_com" class="">Your</span> comment</b>
-						<br>
-						<input type="text" id="id" hidden>
-						<textarea type="text" id="comment" name="comment" class="REPLY_DATA input form-control" rows="2" placeholder="Input your comment/Reply"></textarea>
-					</div>
-					<div class="d-flex justify-content-between">
-						<div class="mb-2" >
-							<button id="send_btn" type="submit" class="btn btn-primary float-end mt-3 " onclick="send_comment()">Reply</i></button>					
-						</div>
-
-					</div>
-				</div>	
 			</div>
 		</div>
 	</div>
@@ -232,7 +235,7 @@
 					for (var i = 0; i < uniq.length; i++) {final_par += uniq[i]}
 					// $ID('card_participants').innerHTML = final_par
 					$ID("reply_container").innerHTML=com_cards
-					$ID("reply_container").scrollTo(0, document.body.scrollHeight);
+					// $ID("reply_container").scrollTo(0, document.body.scrollHeight);
 				}
 			})
 		}

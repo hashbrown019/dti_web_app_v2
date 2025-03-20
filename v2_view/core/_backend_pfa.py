@@ -27,6 +27,7 @@ def get_profiling_form_a(req):
 			`excel_import_form_a`
 		WHERE
 			{position_data_filter()}
+		ORDER BY `frmer_prof_@_basic_Info_@_First_name` ASC
 		;
 	''')
 	return profiles

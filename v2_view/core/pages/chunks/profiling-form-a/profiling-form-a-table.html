@@ -75,7 +75,7 @@
 					<div class="row">
 						<div class="container row d-flex gap-2 mb-3">
 							<div class="x-padding">
-								
+
 								<input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
 								<button id="pfaSortButton" class="btn btn-sm" style="border-color: #3f464d;">SORT ▲</button>
 								<button type="button" class="btn btn-primary mb-2 x-right" onclick="fnExcelReport()">
@@ -127,7 +127,7 @@
 	}
 
 	function renderTable(data, page) {
-		const profileBody = document.getElementById("profileBody");
+		const profileBody = $ID("profileBody");
 		println(profileBody)
 		profileBody.innerHTML = "";
 
@@ -162,7 +162,7 @@
 	}
 
 	function renderPagination(data) {
-		const pagination = document.getElementById("pagination");
+		const pagination = $ID("pagination");
 		pagination.innerHTML = "";
 		const totalPages = Math.ceil(data.length / rowsPerPage);
 		if (totalPages <= 1) return;
@@ -200,13 +200,13 @@
 		pagination.appendChild(ul);
 		}
 
-	document.getElementById("pfaSortButton").addEventListener("click", function () {
+	$ID("pfaSortButton").addEventListener("click", function () {
 		profiles.reverse();
 		this.innerText = this.innerText.includes("▲") ? "SORT ▼" : "SORT ▲";
 		renderTable(profiles, 1);
 	});
 
-	document.getElementById("searchInput").addEventListener("input", function () {
+	$ID("searchInput").addEventListener("input", function () {
 		const searchTerm = this.value.toLowerCase();
 		const filteredProfiles = profiles.filter(profile =>
 			Object.values(profile).some(value =>
@@ -242,6 +242,7 @@
             <th><b>City/Municipality</b></th>
             <th><b>Reference File</b></th>
         </tr>`;
+
 
         // Loop through the entire dataset (profiles) to build rows
         profiles.forEach(profile => {
