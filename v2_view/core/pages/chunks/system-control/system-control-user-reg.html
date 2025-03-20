@@ -18,30 +18,30 @@
 											<p class="text-center small">Enter your personal details to create account</p>
 										</div>
 										<!-- ======FORM======= -->
-										<form action="/mis-v4/user-registration-submit" class="row g-3 needs-validation" method="POST" novalidate>
+										<form action="/mis-v4/user-registration-submit" class="row g-3 needs-validation" method="POST">
 											<div id="form_preview">
 												<div class="form-floating mb-3">
-													<input id="name" name="name" type="text" class="form-control"required="">
+													<input id="name" name="name" type="text" class="form-control" required>
 													<label class="f_name" for="floatingSelect">Name</label>
 												</div>
 												<div class="form-floating mb-3">
-													<input id="address" name="address" type="text" class="form-control"required="">
+													<input id="address" name="address" type="text" class="form-control" required>
 													<label class="f_name" for="floatingSelect">Home Address</label>
 												</div>
 												<div class="form-floating mb-3">
-													<input id="email" name="email" type="text"class="form-control" type="email" required="">
+													<input id="email" name="email" type="text"class="form-control" type="email" required>
 													<label class="f_name" for="floatingSelect">Email</label>
 												</div>
 												<div class="form-floating mb-3">
-													<input id="job" name="job" class="form-control" required="">
+													<input id="job" name="job" class="form-control" required>
 													<label class="f_name" for="floatingSelect">Designation/Position</label>
 												</div>
 												<div class="form-floating mb-3">
-													<input id="number" name="mobile" type="mobile" class="form-control" required="">
+													<input id="number" name="mobile" type="mobile" class="form-control" required>
 													<label class="f_name" for="floatingSelect">Contact Number</label>
 												</div>
 												<div class="form-floating mb-3">
-													<select class="form-select" id="rcu" name="rcu" required="">
+													<select class="form-select" id="rcu" name="rcu" required>
 														<option value="none" disabled>None</option>
 														<option value="RCU 8">RCU 8</option>
 														<option value="RCU 9">RCU 9</option>
@@ -55,7 +55,7 @@
 													<label class="f_name" for="floatingSelect">RCU</label>
 												</div>
 												<div class="form-floating mb-3">
-													<select class="form-select" id="pcu" name="pcu" required="">
+													<select class="form-select" id="pcu" name="pcu" required>
 														<option value="none">None / Assigned at RCU</option>
 														<optgroup label="RCU 8">
 															<option value="Leyte">Leyte</option>
@@ -99,11 +99,11 @@
 													<hr> 
 												</div>
 												<div class="form-floating mb-3">
-													<input id="username" name="username" type="text" class="form-control" required="">
+													<input id="username" name="username" type="text" class="form-control" required>
 													<label class="f_name" for="floatingSelect">Username</label>
 												</div>
 												<div class="form-floating mb-3">
-													<input id="password" name="password" type="password" class="form-control" required="">
+													<input id="password" name="password" type="password" class="form-control" required>
 													<label class="f_name" for="floatingSelect">Password</label>
 												</div>
 
@@ -132,6 +132,15 @@
 					</div>
 
 				</section>
+				<script type="text/javascript">
+					function validateForm() {
+						let x = document.forms["myForm"]["fname"].value;
+						if (x == "") {
+							alert("Name must be filled out");
+							return false;
+						}
+					}
+				</script>
 
 			</div>
 		</main><!-- End #main -->
