@@ -120,7 +120,11 @@ def after_request_func(response):
 	# ss = open("l_header.txt","a")
 	# ss.write("{}\n".format(json.dumps((request))))
 	# ss.close()
-	if( request.endpoint != "static" and "get_notif_unseen" not in str(request.endpoint).split(".")):
+	if( request.endpoint != "static" and 
+		"get_notif_unseen" not in str(request.endpoint).split(".") and 
+		"get_user_pic" not in str(request.endpoint).split(".") and 
+		"get_comment" not in str(request.endpoint).split(".")
+		):
 		if(request.endpoint != "index"):
 			Logs.ACCESS_LOGS(ip_addr, request.endpoint, session, agent, referer)
 			# updated_mac = get_mac_address(ip=ip_addr)
@@ -144,6 +148,6 @@ def after_request_func(response):
 # - Zafiro Premium GIN
 # - COLD- 
 
-# BE YOURSELF, TRUST UR GUTS 
+# BE YOURSELF, TRUST UR GUTS :::
 
 
