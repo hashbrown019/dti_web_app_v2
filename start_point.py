@@ -37,7 +37,7 @@ import json
 from jinja_templates import templates
 from controllers import Logs
 
-Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL","APACE_RESTART")
+Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL","APACHE_RESTART")
 
 app = Flask(__name__)
 c.FLASK_APP = app
@@ -120,7 +120,11 @@ def after_request_func(response):
 	# ss = open("l_header.txt","a")
 	# ss.write("{}\n".format(json.dumps((request))))
 	# ss.close()
-	if( request.endpoint != "static" and "get_notif_unseen" not in str(request.endpoint).split(".")):
+	if( request.endpoint != "static" and 
+		"get_notif_unseen" not in str(request.endpoint).split(".") and 
+		"get_user_pic" not in str(request.endpoint).split(".") and 
+		"get_comment" not in str(request.endpoint).split(".")
+		):
 		if(request.endpoint != "index"):
 			Logs.ACCESS_LOGS(ip_addr, request.endpoint, session, agent, referer)
 			# updated_mac = get_mac_address(ip=ip_addr)
@@ -134,11 +138,9 @@ def after_request_func(response):
 	# response.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'")
 	response.headers.set('X-Frame-Options', "SAMEORIGIN")
 	response.headers.set('X-Content-Type-Options', "nosniff")
-	# response.headers.set('Referrer-Policy', "same-origin'")
+	response.headers.set('Referrer-Policy', "same-origin'")
 	response.headers.set('Permissions-Policy', "geolocation=(self 'none'), camera=(), microphone=()")
 	return response
-
-
 
 # Minify(app=app, html=True, js=True, cssless=True)
 # SECRET RECIPEE COCKTAIL
@@ -146,6 +148,6 @@ def after_request_func(response):
 # - Zafiro Premium GIN
 # - COLD- 
 
-# BE YOURSELF, TRUST UR GUTS 
+# BE YOURSELF, TRUST UR GUTS :::
 
 

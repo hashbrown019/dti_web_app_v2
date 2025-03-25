@@ -244,7 +244,6 @@ def __position_data_filter():
 		_filter = " USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
 	return _filter
 
-
 def where_rcu_is(_rcu):
 	return " USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(_rcu)
 
