@@ -37,7 +37,7 @@ import json
 from jinja_templates import templates
 from controllers import Logs
 
-Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL","APACE_RESTART")
+Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL","APACHE_RESTART")
 
 app = Flask(__name__)
 c.FLASK_APP = app

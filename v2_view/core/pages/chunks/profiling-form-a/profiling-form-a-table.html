@@ -184,20 +184,20 @@
 					renderTable(data, currentPage);
 				}
 			};
-		li.appendChild(link);
-		return li;
+			li.appendChild(link);
+			return li;
 		};
-			if (currentPage > 1) ul.appendChild(createPageItem("«", currentPage - 1));
-			if (currentPage > 2) ul.appendChild(createPageItem("1", 1));
-			if (currentPage > 3) ul.appendChild(createPageItem("...", currentPage - 2, true));
-			for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {
-				ul.appendChild(createPageItem(i, i));
-			}
-			if (currentPage < totalPages - 2) ul.appendChild(createPageItem("...", currentPage + 2, true));
-			if (currentPage < totalPages) ul.appendChild(createPageItem(totalPages, totalPages));
-			if (currentPage < totalPages) ul.appendChild(createPageItem("»", currentPage + 1));
-		pagination.appendChild(ul);
+		if (currentPage > 1) ul.appendChild(createPageItem("«", currentPage - 1));
+		if (currentPage > 2) ul.appendChild(createPageItem("1", 1));
+		if (currentPage > 3) ul.appendChild(createPageItem("...", currentPage - 2, true));
+		for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {
+			ul.appendChild(createPageItem(i, i));
 		}
+		if (currentPage < totalPages - 2) ul.appendChild(createPageItem("...", currentPage + 2, true));
+		if (currentPage < totalPages) ul.appendChild(createPageItem(totalPages, totalPages));
+		if (currentPage < totalPages) ul.appendChild(createPageItem("»", currentPage + 1));
+		pagination.appendChild(ul);
+	}
 
 	$ID("pfaSortButton").addEventListener("click", function () {
 		profiles.reverse();
@@ -241,8 +241,6 @@
             <th><b>City/Municipality</b></th>
             <th><b>Reference File</b></th>
         </tr>`;
-
-
         // Loop through the entire dataset (profiles) to build rows
         profiles.forEach(profile => {
             tab_text += `
