@@ -1,0 +1,16 @@
+<div class="pagetitle">
+    <h1>Grievance</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Grievance<li>
+        </ol>
+    </nav>
+</div>
+
+{% if "forms" in URL_ARGS %}
+    {% include '/chunks/grievance-monitoring/grievance-form.html' %}
+{% elif "table" in URL_ARGS %}
+    {% include '/chunks/grievance-monitoring/grievance-table.html' %}
+{% endif %}
+{% include '/chunks/system-control/system-control-sub-left-content.html'%}
