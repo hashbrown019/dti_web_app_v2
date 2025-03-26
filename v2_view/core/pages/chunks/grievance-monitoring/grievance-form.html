@@ -1,4 +1,4 @@
-<title>IFAD Form</title>
+<title>Grievance Redress System Form</title>
 <div class="wrapper">
   <div id="content_griev"> 
       <h5 class="text-center" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #264653; color:#ffffff; padding: 10px;">IFAD Complaints procedure & the enhanced complaints procedure submission form </h5>
@@ -403,53 +403,26 @@ function toggleTable(value) {
 </script>
 
 <script>
-    document.getElementById("addRowBtn").addEventListener("click", function () {
-        var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
-        var newRow = table.insertRow();
-        const inputStyles = "border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;";
-        const inputClass = "GRIEVANCE_FORM form-control";
-        for (var i = 0; i < 4; i++) {
-            var cell = newRow.insertCell(i);
-            var input = document.createElement("input");
-            input.type = "text";
-            input.className = inputClass; 
-            input.style.cssText = inputStyles; 
-            input.setAttribute("required", "true"); 
-            cell.appendChild(input);
-        }
-        var actionCell = newRow.insertCell(4); 
-        var deleteButton = document.createElement("button");
-        deleteButton.className = "deleteBtn btn btn-danger";
-        deleteButton.textContent = "Delete";
-        deleteButton.onclick = function () {
-            newRow.remove();
-        };
-        actionCell.appendChild(deleteButton);
+let rowCount = 1;
+function addRow(tableId, columnCount) {
+    const table = document.querySelector(`#${tableId} tbody`);
+    const newRow = table.insertRow();
+    const inputs = tableId === "myTable"
+        ? ["first-name", "last-name", "title-affiliation", "contact-info"]
+        : ["first-name-2", "last-name-2", "title-affiliation-2", "estimated-date-2", "nature-communication-2", "response-individual-2"];
+    inputs.forEach((name, i) => {
+        const cell = newRow.insertCell();
+        cell.innerHTML = `<input type="${i === 3 && tableId === "myTable2" ? "date" : "text"}" 
+                                 id="${name}-${rowCount}" 
+                                 class="GRIEVANCE_FORM form-control" 
+                                 style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" 
+                                 required>`;
     });
-
-    document.getElementById("addRowBtn2").addEventListener("click", function () {
-    var table = document.getElementById("myTable2").getElementsByTagName('tbody')[0];
-    var newRow = table.insertRow();
-    const inputStyles = "border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;";
-    const inputClass = "GRIEVANCE_FORM form-control";
-    for (var i = 0; i < 6; i++) {
-        var cell = newRow.insertCell(i);
-        var input = document.createElement("input");
-        input.type = i === 3 ? "date" : "text"; 
-        input.className = inputClass; 
-        input.style.cssText = inputStyles; 
-        input.setAttribute("required", "true");
-        cell.appendChild(input);
-    }
-    var actionCell = newRow.insertCell(6);
-    var deleteButton = document.createElement("button");
-    deleteButton.className = "deleteBtn btn btn-danger";
-    deleteButton.textContent = "Delete";
-    deleteButton.onclick = function () {
-        table.removeChild(newRow);
-    };
-    actionCell.appendChild(deleteButton);
-});
+    newRow.insertCell().innerHTML = `<button class="deleteBtn btn btn-danger" onclick="this.closest('tr').remove()">Delete</button>`;
+    rowCount++;
+}
+document.getElementById("addRowBtn").addEventListener("click", () => addRow("myTable", 4));
+document.getElementById("addRowBtn2").addEventListener("click", () => addRow("myTable2", 6));
 </script>
 
 <script>
@@ -458,7 +431,6 @@ function toggleTable(value) {
      const recordId = urlParams.get('view');
      const editId = urlParams.get('edit');
      const submitButton = document.getElementById('submit');
- 
      if (recordId) {
          fetch(`/get_grievance_data?id=${recordId}`)
              .then(response => response.json())
@@ -473,7 +445,6 @@ function toggleTable(value) {
              })
              .catch(error => console.error("Error fetching data:", error));
      }
- 
      if (editId) {
          fetch(`/get_grievance_data?id=${editId}`)
              .then(response => response.json())
@@ -545,6 +516,9 @@ function toggleTable(value) {
              if (key === 'Date' && data[key]) {
                  const date = new Date(data[key]);
                  element.value = date.toISOString().split('T')[0];
+             } else if (key === 'estimated-date-2' && data[key]) {
+                 const date = new Date(data[key]);
+                 element.value = date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
              } else {
                  element.value = data[key] || '';  
              }
@@ -566,6 +540,14 @@ function toggleTable(value) {
         select.setAttribute('disabled', true);
         select.style.cursor = "pointer";
     });
+    const addRowButtons = [document.getElementById('addRowBtn'), document.getElementById('addRowBtn2')];
+    addRowButtons.forEach(button => {
+        if (button) {
+            button.setAttribute('disabled', true);
+            button.style.cursor = "not-allowed";
+            button.style.backgroundColor = "#d3d3d3";
+        }
+    });
 }
  
  function enableForm() {
@@ -574,14 +556,6 @@ function toggleTable(value) {
          input.removeAttribute('readonly');
          input.style.backgroundColor = "#edf2f4"; 
      });
-     const selects = document.querySelectorAll('select.GRIEVANCE_FORM');
-     selects.forEach(select => {
-         select.removeAttribute('disabled');
-     });
- }
- 
- function validateAndUpdate(id) {
-    const requiredInputs = document.querySelectorAll('input[required], select[required]');
     let isValid = true; 
     requiredInputs.forEach(function(input) {
       if (!input.value.trim()) {

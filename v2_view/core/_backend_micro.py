@@ -18,7 +18,7 @@ class _main:
     def __init__(self, arg):
         super(_main, self).__init__()
         self.arg = arg
-
+#--dynamic insert------------------------------------------------------------------------------------------------
     @app.route("/insert/<TABLE>", methods=["POST", "GET"])
     def insert(TABLE):
         coloumn = ""
@@ -28,7 +28,7 @@ class _main:
             values += f",'{request.form[ids]}' "
         res = rapid_mysql.do(f"INSERT {TABLE} ({coloumn[1:]}) VALUES ({values[1:]})")
         return jsonify(res)
-
+#--micro------------------------------------------------------------------------------------------------
     @app.route("/mis-v4-micro/test", methods=["POST", "GET"])
     @c.login_auth_web()
     def micro_index():
@@ -37,12 +37,12 @@ class _main:
     @app.route("/micro_test", methods=["GET"])
     def micro_test():
         return {"status": "test no auth"}
-
+#--dip tracker------------------------------------------------------------------------------------------------
     @app.route("/view-tracker-dip-main-content")
     def view_tracker_dip_main_content():
         dipData = rapid_mysql.select("SELECT * FROM dcf_prep_review_aprv_status")
         return jsonify(dipData)
-
+#--sales tracker----------------------------------------------------------------------------------------------
     @app.route("/micro/tabl-get-data", methods=["GET", "POST"])
     def core_tracker_sales():
         ids = request.form['id']
@@ -94,7 +94,6 @@ class _main:
     def sales_tracker_table():
         return render_template("sales-tracker-table.html")
 
-
     @app.route("/view-sales-tracker-table", methods=["GET", "POST"])
     @app.route("/view-sales-tracker-table/<ids>", methods=["GET", "POST"])
     def view_sales_tracker_table(ids=None):
@@ -104,7 +103,7 @@ class _main:
         else:
             stData = rapid_mysql.select("SELECT * FROM sales_tracker")
             return jsonify(stData)
-#--------------------------------------------------------------------------------------------------
+#--grievance------------------------------------------------------------------------------------------------
 @app.route("/get_grievance_data")
 def get_grievance_data():
     try:
