@@ -23,8 +23,9 @@
 			<td>status</td>
 			<td>
 				<div class="btn-group" role="group" aria-label="Basic outlined example">
-					<button type="button" class="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#MODAL_PROC">Procurement(0)</button>
-					<button type="button" class="btn btn-outline-primary">Physical Status(0)</button>
+					<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#MODAL_PROC">Procurement(0)</button>
+					<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#MODAL_PHYS">Physical Status(0)</button>
+					<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#MODAL_FIN">Financial Status(0)</button>
 					<button type="button" class="btn btn-outline-danger">Delete</button>
 				</div>
 			</td>
@@ -32,7 +33,10 @@
 		{% endfor %}
 	</tbody>
 </table>
+
 {% include '/chunks/tracker-fmi/fmi-modal-form-proc.html'%}
+{% include '/chunks/tracker-fmi/fmi-modal-form-phys.html'%}
+
 <script type="text/javascript">
 	var fmis = JSON.parse("{{fmi_list}}".replaceAll("&#39;",'"'))
 	$onload(function(){
