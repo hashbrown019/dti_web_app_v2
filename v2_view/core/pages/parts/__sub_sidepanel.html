@@ -26,11 +26,16 @@
 								<div class="activite-label">
 									{% if(staff['profilepic']=="" or staff['profilepic']==" " ): %}
 										<img style="max-width: 50px;"  src="\static\psalm_static\menu\img\profilepic.png" alt="Profile" class="rounded-circle">
-									{% else: %}
+									{% else %}
 										<img style="max-width: 50px;max-height: 50px;"  src="\api\user_pic\{{staff['profilepic']}}" alt="Profile" class="rounded-circle">
-									{%endif%}
+									{% endif %}
 								</div>
-								<i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+								{% if(staff['status']=='halt')%}
+									<i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+								{% else: %}
+									<i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+								{% endif %}
+								
 								<div class="activity-content">
 									<a href="#" class="fw-bold text-dark">{{staff['name']}}</a><br>
 									{{staff['job']}}

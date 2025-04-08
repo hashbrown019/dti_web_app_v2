@@ -197,7 +197,7 @@ class _main:
 	@c.login_auth_web()
 	def test():
 		return session["USER_DATA"]
-		
+
 	# @app.route("/form_a_home/<page>",methods=["POST","GET"])
 	# @c.login_auth_web()
 	# def form_a_home_page(page):

@@ -182,7 +182,6 @@ class personal_forms:
 	def save_data(req):
 		datas = dict(req.form)
 		datas['__data'] = {}; key_to_rem=[];
-
 		for datum in datas:
 			if("__" not in datum):
 				datas['__data'][datum] = datas[datum]
@@ -194,7 +193,6 @@ class personal_forms:
 			_VAL = datas[datum]
 			key.append("`{}`".format(datum))
 			val.append("'{}'".format(_VAL) )
-		
 		sql = ('''INSERT INTO `_form_templates_data` ({}) VALUES ({});'''.format(", ".join(key),", ".join(val)))
 		print(sql)
 		print(rapid_mysql.do(sql))
@@ -226,7 +224,7 @@ def position_data_filter():
 	print(session["USER_DATA"][0]['sg_info']['user_group'])
 	if(JOB in "admin" or JOB in "super admin" or session["USER_DATA"][0]['sg_info']['user_group']=="NATIONAL" or session["USER_DATA"][0]['sg_info']['user_group']=="ALL_OVERVIEW"):
 		session["USER_DATA"][0]["office"] = "NPCO"
-		_filter = " 1 "
+		_filter = " 1 ";
 	else:
 		session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
 		_filter = " USER_ID in ( SELECT id from users WHERE rcu = '{}' )".format(session["USER_DATA"][0]["rcu"])
