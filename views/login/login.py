@@ -37,7 +37,7 @@ class _main:
 	@app.route("/login_dev_test",methods=["POST","GET"])
 	@app.route("/dev_test",methods=["POST","GET"])
 	def login_dev_test():
-		return render_template("login.html")w
+		return render_template("login.html")
 
 	@app.route("/login_v2023",methods=["POST","GET"])
 	def login_v2023():
