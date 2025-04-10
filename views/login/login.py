@@ -11,6 +11,7 @@ app = Blueprint("login",__name__,template_folder='pages')
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 # rapid= sqlite("assets\\db\\dti_rapidxi.db")
 # rapid= sqlite(c.SQLITE_DB)
+
 rapid_mysql = mysql(*c.DB_CRED)
 
 class _main:
@@ -24,13 +25,11 @@ class _main:
 	def logintest():
 		return render_template("loginv4.html")
 
-
 	@app.route("/login",methods=["POST","GET"])
 	def login():
 		_attemp =""
 		if("urlvisit" in request.args):
 			_attemp = "&urlvisit="+request.args['urlvisit']
-			
 		# return render_template("SITE_OFF.html") # MAINTENANCE
 		if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 		return redirect("/login_v2023?ver=dti_rapidgrowth_"+c.DB_CRED[3]+_attemp)
@@ -38,7 +37,7 @@ class _main:
 	@app.route("/login_dev_test",methods=["POST","GET"])
 	@app.route("/dev_test",methods=["POST","GET"])
 	def login_dev_test():
-		return render_template("login.html")
+		return render_template("login.html")w
 
 	@app.route("/login_v2023",methods=["POST","GET"])
 	def login_v2023():
@@ -56,25 +55,21 @@ class _main:
 
 	@app.route("/nlog",methods=["POST","GET"])
 	def nlog():
-		# return render_template("SITE_OFF.html") # MAINTENANCE
 		return render_template("loginv4.html",DB_STAT=c.DB_CRED[3])
+		# return render_template("SITE_OFF.html") # MAINTENANCE
 		# return render_template("loginv3.html",DB_STAT=c.DB_CRED[3])
 		# return render_template("loginv2.html",DB_STAT=c.DB_CRED[3])
-
 
 	@app.route("/login_auth",methods=["POST"])
 	def login_auth():
 		username = request.form['user_name']
 		password = request.form['password']
 		log_res = rapid_mysql.select("SELECT * from `users` WHERE `username` = '{}' AND `password`='{}';".format(username,password))
-		admin_type = ""
-		priv_type = ""
-		
-
+		admin_type = "";
+		priv_type = "";
 		if(len(log_res)!=0):
 			if(log_res[0]['job'] in ['Admin','Super Admin']):
 				admin_type = "_{}".format(log_res[0]['job'].upper().replace(" ","_"))
-				
 			if(log_res[0]['pcu']=='none'):
 				if(log_res[0]['rcu']=='NPCO'):
 					priv_type = "NPCO{}".format(admin_type)
@@ -87,7 +82,6 @@ class _main:
 			log_res[0]['password'] = "********";
 			log_res[0]["PRIV_TYPE"] = priv_type
 			session["USER_DATA"] = log_res
-			print(session['USER_DATA'])
 			sg = rapid_mysql.select("SELECT * FROM `mis_2023`.`_securitygroup` WHERE `id`={};".format(log_res[0]['security_group']))[0]
 			session['USER_DATA'][0]['sg_info'] = sg 
 			if(log_res[0]['security_group']==0):
@@ -119,6 +113,7 @@ class _main:
 			res["data"] = log_res[0]['name']
 			res["profilepic"] = log_res[0]['profilepic']
 			res["job"] = log_res[0]['job']
+			
 			return jsonify(res);
 		else:
 			return jsonify(res);
@@ -133,8 +128,6 @@ class _main:
 		else: action = "none"
 
 		return {"status":status,"action":action}
-
-
 
 
 	@app.route("/login/download_file/<file_>",methods=["POST","GET"])
