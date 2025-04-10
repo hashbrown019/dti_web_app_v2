@@ -24,6 +24,7 @@ class _main:
 	@app.route("/logintest",methods=["POST","GET"])
 	def logintest():
 		return render_template("loginv4.html")
+		
 
 	@app.route("/login",methods=["POST","GET"])
 	def login():
