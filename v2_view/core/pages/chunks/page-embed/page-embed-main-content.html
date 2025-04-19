@@ -44,14 +44,18 @@
 				}
 			}
 
-			function EMBED_OUTER_LINK_IFRAME(_BODY_,obj){
-				var sales_btn = _BODY_.getElementsByClassName("EMBED_OUTER_LINK")
-				for (var i = 0; i < sales_btn.length; i++) {
-					sales_btn[i].onclick = function(el){
-						goto(el.target.attributes['alt'].nodeValue)
+			function EMBED_OUTER_LINK_IFRAME(_BODY_, obj) {
+			_BODY_.addEventListener('click', function (event) {
+				const target = event.target.closest('.EMBED_OUTER_LINK');
+				if (target) {
+					const altValue = target.getAttribute('alt');
+					if (altValue) {
+						goto(altValue); 
 					}
+					event.preventDefault();
 				}
-			}
+			});
+		}
 		</script>
 	</section>
 </div>
