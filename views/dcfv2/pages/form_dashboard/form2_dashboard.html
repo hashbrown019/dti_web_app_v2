@@ -393,7 +393,7 @@
 
 																<br>
 
-																<a class="EMBED_OUTER_LINK" style="color: yellow; cursor: pointer;" alt="/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&id={{row['id']}}">
+																<a class="EMBED_OUTER_LINK" style="color: yellow; cursor: pointer;" href="/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&id={{ row['id'] }}" class="add-sales-button" data-id="{{ row['id'] }}">
 																	<span><i class="fa fa-pencil-square-o"></i></span> Add Sales
 																</a>&nbsp;&nbsp;
 
@@ -410,12 +410,12 @@
 																	<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 																</a>&nbsp;&nbsp;
 																{% endif %}
-																<a class="EMBED_OUTER_LINK" style="color: #ede7e3; cursor: pointer;" alt="/mis-v4/core-file-manager?dbtbl=dcf_implementing_unit&r_id={{ row['id'] }}">
+																<a class="EMBED_OUTER_LINK" style="color: #ede7e3; cursor: pointer;" href="/mis-v4/core-file-manager?dbtbl=dcf_implementing_unit&r_id={{ row['id'] }}" class="mov-button" data-id="{{ row['id'] }}">
 																	<span><i class="fa fa-user-plus"></i></span> Mov
-																</a>&nbsp;&nbsp;
-																<a class="EMBED_OUTER_LINK" style="color: #33cccc; cursor: pointer;" alt="/mis-v4/core-table-sales-tracker?tbl=dcf_implementing_unit&id={{row['id']}}">
+																  </a>&nbsp;&nbsp;
+																<a class="EMBED_OUTER_LINK" style="color: #33cccc; cursor: pointer;" href="/mis-v4/core-table-sales-tracker?tbl=dcf_implementing_unit&id={{ row['id'] }}" class="view-sales-button" data-id="{{ row['id'] }}">
 																	<span><i class="fa fa-pencil-square-o"></i></span> View Sales
-																</a>
+																  </a>
 															</td>
 
 															<td class="date-cell"> {{ row['date_created'] }}<br>

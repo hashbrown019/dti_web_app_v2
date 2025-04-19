@@ -320,56 +320,68 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
-function toggleTable(value) {
-    const isYes = value === "YES";
-    const tableInputs = document.querySelectorAll("#myTable2 input");
-    const addRowBtn = document.getElementById("addRowBtn2");
-
-    tableInputs.forEach(input => {
-        input.disabled = !isYes;
-        if (!isYes) {
-            input.removeAttribute("required");
-        } else {
-            input.setAttribute("required", "true");
-        }
-    });
-    addRowBtn.disabled = !isYes;
-}
+  function toggleTable(value) {
+      const isYes = value === "YES";
+      const tableInputs = document.querySelectorAll("#myTable2 input");
+      const addRowBtn = document.getElementById("addRowBtn2");
+      tableInputs.forEach(input => {
+          input.disabled = !isYes;
+          if (!isYes) {
+              input.removeAttribute("required");
+          } else {
+              input.setAttribute("required", "true");
+          }
+      });
+      addRowBtn.disabled = !isYes;
+  }
 </script>
 
 <script>
-function validateAndSubmit() {
-    const requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
-    let isValid = true;
-
-    // Validate each required input
-    requiredInputs.forEach(function(input) {
-        if (!input.value.trim()) {
-            isValid = false;
-            input.style.setProperty('border', '1px solid red');
-        } else {
-            input.style.setProperty('border', '');
-        }
-    });
-
-    if (isValid) {
-        submit_grievance(); // Submit the form if all fields are valid
-    } else {
-        Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Please fill all required fields",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-}
+  function validateAndSubmit() {
+      const requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
+      let isValid = true;
+      requiredInputs.forEach(function(input) {
+          if (!input.value.trim()) {
+              isValid = false;
+              input.style.setProperty('border', '1px solid red');
+          } else {
+              input.style.setProperty('border', '');
+          }
+      });
+      if (isValid) {
+          submit_grievance();
+          Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Successfully submitted",
+              showConfirmButton: false,
+              timer: 1500
+          }).then(() => {
+              Swal.fire({
+                  title: "Processing...",
+                  text: "Please wait while we redirect you to Dashboard.",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                  didOpen: () => {
+                      Swal.showLoading();
+                  }
+              });
+              window.location.href = "/grievance-table";
+          });
+      } else {
+          Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Please fill all required fields",
+              showConfirmButton: false,
+              timer: 1500
+          });
+      }
+  }
 
 function submit_grievance() {
     const grievance_form_fields = {};
     const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
-
-    // Collect data for each unique ID
     inputs.forEach(input => {
         const id = input.id;
         if (!grievance_form_fields[id]) {
@@ -377,117 +389,83 @@ function submit_grievance() {
         }
         grievance_form_fields[id].push(input.value.trim());
     });
-
-    // Concatenate values for each ID
     for (const key in grievance_form_fields) {
         grievance_form_fields[key] = grievance_form_fields[key].join(', ');
     }
-
-    console.log(grievance_form_fields); // Debugging: Check the collected data
-
+    console.log(grievance_form_fields);
     $send({
         action: "/insert/grievance",
         data: $DATA(grievance_form_fields),
-        method: 'POST',
-        func: function(response) {
-            if (response && response.status === "success") {
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Grievance submitted successfully!",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            } else {
-                console.error("Error response:", response); // Log the error response for debugging
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "Failed to submit grievance",
-                    text: response?.message || "An error occurred. Please try again.",
-                    showConfirmButton: true
-                });
-            }
-        },
-        error: function(err) {
-            console.error("Request failed:", err); // Log the request error for debugging
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "Failed to submit grievance",
-                text: "A network or server error occurred. Please try again.",
-                showConfirmButton: true
-            });
-        }
+        method: POST,
     });
 }
 </script>
 
 <script>
-function addRow(tableId, columnCount) {
-    const table = document.querySelector(`#${tableId} tbody`);
-    const newRow = table.insertRow();
-    const inputs = tableId === "myTable"
-        ? ["first-name-1", "last-name-1", "title-affiliation-1", "contact-info-1"]
-        : ["2-first-name-1", "2-last-name-1", "2-title-affiliation-1", "2-estimated-date-1", "2-nature-communication-1", "2-response-individual-1"];
-    inputs.forEach((id) => {
-        const cell = newRow.insertCell();
-        cell.innerHTML = `<input type="${id.includes('date') ? 'date' : 'text'}" 
-                                 id="${id}" 
-                                 class="GRIEVANCE_FORM form-control" 
-                                 style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" 
-                                 required>`;
-    });
-    newRow.insertCell().innerHTML = `<button class="deleteBtn btn btn-danger" onclick="deleteRow(this)">Delete</button>`;
-}
-
-function deleteRow(button) {
-    const row = button.closest('tr');
-    row.remove();
-}
-
-document.getElementById("addRowBtn").addEventListener("click", () => addRow("myTable", 4));
-document.getElementById("addRowBtn2").addEventListener("click", () => addRow("myTable2", 6));
+  function addRow(tableId, columnCount) {
+      const table = document.querySelector(`#${tableId} tbody`);
+      const newRow = table.insertRow();
+      const inputs = tableId === "myTable"
+          ? ["first-name-1", "last-name-1", "title-affiliation-1", "contact-info-1"]
+          : ["2-first-name-1", "2-last-name-1", "2-title-affiliation-1", "2-estimated-date-1", "2-nature-communication-1", "2-response-individual-1"];
+      inputs.forEach((id) => {
+          const cell = newRow.insertCell();
+          cell.innerHTML = `<input type="${id.includes('date') ? 'date' : 'text'}" 
+                                  id="${id}" 
+                                  class="GRIEVANCE_FORM form-control" 
+                                  style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" 
+                                  required>`;
+      });
+      newRow.insertCell().innerHTML = `<button class="deleteBtn btn btn-danger" onclick="deleteRow(this)">Delete</button>`;
+  }
+  function deleteRow(button) {
+      const row = button.closest('tr');
+      row.remove();
+  }
+  document.getElementById("addRowBtn").addEventListener("click", () => addRow("myTable", 4));
+  document.getElementById("addRowBtn2").addEventListener("click", () => addRow("myTable2", 6));
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-     const urlParams = new URLSearchParams(window.location.search);
-     const recordId = urlParams.get('view');
-     const editId = urlParams.get('edit');
-     const submitButton = document.getElementById('submit');
-     if (recordId) {
-         fetch(`/get_grievance_data?id=${recordId}`)
-             .then(response => response.json())
-             .then(data => {
-                 if (data.status === "error") {
-                     console.error(data.message);
-                     return;
-                 }
-                 populateFields(data[0]); 
-                 disableForm(); 
-                 submitButton.disabled = true; 
-             })
-             .catch(error => console.error("Error fetching data:", error));
-     }
-     if (editId) {
-         fetch(`/get_grievance_data?id=${editId}`)
-             .then(response => response.json())
-             .then(data => {
-                 if (data.status === "error") {
-                     console.error(data.message);
-                     return;
-                 }
-                 populateFields(data[0]); 
-                 enableForm();
-                 submitButton.textContent = "Update"; 
-                 submitButton.onclick = function () {
-                     validateAndUpdate(editId); 
-                 };
-             })
-             .catch(error => console.error("Error fetching data:", error));
-         }
-     });
+  document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const recordId = urlParams.get('view');
+    const editId = urlParams.get('edit');
+    const submitButton = document.getElementById('submit');
+
+    if (recordId) {
+        fetch(`/get_grievance_data?id=${recordId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "error") {
+                    console.error(data.message);
+                    return;
+                }
+                populateFields(data[0]);
+                disableForm();
+                submitButton.disabled = true;
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    }
+
+    if (editId) {
+        fetch(`/get_grievance_data?id=${editId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "error") {
+                    console.error(data.message);
+                    return;
+                }
+                populateFields(data[0]);
+                enableForm(editId); 
+                submitButton.textContent = "Update";
+                submitButton.onclick = function () {
+                    validateAndUpdate(editId); 
+                };
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    }
+});
  
  function populateFields(data) {
      const fields = {
@@ -529,19 +507,19 @@ document.getElementById("addRowBtn2").addEventListener("click", () => addRow("my
         'last-name-1': document.getElementById('last-name-1'),
         'title-affiliation-1': document.getElementById('title-affiliation-1'),
         'contact-info-1': document.getElementById('contact-info-1'),
-        'first-name-2': document.getElementById('2-first-name-1'),
-        'last-name-2': document.getElementById('2-last-name-1'),
-        'title-affiliation-2': document.getElementById('2-title-affiliation-1'),
-        'estimated-date-2': document.getElementById('2-estimated-date-1'),
-        'nature-communication-2': document.getElementById('2-nature-communication-1'),
-        'response-individual-2': document.getElementById('2-response-individual-1'),
+        '2-first-name-1': document.getElementById('2-first-name-1'),
+        '2-last-name-1': document.getElementById('2-last-name-1'),
+        '2-title-affiliation-1': document.getElementById('2-title-affiliation-1'),
+        '2-estimated-date-1': document.getElementById('2-estimated-date-1'),
+        '2-nature-communication-1': document.getElementById('2-nature-communication-1'),
+        '2-response-individual-1': document.getElementById('2-response-individual-1'),
      };
      for (const [key, element] of Object.entries(fields)) {
          if (element) {
              if (key === 'Date' && data[key]) {
                  const date = new Date(data[key]);
                  element.value = date.toISOString().split('T')[0];
-             } else if (key === 'estimated-date-2' && data[key]) {
+             } else if (key === '2-estimated-date-1' && data[key]) {
                  const date = new Date(data[key]);
                  element.value = date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
              } else {
@@ -575,12 +553,15 @@ document.getElementById("addRowBtn2").addEventListener("click", () => addRow("my
     });
 }
  
- function enableForm() {
-     const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
-     inputs.forEach(input => {
-         input.removeAttribute('readonly');
-         input.style.backgroundColor = "#edf2f4"; 
-     });
+function enableForm(id) {
+  const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
+  inputs.forEach(input => {
+    input.removeAttribute('readonly');
+    input.style.backgroundColor = "#edf2f4"; 
+  });
+  const updateButton = document.getElementById('submit');
+  updateButton.addEventListener('click', function () {
+    const requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
     let isValid = true; 
     requiredInputs.forEach(function(input) {
       if (!input.value.trim()) {
@@ -590,68 +571,96 @@ document.getElementById("addRowBtn2").addEventListener("click", () => addRow("my
         input.style.setProperty('border', ''); 
       }
     });
-    if (isValid) {
-      const grievance = input_to_json('GRIEVANCE_FORM');
-      fetch(`/update_grievance_data/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(grievance)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "success") {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Updated successfully",
-            showConfirmButton: false,
-            timer: 1500
-          }).then(() => {
-          Swal.fire({
-            title: "Processing...",
-            text: "Please wait while we redirect you to Dashboard.",
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            didOpen: () => {
-              Swal.showLoading();
-            }
-          });
-          window.location.href = "/grievance-table";
-        });
-        } else {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Failed to update the record",
-            text: data.message,
-            showConfirmButton: true
-          });
-        }
-      })
-      .catch(error => {
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: "An error occurred",
-          text: error.message,
-          showConfirmButton: true
-        });
-      });
-    } else {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Please fill all required fields",
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  }
+  });
+}
   window.addEventListener("pageshow", function(event) {
       if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         Swal.close();
       }
     });
  </script>
+
+<script>
+  function validateAndUpdate(id) {
+    const requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
+    let isValid = true;
+    requiredInputs.forEach(function (input) {
+        if (!input.value.trim()) {
+            isValid = false;
+            input.style.setProperty('border', '1px solid red');
+        } else {
+            input.style.setProperty('border', '');
+        }
+    });
+    if (isValid) {
+        const grievance_form_fields = {};
+        const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
+        inputs.forEach(input => {
+            const id = input.id;
+            if (!grievance_form_fields[id]) {
+                grievance_form_fields[id] = [];
+            }
+            grievance_form_fields[id].push(input.value.trim());
+        });
+        for (const key in grievance_form_fields) {
+            grievance_form_fields[key] = grievance_form_fields[key].join(', ');
+        }
+
+        fetch(`/update_grievance_data/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(grievance_form_fields)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Updated successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    Swal.fire({
+                        title: "Processing...",
+                        text: "Please wait while we redirect you to Dashboard.",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    window.location.href = "/grievance-table";
+                });
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Failed to update the record",
+                    text: data.message,
+                    showConfirmButton: true
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "An error occurred",
+                text: error.message,
+                showConfirmButton: true
+            });
+        });
+    } else {
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Please fill all required fields",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+}
+</script>

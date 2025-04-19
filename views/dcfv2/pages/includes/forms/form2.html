@@ -121,6 +121,7 @@
                         <option value="Coconut - Whole Nuts">Whole Nuts</option>
                         <option value="Coconut - Copra">Copra</option>
                         <option value="Coconut - White Copra">White Copra</option>
+                        <option value="Coconut - White Copra">Twine</option>
                     </optgroup>
             
                     <optgroup label="Cacao">
@@ -198,10 +199,10 @@
                     <option value="">Choose your options.</option>
                     {% for entry in form_c_db %}
                         {% set business_name = entry['reg_businessname'] or entry['name'] or entry['business_addr'] %}
-                        {% if business_name %}
+                        {% if business_name and business_name != 'N/A' %}
                             <option>{{ business_name }}</option>
-                    {% endif %}
-                {% endfor %}    
+                        {% endif %}
+                    {% endfor %}
                 </select>
             </div>
 
