@@ -44,6 +44,7 @@ from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form10
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form11
 from modules.Req_Brorn_util import file_from_request
 from views.feature_0 import feature_0 as a_main
+from openpyxl.worksheet.table import Table, TableStyleInfo
 
 
 
@@ -1424,3 +1425,72 @@ def clean(dict_):
 		new_dict_[KEY] = new_dict_[KEY]+dict_[key]
 		
 	return json.loads(json.dumps(new_dict_))
+
+#########################################################################################################################################
+
+# NEW CODE FOR DCF IMPORT DATA 
+
+@app.route('/export_form5', methods=['GET'])
+def export_form5():
+	query = '''
+		SELECT mg.id, mg.upload_by, u.name AS uploader_name, 
+			   CONCAT(mgit_implementing_unit, ', ', mgit_implementing_unit_rcu, ', ', mgit_implementing_unit_pcu) AS implementing_unit,
+			   mg.mgit_name_of_dip, mg.mgit_msme_recipient, mg.mgit_total_member_recipient, mg.mgit_commodity, 
+			   mg.mgit_commodity_others, mg.mgit_total_number_fo_gender_male, 
+			   mg.mgit_total_number_fo_gender_female, mg.mgit_total_number_fo_sectoral_pwd, 
+			   mg.mgit_total_number_fo_sectoral_youth, mg.mgit_total_number_fo_sectoral_IP, 
+			   mg.mgit_total_number_fo_sectoral_SC, mg.mgit_type_of_investment, 
+			   mg.mgit_total_mgas_based_approved_DIP, mg.mgit_total_mgas_signed, 
+			   mg.mgit_total_mgas_not_yet_signed, mg.mgit_total_matching_grant_based_on_approved_business, 
+			   mg.mgit_pmga_first_availment, mg.mgit_mgar_period_date, 
+			   mg.mgit_remaining_matching_grant_balance, mg.mgit_inclusive_timeline_implementation_start, 
+			   mg.mgit_inclusive_timeline_implementation_end, mg.mgit_time_elapse, 
+			   mg.mgit_total_budget_approved_in_the_DIP, mg.mgit_actual_cost_of_procurement, 
+			   mg.mgit_summary_of_actual_tools_procured, mg.mgit_inclusive_timeline_implementation_start1, 
+			   mg.mgit_inclusive_timeline_implementation_end1, mg.mgit_time_elapse1, 
+			   mg.mgit_date_of_distribution, mg.mgit_remarks_on_the_deliverd_tools, 
+			   mg.date_created, mg.date_modified, mg.filename
+		FROM dcf_matching_grant mg
+		LEFT JOIN users u ON mg.upload_by = u.id
+	'''
+	data = db.select(query)
+	df = pd.DataFrame(data)
+	headers = [
+		'ID', 'Uploaded By', 'Uploader Name', 'Implementing Unit', 
+		'Name of DIP', 'MSME Recipient', 'Total Member Recipient', 'Commodity', 
+		'Commodity Others', 'Total Male', 'Total Female', 'Total PWD', 
+		'Total Youth', 'Total IP', 'Total SC', 'Type of Investment', 
+		'Total MGAs Based on Approved DIP', 'Total MGAs Signed', 
+		'Total MGAs Not Yet Signed', 'Total Matching Grant Based on Approved Business', 
+		'PMGA First Availment', 'MGAR Period Date', 'Remaining Matching Grant Balance', 
+		'Inclusive Timeline Implementation Start', 'Inclusive Timeline Implementation End', 
+		'Time Elapse', 'Total Budget Approved in the DIP', 'Actual Cost of Procurement', 
+		'Summary of Actual Tools Procured', 'Inclusive Timeline Implementation Start 1', 
+		'Inclusive Timeline Implementation End 1', 'Time Elapse 1', 'Date of Distribution', 
+		'Remarks on the Delivered Tools', 'Date Created', 'Date Modified', 'Filename'
+	]
+	df.columns = headers
+	file_path = os.path.join(c.RECORDS, 'dcf_form5_exported_file.xlsx')
+	with pd.ExcelWriter(file_path, engine='openpyxl') as writer:
+		df.to_excel(writer, index=False, sheet_name='dcf_form5_exported_file')
+		workbook = writer.book
+		worksheet = writer.sheets['dcf_form5_exported_file']
+		table = Table(displayName="Form5Table", ref=worksheet.dimensions)
+		style = TableStyleInfo(
+			name="TableStyleMedium9", showFirstColumn=False,
+			showLastColumn=False, showRowStripes=True, showColumnStripes=True
+		)
+		table.tableStyleInfo = style
+		worksheet.add_table(table)
+		for column_cells in worksheet.columns:
+			max_length = 0
+			column_letter = column_cells[0].column_letter
+			for cell in column_cells:
+				try:
+					if cell.value:
+						max_length = max(max_length, len(str(cell.value)))
+				except:
+					pass
+			adjusted_width = max_length + 2
+			worksheet.column_dimensions[column_letter].width = adjusted_width
+	return send_file(file_path, as_attachment=True, download_name='dcf_form5_exported_file.xlsx')

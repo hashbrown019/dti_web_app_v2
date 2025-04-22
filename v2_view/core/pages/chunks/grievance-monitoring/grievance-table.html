@@ -106,14 +106,33 @@
                 let grievanceCurrentPage = 1;
                 const grievanceRowsPerPage = 10;
                 let isGrievanceAscending = true;
+
                 document.addEventListener("DOMContentLoaded", function () {
                     fetchGrievanceData();
                 });
+
+                let loggedInUserId; // Declare loggedInUserId in a higher scope
+
                 async function fetchGrievanceData() {
                     try {
+                        // Fetch grievance data
                         const response = await fetch('/get_grievance_data');
                         const data = await response.json();
-                        grievanceOriginalData = data;
+
+                        // Fetch logged-in user data
+                        const sessionResponse = await fetch('/mis-v4/get-session');
+                        const sessionData = await sessionResponse.json();
+                        loggedInUserId = sessionData[0]?.id; // Assuming 'id' is the user identifier
+
+                        // Check if the logged-in user is the admin (ID = 1)
+                        if (loggedInUserId === 1) {
+                            // Admin can view all data
+                            grievanceOriginalData = data;
+                        } else {
+                            // Filter data based on created_by for other users
+                            grievanceOriginalData = data.filter(row => row.created_by === loggedInUserId);
+                        }
+
                         grievanceFilteredData = [...grievanceOriginalData];
                         createGrievanceTable();
                     } catch (error) {
@@ -123,6 +142,7 @@
 
                 function createGrievanceTable() {
                     const table = document.querySelector('#dataTable tbody');
+
                     function renderTable(page) {
                         table.innerHTML = "";
                         const start = (page - 1) * grievanceRowsPerPage;
@@ -141,7 +161,7 @@
                                 <td>
                                     <div style="display: flex; gap: 5px;">
                                         <a href="?forms&view=${row.id}" class="btn-link btn-sm btn-view">View</a>
-                                        <a href="?forms&edit=${row.id}" class="btn-link btn-sm edit-btn" style="color: rgb(57, 189, 57); cursor:pointer;">Edit</a>
+                                        ${(loggedInUserId === 1 && row.created_by === 1) || (loggedInUserId === row.created_by) ? `<a href="?forms&edit=${row.id}" class="btn-link btn-sm edit-btn" style="color: rgb(57, 189, 57); cursor:pointer;">Edit</a>` : ''}
                                         <a class="btn-link btn-sm delete-btn" style="color: red; cursor: pointer;">Delete</a>
                                     </div>
                                 </td>
@@ -151,12 +171,14 @@
 
                         renderPagination();
                     }
+
                     function renderPagination() {
                         const paginationContainer = document.getElementById("grievancePagination") || createPaginationContainer();
                         paginationContainer.innerHTML = "";
                         const totalPages = Math.ceil(grievanceFilteredData.length / grievanceRowsPerPage);
                         const ul = document.createElement("ul");
                         ul.classList.add("pagination");
+
                         const createPageItem = (label, disabled, onClick) => {
                             const li = document.createElement("li");
                             li.classList.add("page-item");
@@ -168,9 +190,11 @@
                             });
                             return li;
                         };
+
                         ul.appendChild(createPageItem("«", grievanceCurrentPage === 1, () => {
                             if (grievanceCurrentPage > 1) renderTable(--grievanceCurrentPage);
                         }));
+
                         for (let i = 1; i <= totalPages; i++) {
                             const pageItem = createPageItem(i, false, () => {
                                 grievanceCurrentPage = i;
@@ -181,11 +205,14 @@
                             }
                             ul.appendChild(pageItem);
                         }
+
                         ul.appendChild(createPageItem("»", grievanceCurrentPage === totalPages, () => {
                             if (grievanceCurrentPage < totalPages) renderTable(++grievanceCurrentPage);
                         }));
+
                         paginationContainer.appendChild(ul);
                     }
+
                     function createPaginationContainer() {
                         const paginationContainer = document.createElement("nav");
                         paginationContainer.id = "grievancePagination";
@@ -193,16 +220,18 @@
                         document.querySelector("#dataTable").parentNode.appendChild(paginationContainer);
                         return paginationContainer;
                     }
+
                     document.getElementById("grievanceSortButton").addEventListener("click", function () {
                         isGrievanceAscending = !isGrievanceAscending;
-                        grievanceFilteredData.sort((a, b) => 
-                            isGrievanceAscending 
-                                ? a.id - b.id 
+                        grievanceFilteredData.sort((a, b) =>
+                            isGrievanceAscending
+                                ? a.id - b.id
                                 : b.id - a.id
                         );
                         this.innerText = isGrievanceAscending ? "SORT ▲" : "SORT ▼";
                         renderTable(1);
                     });
+
                     document.getElementById("grievanceSearchInput").addEventListener("input", function () {
                         const searchTerm = this.value.trim().toLowerCase();
                         grievanceFilteredData = grievanceOriginalData.filter(row =>
@@ -212,6 +241,7 @@
                         );
                         renderTable(1);
                     });
+
                     renderTable(1);
                 }
 

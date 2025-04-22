@@ -468,7 +468,7 @@ function submit_grievance() {
 });
  
  function populateFields(data) {
-     const fields = {
+  const fields = {
         'type-complaint': document.getElementById('type-complaint'),
         'SECAP': document.getElementById('SECAP'),
         'complainant-quantity': document.getElementById('complainant-quantity'),
@@ -476,6 +476,17 @@ function submit_grievance() {
         'confidentiality-request': document.getElementById('confidentiality-request'),
         'confidentiality-identity': document.getElementById('confidentiality-identity'),
         'confidentiality-option': document.getElementById('confidentiality-option'),
+        'ifad-project-concern': document.getElementById('ifad-project-concern'),
+        'ifad-project-description': document.getElementById('ifad-project-description'),
+        'ifad-project-situation': document.getElementById('ifad-project-situation'),
+        'raised-complaint': document.getElementById('raised-complaint'),
+        'satisfactory-response': document.getElementById('satisfactory-response'),
+        'complaint-resolution': document.getElementById('complaint-resolution'),
+        'ifad-disagreement': document.getElementById('ifad-disagreement'),
+        'ifad-response-details': document.getElementById('ifad-response-details'),
+        'ifad-unsatisfactory-explanation': document.getElementById('ifad-unsatisfactory-explanation'),
+        'ifad-desired-resolution': document.getElementById('ifad-desired-resolution'),
+        'ifad-other-matters': document.getElementById('ifad-other-matters'),
         'complainant-1-fullname': document.getElementById('complainant-1-fullname'),
         'complainant-1-title': document.getElementById('complainant-1-title'),
         'complainant-1-organization': document.getElementById('complainant-1-organization'),
@@ -492,28 +503,61 @@ function submit_grievance() {
         'complainant-2-address': document.getElementById('complainant-2-address'),
         'complainant-2-mailing-address': document.getElementById('complainant-2-mailing-address'),
         'complainant-2-additional-guidance': document.getElementById('complainant-2-additional-guidance'),
-        'ifad-project-concern': document.getElementById('ifad-project-concern'),
-        'ifad-project-description': document.getElementById('ifad-project-description'),
-        'ifad-project-situation': document.getElementById('ifad-project-situation'),
-        'raised-complaint': document.getElementById('raised-complaint'),
-        'satisfactory-response': document.getElementById('satisfactory-response'),
-        'complaint-resolution': document.getElementById('complaint-resolution'),
-        'ifad-disagreement': document.getElementById('ifad-disagreement'),
-        'ifad-response-details': document.getElementById('ifad-response-details'),
-        'ifad-unsatisfactory-explanation': document.getElementById('ifad-unsatisfactory-explanation'),
-        'ifad-desired-resolution': document.getElementById('ifad-desired-resolution'),
-        'ifad-other-matters': document.getElementById('ifad-other-matters'),
-        'first-name-1': document.getElementById('first-name-1'),
-        'last-name-1': document.getElementById('last-name-1'),
-        'title-affiliation-1': document.getElementById('title-affiliation-1'),
-        'contact-info-1': document.getElementById('contact-info-1'),
-        '2-first-name-1': document.getElementById('2-first-name-1'),
-        '2-last-name-1': document.getElementById('2-last-name-1'),
-        '2-title-affiliation-1': document.getElementById('2-title-affiliation-1'),
-        '2-estimated-date-1': document.getElementById('2-estimated-date-1'),
-        '2-nature-communication-1': document.getElementById('2-nature-communication-1'),
-        '2-response-individual-1': document.getElementById('2-response-individual-1'),
-     };
+        
+    };
+
+    // Populate single fields
+    for (const [key, element] of Object.entries(fields)) {
+        if (element && data[key]) {
+            element.value = data[key];
+        }
+    }
+
+    // Populate table rows for "myTable"
+    if (data['first-name-1'] && data['last-name-1']) {
+        const firstNames = data['first-name-1'].split(', ');
+        const lastNames = data['last-name-1'].split(', ');
+        const titles = data['title-affiliation-1'] ? data['title-affiliation-1'].split(', ') : [];
+        const contacts = data['contact-info-1'] ? data['contact-info-1'].split(', ') : [];
+        const table = document.querySelector('#myTable tbody');
+        table.innerHTML = ''; // Clear existing rows
+
+        firstNames.forEach((firstName, index) => {
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${firstName}" required></td>
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${lastNames[index] || ''}" required></td>
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${titles[index] || ''}" required></td>
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${contacts[index] || ''}" required></td>
+                <td><button class="deleteBtn btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
+            `;
+        });
+    }
+
+    // Populate table rows for "myTable2"
+    if (data['2-first-name-1'] && data['2-estimated-date-1']) {
+        const firstNames = data['2-first-name-1'].split(', ');
+        const lastNames = data['2-last-name-1'] ? data['2-last-name-1'].split(', ') : [];
+        const titles = data['2-title-affiliation-1'] ? data['2-title-affiliation-1'].split(', ') : [];
+        const dates = data['2-estimated-date-1'] ? data['2-estimated-date-1'].split(', ') : [];
+        const communications = data['2-nature-communication-1'] ? data['2-nature-communication-1'].split(', ') : [];
+        const responses = data['2-response-individual-1'] ? data['2-response-individual-1'].split(', ') : [];
+        const table = document.querySelector('#myTable2 tbody');
+        table.innerHTML = ''; // Clear existing rows
+
+        firstNames.forEach((firstName, index) => {
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${firstName}" required></td>
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${lastNames[index] || ''}" required></td>
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${titles[index] || ''}" required></td>
+                <td><input type="date" class="GRIEVANCE_FORM form-control" value="${dates[index] || ''}" required></td>
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${communications[index] || ''}" required></td>
+                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${responses[index] || ''}" required></td>
+                <td><button class="deleteBtn btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
+            `;
+        });
+    };
      for (const [key, element] of Object.entries(fields)) {
          if (element) {
              if (key === 'Date' && data[key]) {
@@ -550,6 +594,12 @@ function submit_grievance() {
             button.style.cursor = "not-allowed";
             button.style.backgroundColor = "#d3d3d3";
         }
+    });
+    const deleteButtons = document.querySelectorAll('.deleteBtn');
+    deleteButtons.forEach(button => {
+        button.setAttribute('disabled', true);
+        button.style.cursor = "not-allowed";
+        button.style.backgroundColor = "#ff9b9b";
     });
 }
  
@@ -663,4 +713,20 @@ function enableForm(id) {
         });
     }
 }
+</script>
+
+<input type="hidden" id="created_by" class="GRIEVANCE_FORM" value="">
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/mis-v4/get-session")
+        .then(response => response.json())
+        .then(data => {
+            const createdByField = document.getElementById("created_by");
+            if (data && data[0] && data[0].id) {
+                createdByField.value = data[0].id;
+            }
+        })
+        .catch(error => console.error("Error fetching user data:", error));
+});
 </script>

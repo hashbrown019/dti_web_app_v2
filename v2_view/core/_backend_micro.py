@@ -89,22 +89,9 @@ class _main:
             return jsonify({"status": "success", "message": "Data inserted successfully", "result": res})
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)}), 500
-
-    @app.route("/sales-tracker-table", methods=["GET"])
-    def sales_tracker_table():
-        return render_template("sales-tracker-table.html")
-
-    @app.route("/view-sales-tracker-table", methods=["GET", "POST"])
-    @app.route("/view-sales-tracker-table/<ids>", methods=["GET", "POST"])
-    def view_sales_tracker_table(ids=None):
-        if ids:
-            stData = rapid_mysql.select(f"SELECT * FROM sales_tracker WHERE `CPA_id`={ids}")
-            return jsonify(stData)
-        else:
-            stData = rapid_mysql.select("SELECT * FROM sales_tracker")
-            return jsonify(stData)
 #--grievance------------------------------------------------------------------------------------------------
 @app.route("/get_grievance_data")
+@c.login_auth_web()
 def get_grievance_data():
     try:
         record_id = request.args.get('id') 
@@ -160,3 +147,95 @@ def update_grievance_data(id):
 @app.route("/grievance-table", methods=["GET"])
 def grievance_table():
     return redirect("mis-v4/core-grievance-monitoring?table")
+
+@app.route("/insert/grievance", methods=["POST"])
+@c.login_auth_web() 
+def insert_grievance():
+    try:
+        user_data = session.get("USER_DATA", [{}])[0]
+        created_by = user_data.get("id") 
+        data = request.form.to_dict()
+        data["created_by"] = created_by 
+        columns = ", ".join([f"`{key}`" for key in data.keys()])
+        values = ", ".join([f"'{value}'" for value in data.values()])
+        query = f"INSERT INTO grievance ({columns}) VALUES ({values})"
+        result = rapid_mysql.do(query)
+        if result is not None:
+            return jsonify({"status": "success", "message": "Grievance submitted successfully"}), 200
+        else:
+            return jsonify({"status": "error", "message": "Failed to submit grievance"}), 500
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+#SALES TRACKER TABLE ------------------------------------------------------
+@app.route("/delete_sales_tracker/<int:id>", methods=["DELETE"])
+def delete_sales_tracker(id):
+    try:
+        query = f"DELETE FROM sales_tracker WHERE CPA_id = {id}"
+        result = rapid_mysql.do(query)
+        if result is not None:
+            return jsonify({"status": "success", "message": "Record deleted successfully"}), 200
+        else:
+            return jsonify({"status": "error", "message": "Failed to delete the record"}), 500
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+    
+@app.route("/sales-tracker-table", methods=["GET"])
+def sales_tracker_table():
+    return render_template("sales-tracker-table.html")
+
+@app.route("/view-sales-tracker-table/all/<int:ids>", methods=["GET"])
+def view_all_sales_tracker_table(ids):
+    try:
+        stData = rapid_mysql.select(f"SELECT * FROM sales_tracker WHERE CPA_id = {ids}")
+        if stData:
+            print("Fetched Data:", stData)
+            return jsonify(stData)
+        else:
+            return jsonify({"status": "error", "message": "No records found"}), 404
+    except Exception as e:
+        print("Error:", str(e)) 
+        return jsonify({"status": "error", "message": str(e)}), 500
+    
+@app.route("/view-sales-tracker-table/<int:st_id>", methods=["GET"])
+def view_single_sales_tracker_table(st_id):
+    try:
+        stData = rapid_mysql.select(f"SELECT * FROM sales_tracker WHERE ST_id = {st_id} LIMIT 1")
+        if stData:
+            print("Fetched Data:", stData[0])
+            return jsonify(stData[0]) 
+        else:
+            return jsonify({"status": "error", "message": "Record not found"}), 404
+    except Exception as e:
+        print("Error:", str(e)) 
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/delete_sales_tracker_entry/<int:st_id>", methods=["DELETE"])
+def delete_sales_tracker_entry(st_id):
+    try:
+        query = f"DELETE FROM sales_tracker WHERE ST_id = {st_id}"
+        result = rapid_mysql.do(query)
+        if result is not None:
+            return jsonify({"status": "success", "message": "Record deleted successfully"}), 200
+        else:
+            return jsonify({"status": "error", "message": "Failed to delete the record"}), 500
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+    
+@app.route("/update_sales_tracker/<int:id>", methods=["POST"])
+def update_sales_tracker():
+    try:
+        st_id = request.form.get("st_id")
+        if not st_id:
+            return jsonify({"status": "error", "message": "ST_id is required"}), 400
+        fields = {key: value for key, value in request.form.items() if key != "st_id"}
+        set_clause = ", ".join([f"{key} = %s" for key in fields.keys()])
+        values = list(fields.values()) + [st_id]
+        query = f"UPDATE sales_tracker SET {set_clause} WHERE ST_id = %s"
+        result = rapid_mysql.do(query, values)
+        if result:
+            return jsonify({"status": "success", "message": "Record updated successfully"}), 200
+        else:
+            return jsonify({"status": "error", "message": "Failed to update the record"}), 500
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
