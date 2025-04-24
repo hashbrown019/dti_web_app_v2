@@ -173,7 +173,13 @@
                   <th>Total Transaction</th>
                   <th>Incentives Provided</th>
                   <th>Date</th>
-                  <th>Action</th>
+                  <!-- <th>Action</th> 
+                    <td>
+                  <span class="text-primary view-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">View</span>
+                      <span class="text-success edit-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Edit</span>
+                      <span class="text-danger delete-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Delete</span>
+                  </td>-->
+                   
                 </tr>
               </thead>
               <tbody></tbody>
@@ -254,15 +260,11 @@
         <td>${entry.ST_total_transaction}</td>
         <td>${entry.ST_incentives_provided}</td>
         <td>${date}</td>
-        <td>
-          <span class="text-primary view-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">View</span>
-          <span class="text-success edit-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Edit</span>
-          <span class="text-danger delete-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Delete</span>
-        </td>
       `;
     });
     renderPagination(page, rowsPerPage);
   }
+  
 
     function renderPagination(currentPage, rowsPerPage) {
       const totalPages = Math.ceil(filteredData.length / rowsPerPage);
