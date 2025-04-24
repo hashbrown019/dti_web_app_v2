@@ -167,19 +167,7 @@ def insert_grievance():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
-#SALES TRACKER TABLE ------------------------------------------------------
-@app.route("/delete_sales_tracker/<int:id>", methods=["DELETE"])
-def delete_sales_tracker(id):
-    try:
-        query = f"DELETE FROM sales_tracker WHERE CPA_id = {id}"
-        result = rapid_mysql.do(query)
-        if result is not None:
-            return jsonify({"status": "success", "message": "Record deleted successfully"}), 200
-        else:
-            return jsonify({"status": "error", "message": "Failed to delete the record"}), 500
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
-    
+#SALES TRACKER TABLE ------------------------------------------------------    
 @app.route("/sales-tracker-table", methods=["GET"])
 def sales_tracker_table():
     return render_template("sales-tracker-table.html")
@@ -221,21 +209,34 @@ def delete_sales_tracker_entry(st_id):
             return jsonify({"status": "error", "message": "Failed to delete the record"}), 500
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
-    
-@app.route("/update_sales_tracker/<int:id>", methods=["POST"])
-def update_sales_tracker():
+
+@app.route("/update_sales_tracker/<int:st_id>", methods=["POST"])
+def update_sales_tracker(st_id):
     try:
-        st_id = request.form.get("st_id")
-        if not st_id:
-            return jsonify({"status": "error", "message": "ST_id is required"}), 400
-        fields = {key: value for key, value in request.form.items() if key != "st_id"}
-        set_clause = ", ".join([f"{key} = %s" for key in fields.keys()])
-        values = list(fields.values()) + [st_id]
-        query = f"UPDATE sales_tracker SET {set_clause} WHERE ST_id = %s"
-        result = rapid_mysql.do(query, values)
-        if result:
-            return jsonify({"status": "success", "message": "Record updated successfully"}), 200
-        else:
-            return jsonify({"status": "error", "message": "Failed to update the record"}), 500
+        field_mapping = {
+            "nameID": "CPA_id",
+            "nameRCU": "ST_rcu",
+            "namePCU": "ST_pcu",
+            "nameCOMMODITY": "ST_commodity",
+            "nameDIP": "ST_nameofdip",
+            "nameFO": "ST_nameof_fo",
+            "addressFO": "ST_address_fo",
+            "af-msme": "ST_af_msme",
+            "productType": "ST_product_type",
+            "vs": "ST_vol_supplied",
+            "aveP": "ST_ave_price",
+            "totalTransaction": "ST_total_transaction",
+            "incentives": "ST_incentives_provided",
+            "date": "ST_date",
+        }
+        update_fields = []
+        for form_field, db_column in field_mapping.items():
+            if form_field in request.form:
+                update_fields.append(f"`{db_column}` = '{request.form[form_field]}'")
+        if not update_fields:
+            return jsonify({"status": "error", "message": "No valid data provided"}), 400
+        query = f"UPDATE `sales_tracker` SET {', '.join(update_fields)} WHERE `ST_id` = {st_id}"
+        res = rapid_mysql.do(query)
+        return jsonify({"status": "success", "message": "Data updated successfully", "result": res})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500

@@ -159,6 +159,7 @@
               <thead>
                 <tr>
                   <th>ID</th>
+                  <th>Entry ID</th>
                   <th>RCU</th>
                   <th>PCU</th>
                   <th>Commodity</th>
@@ -172,6 +173,7 @@
                   <th>Total Transaction</th>
                   <th>Incentives Provided</th>
                   <th>Date</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -187,24 +189,42 @@
     const URL_ID = URL_ARGS['id'];
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let isAscending = true, originalData = [], filteredData = [];
-
     async function fetchData() {
-      try {
-        const response = await fetch(URL + URL_ID);
-        originalData = await response.json();
-        filteredData = [...originalData];
-        updateTotals(originalData);
-        renderTable();
-        setupCharts();
-      } catch (error) { console.error('Error fetching data:', error); }
+  try {
+    const response = await fetch(`/view-sales-tracker-table/all/${URL_ID}`);
+    const data = await response.json();
+
+    // Check if data is empty or not found
+    if (!data || data.status === "error" || data.length === 0) {
+      originalData = [];
+      filteredData = [];
+      document.querySelector("#salesTrackerTable tbody").innerHTML = `
+        <tr>
+          <td colspan="16" class="text-center">No Entries</td>
+        </tr>
+      `;
+      updateTotals([]); // Reset totals to 0
+      return;
     }
+
+    // Ensure data is an array
+    originalData = Array.isArray(data) ? data : [data];
+    filteredData = [...originalData];
+
+    updateTotals(originalData);
+    renderTable();
+    setupCharts();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
 
     function updateTotals(data) {
       const totals = {
         totalAvePrice: data.reduce((t, e) => t + parseFloat(e.ST_ave_price || 0), 0),
         totalVolSup: data.reduce((t, e) => t + parseFloat(e.ST_vol_supplied || 0), 0),
         totalTransaction: data.reduce((t, e) => t + parseFloat(e.ST_total_transaction || 0), 0),
-        totalSales: data.reduce((t, e) => t + (parseFloat(e.ST_ave_price || 0) * parseFloat(e.ST_total_transaction || 0)), 
+        totalSales: data.reduce((t, e) => t + (parseFloat(e.ST_ave_price || 0) * parseFloat(e.ST_vol_supplied || 0)), 
         0)
       };
       Object.entries(totals).forEach(([id, value]) => document.getElementById(id).innerText = value.toLocaleString());
@@ -220,6 +240,7 @@
       const date = entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "";
       row.innerHTML = `
         <td>${entry.CPA_id}</td>
+        <td>${entry.ST_id}</td>
         <td>${entry.ST_rcu}</td>
         <td>${entry.ST_pcu}</td>
         <td>${entry.ST_commodity}</td>
@@ -233,6 +254,11 @@
         <td>${entry.ST_total_transaction}</td>
         <td>${entry.ST_incentives_provided}</td>
         <td>${date}</td>
+        <td>
+          <span class="text-primary view-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">View</span>
+          <span class="text-success edit-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Edit</span>
+          <span class="text-danger delete-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Delete</span>
+        </td>
       `;
     });
     renderPagination(page, rowsPerPage);
@@ -250,7 +276,6 @@
       nav.innerHTML = "";
       const ul = document.createElement("ul");
       ul.classList.add("pagination");
-
       const createPageItem = (label, disabled, onClick) => {
         const li = document.createElement("li");
         li.classList.add("page-item");
@@ -272,14 +297,12 @@
       ul.appendChild(createPageItem("»", currentPage === totalPages, () => renderTable(currentPage + 1, rowsPerPage)));
       nav.appendChild(ul);
     }
-
     document.getElementById("sortButton").addEventListener("click", () => {
       isAscending = !isAscending;
       filteredData.sort((a, b) => isAscending ? a.ST_id - b.ST_id : b.ST_id - a.ST_id);
       document.getElementById("sortButton").innerText = isAscending ? "Sort ▲" : "Sort ▼";
       renderTable();
     });
-
     document.getElementById("searchInput").addEventListener("input", (e) => {
       const searchTerm = e.target.value.toLowerCase();
       filteredData = searchTerm
@@ -287,13 +310,11 @@
         : [...originalData];
       renderTable();
     });
-
     async function setupCharts() {
     setupLineChart("lineChart", "filterType", "filterValue", ["Sales", "Average Price"], ["rgb(75, 192, 192)", "#a7c957"], entry => [(entry.ST_ave_price || 0) * (entry.ST_total_transaction || 0), entry.ST_ave_price || 0]);
     setupLineChart("VPlineChart", "VPfilterType", "VPfilterValue", ["Volume Supply"], ["rgb(255, 111, 233)"], entry => [entry.ST_vol_supplied || 0]);
     setupLineChart("transactionChart", "transactionFilterType", "transactionFilterValue", ["Total Transaction"], ["rgb(255, 105, 97)"], entry => [entry.ST_total_transaction || 0]);
 }
-
 async function setupLineChart(canvasId, filterTypeId, filterValueId, labels, colors, dataExtractor) {
   const ctx = document.querySelector(`#${canvasId}`).getContext("2d");
   const chart = new Chart(ctx, {
@@ -324,10 +345,8 @@ async function setupLineChart(canvasId, filterTypeId, filterValueId, labels, col
       const date = new Date(entry.ST_date);
       return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
     }))];
-
     const filterDropdown = document.getElementById(filterValueId);
     filterDropdown.innerHTML = '<option value="all">All</option>';
-
     const options = filterType === "year" ? years : months;
     options.forEach(option => {
       const display = filterType === "year" ? option : `${option.split('-')[0]} - ${monthNames[parseInt(option.split('-')[1]) - 1]}`;
@@ -378,7 +397,6 @@ async function setupLineChart(canvasId, filterTypeId, filterValueId, labels, col
       pointRadius: 6,
       pointHoverRadius: 8,
     }));
-
     chart.update();
   }
 
@@ -395,19 +413,68 @@ async function setupLineChart(canvasId, filterTypeId, filterValueId, labels, col
     pointHoverRadius: 8,
   }));
   chart.update();
-
   populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
-
   document.getElementById(filterTypeId).addEventListener("change", () => {
     populateFilters(originalData, document.getElementById(filterTypeId).value, filterValueId);
     updateChart(originalData);
   });
-
   document.getElementById(filterValueId).addEventListener("change", () => {
     updateChart(originalData);
   });
 }
-
 fetchData();
-
   </script>
+
+<script>
+  document.addEventListener("click", function (event) {
+  const target = event.target;
+
+  // Handle View Button
+  if (target.classList.contains("view-btn")) {
+    const id = target.dataset.id; // Use ST_id for viewing
+    window.location.href = `/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&st_id=${id}&view=true`;
+  }
+
+  // Handle Edit Button
+  if (target.classList.contains("edit-btn")) {
+    const id = target.dataset.id; // Use ST_id for editing
+    window.location.href = `/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&st_id=${id}&edit=true`;
+  }
+
+  // Handle Delete Button
+  if (target.classList.contains("delete-btn")) {
+  const st_id = target.dataset.id; // Get the ST_id from the button's data attribute
+
+  // Confirm deletion using SweetAlert
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`/delete_sales_tracker_entry/${st_id}`, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            Swal.fire("Deleted!", "Your record has been deleted.", "success");
+            fetchData(); // Re-fetch data to update the table and charts
+          } else {
+            Swal.fire("Error!", "Failed to delete the record: " + data.message, "error");
+          }
+        })
+        .catch((error) => {
+          console.error("Error deleting record:", error);
+          Swal.fire("Error!", "An error occurred while deleting the record.", "error");
+        });
+    }
+  });
+}
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

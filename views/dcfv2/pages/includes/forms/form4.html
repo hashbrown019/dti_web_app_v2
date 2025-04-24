@@ -423,9 +423,11 @@
 					<table id="form4_table" class="x-table x-container x-table-border">
 							<tr>
 								<th>
-									<center><button type="button" style="float: left;" class="btn btn-primary"
+									<center>
+										<button type="button" style="float: left;" class="btn btn-primary"
 										onclick="add_row()"><i
-										class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add</button> Venue
+										class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add</button>Venue
+										<button type="button" class="btn btn-danger" style="float: right;" onclick="delete_row()"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove Empty Row</button>
 									</center>
 								</th>
 								<th>
@@ -455,6 +457,30 @@
 								row.insertCell(1).innerHTML = `<td><input class="FORM4_FIELD x-light-grey x-input" id="cbb_name_of_resource_person_kapown_`+k_counter+`" type="text" name="cbb_name_of_resource_person[]"></td>`
 								k_counter += 1
 								// Add some text to the new cells:
+					}
+
+
+						function delete_row() {
+						var rows = form4_table.rows; // Get all rows in the table
+						var emptyRowFound = false;
+
+						// Loop through the rows to find and delete empty rows first
+						for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+							var venueInput = rows[i].querySelector("input[name='cbb_venue[]']");
+							var resourcePersonInput = rows[i].querySelector("input[name='cbb_name_of_resource_person[]']");
+
+							// Check if both inputs are empty
+							if (venueInput && resourcePersonInput && venueInput.value.trim() === "" && resourcePersonInput.value.trim() === "") {
+								form4_table.deleteRow(i);
+								emptyRowFound = true;
+								break; // Stop after deleting the first empty row
+							}
+						}
+
+						// If no empty rows are found, do not delete rows with any data
+						if (!emptyRowFound) {
+							alert("Cannot delete rows with data. Please clear the row before deleting.");
+						}
 					}
 				</script>
 
