@@ -76,14 +76,17 @@ class _main:
                 "incentives": "ST_incentives_provided",
                 "date": "ST_date",
             }
-            columns = []
-            values = []
+            columns = ["`upload_by`"]
+            values = [f"'{session['USER_DATA'][0]['id']}'"]  # Add the current user's ID to the upload_by column
+
             for form_field, db_column in field_mapping.items():
                 if form_field in request.form:
                     columns.append(f"`{db_column}`")
                     values.append(f"'{request.form[form_field]}'")
+
             if not columns:
                 return jsonify({"status": "error", "message": "No valid data provided"}), 400
+
             query = f"INSERT INTO `sales_tracker` ({', '.join(columns)}) VALUES ({', '.join(values)})"
             res = rapid_mysql.do(query)
             return jsonify({"status": "success", "message": "Data inserted successfully", "result": res})
@@ -214,14 +217,15 @@ def delete_sales_tracker_entry(st_id):
 def update_sales_tracker(st_id):
     try:
         field_mapping = {
+            "nameSTID": "ST_id",
             "nameID": "CPA_id",
             "nameRCU": "ST_rcu",
             "namePCU": "ST_pcu",
             "nameCOMMODITY": "ST_commodity",
             "nameDIP": "ST_nameofdip",
             "nameFO": "ST_nameof_fo",
-            "addressFO": "ST_address_fo",
             "af-msme": "ST_af_msme",
+            "addressFO": "ST_address_fo",
             "productType": "ST_product_type",
             "vs": "ST_vol_supplied",
             "aveP": "ST_ave_price",
@@ -229,14 +233,35 @@ def update_sales_tracker(st_id):
             "incentives": "ST_incentives_provided",
             "date": "ST_date",
         }
-        update_fields = []
+        # Add the current user's ID to the `upload_by` column
+        update_fields = [f"`upload_by` = '{session['USER_DATA'][0]['id']}'"]
+
+        # Map form fields to database columns
         for form_field, db_column in field_mapping.items():
             if form_field in request.form:
                 update_fields.append(f"`{db_column}` = '{request.form[form_field]}'")
         if not update_fields:
             return jsonify({"status": "error", "message": "No valid data provided"}), 400
+
+        # Construct the SQL UPDATE query
         query = f"UPDATE `sales_tracker` SET {', '.join(update_fields)} WHERE `ST_id` = {st_id}"
         res = rapid_mysql.do(query)
         return jsonify({"status": "success", "message": "Data updated successfully", "result": res})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+    
+@app.route("/get_salesT_data")
+@c.login_auth_web()
+def get_salesT_data():
+    try:
+        record_id = request.args.get('id') 
+        if record_id:
+            query = f"SELECT * FROM sales_tracker WHERE Id = {record_id}"
+        else:
+            query = "SELECT * FROM sales_tracker"
+        sales_data = rapid_mysql.select(query)
+        if record_id and not sales_data:
+            return jsonify({"status": "error", "message": "No data found for the given ID"}), 404
+        return jsonify(sales_data)
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500

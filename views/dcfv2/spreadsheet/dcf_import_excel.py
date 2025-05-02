@@ -298,57 +298,78 @@ def importcsvform4(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open4(path):  
-	book = xlrd.open_workbook(path)
-	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
-	header = data[4]
-	
-	print(sheet.name)
-	if(sheet.name !='form4'):
-		flash(f"Invalid file template!", "error")
-		return "done:Sheet Error"
-	for row in data[5:]:
-		upload_by = session["USER_DATA"][0]['id']
-		cbb_implementing_unit = row[0]
-		cbb_activity_title = row[1]
-		cbb_types_of_training = row[2]
-		cbb_topic_of_training = row[3]
-		cbb_dip_approved_alignment = row[4]
-		cbb_name_of_dip = row[5]
-		cbb_date_start = row[6]
-		cbb_date_end = row[7]
-		cbb_commodity = row[8]
-		cbb_venue = row[9]
-		cbb_name_of_resource_person = row[10]
-		cbb_rapid_actual_budget = row[11]
-		cbb_dip_capbuild_activities_NPO = row[12]
-		cbb_dip_capbuild_activities_CA = row[13]
-		cbb_total_number_per_gender_male = row[14]
-		cbb_total_number_per_gender_female = row[15]
-		cbb_total_number_per_gender_total = row[16]
-		cbb_total_number_per_sector_pwd = row[17]
-		cbb_total_number_per_sector_youth = row[18]
-		cbb_total_number_per_sector_ip = row[19]
-		cbb_total_number_per_sector_sc = row[20]
-		cbb_total_number_per_sector_total = row[21]
-		cbb_results_of_activity_pre_test = row[32]
-		cbb_results_of_activity_post_test = row[33]
-		cbb_client_feedback_survey_rating = row[34]
-		cbb_client_feedback_survey_comments_AOI = row[35]                                                                                                        
-		filename = UPLOAD_NAME
+    book = xlrd.open_workbook(path)
+    sheet = book.sheet_by_index(0)
+    data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+    header = data[4]
+    
+    if sheet.name != 'form4':
+        flash(f"Invalid file template!", "error")
+        return "done:Sheet Error"
 
-		querycsv = ("INSERT INTO dcf_capacity_building ( upload_by, cbb_implementing_unit,cbb_activity_title,cbb_types_of_training,cbb_topic_of_training,cbb_dip_approved_alignment,cbb_name_of_dip,cbb_date_start,cbb_date_end,cbb_commodity,cbb_venue,cbb_name_of_resource_person,cbb_rapid_actual_budget,cbb_dip_capbuild_activities_NPO,cbb_dip_capbuild_activities_CA,cbb_total_number_per_gender_male,cbb_total_number_per_gender_female,cbb_total_number_per_gender_total,cbb_total_number_per_sector_pwd,cbb_total_number_per_sector_youth,cbb_total_number_per_sector_ip,cbb_total_number_per_sector_sc,cbb_total_number_per_sector_total,cbb_results_of_activity_pre_test,cbb_results_of_activity_post_test,cbb_client_feedback_survey_rating,cbb_client_feedback_survey_comments_AOI,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
-		format(upload_by, cbb_implementing_unit,cbb_activity_title,cbb_types_of_training,cbb_topic_of_training,cbb_dip_approved_alignment,cbb_name_of_dip,cbb_date_start,cbb_date_end,cbb_commodity,cbb_venue,cbb_name_of_resource_person,cbb_rapid_actual_budget,cbb_dip_capbuild_activities_NPO,cbb_dip_capbuild_activities_CA,cbb_total_number_per_gender_male,cbb_total_number_per_gender_female,cbb_total_number_per_gender_total,cbb_total_number_per_sector_pwd,cbb_total_number_per_sector_youth,cbb_total_number_per_sector_ip,cbb_total_number_per_sector_sc,cbb_total_number_per_sector_total,cbb_results_of_activity_pre_test,cbb_results_of_activity_post_test,cbb_client_feedback_survey_rating,cbb_client_feedback_survey_comments_AOI,filename))
-		insert=db.do(querycsv)
-		print(insert)
-		print("===============================================")
+    def safe_int(val):
+        try:
+            if val is None:
+                return ''
+            return int(float(val))
+        except (ValueError, TypeError):
+            return 0
 
-	if(insert["response"]=="error"):
-		flash(f"An error occured!", "error")
-		print(str(insert))
-	else:
-		flash(f"The file was imported successfully!", "success")
-	return "done"
+    for row in data[5:]:
+        upload_by = session["USER_DATA"][0]['id']
+        cbb_implementing_unit = row[0]
+        cbb_activity_title = row[1]
+        cbb_types_of_training = row[2]
+        cbb_topic_of_training = row[3]
+        cbb_dip_approved_alignment = row[4]
+        cbb_name_of_dip = row[5]
+        cbb_date_start = row[6]
+        cbb_date_end = row[7]
+        cbb_commodity = row[8]
+        cbb_venue = row[9]
+        cbb_name_of_resource_person = row[10]
+        cbb_rapid_actual_budget = row[11]
+        cbb_dip_capbuild_activities_NPO = row[12]
+        cbb_dip_capbuild_activities_CA = row[13]
+        cbb_total_number_per_gender_male = safe_int(row[14])
+        cbb_total_number_per_gender_female = safe_int(row[15])
+        cbb_total_number_per_gender_total = safe_int(row[16])
+        cbb_total_number_per_sector_pwd = safe_int(row[17])
+        cbb_total_number_per_sector_youth = safe_int(row[18])
+        cbb_total_number_per_sector_ip = safe_int(row[19])
+        cbb_total_number_per_sector_sc = safe_int(row[20])
+        cbb_total_number_per_sector_total = safe_int(row[21])
+        cbb_male_ip = safe_int(row[22])
+        cbb_female_ip = safe_int(row[23])
+        cbb_male_youth = safe_int(row[24])
+        cbb_female_youth = safe_int(row[25])
+        cbb_male_pwd = safe_int(row[26])
+        cbb_female_pwd = safe_int(row[27])
+        cbb_male_sc = safe_int(row[28])
+        cbb_female_sc = safe_int(row[29])
+        cbb_male_total = safe_int(row[30])
+        cbb_female_total = safe_int(row[31])
+        cbb_results_of_activity_pre_test = row[32]
+        cbb_results_of_activity_post_test = row[33]
+        cbb_client_feedback_survey_rating = row[34]
+        cbb_client_feedback_survey_comments_AOI = row[35]
+        filename = UPLOAD_NAME
+
+        querycsv = ("INSERT INTO dcf_capacity_building ( upload_by, cbb_implementing_unit,cbb_activity_title,cbb_types_of_training,cbb_topic_of_training,cbb_dip_approved_alignment,cbb_name_of_dip,cbb_date_start,cbb_date_end,cbb_commodity,cbb_venue,cbb_name_of_resource_person,cbb_rapid_actual_budget,cbb_dip_capbuild_activities_NPO,cbb_dip_capbuild_activities_CA,cbb_total_number_per_gender_male,cbb_total_number_per_gender_female,cbb_total_number_per_gender_total,cbb_total_number_per_sector_pwd,cbb_total_number_per_sector_youth,cbb_total_number_per_sector_ip,cbb_total_number_per_sector_sc,cbb_total_number_per_sector_total,cbb_male_ip,cbb_female_ip,cbb_male_youth,cbb_female_youth,cbb_male_pwd,cbb_female_pwd,cbb_male_sc,cbb_female_sc,cbb_male_total,cbb_female_total,cbb_results_of_activity_pre_test,cbb_results_of_activity_post_test,cbb_client_feedback_survey_rating,cbb_client_feedback_survey_comments_AOI,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+        format(upload_by, cbb_implementing_unit,cbb_activity_title,cbb_types_of_training,cbb_topic_of_training,cbb_dip_approved_alignment,cbb_name_of_dip,cbb_date_start,cbb_date_end,cbb_commodity,cbb_venue,cbb_name_of_resource_person,cbb_rapid_actual_budget,cbb_dip_capbuild_activities_NPO,cbb_dip_capbuild_activities_CA,cbb_total_number_per_gender_male,cbb_total_number_per_gender_female,cbb_total_number_per_gender_total,cbb_total_number_per_sector_pwd,cbb_total_number_per_sector_youth,cbb_total_number_per_sector_ip,cbb_total_number_per_sector_sc,cbb_total_number_per_sector_total,cbb_male_ip,cbb_female_ip,cbb_male_youth,cbb_female_youth,cbb_male_pwd,cbb_female_pwd,cbb_male_sc,cbb_female_sc,cbb_male_total,cbb_female_total,cbb_results_of_activity_pre_test,cbb_results_of_activity_post_test,cbb_client_feedback_survey_rating,cbb_client_feedback_survey_comments_AOI,filename))
+
+
+        insert = db.do(querycsv)
+        print(insert)
+        print("===============================================")
+
+        if insert["response"] == "error":
+            flash(f"An error occurred!", "error")
+            print(str(insert))
+        else:
+            flash(f"The file was imported successfully!", "success")
+
+    return "done"
 
 
 def importcsvform5(request):

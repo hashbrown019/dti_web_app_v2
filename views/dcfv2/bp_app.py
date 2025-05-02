@@ -710,6 +710,7 @@ def dcfexport_data():
 					writer.save()
 					return send_file(c.RECORDS+'/objects/_temp_/dcf_form1_exported_file.xlsx')
 			return form1export()
+		
 		elif export_type == 'form2export':
 			def form2export():
 				if request.method == "POST":
@@ -1429,6 +1430,292 @@ def clean(dict_):
 #########################################################################################################################################
 
 # NEW CODE FOR DCF IMPORT DATA 
+#FORM_1############################################################################################################################################
+@app.route('/export_form1', methods=['GET'])
+def export_form1():
+    query = '''
+        SELECT 
+            dcf.id, dcf.form_1_rcus, dcf.form_1_name_dip, dcf.form_1_anchor_firm,
+            dcf.form_1_size_of_anchor, dcf.form_1_msmes, dcf.form_1_scope_provinces,
+            CONCAT(dcf.form_1_commodity, ', ', dcf.form_1_commodity_others) AS Commodity,
+            dcf.form_1_for_development, dcf.form_1_finalized_approved, dcf.form_1_date_of_parallel_review,
+            dcf.form_1_date_of_submission, dcf.form_1_date_of_rtwg, dcf.form_1_date_of_npco_cursory, dcf.form_1_date_of_ifad_no_inssuance,
+            dcf.total_large_enterprise, dcf.total_medium_enterprise, dcf.total_small_enterprise,
+            dcf.total_micro_enterprise, dcf.form_1_totalmale, dcf.form_1_maleyouth, dcf.form_1_maleip,
+            dcf.form_1_malepwd, dcf.form_1_totalfemale, dcf.form_1_femaleyouth, dcf.form_1_femaleip,
+            dcf.form_1_femalepwd, dcf.form_1_totalyouth, dcf.form_1_totalip, dcf.form_1_totalpwd,
+            dcf.form_1_totalcooperatives, dcf.form_1_totalassociations, dcf.form_1_totalmsme,
+            dcf.form_1_total_farmerbene, dcf.form_1_totalfo, dcf.form_1_hect_rehab, dcf.form_1_total_cost_rehab,
+            dcf.form_1_hect_exp, dcf.form_1_cost_exp, dcf.form_1_totalhectarage_cov, dcf.form_1_euqipment,
+            dcf.form_1_Facilities_warehouse, dcf.form_1_totalcost_prodinvest, dcf.form_1_total_rehab,
+            dcf.form_1_total_exp, dcf.form_1_totalcost_prodinvest2, dcf.form_1_partners_counterpart,
+            dcf.form_1_total_matching_grant, dcf.form1_total_mg_cost, dcf.form_1_organizational,
+            dcf.form_1_technical_trainings, dcf.form_1_post_production, dcf.form_1_others, dcf.form_1_total_capbuild,
+            dcf.form_1_total_capbuild_counterpart, dcf.form_1_supply_chain_manager, dcf.supply_chain_manager_counterpart,
+            dcf.form_1_fmi, dcf.form_1_fmi_kms, dcf.fmi_part_counter, dcf.form_1_y, dcf.form_1_ac, dcf.form_1_ad,
+            dcf.form1_total_fmi, dcf.form_1_totalproject_cost, dcf.partner_counterpart_MG, dcf.partner_counterpart_CB,
+            dcf.partner_counterpart_SCM, dcf.partner_counterpart_FMI, dcf.partner_counterpart_total, dcf.total_dip_cost_MG,
+            dcf.total_dip_cost_CB, dcf.total_dip_cost_SCM, dcf.total_dip_cost_FMI, dcf.total_dip_cost_total,
+            dcf.date_created, dcf.date_modified, u.name AS "Uploaded by"
+        FROM dcf_prep_review_aprv_status dcf
+        INNER JOIN users u ON dcf.upload_by = u.id
+    '''.format(position_data_filter())
+    
+    data = db.select(query)
+    df = pd.DataFrame(data)
+
+    headers = [
+        'ID', 'RCUs', 'Name of DIP', 'Anchor Firms', 'Size of Anchor Firm', 'MSMEs', 'Scope/Provinces', 'Commodity',
+        'Start date of DIP development', 'Submission Date of Full BPs/DIPs to NPCO for Technical review',
+        'DIP Technical/Parallel Review Date', 'Submission Date of revised DIPs to RTWG',
+        'Date of RTWG Approval', 'DIP Submission Date to IFAD/NPCO', 'NPCO/IFAD (No Objection Issuance) Date',
+        '# of Large Enterprises', '# of Medium Enterprises', '# of Small Enterprises', '# of Micro Enterprises',
+        'Total # of Male', '# of Male-Youth', '# of Male - IP', '# of Male - PWD',
+        'Total # of Female', '# of Female-Youth', '# of Female - IP', '# of Female - PWD',
+        'Total # of Youth', 'Total # of IP', 'Total # of PWD', 'Total # of Cooperatives', 'Total # of Associations',
+        'Total # of MSMEs', 'Total # of Smallholder Farming Households', 'Total # of FOs', 'Hectares for Rehab',
+        'Total Cost of Rehab', 'Hectares for Expansion', 'Total Cost of Expansion', 'Total Hectarage Covered',
+        'Equipment', 'Facilities/Warehouse', 'Total Cost of Productive Investments', 'Total Rehab',
+        'Total Expansion', 'Total Cost Productive Investments 2', 'Partners Total Counterpart',
+        'Total Matching Grant', 'Total MG Cost', 'Organizational', 'Technical Trainings', 'Post Production',
+        'Others', 'Total Capacity Building', 'Total Cap Build Counterpart', 'Supply Chain Manager',
+        'Supply Chain Manager Counterpart', 'FMI', 'FMI KMS', 'FMI Partner Counterpart',
+        'Year', 'AC', 'AD', 'Total FMI', 'Total Project Cost',
+        'Partner Counterpart MG', 'Partner Counterpart CB', 'Partner Counterpart SCM', 'Partner Counterpart FMI',
+        'Partner Counterpart Total', 'Total DIP Cost MG', 'Total DIP Cost CB', 'Total DIP Cost SCM',
+        'Total DIP Cost FMI', 'Total DIP Cost Total', 'Date Created', 'Date Modified', 'Uploaded by'
+    ]
+
+    df.columns = headers
+    file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form1_exported_file.xlsx')
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    with pd.ExcelWriter(file_path, engine='xlsxwriter') as writer:
+        df.to_excel(writer, sheet_name='exported_file', index=False)
+        workbook = writer.book
+        worksheet = writer.sheets['exported_file']
+        header_format = workbook.add_format({
+            'bold': True,
+            'text_wrap': True,
+            'valign': 'top',
+            'fg_color': '#264653',  # Updated color code
+            'border': 1
+        })
+        for col_num, value in enumerate(df.columns.values):
+            worksheet.write(0, col_num, value, header_format)
+        for idx, col in enumerate(df.columns):
+            series = df[col].astype(str)
+            max_len = max(series.map(len).max(), len(col)) + 2
+            worksheet.set_column(idx, idx, max_len)
+    return send_file(file_path, as_attachment=True, download_name='dcf_form1_exported_file.xlsx')
+
+
+#FORM_2 ############################################################################################################
+@app.route('/export_form2', methods=['GET'])
+def export_form2():
+    query = '''
+        SELECT 
+            dcf.id, dcf.form_2_rcus, dcf.form_2_pcu,
+            CONCAT(dcf.form_2_commodity, ', ', dcf.form_2_commodity_others) AS Commodity,
+            CONCAT(dcf.form_2_dip_alignment, ', ', dcf.form_2_dip_alignment_yes) AS dip_alignment,
+            dcf.form_2_name_owner_manager, dcf.form_2_sex_owner_manager, dcf.form_2_sector_owner_manager,
+            dcf.form_2_businessname, dcf.form_2_business_owner_manager, dcf.form_2_partner_fo_engaged,
+            dcf.form_2_chairperson_manager, dcf.form_2_sex_chairperson_manager, dcf.form_2_sector_chairperson_manager,
+            dcf.form_2_office_address_province, dcf.form_2_total_number_fo, dcf.form_2_male, dcf.form_2_female,
+            dcf.form_2_pwde, dcf.form_2_youth, dcf.form_2_ip, dcf.form_2_sc, dcf.form_2_hectares_covered,
+            dcf.form_2_cpa_date_signing, dcf.form_2_cpa_date_expiration, dcf.form_2_days_remaining,
+            dcf.form_2_date_renewed, dcf.form_2_notable_cpa_incentives,
+            CONCAT(dcf.form_2_remarks_status, ', ', dcf.form_2_remarks_status_why) AS remark_status,
+            dcf.form_2_activity_agreements, dcf.form_2_date_conducted, dcf.date_created,
+            dcf.date_modified, u.name AS 'Uploaded by'
+        FROM dcf_implementing_unit dcf
+        INNER JOIN users u ON dcf.upload_by = u.id
+    '''.format(position_data_filter())
+    data = db.select(query)
+    df = pd.DataFrame(data)
+
+    headers = [
+        'ID', 'RCUs', 'PCUs', 'Commodity', 'DIP Alignment', 'Name of Owner/Manager of the Anchor Firm/MSMEs',
+        'Sex of Owner/Manager', 'Sector of Owner/Manager', 'Business Name', 'Business Address of Owner/Manager',
+        'Name of Partner FOs Engaged', 'Chairperson/Manager of Partner FO', 'Sex of Chairperson/Manager',
+        'Sector of Chairperson/Manager', 'Office Address/Province of FO', 'Total # of FO Members',
+        'Total # of FO Members Male', 'Total # of FO Members Female', 'Total # of FO Members - PWD',
+        'Total # of FO Members - Youth', 'Total # of FO Members - IP', 'Total # of FO Members - SC',
+        'Hectares Covered', 'Date of CPA Signing', 'CPA Expiration Date', 'Days Remaining', 'Date Renewed',
+        'Notable CPA Incentives (Optional)', 'Remarks/Status', 'Activity/Agreements',
+        'Date Conducted/Implemented', 'Date Created', 'Date Modified', 'Uploaded by'
+    ]
+    df.columns = headers
+
+    file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form2_exported_file.xlsx')
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='exported_file', index=False)
+    workbook = writer.book
+    worksheet = writer.sheets['exported_file']
+    header_format = workbook.add_format({
+        'bold': True,
+        'text_wrap': True,
+        'valign': 'top',
+        'fg_color': '#606c38',
+        'border': 1
+    })
+
+    for col_num, value in enumerate(df.columns.values):
+        worksheet.write(0, col_num, value, header_format)
+    for idx, col in enumerate(df.columns):
+        series = df[col].astype(str)
+        max_len = max(series.map(len).max(), len(col)) + 2
+        worksheet.set_column(idx, idx, max_len)
+    writer.close()
+    return send_file(file_path, as_attachment=True, download_name='dcf_form2_exported_file.xlsx')
+
+#FORM_3 ############################################################################################################
+@app.route('/export_form3', methods=['GET'])
+def export_form3():
+    query = '''
+        SELECT 
+            dcf_bdsp_reg.id, dcf_bdsp_reg.upload_by, users.name AS uploader_name,
+            dcf_bdsp_reg.form_3_orgfirm, dcf_bdsp_reg.form_3_types_of_bdsp,
+            dcf_bdsp_reg.form_3_contact_person, dcf_bdsp_reg.form_3_sex,
+            dcf_bdsp_reg.form_3_office_addr, dcf_bdsp_reg.form_3_email,
+            dcf_bdsp_reg.form_3_breif_description, dcf_bdsp_reg.phone,
+            dcf_bdsp_reg.form_3_choices, dcf_bdsp_reg.form_3_preferred_region,
+            dcf_bdsp_reg.form_3_preferred_province, dcf_bdsp_reg.form_3_name,
+            dcf_bdsp_reg.form_3_education, dcf_bdsp_reg.form_3_expertise,
+            dcf_bdsp_reg.form_3_prior_rapid_engagements, dcf_bdsp_reg.form_3_rapid_implementing_unit,
+            dcf_bdsp_reg.form_3_nature_engagements, dcf_bdsp_reg.form_3_suppliers_evaluation,
+            dcf_bdsp_reg.form_3_other_engagement_outside_rapid, dcf_bdsp_reg.form_3_lecture_training_seminar,
+            dcf_bdsp_reg.form_3_training_materials, dcf_bdsp_reg.form_3_organize_pool,
+            dcf_bdsp_reg.form_3_demand_basis, dcf_bdsp_reg.form_3_extension_service_facilitation,
+            dcf_bdsp_reg.form_3_philgeps_registered, dcf_bdsp_reg.date_created, dcf_bdsp_reg.date_modified
+        FROM dcf_bdsp_reg
+        INNER JOIN users ON dcf_bdsp_reg.upload_by = users.id
+    '''.format(position_data_filter())
+    data = db.select(query)
+    df = pd.DataFrame(data)
+
+    headers = [
+        'ID', 'Uploaded By', 'Uploader Name', 'Name of BDSP', 'Types of BDSP', 
+        'Contact Person', 'Sex', 'Office/Main Address', 'Email Address', 
+        'Brief Description of Company', 'Tel/Cellphone number', 'Field of Expertise',
+        'Preferred Region to work in for RAPID', 'Preferred Province to work in for RAPID',
+        'Name', 'Education', 'Expertise', 'Prior RAPID Engagements?', 
+        'RAPID Implementing Unit', 'Type/Nature of Engagements', 
+        'Suppliers Evaluation', 'Other Engagement outside RAPID', 
+        'Willing to Conduct On-line Training', 'Willing to Develop Training Materials', 
+        'Willing to Join Other Providers as Organize Pool', 'Willing to Be a Mentor/Coach', 
+        'Willing for Long-Term Engagement', 'Philgeps Registered', 'Date Created', 'Date Modified'
+    ]
+    df.columns = headers
+    file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form3_exported_file.xlsx')
+    writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='exported_file', index=False)
+    workbook = writer.book
+    worksheet = writer.sheets['exported_file']
+
+    header_format = workbook.add_format({
+        'bold': True,
+        'text_wrap': True,
+        'valign': 'top',
+        'fg_color': '#0dda15',
+        'border': 1
+    })
+    for col_num, value in enumerate(df.columns.values):
+        worksheet.write(0, col_num, value, header_format)
+    for idx, col in enumerate(df.columns):
+        series = df[col].astype(str)
+        max_len = max(series.map(len).max(), len(col)) + 2
+        worksheet.set_column(idx, idx, max_len)
+    writer.close()
+    return send_file(file_path, as_attachment=True, download_name='dcf_form3_exported_file.xlsx')
+
+#FORM_4 ############################################################################################################
+@app.route('/export_form4', methods=['GET'])
+def export_form4():
+	query = '''
+		SELECT dcf_capacity_building.id,
+				users.name AS uploader_name,
+				dcf_capacity_building.cbb_implementing_unit,
+				dcf_capacity_building.cbb_activity_title,
+				dcf_capacity_building.cbb_types_of_training,
+				dcf_capacity_building.cbb_topic_of_training,
+				dcf_capacity_building.cbb_dip_approved_alignment,
+				dcf_capacity_building.cbb_name_of_dip,
+				dcf_capacity_building.cbb_date_start,
+				dcf_capacity_building.cbb_date_end,
+				dcf_capacity_building.cbb_total_number_of_participants,
+				CONCAT(dcf_capacity_building.cbb_commodity, ', ', dcf_capacity_building.cbb_commodity_others) AS 'Commodity',
+				dcf_capacity_building.cbb_venue,
+				dcf_capacity_building.cbb_name_of_resource_person,
+				dcf_capacity_building.cbb_rapid_actual_budget,
+				dcf_capacity_building.cbb_dip_capbuild_activities_NPO,
+				dcf_capacity_building.cbb_dip_capbuild_activities_CA,
+				dcf_capacity_building.cbb_total_number_per_gender_male,
+				dcf_capacity_building.cbb_total_number_per_gender_female,
+				dcf_capacity_building.cbb_total_number_per_gender_total,
+				dcf_capacity_building.cbb_total_number_per_sector_pwd,
+				dcf_capacity_building.cbb_total_number_per_sector_youth,
+				dcf_capacity_building.cbb_total_number_per_sector_ip,
+				dcf_capacity_building.cbb_total_number_per_sector_sc,
+				dcf_capacity_building.cbb_total_number_per_sector_total,
+				dcf_capacity_building.cbb_male_ip,
+				dcf_capacity_building.cbb_female_ip,
+				dcf_capacity_building.cbb_male_youth,
+				dcf_capacity_building.cbb_female_youth,
+				dcf_capacity_building.cbb_male_pwd,
+				dcf_capacity_building.cbb_female_pwd,
+				dcf_capacity_building.cbb_male_sc,
+				dcf_capacity_building.cbb_female_sc,
+				dcf_capacity_building.cbb_male_total,
+				dcf_capacity_building.cbb_female_total,
+				dcf_capacity_building.cbb_results_of_activity_pre_test,
+				dcf_capacity_building.cbb_results_of_activity_post_test,
+				dcf_capacity_building.cbb_client_feedback_survey_rating,
+				dcf_capacity_building.cbb_client_feedback_survey_comments_AOI,
+				dcf_capacity_building.date_created,
+				dcf_capacity_building.date_modified
+		FROM dcf_capacity_building
+		LEFT JOIN users ON dcf_capacity_building.upload_by = users.id
+	'''.format(position_data_filter())
+	data = db.select(query)
+	df = pd.DataFrame(data)
+
+	headers = [
+		'ID', 'Uploaded By', 'Implementing Unit', 'Activity Title', 'Types of Training',
+		'Topic Of Training', 'DIP approved alignment', 'Name of DIPs',
+		'ACTIVITY DURATION (start date)', 'ACTIVITY DURATION (end date)',
+		'Total Number of Participants', 'Commodity', 'Venue',
+		'Name of Resource Person/Facilitator/BDSP (First Name Middle Name Last Name)',
+		'RAPID Actual Budget Actual (CY 2022 Onwards e.g. 34000.00)',
+		'Name of Partner/Organization', 'Counterpart Amount(monetize & estimates)',
+		'Male', 'Female', 'Total', 'PWD', 'Youth', 'IP', 'SC', 'Total',
+		'Male IP', 'Female IP', 'Male Youth', 'Female Youth', 'Male PWD', 'Female PWD',
+		'Male SC', 'Female SC', 'Male Total', 'Female Total', 'Pre-Test', 'Post-Test',
+		'Rating', 'Comments/ Areas of Improvement', 'Date Created', 'Date Modified'
+	]
+	df.columns = headers
+	file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form4_exported_file.xlsx')
+	writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+	df.to_excel(writer, sheet_name='exported_file', index=False)
+	workbook = writer.book
+	worksheet = writer.sheets['exported_file']
+	header_format = workbook.add_format({
+		'bold': True,
+		'text_wrap': True,
+		'valign': 'top',
+		'fg_color': '#fcbf49',
+		'border': 1
+	})
+	for col_num, value in enumerate(df.columns.values):
+		worksheet.write(0, col_num, value, header_format)
+	for idx, col in enumerate(df.columns):
+		series = df[col].astype(str)
+		max_len = max(series.apply(len).max(), len(col)) + 2
+		worksheet.set_column(idx, idx, max_len)
+	writer.close()
+	return send_file(file_path, as_attachment=True, download_name='dcf_form4_exported_file.xlsx')
+
+#FORM_5 ############################################################################################################
 @app.route('/export_form5', methods=['GET'])
 def export_form5():
     query = '''
@@ -1450,8 +1737,8 @@ def export_form5():
                mg.mgit_date_of_distribution, mg.mgit_remarks_on_the_deliverd_tools, 
                mg.date_created, mg.date_modified, mg.filename
         FROM dcf_matching_grant mg
-        LEFT JOIN users u ON mg.upload_by = u.id
-    '''
+        LEFT JOIN users u ON mg.upload_by = u.id 
+    '''.format(position_data_filter())
     data = db.select(query)
     df = pd.DataFrame(data)
 
@@ -1479,7 +1766,7 @@ def export_form5():
         'bold': True,
         'text_wrap': True,
         'valign': 'top',
-        'fg_color': '#00cc66',
+        'fg_color': '#fcbf49', 
         'border': 1
     })
     for col_num, value in enumerate(df.columns.values):
@@ -1490,3 +1777,287 @@ def export_form5():
         worksheet.set_column(idx, idx, max_len)
     writer.close()
     return send_file(file_path, as_attachment=True, download_name='dcf_form5_exported_file.xlsx')
+
+#FORM_6 ############################################################################################################
+@app.route('/export_form6', methods=['GET'])
+def export_form6():
+        query = '''
+            SELECT dcf_product_development.id,
+                   dcf_product_development.form_6_implementing_unit,
+                   dcf_product_development.form_6_type_of_assisstance,
+                   dcf_product_development.form_6_type_of_activity,
+                   dcf_product_development.form_6_dip_alignment,
+                   dcf_product_development.form_6_activity_duration_start,
+                   dcf_product_development.form_6_activity_duration_end,
+                   dcf_product_development.form_6_venue,
+                   dcf_product_development.form_6_resource_person,
+                   dcf_product_development.form_6_rapid_actual_budget,
+                   dcf_product_development.form_6_name_of_partner_organization_1,
+                   dcf_product_development.form_6_name_of_partner_organization_2,
+                   dcf_product_development.form_6_beneficiary_participant,
+                   dcf_product_development.form_6_commodity,
+                   dcf_product_development.form_6_type_of_beneficiary,
+                   dcf_product_development.form_6_sex,
+                   dcf_product_development.form_6_sector,
+                   dcf_product_development.form_6_product_developed,
+                   dcf_product_development.form_6_date_launched_to_market,
+                   dcf_product_development.form_6_improved_product,
+                   dcf_product_development.form_6_type_of_product_improvement,
+                   dcf_product_development.form_6_name_of_product_developed,
+                   CONCAT(dcf_product_development.form_6_certification, ', ', dcf_product_development.form6_otherss1) AS certification1,
+                   CONCAT(dcf_product_development.form_6_certification2, ', ', dcf_product_development.form6_otherss2) AS certification2,
+                   dcf_product_development.form_6_date_issuance,
+                   dcf_product_development.form_6_expiration_date,
+                   dcf_product_development.form_6_product_certified,
+                   dcf_product_development.form_6_rating,
+                   dcf_product_development.form_6_comment_ares_of_improvement,
+                   dcf_product_development.date_created,
+                   dcf_product_development.date_modified,
+                   users.name as 'Uploaded by'
+            FROM dcf_product_development
+            LEFT JOIN users ON dcf_product_development.upload_by = users.id
+        '''.format(position_data_filter())
+        data = db.select(query)
+        df = pd.DataFrame(data)
+        headers = [
+            'ID', 'Implementing Unit', 'Type of Assistance', 'Type of Activity', 'DIP Alignment',
+            'Activity Duration Start Date', 'Activity Duration End Date', 'Venue', 'Resource Person',
+            'RAPID Actual Budget', 'Partner Organization 1', 'Partner Organization 2', 'Beneficiary/Participant',
+            'Commodity', 'Beneficiary Type', 'Sex', 'Sector', 'Product Developed', 'Date Launched to Market',
+            'Improved Product', 'Type of Product Improvement', 'Name of Product Developed', 'Certification 1',
+            'Certification 2', 'Date of Issuance', 'Expiration Date', 'Product Certified', 'Rating',
+            'Comments/Areas of Improvement', 'Date Created', 'Date Modified', 'Uploaded By'
+        ]
+        df.columns = headers
+        file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form6_exported_file.xlsx')
+        writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='dcf_form6_exported_file', index=False)
+        workbook = writer.book
+        worksheet = writer.sheets['dcf_form6_exported_file']
+        header_format = workbook.add_format({
+            'bold': True,
+            'text_wrap': True,
+            'valign': 'top',
+            'fg_color': '#6c757d',
+            'border': 1
+        })
+        for col_num, value in enumerate(df.columns.values):
+            worksheet.write(0, col_num, value, header_format)
+        for idx, col in enumerate(df.columns):
+            series = df[col].astype(str)
+            max_len = max(series.map(len).max(), len(col)) + 2
+            worksheet.set_column(idx, idx, max_len)
+        writer.close()
+        return send_file(file_path, as_attachment=True, download_name='dcf_form6_exported_file.xlsx')
+
+#FORM_7 ############################################################################################################
+@app.route('/export_form7', methods=['GET'])
+def export_form7():
+		query = '''SELECT dcf_trade_promotion.id,
+					dcf_trade_promotion.form_7_implementing_unit, dcf_trade_promotion.form_7_title_trade_promotion,
+					dcf_trade_promotion.form_7_type_of_trade_promotion, dcf_trade_promotion.form_7_dip_indicate,
+					dcf_trade_promotion.form_7_start_date, dcf_trade_promotion.form_7_end_date,
+					dcf_trade_promotion.form_7_name_of_po, dcf_trade_promotion.form_7_amount,
+					dcf_trade_promotion.form_7_venue, dcf_trade_promotion.form_7_rapid_actual_budget,
+					dcf_trade_promotion.form_7_name_of_beneficiary,
+					CONCAT(dcf_trade_promotion.form_7_commodity, ', ', dcf_trade_promotion.form_7_commodity_others) AS 'Commodity',
+					dcf_trade_promotion.form_7_beneficiary, dcf_trade_promotion.form_7_sex,
+					dcf_trade_promotion.form_7_sector, dcf_trade_promotion.form_7_type_of_products,
+					dcf_trade_promotion.form_7_name_of_buyer, dcf_trade_promotion.form_7_cash_sales,
+					dcf_trade_promotion.form_7_booked_sales, dcf_trade_promotion.form_7_under_negotiations,
+					dcf_trade_promotion.form_7_total_autosum, dcf_trade_promotion.date_created,
+					dcf_trade_promotion.date_modified, users.name as 'Uploaded by'
+					FROM dcf_trade_promotion
+					LEFT JOIN users ON dcf_trade_promotion.upload_by = users.id
+				'''.format(position_data_filter())
+		data = db.select(query)
+		df = pd.DataFrame(data)
+		headers = [
+			'ID', 'Implementing Unit', 'Title of Trade Promotion', 'Type of Trade Promotion',
+			'DIP Indicate', 'Start Date', 'End Date', 'Name of PO',
+			'Amount', 'Venue', 'RAPID Actual Budget', 'Name of Beneficiary',
+			'Commodity', 'Beneficiary Type', 'Sex', 'Sector', 'Type of Products',
+			'Name of Buyer', 'Cash Sales', 'Booked Sales', 'Under Negotiations',
+			'Total Autosum', 'Date Created', 'Date Modified', 'Uploaded By'
+		] 
+		df.columns = headers
+		file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form7_exported_file.xlsx')
+		writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+		df.to_excel(writer, sheet_name='dcf_form7_exported_file', index=False)
+		workbook = writer.book
+		worksheet = writer.sheets['dcf_form7_exported_file']
+		header_format = workbook.add_format({
+			'bold': True,
+			'text_wrap': True,
+			'valign': 'top',
+			'fg_color': '#9e2a2b',
+			'border': 1
+		})
+		for col_num, value in enumerate(df.columns.values):
+			worksheet.write(0, col_num, value, header_format)
+		for idx, col in enumerate(df.columns):
+			series = df[col].astype(str)
+			max_len = max(series.map(len).max(), len(col)) + 2
+			worksheet.set_column(idx, idx, max_len)
+		writer.close()
+		return send_file(file_path, as_attachment=True, download_name='dcf_form7_exported_file.xlsx')
+
+#FORM_9 ############################################################################################################
+@app.route('/export_form9', methods=['GET'])
+def export_form9():
+    query = '''SELECT dcf_enablers_activity.id,
+                    dcf_enablers_activity.form_9_implementing_unit,
+                    dcf_enablers_activity.form_9_title_trade_promotion,
+                    CONCAT(dcf_enablers_activity.form_9_type_of_training,', ', dcf_enablers_activity.form_9_othertypetraining) AS 'Type of Training/Activity',
+                    dcf_enablers_activity.form_9_start_date, dcf_enablers_activity.form_9_end_date,
+                    dcf_enablers_activity.form_9_venue, dcf_enablers_activity.form_9_rapid_actual_budget,
+                    dcf_enablers_activity.form_9_name_of_resource_person, dcf_enablers_activity.form_9_name_of_participant_org,
+                    dcf_enablers_activity.form_9_counterpart_amount, dcf_enablers_activity.form_9_name_of_participant,
+                    dcf_enablers_activity.form_9_sex, dcf_enablers_activity.form_9_sector,
+                    dcf_enablers_activity.form_9_organization, dcf_enablers_activity.form_9_designation,
+                    dcf_enablers_activity.form_9_pre_test1, dcf_enablers_activity.form_9_post_test1,
+                    dcf_enablers_activity.form_9_activity_output, dcf_enablers_activity.form_9_pre_test2,
+                    dcf_enablers_activity.form_9_post_test2, dcf_enablers_activity.form_9_rating,
+                    dcf_enablers_activity.form_9_comments, dcf_enablers_activity.date_created,
+                    dcf_enablers_activity.date_modified, users.name as 'Uploaded by'
+                FROM dcf_enablers_activity
+                LEFT JOIN users ON dcf_enablers_activity.upload_by = users.id
+            '''.format(position_data_filter())
+    data = db.select(query)
+    df = pd.DataFrame(data)
+    headers = [
+        'ID', 'Implementing Unit', 'Activity Title', 'Type of Training/Activity',
+        'Start Date', 'End Date', 'Venue', 'RAPID Actual Budget',
+        'Name of Resource Person/Facilitator/BDSP', 'Name of Partner/Organization',
+        'Counterpart Amount', 'Name of Participant', 'Sex', 'Sector',
+        'Organization', 'Designation', 'Results of Activity Pre-test',
+        'Results of Activity Post-test', 'Activity Output',
+        'Results of Activity (Average if applicable/NA option) Pre-test',
+        'Results of Activity (Average if applicable/NA option) Post-test',
+        'Rating', 'Comments/Areas of Improvement', 'Date Created', 'Date Modified',
+        'Uploaded By'
+    ]
+    df.columns = headers
+    file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form9_exported_file.xlsx')
+    writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='dcf_form9_exported_file', index=False)
+    workbook = writer.book
+    worksheet = writer.sheets['dcf_form9_exported_file']
+    header_format = workbook.add_format({
+        'bold': True,
+        'text_wrap': True,
+        'valign': 'top',
+        'fg_color': '#b8b8ff',
+        'border': 1
+    })
+    for col_num, value in enumerate(df.columns.values):
+        worksheet.write(0, col_num, value, header_format)
+    for idx, col in enumerate(df.columns):
+        series = df[col].astype(str)
+        max_len = max(series.map(len).max(), len(col)) + 2
+        worksheet.set_column(idx, idx, max_len)
+    writer.close()
+    return send_file(file_path, as_attachment=True, download_name='dcf_form9_exported_file.xlsx')
+
+#FORM_10 ############################################################################################################
+@app.route('/export_form10', methods=['GET'])
+def export_form10():
+	query = '''
+		SELECT dcf_negosyo_center.id,
+					dcf_negosyo_center.form_10_nc_location, dcf_negosyo_center.form_10_name_of_nc,
+					dcf_negosyo_center.form_10_title_of_rapid_activity, dcf_negosyo_center.form_10_type_of_assistance,
+					dcf_negosyo_center.form_10_date, dcf_negosyo_center.form_10_type_of_beneficiary,
+					dcf_negosyo_center.form_10_sex_male, dcf_negosyo_center.form_10_sex_female,
+					dcf_negosyo_center.form_10_commodity, dcf_negosyo_center.date_created,
+					dcf_negosyo_center.date_modified, users.name as 'Uploaded by'
+					FROM dcf_negosyo_center
+					LEFT JOIN users ON dcf_negosyo_center.upload_by = users.id
+	'''.format(position_data_filter())
+	data = db.select(query)
+	df = pd.DataFrame(data)
+	headers = [
+		'ID', 'Location of NC', 'Name of NC', 'Title of RAPID Activity',
+		'Type of Assistance', 'Date', 'Type of Beneficiary', 'Commodity', 'Male',
+		'Female', 'Date Created', 'Date Modified', 'Uploaded By'
+	]
+	df.columns = headers
+	file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form10_exported_file.xlsx')
+	writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+	df.to_excel(writer, sheet_name='dcf_form10_exported_file', index=False)
+	workbook = writer.book
+	worksheet = writer.sheets['dcf_form10_exported_file']
+	header_format = workbook.add_format({
+		'bold': True,
+		'text_wrap': True,
+		'valign': 'top',
+		'fg_color': '#bb8588',
+		'border': 1
+	})
+	for col_num, value in enumerate(df.columns.values):
+		worksheet.write(0, col_num, value, header_format)
+	for idx, col in enumerate(df.columns):
+		series = df[col].astype(str)
+		max_len = max(series.map(len).max(), len(col)) + 2
+		worksheet.set_column(idx, idx, max_len)
+	writer.close()
+	return send_file(file_path, as_attachment=True, download_name='dcf_form10_exported_file.xlsx')
+
+#FORM_11 ############################################################################################################
+@app.route('/export_form11', methods=['GET'])
+def export_form11():
+	query = '''
+		SELECT dcf_access_financing.id,
+					CONCAT(dcf_access_financing.form_11_dip_alignment, ', ', dcf_access_financing.form_11_dip_alignment_yes) AS 'form11_dip',
+					dcf_access_financing.form_11_activity_title,
+					dcf_access_financing.form_11_name_of_beneficiary,
+					CONCAT(dcf_access_financing.form_11_industry_cluster, ' ', dcf_access_financing.form_11_industry_pfn) AS 'industry_cluster',
+					dcf_access_financing.form_11_msme_regional,
+					dcf_access_financing.form_11_msme_province,
+					dcf_access_financing.form_11_male,
+					dcf_access_financing.form_11_female,
+					dcf_access_financing.form_11_pwd,
+					dcf_access_financing.form_11_youth,
+					dcf_access_financing.form_11_ip,
+					dcf_access_financing.form_11_sc,
+					dcf_access_financing.form_11_date_submitted,
+					dcf_access_financing.form_11_date_approved,
+					dcf_access_financing.form_11_name_of_fsp,
+					dcf_access_financing.form_11_location_address,
+					dcf_access_financing.form_11_amount_of_equity,
+					dcf_access_financing.form_11_date_released,
+					dcf_access_financing.date_created,
+					dcf_access_financing.date_modified,
+					users.name as 'Uploaded by'
+					FROM dcf_access_financing
+					LEFT JOIN users ON dcf_access_financing.upload_by = users.id
+	'''.format(position_data_filter())
+	data = db.select(query)
+	df = pd.DataFrame(data)
+	headers = [
+		'ID', 'DIP Alignment', 'Activity Title', 'Name of Beneficiary',
+		'Industry Cluster', 'MSME Regional', 'MSME Province', 'Male', 'Female',
+		'PWD', 'Youth', 'IP', 'SC', 'Date Submitted', 'Date Approved',
+		'Name of FSP', 'Location Address', 'Amount of Equity', 'Date Released',
+		'Date Created', 'Date Modified', 'Uploaded By'
+	]
+	df.columns = headers
+	file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form11_exported_file.xlsx')
+	writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+	df.to_excel(writer, sheet_name='dcf_form11_exported_file', index=False)
+	workbook = writer.book
+	worksheet = writer.sheets['dcf_form11_exported_file']
+	header_format = workbook.add_format({
+		'bold': True,
+		'text_wrap': True,
+		'valign': 'top',
+		'fg_color': '#9bc1bc',
+		'border': 1
+	})
+	for col_num, value in enumerate(df.columns.values):
+		worksheet.write(0, col_num, value, header_format)
+	for idx, col in enumerate(df.columns):
+		series = df[col].astype(str)
+		max_len = max(series.map(len).max(), len(col)) + 2
+		worksheet.set_column(idx, idx, max_len)
+	writer.close()
+	return send_file(file_path, as_attachment=True, download_name='dcf_form11_exported_file.xlsx')

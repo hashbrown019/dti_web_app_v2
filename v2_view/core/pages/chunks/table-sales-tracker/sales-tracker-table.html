@@ -173,13 +173,7 @@
                   <th>Total Transaction</th>
                   <th>Incentives Provided</th>
                   <th>Date</th>
-                  <!-- <th>Action</th> 
-                    <td>
-                  <span class="text-primary view-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">View</span>
-                      <span class="text-success edit-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Edit</span>
-                      <span class="text-danger delete-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Delete</span>
-                  </td>-->
-                   
+                  <th>Action</th>      
                 </tr>
               </thead>
               <tbody></tbody>
@@ -196,34 +190,34 @@
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let isAscending = true, originalData = [], filteredData = [];
     async function fetchData() {
-  try {
-    const response = await fetch(`/view-sales-tracker-table/all/${URL_ID}`);
-    const data = await response.json();
+      try {
+        const response = await fetch(`/view-sales-tracker-table/all/${URL_ID}`);
+        const data = await response.json();
 
-    // Check if data is empty or not found
-    if (!data || data.status === "error" || data.length === 0) {
-      originalData = [];
-      filteredData = [];
-      document.querySelector("#salesTrackerTable tbody").innerHTML = `
-        <tr>
-          <td colspan="16" class="text-center">No Entries</td>
-        </tr>
-      `;
-      updateTotals([]); // Reset totals to 0
-      return;
+        // Check if data is empty or not found
+        if (!data || data.status === "error" || data.length === 0) {
+          originalData = [];
+          filteredData = [];
+          document.querySelector("#salesTrackerTable tbody").innerHTML = `
+            <tr>
+              <td colspan="16" class="text-center">No Entries</td>
+            </tr>
+          `;
+          updateTotals([]); // Reset totals to 0
+          return;
+        }
+
+        // Ensure data is an array
+        originalData = Array.isArray(data) ? data : [data];
+        filteredData = [...originalData];
+
+        updateTotals(originalData);
+        renderTable();
+        setupCharts();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
-
-    // Ensure data is an array
-    originalData = Array.isArray(data) ? data : [data];
-    filteredData = [...originalData];
-
-    updateTotals(originalData);
-    renderTable();
-    setupCharts();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
 
     function updateTotals(data) {
       const totals = {
@@ -236,36 +230,84 @@
       Object.entries(totals).forEach(([id, value]) => document.getElementById(id).innerText = value.toLocaleString());
     }
 
-    function renderTable(page = 1, rowsPerPage = 15) {
-    const table = document.querySelector('#salesTrackerTable tbody');
-    table.innerHTML = "";
-    const start = (page - 1) * rowsPerPage;
-    const paginatedData = filteredData.slice(start, start + rowsPerPage);
-    paginatedData.forEach(entry => {
-      const row = table.insertRow();
-      const date = entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "";
-      row.innerHTML = `
-        <td>${entry.CPA_id}</td>
-        <td>${entry.ST_id}</td>
-        <td>${entry.ST_rcu}</td>
-        <td>${entry.ST_pcu}</td>
-        <td>${entry.ST_commodity}</td>
-        <td>${entry.ST_nameofdip}</td>
-        <td>${entry.ST_nameof_fo}</td>
-        <td>${entry.ST_address_fo}</td>
-        <td>${entry.ST_af_msme}</td>
-        <td>${entry.ST_product_type}</td>
-        <td>${entry.ST_vol_supplied}</td>
-        <td>${entry.ST_ave_price}</td>
-        <td>${entry.ST_total_transaction}</td>
-        <td>${entry.ST_incentives_provided}</td>
-        <td>${date}</td>
-      `;
-    });
-    renderPagination(page, rowsPerPage);
-  }
-  
+    document.addEventListener("DOMContentLoaded", function () {
+  fetchSalesTrackerData();
+});
 
+let salesTrackerRowsPerPage = 15;
+let loggedInUserId;
+let salesTrackerOriginalData = [];
+let salesTrackerFilteredData = [];
+
+document.addEventListener("DOMContentLoaded", function () {
+  fetchSalesTrackerData();
+});
+
+async function fetchSalesTrackerData() {
+  try {
+    const response = await fetch('/get_salesT_data');
+    const data = await response.json();
+
+    const sessionResponse = await fetch('/mis-v4/get-session');
+    const sessionData = await sessionResponse.json();
+    loggedInUserId = sessionData[0]?.id;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const cpaId = urlParams.get('id');
+
+    salesTrackerOriginalData = data.filter(row => {
+      const userMatch = loggedInUserId === 1 || row.upload_by === loggedInUserId;
+      const cpaMatch = !cpaId || row.CPA_id == cpaId;
+      return userMatch && cpaMatch;
+    });
+
+    salesTrackerFilteredData = [...salesTrackerOriginalData];
+    renderTable(1);
+  } catch (error) {
+    console.error('Error fetching sales tracker data:', error);
+  }
+}
+
+function renderTable(page = 1) {
+  const table = document.querySelector('#salesTrackerTable tbody');
+  table.innerHTML = "";
+  const start = (page - 1) * salesTrackerRowsPerPage;
+  const paginatedData = salesTrackerFilteredData.slice(start, start + salesTrackerRowsPerPage);
+
+  paginatedData.forEach(entry => {
+    const date = entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "";
+    const row = table.insertRow();
+    row.innerHTML = `
+      <td>${entry.CPA_id}</td>
+      <td>${entry.ST_id}</td>
+      <td>${entry.ST_rcu}</td>
+      <td>${entry.ST_pcu}</td>
+      <td>${entry.ST_commodity}</td>
+      <td>${entry.ST_nameofdip}</td>
+      <td>${entry.ST_nameof_fo}</td>
+      <td>${entry.ST_address_fo}</td>
+      <td>${entry.ST_af_msme}</td>
+      <td>${entry.ST_product_type}</td>
+      <td>${entry.ST_vol_supplied}</td>
+      <td>${entry.ST_ave_price}</td>
+      <td>${entry.ST_total_transaction}</td>
+      <td>${entry.ST_incentives_provided}</td>
+      <td>${date}</td>
+      <td>
+        <span class="text-primary view-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">View</span>
+        ${
+          (loggedInUserId == entry.upload_by)
+            ? `<span class="text-success edit-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Edit</span>
+               <span class="text-danger delete-btn" style="cursor: pointer; text-decoration: underline;" data-id="${entry.ST_id}">Delete</span>`
+            : ''
+        }
+      </td>
+    `;
+  });
+
+  renderPagination(page, salesTrackerRowsPerPage);
+}
+ 
     function renderPagination(currentPage, rowsPerPage) {
       const totalPages = Math.ceil(filteredData.length / rowsPerPage);
       let nav = document.getElementById("pagination");
@@ -430,22 +472,16 @@ fetchData();
 <script>
   document.addEventListener("click", function (event) {
   const target = event.target;
-
-  // Handle View Button
   if (target.classList.contains("view-btn")) {
-    const id = target.dataset.id; // Use ST_id for viewing
+    const id = target.dataset.id;
     window.location.href = `/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&st_id=${id}&view=true`;
   }
-
-  // Handle Edit Button
   if (target.classList.contains("edit-btn")) {
-    const id = target.dataset.id; // Use ST_id for editing
+    const id = target.dataset.id;
     window.location.href = `/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&st_id=${id}&edit=true`;
   }
-
-  // Handle Delete Button
   if (target.classList.contains("delete-btn")) {
-  const st_id = target.dataset.id; // Get the ST_id from the button's data attribute
+  const st_id = target.dataset.id;
 
   // Confirm deletion using SweetAlert
   Swal.fire({

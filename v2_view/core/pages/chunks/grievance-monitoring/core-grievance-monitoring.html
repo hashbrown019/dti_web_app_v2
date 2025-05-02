@@ -1,9 +1,19 @@
-<div class="pagetitle">
+<div class="pagetitle" style="display: flex; justify-content: space-between; align-items: center;">
     <h1>Grievance</h1>
+    {% if "forms" in URL_ARGS %}
+    <!-- Button with JavaScript to redirect -->
+    <button id="viewTableBtn" class="btn btn-primary" style="border: none; background-color: #4B5F71; color: white; padding: 8px 20px; font-size: 16px; font-weight: 600; transition: all 0.3s ease;" onclick="window.location.href = '/grievance-table'">
+        View Table
+    </button>    
+    {% endif %}
+</div>
+
+<!-- Breadcrumbs below the header -->
+<div>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active">Grievance<li>
+            <li class="breadcrumb-item active">Grievance</li>
         </ol>
     </nav>
 </div>
@@ -13,4 +23,5 @@
 {% elif "table" in URL_ARGS %}
     {% include '/chunks/grievance-monitoring/grievance-table.html' %}
 {% endif %}
-{% include '/chunks/system-control/system-control-sub-left-content.html'%}
+
+{% include '/chunks/system-control/system-control-sub-left-content.html' %}

@@ -601,6 +601,13 @@ function submit_grievance() {
         button.style.cursor = "not-allowed";
         button.style.backgroundColor = "#ff9b9b";
     });
+
+    const viewTableBtn = document.getElementById('viewTableBtn');
+    if (viewTableBtn) {
+        viewTableBtn.setAttribute('disabled', true);
+        viewTableBtn.style.cursor = "not-allowed";
+        viewTableBtn.style.backgroundColor = "#d3d3d3";
+    }
 }
  
 function enableForm(id) {
