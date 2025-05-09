@@ -82,20 +82,23 @@ def get_dip_names():
     try:
         query = "SELECT form_1_name_dip FROM dcf_prep_review_aprv_status WHERE form_1_name_dip IS NOT NULL AND form_1_name_dip != '' GROUP BY form_1_name_dip ORDER BY form_1_name_dip ASC"
         result = db.select(query)
-        dip_names = [dict(form_1_name_dip=row['form_1_name_dip']) for row in result]
-        return jsonify(dip_names)
+        dip_data = [dict(form_1_name_dip=row['form_1_name_dip'], form_1_commodity=row['form_1_commodity']) for row in result]
+        return jsonify(dip_data)
     except Exception as e:
         print(f"Error fetching DIP names: {e}")
         return jsonify({"error": "Error fetching DIP names"}), 500
 
 @app.route('/api/get_msme_names', methods=['GET'])
 def get_msme_names():
-    query = "SELECT reg_businessname FROM form_c ;"
-    result = db.select(query)
-    print(result)
-    # dip_names = [dict(form_1_name_dip=row['form_1_name_dip']) for row in result]
-    dip_names = result
-    return jsonify(dip_names)
+    try:
+        query = "SELECT DISTINCT reg_businessname FROM form_c WHERE reg_businessname IS NOT NULL AND TRIM(reg_businessname) != '';"
+        result = db.select(query)
+        msme_names = sorted({row['reg_businessname'].strip() for row in result if row['reg_businessname'].strip()})
+        msme_names = [{'reg_businessname': name} for name in msme_names]
+        return jsonify(msme_names)
+    except Exception as e:
+        print(f"Error fetching MSME names: {e}")
+        return jsonify({"error": "Error fetching MSME names"}), 500
 
 @app.route('/api/get_fo_names', methods=['GET'])
 def get_fo_names():
@@ -103,8 +106,8 @@ def get_fo_names():
     result = db.select(query)
     print(result)
     # dip_names = [dict(form_1_name_dip=row['form_1_name_dip']) for row in result]
-    dip_names = result
-    return jsonify(dip_names)
+    fo_names = result
+    return jsonify(fo_names)
 		
 
 @app.route('/form1_dashboard')
@@ -1735,6 +1738,8 @@ def export_form5():
                mg.mgit_summary_of_actual_tools_procured, mg.mgit_inclusive_timeline_implementation_start1, 
                mg.mgit_inclusive_timeline_implementation_end1, mg.mgit_time_elapse1, 
                mg.mgit_date_of_distribution, mg.mgit_remarks_on_the_deliverd_tools, 
+			   mg.mgit_tpc, mg.mgit_tmg, mg.mgit_te, mg.mgit_tpi, mg.mgit_spi, mg.mgit_timeline_start_prod,
+			   mg.mgit_timeline_end_prod, mg.mgit_time_elapse_prod,
                mg.date_created, mg.date_modified, mg.filename
         FROM dcf_matching_grant mg
         LEFT JOIN users u ON mg.upload_by = u.id 
@@ -1754,7 +1759,8 @@ def export_form5():
         'Time Elapse', 'Total Budget Approved in the DIP', 'Actual Cost of Procurement', 
         'Summary of Actual Tools Procured', 'Inclusive Timeline Implementation Start 1', 
         'Inclusive Timeline Implementation End 1', 'Time Elapse 1', 'Date of Distribution', 
-        'Remarks on the Delivered Tools', 'Date Created', 'Date Modified', 'Filename'
+        'Remarks on the Delivered Tools', 'Total Project Cost', 'Total Matching Grant', 'Total Equity', 'Type of Investment', 'Specific Productive Investment',
+        'Inclusive Timeline of Implementation Start', 'Inclusive Timeline of Implementation End', 'Time Elapse', 'Date Created', 'Date Modified', 'Filename'
     ]
     df.columns = headers
     file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form5_exported_file.xlsx')
@@ -1773,7 +1779,7 @@ def export_form5():
         worksheet.write(0, col_num, value, header_format)
     for idx, col in enumerate(df.columns):
         series = df[col].astype(str)
-        max_len = max(series.map(len).max(), len(col)) + 2
+        max_len = max(series.apply(len).max(), len(col)) + 2
         worksheet.set_column(idx, idx, max_len)
     writer.close()
     return send_file(file_path, as_attachment=True, download_name='dcf_form5_exported_file.xlsx')

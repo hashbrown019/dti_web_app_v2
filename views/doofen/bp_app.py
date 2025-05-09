@@ -257,6 +257,23 @@ def excel_upload():
 	uploadstate = excel_popu_individual(UPLOAD_NAME)
 	return uploadstate
 
+@app.route('/api/get_dip_names', methods=['GET'])
+def get_dip_names():
+    try:
+        query = """
+            SELECT form_1_name_dip, form_1_commodity 
+            FROM dcf_prep_review_aprv_status 
+            WHERE form_1_name_dip IS NOT NULL AND form_1_name_dip != '' 
+            GROUP BY form_1_name_dip, form_1_commodity 
+            ORDER BY form_1_name_dip ASC
+        """
+        result = rapid_mysql.select(query)
+        dip_data = [dict(form_1_name_dip=row['form_1_name_dip'], form_1_commodity=row['form_1_commodity']) for row in result]
+        return jsonify(dip_data)
+    except Exception as e:
+        print(f"Error fetching DIP names: {e}")
+        return jsonify({"error": "Error fetching DIP names"}), 500
+
 
 def excel_popu_individual(_NAME_):
 	msg = "Unfinished"
