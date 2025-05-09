@@ -431,7 +431,7 @@ def excel_upload_open5(path):
 		mgit_inclusive_timeline_implementation_end1 = row[26]
 		mgit_time_elapse1 = row[27]
 		mgit_date_of_distribution = row[28]
-		mgit_remarks_on_the_deliverd_tools = row[29]                                                                                                     
+		mgit_remarks_on_the_deliverd_tools = row[29]                                                                                          
 		filename = UPLOAD_NAME
 
 		querycsv = ("INSERT INTO dcf_matching_grant ( upload_by,mgit_implementing_unit,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
@@ -440,11 +440,11 @@ def excel_upload_open5(path):
 		print(insert)
 		print("===============================================")
 
-	if(insert["response"]=="error"):
-		flash(f"An error occured!", "error")
-		print(str(insert))
-	else:
-		flash(f"The file was imported successfully!", "success")
+		if insert["response"] == "error":
+			flash(f"An error occurred!", "error")
+			print(str(insert))
+		else:
+			flash(f"The file was imported successfully!", "success")
 	return "done"
 
 
