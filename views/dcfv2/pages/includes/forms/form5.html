@@ -11,7 +11,7 @@
         <div class="row">
     <div class="col-md-12 col-sm-12 x-card  x-light-grey">
         <center>
-            <h2 class=" x-container x-padding text-white" style="background-color: #007399;">FORM 5 - MATCHING GRANT IMPLEMENTATION TRACKER</h2>
+            <h2 class=" x-container x-padding text-white" style="background-color: #007399;">FORM 5 - MATCHING GRANT FUNDS TRACKER</h2>
 			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
         </center>
 
@@ -179,37 +179,39 @@
                 <select class="FORM5_FIELD x-border x-select x-border" id="mgit_type_of_investment"
                     name="mgit_type_of_investment"><br>
                     <option value="">Choose your option</option>
-                    <!--<option disabled>Productive investments</option>
-                    <option disabled>Expansion</option>
-                    <option disabled>Rehabilitation</option>-->
-                    <option>Productive investments, Rehabilitation </option>
-                    <option>Expansion, Rehabilitation </option>
+                    <option>Expansion</option>
+                    <option>Rehabilitation</option>
+                    <option>Productive investments</option>
+                    <option>Expansion, Rehabilitation</option>
+                    <option>Expansion, Productive investments</option>
+                    <option>Rehabilitation, Productive investments</option>
+                    <option>Expansion, Productive investments, Rehabilitation</option>
                 </select>
             </div>
         </div>
 
         <script>
             $(document).ready(function () {
-                $("#prodex, #prodex2, #prodex3, #rehab, #rehab2").hide();
+                $("#exp, #exp2, #exp3, #rehab, #rehab2, #prodInv").hide();
                 $("#mgit_type_of_investment").change(function () {
-                    $("#prodex, #prodex2, #prodex3, #rehab, #rehab2").hide();
+                    $("#exp, #exp2, #exp3, #rehab, #rehab2, #prodInv").hide();
                     var selectedOption = $(this).val();
-                    if (selectedOption === "Productive investments" || selectedOption === "Expansion") {
-                        $("#prodex, #prodex2, #prodex3").show();
-                    } else if (selectedOption === "Rehabilitation") {
+                    if (selectedOption.includes("Expansion")) {
+                        $("#exp, #exp2, #exp3").show();
+                    }
+                    if (selectedOption.includes("Rehabilitation")) {
                         $("#rehab, #rehab2").show();
                     }
-                    else if (selectedOption === "Productive investments, Rehabilitation") {
-                        $("#prodex, #prodex2, #prodex3,#rehab, #rehab2").show();
-                    }
-                    else if (selectedOption === "Expansion, Rehabilitation") {
-                        $("#prodex, #prodex2, #prodex3,#rehab, #rehab2").show();
+                    if (selectedOption.includes("Productive investments")) {
+                        $("#prodInv").show();
                     }
                 });
             });
         </script>
+        
 
-        <div id="prodex" class="x-container x-padding">
+        <div id="exp" class="x-container x-padding">
+            <h2 class=" x-container x-padding text-white" style="background-color: #007399; text-align: center;">EXPANSION</h2>
             <style>
                 table,
                 th,
@@ -248,7 +250,7 @@
             </table>
         </div>
 
-        <div id="prodex2" class="x-container x-padding">
+        <div id="exp2" class="x-container x-padding">
             <style>
                 table,
                 th,
@@ -283,7 +285,7 @@
         </div>
 
 
-        <div id="prodex3" class="x-col l5 x-container x-padding">
+        <div id="exp3" class="x-col l5 x-container x-padding">
             <style>
                 table,
                 th,
@@ -340,6 +342,7 @@
         </script>
 
         <div id="rehab" class="x-container x-padding">
+            <h2 class=" x-container x-padding text-white" style="background-color: #007399; text-align: center;">REHABILITATION</h2>
             <style>
                 table,
                 th,
@@ -430,6 +433,89 @@
                 endDateInput2.addEventListener('input', calculateTimeElapsed2);
             </script>
         </div>
+
+        <div id="prodInv" class="x-container x-padding">
+            <h2 class=" x-container x-padding text-white" style="background-color: #007399; text-align: center;">PRODUCTIVE INVESTMENT</h2>
+            <style>
+                table, th, td {
+                    border: 1px solid black;
+                    border-collapse: collapse;
+                }
+            </style>
+        
+            <table class="x-table x-container x-table-border">
+                <tr>
+                    <th><center>TOTAL PROJECT COST (based on the signed MGA & Equity + Grant)</center></th>
+                    <th><center>TOTAL MATCHING GRANT</center></th>
+                    <th><center>TOTAL EQUITY</center></th>
+                </tr>
+                <tr>
+                    <td><input class="FORM5_FIELD x-light-grey x-input" id="mgit_tpc" type="text" name="mgit_tpc"></td>
+                    <td><input class="FORM5_FIELD x-light-grey x-input" id="mgit_tmg" type="text" name="mgit_tmg"></td>
+                    <td><input class="FORM5_FIELD x-light-grey x-input" id="mgit_te" type="text" name="mgit_te"></td>
+                </tr>
+            </table>
+            <br>
+        
+            <table class="x-table x-container x-table-border">
+                <tr>
+                    <th><center>TYPE OF PRODUCTIVE INVESTMENT</center></th>
+                    <th><center>SPECIFIC PRODUCTIVE INVESTMENT</center></th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="x-row">
+                            <div class="x-container">
+                                <select class="FORM5_FIELD x-border x-select x-light-grey x-input" id="mgit_tpi" name="mgit_tpi">
+                                    <option value="">Choose your option</option>
+                                    <option value="Equipment/ Machineries">Equipment/ Machineries</option>
+                                    <option value="Facilities/ Infrastructure">Facilities/ Infrastructure</option>
+                                    <option value="Logistics">Logistics</option>
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input class="FORM5_FIELD x-light-grey x-input" id="mgit_spi" type="text" name="mgit_spi">
+                    </td>
+                </tr>
+            </table>
+            <br>
+        
+            <table class="x-table x-container x-table-border">
+                <tr>
+                    <th colspan="2"><center>INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA)</center></th>
+                    <th rowspan="2"><center>TIME ELAPSE<br>(auto-calculate)</center></th>
+                </tr>
+                <tr>
+                    <td><center>Start</center></td>
+                    <td><center>End</center></td>
+                </tr>
+                <tr>
+                    <td><input class="FORM5_FIELD x-input x-border" id="mgit_timeline_start_prod" name="mgit_timeline_start_prod" type="date" placeholder=""></td>
+                    <td><input class="FORM5_FIELD x-input x-border" id="mgit_timeline_end_prod" name="mgit_timeline_end_prod" type="date" placeholder=""></td>
+                    <td><input readonly class="FORM5_FIELD x-light-grey x-input" id="mgit_time_elapse_prod" type="text" name="mgit_time_elapse_prod"></td>
+                </tr>
+            </table>
+
+            <script>
+                const startDateInput3 = document.getElementById('mgit_timeline_start_prod');
+                const endDateInput3 = document.getElementById('mgit_timeline_end_prod');
+                const timeElapsedInput3 = document.getElementById('mgit_time_elapse_prod');
+            
+                function calculateTimeElapsed() {
+                    const startDate = new Date(startDateInput3.value);
+                    const endDate = new Date(endDateInput3.value);
+                    const timeDiff = endDate - startDate;
+                    const daysElapsed = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                    timeElapsedInput3.value = daysElapsed + " days";
+                }
+            
+                startDateInput3.addEventListener('input', calculateTimeElapsed);
+                endDateInput3.addEventListener('input', calculateTimeElapsed);
+            </script>
+        </div>        
+        
         <!-- <div class="x-col l4 x-container x-padding">
             <button data-toggle="modal" data-target="#form5_modalpart" href=""
                 style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart"
@@ -499,7 +585,7 @@
 </div>
 </div>
 </div>
-    </div>
+</div>
         {%endif%}   
             <p class="x-right" id="submit_btn_holder">
                 <button class="btn btn-primary" type="button" onclick="submit_form('FORM5_FIELD','dcf_matching_grant','/form5_dashboard')">Submit</button>
