@@ -33,6 +33,10 @@
         <label for="af-msme" class="form-label">Anchor Firm/MSME </label>
         <input type="text" class="TRACKING_FORM form-control" id="af-msme"  disabled style=" padding: 10px; background-color: #b3e6cc;">
       </div>
+      <div class="col-md-6">
+        <label for="TotalSales" class="form-label">Total Sales </label>
+        <input type="text" class="TRACKING_FORM form-control" id="TotalSales"  disabled style=" padding: 10px; background-color: #b3e6cc;">
+      </div>
       </form>
     </div>
     </div>
@@ -63,11 +67,15 @@
               <option value="Coffee - Green Coffee Beans">Green Coffee Beans</option>
           </optgroup>
   
-          <optgroup label="Banana">
-              <option value="Banana - Green Cardava Banana">Green Cardava Banana</option>
-              <option value="Banana - Banana Chips">Banana Chips</option>
-              <option value="Banana - Vacuum Sealed Banana">Vacuum Sealed Banana</option>
-          </optgroup>
+          <optgroup label="PFN">
+               <option value="PFN - Green Cardava Banana">Green Cardava Banana</option>
+               <option value="PFN - Banana Chips">Banana Chips</option>
+               <option value="PFN - Vacuum Sealed Banana">Vacuum Sealed Banana</option>
+               <option value="PFN - Calamansi Marmalade">Calamansi Marmalade</option>
+               <option value="PFN - Calamansi Concentrate">Calamansi Concentrate</option>
+               <option value="PFN - Calamansi Puree">Calamansi Puree</option>
+        </optgroup>
+        
       </select>
       </div>
       <div class="col-md-3">
@@ -219,6 +227,7 @@
                   document.getElementById("nameFO").value = data.ST_nameof_fo || "";
                   document.getElementById("addressFO").value = data.ST_address_fo || "";
                   document.getElementById("af-msme").value = data.ST_af_msme || "";
+                  document.getElementById("TotalSales").value = data.ST_totalsales || "";
                   document.getElementById("productType").value = data.ST_product_type || "";
                   document.getElementById("vs").value = data.ST_vol_supplied || "";
                   document.getElementById("aveP").value = data.ST_ave_price || "";
@@ -332,3 +341,20 @@
     });
 }
   </script>
+
+<script>
+  function computeTotalSales() {
+    const vs = parseFloat(document.getElementById("vs").value) || 0;
+    const aveP = parseFloat(document.getElementById("aveP").value) || 0;
+    const totalSales = vs * aveP;
+    document.getElementById("TotalSales").value = totalSales.toFixed(2);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const vsInput = document.getElementById("vs");
+    const avePInput = document.getElementById("aveP");
+
+    vsInput.addEventListener("input", computeTotalSales);
+    avePInput.addEventListener("input", computeTotalSales);
+  });
+</script>

@@ -1,10 +1,12 @@
-from flask import flash,render_template,redirect,session
+from flask import app, flash, jsonify,render_template,redirect, request,session
 import Configurations as c
 from modules.Connections import mysql
 from flask_session import Session
 import Configurations as c
 from werkzeug.utils import secure_filename
+from flask import Flask
 
+app = Flask(__name__)
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -327,12 +329,6 @@ def displayform():
     form7_data_july=len(form7_data_july)
 
 
-
-
-
-
-
-
     form9_data_sep = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)".format(position_data_filter()))
     form9_data_oct = db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
     form9_data_nov =db.select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
@@ -487,9 +483,7 @@ def displayform():
     dcf_form1maleip=db.select("SELECT SUM(form_1_maleip) AS total_maleip FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1malepwd=db.select("SELECT SUM(form_1_malepwd) AS total_malepwd FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
 
-
     dcf_form1sextotal=db.select("SELECT SUM(form_1_total_farmerbene) AS total_sex FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
-    dcf_form2sextotal=db.select("SELECT  SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form3sextotal=db.select("SELECT COUNT(CASE WHEN form_3_sex = 'male' OR form_3_sex = 'female' THEN 1 END) AS total_sex3 FROM dcf_bdsp_reg {}; ".format(position_data_filter()))
     dcf_form4sextotal=db.select("SELECT  SUM(cbb_total_number_per_gender_male + cbb_total_number_per_gender_female)AS total_sex4 FROM dcf_capacity_building {}; ".format(position_data_filter()))
 
@@ -501,15 +495,6 @@ def displayform():
     dcf_form1femaleyouth=db.select("SELECT SUM(form_1_femaleyouth) AS total_femaleyouth FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1femaleip=db.select("SELECT SUM(form_1_femaleip) AS total_femaleip FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1femalepwd=db.select("SELECT SUM(form_1_femalepwd) AS total_femalepwd FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
-
-
-    dcf_form2FOmale=db.select("SELECT SUM(form_2_male) AS total_male2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
-    dcf_form2FOfemale=db.select("SELECT SUM(form_2_female) AS total_female2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
-
-    dcf_form2FOpwd=db.select("SELECT SUM(form_2_pwde) AS total_pwd FROM dcf_implementing_unit {}; ".format(position_data_filter()))
-    dcf_form2FOyouth=db.select("SELECT SUM( form_2_youth) AS total_youth FROM dcf_implementing_unit {}; ".format(position_data_filter()))
-    dcf_form2FOip=db.select("SELECT SUM(form_2_ip) AS total_ip FROM dcf_implementing_unit {}; ".format(position_data_filter()))
-    dcf_form2FOsc=db.select("SELECT SUM(form_2_sc) AS total_sc FROM dcf_implementing_unit {}; ".format(position_data_filter()))
 
     form3_agri =db.select("SELECT COUNT(id) AS total_agri FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Agri-technical%'; ".format(position_data_filter()))
     form3_entrep =db.select("SELECT COUNT(id) AS total_entrep FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Entrepreneurial%'; ".format(position_data_filter()))
@@ -600,8 +585,20 @@ def displayform():
 
 
 
-    
 
+
+    dcf_form2sextotal=db.select("SELECT SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    dcf_form2FOmale=db.select("SELECT SUM(form_2_male) AS total_male2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    dcf_form2FOfemale=db.select("SELECT SUM(form_2_female) AS total_female2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    dcf_form2FOpwd=db.select("SELECT SUM(form_2_pwde) AS total_pwd FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    dcf_form2FOyouth=db.select("SELECT SUM( form_2_youth) AS total_youth FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    dcf_form2FOip=db.select("SELECT SUM(form_2_ip) AS total_ip FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    dcf_form2FOsc=db.select("SELECT SUM(form_2_sc) AS total_sc FROM dcf_implementing_unit {}; ".format(position_data_filter()))
+    
+    st_sales = db.select("SELECT SUM(ST_ave_price * ST_vol_supplied) AS total_sales FROM sales_tracker {};".format(position_data_filter()))
+    st_vol = db.select("SELECT SUM(ST_vol_supplied) AS total_vol FROM sales_tracker {};".format(position_data_filter()))
+    st_transaction = db.select("SELECT SUM(ST_total_transaction) AS total_transaction FROM sales_tracker {};".format(position_data_filter()))
+    st_commodity = db.select("SELECT COUNT(*) AS total_commodity FROM sales_tracker {}".format(position_data_filter()))
 
 
     dcf_form1msme=db.select("SELECT SUM(total_large_enterprise) as total_large_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
@@ -1773,6 +1770,10 @@ def displayform():
         'dcf_form2FOyouth':  dcf_form2FOyouth,
         'dcf_form2FOip':  dcf_form2FOip,
         'dcf_form2FOsc':  dcf_form2FOsc,
+        'st_sales' : st_sales,
+        'st_vol' : st_vol,
+        'st_transaction' : st_transaction,
+        'st_commodity' : st_commodity,
         'dcf_form2FOfemale':  dcf_form2FOfemale,
         'dcf_form3male':  dcf_form3male,
         'dcf_form3female':  dcf_form3female,

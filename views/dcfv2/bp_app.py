@@ -128,6 +128,155 @@ def form2_dashboard():
 	form_c = db.select("SELECT * FROM form_c")
 	return render_template("form_dashboard/form2_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp,form_c=form_c)
 
+# THIS IS THE FILTER PER REGION OF FORM 2 DASHBOARD
+@app.route('/filter_dashboard', methods=['GET'])
+def filter_dashboard():
+    region = request.args.get('region', default='', type=str)
+    if region:
+        try:
+            region_num = int(float(region))
+            region_filter_dcf = f"WHERE CAST(form_2_rcus AS UNSIGNED) = {region_num}"
+            region_filter_sales = f"WHERE CAST(ST_rcu AS UNSIGNED) = {region_num}"
+        except ValueError:
+            region_filter_dcf = f"WHERE form_2_rcus = '{region}'"
+            region_filter_sales = f"WHERE ST_rcu = '{region}'"
+    else:
+        region_filter_dcf = ""
+        region_filter_sales = ""
+
+    def status_condition(status):
+        return f"{region_filter_dcf} AND form_2_remarks_status = '{status}'" if region_filter_dcf else f"WHERE form_2_remarks_status = '{status}'"
+
+    # DCF Implementing Unit Stats
+    total_entries = db.select(f"SELECT COUNT(*) AS total FROM dcf_implementing_unit {region_filter_dcf}")[0]['total']
+    total_sex2 = db.select(f"SELECT SUM(form_2_male + form_2_female) AS total_sex2 FROM dcf_implementing_unit {region_filter_dcf}")[0]['total_sex2']
+    total_male = db.select(f"SELECT SUM(form_2_male) AS total_male FROM dcf_implementing_unit {region_filter_dcf}")[0]['total_male']
+    total_female = db.select(f"SELECT SUM(form_2_female) AS total_female FROM dcf_implementing_unit {region_filter_dcf}")[0]['total_female']
+    total_pwd = db.select(f"SELECT SUM(form_2_pwde) AS total_pwd FROM dcf_implementing_unit {region_filter_dcf}")[0]['total_pwd']
+    total_youth = db.select(f"SELECT SUM(form_2_youth) AS total_youth FROM dcf_implementing_unit {region_filter_dcf}")[0]['total_youth']
+    total_ip = db.select(f"SELECT SUM(form_2_ip) AS total_ip FROM dcf_implementing_unit {region_filter_dcf}")[0]['total_ip']
+    total_sc = db.select(f"SELECT SUM(form_2_sc) AS total_sc FROM dcf_implementing_unit {region_filter_dcf}")[0]['total_sc']
+
+    # Sales Tracker Stats
+    st_sales = db.select(f"SELECT SUM(ST_ave_price * ST_vol_supplied) AS total_sales FROM sales_tracker {region_filter_sales}")[0]['total_sales']
+    st_ave = db.select(f"SELECT AVG(ST_ave_price) AS total_ave FROM sales_tracker {region_filter_sales}")[0]['total_ave']
+    st_vol = db.select(f"SELECT SUM(ST_vol_supplied) AS total_vol FROM sales_tracker {region_filter_sales}")[0]['total_vol']
+    st_transaction = db.select(f"SELECT SUM(ST_total_transaction) AS total_transaction FROM sales_tracker {region_filter_sales}")[0]['total_transaction']
+    st_commodity_result = db.select(f"SELECT COUNT(ST_commodity) AS total_commodity FROM sales_tracker {region_filter_sales}")
+    st_commodity = st_commodity_result[0]['total_commodity'] if st_commodity_result else 0
+
+    # Commodity breakdown for DCF (for doughnut)
+    commodity_counts = db.select(f"""
+        SELECT form_2_commodity, COUNT(*) AS count
+        FROM dcf_implementing_unit {region_filter_dcf}
+        GROUP BY form_2_commodity
+    """)
+
+    over_all_commodity_count2 = {}
+    _comm_rule2 = ["cacao", "coconut", "coffee", "pfn"]
+    for row in commodity_counts:
+        _com2 = (row['form_2_commodity'] or '').strip().lower()
+        if _com2 not in _comm_rule2:
+            _com2 = "Others"
+        over_all_commodity_count2[_com2] = over_all_commodity_count2.get(_com2, 0) + row['count']
+
+    for label in _comm_rule2 + ["Others"]:
+        over_all_commodity_count2.setdefault(label, 0)
+
+    specific_commodities = [
+		"Coconut - Whole Nuts", "Coconut - Copra", "Coconut - White Copra",
+		"Cacao - Wet Beans", "Cacao - Dried Beans", "Cacao - Dried Fermented Beans",
+		"Coffee - Red Cherries", "Coffee - Green Coffee Beans",
+		"PFN - Green Cardava Banana", "PFN - Banana Chips", "PFN - Vacuum Sealed Banana",
+		"PFN - Calamansi Marmalade", "PFN - Calamansi Concentrate", "PFN - Calamansi Puree"
+	]
+
+	# Initialize the dictionary with all specific commodities set to 0
+    sales_commodity_data = {comm: 0.0 for comm in specific_commodities}
+    sales_commodity_data["Others"] = 0.0
+
+	# Query and group by the exact commodity name, summing ST_totalsales
+    sales_commodity_totals = db.select(f"""
+		SELECT TRIM(ST_commodity) AS commodity, SUM(CAST(ST_totalsales AS DECIMAL(20,2))) AS total_sales
+		FROM sales_tracker {region_filter_sales}
+		GROUP BY TRIM(ST_commodity)
+	""")
+    for row in sales_commodity_totals:
+        comm_raw = (row['commodity'] or '').strip()
+        total_sales = float(row['total_sales'] or 0)
+        if comm_raw in specific_commodities:
+            sales_commodity_data[comm_raw] += total_sales
+        else:
+            sales_commodity_data["Others"] += total_sales
+
+	# Only include specific commodities that have data, and "Others" if it has data
+    filtered_sales_commodity_data = {
+		comm: sales_commodity_data[comm]
+		for comm in specific_commodities
+		if sales_commodity_data[comm] > 0
+	}
+    if sales_commodity_data["Others"] > 0:
+        filtered_sales_commodity_data["Others"] = sales_commodity_data["Others"]
+
+    sales_commodity_data = filtered_sales_commodity_data
+
+    # Status breakdown
+    cancelled_count = db.select(f"SELECT COUNT(*) AS count FROM dcf_implementing_unit {status_condition('Cancelled')}")[0]['count']
+    ongoing_count = db.select(f"SELECT COUNT(*) AS count FROM dcf_implementing_unit {status_condition('On-going')}")[0]['count']
+    nonrenewal_count = db.select(f"SELECT COUNT(*) AS count FROM dcf_implementing_unit {status_condition('Non-renewal')}")[0]['count']
+
+
+    st_commodities = ["coffee", "coconut", "cacao", "pfn"]
+    st_commodity_stats = {c: {"sales": 0, "vol": 0, "transaction": 0} for c in st_commodities}
+    st_commodity_stats["others"] = {"sales": 0, "vol": 0, "transaction": 0}
+
+    st_rows = db.select(f"""
+        SELECT LOWER(TRIM(ST_commodity)) AS commodity,
+               SUM(ST_ave_price * ST_vol_supplied) AS total_sales,
+               SUM(ST_vol_supplied) AS total_vol,
+               SUM(ST_total_transaction) AS total_transaction
+        FROM sales_tracker {region_filter_sales}
+        GROUP BY LOWER(TRIM(ST_commodity))
+    """)
+    for row in st_rows:
+        comm_raw = (row['commodity'] or '').strip().lower()
+        if comm_raw.startswith("coffee"):
+            comm = "coffee"
+        elif comm_raw.startswith("coconut"):
+            comm = "coconut"
+        elif comm_raw.startswith("cacao"):
+            comm = "cacao"
+        elif comm_raw.startswith("pfn"):
+            comm = "pfn"
+        else:
+            comm = "others"
+        st_commodity_stats[comm]["sales"] += int(row["total_sales"] or 0)
+        st_commodity_stats[comm]["vol"] += int(row["total_vol"] or 0)
+        st_commodity_stats[comm]["transaction"] += int(row["total_transaction"] or 0)
+
+    return jsonify({
+        'total_entries': total_entries or 0,
+        'total_members': total_sex2 or 0,
+        'total_male': total_male or 0,
+        'total_female': total_female or 0,
+        'total_pwd': total_pwd or 0,
+        'total_youth': total_youth or 0,
+        'total_ip': total_ip or 0,
+        'total_sc': total_sc or 0,
+        'total_ave': st_ave or 0,
+        'total_vol': st_vol or 0,
+        'total_sales': st_sales or 0,
+        'total_transaction': st_transaction or 0,
+        'total_commodity': st_commodity or 0,
+        'commodity_data': over_all_commodity_count2,  # for doughnut
+        'sales_commodity_data': sales_commodity_data,
+		'st_commodity_stats': st_commodity_stats,
+        'status_data': {
+            'cancelled': cancelled_count or 0,
+            'ongoing': ongoing_count or 0,
+            'nonrenewal': nonrenewal_count or 0
+        }
+    })
 
 @app.route('/form3_dashboard')
 @c.login_auth_web()
@@ -1517,7 +1666,7 @@ def export_form1():
 def export_form2():
     query = '''
         SELECT 
-            dcf.id, dcf.form_2_rcus, dcf.form_2_pcu,
+            dcf.id, dcf.form_2_name_dip, dcf.form_2_rcus, dcf.form_2_pcu,
             CONCAT(dcf.form_2_commodity, ', ', dcf.form_2_commodity_others) AS Commodity,
             CONCAT(dcf.form_2_dip_alignment, ', ', dcf.form_2_dip_alignment_yes) AS dip_alignment,
             dcf.form_2_name_owner_manager, dcf.form_2_sex_owner_manager, dcf.form_2_sector_owner_manager,
@@ -1537,7 +1686,7 @@ def export_form2():
     df = pd.DataFrame(data)
 
     headers = [
-        'ID', 'RCUs', 'PCUs', 'Commodity', 'DIP Alignment', 'Name of Owner/Manager of the Anchor Firm/MSMEs',
+        'ID', 'Name of DIP', 'RCUs', 'PCUs', 'Commodity', 'DIP Alignment', 'Name of Owner/Manager of the Anchor Firm/MSMEs',
         'Sex of Owner/Manager', 'Sector of Owner/Manager', 'Business Name', 'Business Address of Owner/Manager',
         'Name of Partner FOs Engaged', 'Chairperson/Manager of Partner FO', 'Sex of Chairperson/Manager',
         'Sector of Chairperson/Manager', 'Office Address/Province of FO', 'Total # of FO Members',

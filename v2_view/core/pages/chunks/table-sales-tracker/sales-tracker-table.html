@@ -69,11 +69,7 @@
       <div class="count" id="totalSales">0</div>
       <span class="count_bottom">Total # of Sales</span>
     </div>
-    <div class="tile_stats_count">
-      <span class="count_top"><small>Ave Price</small></span>
-      <div class="count" id="totalAvePrice">0</div>
-      <span class="count_bottom">Total # of Ave Price</span>
-    </div>
+
     <div class="tile_stats_count">
       <span class="count_top"><small>Vol. Supply</small></span>
       <div class="count" id="totalVolSup">0</div>
@@ -167,6 +163,7 @@
                   <th>F.O</th>
                   <th>Address(F.O)</th>
                   <th>Anchor Firm/MSME</th>
+                  <th>Total Sales</th>
                   <th>Product Type</th>
                   <th>Vol. Sup</th>
                   <th>Ave Price</th>
@@ -221,7 +218,6 @@
 
     function updateTotals(data) {
       const totals = {
-        totalAvePrice: data.reduce((t, e) => t + parseFloat(e.ST_ave_price || 0), 0),
         totalVolSup: data.reduce((t, e) => t + parseFloat(e.ST_vol_supplied || 0), 0),
         totalTransaction: data.reduce((t, e) => t + parseFloat(e.ST_total_transaction || 0), 0),
         totalSales: data.reduce((t, e) => t + (parseFloat(e.ST_ave_price || 0) * parseFloat(e.ST_vol_supplied || 0)), 
@@ -245,15 +241,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchSalesTrackerData() {
   try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const cpaId = urlParams.get('id');
+
+    // If id is empty, clear the table and return
+    if (!cpaId) {
+      const table = document.querySelector('#salesTrackerTable tbody');
+      table.innerHTML = `
+        <tr>
+          <td colspan="17" class="text-center">No Entries</td>
+        </tr>
+      `;
+      return;
+    }
+
     const response = await fetch('/get_salesT_data');
     const data = await response.json();
 
     const sessionResponse = await fetch('/mis-v4/get-session');
     const sessionData = await sessionResponse.json();
     loggedInUserId = sessionData[0]?.id;
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const cpaId = urlParams.get('id');
 
     salesTrackerOriginalData = data.filter(row => {
       const userMatch = loggedInUserId === 1 || row.upload_by === loggedInUserId;
@@ -287,6 +294,7 @@ function renderTable(page = 1) {
       <td>${entry.ST_nameof_fo}</td>
       <td>${entry.ST_address_fo}</td>
       <td>${entry.ST_af_msme}</td>
+      <td>${entry.ST_totalsales}</td>
       <td>${entry.ST_product_type}</td>
       <td>${entry.ST_vol_supplied}</td>
       <td>${entry.ST_ave_price}</td>

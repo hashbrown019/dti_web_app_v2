@@ -11,59 +11,187 @@
 <title>Form 2 Dashboard</title>
 <div class="right_col" role="main">
 	<!-- top tiles -->
+
+<div class="row">
+    <div class="col-md-3">
+        <label for="regionFilter">Select Region</label>
+        <select id="regionFilter" class="form-control">
+            <option value="">All Regions</option>
+            <option value="8">Region 8</option>
+            <option value="9">Region 9</option>
+            <option value="10">Region 10</option>
+            <option value="11">Region 11</option>
+            <option value="12">Region 12</option>
+            <option value="13">Region 13</option>
+            <option value="BARMM">BARMM</option>
+        </select>
+    </div>
+</div>
+<script>
+    function updateElement(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.innerText = (value ?? 0).toLocaleString();
+    }
+    const regionFilterDropdown = document.getElementById('regionFilter');
+    let dataTable;
+    function initializeDataTable() {
+        if ($.fn.DataTable.isDataTable('#datatable-responsive')) {
+            dataTable = $('#datatable-responsive').DataTable();
+        } else {
+            dataTable = $('#datatable-responsive').DataTable({
+                "order": [[8, "desc"]],
+                "columnDefs": [
+                    {
+                        "targets": [3],
+                        "visible": false,
+                    }
+                ]
+            });
+        }
+    }
+    function filterDataTable(region) {
+        if (dataTable) {
+            dataTable.column(3).search(region).draw();
+        }
+    }
+
+	function updateSalesCommodityTable(stats) {
+        const commodities = ["coffee", "coconut", "cacao", "pfn", "others"];
+        commodities.forEach(comm => {
+            document.getElementById(`st_${comm}_sales`).innerText = (stats[comm]?.sales ?? 0).toLocaleString();
+            document.getElementById(`st_${comm}_vol`).innerText = (stats[comm]?.vol ?? 0).toLocaleString();
+            document.getElementById(`st_${comm}_transaction`).innerText = (stats[comm]?.transaction ?? 0).toLocaleString();
+        });
+    }
+
+    regionFilterDropdown.addEventListener('change', function () {
+        const selectedRegion = this.value;
+        filterDataTable(selectedRegion);
+
+        fetch(`/filter_dashboard?region=${selectedRegion}`)
+            .then(response => response.json())
+            .then(data => {
+                updateElement('totalEntries', data.total_entries);
+                updateElement('totalMembers', data.total_members);
+                updateElement('totalMale', data.total_male);
+                updateElement('totalFemale', data.total_female);
+                updateElement('totalPWD', data.total_pwd);
+                updateElement('totalYouth', data.total_youth);
+                updateElement('totalIP', data.total_ip);
+                updateElement('totalSC', data.total_sc);
+                updateElement('totalVol', data.total_vol);
+                updateElement('totalTransaction', data.total_transaction);
+                updateElement('totalSales', data.total_sales);
+                updateElement('totalCommodity', data.total_commodity);
+
+                // Doughnut chart (do not touch)
+                const labels = Object.keys(data.commodity_data || {});
+                const values = Object.values(data.commodity_data || {});
+                init_chart_doughnut(labels, values);
+
+                // Bar chart (use sales_commodity_data)
+                const barLabels = Object.keys(data.sales_commodity_data || {});
+                const barValues = Object.values(data.sales_commodity_data || {});
+                renderCommodityBarChart(barLabels, barValues);
+
+                // --- ADD THIS LINE ---
+                updateSalesCommodityTable(data.st_commodity_stats);
+
+                updatePolarChart(
+                    data.status_data.cancelled,
+                    data.status_data.ongoing,
+                    data.status_data.nonrenewal
+                );
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+
+    $(document).ready(function () {
+        initializeDataTable();
+        fetch(`/filter_dashboard?region=`)
+            .then(response => response.json())
+            .then(data => {
+                // Doughnut chart (do not touch)
+                const initialLabels = Object.keys(data.commodity_data || {});
+                const initialValues = Object.values(data.commodity_data || {});
+                init_chart_doughnut(initialLabels, initialValues);
+
+                // Bar chart (use sales_commodity_data)
+                const barLabels = Object.keys(data.sales_commodity_data || {});
+                const barValues = Object.values(data.sales_commodity_data || {});
+                renderCommodityBarChart(barLabels, barValues);
+
+                // --- ADD THIS LINE ---
+                updateSalesCommodityTable(data.st_commodity_stats);
+
+                updatePolarChart(
+                    data.status_data.cancelled,
+                    data.status_data.ongoing,
+                    data.status_data.nonrenewal
+                );
+            })
+            .catch(error => {
+                console.error('Error fetching initial data:', error);
+            });
+    });
+</script>
+<br/>
+
 	<div class="row" style="display: inline-block;" >
 		<div class="top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
-					<div class="count _money_tag">{{dcf_form2}}</div>
+					<div class="count _money_tag" id="totalEntries">{{ dcf_form2 }}</div>
 					<h3>Total Entries</h3>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
-					<div class="count _money_tag">{{dcf_form2sextotal[0]['total_sex2'] | int}}</div>
+					<div class="count _money_tag" id="totalMembers">{{ dcf_form2sextotal[0]['total_sex2'] | int }}</div>
 					<h3>Total Members</h3>
 					<p>Total # of FO Members.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
-					<div class="count _money_tag">{{dcf_form2FOmale[0]['total_male2'] | int}} </div>
+					<div class="count _money_tag" id="totalMale">{{ dcf_form2FOmale[0]['total_male2'] | int }}</div>
 					<h3>Total Male</h3>
 					<p>Total # of FO Members by Sex.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
-					<div class="count _money_tag">{{dcf_form2FOfemale[0]['total_female2'] | int}}</div>
+					<div class="count _money_tag" id="totalFemale">{{ dcf_form2FOfemale[0]['total_female2'] | int }}</div>
 					<h3>Total Female</h3>
 					<p>Total # of FO Members by Sex.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
-					<div class="count _money_tag">{{dcf_form2FOpwd[0]['total_pwd'] | int}}</div>
+					<div class="count _money_tag" id="totalPWD">{{ dcf_form2FOpwd[0]['total_pwd'] | int }}</div>
 					<h3>PWD</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
-					<div class="count _money_tag">{{dcf_form2FOyouth[0]['total_youth'] | int}}</div>
+					<div class="count _money_tag" id="totalYouth">{{ dcf_form2FOyouth[0]['total_youth'] | int }}</div>
 					<h3>Youth</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
-					<div class="count _money_tag">{{dcf_form2FOip[0]['total_ip'] | int}}</div>
+					<div class="count _money_tag" id="totalIP">{{ dcf_form2FOip[0]['total_ip'] | int }}</div>
 					<h3>IP</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats">
-					<div class="count _money_tag">{{dcf_form2FOsc[0]['total_sc'] | int}}</div>
+					<div class="count _money_tag" id="totalSC">{{ dcf_form2FOsc[0]['total_sc'] | int }}</div>
 					<h3>SC</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
@@ -92,129 +220,268 @@
 			</div>
 			<div class="x_content">
 				<canvas id="polarArea"></canvas>
-					<div style="text-align: center;">
+					<div style="text-align: center;" id="polarLegend">
 						<p><i class="fa fa-square" style="color:#ff5c33 "></i> Cancelled: {{dcf_form2cancelled}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc">&nbsp;&nbsp;&nbsp;</i>On-going: {{dcf_form2og}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#999999">&nbsp;&nbsp;&nbsp;</i>Non-renewal: {{dcf_form2nonrenewal}}
-						</div>
+					</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-md-4 col-sm-4 ">
+			<div class="col-md-6 col-sm-6">
 				<div class="x_panel tile overflow_hidden">
 					<div class="x_title">
-						<h2>Commodity</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">Settings 1</a>
-										<a class="dropdown-item" href="#">Settings 2</a>
-									</div>
-								</li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
+					<h2>Commodity</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+						<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a>
+							<a class="dropdown-item" href="#">Settings 2</a>
+						</div>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
 					<div class="clearfix"></div>
-				</div>
+					</div>
 					<div class="x_content">
-						<table class="" style="width:100%">
+					<div class="row">
+						<div class="col-md-8 col-sm-6">
+						<p>Pie Chart Percentage</p>
+						<canvas id="canvasDoughnut" ></canvas>
+						</div>
+						<div class="col-md-4 col-sm-6">
+						<p class="">Commodities</p>
+						<table class="tile_info" id="commodityLegend">
+							{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
+							{% for key in over_all_commodity_count2 %}
 							<tr>
-								<th>
-									<p>Pie Chart Percentage</p>
-								</th>
-								<th>
-									<p class="">Commodities</p>
-								</th>
-							</tr>
-								<tr>
-									<td>
-										<canvas class="canvasDoughnut" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-									</td>
-								<td>
-									<table class="tile_info">
-										{% for key in over_all_commodity_count2 %}
-										<tr>
-											<td>
-												{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
-												{% set color_index = loop.index0 % square_colors|length %}
-												<p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count2[key] }}</p>
-											</td>
-										</tr>
-										{% endfor %}
-									</tr>
-								</table>
+							<td>
+								{% set color_index = loop.index0 % square_colors|length %}
+								<p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i> {{ key }}: {{ over_all_commodity_count2[key] }}</p>
 							</td>
-						</tr>
+							</tr>
+							{% endfor %}
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<h2 class=" x-container text-white x-padding" style="background-color: #007399; text-align: center;">Sales Monitoring</h2>
+	<div class="row">
+	<div class="col-md-6 col-sm-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>SALES MONITORING (by Commodity)</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<div class="table-container">
+					<table class="ui-table table table-bordered table-striped" id="salesCommodityTable">
+						<thead>
+							<tr>
+								<th>COMMODITY</th>
+								<th>TOTAL SALES</th>
+								<th>VOL. SUPPLIED</th>
+								<th>TOTAL TRANSACTION</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for comm in ["coffee", "coconut", "cacao", "pfn", "others"] %}
+							<tr>
+								<td>{{ comm|upper }}</td>
+								<td id="st_{{ comm }}_sales">0</td>
+								<td id="st_{{ comm }}_vol">0</td>
+								<td id="st_{{ comm }}_transaction">0</td>
+							</tr>
+							{% endfor %}
+						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-<br />
-
+	<div class="col-md-6 col-sm-6">
+		<div class="x_panel tile overflow_hidden">
+			<div class="x_title">
+				<h2>Commodity Bar Chart</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+							<i class="fa fa-wrench"></i>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a>
+							<a class="dropdown-item" href="#">Settings 2</a>
+						</div>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
 				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<p>Sales per Commodity per Product Type</p>
+						<canvas id="commodityBarChart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+
+<br />
+	<div class="row">
 					<script>
-						function init_chart_doughnut() {
-							if (typeof (Chart) === 'undefined') { return; }
-							console.log('init_chart_doughnut');
-							if ($('.canvasDoughnut').length) {
-								var _labels = [];
-								var _data = [];	
-								{% for key in over_all_commodity_count2 %}
-								_labels.push('{{key}}');
-								_data.push('{{over_all_commodity_count2[key]}}');
-								{% endfor %}
-								// Calculate total for _data
-								var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-								// Normalize _data to make its total equivalent to totalData
-								var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
-								var chart_doughnut_settings = {
+						let commodityBarChart;
+						function renderCommodityBarChart(labels, values) {
+							const ctx = document.getElementById('commodityBarChart').getContext('2d');
+							if (commodityBarChart) {
+								commodityBarChart.destroy();
+							}
+							commodityBarChart = new Chart(ctx, {
+								type: 'bar',
+								data: {
+									labels: labels,
+									datasets: [{
+										label: 'Commodity Count',
+										data: values,
+										backgroundColor: [
+											'#f39c12', // Coconut
+											'#2ecc71', // Cacao
+											'#3498db', // Coffee
+											'#9b59b6', // PFN
+											'#95a5a6'  // Others
+										],
+										borderWidth: 1
+									}]
+								},
+								options: {
+									responsive: true,
+									scales: {
+										y: {
+											beginAtZero: true,
+											ticks: {
+												precision: 0
+											}
+										}
+									},
+									plugins: {
+										legend: {
+											display: false
+										},
+										title: {
+											display: true,
+											text: 'Commodity Breakdown'
+										}
+									}
+								}
+							});
+						}
+					</script>
+
+					<script>
+						let doughnutChart = null;
+						function init_chart_doughnut(labels, data) {
+							const ctx = document.getElementById('canvasDoughnut').getContext('2d');
+							const colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"];
+							if (doughnutChart) {
+								doughnutChart.data.labels = labels;
+								doughnutChart.data.datasets[0].data = data;
+								doughnutChart.data.datasets[0].backgroundColor = colors.slice(0, labels.length);
+								doughnutChart.data.datasets[0].hoverBackgroundColor = colors.slice(0, labels.length);
+								doughnutChart.update(); // Update existing chart with new data
+							} else {
+								doughnutChart = new Chart(ctx, {
 									type: 'doughnut',
-									tooltipFillColor: "rgba(51, 51, 51, 0.55)",
 									data: {
-										labels: _labels,
+										labels: labels,
 										datasets: [{
-											data: normalizedData, // Use normalizedData here
-											backgroundColor: [
-												"#BDC3C7",
-												"#5c5c3d",
-												"#994d00",
-												"#331a00",
-												"#23a98c"
-												],
-											hoverBackgroundColor: [
-												"#CFD4D8",
-												"#8a8a5c",
-												"#cc6600",
-												"#663500",
-												"#56dcbf"
-												]
+											label: 'Commodity Distribution',
+											data: data,
+											backgroundColor: colors.slice(0, labels.length),
+											hoverBackgroundColor: colors.slice(0, labels.length)
 										}]
 									},
 									options: {
-										legend: false,
-										responsive: false,
+										responsive: true,
+										maintainAspectRatio: true, // Keep aspect ratio for consistent size
 										tooltips: {
 											callbacks: {
-												label: function (tooltipItem, data) {
-													var dataset = data.datasets[tooltipItem.datasetIndex];
-													var currentValue = _data[tooltipItem.index];
-													var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
-													return _labels[tooltipItem.index] + ": " + percentage;
+												label: function (tooltipItem, chartData) {
+													let dataset = chartData.datasets[tooltipItem.datasetIndex];
+													let currentValue = dataset.data[tooltipItem.index];
+													let total = dataset.data.reduce((acc, val) => acc + val, 0);
+													let percentage = ((currentValue / total) * 100).toFixed(1);
+													return `${chartData.labels[tooltipItem.index]}: ${currentValue} (${percentage}%)`;
 												}
 											}
 										}
-
 									}
-								};
-								$('.canvasDoughnut').each(function () {
-									var chart_element = $(this);
-									var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
-
 								});
+							}
+							// Update legend
+							const legendContainer = document.getElementById("commodityLegend");
+							legendContainer.innerHTML = '';
+							for (let i = 0; i < labels.length; i++) {
+								legendContainer.innerHTML += `
+									<tr>
+										<td>
+											<p><i class="fa fa-square" style="color:${colors[i % colors.length]}"></i> ${labels[i]}: ${data[i]}</p>
+										</td>
+									</tr>
+								`;
 							}
 						}
 
+						let polarChartInstance = null;
+						function updatePolarChart(cancelled, ongoing, nonrenewal) {
+							const ctx = document.getElementById("polarArea").getContext("2d");
+							// Destroy previous chart if exists
+							if (polarChartInstance) {
+								polarChartInstance.destroy();
+							}
+							const labels = ["Cancelled", "On-going", "Non-renewal"];
+							const data = [cancelled, ongoing, nonrenewal];
+							const colors = ["#ff5c33", "#0099cc", "#999999"];
+							polarChartInstance = new Chart(ctx, {
+								type: 'polarArea',
+								data: {
+									labels: labels,
+									datasets: [{
+										label: "Status Distribution",
+										data: data,
+										backgroundColor: colors
+									}]
+								},
+								options: {
+									responsive: true,
+									scale: {
+										ticks: {
+											beginAtZero: true,
+											userCallback: function(label) {
+												if (Math.floor(label) === label) return label;
+											}
+										}
+									}
+								}
+							});
+							const legendContainer = document.getElementById("polarLegend");
+							if (legendContainer) {
+								legendContainer.innerHTML = `
+									<p>
+										<i class="fa fa-square" style="color:#ff5c33"></i> Cancelled: ${cancelled}&nbsp;&nbsp;&nbsp;
+										<i class="fa fa-square" style="color:#0099cc"></i> On-going: ${ongoing}&nbsp;&nbsp;&nbsp;
+										<i class="fa fa-square" style="color:#999999"></i> Non-renewal: ${nonrenewal}
+									</p>
+								`;
+							}
+						}
 						function init_charts() {
 							console.log('run_charts  typeof [' + typeof (Chart) + ']');
 							if (typeof (Chart) === 'undefined') { return; }
@@ -222,37 +489,10 @@
 							Chart.defaults.global.legend = {
 								enabled: false
 							};
-							var _data =  [{{dcf_form2cancelled | int}}, {{dcf_form2og | int}}, {{dcf_form2nonrenewal | int}}]
-							println(_data)
-							if ($("#polarArea").length) e = document.getElementById("polarArea"), a = {
-								datasets: [{
-									data:_data,
-									backgroundColor: [ "#ff5c33","#0099cc","#999999"],
-									label: "My dataset"
-								}],
-								labels: ["Cancelled", "On-going", "Non-renewal"]
-							}, new Chart(e, {
-								data: a,
-								type: "polarArea",
-								options: {
-									scale: {
-										ticks: {
-											beginAtZero: true,
-											userCallback: function(label, index, labels) {
-                     						// when the floored value is the same as the value we have a whole number
-												if (Math.floor(label) === label) {
-													return label;
-												}
-
-											}
-										},
-									}
-								}
-							})
 						}
-						
+		
 						// Radar 
-						
+					
 						function showLoadingAndRedirect(id, table, form) {
 							Swal.fire({
 								title: 'Loading...',
@@ -511,7 +751,7 @@
 					<!-- End to do list -->
 					<!-- end of weather widget -->
 				</div>
-			</div>
+			
 		</div>
 	</div>
 

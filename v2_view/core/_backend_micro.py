@@ -1,7 +1,9 @@
 from datetime import date, datetime
-from flask import Blueprint, render_template, request, session, redirect, jsonify, send_file
+import io
+from flask import Blueprint, Response, render_template, request, session, redirect, jsonify, send_file
 from flask_session import Session
 import pandas as pd
+import xlsxwriter
 from modules.Connections import mysql, sqlite
 import Configurations as c
 import os
@@ -66,6 +68,7 @@ class _main:
                 "nameDIP": "ST_nameofdip",
                 "nameFO": "ST_nameof_fo",
                 "af-msme": "ST_af_msme",
+                "TotalSales": "ST_totalsales",
                 "addressFO": "ST_address_fo",
                 "productType": "ST_product_type",
                 "vs": "ST_vol_supplied",
@@ -76,15 +79,12 @@ class _main:
             }
             columns = ["`upload_by`"]
             values = [f"'{session['USER_DATA'][0]['id']}'"]  # Add the current user's ID to the upload_by column
-
             for form_field, db_column in field_mapping.items():
                 if form_field in request.form:
                     columns.append(f"`{db_column}`")
                     values.append(f"'{request.form[form_field]}'")
-
             if not columns:
                 return jsonify({"status": "error", "message": "No valid data provided"}), 400
-
             query = f"INSERT INTO `sales_tracker` ({', '.join(columns)}) VALUES ({', '.join(values)})"
             res = rapid_mysql.do(query)
             return jsonify({"status": "success", "message": "Data inserted successfully", "result": res})
@@ -222,6 +222,7 @@ def update_sales_tracker(st_id):
             "nameCOMMODITY": "ST_commodity",
             "nameDIP": "ST_nameofdip",
             "nameFO": "ST_nameof_fo",
+            "TotalSales": "ST_totalsales",
             "af-msme": "ST_af_msme",
             "addressFO": "ST_address_fo",
             "productType": "ST_product_type",
@@ -266,220 +267,220 @@ def get_salesT_data():
     
 #PROFILING FORM A------------------------------------------------------------------------------------------------
 @app.route('/export_form_a', methods=['GET'])
+@c.login_auth_web()
 def export_form_a():
-    query = ('''SELECT 
-    `excel_import_form_a`.`id`,
-    `excel_import_form_a`.`user_id`,
-    `excel_import_form_a`.`DEV_@_ID_@_ID`,
-    CONCAT(
-        `excel_import_form_a`.`frmer_prof_@_basic_Info_@_First_name`, ' ',
-        `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Middle_name`, ' ',
-        `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Last_name`, ' ',
-        `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Extension_name`
-    ) AS full_name,
-    `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Sex`,
-    `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Mobile_number`,
-    `excel_import_form_a`.`frmer_prof_@_basic_Info_@_email_address`,
-    `excel_import_form_a`.`frmer_prof_@_basic_Info_@_birthday`,
-    `excel_import_form_a`.`frmer_prof_@_basic_Info_@_bday_not_sure`,
-    `excel_import_form_a`.`frmer_prof_@_basic_Info_@_civil_status`,
-    `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_is_head_og_household`,
-    `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_name_head_household`,
-    `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_name`,
-    `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_relationship`,
-    `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_sex`,
-    `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_pwd`,
-    `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_ofw`,
-    `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_ip`,
-    `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_longitude`,
-    `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_latitude`,
-    `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_region`,
-    `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_province`,
-    `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality`,
-    `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_brgy`,
-    `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_purok_sitio_street`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_primary_crop`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Farmer_pwd`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Farmer_ofw`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_farmer_ip`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_years_farming`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Name_coop`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_position_in_coop`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_coop_mem_since`,
-    `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_is_listed_in_RSBSA`,
-    `excel_import_form_a`.`frmer_prof_@_educ_@_highest_educational_attainment`,
-    `excel_import_form_a`.`frmer_prof_@_educ_@_Vocational_Skills`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_Longitude`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_Latitude`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_region`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_province`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_municipality`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_Brgy`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_street_purok_sitio`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_declared_area_Ha`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_is_intercroping`,
-    `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_Primary_crop`,
-    `excel_import_form_a`.`farm_info@_Topography_@_slop_area_in_ha_greater_18_degrees`,
-    `excel_import_form_a`.`farm_info@_Topography_@_flat_lain_area_in_hectares`,
-    `excel_import_form_a`.`farm_info@_Trees_@_No_bearing_trees_planted`,
-    `excel_import_form_a`.`farm_info@_Trees_@_No_bearing_non_trees_planted`,
-    `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_Sole_ownership`,
-    `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_co_ownership`,
-    `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_CLOA_individual_EP`,
-    `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_stewardship`,
-    `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_usufruct`,
-    `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_tenancy`,
-    `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_others`,
-    `excel_import_form_a`.`farm_info@_Primary_Crop_Info_@_Ave_Prod_vol_w018_2019_kg_cycle`,
-    `excel_import_form_a`.`farm_info@_Primary_Crop_Info_@_Crop_total_land_area_covered_Ha`,
-    `excel_import_form_a`.`farm_info@_Primary_Crop_Info_@_Crop_No_Cycle_`,
-    `excel_import_form_a`.`farm_info@_Secondary_Crop_Info_@_Secondary_Crop_if_Any`,
-    `excel_import_form_a`.`farm_info@_Secondary_Crop_Info_@_Ave_Prod_vol_w018_2019_kg_cycle`,
-    `excel_import_form_a`.`farm_info@_Secondary_Crop_Info_@_Crop_total_land_area_covered_Ha`,
-    `excel_import_form_a`.`farm_info@_Secondary_Crop_Info_@_Crop_No_Cycle_`,
-    `excel_import_form_a`.`farm_info@_Area_land_for_Expansion_@_Sloping_`,
-    `excel_import_form_a`.`farm_info@_Area_land_for_Expansion_@_Flat_Plain`,
-    `excel_import_form_a`.`farm_info@_area_land_for_rehabilitation_@_Sloping`,
-    `excel_import_form_a`.`farm_info@_area_land_for_rehabilitation_@_flat_plain`,
-    `excel_import_form_a`.`farm_info@_num_HH_mem_Age_0_14_per_Gender_@_No_Male`,
-    `excel_import_form_a`.`farm_info@_num_HH_mem_Age_0_14_per_Gender_@_no_Female`,
-    `excel_import_form_a`.`farm_info@_num_HH_mem_Age_15_30_per_Gender_@_No_Male`,
-    `excel_import_form_a`.`farm_info@_num_HH_mem_Age_15_30_per_Gender_@_no_Female`,
-    `excel_import_form_a`.`farm_info@_num_HH_mem_Age_31_59_per_Gender_@_No_Male`,
-    `excel_import_form_a`.`farm_info@_num_HH_mem_Age_31_59_per_Gender_@_no_Female`,
-    `excel_import_form_a`.`farm_info@_num_HH_mem_Age_60_above_per_Gender_@_No_Male`,
-    `excel_import_form_a`.`farm_info@_num_HH_mem_Age_60_above_per_Gender_@_no_Female`,
-    `excel_import_form_a`.`farm_info@_num_PWD_HH_Mem_@_No_Male`,
-    `excel_import_form_a`.`farm_info@_num_PWD_HH_Mem_@_no_Female`,
-    `excel_import_form_a`.`farm_info@_num_OFW_HH_Mem_@_No_Male`,
-    `excel_import_form_a`.`farm_info@_num_OFW_HH_Mem_@_no_Female`,
-    `excel_import_form_a`.`farm_info@_num_PWD_IP_Mem_@_No_Male`,
-    `excel_import_form_a`.`farm_info@_num_PWD_IP_Mem_@_no_Female`,
-    `excel_import_form_a`.`farm_info@_num_PWD_IP_Mem_@_List_IP_in_HH`,
-    `excel_import_form_a`.`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Primary_Crop_`,
-    `excel_import_form_a`.`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Secondary_Crop_`,
-    `excel_import_form_a`.`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Lvstock_Fish_etc`,
-    `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_fam_Remittnaces`,
-    `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Employment`,
-    `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Skilled_Labor`,
-    `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Business`,
-    `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Social_Pension`,
-    `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Pantawid_Beneficary`,
-    `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Other_Subsidies`,
-    `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_If_Others_specify`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Farmer_farm_info_@_Does_Farmer_Keep_Records`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Farmer_farm_info_@_Crop_Cycle_Per_year`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Land_Dev_Prep`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Crop_Maintenance_Acts`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Crop_Harvesting`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Post_Harvest_Acts`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Land_Dev_Prep`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Mntnce_Acts`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Harvesting`,
-    `excel_import_form_a`.`prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Post_Harv_Acts`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_Youth`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_Senior_Citizen`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_PWD`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_OFW`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_IP`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_Youth`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_Senior_Citizen`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_PWD`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_OFW`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_IP`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_Youth`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_Senior_Citizen`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_PWD`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_OFW`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_IP`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_Youth`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_Sr_Citizen`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_PWD`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_OFW`,
-    `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_IP`,
-    `excel_import_form_a`.`Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_fam_Workers`,
-    `excel_import_form_a`.`Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_NON_fam_Workers`,
-    `excel_import_form_a`.`Workers_Laborers_@_Worker_Income_@_Male_fam_Income_Yearly`,
-    `excel_import_form_a`.`Workers_Laborers_@_Worker_Income_@_Fem_fam_Income_Yearly`,
-    `excel_import_form_a`.`Workers_Laborers_@_Worker_Income_@_Male_NON_fam_Income_Yearly`,
-    `excel_import_form_a`.`Workers_Laborers_@_Worker_Income_@_Fem_NON_fam_Income_Yearly`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_@_Type_PH_Faci_Equipnt`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_@_Name_Equipnt_Faci`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Longitude`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Latitude`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Region`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Province`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_City_Muni`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_st_prkk_sitio`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Prod_Out_@_PH_Product_Form`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Prod_Out_@_Cap_qty`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Prod_Out_@_Cap_unit_kg_metric_tons_sac_crate_box`,
-    `excel_import_form_a`.`Post_Harv_@_PH_Prod_Out_@_Cap_Freq_hr_daymonth_year_cyc_harv`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Primary_crop_Prod_@_Primary_crop_Prod_Type`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Primary_crop_Prod_@_Primary_crop_Product_Dlvry`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Farmers_Org`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_SME`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Anchor_Firm`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Negosyo_Center`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Others`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Mrkt_@_Payterms_Cnsgnmnt_Cash_Cred_Other`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Mrkt_@_Buyer_Type_Trdr_Conso_Processor_Other`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Mrkt_@_Farm_Gate_Price_FGP_on_Php`,
-    `excel_import_form_a`.`Mrktng_Sales_@_Mrkt_@_Unit_Kg_Metric_tons_Sack_box`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Crop_Insurance_@_Crop_Insurance_yes_No`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Loan_Bank_@_Name_Govt_Bank_LBP_DBP_if_any`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Loan_Bank_@_Type_Loan`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Loan_Non_Bank_@_Name_Private_Bank_if_any`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Loan_Non_Bank_@_Type_Loan`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Loan_Others_@_Loan_Init_Rltives_Informal_Lndrs`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Loan_Others_@_Type_Loan`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Depo_@_Type_Depo_if_any`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Depo_@_Name_bank_if_the_FSP_is_Bank`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Depo_@_Name_non_bank_if_the_FSP_is_non_Bank`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Insurance_@_Type_Insurance_if_any`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Insurance_@_Name_bank_if_the_FSP_is_Bank`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Insurance_@_Name_non_bank_if_the_FSP_is_non_Bank`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Paymnts_Util_@_Type_Payments_if_any`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Paymnts_Util_@_Name_bank_if_the_FSP_is_Bank`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Paymnts_Util_@_Name_non_bank_if_FSP_is_non_Bank`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Remittances_OFW_@_Name_Non_Bank_FSP`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Others_@_Name_bank_if_the_FSP_is_Bank`,
-    `excel_import_form_a`.`Acs_to_Finc_@_Others_@_Name_non_bank_if_the_FSP_is_non_Bank`,
-    `excel_import_form_a`.`Competency_@_Core_@_num_Farm_Relate_Trainings_last_2_3_years`,
-    `excel_import_form_a`.`Competency_@_Core_@_List_Value_Chain`,
-    `excel_import_form_a`.`Competency_@_Core_@_Farm_Certification_Acquired_if_any`,
-    `excel_import_form_a`.`Competency_@_src_info@_ls_Medium_source_information`,
-    `excel_import_form_a`.`Competency_@_src_info@_ls_frequency_Medium_source_info_`,
-    `excel_import_form_a`.`Competency_@_Others_@_Owns_what_Type_Mobile_Phone`,
-    `excel_import_form_a`.`Competency_@_Others_@_Support_Needed_to_improve_farm_prodcvty`,
-    `excel_import_form_a`.`Competency_@_Others_@_Farmer_Comments_about_Rapid`,
-    `excel_import_form_a`.`Others_@_Others_@_Enumerator_Remarks`,
-    `excel_import_form_a`.`Others_@_Others_@_Others_1`,
-    `excel_import_form_a`.`Others_@_Others_@_Others_2`,
-    `excel_import_form_a`.`Others_@_Others_@_Others_3`,
-    `excel_import_form_a`.`Others_@_Others_@_Others_4`,
-    `excel_import_form_a`.`Others_@_Others_@_Others_5`,
-    `excel_import_form_a`.`Others_@_Others_@_Others_6`,
-    `excel_import_form_a`.`v2_date_enum`,
-    `excel_import_form_a`.`v2_name_enum`,
-    `excel_import_form_a`.`v2_workers_total_fam_female`,
-    `excel_import_form_a`.`v2_workers_total_fam_male`,
-    `excel_import_form_a`.`v2_workers_total_nonfam_female`,
-    `excel_import_form_a`.`v2_workers_total_nonfam_male`,
-    `excel_import_form_a`.`v2_access_crop_insur_name_fsp_access`,
-    `excel_import_form_a`.`v2_interv_capbuild`,
-    `excel_import_form_a`.`v2_interv_expansion`,
-    `excel_import_form_a`.`v2_interv_rehab`,
-    `excel_import_form_a`.`v2_interv_prod_inv`,
-    `excel_import_form_a`.`v2_interv_fmi`,
-    `excel_import_form_a`.`file_name`,
-    `users`.`name` AS 'Uploaded By'
-FROM excel_import_form_a
-LEFT JOIN users ON `excel_import_form_a`.`user_id` = `users`.`id`
-''')
-    data = rapid_mysql.select(query)
-    df = pd.DataFrame(data)
+    query = ('''SELECT
+            `excel_import_form_a`.`id`,
+            `excel_import_form_a`.`user_id`,
+            `excel_import_form_a`.`DEV_@_ID_@_ID`,
+            CONCAT(
+                `excel_import_form_a`.`frmer_prof_@_basic_Info_@_First_name`, ' ',
+                `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Middle_name`, ' ',
+                `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Last_name`, ' ',
+                `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Extension_name`
+            ) AS full_name,
+            `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Sex`,
+            `excel_import_form_a`.`frmer_prof_@_basic_Info_@_Mobile_number`,
+            `excel_import_form_a`.`frmer_prof_@_basic_Info_@_email_address`,
+            `excel_import_form_a`.`frmer_prof_@_basic_Info_@_birthday`,
+            `excel_import_form_a`.`frmer_prof_@_basic_Info_@_bday_not_sure`,
+            `excel_import_form_a`.`frmer_prof_@_basic_Info_@_civil_status`,
+            `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_is_head_og_household`,
+            `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_name_head_household`,
+            `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_name`,
+            `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_relationship`,
+            `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_sex`,
+            `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_pwd`,
+            `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_ofw`,
+            `excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_head_hh_ip`,
+            `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_longitude`,
+            `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_latitude`,
+            `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_region`,
+            `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_province`,
+            `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality`,
+            `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_brgy`,
+            `excel_import_form_a`.`frmer_prof_@_frmer_addr_@_purok_sitio_street`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_primary_crop`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Farmer_pwd`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Farmer_ofw`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_farmer_ip`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_years_farming`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Name_coop`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_position_in_coop`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_coop_mem_since`,
+            `excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_is_listed_in_RSBSA`,
+            `excel_import_form_a`.`frmer_prof_@_educ_@_highest_educational_attainment`,
+            `excel_import_form_a`.`frmer_prof_@_educ_@_Vocational_Skills`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_Longitude`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_Latitude`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_region`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_province`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_municipality`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_Brgy`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_street_purok_sitio`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_declared_area_Ha`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_is_intercroping`,
+            `excel_import_form_a`.`farm_info@_Farm_Basic_Info_@_Primary_crop`,
+            `excel_import_form_a`.`farm_info@_Topography_@_slop_area_in_ha_greater_18_degrees`,
+            `excel_import_form_a`.`farm_info@_Topography_@_flat_lain_area_in_hectares`,
+            `excel_import_form_a`.`farm_info@_Trees_@_No_bearing_trees_planted`,
+            `excel_import_form_a`.`farm_info@_Trees_@_No_bearing_non_trees_planted`,
+            `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_Sole_ownership`,
+            `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_co_ownership`,
+            `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_CLOA_individual_EP`,
+            `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_stewardship`,
+            `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_usufruct`,
+            `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_tenancy`,
+            `excel_import_form_a`.`farm_info@_Land_Tenurial_Status_in_Ha_@_others`,
+            `excel_import_form_a`.`farm_info@_Primary_Crop_Info_@_Ave_Prod_vol_w018_2019_kg_cycle`,
+            `excel_import_form_a`.`farm_info@_Primary_Crop_Info_@_Crop_total_land_area_covered_Ha`,
+            `excel_import_form_a`.`farm_info@_Primary_Crop_Info_@_Crop_No_Cycle_`,
+            `excel_import_form_a`.`farm_info@_Secondary_Crop_Info_@_Secondary_Crop_if_Any`,
+            `excel_import_form_a`.`farm_info@_Secondary_Crop_Info_@_Ave_Prod_vol_w018_2019_kg_cycle`,
+            `excel_import_form_a`.`farm_info@_Secondary_Crop_Info_@_Crop_total_land_area_covered_Ha`,
+            `excel_import_form_a`.`farm_info@_Secondary_Crop_Info_@_Crop_No_Cycle_`,
+            `excel_import_form_a`.`farm_info@_Area_land_for_Expansion_@_Sloping_`,
+            `excel_import_form_a`.`farm_info@_Area_land_for_Expansion_@_Flat_Plain`,
+            `excel_import_form_a`.`farm_info@_area_land_for_rehabilitation_@_Sloping`,
+            `excel_import_form_a`.`farm_info@_area_land_for_rehabilitation_@_flat_plain`,
+            `excel_import_form_a`.`farm_info@_num_HH_mem_Age_0_14_per_Gender_@_No_Male`,
+            `excel_import_form_a`.`farm_info@_num_HH_mem_Age_0_14_per_Gender_@_no_Female`,
+            `excel_import_form_a`.`farm_info@_num_HH_mem_Age_15_30_per_Gender_@_No_Male`,
+            `excel_import_form_a`.`farm_info@_num_HH_mem_Age_15_30_per_Gender_@_no_Female`,
+            `excel_import_form_a`.`farm_info@_num_HH_mem_Age_31_59_per_Gender_@_No_Male`,
+            `excel_import_form_a`.`farm_info@_num_HH_mem_Age_31_59_per_Gender_@_no_Female`,
+            `excel_import_form_a`.`farm_info@_num_HH_mem_Age_60_above_per_Gender_@_No_Male`,
+            `excel_import_form_a`.`farm_info@_num_HH_mem_Age_60_above_per_Gender_@_no_Female`,
+            `excel_import_form_a`.`farm_info@_num_PWD_HH_Mem_@_No_Male`,
+            `excel_import_form_a`.`farm_info@_num_PWD_HH_Mem_@_no_Female`,
+            `excel_import_form_a`.`farm_info@_num_OFW_HH_Mem_@_No_Male`,
+            `excel_import_form_a`.`farm_info@_num_OFW_HH_Mem_@_no_Female`,
+            `excel_import_form_a`.`farm_info@_num_PWD_IP_Mem_@_No_Male`,
+            `excel_import_form_a`.`farm_info@_num_PWD_IP_Mem_@_no_Female`,
+            `excel_import_form_a`.`farm_info@_num_PWD_IP_Mem_@_List_IP_in_HH`,
+            `excel_import_form_a`.`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Primary_Crop_`,
+            `excel_import_form_a`.`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Secondary_Crop_`,
+            `excel_import_form_a`.`farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Lvstock_Fish_etc`,
+            `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_fam_Remittnaces`,
+            `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Employment`,
+            `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Skilled_Labor`,
+            `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Business`,
+            `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Social_Pension`,
+            `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Pantawid_Beneficary`,
+            `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_Other_Subsidies`,
+            `excel_import_form_a`.`farm_info@_Household_Income_Non_Farming_@_If_Others_specify`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Farmer_farm_info_@_Does_Farmer_Keep_Records`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Farmer_farm_info_@_Crop_Cycle_Per_year`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Land_Dev_Prep`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Crop_Maintenance_Acts`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Crop_Harvesting`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Labor_Cost_P_Cycle_@_Post_Harvest_Acts`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Land_Dev_Prep`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Mntnce_Acts`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Harvesting`,
+            `excel_import_form_a`.`prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Post_Harv_Acts`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_Youth`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_Senior_Citizen`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_PWD`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_OFW`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_fam_Workers_@_IP`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_Youth`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_Senior_Citizen`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_PWD`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_OFW`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_fam_Workers_@_IP`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_Youth`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_Senior_Citizen`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_PWD`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_OFW`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Male_Non_fam_Workers_@_IP`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_Youth`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_Sr_Citizen`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_PWD`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_OFW`,
+            `excel_import_form_a`.`Workers_Laborers_@_num_Fem_Non_fam_Workers_@_IP`,
+            `excel_import_form_a`.`Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_fam_Workers`,
+            `excel_import_form_a`.`Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_NON_fam_Workers`,
+            `excel_import_form_a`.`Workers_Laborers_@_Worker_Income_@_Male_fam_Income_Yearly`,
+            `excel_import_form_a`.`Workers_Laborers_@_Worker_Income_@_Fem_fam_Income_Yearly`,
+            `excel_import_form_a`.`Workers_Laborers_@_Worker_Income_@_Male_NON_fam_Income_Yearly`,
+            `excel_import_form_a`.`Workers_Laborers_@_Worker_Income_@_Fem_NON_fam_Income_Yearly`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_@_Type_PH_Faci_Equipnt`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_@_Name_Equipnt_Faci`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Longitude`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Latitude`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Region`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Province`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_City_Muni`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Faci_Equipnt_Addresses_@_st_prkk_sitio`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Prod_Out_@_PH_Product_Form`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Prod_Out_@_Cap_qty`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Prod_Out_@_Cap_unit_kg_metric_tons_sac_crate_box`,
+            `excel_import_form_a`.`Post_Harv_@_PH_Prod_Out_@_Cap_Freq_hr_daymonth_year_cyc_harv`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Primary_crop_Prod_@_Primary_crop_Prod_Type`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Primary_crop_Prod_@_Primary_crop_Product_Dlvry`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Farmers_Org`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_SME`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Anchor_Firm`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Negosyo_Center`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Others`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Mrkt_@_Payterms_Cnsgnmnt_Cash_Cred_Other`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Mrkt_@_Buyer_Type_Trdr_Conso_Processor_Other`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Mrkt_@_Farm_Gate_Price_FGP_on_Php`,
+            `excel_import_form_a`.`Mrktng_Sales_@_Mrkt_@_Unit_Kg_Metric_tons_Sack_box`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Crop_Insurance_@_Crop_Insurance_yes_No`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Loan_Bank_@_Name_Govt_Bank_LBP_DBP_if_any`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Loan_Bank_@_Type_Loan`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Loan_Non_Bank_@_Name_Private_Bank_if_any`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Loan_Non_Bank_@_Type_Loan`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Loan_Others_@_Loan_Init_Rltives_Informal_Lndrs`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Loan_Others_@_Type_Loan`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Depo_@_Type_Depo_if_any`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Depo_@_Name_bank_if_the_FSP_is_Bank`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Depo_@_Name_non_bank_if_the_FSP_is_non_Bank`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Insurance_@_Type_Insurance_if_any`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Insurance_@_Name_bank_if_the_FSP_is_Bank`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Insurance_@_Name_non_bank_if_the_FSP_is_non_Bank`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Paymnts_Util_@_Type_Payments_if_any`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Paymnts_Util_@_Name_bank_if_the_FSP_is_Bank`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Paymnts_Util_@_Name_non_bank_if_FSP_is_non_Bank`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Remittances_OFW_@_Name_Non_Bank_FSP`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Others_@_Name_bank_if_the_FSP_is_Bank`,
+            `excel_import_form_a`.`Acs_to_Finc_@_Others_@_Name_non_bank_if_the_FSP_is_non_Bank`,
+            `excel_import_form_a`.`Competency_@_Core_@_num_Farm_Relate_Trainings_last_2_3_years`,
+            `excel_import_form_a`.`Competency_@_Core_@_List_Value_Chain`,
+            `excel_import_form_a`.`Competency_@_Core_@_Farm_Certification_Acquired_if_any`,
+            `excel_import_form_a`.`Competency_@_src_info@_ls_Medium_source_information`,
+            `excel_import_form_a`.`Competency_@_src_info@_ls_frequency_Medium_source_info_`,
+            `excel_import_form_a`.`Competency_@_Others_@_Owns_what_Type_Mobile_Phone`,
+            `excel_import_form_a`.`Competency_@_Others_@_Support_Needed_to_improve_farm_prodcvty`,
+            `excel_import_form_a`.`Competency_@_Others_@_Farmer_Comments_about_Rapid`,
+            `excel_import_form_a`.`Others_@_Others_@_Enumerator_Remarks`,
+            `excel_import_form_a`.`Others_@_Others_@_Others_1`,
+            `excel_import_form_a`.`Others_@_Others_@_Others_2`,
+            `excel_import_form_a`.`Others_@_Others_@_Others_3`,
+            `excel_import_form_a`.`Others_@_Others_@_Others_4`,
+            `excel_import_form_a`.`Others_@_Others_@_Others_5`,
+            `excel_import_form_a`.`Others_@_Others_@_Others_6`,
+            `excel_import_form_a`.`v2_date_enum`,
+            `excel_import_form_a`.`v2_name_enum`,
+            `excel_import_form_a`.`v2_workers_total_fam_female`,
+            `excel_import_form_a`.`v2_workers_total_fam_male`,
+            `excel_import_form_a`.`v2_workers_total_nonfam_female`,
+            `excel_import_form_a`.`v2_workers_total_nonfam_male`,
+            `excel_import_form_a`.`v2_access_crop_insur_name_fsp_access`,
+            `excel_import_form_a`.`v2_interv_capbuild`,
+            `excel_import_form_a`.`v2_interv_expansion`,
+            `excel_import_form_a`.`v2_interv_rehab`,
+            `excel_import_form_a`.`v2_interv_prod_inv`,
+            `excel_import_form_a`.`v2_interv_fmi`,
+            `excel_import_form_a`.`file_name`,
+            `users`.`name` AS 'Uploaded By'
+        FROM excel_import_form_a
+        LEFT JOIN users ON `excel_import_form_a`.`user_id` = `users`.`id`
+    ''')
+
     headers = [
         "ID", "User ID", "DEV @ ID @ ID", "Full Name", "Sex",
         "Mobile Number", "Email Address", "Birthday", "Birthday Not Sure",
@@ -555,29 +556,78 @@ LEFT JOIN users ON `excel_import_form_a`.`user_id` = `users`.`id`
         "Intervention - Rehabilitation", "Intervention - Production Investment",
         "Intervention - FMI", "File Name", "Uploaded By"
     ]
-    
-    num_columns_in_df = len(df.columns)
-    num_expected_headers = len(headers)
-    if num_columns_in_df != num_expected_headers:
-        print(f"Warning: Column count mismatch! DataFrame has {num_columns_in_df} columns, expected {num_expected_headers}.")
-        if num_columns_in_df > num_expected_headers:
-            df = df.iloc[:, :num_expected_headers] 
-        elif num_columns_in_df < num_expected_headers:
-            headers = headers[:num_columns_in_df]
-    df.columns = headers
-    file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form_a_exported_file.xlsx')
-    writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='dcf_form_a_exported_file', index=False)
-    workbook = writer.book
-    worksheet = writer.sheets['dcf_form_a_exported_file']
-    header_format = workbook.add_format({'bold': True,'text_wrap': True,'valign': 'vcenter','align': 'center','fg_color': '#00cc66','border': 1})
-    for col_num, value in enumerate(df.columns.values):
-        worksheet.write(0, col_num, value, header_format)
-    for idx, col in enumerate(df.columns):
-        header_length = len(str(col)) + 2
-        series = df[col].astype(str)
-        data_max_length = series.apply(len).max()
-        max_len = min(max(header_length, data_max_length), 40) 
-        worksheet.set_column(idx, idx, max_len)
-    writer.close()
-    return send_file(file_path, as_attachment=True, download_name='dcf_form_a_exported_file.xlsx', conditional=True)
+    def generate_excel_data():
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'constant_memory': True})
+        worksheet = workbook.add_worksheet('dcf_form_a_exported_file')
+        header_format = workbook.add_format({
+            'bold': True,'text_wrap': True,'valign': 'vcenter','align': 'center','fg_color': '#00cc66','border': 1
+        })
+        for col_num, header_text in enumerate(headers):
+            worksheet.write(0, col_num, header_text, header_format)
+        offset = 0
+        chunk_size = 1000
+        row_num = 1
+        adaptive_chunk = True 
+        while True:
+            try:
+                query_with_limit = query + f" LIMIT {chunk_size} OFFSET {offset}"
+                data_chunk = rapid_mysql.select(query_with_limit)
+                if not data_chunk:
+                    break
+                df_chunk = pd.DataFrame(data_chunk)
+                num_columns_in_df = len(df_chunk.columns)
+                num_expected_headers = len(headers)
+
+                if num_columns_in_df != num_expected_headers:
+                    print(
+                        f"Column count mismatch! DataFrame has {num_columns_in_df} columns, expected {num_expected_headers}."
+                    )
+                    if num_columns_in_df > num_expected_headers:
+                        df_chunk = df_chunk.iloc[:, :num_expected_headers]
+                    elif num_columns_in_df < num_expected_headers:
+                        local_headers = headers[:num_columns_in_df]
+                        df_chunk.columns = local_headers
+                    else:
+                        df_chunk.columns = headers
+                else:
+                    df_chunk.columns = headers
+                for row_data in df_chunk.itertuples(index=False, name=None):
+                    for col_num, cell_value in enumerate(row_data):
+                        worksheet.write(row_num, col_num, cell_value)
+                    row_num += 1
+                for idx, col in enumerate(df_chunk.columns):
+                    header_length = len(str(col)) + 2
+                    series = df_chunk[col].astype(str)
+                    data_max_length = series.apply(len).max()
+                    max_len = min(max(header_length, data_max_length), 40) 
+                    worksheet.set_column(idx, idx, max_len)
+                offset += chunk_size
+                yield output.getvalue()
+                output.seek(0)
+                output.truncate(0)
+                if adaptive_chunk:
+                    if len(df_chunk) < 100 and chunk_size > 500: 
+                        chunk_size -= 100
+                        print(f"Decreasing chunk size to {chunk_size}")
+                    elif len(df_chunk) > 900 and chunk_size < 2000:  
+                        chunk_size += 100
+                        print(f"Increasing chunk size to {chunk_size}")
+            except Exception as e:
+                print(f"Error during Excel data generation: {e}")
+                yield f"Error: {e}".encode()
+                break
+
+        workbook.close()
+        yield output.getvalue()
+    def generate_response():
+        try:
+            return Response(
+                generate_excel_data(),
+                mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                headers={'Content-Disposition': 'attachment; filename=dcf_form_a_exported_file.xlsx'}
+            )
+        except Exception as e:
+            print(f"Error creating response: {e}")
+            return "An error occurred while generating the Excel file.", 500 
+    return generate_response()
