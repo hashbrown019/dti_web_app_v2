@@ -197,67 +197,113 @@
     </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const st_id = urlParams.get("st_id");
-      const isView = urlParams.get("view") === "true";
-      const isEdit = urlParams.get("edit") === "true";
-  
-      if (st_id) {
-          fetch(`/view-sales-tracker-table/${st_id}`)
-              .then((response) => response.json())
-              .then((data) => {
-                  if (data.status === "error") {
-                      console.error(data.message);
-                      return;
-                  }
-                  function formatDate(dateString) {
-                      if (!dateString) return "";
-                      const date = new Date(dateString);
-                      const year = date.getFullYear();
-                      const month = String(date.getMonth() + 1).padStart(2, "0");
-                      const day = String(date.getDate()).padStart(2, "0");
-                      return `${year}-${month}-${day}`;
-                  }
-                  document.getElementById("nameID").value = data.CPA_id || "";
-                  document.getElementById("nameRCU").value = data.ST_rcu || "";
-                  document.getElementById("namePCU").value = data.ST_pcu || "";
-                  document.getElementById("nameCOMMODITY").value = data.ST_commodity || "";
-                  document.getElementById("nameDIP").value = data.ST_nameofdip || "";
-                  document.getElementById("nameFO").value = data.ST_nameof_fo || "";
-                  document.getElementById("addressFO").value = data.ST_address_fo || "";
-                  document.getElementById("af-msme").value = data.ST_af_msme || "";
-                  document.getElementById("TotalSales").value = data.ST_totalsales || "";
-                  document.getElementById("productType").value = data.ST_product_type || "";
-                  document.getElementById("vs").value = data.ST_vol_supplied || "";
-                  document.getElementById("aveP").value = data.ST_ave_price || "";
-                  document.getElementById("totalTransaction").value = data.ST_total_transaction || "";
-                  document.getElementById("incentives").value = data.ST_incentives_provided || "";
-                  document.getElementById("date").value = formatDate(data.ST_date);
-                  if (isView) {
-                      const inputs = document.querySelectorAll(".TRACKING_FORM");
-                      inputs.forEach((input) => {
-                          input.disabled = true;
-                          input.style.backgroundColor = "#e9ecef";
-                      });
-                      const submitButton = document.querySelector("button[type='button']");
-                      const clearButton = document.querySelector("button[type='reset']");
-                      if (submitButton) submitButton.disabled = true;
-                      if (clearButton) clearButton.disabled = true;
-                  }
-                  if (isEdit) {
-                      const submitButton = document.querySelector("button[type='button']");
-                      if (submitButton) {
-                          submitButton.textContent = "Update";
-                          submitButton.onclick = function () {
-                              updateSalesTracker(st_id);
-                          };
-                      }
-                  }
-              })
-              .catch((error) => console.error("Error fetching data:", error));
-      }
-  });
+  document.addEventListener("DOMContentLoaded", async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const st_id = urlParams.get("st_id");
+    const isView = urlParams.get("view") === "true";
+
+    if (st_id) {
+        try {
+            const response = await fetch(`/view-sales-tracker-table/${st_id}`);
+            const data = await response.json();
+            if (data.status === "error") {
+                console.error(data.message);
+                return;
+            }
+
+            function formatDate(dateString) {
+                if (!dateString) return "";
+                const date = new Date(dateString);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, "0");
+                const day = String(date.getDate()).padStart(2, "0");
+                return `${year}-${month}-${day}`;
+            }
+
+            // Populate fields
+            document.getElementById("nameID").value = data.CPA_id || "";
+            document.getElementById("nameRCU").value = data.ST_rcu || "";
+            document.getElementById("namePCU").value = data.ST_pcu || "";
+            document.getElementById("nameCOMMODITY").value = data.ST_commodity || "";
+            document.getElementById("nameDIP").value = data.ST_nameofdip || "";
+            document.getElementById("nameFO").value = data.ST_nameof_fo || "";
+            document.getElementById("addressFO").value = data.ST_address_fo || "";
+            document.getElementById("af-msme").value = data.ST_af_msme || "";
+            document.getElementById("TotalSales").value = data.ST_totalsales || "";
+            document.getElementById("productType").value = data.ST_product_type || "";
+            document.getElementById("vs").value = data.ST_vol_supplied || "";
+            document.getElementById("aveP").value = data.ST_ave_price || "";
+            document.getElementById("totalTransaction").value = data.ST_total_transaction || "";
+            document.getElementById("incentives").value = data.ST_incentives_provided || "";
+            document.getElementById("date").value = formatDate(data.ST_date);
+
+            const inputs = document.querySelectorAll(".TRACKING_FORM");
+            const submitButton = document.querySelector("button[type='button']");
+            const clearButton = document.querySelector("button[type='reset']");
+            const commercialInputs = [
+                document.getElementById("nameID"),
+                document.getElementById("nameRCU"),
+                document.getElementById("namePCU"),
+                document.getElementById("nameCOMMODITY"),
+                document.getElementById("nameDIP"),
+                document.getElementById("nameFO"),
+                document.getElementById("addressFO"),
+                document.getElementById("af-msme"),
+                document.getElementById("TotalSales")
+            ];
+
+            function disableCommercialInputs() {
+                commercialInputs.forEach(input => {
+                    if (input) {
+                        input.disabled = true;
+                        input.style.backgroundColor = "#b3e6cc";
+                    }
+                });
+            }
+
+            // Get current session and compare uploader
+            let canEdit = false;
+            try {
+                const sessionRes = await fetch("/mis-v4/get-session");
+                const sessionData = await sessionRes.json();
+                const userId = sessionData && sessionData[0] && sessionData[0].id;
+                if (userId && userId == data.upload_by) {
+                    canEdit = true;
+                }
+            } catch (e) {
+                console.error("Error fetching session:", e);
+            }
+
+            if (canEdit && !isView) {
+                inputs.forEach((input) => {
+                    input.disabled = false;
+                    input.style.backgroundColor = "";
+                });
+                disableCommercialInputs(); // commercial fields stay disabled
+
+                if (submitButton) {
+                    submitButton.textContent = "Update";
+                    submitButton.disabled = false;
+                    submitButton.onclick = () => updateSalesTracker(st_id);
+                }
+                if (clearButton) clearButton.disabled = false;
+            } else {
+                // View-only mode
+                inputs.forEach((input) => {
+                    input.disabled = true;
+                    input.style.backgroundColor = "#e9ecef";
+                });
+                if (submitButton) submitButton.disabled = true;
+                if (clearButton) clearButton.disabled = true;
+                disableCommercialInputs();
+            }
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+});
+
   
   function updateSalesTracker(st_id) {
     const trackerInputs = document.querySelectorAll("#yearlySalesTrackerForm .TRACKING_FORM");

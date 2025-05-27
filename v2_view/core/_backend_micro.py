@@ -95,14 +95,14 @@ class _main:
 @c.login_auth_web()
 def get_grievance_data():
     try:
-        record_id = request.args.get('id') 
+        record_id = request.args.get('id')
         if record_id:
-            query = f"SELECT * FROM grievance WHERE Id = {record_id}"
+            query = f"SELECT * FROM grievance WHERE id = {int(record_id)}"
         else:
             query = "SELECT * FROM grievance"
         grievance_data = rapid_mysql.select(query)
         if record_id and not grievance_data:
-            return jsonify({"status": "error", "message": "No data found for the given ID"}), 404
+            return jsonify({"status": "error", "message": "Record not found"}), 404
         return jsonify(grievance_data)
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
@@ -148,25 +148,6 @@ def update_grievance_data(id):
 @app.route("/grievance-table", methods=["GET"])
 def grievance_table():
     return redirect("mis-v4/core-grievance-monitoring?table")
-
-@app.route("/insert/grievance", methods=["POST"])
-@c.login_auth_web() 
-def insert_grievance():
-    try:
-        user_data = session.get("USER_DATA", [{}])[0]
-        created_by = user_data.get("id") 
-        data = request.form.to_dict()
-        data["created_by"] = created_by 
-        columns = ", ".join([f"`{key}`" for key in data.keys()])
-        values = ", ".join([f"'{value}'" for value in data.values()])
-        query = f"INSERT INTO grievance ({columns}) VALUES ({values})"
-        result = rapid_mysql.do(query)
-        if result is not None:
-            return jsonify({"status": "success", "message": "Grievance submitted successfully"}), 200
-        else:
-            return jsonify({"status": "error", "message": "Failed to submit grievance"}), 500
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
 
 #SALES TRACKER TABLE ------------------------------------------------------    
 @app.route("/sales-tracker-table", methods=["GET"])
@@ -610,7 +591,7 @@ def export_form_a():
                     if len(df_chunk) < 100 and chunk_size > 500: 
                         chunk_size -= 100
                         print(f"Decreasing chunk size to {chunk_size}")
-                    elif len(df_chunk) > 900 and chunk_size < 2000:  
+                    elif len(df_chunk) > 900 and chunk_size < 3000:  
                         chunk_size += 100
                         print(f"Increasing chunk size to {chunk_size}")
             except Exception as e:

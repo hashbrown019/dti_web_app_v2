@@ -1,353 +1,434 @@
 <title>Grievance Redress System Form</title>
 <div class="wrapper">
-  <div id="content_griev"> 
-      <h5 class="text-center" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px;">IFAD Complaints procedure & the enhanced complaints procedure submission form </h5>
+  <div id="content_griev">
+      <h5 class="text-center" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px;">Rapid Growth Project - Grievance Form</h5>
       <div class="text-center mb-4">
         <label>Alleged non-compliance with its social and environmental policies and mandatory aspects of its social, environmental and climate assessment procedures (SECAP)</label>
       </div>
-      <br>    
+      <br>
+
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <!-- i) NATURE OF COMPLAINT -->
+            <h5 id="complainant-info-title-2" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">I. Complainants' information</h5>
             <div class="row">
               <div class="col-md-6">
-                <h5 id="nature-complaint-title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;" >I. Nature of The Complaint</h5>
-                <div class="dropdown">
-                   <input type="hidden" id="entryId">
-                  <div class="form-group">
-                    <label>What complaint are you making to IFAD? (Choose the one(s) applicable to your complaint)</label>
-                    <select id="type-complaint" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite; " required>
-                      <option value="" disabled selected>choose your option</option>             
-                      <option>Complaint relating to individuals/communities believing they are or may be adversely affected by an IFAD funded project</option>
-                      <option>Complaint relating to IFADs failure to apply its Social and Environmental Policies</option>
-                      <option>Complaint relating to IFADs failure to apply the Mandatory Aspects of</option>
-                  </select>
-                  </div>
-                </div>
-                <br>
-                <div class="dropdown">
-                  <div class="form-group">
-                    <label>Choose SECAP</label>
-                    <select id="SECAP" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                      <option value="" disabled selected>Choose your option</option>
-                      <option>SECAP 2015</option>
-                      <option>SECAP 2017</option>
-                      <option>SECAP 2021</option>
-                  </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <h5 id="complainant-info-title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">II. Complainants Information</h5>
-                <form action="/action_page.php">
-                  <label>a) How many Complainants are you? (You must be 2 in order for the Complaint to be admissible)</label>
-                  <input id="complainant-quantity" type="number" name="quantity" min="2" placeholder="Enter number" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                </form>
-                <br>
-                <div class="form-group">
-                  <label>b) Are you nationals of the concerned country or living in the area? (Complainants must be nationals of the country concerned and/or living in the project area)</label>
-                  <select id="nationality" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                    <option value="" disabled selected>choose your option</option>            
-                    <option>YES</option>
-                    <option>NO</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <br>
-            <!-- iii) CONFIDENTIALITY -->
-            <h5 id="confidentiality-title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px;">III. Confidentiality</h5>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>a) The identity of complainants will be kept confidential if they request so of IFAD</label>      
-                    <select id="confidentiality-request" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                      <option value="" disabled selected>choose your option</option>            
-                      <option>YES</option>
-                      <option>NO</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>b) Do you want your identity to be kept confidential?</label>
-                    <select id="confidentiality-identity" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                      <option value="" disabled selected>choose your option</option>            
-                      <option>YES</option>
-                      <option>NO</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div>
-              <label>c) If YES, please state why. If NO, please avail your details below</label>
-              <input id="confidentiality-option" type="text" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Enter text" required>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>     
-      <div class="container-fluid">
-        <div class="card">
-          <div class="card-body">
-            <h5 id="complainant-info-title-2" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">IV. Complainants' information</h5>
-            <div class="row">
-              <div class="col-md-6">
-                <h5 class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px;">A) Complainant 1</h5>
-                <!-- Complainant 1 information -->
+                <h5 class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px;">Complainant</h5>
                 <div class="row">
                   <div class="col-md-6">
                     <label>Full Name</label>
-                    <input id="complainant-1-fullname" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Name" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>                
+                    <input id="complainant_1_fullname" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Name" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
                   </div>
                   <div class="col-md-6">
-                    <label>Title</label>
-                    <input id="complainant-1-title" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Title" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                  <label>Beneficiary Category</label>
+                    <input list="complainant-1-beneficiary-category" id="complainant_1_beneficiary_category" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Type or select beneficiary category" required>
+                    <datalist id="complainant-1-beneficiary-category">
+                      <option value="Smallholder Farmer"></option>
+                      <option value="MSME"></option>
+                    </datalist>
                   </div>
-                </div>              
+                </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <label>Organisation</label>
-                    <input id="complainant-1-organization" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Organisation" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>               
-                 </div> 
+                    <label>Organization</label>
+                    <input id="complainant_1_organization" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Organisation" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                 </div>
                   <div class="col-md-6">
                     <label>Phone Number</label>
-                    <input id="complainant-1-phone" type="tel" class="GRIEVANCE_FORM form-control" placeholder="(+63XX XXXX XXX)" maxlength="11" id="num1" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                    <input id="complainant_1_phone" type="tel" class="GRIEVANCE_FORM form-control" placeholder="(0987) 654 3210" maxlength="11" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
                 </div>
-              </div>               
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                 <label>Email</label>
-                <input id="complainant-1-email" type="email" class="GRIEVANCE_FORM form-control" placeholder="Enter Email" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                <input id="complainant_1_email" type="email" class="GRIEVANCE_FORM form-control" placeholder="Enter Email" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                </div>
+                <div class="col-md-6">
+                <label>DIP Name</label>
+                <select class="GRIEVANCE_FORM form-control" id="complainant_1_dip_name" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                  <option value="">Choose your option</option>
+                </select>
+                </div>
+                <div class="col-md-6">
+                  <label>Gender</label>
+                    <select id="complainant_1_gender" type="text" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                      <option value="" disabled selected>choose your option</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                  </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Age</label>
+                    <input id="complainant_1_age" type="number" class="GRIEVANCE_FORM form-control" placeholder="Enter Age" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                </div>
+                <div class="col-md-6">
+                  <label>Sector</label>
+                  <select id="complainant_1_sector" name="complainant_1_sector" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="IP">IP</option>
+                    <option value="NON IP">NON IP</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <h5 id="location_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px;">Location</h5>
+                <label>Implementing Unit</label>
+                  <input list="complainant-1-implementing-unit" id="complainant_1_implementing_unit" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Type or select implementing unit" required>
+                  <datalist id="complainant-1-implementing-unit">
+                    <option value="NPCO"></option>
+                    <option value="R8"></option>
+                    <option value="R9"></option>
+                    <option value="R10"></option>
+                    <option value="R11"></option>
+                    <option value="R12"></option>
+                    <option value="R13"></option>
+                    <option value="BARMM"></option>
+                  </datalist>
+                <label>Your address/location</label>
+                <input id="complainant_1_address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Addresss/Location" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                <label>Mailing Address (if different)</label>
+                <input id="complainant_1_mailing_address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Mailing Address" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;"  required>
+                <label>Additional guidance on how to locate you (if applicable)</label>
+                <input id="complainant_1_additional_guidance" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Additional Guidance" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+              </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <br>
+            <h5 id="confidentiality_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px;">II. Confidentiality</h5>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>a) Do you want your identity to be kept confidential?</label>
+                    <select id="confidentiality_identity" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                      <option value="" disabled selected>choose your option</option>
+                      <option>YES</option>
+                      <option>NO</option>
+                  </select>
+                </div>
               </div>
               <div class="col-md-6">
-                <h5 id="location-title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px;">Location</h5>                
-                <label>Your address/location</label>
-                <input id="complainant-1-address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Addresss/Location" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>               
-                <label>Mailing Address (if different)</label>
-                <input id="complainant-1-mailing-address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Mailing Address" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;"  required>               
-                <label>Additional guidance on how to locate you (if applicable)</label>
-                <input id="complainant-1-additional-guidance" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Additional Guidance" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                <div>
+                  <label>b) If YES, please state why. If NO, please avail your details below</label>
+                  <input id="confidentiality_reason" name="confidentiality_reason" type="text" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Enter text" required>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <br>
-      
-      <div class="container-fluid">
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-                <h5 class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">B) Complainant 2</h5>
-                <!-- Complainant 2 information -->
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Full Name</label>
-                    <input id="complainant-2-fullname" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Name" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Title</label>
-                    <input id="complainant-2-title" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Title" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                  </div>
-                </div>               
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Organisation</label>
-                    <input id="complainant-2-organization" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Organisation" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Phone Number</label>
-                    <input id="complainant-2-phone" type="tel" class="GRIEVANCE_FORM form-control" placeholder="(+63XX XXXX XXX)" maxlength="11" id="num2" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                  </div>
-                </div>                
-                <label>Email </label>
-                <input id="complainant-2-email" type="email" class="GRIEVANCE_FORM form-control" placeholder="Enter Email" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-              </div>
-              <div class="col-md-6">
-                <h5 id="location-2-title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">Location</h5>               
-                <label>Your address/location</label>
-                <input id="complainant-2-address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Addresss/Location" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>               
-                <label>Mailing Address (if different) </label>
-                <input id="complainant-2-mailing-address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Mailing Address" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>            
-                <label>Additional guidance on how to locate you (if applicable)</label>
-                <input id="complainant-2-additional-guidance" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Additional Guidance" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>      
+
     </head>
     <body>
-      <div class="card">
-        <div class="card-body"> 
-          <div class="button-container d-flex justify-content-between">
-            <div class="text-left">
-              <button class="btn" id="addRowBtn" style="border: 2px solid #c2bfbf; padding: 10px; width: 120px; font-size: 14px; font-weight: bold; background-color: #4B5F71; color: #ffffff; border-radius: 5px; margin-bottom: 10px; margin-top: 15px;">Add Row</button>
-            </div>
-          </div>          
-          <div class="table-responsive">
-            <table id="myTable" class="table table-bordered table-striped table-hover">
-              <thead class="thead-dark">
-                <tr class="text-center">
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Title/Affiliation</th>
-                  <th>Contact Information</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="text" id="first-name-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                  <td><input type="text" id="last-name-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                  <td><input type="text" id="title-affiliation-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                  <td><input type="text" id="contact-info-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                </tr>       
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>       
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <h5 id="ifad-project-title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">V. IFAD Project / programme of concern and nature of concern</h5>           
-            <label>a) Which IFAD-supported project/programme are you concerned about? (please provide the Project/Programme name, if known):</label>
-            <input id="ifad-project-concern" type="text" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>  
-            <label>b) Please provide a short description of your concerns about the project/programme. Please describe, as well, the types of Environmental and Social impacts that may occur, or have occurred, as a result.</label>
-            <textarea id="ifad-project-description" class="GRIEVANCE_FORM form-control mb-2" rows="3" placeholder="Enter text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>           
-            <label>c) When did the situation that raised your concerns start developing? (Please note that complaints must concern projects/programmes currently under design/implementation. Complaints concerning projects/programmes that preceded the operationalization of SECAP in 1/1/2015, projects that have been closed for a period of 24 months or more will not be eligible).</label>
-            <textarea id="ifad-project-situation" class="GRIEVANCE_FORM form-control mb-2" rows="3" placeholder="Enter text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>      
+            <h5 id="ifad_project_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">III. Details of the Complaint Raised</h5>
+            <label>Date</label>
+            <input id="complaint_raised_date" type="date" class="GRIEVANCE_FORM form-control mb-2" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+            <label>a) Please provide a short description of your concerns about the project/programme.</label>
+            <textarea id="project_concern_description" class="GRIEVANCE_FORM form-control mb-2" rows="3" placeholder="Enter text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>
+            <div class="col-md-12">
+              <h5 id="staff_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; margin-top: 15px;">
+                Name of RAPID/DTI Staff who recorded the complaint
+              </h5>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label>Name</label>
+                  <input id="staff_name" type="text" class="GRIEVANCE_FORM form-control"
+                        placeholder="Enter Name" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label>Position</label>
+                  <input id="staff_position" type="text" class="GRIEVANCE_FORM form-control"
+                        placeholder="Enter Position" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label>Contact Number</label>
+                  <input id="staff_contact" type="text" class="GRIEVANCE_FORM form-control"
+                        placeholder="Enter Contact Number" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label>Implementing Unit</label>
+                    <input list="staff-implementing-units" id="staff_implementing_unit" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Type or select implementing unit" required>
+                    <datalist id="staff_implementing_unit">
+                      <option value="NPCO"></option>
+                      <option value="R8"></option>
+                      <option value="R9"></option>
+                      <option value="R10"></option>
+                      <option value="R11"></option>
+                      <option value="R12"></option>
+                      <option value="R13"></option>
+                      <option value="BARMM"></option>
+                    </datalist>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <br>      
+      <br>
       <div class="container-fluid">
-        <!-- vi) PROJECT LEVEL -->
         <div class="card mb-4">
           <div class="card-body">
-            <h5 id="project-level-title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">VI. Project Level</h5>
-            <!-- Input fields for project level concerns -->  
-            <div>
-              <label>a) Have you raised your complaint with government representatives or NGO(s) responsible for planning or executing the project or programme or the Lead Agency or any other agency acting on behalf of IFAD?</label>         
-              <select id="raised-complaint" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required onchange="toggleTable(this.value)">
-                <option value="" disabled selected>choose your option</option>            
+            <h5 id="grievance_status_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">IV. Status of Grievance Process</h5>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="grievance-status-date">Date</label>
+                <input id="grievance_status_date" type="date" class="GRIEVANCE_FORM form-control"
+                      style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+              </div>
+              <div class="col-md-6 mb-3">
+              <label>a) Have you raised your complaint with government representatives or NGO(s) responsible for planning or executing the project or programme or the Lead Agency or any other agency acting on behalf of IFAD?</label>
+              <select id="raised_complaint" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                <option value="" disabled selected>choose your option</option>
                 <option value="YES">YES</option>
                 <option value="NO">NO</option>
-              </select>      
-            </div>           
-            <br>             
-            <label style="padding: 10px; font-weight: bold;">If Yes,</label>
-              <div class="card-body">
-                <div class="button-container d-flex justify-content-between">
-                    <div class="text-left">
-                      <button class="btn" id="addRowBtn2" style="border: 2px solid #c2bfbf; padding: 10px; width: 120px; font-size: 14px; font-weight: bold; background-color: #4B5F71; color: #ffffff; border-radius: 5px; margin-bottom: 10px;">Add Row</button>
-                    </div>
-                  </div>
-                <div class="table-responsive">
-                  <table id="myTable2" class="table table-bordered table-striped table-hover">
-                    <thead class="thead-dark">
-                      <tr class="text-center">
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Title/Affiliation</th>
-                        <th>Estimated Date of Contact</th>
-                        <th>Nature of Communication</th>
-                        <th>Response from the Individual</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>    
-                        <td><input type="text" id="2-first-name-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                        <td><input type="text" id="2-last-name-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                        <td><input type="text" id="2-title-affiliation-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                        <td><input type="date" id="2-estimated-date-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                        <td><input type="text" id="2-nature-communication-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                        <td><input type="text" id="2-response-individual-1" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></td>
-                      </tr>       
-                    </tbody>
-                  </table>
-                </div>
-                <div>  
-                    <label>b) Please explain why, if the response or actions taken are not satisfactory.</label>
-                    <input type="text" id="satisfactory-response" class="GRIEVANCE_FORM form-control" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+              </select>
+            </div>
+            </div>
+
+            <h5 id="grievance_status_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">Delegated Office/Unit</h5>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="delegated_staff_name">Name Of Staff</label>
+                <input id="delegated_staff_name" type="text" class="GRIEVANCE_FORM form-control"
+                      style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Enter Name of Staff" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label>Implementing Unit</label>
+                    <input list="delegated_implementing_unit" id="delegated_implementing_unit" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Type or select implementing unit" required>
+                    <datalist id="delegated_implementing_unit">
+                      <option value="NPCO"></option>
+                      <option value="R8"></option>
+                      <option value="R9"></option>
+                      <option value="R10"></option>
+                      <option value="R11"></option>
+                      <option value="R12"></option>
+                      <option value="R13"></option>
+                      <option value="BARMM"></option>
+                    </datalist>
+              </div>
+            </div>
+            <br>
+
+              <div class="row">
+                <div>
+                    <label>Results of Fact Finding</label>
+                    <input type="text" id="fact_finding_results" class="GRIEVANCE_FORM form-control" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
                 </div>
                 <div>
-                    <label>c) How do you wish to see the complaint resolved? Do you have any other matters, evidence, or facts (including supporting documents) that you would like to share?</label>
-                    <input type="text" id="complaint-resolution" class="GRIEVANCE_FORM form-control" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                    <label>Appeals</label>
+                    <input type="text" id="appeals" class="GRIEVANCE_FORM form-control" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
                 </div>
+                <div>
+                    <label>Settlement</label>
+                    <input type="text" id="settlement" class="GRIEVANCE_FORM form-control" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                </div>
+                <div class="col-md-6">
+                  <label>Status</label>
+                  <select id="grievance_status" name="grievance_status" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="Closed/Resolved">Closed/Resolved</option>
+                    <option value="Unable to Complete">Unable to Complete</option>
+                    <option value="Forwarded to NPCO">Forwarded to NPCO</option>
+                  </select>
                 </div>
               </div>
-            <br>          
+            <br>
           </div>
         </div>
       </div>
     <br>
-  
-      <!-- vii) IFAD Level -->
-      <div class="container-fluid">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color: #ffffff; padding: 10px; margin-top: 15px;">VII. IFAD Level</h5>     
-            <div class="form-group">
-              <label>a) Do you disagree with the response from the IFAD Country team and Regional Division in relation to your complaint?</label>
-              <select id="ifad-disagreement" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                  <option value="" disabled selected>choose your option</option>            
-                  <option>YES</option>
-                  <option>NO</option>
-              </select>
-            </div>       
-            <label>b) Please provide the details of the response from the IFAD Country Team and Regional Division in relation to your complaint</label>
-            <textarea id="ifad-response-details" class="GRIEVANCE_FORM form-control mb-2" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>           
-            <label>c) Please explain why, if the response or actions taken are not satisfactory</label>
-            <textarea id="ifad-unsatisfactory-explanation" class="GRIEVANCE_FORM form-control mb-2" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>   
-            <label>d) How do you wish to see the complaint resolved?</label>
-            <textarea id="ifad-desired-resolution" class="GRIEVANCE_FORM form-control mb-2" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>  
-            <label>e) Do you have any other matters or facts (including supporting documents) that you would like to share?</label>
-            <textarea id="ifad-other-matters" class="GRIEVANCE_FORM form-control mb-2" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;"  required></textarea>
-          </div>
-        </div>
-      </div>
       <div class="text-right">
             <button type="submit" class="btn btn-primary" id="submit" style="border: 2px solid #c2bfbf; padding: 10px; width: 150px; font-size: 18px; font-weight: bold;" onclick="validateAndSubmit()">Submit</button>
-      </div>    
+      </div>
   </div>
 <div id="readonly" style="border: 2px solid #c2bfbf; padding: 10px; display: none;">{% if readonly %}true{% else %}false{% endif %}</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<script>
-  function toggleTable(value) {
-      const isYes = value === "YES";
-      const tableInputs = document.querySelectorAll("#myTable2 input");
-      const addRowBtn = document.getElementById("addRowBtn2");
-      tableInputs.forEach(input => {
-          input.disabled = !isYes;
-          if (!isYes) {
-              input.removeAttribute("required");
-          } else {
-              input.setAttribute("required", "true");
-          }
-      });
-      addRowBtn.disabled = !isYes;
-  }
-</script>
+<input type="hidden" id="created_by" class="GRIEVANCE_FORM" value="">
 
 <script>
+  // All JavaScript logic is consolidated here for better organization and readability.
+
+  // Helper function to toggle visibility and required status of an input field
+  function toggleOtherImplementingUnit(selectElement, otherInputId) {
+    const otherInput = document.getElementById(otherInputId);
+    if (selectElement.value === 'OTHER') {
+      otherInput.style.display = '';
+      otherInput.required = true;
+    } else {
+      otherInput.style.display = 'none';
+      otherInput.required = false;
+      otherInput.value = '';
+    }
+  }
+
+  // Function to populate form fields with data fetched from the backend
+  function populateFields(data) {
+    const formElements = document.querySelectorAll('.GRIEVANCE_FORM');
+
+    formElements.forEach(element => {
+        const id = element.id;
+        const name = element.name;
+        const type = element.type;
+
+        // Determine the key to look for in the data object
+        let valueToSet = data[id];
+        if (type === 'radio') {
+            valueToSet = data[name];
+        }
+
+        if (valueToSet !== undefined) {
+            if (type === 'radio') {
+                if (element.value === valueToSet) {
+                    element.checked = true;
+                }
+            } else if (type === 'date') {
+                // Format date string to 'YYYY-MM-DD' for date input
+                const date = new Date(valueToSet);
+                element.value = date.toISOString().split('T')[0];
+            } else {
+                element.value = valueToSet; // Handles text, select, datalist-linked inputs
+            }
+        }
+    });
+  }
+
+  // Function to disable all form inputs for view mode
+  function disableForm() {
+    const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
+    inputs.forEach(input => {
+        input.setAttribute('readonly', true);
+        input.style.backgroundColor = "#d3d3d3";
+        input.style.cursor = "not-allowed";
+    });
+    const selects = document.querySelectorAll('select.GRIEVANCE_FORM');
+    selects.forEach(select => {
+        select.setAttribute('disabled', true);
+        select.style.cursor = "not-allowed";
+    });
+    // Disable specific buttons if they exist (e.g., addRowBtn2, deleteBtn, viewTableBtn)
+    const addRowButtons = [document.getElementById('addRowBtn2')];
+    addRowButtons.forEach(button => {
+        if (button) {
+            button.setAttribute('disabled', true);
+            button.style.cursor = "not-allowed";
+            button.style.backgroundColor = "#d3d3d3";
+        }
+    });
+    const deleteButtons = document.querySelectorAll('.deleteBtn');
+    deleteButtons.forEach(button => {
+        button.setAttribute('disabled', true);
+        button.style.cursor = "not-allowed";
+        button.style.backgroundColor = "#ff9b9b";
+    });
+
+    const viewTableBtn = document.getElementById('viewTableBtn');
+    if (viewTableBtn) {
+        viewTableBtn.setAttribute('disabled', true);
+        viewTableBtn.style.cursor = "not-allowed";
+        viewTableBtn.style.backgroundColor = "#d3d3d3";
+    }
+  }
+
+  // Function to enable form inputs for edit mode
+  function enableForm(id) {
+    const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
+    inputs.forEach(input => {
+      input.removeAttribute('readonly');
+      input.style.backgroundColor = "ghostwhite"; // Revert to original background
+      input.style.cursor = "auto";
+    });
+    const selects = document.querySelectorAll('select.GRIEVANCE_FORM');
+    selects.forEach(select => {
+      select.removeAttribute('disabled');
+      select.style.cursor = "auto";
+    });
+    // Enable specific buttons if they exist
+    const addRowButtons = [document.getElementById('addRowBtn2')];
+    addRowButtons.forEach(button => {
+        if (button) {
+            button.removeAttribute('disabled');
+            button.style.cursor = "pointer";
+            button.style.backgroundColor = "";
+        }
+    });
+    const deleteButtons = document.querySelectorAll('.deleteBtn');
+    deleteButtons.forEach(button => {
+        button.removeAttribute('disabled');
+        button.style.cursor = "pointer";
+        button.style.backgroundColor = "";
+    });
+  }
+
+  // Function to collect form data and send it to the backend for submission
+  function submit_grievance() {
+    const grievance_form_fields = {};
+    const formElements = document.querySelectorAll('.GRIEVANCE_FORM');
+
+    formElements.forEach(element => {
+        const id = element.id;
+        const name = element.name;
+        const type = element.type;
+        // Use name attribute for radio buttons, otherwise use id
+        let key = name || id;
+        if (type === 'radio') {
+            if (element.checked) {
+                grievance_form_fields[key] = element.value.trim();
+            }
+        } else {
+            grievance_form_fields[key] = element.value.trim();
+        }
+    });
+
+    // Send data using the custom $send function
+    $send({
+        action: "/insert/grievance",
+        data: $DATA(grievance_form_fields),
+        method: POST, // Assuming POST is a global constant or defined elsewhere
+    });
+  }
+
+  // Function to validate all required fields and submit the form
   function validateAndSubmit() {
       const requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
       let isValid = true;
       requiredInputs.forEach(function(input) {
-          if (!input.value.trim()) {
+          // For radio buttons, check if at least one in the group is checked
+          if (input.type === 'radio') {
+              const radioGroup = document.querySelectorAll(`input[name="${input.name}"]`);
+              const isRadioGroupChecked = Array.from(radioGroup).some(radio => radio.checked);
+              if (!isRadioGroupChecked) {
+                  isValid = false;
+                  // Highlight the first radio in the group for visual feedback
+                  radioGroup[0].style.setProperty('outline', '1px solid red');
+              } else {
+                  radioGroup.forEach(radio => radio.style.setProperty('outline', ''));
+              }
+          } else if (!input.value.trim()) {
               isValid = false;
               input.style.setProperty('border', '1px solid red');
           } else {
               input.style.setProperty('border', '');
           }
       });
+
       if (isValid) {
           submit_grievance();
           Swal.fire({
@@ -379,289 +460,48 @@
       }
   }
 
-function submit_grievance() {
-    const grievance_form_fields = {};
-    const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
-    inputs.forEach(input => {
-        const id = input.id;
-        if (!grievance_form_fields[id]) {
-            grievance_form_fields[id] = [];
-        }
-        grievance_form_fields[id].push(input.value.trim());
-    });
-    for (const key in grievance_form_fields) {
-        grievance_form_fields[key] = grievance_form_fields[key].join(', ');
-    }
-    console.log(grievance_form_fields);
-    $send({
-        action: "/insert/grievance",
-        data: $DATA(grievance_form_fields),
-        method: POST,
-    });
-}
-</script>
-
-<script>
-  function addRow(tableId, columnCount) {
-      const table = document.querySelector(`#${tableId} tbody`);
-      const newRow = table.insertRow();
-      const inputs = tableId === "myTable"
-          ? ["first-name-1", "last-name-1", "title-affiliation-1", "contact-info-1"]
-          : ["2-first-name-1", "2-last-name-1", "2-title-affiliation-1", "2-estimated-date-1", "2-nature-communication-1", "2-response-individual-1"];
-      inputs.forEach((id) => {
-          const cell = newRow.insertCell();
-          cell.innerHTML = `<input type="${id.includes('date') ? 'date' : 'text'}" 
-                                  id="${id}" 
-                                  class="GRIEVANCE_FORM form-control" 
-                                  style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" 
-                                  required>`;
-      });
-      newRow.insertCell().innerHTML = `<button class="deleteBtn btn btn-danger" onclick="deleteRow(this)">Delete</button>`;
-  }
-  function deleteRow(button) {
-      const row = button.closest('tr');
-      row.remove();
-  }
-  document.getElementById("addRowBtn").addEventListener("click", () => addRow("myTable", 4));
-  document.getElementById("addRowBtn2").addEventListener("click", () => addRow("myTable2", 6));
-</script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const recordId = urlParams.get('view');
-    const editId = urlParams.get('edit');
-    const submitButton = document.getElementById('submit');
-
-    if (recordId) {
-        fetch(`/get_grievance_data?id=${recordId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "error") {
-                    console.error(data.message);
-                    return;
-                }
-                populateFields(data[0]);
-                disableForm();
-                submitButton.disabled = true;
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    }
-
-    if (editId) {
-        fetch(`/get_grievance_data?id=${editId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "error") {
-                    console.error(data.message);
-                    return;
-                }
-                populateFields(data[0]);
-                enableForm(editId); 
-                submitButton.textContent = "Update";
-                submitButton.onclick = function () {
-                    validateAndUpdate(editId); 
-                };
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    }
-});
- 
- function populateFields(data) {
-  const fields = {
-        'type-complaint': document.getElementById('type-complaint'),
-        'SECAP': document.getElementById('SECAP'),
-        'complainant-quantity': document.getElementById('complainant-quantity'),
-        'nationality': document.getElementById('nationality'),
-        'confidentiality-request': document.getElementById('confidentiality-request'),
-        'confidentiality-identity': document.getElementById('confidentiality-identity'),
-        'confidentiality-option': document.getElementById('confidentiality-option'),
-        'ifad-project-concern': document.getElementById('ifad-project-concern'),
-        'ifad-project-description': document.getElementById('ifad-project-description'),
-        'ifad-project-situation': document.getElementById('ifad-project-situation'),
-        'raised-complaint': document.getElementById('raised-complaint'),
-        'satisfactory-response': document.getElementById('satisfactory-response'),
-        'complaint-resolution': document.getElementById('complaint-resolution'),
-        'ifad-disagreement': document.getElementById('ifad-disagreement'),
-        'ifad-response-details': document.getElementById('ifad-response-details'),
-        'ifad-unsatisfactory-explanation': document.getElementById('ifad-unsatisfactory-explanation'),
-        'ifad-desired-resolution': document.getElementById('ifad-desired-resolution'),
-        'ifad-other-matters': document.getElementById('ifad-other-matters'),
-        'complainant-1-fullname': document.getElementById('complainant-1-fullname'),
-        'complainant-1-title': document.getElementById('complainant-1-title'),
-        'complainant-1-organization': document.getElementById('complainant-1-organization'),
-        'complainant-1-phone': document.getElementById('complainant-1-phone'),
-        'complainant-1-email': document.getElementById('complainant-1-email'),
-        'complainant-1-address': document.getElementById('complainant-1-address'),
-        'complainant-1-mailing-address': document.getElementById('complainant-1-mailing-address'),
-        'complainant-1-additional-guidance': document.getElementById('complainant-1-additional-guidance'),
-        'complainant-2-fullname': document.getElementById('complainant-2-fullname'),
-        'complainant-2-title': document.getElementById('complainant-2-title'),
-        'complainant-2-organization': document.getElementById('complainant-2-organization'),
-        'complainant-2-phone': document.getElementById('complainant-2-phone'),
-        'complainant-2-email': document.getElementById('complainant-2-email'),
-        'complainant-2-address': document.getElementById('complainant-2-address'),
-        'complainant-2-mailing-address': document.getElementById('complainant-2-mailing-address'),
-        'complainant-2-additional-guidance': document.getElementById('complainant-2-additional-guidance'),
-        
-    };
-
-    // Populate single fields
-    for (const [key, element] of Object.entries(fields)) {
-        if (element && data[key]) {
-            element.value = data[key];
-        }
-    }
-
-    // Populate table rows for "myTable"
-    if (data['first-name-1'] && data['last-name-1']) {
-        const firstNames = data['first-name-1'].split(', ');
-        const lastNames = data['last-name-1'].split(', ');
-        const titles = data['title-affiliation-1'] ? data['title-affiliation-1'].split(', ') : [];
-        const contacts = data['contact-info-1'] ? data['contact-info-1'].split(', ') : [];
-        const table = document.querySelector('#myTable tbody');
-        table.innerHTML = ''; // Clear existing rows
-
-        firstNames.forEach((firstName, index) => {
-            const newRow = table.insertRow();
-            newRow.innerHTML = `
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${firstName}" required></td>
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${lastNames[index] || ''}" required></td>
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${titles[index] || ''}" required></td>
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${contacts[index] || ''}" required></td>
-                <td><button class="deleteBtn btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
-            `;
-        });
-    }
-
-    // Populate table rows for "myTable2"
-    if (data['2-first-name-1'] && data['2-estimated-date-1']) {
-        const firstNames = data['2-first-name-1'].split(', ');
-        const lastNames = data['2-last-name-1'] ? data['2-last-name-1'].split(', ') : [];
-        const titles = data['2-title-affiliation-1'] ? data['2-title-affiliation-1'].split(', ') : [];
-        const dates = data['2-estimated-date-1'] ? data['2-estimated-date-1'].split(', ') : [];
-        const communications = data['2-nature-communication-1'] ? data['2-nature-communication-1'].split(', ') : [];
-        const responses = data['2-response-individual-1'] ? data['2-response-individual-1'].split(', ') : [];
-        const table = document.querySelector('#myTable2 tbody');
-        table.innerHTML = ''; // Clear existing rows
-
-        firstNames.forEach((firstName, index) => {
-            const newRow = table.insertRow();
-            newRow.innerHTML = `
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${firstName}" required></td>
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${lastNames[index] || ''}" required></td>
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${titles[index] || ''}" required></td>
-                <td><input type="date" class="GRIEVANCE_FORM form-control" value="${dates[index] || ''}" required></td>
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${communications[index] || ''}" required></td>
-                <td><input type="text" class="GRIEVANCE_FORM form-control" value="${responses[index] || ''}" required></td>
-                <td><button class="deleteBtn btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
-            `;
-        });
-    };
-     for (const [key, element] of Object.entries(fields)) {
-         if (element) {
-             if (key === 'Date' && data[key]) {
-                 const date = new Date(data[key]);
-                 element.value = date.toISOString().split('T')[0];
-             } else if (key === '2-estimated-date-1' && data[key]) {
-                 const date = new Date(data[key]);
-                 element.value = date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
-             } else {
-                 element.value = data[key] || '';  
-             }
-         } else {
-             console.warn(`Element with ID '${key}' not found.`);
-         }
-     }
- }
- 
- function disableForm() {
-    const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
-    inputs.forEach(input => {
-        input.setAttribute('readonly', true);
-        input.style.backgroundColor = "#d3d3d3";
-        input.style.cursor = "pointer";
-    });
-    const selects = document.querySelectorAll('select.GRIEVANCE_FORM');
-    selects.forEach(select => {
-        select.setAttribute('disabled', true);
-        select.style.cursor = "pointer";
-    });
-    const addRowButtons = [document.getElementById('addRowBtn'), document.getElementById('addRowBtn2')];
-    addRowButtons.forEach(button => {
-        if (button) {
-            button.setAttribute('disabled', true);
-            button.style.cursor = "not-allowed";
-            button.style.backgroundColor = "#d3d3d3";
-        }
-    });
-    const deleteButtons = document.querySelectorAll('.deleteBtn');
-    deleteButtons.forEach(button => {
-        button.setAttribute('disabled', true);
-        button.style.cursor = "not-allowed";
-        button.style.backgroundColor = "#ff9b9b";
-    });
-
-    const viewTableBtn = document.getElementById('viewTableBtn');
-    if (viewTableBtn) {
-        viewTableBtn.setAttribute('disabled', true);
-        viewTableBtn.style.cursor = "not-allowed";
-        viewTableBtn.style.backgroundColor = "#d3d3d3";
-    }
-}
- 
-function enableForm(id) {
-  const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
-  inputs.forEach(input => {
-    input.removeAttribute('readonly');
-    input.style.backgroundColor = "#edf2f4"; 
-  });
-  const updateButton = document.getElementById('submit');
-  updateButton.addEventListener('click', function () {
-    const requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
-    let isValid = true; 
-    requiredInputs.forEach(function(input) {
-      if (!input.value.trim()) {
-        isValid = false;
-        input.style.setProperty('border', '1px solid red');
-      } else {
-        input.style.setProperty('border', ''); 
-      }
-    });
-  });
-}
-  window.addEventListener("pageshow", function(event) {
-      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        Swal.close();
-      }
-    });
- </script>
-
-<script>
+  // Function to validate fields and update grievance data
   function validateAndUpdate(id) {
     const requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
     let isValid = true;
     requiredInputs.forEach(function (input) {
-        if (!input.value.trim()) {
+        // Validation logic for radio buttons and other inputs
+        if (input.type === 'radio') {
+            const radioGroup = document.querySelectorAll(`input[name="${input.name}"]`);
+            const isRadioGroupChecked = Array.from(radioGroup).some(radio => radio.checked);
+            if (!isRadioGroupChecked) {
+                isValid = false;
+                radioGroup[0].style.setProperty('outline', '1px solid red');
+            } else {
+                radioGroup.forEach(radio => radio.style.setProperty('outline', ''));
+            }
+        } else if (!input.value.trim()) {
             isValid = false;
             input.style.setProperty('border', '1px solid red');
         } else {
             input.style.setProperty('border', '');
         }
     });
+
     if (isValid) {
         const grievance_form_fields = {};
-        const inputs = document.querySelectorAll('.GRIEVANCE_FORM');
-        inputs.forEach(input => {
-            const id = input.id;
-            if (!grievance_form_fields[id]) {
-                grievance_form_fields[id] = [];
+        const formElements = document.querySelectorAll('.GRIEVANCE_FORM');
+
+        formElements.forEach(element => {
+            const elementId = element.id;
+            const name = element.name;
+            const type = element.type;
+
+            if (type === 'radio') {
+                if (element.checked) {
+                    grievance_form_fields[name] = element.value.trim();
+                }
+            } else {
+                grievance_form_fields[elementId] = element.value.trim();
             }
-            grievance_form_fields[id].push(input.value.trim());
         });
-        for (const key in grievance_form_fields) {
-            grievance_form_fields[key] = grievance_form_fields[key].join(', ');
-        }
+
+        console.log("Grievance Form Fields for Update:", grievance_form_fields);
 
         fetch(`/update_grievance_data/${id}`, {
             method: 'POST',
@@ -719,21 +559,138 @@ function enableForm(id) {
             timer: 1500
         });
     }
-}
-</script>
+  }
 
-<input type="hidden" id="created_by" class="GRIEVANCE_FORM" value="">
+  // Populates the 'DIP Name' select dropdown by fetching data from an API
+  async function populateDipNames() {
+    try {
+      const response = await fetch('/api/get_dip_names');
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${text}`);
+      }
+      const data = await response.json();
+      const selectElement = document.getElementById('complainant_1_dip_name');
+      if (selectElement) {
+          // Clear existing options to prevent duplication
+          selectElement.innerHTML = '<option value="">Choose your option</option>';
+          data.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.form_1_name_dip;
+            option.textContent = item.form_1_name_dip;
+            selectElement.appendChild(option);
+          });
+      }
+    } catch (error) {
+      console.error('Error fetching DIP names:', error);
+    }
+  }
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch("/mis-v4/get-session")
-        .then(response => response.json())
-        .then(data => {
-            const createdByField = document.getElementById("created_by");
-            if (data && data[0] && data[0].id) {
-                createdByField.value = data[0].id;
+  // Main DOMContentLoaded listener to initialize the form
+  document.addEventListener("DOMContentLoaded", async function () {
+    await populateDipNames();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const recordId = urlParams.get('view');
+    const editId = urlParams.get('edit');
+    const submitButton = document.getElementById('submit');
+    const clearButton = document.getElementById('clear'); // If you have a clear/reset button
+
+    // Helper to disable all form fields
+    function setFormDisabled(disabled) {
+        const formElements = document.querySelectorAll('.GRIEVANCE_FORM');
+        formElements.forEach(el => {
+            if (el.tagName === "SELECT" || el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+                el.disabled = disabled;
+                el.style.backgroundColor = disabled ? "#e9ecef" : "ghostwhite";
             }
-        })
-        .catch(error => console.error("Error fetching user data:", error));
+        });
+    }
+
+    // Always disable by default
+    setFormDisabled(false);
+    if (submitButton) submitButton.disabled = false;
+    if (clearButton) clearButton.disabled = false;
+
+    // Get session user
+    let loggedInUserId = null;
+    try {
+        const sessionRes = await fetch("/mis-v4/get-session");
+        const sessionData = await sessionRes.json();
+        if (sessionData && sessionData[0] && sessionData[0].id) {
+            loggedInUserId = Number(sessionData[0].id);
+            const createdByField = document.getElementById("created_by");
+            if (createdByField) createdByField.value = loggedInUserId;
+        }
+    } catch (e) {
+        console.error("Error fetching session:", e);
+    }
+
+    // View mode
+    if (recordId) {
+        try {
+            const response = await fetch(`/get_grievance_data?id=${recordId}`);
+            const data = await response.json();
+                if (data.status === "error") {
+                    console.error(data.message);
+                    return;
+                }
+                const record = data[0];
+                populateFields(record);
+                setFormDisabled(true);
+                if (submitButton) submitButton.disabled = true;
+            if (clearButton) clearButton.disabled = true;
+        } catch (error) {
+            console.error("Error fetching data for view mode:", error);
+        }
+    }
+
+    // Edit mode
+    if (editId) {
+        try {
+            const response = await fetch(`/get_grievance_data?id=${editId}`);
+            const data = await response.json();
+                if (data.status === "error") {
+                    console.error(data.message);
+                    return;
+                }
+                const record = data[0];
+                populateFields(record);
+
+            // Only allow edit if user is creator
+            let canEdit = false;
+            if (loggedInUserId && loggedInUserId == record.created_by) {
+                canEdit = true;
+            }
+
+                if (canEdit) {
+                    setFormDisabled(false);
+                    if (submitButton) {
+                        submitButton.textContent = "Update";
+                        submitButton.disabled = false;
+                        submitButton.onclick = function () {
+                            validateAndUpdate(editId);
+                        };
+                    }
+                if (clearButton) clearButton.disabled = false;
+                } else {
+                    setFormDisabled(true);
+                    if (submitButton) {
+                        submitButton.textContent = "Update";
+                        submitButton.disabled = true;
+                    }
+                if (clearButton) clearButton.disabled = true;
+                }
+        } catch (error) {
+            console.error("Error fetching data for edit mode:", error);
+        }
+    }
 });
+
+  // SweetAlert2 fix for back/forward navigation, ensuring modals are closed
+  window.addEventListener("pageshow", function(event) {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        Swal.close();
+      }
+  });
 </script>
