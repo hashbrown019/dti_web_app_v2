@@ -74,7 +74,7 @@
                                 <div class="d-flex" style="gap: 8px;">
                                   <input type="text" id="grievanceSearchInput" class="form-control form-control-sm me-2" placeholder="Search...">
                                   <button id="grievanceSortButton" class="btn btn-sm btn-dark">SORT ▲</button>
-                                        <button id="grievanceExportBtn" class="btn btn-sm btn-primary" style="border: 2px solid #c2bfbf; font-weight: bold;">Export</button>
+                                        <button class="btn btn-sm btn-primary" style="border: 2px solid #c2bfbf; font-weight: bold;" onclick="exportGrievanceData()">Export</button>
                                 </div>
                               </h5>                              
                             <div class="table-responsive">
@@ -287,3 +287,10 @@
                     window.open('/export_grievance_data', '_blank');
                 });
             </script>
+
+            <script type="text/javascript">
+					function exportGrievanceData() {
+						// Redirect to the backend route to download the Excel file
+						window.location.href = '/export_grievance_data';
+					}
+			</script>
