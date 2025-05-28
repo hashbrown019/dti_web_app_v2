@@ -193,7 +193,13 @@ def export_grievance_data():
     data = rapid_mysql.select(query)
     df = pd.DataFrame(data)
     if not df.empty:
-        df.columns = headers
+        # Ensure the number of columns matches the number of headers
+        if len(df.columns) > len(headers):
+            df = df.iloc[:, :len(headers)]
+        elif len(df.columns) < len(headers):
+            df.columns = headers[:len(df.columns)]
+        else:
+            df.columns = headers
         df = df.astype(str).replace({'NaT': '', 'nan': '', 'None': ''})
     output = io.BytesIO()
     workbook = xlsxwriter.Workbook(output, {'in_memory': True})
