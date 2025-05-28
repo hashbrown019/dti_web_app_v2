@@ -71,9 +71,10 @@
                         <div class="card-body">
                             <h5 class="card-title d-flex justify-content-between align-items-center">
                                 GRIEVANCE TABLE
-                                <div class="d-flex">
+                                <div class="d-flex" style="gap: 8px;">
                                   <input type="text" id="grievanceSearchInput" class="form-control form-control-sm me-2" placeholder="Search...">
                                   <button id="grievanceSortButton" class="btn btn-sm btn-dark">SORT ▲</button>
+                                        <button id="grievanceExportBtn" class="btn btn-sm btn-primary" style="border: 2px solid #c2bfbf; font-weight: bold;">Export</button>
                                 </div>
                               </h5>                              
                             <div class="table-responsive">
@@ -83,9 +84,10 @@
                                         <tr >
                                             <th>ID</th>
                                             <th>Complainant</th>
-                                            <th>SECAP</th>
-                                            <th>Number of Complainants</th>
-                                            <th>Nationals of the concerned country or living in the area?</th>
+                                            <th>Beneficiary</th>
+                                            <th>DIP Name</th>
+                                            <th>Complainant Implementing Unit</th>
+                                            <th>Status</th>
                                             <th>Timestamp</th>
                                             <th>Action</th>
                                         </tr>
@@ -151,10 +153,11 @@
                             const tr = document.createElement('tr');
                             tr.innerHTML = `
                                 <td>${row['id']}</td>
-                                <td>${row['type-complaint']}</td>
-                                <td>${row['SECAP']}</td>
-                                <td>${row['complainant-quantity']}</td>
-                                <td>${row['nationality']}</td>
+                                <td>${row['complainant_1_fullname']}</td>
+                                <td>${row['complainant_1_beneficiary_category']}</td>
+                                <td>${row['complainant_1_dip_name']}</td>
+                                <td>${row['complainant_1_implementing_unit']}</td>
+                                <td>${row['grievance_status']}</td>
                                 <td>${row['date_created']}<br>
                                     ${row['date_modified'] ? `<i style="font-size: smaller;color: #00cc66;">Updated: ${row['date_modified']}</i>` : ''}
                                 </td>
@@ -281,4 +284,8 @@
                 function numberWithCommas(x) {
                     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
+
+                document.getElementById("grievanceExportBtn").addEventListener("click", function () {
+                    window.location.href = "/export_grievance_data";
+                });
             </script>

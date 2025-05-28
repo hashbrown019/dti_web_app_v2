@@ -163,8 +163,8 @@
 
                 <div class="col-md-6 mb-3">
                   <label>Implementing Unit</label>
-                    <input list="staff-implementing-units" id="staff_implementing_unit" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Type or select implementing unit" required>
-                    <datalist id="staff_implementing_unit">
+                    <input list="staff_implementing_unit_list" id="staff_implementing_unit" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Type or select implementing unit" required>
+                    <datalist id="staff_implementing_unit_list">
                       <option value="NPCO"></option>
                       <option value="R8"></option>
                       <option value="R9"></option>
@@ -210,8 +210,8 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label>Implementing Unit</label>
-                    <input list="delegated_implementing_unit" id="delegated_implementing_unit" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Type or select implementing unit" required>
-                    <datalist id="delegated_implementing_unit">
+                    <input list="delegated_implementing_unit_list" id="delegated_implementing_unit" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" placeholder="Type or select implementing unit" required>
+                    <datalist id="delegated_implementing_unit_list">
                       <option value="NPCO"></option>
                       <option value="R8"></option>
                       <option value="R9"></option>
@@ -223,39 +223,44 @@
                     </datalist>
               </div>
             </div>
-            <br>
 
               <div class="row">
-                <div>
-                    <label>Results of Fact Finding</label>
-                    <input type="text" id="fact_finding_results" class="GRIEVANCE_FORM form-control" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                <div class="col-md-12 mb-3">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Results of Fact Finding</label>
+                      <textarea id="fact_finding_results" class="GRIEVANCE_FORM form-control" placeholder="Enter Results of Fact Finding" rows="3" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Appeals</label>
+                      <textarea id="appeals" class="GRIEVANCE_FORM form-control" placeholder="Enter Appeals" rows="3" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                    <label>Appeals</label>
-                    <input type="text" id="appeals" class="GRIEVANCE_FORM form-control" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                </div>
-                <div>
+                <div class="row">
+                  <div class="col-md-6">
                     <label>Settlement</label>
-                    <input type="text" id="settlement" class="GRIEVANCE_FORM form-control" placeholder="Enter Text" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                </div>
-                <div class="col-md-6">
-                  <label>Status</label>
-                  <select id="grievance_status" name="grievance_status" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="Closed/Resolved">Closed/Resolved</option>
-                    <option value="Unable to Complete">Unable to Complete</option>
-                    <option value="Forwarded to NPCO">Forwarded to NPCO</option>
-                  </select>
+                    <textarea id="settlement" class="GRIEVANCE_FORM form-control" placeholder="Enter Settlement" rows="3" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Status</label>
+                    <select id="grievance_status" name="grievance_status" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                      <option value="" disabled selected>Choose your option</option>
+                      <option value="Closed/Resolved">Closed/Resolved</option>
+                      <option value="Unable to Complete">Unable to Complete</option>
+                      <option value="Forwarded to NPCO">Forwarded to NPCO</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             <br>
           </div>
         </div>
       </div>
-    <br>
-      <div class="text-right">
+      <div class="text-center">
             <button type="submit" class="btn btn-primary" id="submit" style="border: 2px solid #c2bfbf; padding: 10px; width: 150px; font-size: 18px; font-weight: bold;" onclick="validateAndSubmit()">Submit</button>
       </div>
+      <br>
   </div>
 <div id="readonly" style="border: 2px solid #c2bfbf; padding: 10px; display: none;">{% if readonly %}true{% else %}false{% endif %}</div>
 
