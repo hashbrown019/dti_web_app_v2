@@ -34,7 +34,7 @@
                     <input id="complainant_1_organization" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Organisation" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
                  </div>
                   <div class="col-md-6">
-                    <label>Phone Number</label>
+                    <label>Contact Number</label>
                     <input id="complainant_1_phone" type="tel" class="GRIEVANCE_FORM form-control" placeholder="(0987) 654 3210" maxlength="11" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
                 </div>
               </div>
@@ -86,11 +86,15 @@
                     <option value="BARMM"></option>
                   </datalist>
                 <label>Your address/location</label>
-                <input id="complainant_1_address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Addresss/Location" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                <input id="complainant_1_address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Address/Location" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+
                 <label>Mailing Address (if different)</label>
-                <input id="complainant_1_mailing_address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Mailing Address" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;"  required>
+                <input class="form-check-input" type="checkbox" id="same_as_address_checkbox" style="box-shadow: 0 0 2px 2px #4B5F71; margin-left: 1.5em;">
+                <label class="form-check-label" for="same_as_address_checkbox" style="margin-left: 0.5em;">(check if same as above)</label>
+                <input id="complainant_1_mailing_address" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Mailing Address" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+
                 <label>Additional guidance on how to locate you (if applicable)</label>
-                <input id="complainant_1_additional_guidance" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Additional Guidance" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                <input id="complainant_1_additional_guidance" type="text" class="GRIEVANCE_FORM form-control" placeholder="Enter Additional Guidance" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;">
               </div>
           </div>
         </div>
@@ -158,7 +162,7 @@
                 <div class="col-md-6 mb-3">
                   <label>Contact Number</label>
                   <input id="staff_contact" type="text" class="GRIEVANCE_FORM form-control"
-                        placeholder="Enter Contact Number" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
+                        placeholder="(0987) 654 3210" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -184,24 +188,8 @@
       <div class="container-fluid">
         <div class="card mb-4">
           <div class="card-body">
-            <h5 id="grievance_status_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">IV. Status of Grievance Process</h5>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="grievance-status-date">Date</label>
-                <input id="grievance_status_date" type="date" class="GRIEVANCE_FORM form-control"
-                      style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-              </div>
-              <div class="col-md-6 mb-3">
-              <label>a) Have you raised your complaint with government representatives or NGO(s) responsible for planning or executing the project or programme or the Lead Agency or any other agency acting on behalf of IFAD?</label>
-              <select id="raised_complaint" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
-                <option value="" disabled selected>choose your option</option>
-                <option value="YES">YES</option>
-                <option value="NO">NO</option>
-              </select>
-            </div>
-            </div>
+            <h5 id="grievance_status_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">IV. Delegated Office/Unit</h5>
 
-            <h5 id="grievance_status_title" class="text-center mb-4" style="border: 2px solid #c2bfbf; padding: 10px; background-color: #4B5F71; color:#ffffff; padding: 10px; margin-top: 15px;">Delegated Office/Unit</h5>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="delegated_staff_name">Name Of Staff</label>
@@ -237,12 +225,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
+              </div>
+              <div class="row">
+                  <div class="col-md-6 mb-3">
                     <label>Settlement</label>
                     <textarea id="settlement" class="GRIEVANCE_FORM form-control" placeholder="Enter Settlement" rows="3" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required></textarea>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6 mb-3">
                     <label>Status</label>
                     <select id="grievance_status" name="grievance_status" class="GRIEVANCE_FORM form-control" style="border: 2px solid #c2bfbf; padding: 10px; background-color: ghostwhite;" required>
                       <option value="" disabled selected>Choose your option</option>
@@ -252,7 +241,6 @@
                     </select>
                   </div>
                 </div>
-              </div>
             <br>
           </div>
         </div>
@@ -610,6 +598,11 @@
                 el.style.backgroundColor = disabled ? "#e9ecef" : "ghostwhite";
             }
         });
+        const sameAsCheckbox = document.getElementById('same_as_address_checkbox');
+        if (sameAsCheckbox) {
+            sameAsCheckbox.disabled = disabled;
+            sameAsCheckbox.style.cursor = disabled ? "not-allowed" : "pointer";
+        }
     }
 
     // Always disable by default
@@ -697,5 +690,31 @@
       if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         Swal.close();
       }
+  });
+</script>
+<script>
+  // Checkbox logic for copying address to mailing address
+  document.addEventListener('DOMContentLoaded', function () {
+    const addressInput = document.getElementById('complainant_1_address');
+    const mailingInput = document.getElementById('complainant_1_mailing_address');
+    const checkbox = document.getElementById('same_as_address_checkbox');
+
+    function syncMailingAddress() {
+      if (checkbox.checked) {
+        mailingInput.value = addressInput.value;
+        mailingInput.setAttribute('readonly', true);
+        mailingInput.style.backgroundColor = "#e9ecef";
+      } else {
+        mailingInput.removeAttribute('readonly');
+        mailingInput.style.backgroundColor = "ghostwhite";
+      }
+    }
+
+    checkbox.addEventListener('change', syncMailingAddress);
+    addressInput.addEventListener('input', function () {
+      if (checkbox.checked) {
+        mailingInput.value = addressInput.value;
+      }
+    });
   });
 </script>

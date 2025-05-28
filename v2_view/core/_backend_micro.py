@@ -150,30 +150,51 @@ def grievance_table():
     return redirect("mis-v4/core-grievance-monitoring?table")
 
 @app.route('/export_grievance_data', methods=['GET'])
+@c.login_auth_web()
 def export_grievance_data():
     headers = [
         "ID", "Complainant", "Beneficiary", "Organization", "Phone Number", "EMAIL", "DIP Name", "Gender", "Age", "Sector",
         "Implementing Unit", "Address", "Mailing Address", "Guidance", "Confidential Identity", "Reason", "Raised Date",
-        "Project Concern", "Staff Name", "Position", "Staff Contact", "Staff Implementing Unit", "Grievance Status Date",
-        "Raised Complaint", "Delegated Staff Name", "Delegated Staff Implementing Unit", "Fact Finding Results", "Appeals",
+        "Project Concern", "Staff Name", "Position", "Staff Contact", "Staff Implementing Unit", "Delegated Staff Name", 
+        "Delegated Staff Implementing Unit", "Fact Finding Results", "Appeals",
         "Settlement", "Status", "Timestamp Created", "Timestamp Modified", "Created By"
     ]
-    query = (
-        "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
-        "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
-        "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
-        "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
-        "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
-        "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, g.`grievance_status_date`, g.`raised_complaint`, "
-        "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
-        "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
-        "FROM grievance g "
-        "INNER JOIN users u ON g.`created_by` = u.`id`"
-    )
+    user = session["USER_DATA"][0]
+    user_id = user.get("id")
+    user_type = user.get("type", "")
+    # If admin or assign person (id==1), export all, else only user's data
+    if str(user_id) == "1" or user_type.lower() == "admin":
+        query = (
+            "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
+            "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
+            "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
+            "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
+            "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
+            "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
+            "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
+            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
+            "FROM grievance g "
+            "INNER JOIN users u ON g.`created_by` = u.`id`"
+        )
+    else:
+        query = (
+            "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
+            "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
+            "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
+            "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
+            "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
+            "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
+            "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
+            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
+            "FROM grievance g "
+            "INNER JOIN users u ON g.`created_by` = u.`id` "
+            f"WHERE g.`created_by` = {int(user_id)}"
+        )
     data = rapid_mysql.select(query)
     df = pd.DataFrame(data)
     if not df.empty:
         df.columns = headers
+        df = df.astype(str).replace({'NaT': '', 'nan': '', 'None': ''})
     output = io.BytesIO()
     workbook = xlsxwriter.Workbook(output, {'in_memory': True})
     worksheet = workbook.add_worksheet('Grievance')
@@ -185,7 +206,7 @@ def export_grievance_data():
         worksheet.write(0, col_num, header_text, header_format)
     for row_num, row in enumerate(df.itertuples(index=False, name=None), 1):
         for col_num, cell_value in enumerate(row):
-            worksheet.write(row_num, col_num, cell_value)
+            worksheet.write(row_num, col_num, str(cell_value) if cell_value not in [None, 'NaT', 'nan'] else "")
     for idx, col in enumerate(headers):
         header_length = len(str(col)) + 2
         if not df.empty:

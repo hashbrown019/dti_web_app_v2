@@ -87,7 +87,6 @@
                                             <th>Beneficiary</th>
                                             <th>DIP Name</th>
                                             <th>Complainant Implementing Unit</th>
-                                            <th>Status</th>
                                             <th>Timestamp</th>
                                             <th>Action</th>
                                         </tr>
@@ -127,12 +126,12 @@
                         loggedInUserId = sessionData[0]?.id; // Assuming 'id' is the user identifier
 
                         // Check if the logged-in user is the admin (ID = 1)
-                        if (loggedInUserId === 1) {
+                        if (loggedInUserId == 1) {
                             // Admin can view all data
                             grievanceOriginalData = data;
                         } else {
                             // Filter data based on created_by for other users
-                            grievanceOriginalData = data.filter(row => row.created_by === loggedInUserId);
+                            grievanceOriginalData = data.filter(row => String(row.created_by) == String(loggedInUserId));
                         }
 
                         grievanceFilteredData = [...grievanceOriginalData];
@@ -157,7 +156,6 @@
                                 <td>${row['complainant_1_beneficiary_category']}</td>
                                 <td>${row['complainant_1_dip_name']}</td>
                                 <td>${row['complainant_1_implementing_unit']}</td>
-                                <td>${row['grievance_status']}</td>
                                 <td>${row['date_created']}<br>
                                     ${row['date_modified'] ? `<i style="font-size: smaller;color: #00cc66;">Updated: ${row['date_modified']}</i>` : ''}
                                 </td>
@@ -286,6 +284,6 @@
                 }
 
                 document.getElementById("grievanceExportBtn").addEventListener("click", function () {
-                    window.location.href = "/export_grievance_data";
+                    window.open('/export_grievance_data', '_blank');
                 });
             </script>
