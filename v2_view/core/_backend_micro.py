@@ -154,7 +154,7 @@ def grievance_table():
 def export_grievance_data():
     headers = [
         "ID", "Complainant", "Beneficiary", "Organization", "Phone Number", "EMAIL", "DIP Name", "Gender", "Age", "Sector",
-        "Implementing Unit", "Address", "Mailing Address", "Guidance", "Confidential Identity", "Reason", "Raised Date",
+        "Implementing Unit", "Address", "Mailing Address", "Guidance", "Confidential Means of Reception", "Confidential Identity", "Confidential Reason", "Raised Date",
         "Project Concern", "Staff Name", "Position", "Staff Contact", "Staff Implementing Unit", "Delegated Staff Name", 
         "Delegated Staff Implementing Unit", "Fact Finding Results", "Appeals",
         "Settlement", "Status", "Timestamp Created", "Timestamp Modified", "Created By"
@@ -168,7 +168,7 @@ def export_grievance_data():
             "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
             "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
             "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
-            "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
+            "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_means_of_reception`, g.`confidentiality_identity`, "
             "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
             "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
             "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
@@ -181,9 +181,9 @@ def export_grievance_data():
             "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
             "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
             "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
-            "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
-            "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
-            "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
+            "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_means_of_reception`, "
+            "g.`confidentiality_identity`, g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, "
+            "g.`staff_name`, g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
             "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
             "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
             "FROM grievance g "
