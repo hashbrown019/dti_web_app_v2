@@ -63,7 +63,7 @@
 </style>
 
     <div class="text-center mb-4" style="margin-bottom: 1rem!important;">
-        <h4 style="background-color: #4B5F71; color: #fff; padding: 10px;">Grievance Redress System</h4>
+        <h4 style="background-color: #4B5F71; color: #fff; padding: 10px;">Grievance Redress System Table</h4>
     </div>
         <br>
             <div class="container-fluid">
@@ -162,7 +162,7 @@
                                 <td>
                                     <div style="display: flex; gap: 5px;">
                                         <a href="?forms&view=${row.id}" class="btn-link btn-sm btn-view">View</a>
-                                        ${(loggedInUserId == 1 && row.created_by == 1) || (loggedInUserId == row.created_by) ? `<a href="?forms&edit=${row.id}" class="btn-link btn-sm edit-btn" style="color: rgb(57, 189, 57); cursor:pointer;">Edit</a>` : ''}
+                                        ${(loggedInUserId == 1 || loggedInUserId == row.created_by) ? `<a href="?forms&edit=${row.id}" class="btn-link btn-sm edit-btn" style="color: rgb(57, 189, 57); cursor:pointer;">Edit</a>` : ''}
                                         <a class="btn-link btn-sm delete-btn" style="color: red; cursor: pointer;">Delete</a>
                                     </div>
                                 </td>

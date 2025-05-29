@@ -159,72 +159,71 @@ def export_grievance_data():
         "Delegated Staff Implementing Unit", "Fact Finding Results", "Appeals",
         "Settlement", "Status", "Timestamp Created", "Timestamp Modified", "Created By"
     ]
-    try:
-        user = session["USER_DATA"][0]
-        user_id = user.get("id")
-        user_type = user.get("type", "")
-        if str(user_id) == "1" or user_type.lower() == "admin":
-            query = (
-                "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
-                "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
-                "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
-                "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
-                "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
-                "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
-                "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
-                "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
-                "FROM grievance g "
-                "INNER JOIN users u ON g.`created_by` = u.`id`"
-            )
+    user = session["USER_DATA"][0]
+    user_id = user.get("id")
+    user_type = user.get("type", "")
+    # If admin or assign person (id==1), export all, else only user's data
+    if str(user_id) == "1" or user_type.lower() == "admin":
+        query = (
+            "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
+            "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
+            "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
+            "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
+            "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
+            "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
+            "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
+            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
+            "FROM grievance g "
+            "INNER JOIN users u ON g.`created_by` = u.`id`"
+        )
+    else:
+        query = (
+            "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
+            "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
+            "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
+            "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
+            "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
+            "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
+            "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
+            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
+            "FROM grievance g "
+            "INNER JOIN users u ON g.`created_by` = u.`id` "
+            f"WHERE g.`created_by` = {int(user_id)}"
+        )
+    data = rapid_mysql.select(query)
+    df = pd.DataFrame(data)
+    if not df.empty:
+        # Ensure the number of columns matches the number of headers
+        if len(df.columns) > len(headers):
+            df = df.iloc[:, :len(headers)]
+        elif len(df.columns) < len(headers):
+            df.columns = headers[:len(df.columns)]
         else:
-            query = (
-                "SELECT g.`id`, g.`complainant_1_fullname`, g.`complainant_1_beneficiary_category`, g.`complainant_1_organization`, "
-                "g.`complainant_1_phone`, g.`complainant_1_email`, g.`complainant_1_dip_name`, g.`complainant_1_gender`, "
-                "g.`complainant_1_age`, g.`complainant_1_sector`, g.`complainant_1_implementing_unit`, g.`complainant_1_address`, "
-                "g.`complainant_1_mailing_address`, g.`complainant_1_additional_guidance`, g.`confidentiality_identity`, "
-                "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
-                "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
-                "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
-                "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
-                "FROM grievance g "
-                "INNER JOIN users u ON g.`created_by` = u.`id` "
-                f"WHERE g.`created_by` = {int(user_id)}"
-            )
-        data = rapid_mysql.select(query)
-        df = pd.DataFrame(data)
-        # Always set columns, even if empty
-        df = df.reindex(columns=range(len(headers)))
-        df.columns = headers
-        # Convert all to string and replace NaT/nan/None
+            df.columns = headers
         df = df.astype(str).replace({'NaT': '', 'nan': '', 'None': ''})
-        output = io.BytesIO()
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        worksheet = workbook.add_worksheet('Grievance')
-        header_format = workbook.add_format({
-            'bold': True, 'text_wrap': True, 'valign': 'vcenter', 'align': 'center',
-            'fg_color': '#00cc66', 'border': 1
-        })
-        for col_num, header_text in enumerate(headers):
-            worksheet.write(0, col_num, header_text, header_format)
-        for row_num, row in enumerate(df.itertuples(index=False, name=None), 1):
-            for col_num, cell_value in enumerate(row):
-                worksheet.write(row_num, col_num, str(cell_value) if cell_value not in [None, 'NaT', 'nan'] else "")
-        for idx, col in enumerate(headers):
-            header_length = len(str(col)) + 2
-            if not df.empty:
-                data_max_length = df.iloc[:, idx].astype(str).apply(len).max()
-            else:
-                data_max_length = 0
-            max_len = min(max(header_length, data_max_length), 40)
-            worksheet.set_column(idx, idx, max_len)
-        workbook.close()
-        output.seek(0)
-        return send_file(output, download_name="grievance_export.xlsx", as_attachment=True)
-    except Exception as e:
-        import traceback
-        print("Export grievance error:", e)
-        print(traceback.format_exc())
-        return jsonify({"status": "error", "message": str(e)}), 500
+    output = io.BytesIO()
+    workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+    worksheet = workbook.add_worksheet('Grievance')
+    header_format = workbook.add_format({
+        'bold': True, 'text_wrap': True, 'valign': 'vcenter', 'align': 'center',
+        'fg_color': '#00cc66', 'border': 1
+    })
+    for col_num, header_text in enumerate(headers):
+        worksheet.write(0, col_num, header_text, header_format)
+    for row_num, row in enumerate(df.itertuples(index=False, name=None), 1):
+        for col_num, cell_value in enumerate(row):
+            worksheet.write(row_num, col_num, str(cell_value) if cell_value not in [None, 'NaT', 'nan'] else "")
+    for idx, col in enumerate(headers):
+        header_length = len(str(col)) + 2
+        if not df.empty:
+            data_max_length = df.iloc[:, idx].astype(str).apply(len).max()
+        else:
+            data_max_length = 0
+        max_len = min(max(header_length, data_max_length), 40)
+        worksheet.set_column(idx, idx, max_len)
+    workbook.close()
+    output.seek(0)
+    return send_file(output, download_name="grievance_export.xlsx", as_attachment=True)
 
 #SALES TRACKER TABLE ------------------------------------------------------    
 @app.route("/sales-tracker-table", methods=["GET"])
