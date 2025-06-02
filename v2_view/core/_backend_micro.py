@@ -572,25 +572,25 @@ def export_form_a():
     ''')
 
     headers = [
-        "ID", "User ID", "DEV @ ID @ ID", "Full Name", "Sex",
+        "ID", "User ID", "DEV ID", "Full Name", "Sex",
         "Mobile Number", "Email Address", "Birthday", "Birthday Not Sure",
         "Civil Status", "Is Head of Household", "Name of Household Head",
         "Head HH Name", "Head HH Relationship", "Head HH Sex", "Head HH PWD",
-        "Head HH OFW", "Head HH IP", "Longitude", "Latitude", "Region", "Province",
-        "City/Municipality", "Barangay", "Purok/Sitio/Street", "Primary Crop",
-        "DIP Name", "Farmer PWD", "Farmer OFW", "Farmer IP", "Years Farming",
-        "Name Coop", "Position in Coop", "Coop Mem Since", "Is Listed in RSBSA",
+        "Head HH OFW", "Head HH IP", "Farmer Longitude", "Farmer Latitude", "Farmer Region", "Farmer Province",
+        "Farmer City/Municipality", "Farmer Barangay", "Farmer Purok/Sitio/Street", "Farming Primary Crop",
+        "Farming DIP Name", "Farmer PWD Status", "Farmer OFW Status", "Farmer IP Status", "Years Farming",
+        "Name of Coop", "Position in Coop", "Coop Member Since", "Is Listed in RSBSA",
         "Highest Educational Attainment", "Vocational Skills", "Farm Longitude",
         "Farm Latitude", "Farm Region", "Farm Province", "Farm Municipality",
         "Farm Barangay", "Farm Street/Purok/Sitio", "Declared Area (Ha)",
-        "Is Intercropping", "Primary Crop", "Slope Area (>18 Degrees) (Ha)",
-        "Flat Plain Area (Ha)", "No Bearing Trees Planted", "No Bearing Non-Trees",
+        "Is Intercropping", "Farm Primary Crop", "Slope Area (>18 Degrees) (Ha)",
+        "Flat Plain Area (Ha)", "No Bearing Trees Planted", "No Bearing Non-Trees Planted",
         "Land Tenure - Sole Ownership", "Land Tenure - Co-Ownership",
-        "Land Tenure - CLOA Individual EP", # Removed the duplicate header
+        "Land Tenure - CLOA Individual EP",
         "Land Tenure - Stewardship",
         "Land Tenure - Usufruct", "Land Tenure - Tenancy", "Land Tenure - Others",
         "Primary Crop Avg Prod Vol 2018-2019 (kg/cycle)", "Primary Crop Land Area Covered (Ha)",
-        "Primary Crop No Cycle", "Secondary Crop", "Secondary Crop Avg Prod Vol 2018-2019",
+        "Primary Crop No Cycle", "Secondary Crop", "Secondary Crop Avg Prod Vol 2018-2019 (kg/cycle)",
         "Secondary Crop Land Area Covered (Ha)", "Secondary Crop No Cycle",
         "Area for Expansion - Sloping", "Area for Expansion - Flat Plain",
         "Area for Rehabilitation - Sloping", "Area for Rehabilitation - Flat Plain",
@@ -641,8 +641,8 @@ def export_form_a():
         "Source Medium Frequency", "Mobile Phone Type",
         "Support Needed to Improve Productivity", "Farmer Comments about RAPID",
         "Enumerator Remarks", "Others 1", "Others 2", "Others 3", "Others 4", "Others 5", "Others 6",
-        "Date Enumerated", "Enumerator Name", "Total Fam Female", "Total Fam Male",
-        "Total Non-Fam Female", "Total Non-Fam Male", "Access Crop Insurer Name",
+        "Date Enumerated", "Enumerator Name", "Total Fam Female Workers", "Total Fam Male Workers",
+        "Total Non-Fam Female Workers", "Total Non-Fam Male Workers", "Access Crop Insurer Name",
         "Intervention - Capacity Building", "Intervention - Expansion",
         "Intervention - Rehabilitation", "Intervention - Production Investment",
         "Intervention - FMI", "File Name", "Uploaded By"
@@ -665,7 +665,7 @@ def export_form_a():
             worksheet.write(0, col_num, header_text, header_format)
 
         offset = 0
-        chunk_size = 1000 # Number of rows to fetch per database query
+        chunk_size = 500 # Number of rows to fetch per database query, adjusted to a safer initial value
         row_num = 1 # Start writing data from the second row (after headers)
 
         while True:
@@ -687,10 +687,9 @@ def export_form_a():
                 df_chunk = df_chunk.iloc[:, :num_expected_headers]
             elif num_columns_in_df < num_expected_headers:
                 # If fewer columns, add empty columns to match the header count
-                # This assumes the existing columns are in the correct order up to num_columns_in_df
                 for _ in range(num_expected_headers - num_columns_in_df):
-                    df_chunk[f'__placeholder_col_{_}'] = '' # Add temporary placeholder columns
-                # Reorder columns to match 'headers' list, taking care of original and new placeholder columns
+                    df_chunk[f'__placeholder_col_{_}'] = '' 
+                # Reorder columns to match 'headers' list
                 df_chunk = df_chunk[headers[:num_columns_in_df] + [col for col in df_chunk.columns if col.startswith('__placeholder_col_')]]
 
             # Assign the correct headers to the DataFrame for consistent processing
@@ -707,17 +706,6 @@ def export_form_a():
                     worksheet.write(row_num, col_num, display_value)
                 row_num += 1
 
-            # --- OPTIMIZATION: Removed dynamic column width adjustment inside the loop ---
-            # This part was commented out because recalculating max widths for every chunk
-            # can be computationally intensive for very large files and contribute to timeouts.
-            # You can set a default width or calculate it once after all data is loaded
-            # if precise column widths are critical and performance allows.
-            # for idx, col_name in enumerate(df_chunk.columns):
-            #     header_length = len(str(col_name)) + 2
-            #     data_max_length = df_chunk[col_name].astype(str).apply(len).max()
-            #     max_len = min(max(header_length, data_max_length), 40)
-            #     worksheet.set_column(idx, idx, max_len)
-
             # Increment offset for the next chunk
             offset += chunk_size
 
@@ -725,14 +713,14 @@ def export_form_a():
             if len(data_chunk) < chunk_size * 0.1 and chunk_size > 100:
                 chunk_size = max(100, chunk_size - 100)
                 print(f"Decreasing chunk size to {chunk_size}")
-            elif len(data_chunk) > chunk_size * 0.9 and chunk_size < 5000:
-                chunk_size = min(5000, chunk_size + 100)
+            elif len(data_chunk) > chunk_size * 0.9 and chunk_size < 1500: # Max chunk size further reduced to 1500
+                chunk_size = min(1500, chunk_size + 100) # Max chunk size further reduced to 1500
                 print(f"Increasing chunk size to {chunk_size}")
+            
+            # Explicitly delete the DataFrame chunk to free up memory
+            del df_chunk
 
         # Set column widths once after all data has been written (optional, but more efficient)
-        # You can uncomment and adjust this if you still need auto-sizing for columns.
-        # For very large datasets, consider setting a fixed width or using a subset of data
-        # to determine widths if performance is paramount.
         for idx, header_text in enumerate(headers):
             worksheet.set_column(idx, idx, 20) # Set a default width of 20 for all columns
 
