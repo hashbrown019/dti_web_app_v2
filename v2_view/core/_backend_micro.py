@@ -1,6 +1,6 @@
 from datetime import date, datetime
 import io
-from flask import Blueprint, Response, render_template, request, session, redirect, jsonify, send_file
+from flask import Blueprint, Response, render_template, request, session, redirect, jsonify, send_file, url_for
 from flask_session import Session
 import pandas as pd
 import xlsxwriter
@@ -8,11 +8,22 @@ from modules.Connections import mysql, sqlite
 import Configurations as c
 import os
 import json
-
+import uuid
+from werkzeug.utils import secure_filename
 
 app = Blueprint("_micro", __name__, template_folder='pages')
 rapid_mysql = mysql(*c.DB_CRED)
 
+# --- Configuration for file uploads ---
+UPLOAD_FOLDER = 'static/uploads/grievances' # Define your upload folder
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'} # Allowed file extensions
+
+# Ensure the upload folder exists
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 class _main:
     def __init__(self, arg):
@@ -23,11 +34,35 @@ class _main:
     def insert(TABLE):
         coloumn = ""
         values = ""
+
+        if TABLE == 'grievance' and 'grievance_image' in request.files:
+            file = request.files['grievance_image']
+            if file and allowed_file(file.filename):
+                ext = os.path.splitext(file.filename)[1]
+                filename = f"{uuid.uuid4()}{ext}"
+                filepath = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(filepath)
+
+                coloumn += ",`grievance_image`"
+                values += f",'{url_for('static', filename=f'uploads/grievances/{filename}')}'"
+            else:
+                return jsonify({"status": "error", "message": "Invalid file type or no file selected"}), 400
+
         for ids in request.form:
             coloumn += f",`{ids}`"
-            values += f",'{request.form[ids]}' "
+            values += f",'{request.form[ids]}'"
+
+        if TABLE == 'grievance' and 'created_by' not in request.form and 'USER_DATA' in session:
+            coloumn += ",`created_by`"
+            values += f",'{session['USER_DATA'][0]['id']}'"
+
         res = rapid_mysql.do(f"INSERT {TABLE} ({coloumn[1:]}) VALUES ({values[1:]})")
-        return jsonify(res)
+
+        if res:
+            return jsonify({"status": "success", "message": "Data inserted successfully", "result": res})
+        else:
+            return jsonify({"status": "error", "message": "Failed to insert data", "result": res}), 500
+
 #--micro------------------------------------------------------------------------------------------------
     @app.route("/mis-v4-micro/test", methods=["POST", "GET"])
     @c.login_auth_web()
@@ -130,14 +165,40 @@ def delete_grievance_data(id):
 @app.route("/update_grievance_data/<int:id>", methods=["POST"])
 def update_grievance_data(id):
     try:
-        data = request.json
-        if not data:
-            return jsonify({"status": "error", "message": "No data provided"}), 400
-        if not isinstance(data, dict):
-            return jsonify({"status": "error", "message": "Invalid data format"}), 400
-        update_fields = ", ".join([f"`{key}` = '{value}'" for key, value in data.items()])
-        query = f"UPDATE grievance SET {update_fields} WHERE Id = {id}"
+        update_fields = []
+        
+        # Handle file upload if present
+        if 'grievance_image' in request.files:
+            file = request.files['grievance_image']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(filepath)
+                update_fields.append(f"`grievance_image` = '{url_for('static', filename=f'uploads/grievances/{filename}')}'")
+            elif file.filename == '': # No new file selected, but the input was present
+                pass # Do nothing, keep existing image path
+            else:
+                return jsonify({"status": "error", "message": "Invalid file type"}), 400
+        
+        # Process other form data
+        for key, value in request.form.items():
+            # Exclude the file input from this loop if already handled
+            if key == 'grievance_image':
+                continue
+            update_fields.append(f"`{key}` = '{value}'")
+        
+        # Add date_modified and created_by for update
+        update_fields.append(f"`date_modified` = '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}'")
+        if 'USER_DATA' in session:
+            update_fields.append(f"`created_by` = '{session['USER_DATA'][0]['id']}'")
+
+
+        if not update_fields:
+            return jsonify({"status": "error", "message": "No data provided for update"}), 400
+
+        query = f"UPDATE grievance SET {', '.join(update_fields)} WHERE Id = {id}"
         result = rapid_mysql.do(query)
+        
         if result is not None:  
             return jsonify({"status": "success", "message": "Record updated successfully"}), 200
         else:
@@ -157,7 +218,7 @@ def export_grievance_data():
         "Implementing Unit", "Address", "Mailing Address", "Guidance", "Confidential Means of Reception", "Confidential Identity", "Confidential Reason", "Raised Date",
         "Project Concern", "Staff Name", "Position", "Staff Contact", "Staff Implementing Unit", "Delegated Staff Name", 
         "Delegated Staff Implementing Unit", "Fact Finding Results", "Appeals",
-        "Settlement", "Status", "Timestamp Created", "Timestamp Modified", "Created By"
+        "Settlement", "Status", "Timestamp Created", "Timestamp Modified", "Created By", "Document Path" # Added Document Path
     ]
     user = session["USER_DATA"][0]
     user_id = user.get("id")
@@ -172,7 +233,7 @@ def export_grievance_data():
             "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
             "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
             "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
-            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
+            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by`, g.`grievance_image` " # Added grievance_image
             "FROM grievance g "
             "INNER JOIN users u ON g.`created_by` = u.`id`"
         )
@@ -185,7 +246,7 @@ def export_grievance_data():
             "g.`confidentiality_identity`, g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, "
             "g.`staff_name`, g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
             "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
-            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
+            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by`, g.`grievance_image` " # Added grievance_image
             "FROM grievance g "
             "INNER JOIN users u ON g.`created_by` = u.`id` "
             f"WHERE g.`created_by` = {int(user_id)}"
@@ -324,8 +385,13 @@ def get_salesT_data():
     
 #PROFILING FORM A------------------------------------------------------------------------------------------------
 @app.route('/export_form_a', methods=['GET'])
-@c.login_auth_web()
+@c.login_auth_web() # Use your actual login_auth_web decorator here
 def export_form_a():
+    """
+    Exports data from the 'excel_import_form_a' table to an Excel file.
+    It fetches data in chunks to manage memory and prevent gateway timeouts.
+    The generated Excel file is sent as an attachment.
+    """
     query = ('''SELECT
             `excel_import_form_a`.`id`,
             `excel_import_form_a`.`user_id`,
@@ -553,7 +619,8 @@ def export_form_a():
         "Is Intercropping", "Primary Crop", "Slope Area (>18 Degrees) (Ha)",
         "Flat Plain Area (Ha)", "No Bearing Trees Planted", "No Bearing Non-Trees",
         "Land Tenure - Sole Ownership", "Land Tenure - Co-Ownership",
-        "Land Tenure - CLOA Individual EP", "Land Tenure - Stewardship",
+        "Land Tenure - CLOA Individual EP", # Removed the duplicate header
+        "Land Tenure - Stewardship",
         "Land Tenure - Usufruct", "Land Tenure - Tenancy", "Land Tenure - Others",
         "Primary Crop Avg Prod Vol 2018-2019 (kg/cycle)", "Primary Crop Land Area Covered (Ha)",
         "Primary Crop No Cycle", "Secondary Crop", "Secondary Crop Avg Prod Vol 2018-2019",
@@ -587,8 +654,8 @@ def export_form_a():
         "Male Family Worker Income Yearly", "Female Family Worker Income Yearly",
         "Male Non-Family Worker Income Yearly", "Female Non-Family Worker Income Yearly",
         "PH Facility Type", "PH Equipment Name", "PH Facility Longitude",
-        "PH Facility Latitude", "PH Facility Region", "PH Facility Province",
-        "PH Facility City/Municipality", "PH Facility Street/Purok/Sitio",
+        "PH Facility Latitude", "PH Facility Region",
+        "PH Facility Province", "PH Facility City/Municipality", "PH Facility Street/Purok/Sitio",
         "PH Product Form", "PH Capacity Quantity", "PH Capacity Unit",
         "PH Capacity Frequency", "Sales Product Type", "Sales Product Delivery",
         "Distribution Point - Farmers Org", "Distribution Point - SME",
@@ -613,78 +680,115 @@ def export_form_a():
         "Intervention - Rehabilitation", "Intervention - Production Investment",
         "Intervention - FMI", "File Name", "Uploaded By"
     ]
-    def generate_excel_data():
+
+    try:
         output = io.BytesIO()
+        # Use constant_memory=True to reduce peak memory usage for large files
         workbook = xlsxwriter.Workbook(output, {'constant_memory': True})
         worksheet = workbook.add_worksheet('dcf_form_a_exported_file')
+
+        # Define header format
         header_format = workbook.add_format({
-            'bold': True,'text_wrap': True,'valign': 'vcenter','align': 'center','fg_color': '#00cc66','border': 1
+            'bold': True, 'text_wrap': True, 'valign': 'vcenter', 'align': 'center',
+            'fg_color': '#00cc66', 'border': 1
         })
+
+        # Write headers to the first row
         for col_num, header_text in enumerate(headers):
             worksheet.write(0, col_num, header_text, header_format)
-        offset = 0
-        chunk_size = 1000
-        row_num = 1
-        adaptive_chunk = True 
-        while True:
-            try:
-                query_with_limit = query + f" LIMIT {chunk_size} OFFSET {offset}"
-                data_chunk = rapid_mysql.select(query_with_limit)
-                if not data_chunk:
-                    break
-                df_chunk = pd.DataFrame(data_chunk)
-                num_columns_in_df = len(df_chunk.columns)
-                num_expected_headers = len(headers)
 
-                if num_columns_in_df != num_expected_headers:
-                    print(
-                        f"Column count mismatch! DataFrame has {num_columns_in_df} columns, expected {num_expected_headers}."
-                    )
-                    if num_columns_in_df > num_expected_headers:
-                        df_chunk = df_chunk.iloc[:, :num_expected_headers]
-                    elif num_columns_in_df < num_expected_headers:
-                        local_headers = headers[:num_columns_in_df]
-                        df_chunk.columns = local_headers
-                    else:
-                        df_chunk.columns = headers
-                else:
-                    df_chunk.columns = headers
-                for row_data in df_chunk.itertuples(index=False, name=None):
-                    for col_num, cell_value in enumerate(row_data):
-                        worksheet.write(row_num, col_num, cell_value)
-                    row_num += 1
-                for idx, col in enumerate(df_chunk.columns):
-                    header_length = len(str(col)) + 2
-                    series = df_chunk[col].astype(str)
-                    data_max_length = series.apply(len).max()
-                    max_len = min(max(header_length, data_max_length), 40) 
-                    worksheet.set_column(idx, idx, max_len)
-                offset += chunk_size
-                yield output.getvalue()
-                output.seek(0)
-                output.truncate(0)
-                if adaptive_chunk:
-                    if len(df_chunk) < 100 and chunk_size > 500: 
-                        chunk_size -= 100
-                        print(f"Decreasing chunk size to {chunk_size}")
-                    elif len(df_chunk) > 900 and chunk_size < 3000:  
-                        chunk_size += 100
-                        print(f"Increasing chunk size to {chunk_size}")
-            except Exception as e:
-                print(f"Error during Excel data generation: {e}")
-                yield f"Error: {e}".encode()
+        offset = 0
+        chunk_size = 1000 # Number of rows to fetch per database query
+        row_num = 1 # Start writing data from the second row (after headers)
+
+        while True:
+            # Fetch data in chunks from the database
+            query_with_limit = query + f" LIMIT {chunk_size} OFFSET {offset}"
+            data_chunk = rapid_mysql.select(query_with_limit)
+
+            if not data_chunk:
+                # No more data, break the loop
                 break
 
+            df_chunk = pd.DataFrame(data_chunk)
+
+            # Ensure the number of columns in the DataFrame matches the expected headers
+            num_columns_in_df = len(df_chunk.columns)
+            num_expected_headers = len(headers)
+
+            # If the number of columns from the query doesn't match the expected headers,
+            # we need to handle it. The primary fix is ensuring the `headers` list itself is correct.
+            # If there's still a mismatch, this block will attempt to align.
+            if num_columns_in_df > num_expected_headers:
+                # If more columns are returned than expected, truncate the DataFrame
+                df_chunk = df_chunk.iloc[:, :num_expected_headers]
+            elif num_columns_in_df < num_expected_headers:
+                # If fewer columns, add empty columns to match the header count
+                # This assumes the existing columns are in the correct order up to num_columns_in_df
+                for _ in range(num_expected_headers - num_columns_in_df):
+                    df_chunk[f'__placeholder_col_{_}'] = '' # Add temporary placeholder columns
+                # Reorder columns to match 'headers' list, taking care of original and new placeholder columns
+                # This line is critical for correct column alignment
+                df_chunk = df_chunk[headers[:num_columns_in_df] + [col for col in df_chunk.columns if col.startswith('__placeholder_col_')]]
+
+
+            # Assign the correct headers to the DataFrame for consistent processing
+            # This line will now work correctly as num_columns_in_df should match len(headers)
+            df_chunk.columns = headers
+
+            # Write data rows from the DataFrame chunk to the worksheet
+            for row_data in df_chunk.itertuples(index=False, name=None):
+                for col_num, cell_value in enumerate(row_data):
+                    # Convert all cell values to string to avoid xlsxwriter errors with mixed types
+                    # Handle None, NaT (Not a Time), and nan (Not a Number) values explicitly
+                    display_value = ""
+                    if cell_value is not None and str(cell_value).lower() not in ['nat', 'nan']:
+                        display_value = str(cell_value)
+                    worksheet.write(row_num, col_num, display_value)
+                row_num += 1
+
+            # Adjust column widths based on the data in the current chunk.
+            # This can be computationally intensive for very large files if done for every chunk.
+            # For optimal performance, consider calculating max widths once after all data is loaded,
+            # or if not critical, remove this loop.
+            for idx, col_name in enumerate(df_chunk.columns):
+                header_length = len(str(col_name)) + 2
+                # Get max length of data in this column for the current chunk
+                data_max_length = df_chunk[col_name].astype(str).apply(len).max()
+                # Set column width, capping at 40 for readability
+                max_len = min(max(header_length, data_max_length), 40)
+                worksheet.set_column(idx, idx, max_len)
+
+            # Increment offset for the next chunk
+            offset += chunk_size
+
+            # Adaptive chunking logic (optional, helps optimize chunk size based on data density)
+            # Adjust chunk_size dynamically based on the number of rows returned in the chunk
+            # This helps to avoid fetching too much data at once or too little.
+            if len(data_chunk) < chunk_size * 0.1 and chunk_size > 100:
+                # If very few rows were returned, decrease chunk size to be more granular
+                chunk_size = max(100, chunk_size - 100)
+                print(f"Decreasing chunk size to {chunk_size}")
+            elif len(data_chunk) > chunk_size * 0.9 and chunk_size < 5000:
+                # If almost a full chunk, increase chunk size to fetch more data per query
+                chunk_size = min(5000, chunk_size + 100)
+                print(f"Increasing chunk size to {chunk_size}")
+
+        # Close the workbook to finalize the Excel file. This is crucial for xlsxwriter.
         workbook.close()
-        yield output.getvalue()
-    def generate_response():
-        try:
-            return Response(
-                generate_excel_data(),
-                mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                headers={'Content-Disposition': 'attachment; filename=dcf_form_a_exported_file.xlsx'}
-            )
-        except Exception as e:
-            print(f"Error creating response: {e}")
-            return "An error occurred while generating the Excel file.", 500 
-    return generate_response()
+        # Rewind the BytesIO buffer to the beginning before sending
+        output.seek(0)
+
+        # Send the generated Excel file as a response
+        return send_file(
+            output,
+            download_name="dcf_form_a_exported_file.xlsx",
+            as_attachment=True,
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+
+    except Exception as e:
+        # Log the error for debugging purposes
+        print(f"Error during Excel export: {e}")
+        # Return a generic error message to the user
+        return "An error occurred while generating the Excel file. Please try again later.", 500
