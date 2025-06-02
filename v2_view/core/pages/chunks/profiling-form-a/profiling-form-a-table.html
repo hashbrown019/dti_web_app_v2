@@ -1,221 +1,275 @@
 <style>
-	.input {
-		border: 2px solid transparent;
-		height: 4em;
-		padding-left: 0.8em;
-		outline: none;
-		overflow: hidden;
-		background-color: #ffffff;
-		border-radius: 10px;
-		transition: all 0.2s;
-		border-color: #6c757d;
-		}
-	.input:hover,
-	.input:focus {
-		border: 2px solid #4a9dec;
-		box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
-		background-color: white;
-		}
-	#pagination {
-		display: flex;
-		justify-content: center;
-		gap: 5px;
-		}
-	#pagination button {
-		background-color: #fff;
-		border: 1px solid #ddd;
-		color: #007bff;
-		padding: 5px 12px;
-		border-radius: 5px;
-		cursor: pointer;
-		transition: background 0.3s, color 0.3s;
-	}
-	#pagination button.active {
-		background-color: #007bff;
-		color: #fff;
-		border-color: #007bff;
-	}
-	#pagination button:disabled {
-		background-color: #f8f9fa;
-		color: #6c757d;
-		cursor: not-allowed;
-	}
-	#profileTable tbody tr {
-		cursor: pointer;
-	}
-	#profileTable thead th {
-		border: 1px solid #ffffff;
-		background: #343a40; 
-		color: #ffffff; 
-	}
+    .input {
+        border: 2px solid transparent;
+        height: 4em;
+        padding-left: 0.8em;
+        outline: none;
+        overflow: hidden;
+        background-color: #ffffff;
+        border-radius: 10px;
+        transition: all 0.2s;
+        border-color: #6c757d;
+        }
+    .input:hover,
+    .input:focus {
+        border: 2px solid #4a9dec;
+        box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+        background-color: white;
+        }
+    #pagination {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        }
+    #pagination button {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        color: #007bff;
+        padding: 5px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s, color 0.3s;
+    }
+    #pagination button.active {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+    #pagination button:disabled {
+        background-color: #f8f9fa;
+        color: #6c757d;
+        cursor: not-allowed;
+    }
+    #profileTable tbody tr {
+        cursor: pointer;
+    }
+    #profileTable thead th {
+        border: 1px solid #ffffff;
+        background: #343a40; 
+        color: #ffffff; 
+    }
+    /* Loading spinner styles */
+    .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #007bff;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 8px;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 
 <div class="col-lg-12" id="dropContainer" style="min-height: 60vh;">
-	<div class="row">
-		<div class="pagetitle"></div>
-		<section class="section dashboard">
-			<div class="row">
-				<h5>
-					<strong class="bi bi-folder"></strong>
-					<strong id="FOLDER_NAME">Home</strong>
-				</h5>
-			</div>
+    <div class="row">
+        <div class="pagetitle"></div>
+        <section class="section dashboard">
+            <div class="row">
+                <h5>
+                    <strong class="bi bi-folder"></strong>
+                    <strong id="FOLDER_NAME">Home</strong>
+                </h5>
+            </div>
 
-			<div class="row">
-				<div class="col-lg-12">
-					<hr>
-					<div class="row">
-						<div class="container row d-flex gap-2 mb-3">
-							<div class="x-padding">
-								<input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
-								<button id="pfaSortButton" class="btn btn-sm" style="border-color: #3f464d;">SORT ▲</button>
-								<button type="button" class="btn btn-primary mb-2 x-right" onclick="exportFormAData()">
-									<i class="ri-file-excel-2-fill x-xlarge"></i> Open this table with spreadsheet App
-								</button>
-							</div>
-						</div>
-						<table id="profileTable" class="table table-striped table-hover table-bordered">
-							<thead>
-								<th><b>MIS ID</b></th>
-								<th><b>First Name</b></th>
-								<th><b>Middle Name</b></th>
-								<th><b>Last Name</b></th>
-								<th><b>Ext name</b></th>
-								<th><b>Sex</b></th>
-								<th><b>Primary<br>Crop</b></th>
-								<th><b>Farmers Org</b></th>
-								<th><b>DIP</b></th>
-								<th><b>Region</b></th>
-								<th><b>Province</b></th>
-								<th><b>City/Municipality</b></th>
-								<th><b>Reference File</b></th>
-							</thead>
-							<tbody id="profileBody">
-								<!-- Data will be dynamically injected here -->
-							</tbody>
-						</table>
-						<div id="pagination" class="mt-3"></div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <hr>
+                    <div class="row">
+                        <div class="container row d-flex gap-2 mb-3">
+                            <div class="x-padding">
+                                <input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
+                                <button id="pfaSortButton" class="btn btn-sm" style="border-color: #3f464d;">SORT ▲</button>
+                                <button type="button" class="btn btn-primary mb-2 x-right" id="exportButton" onclick="exportFormAData()">
+                                    <span id="exportButtonText"><i class="ri-file-excel-2-fill x-xlarge"></i> Open this table with spreadsheet App</span>
+                                    <span id="loadingSpinner" style="display: none;"><span class="spinner"></span> Exporting...</span>
+                                </button>
+                            </div>
+                        </div>
+                        <table id="profileTable" class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <th><b>MIS ID</b></th>
+                                <th><b>First Name</b></th>
+                                <th><b>Middle Name</b></th>
+                                <th><b>Last Name</b></th>
+                                <th><b>Ext name</b></th>
+                                <th><b>Sex</b></th>
+                                <th><b>Primary<br>Crop</b></th>
+                                <th><b>Farmers Org</b></th>
+                                <th><b>DIP</b></th>
+                                <th><b>Region</b></th>
+                                <th><b>Province</b></th>
+                                <th><b>City/Municipality</b></th>
+                                <th><b>Reference File</b></th>
+                            </thead>
+                            <tbody id="profileBody">
+                                </tbody>
+                        </table>
+                        <div id="pagination" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 <script type="text/javascript">
-   let profiles = [], currentPage = 1;
-   const rowsPerPage = 200;
-	$onload(get_profile);
-	function get_profile() {
-		$http({
-			action: "/mis-v4/profiling-form-a/get-profiles",
-			method: "POST",
-			func: (r) => {
-				profiles = JSON.parse(r);
-				renderTable(profiles, currentPage);
-			}
-		});
-	}
+    let profiles = [], currentPage = 1;
+    const rowsPerPage = 200;
+    $onload(get_profile);
+    function get_profile() {
+        $http({
+            action: "/mis-v4/profiling-form-a/get-profiles",
+            method: "POST",
+            func: (r) => {
+                profiles = JSON.parse(r);
+                renderTable(profiles, currentPage);
+            }
+        });
+    }
 
-	function renderTable(data, page) {
-		const profileBody = $ID("profileBody");
-		println(profileBody)
-		profileBody.innerHTML = "";
+    function renderTable(data, page) {
+        const profileBody = $ID("profileBody");
+        println(profileBody)
+        profileBody.innerHTML = "";
 
-		const fragment = document.createDocumentFragment();
-		const start = (page - 1) * rowsPerPage;
-		const end = start + rowsPerPage;
-		const paginatedData = data.slice(start, end);
+        const fragment = document.createDocumentFragment();
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedData = data.slice(start, end);
 
-		paginatedData.forEach(a_profile => {
-			const row = document.createElement("tr");
-			row.className = "x-hover-blue";
-			row.onclick = () => dialog_pfa(a_profile.id);
-			row.innerHTML = `
-				<td>PFA_ID_${a_profile.id}</td>
-				<td>${a_profile.fname}</td>
-				<td>${a_profile.mname}</td>
-				<td>${a_profile.lname}</td>
-				<td>${a_profile.xname}</td>
-				<td>${a_profile.sex}</td>
-				<td>${a_profile.primary_crop}</td>
-				<td>${a_profile.fo}</td>
-				<td>${a_profile.dip}</td>
-				<td>${a_profile.region}</td>
-				<td>${a_profile.prov}</td>
-				<td>${a_profile.city}</td>
-				<td>${a_profile.ref}</td>
-			`;
-			fragment.appendChild(row);
-		});
-		profileBody.appendChild(fragment);
-		renderPagination(data);
-	}
+        paginatedData.forEach(a_profile => {
+            const row = document.createElement("tr");
+            row.className = "x-hover-blue";
+            row.onclick = () => dialog_pfa(a_profile.id);
+            row.innerHTML = `
+                <td>PFA_ID_${a_profile.id}</td>
+                <td>${a_profile.fname}</td>
+                <td>${a_profile.mname}</td>
+                <td>${a_profile.mname}</td>
+                <td>${a_profile.lname}</td>
+                <td>${a_profile.xname}</td>
+                <td>${a_profile.sex}</td>
+                <td>${a_profile.primary_crop}</td>
+                <td>${a_profile.fo}</td>
+                <td>${a_profile.dip}</td>
+                <td>${a_profile.region}</td>
+                <td>${a_profile.prov}</td>
+                <td>${a_profile.city}</td>
+                <td>${a_profile.ref}</td>
+            `;
+            fragment.appendChild(row);
+        });
+        profileBody.appendChild(fragment);
+        renderPagination(data);
+    }
 
-	function renderPagination(data) {
-		const pagination = $ID("pagination");
-		pagination.innerHTML = "";
-		const totalPages = Math.ceil(data.length / rowsPerPage);
-		if (totalPages <= 1) return;
-		const ul = document.createElement("ul");
-		ul.classList.add("pagination", "justify-content-center");
+    function renderPagination(data) {
+        const pagination = $ID("pagination");
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(data.length / rowsPerPage);
+        if (totalPages <= 1) return;
+        const ul = document.createElement("ul");
+        ul.classList.add("pagination", "justify-content-center");
 
-		const createPageItem = (text, page, isDisabled = false) => {
-			const li = document.createElement("li");
-			li.classList.add("page-item");
-			if (page === currentPage) li.classList.add("active");
-			if (isDisabled) li.classList.add("disabled");
-			const link = document.createElement("a");
-			link.classList.add("page-link");
-			link.href = "#";
-			link.innerText = text;
-			link.onclick = function (e) {
-				e.preventDefault();
-				if (!isDisabled) {
-					currentPage = page;
-					renderTable(data, currentPage);
-				}
-			};
-			li.appendChild(link);
-			return li;
-		};
-		if (currentPage > 1) ul.appendChild(createPageItem("«", currentPage - 1));
-		if (currentPage > 2) ul.appendChild(createPageItem("1", 1));
-		if (currentPage > 3) ul.appendChild(createPageItem("...", currentPage - 2, true));
-		for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {ul.appendChild(createPageItem(i, i));}
-		if (currentPage < totalPages - 2) ul.appendChild(createPageItem("...", currentPage + 2, true));
-		if (currentPage < totalPages) ul.appendChild(createPageItem(totalPages, totalPages));
-		if (currentPage < totalPages) ul.appendChild(createPageItem("»", currentPage + 1));
-		pagination.appendChild(ul);
-	}
+        const createPageItem = (text, page, isDisabled = false) => {
+            const li = document.createElement("li");
+            li.classList.add("page-item");
+            if (page === currentPage) li.classList.add("active");
+            if (isDisabled) li.classList.add("disabled");
+            const link = document.createElement("a");
+            link.classList.add("page-link");
+            link.href = "#";
+            link.innerText = text;
+            link.onclick = function (e) {
+                e.preventDefault();
+                if (!isDisabled) {
+                    currentPage = page;
+                    renderTable(data, currentPage);
+                }
+            };
+            li.appendChild(link);
+            return li;
+        };
+        if (currentPage > 1) ul.appendChild(createPageItem("«", currentPage - 1));
+        if (currentPage > 2) ul.appendChild(createPageItem("1", 1));
+        if (currentPage > 3) ul.appendChild(createPageItem("...", currentPage - 2, true));
+        for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {ul.appendChild(createPageItem(i, i));}
+        if (currentPage < totalPages - 2) ul.appendChild(createPageItem("...", currentPage + 2, true));
+        if (currentPage < totalPages) ul.appendChild(createPageItem(totalPages, totalPages));
+        if (currentPage < totalPages) ul.appendChild(createPageItem("»", currentPage + 1));
+        pagination.appendChild(ul);
+    }
 
-	$ID("pfaSortButton").addEventListener("click", function () {
-		profiles.reverse();
-		this.innerText = this.innerText.includes("▲") ? "SORT ▼" : "SORT ▲";
-		renderTable(profiles, 1);
-	});
+    $ID("pfaSortButton").addEventListener("click", function () {
+        profiles.reverse();
+        this.innerText = this.innerText.includes("▲") ? "SORT ▼" : "SORT ▲";
+        renderTable(profiles, 1);
+    });
 
-	$ID("searchInput").addEventListener("input", function () {
-		const searchTerm = this.value.toLowerCase();
-		const filteredProfiles = profiles.filter(profile =>
-			Object.values(profile).some(value =>
-				value && value.toString().toLowerCase().includes(searchTerm)
-			)
-		);
-		renderTable(filteredProfiles, 1);
-	});
+    $ID("searchInput").addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase();
+        const filteredProfiles = profiles.filter(profile =>
+            Object.values(profile).some(value =>
+                value && value.toString().toLowerCase().includes(searchTerm)
+            )
+        );
+        renderTable(filteredProfiles, 1);
+    });
 
-	function dialog_pfa(ids) {
-		goto(`/mis-v4/core-profiling-form-a?fields=${ids}`);
-	}
+    function dialog_pfa(ids) {
+        goto(`/mis-v4/core-profiling-form-a?fields=${ids}`);
+    }
 </script>
 
 
-<!-- /////////////////////FOR EXPORT BUTTON///////////////////// -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script type="text/javascript">
-	function exportFormAData() {
-		// Redirect to the backend route to download the Excel file
-		window.location.href = '/export_form_a';
-	}
+    function exportFormAData() {
+        const exportButton = $ID('exportButton');
+        const exportButtonText = $ID('exportButtonText');
+        const loadingSpinner = $ID('loadingSpinner');
+
+        // Show loading spinner and disable button
+        exportButton.disabled = true;
+        exportButtonText.style.display = 'none';
+        loadingSpinner.style.display = 'inline-block';
+
+        fetch('/mis-v4/profiling-form-a/export')
+            .then(response => {
+                if (!response.ok) {
+                    // Handle HTTP errors (e.g., 404, 500)
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.blob(); // Get the response as a Blob
+            })
+            .then(blob => {
+                // Create a URL for the blob
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'dcf_form_a_exported_file.xlsx'; // Set the desired file name
+                document.body.appendChild(a);
+                a.click(); // Programmatically click the link to trigger the download
+                window.URL.revokeObjectURL(url); // Clean up the URL
+                a.remove(); // Remove the element
+                alert('Export completed! Your download should start shortly.');
+            })
+            .catch(error => {
+                console.error('There was a problem with the export operation:', error);
+                alert('Export failed. Please try again or contact support if the problem persists.');
+            })
+            .finally(() => {
+                // Hide loading spinner and enable button
+                exportButton.disabled = false;
+                exportButtonText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+            });
+    }
 </script>

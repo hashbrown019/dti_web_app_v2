@@ -351,8 +351,8 @@ def get_salesT_data():
         return jsonify({"status": "error", "message": str(e)}), 500
     
 #PROFILING FORM A------------------------------------------------------------------------------------------------
-@app.route('/export_form_a', methods=['GET'])
-@c.login_auth_web() # Use your actual login_auth_web decorator here
+@app.route("/mis-v4/profiling-form-a/export", methods=["GET"]) # Added this route
+@c.login_auth_web()
 def export_form_a():
     """
     Exports data from the 'excel_import_form_a' table to an Excel file.
@@ -683,11 +683,7 @@ def export_form_a():
             num_columns_in_df = len(df_chunk.columns)
             num_expected_headers = len(headers)
 
-            # If the number of columns from the query doesn't match the expected headers,
-            # we need to handle it. The primary fix is ensuring the `headers` list itself is correct.
-            # If there's still a mismatch, this block will attempt to align.
             if num_columns_in_df > num_expected_headers:
-                # If more columns are returned than expected, truncate the DataFrame
                 df_chunk = df_chunk.iloc[:, :num_expected_headers]
             elif num_columns_in_df < num_expected_headers:
                 # If fewer columns, add empty columns to match the header count
@@ -695,12 +691,9 @@ def export_form_a():
                 for _ in range(num_expected_headers - num_columns_in_df):
                     df_chunk[f'__placeholder_col_{_}'] = '' # Add temporary placeholder columns
                 # Reorder columns to match 'headers' list, taking care of original and new placeholder columns
-                # This line is critical for correct column alignment
                 df_chunk = df_chunk[headers[:num_columns_in_df] + [col for col in df_chunk.columns if col.startswith('__placeholder_col_')]]
 
-
             # Assign the correct headers to the DataFrame for consistent processing
-            # This line will now work correctly as num_columns_in_df should match len(headers)
             df_chunk.columns = headers
 
             # Write data rows from the DataFrame chunk to the worksheet
@@ -714,32 +707,34 @@ def export_form_a():
                     worksheet.write(row_num, col_num, display_value)
                 row_num += 1
 
-            # Adjust column widths based on the data in the current chunk.
-            # This can be computationally intensive for very large files if done for every chunk.
-            # For optimal performance, consider calculating max widths once after all data is loaded,
-            # or if not critical, remove this loop.
-            for idx, col_name in enumerate(df_chunk.columns):
-                header_length = len(str(col_name)) + 2
-                # Get max length of data in this column for the current chunk
-                data_max_length = df_chunk[col_name].astype(str).apply(len).max()
-                # Set column width, capping at 40 for readability
-                max_len = min(max(header_length, data_max_length), 40)
-                worksheet.set_column(idx, idx, max_len)
+            # --- OPTIMIZATION: Removed dynamic column width adjustment inside the loop ---
+            # This part was commented out because recalculating max widths for every chunk
+            # can be computationally intensive for very large files and contribute to timeouts.
+            # You can set a default width or calculate it once after all data is loaded
+            # if precise column widths are critical and performance allows.
+            # for idx, col_name in enumerate(df_chunk.columns):
+            #     header_length = len(str(col_name)) + 2
+            #     data_max_length = df_chunk[col_name].astype(str).apply(len).max()
+            #     max_len = min(max(header_length, data_max_length), 40)
+            #     worksheet.set_column(idx, idx, max_len)
 
             # Increment offset for the next chunk
             offset += chunk_size
 
             # Adaptive chunking logic (optional, helps optimize chunk size based on data density)
-            # Adjust chunk_size dynamically based on the number of rows returned in the chunk
-            # This helps to avoid fetching too much data at once or too little.
             if len(data_chunk) < chunk_size * 0.1 and chunk_size > 100:
-                # If very few rows were returned, decrease chunk size to be more granular
                 chunk_size = max(100, chunk_size - 100)
                 print(f"Decreasing chunk size to {chunk_size}")
             elif len(data_chunk) > chunk_size * 0.9 and chunk_size < 5000:
-                # If almost a full chunk, increase chunk size to fetch more data per query
                 chunk_size = min(5000, chunk_size + 100)
                 print(f"Increasing chunk size to {chunk_size}")
+
+        # Set column widths once after all data has been written (optional, but more efficient)
+        # You can uncomment and adjust this if you still need auto-sizing for columns.
+        # For very large datasets, consider setting a fixed width or using a subset of data
+        # to determine widths if performance is paramount.
+        for idx, header_text in enumerate(headers):
+            worksheet.set_column(idx, idx, 20) # Set a default width of 20 for all columns
 
         # Close the workbook to finalize the Excel file. This is crucial for xlsxwriter.
         workbook.close()
