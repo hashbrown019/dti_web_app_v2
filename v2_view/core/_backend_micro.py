@@ -13,11 +13,6 @@ from werkzeug.utils import secure_filename
 import threading
 from io import BytesIO
 
-EXPORT_TASKS = {}
-
-EXPORT_FOLDER = "exports"
-os.makedirs(EXPORT_FOLDER, exist_ok=True)
-
 app = Blueprint("_micro", __name__, template_folder='pages')
 rapid_mysql = mysql(*c.DB_CRED)
 
