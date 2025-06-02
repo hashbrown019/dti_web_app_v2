@@ -10,10 +10,16 @@ import os
 import json
 import uuid
 from werkzeug.utils import secure_filename
+import threading
+from io import BytesIO
+
+EXPORT_TASKS = {}
+
+EXPORT_FOLDER = "exports"
+os.makedirs(EXPORT_FOLDER, exist_ok=True)
 
 app = Blueprint("_micro", __name__, template_folder='pages')
 rapid_mysql = mysql(*c.DB_CRED)
-
 
 class _main:
     def __init__(self, arg):
@@ -29,7 +35,6 @@ class _main:
             values += f",'{request.form[ids]}' "
         res = rapid_mysql.do(f"INSERT {TABLE} ({coloumn[1:]}) VALUES ({values[1:]})")
         return jsonify(res)
-
 #--micro------------------------------------------------------------------------------------------------
     @app.route("/mis-v4-micro/test", methods=["POST", "GET"])
     @c.login_auth_web()
@@ -132,40 +137,14 @@ def delete_grievance_data(id):
 @app.route("/update_grievance_data/<int:id>", methods=["POST"])
 def update_grievance_data(id):
     try:
-        update_fields = []
-        
-        # Handle file upload if present
-        if 'grievance_image' in request.files:
-            file = request.files['grievance_image']
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                filepath = os.path.join(UPLOAD_FOLDER, filename)
-                file.save(filepath)
-                update_fields.append(f"`grievance_image` = '{url_for('static', filename=f'uploads/grievances/{filename}')}'")
-            elif file.filename == '': # No new file selected, but the input was present
-                pass # Do nothing, keep existing image path
-            else:
-                return jsonify({"status": "error", "message": "Invalid file type"}), 400
-        
-        # Process other form data
-        for key, value in request.form.items():
-            # Exclude the file input from this loop if already handled
-            if key == 'grievance_image':
-                continue
-            update_fields.append(f"`{key}` = '{value}'")
-        
-        # Add date_modified and created_by for update
-        update_fields.append(f"`date_modified` = '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}'")
-        if 'USER_DATA' in session:
-            update_fields.append(f"`created_by` = '{session['USER_DATA'][0]['id']}'")
-
-
-        if not update_fields:
-            return jsonify({"status": "error", "message": "No data provided for update"}), 400
-
-        query = f"UPDATE grievance SET {', '.join(update_fields)} WHERE Id = {id}"
+        data = request.json
+        if not data:
+            return jsonify({"status": "error", "message": "No data provided"}), 400
+        if not isinstance(data, dict):
+            return jsonify({"status": "error", "message": "Invalid data format"}), 400
+        update_fields = ", ".join([f"`{key}` = '{value}'" for key, value in data.items()])
+        query = f"UPDATE grievance SET {update_fields} WHERE Id = {id}"
         result = rapid_mysql.do(query)
-        
         if result is not None:  
             return jsonify({"status": "success", "message": "Record updated successfully"}), 200
         else:
@@ -351,15 +330,16 @@ def get_salesT_data():
         return jsonify({"status": "error", "message": str(e)}), 500
     
 #PROFILING FORM A------------------------------------------------------------------------------------------------
-@app.route("/mis-v4/profiling-form-a/export", methods=["GET"]) # Added this route
+
+@app.route("/start-export-form-a", methods=["POST"])
 @c.login_auth_web()
-def export_form_a():
-    """
-    Exports data from the 'excel_import_form_a' table to an Excel file.
-    It fetches data in chunks to manage memory and prevent gateway timeouts.
-    The generated Excel file is sent as an attachment.
-    """
-    query = ('''SELECT
+def start_export_form_a():
+    task_id = str(uuid.uuid4())
+    EXPORT_TASKS[task_id] = {"status": "processing"}
+
+    def background_task(task_id):
+        try:
+            query = ('''SELECT
             `excel_import_form_a`.`id`,
             `excel_import_form_a`.`user_id`,
             `excel_import_form_a`.`DEV_@_ID_@_ID`,
@@ -571,26 +551,28 @@ def export_form_a():
         LEFT JOIN users ON `excel_import_form_a`.`user_id` = `users`.`id`
     ''')
 
-    headers = [
-        "ID", "User ID", "DEV ID", "Full Name", "Sex",
+            data = rapid_mysql.select(query)
+            df = pd.DataFrame(data)
+
+            # Align headers
+            headers = ["ID", "User ID", "DEV @ ID @ ID", "Full Name", "Sex",
         "Mobile Number", "Email Address", "Birthday", "Birthday Not Sure",
         "Civil Status", "Is Head of Household", "Name of Household Head",
         "Head HH Name", "Head HH Relationship", "Head HH Sex", "Head HH PWD",
-        "Head HH OFW", "Head HH IP", "Farmer Longitude", "Farmer Latitude", "Farmer Region", "Farmer Province",
-        "Farmer City/Municipality", "Farmer Barangay", "Farmer Purok/Sitio/Street", "Farming Primary Crop",
-        "Farming DIP Name", "Farmer PWD Status", "Farmer OFW Status", "Farmer IP Status", "Years Farming",
-        "Name of Coop", "Position in Coop", "Coop Member Since", "Is Listed in RSBSA",
+        "Head HH OFW", "Head HH IP", "Longitude", "Latitude", "Region", "Province",
+        "City/Municipality", "Barangay", "Purok/Sitio/Street", "Primary Crop",
+        "DIP Name", "Farmer PWD", "Farmer OFW", "Farmer IP", "Years Farming",
+        "Name Coop", "Position in Coop", "Coop Mem Since", "Is Listed in RSBSA",
         "Highest Educational Attainment", "Vocational Skills", "Farm Longitude",
         "Farm Latitude", "Farm Region", "Farm Province", "Farm Municipality",
         "Farm Barangay", "Farm Street/Purok/Sitio", "Declared Area (Ha)",
-        "Is Intercropping", "Farm Primary Crop", "Slope Area (>18 Degrees) (Ha)",
-        "Flat Plain Area (Ha)", "No Bearing Trees Planted", "No Bearing Non-Trees Planted",
+        "Is Intercropping", "Primary Crop", "Slope Area (>18 Degrees) (Ha)",
+        "Flat Plain Area (Ha)", "No Bearing Trees Planted", "No Bearing Non-Trees",
         "Land Tenure - Sole Ownership", "Land Tenure - Co-Ownership",
-        "Land Tenure - CLOA Individual EP",
-        "Land Tenure - Stewardship",
+        "Land Tenure - CLOA Individual EP", "Land Tenure - Stewardship",
         "Land Tenure - Usufruct", "Land Tenure - Tenancy", "Land Tenure - Others",
         "Primary Crop Avg Prod Vol 2018-2019 (kg/cycle)", "Primary Crop Land Area Covered (Ha)",
-        "Primary Crop No Cycle", "Secondary Crop", "Secondary Crop Avg Prod Vol 2018-2019 (kg/cycle)",
+        "Primary Crop No Cycle", "Secondary Crop", "Secondary Crop Avg Prod Vol 2018-2019",
         "Secondary Crop Land Area Covered (Ha)", "Secondary Crop No Cycle",
         "Area for Expansion - Sloping", "Area for Expansion - Flat Plain",
         "Area for Rehabilitation - Sloping", "Area for Rehabilitation - Flat Plain",
@@ -621,8 +603,8 @@ def export_form_a():
         "Male Family Worker Income Yearly", "Female Family Worker Income Yearly",
         "Male Non-Family Worker Income Yearly", "Female Non-Family Worker Income Yearly",
         "PH Facility Type", "PH Equipment Name", "PH Facility Longitude",
-        "PH Facility Latitude", "PH Facility Region",
-        "PH Facility Province", "PH Facility City/Municipality", "PH Facility Street/Purok/Sitio",
+        "PH Facility Latitude", "PH Facility Region", "PH Facility Province",
+        "PH Facility City/Municipality", "PH Facility Street/Purok/Sitio",
         "PH Product Form", "PH Capacity Quantity", "PH Capacity Unit",
         "PH Capacity Frequency", "Sales Product Type", "Sales Product Delivery",
         "Distribution Point - Farmers Org", "Distribution Point - SME",
@@ -641,104 +623,82 @@ def export_form_a():
         "Source Medium Frequency", "Mobile Phone Type",
         "Support Needed to Improve Productivity", "Farmer Comments about RAPID",
         "Enumerator Remarks", "Others 1", "Others 2", "Others 3", "Others 4", "Others 5", "Others 6",
-        "Date Enumerated", "Enumerator Name", "Total Fam Female Workers", "Total Fam Male Workers",
-        "Total Non-Fam Female Workers", "Total Non-Fam Male Workers", "Access Crop Insurer Name",
+        "Date Enumerated", "Enumerator Name", "Total Fam Female", "Total Fam Male",
+        "Total Non-Fam Female", "Total Non-Fam Male", "Access Crop Insurer Name",
         "Intervention - Capacity Building", "Intervention - Expansion",
         "Intervention - Rehabilitation", "Intervention - Production Investment",
-        "Intervention - FMI", "File Name", "Uploaded By"
-    ]
+        "Intervention - FMI", "File Name", "Uploaded By"]
+            if len(df.columns) != len(headers):
+                df = df.iloc[:, :len(headers)]
+                df.columns = headers[:len(df.columns)]
 
-    try:
-        output = io.BytesIO()
-        # Use constant_memory=True to reduce peak memory usage for large files
-        workbook = xlsxwriter.Workbook(output, {'constant_memory': True})
-        worksheet = workbook.add_worksheet('dcf_form_a_exported_file')
+            # Convert problematic values to empty string
+            df = df.fillna('').astype(str).replace({'...': '', 'None': '', 'nan': ''})
 
-        # Define header format
-        header_format = workbook.add_format({
-            'bold': True, 'text_wrap': True, 'valign': 'vcenter', 'align': 'center',
-            'fg_color': '#00cc66', 'border': 1
-        })
+            # Create Excel in memory
+            output = BytesIO()
+            workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+            worksheet = workbook.add_worksheet('dcf_form_a_exported_file')
+            header_format = workbook.add_format({
+                'bold': True, 'text_wrap': True, 'valign': 'vcenter', 'align': 'center',
+                'fg_color': '#00cc66', 'border': 1
+            })
 
-        # Write headers to the first row
-        for col_num, header_text in enumerate(headers):
-            worksheet.write(0, col_num, header_text, header_format)
+            # Write headers
+            for col_num, header_text in enumerate(headers):
+                worksheet.write(0, col_num, header_text, header_format)
 
-        offset = 0
-        chunk_size = 500 # Number of rows to fetch per database query, adjusted to a safer initial value
-        row_num = 1 # Start writing data from the second row (after headers)
-
-        while True:
-            # Fetch data in chunks from the database
-            query_with_limit = query + f" LIMIT {chunk_size} OFFSET {offset}"
-            data_chunk = rapid_mysql.select(query_with_limit)
-
-            if not data_chunk:
-                # No more data, break the loop
-                break
-
-            df_chunk = pd.DataFrame(data_chunk)
-
-            # Ensure the number of columns in the DataFrame matches the expected headers
-            num_columns_in_df = len(df_chunk.columns)
-            num_expected_headers = len(headers)
-
-            if num_columns_in_df > num_expected_headers:
-                df_chunk = df_chunk.iloc[:, :num_expected_headers]
-            elif num_columns_in_df < num_expected_headers:
-                # If fewer columns, add empty columns to match the header count
-                for _ in range(num_expected_headers - num_columns_in_df):
-                    df_chunk[f'__placeholder_col_{_}'] = '' 
-                # Reorder columns to match 'headers' list
-                df_chunk = df_chunk[headers[:num_columns_in_df] + [col for col in df_chunk.columns if col.startswith('__placeholder_col_')]]
-
-            # Assign the correct headers to the DataFrame for consistent processing
-            df_chunk.columns = headers
-
-            # Write data rows from the DataFrame chunk to the worksheet
-            for row_data in df_chunk.itertuples(index=False, name=None):
+            # Write rows
+            for row_num, row_data in enumerate(df.itertuples(index=False, name=None), 1):
                 for col_num, cell_value in enumerate(row_data):
-                    # Convert all cell values to string to avoid xlsxwriter errors with mixed types
-                    # Handle None, NaT (Not a Time), and nan (Not a Number) values explicitly
-                    display_value = ""
-                    if cell_value is not None and str(cell_value).lower() not in ['nat', 'nan']:
-                        display_value = str(cell_value)
-                    worksheet.write(row_num, col_num, display_value)
-                row_num += 1
+                    worksheet.write(row_num, col_num, cell_value)
 
-            # Increment offset for the next chunk
-            offset += chunk_size
+            # Auto-size columns
+            for idx, col in enumerate(headers):
+                max_len = max(
+                    len(str(col)),
+                    df.iloc[:, idx].astype(str).str.len().max() if not df.empty else 0
+                )
+                worksheet.set_column(idx, idx, min(max_len + 2, 40))
 
-            # Adaptive chunking logic (optional, helps optimize chunk size based on data density)
-            if len(data_chunk) < chunk_size * 0.1 and chunk_size > 100:
-                chunk_size = max(100, chunk_size - 100)
-                print(f"Decreasing chunk size to {chunk_size}")
-            elif len(data_chunk) > chunk_size * 0.9 and chunk_size < 1500: # Max chunk size further reduced to 1500
-                chunk_size = min(1500, chunk_size + 100) # Max chunk size further reduced to 1500
-                print(f"Increasing chunk size to {chunk_size}")
-            
-            # Explicitly delete the DataFrame chunk to free up memory
-            del df_chunk
+            workbook.close()
+            output.seek(0)
 
-        # Set column widths once after all data has been written (optional, but more efficient)
-        for idx, header_text in enumerate(headers):
-            worksheet.set_column(idx, idx, 20) # Set a default width of 20 for all columns
+            # Save in-memory file to task store
+            EXPORT_TASKS[task_id] = {
+                "status": "complete",
+                "file_data": output.getvalue()
+            }
 
-        # Close the workbook to finalize the Excel file. This is crucial for xlsxwriter.
-        workbook.close()
-        # Rewind the BytesIO buffer to the beginning before sending
-        output.seek(0)
+        except Exception as e:
+            EXPORT_TASKS[task_id] = {"status": "failed", "error": str(e)}
 
-        # Send the generated Excel file as a response
-        return send_file(
-            output,
-            download_name="dcf_form_a_exported_file.xlsx",
-            as_attachment=True,
-            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
+    thread = threading.Thread(target=background_task, args=(task_id,))
+    thread.start()
 
-    except Exception as e:
-        # Log the error for debugging purposes
-        print(f"Error during Excel export: {e}")
-        # Return a generic error message to the user
-        return "An error occurred while generating the Excel file. Please try again later.", 500
+    return jsonify({"task_id": task_id})
+
+@app.route("/check-export-status/<task_id>", methods=["GET"])
+def check_export_status(task_id):
+    task = EXPORT_TASKS.get(task_id)
+    if not task:
+        return jsonify({"status": "not_found"})
+    # Exclude file_data from the response to avoid JSON serialization error
+    task_copy = dict(task)
+    if "file_data" in task_copy:
+        del task_copy["file_data"]
+    return jsonify(task_copy)
+
+@app.route("/download-exported-file/<task_id>", methods=["GET"])
+def download_exported_file(task_id):
+    task = EXPORT_TASKS.get(task_id)
+    if not task or task["status"] != "complete":
+        return jsonify({"error": "File not ready or invalid task"}), 400
+
+    file_data = BytesIO(task["file_data"])
+    return send_file(
+        file_data,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        download_name="dcf_form_a_exported_file.xlsx",
+        as_attachment=True
+    )
