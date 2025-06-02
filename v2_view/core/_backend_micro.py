@@ -1,6 +1,6 @@
 from datetime import date, datetime
 import io
-from flask import Blueprint, Response, render_template, request, session, redirect, jsonify, send_file
+from flask import Blueprint, Response, render_template, request, session, redirect, jsonify, send_file, url_for
 from flask_session import Session
 import pandas as pd
 import xlsxwriter
@@ -8,7 +8,8 @@ from modules.Connections import mysql, sqlite
 import Configurations as c
 import os
 import json
-
+import uuid
+from werkzeug.utils import secure_filename
 
 app = Blueprint("_micro", __name__, template_folder='pages')
 rapid_mysql = mysql(*c.DB_CRED)
@@ -28,6 +29,7 @@ class _main:
             values += f",'{request.form[ids]}' "
         res = rapid_mysql.do(f"INSERT {TABLE} ({coloumn[1:]}) VALUES ({values[1:]})")
         return jsonify(res)
+
 #--micro------------------------------------------------------------------------------------------------
     @app.route("/mis-v4-micro/test", methods=["POST", "GET"])
     @c.login_auth_web()
@@ -130,14 +132,40 @@ def delete_grievance_data(id):
 @app.route("/update_grievance_data/<int:id>", methods=["POST"])
 def update_grievance_data(id):
     try:
-        data = request.json
-        if not data:
-            return jsonify({"status": "error", "message": "No data provided"}), 400
-        if not isinstance(data, dict):
-            return jsonify({"status": "error", "message": "Invalid data format"}), 400
-        update_fields = ", ".join([f"`{key}` = '{value}'" for key, value in data.items()])
-        query = f"UPDATE grievance SET {update_fields} WHERE Id = {id}"
+        update_fields = []
+        
+        # Handle file upload if present
+        if 'grievance_image' in request.files:
+            file = request.files['grievance_image']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(filepath)
+                update_fields.append(f"`grievance_image` = '{url_for('static', filename=f'uploads/grievances/{filename}')}'")
+            elif file.filename == '': # No new file selected, but the input was present
+                pass # Do nothing, keep existing image path
+            else:
+                return jsonify({"status": "error", "message": "Invalid file type"}), 400
+        
+        # Process other form data
+        for key, value in request.form.items():
+            # Exclude the file input from this loop if already handled
+            if key == 'grievance_image':
+                continue
+            update_fields.append(f"`{key}` = '{value}'")
+        
+        # Add date_modified and created_by for update
+        update_fields.append(f"`date_modified` = '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}'")
+        if 'USER_DATA' in session:
+            update_fields.append(f"`created_by` = '{session['USER_DATA'][0]['id']}'")
+
+
+        if not update_fields:
+            return jsonify({"status": "error", "message": "No data provided for update"}), 400
+
+        query = f"UPDATE grievance SET {', '.join(update_fields)} WHERE Id = {id}"
         result = rapid_mysql.do(query)
+        
         if result is not None:  
             return jsonify({"status": "success", "message": "Record updated successfully"}), 200
         else:
@@ -157,7 +185,7 @@ def export_grievance_data():
         "Implementing Unit", "Address", "Mailing Address", "Guidance", "Confidential Means of Reception", "Confidential Identity", "Confidential Reason", "Raised Date",
         "Project Concern", "Staff Name", "Position", "Staff Contact", "Staff Implementing Unit", "Delegated Staff Name", 
         "Delegated Staff Implementing Unit", "Fact Finding Results", "Appeals",
-        "Settlement", "Status", "Timestamp Created", "Timestamp Modified", "Created By"
+        "Settlement", "Status", "Timestamp Created", "Timestamp Modified", "Created By", "Document Path" # Added Document Path
     ]
     user = session["USER_DATA"][0]
     user_id = user.get("id")
@@ -172,7 +200,7 @@ def export_grievance_data():
             "g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, g.`staff_name`, "
             "g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
             "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
-            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
+            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by`, g.`grievance_image` " # Added grievance_image
             "FROM grievance g "
             "INNER JOIN users u ON g.`created_by` = u.`id`"
         )
@@ -185,7 +213,7 @@ def export_grievance_data():
             "g.`confidentiality_identity`, g.`confidentiality_reason`, g.`complaint_raised_date`, g.`project_concern_description`, "
             "g.`staff_name`, g.`staff_position`, g.`staff_contact`, g.`staff_implementing_unit`, "
             "g.`delegated_staff_name`, g.`delegated_implementing_unit`, g.`fact_finding_results`, g.`appeals`, g.`settlement`, "
-            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by` "
+            "g.`grievance_status`, g.`date_created`, g.`date_modified`, u.`name` as `created_by`, g.`grievance_image` " # Added grievance_image
             "FROM grievance g "
             "INNER JOIN users u ON g.`created_by` = u.`id` "
             f"WHERE g.`created_by` = {int(user_id)}"
