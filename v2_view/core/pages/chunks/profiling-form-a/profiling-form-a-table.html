@@ -231,28 +231,7 @@
 
 <script type="text/javascript">
 	function exportFormAData() {
-    fetch('/start-export-form-a', {
-        method: 'POST',
-        credentials: 'include'
-    })
-    .then(res => res.json())
-    .then(data => {
-        const taskId = data.task_id;
-        if (!taskId) return alert("Failed to start export.");
-
-        const interval = setInterval(() => {
-            fetch(`/check-export-status/${taskId}`)
-                .then(res => res.json())
-                .then(status => {
-                    if (status.status === "complete") {
-                        clearInterval(interval);
-                        window.location.href = `/download-exported-file/${taskId}`;
-                    } else if (status.status === "failed") {
-                        clearInterval(interval);
-                        alert("Export failed: " + status.error);
-                    }
-                });
-        }, 3000); // Check every 3 seconds
-    });
-}
+		// Redirect to the backend route to download the Excel file
+		window.location.href = '/export_form_a';
+    }
 </script>

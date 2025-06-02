@@ -10,14 +10,9 @@ import os
 import json
 import uuid
 from werkzeug.utils import secure_filename
-import threading
-from io import BytesIO
-
-EXPORT_TASKS = {}
 
 app = Blueprint("_micro", __name__, template_folder='pages')
 rapid_mysql = mysql(*c.DB_CRED)
-
 class _main:
     def __init__(self, arg):
         super(_main, self).__init__()
@@ -27,11 +22,35 @@ class _main:
     def insert(TABLE):
         coloumn = ""
         values = ""
+
+        if TABLE == 'grievance' and 'grievance_image' in request.files:
+            file = request.files['grievance_image']
+            if file and allowed_file(file.filename):
+                ext = os.path.splitext(file.filename)[1]
+                filename = f"{uuid.uuid4()}{ext}"
+                filepath = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(filepath)
+
+                coloumn += ",`grievance_image`"
+                values += f",'{url_for('static', filename=f'uploads/grievances/{filename}')}'"
+            else:
+                return jsonify({"status": "error", "message": "Invalid file type or no file selected"}), 400
+
         for ids in request.form:
             coloumn += f",`{ids}`"
-            values += f",'{request.form[ids]}' "
+            values += f",'{request.form[ids]}'"
+
+        if TABLE == 'grievance' and 'created_by' not in request.form and 'USER_DATA' in session:
+            coloumn += ",`created_by`"
+            values += f",'{session['USER_DATA'][0]['id']}'"
+
         res = rapid_mysql.do(f"INSERT {TABLE} ({coloumn[1:]}) VALUES ({values[1:]})")
-        return jsonify(res)
+
+        if res:
+            return jsonify({"status": "success", "message": "Data inserted successfully", "result": res})
+        else:
+            return jsonify({"status": "error", "message": "Failed to insert data", "result": res}), 500
+
 #--micro------------------------------------------------------------------------------------------------
     @app.route("/mis-v4-micro/test", methods=["POST", "GET"])
     @c.login_auth_web()
@@ -134,14 +153,40 @@ def delete_grievance_data(id):
 @app.route("/update_grievance_data/<int:id>", methods=["POST"])
 def update_grievance_data(id):
     try:
-        data = request.json
-        if not data:
-            return jsonify({"status": "error", "message": "No data provided"}), 400
-        if not isinstance(data, dict):
-            return jsonify({"status": "error", "message": "Invalid data format"}), 400
-        update_fields = ", ".join([f"`{key}` = '{value}'" for key, value in data.items()])
-        query = f"UPDATE grievance SET {update_fields} WHERE Id = {id}"
+        update_fields = []
+        
+        # Handle file upload if present
+        if 'grievance_image' in request.files:
+            file = request.files['grievance_image']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(filepath)
+                update_fields.append(f"`grievance_image` = '{url_for('static', filename=f'uploads/grievances/{filename}')}'")
+            elif file.filename == '': # No new file selected, but the input was present
+                pass # Do nothing, keep existing image path
+            else:
+                return jsonify({"status": "error", "message": "Invalid file type"}), 400
+        
+        # Process other form data
+        for key, value in request.form.items():
+            # Exclude the file input from this loop if already handled
+            if key == 'grievance_image':
+                continue
+            update_fields.append(f"`{key}` = '{value}'")
+        
+        # Add date_modified and created_by for update
+        update_fields.append(f"`date_modified` = '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}'")
+        if 'USER_DATA' in session:
+            update_fields.append(f"`created_by` = '{session['USER_DATA'][0]['id']}'")
+
+
+        if not update_fields:
+            return jsonify({"status": "error", "message": "No data provided for update"}), 400
+
+        query = f"UPDATE grievance SET {', '.join(update_fields)} WHERE Id = {id}"
         result = rapid_mysql.do(query)
+        
         if result is not None:  
             return jsonify({"status": "success", "message": "Record updated successfully"}), 200
         else:
@@ -327,16 +372,10 @@ def get_salesT_data():
         return jsonify({"status": "error", "message": str(e)}), 500
     
 #PROFILING FORM A------------------------------------------------------------------------------------------------
-
-@app.route("/start-export-form-a", methods=["POST"])
+@app.route('/export_form_a', methods=['GET'])
 @c.login_auth_web()
-def start_export_form_a():
-    task_id = str(uuid.uuid4())
-    EXPORT_TASKS[task_id] = {"status": "processing"}
-
-    def background_task(task_id):
-        try:
-            query = ('''SELECT
+def export_form_a():
+    query = ('''SELECT
             `excel_import_form_a`.`id`,
             `excel_import_form_a`.`user_id`,
             `excel_import_form_a`.`DEV_@_ID_@_ID`,
@@ -548,11 +587,8 @@ def start_export_form_a():
         LEFT JOIN users ON `excel_import_form_a`.`user_id` = `users`.`id`
     ''')
 
-            data = rapid_mysql.select(query)
-            df = pd.DataFrame(data)
-
-            # Align headers
-            headers = ["ID", "User ID", "DEV @ ID @ ID", "Full Name", "Sex",
+    headers = [
+        "ID", "User ID", "DEV @ ID @ ID", "Full Name", "Sex",
         "Mobile Number", "Email Address", "Birthday", "Birthday Not Sure",
         "Civil Status", "Is Head of Household", "Name of Household Head",
         "Head HH Name", "Head HH Relationship", "Head HH Sex", "Head HH PWD",
@@ -624,78 +660,80 @@ def start_export_form_a():
         "Total Non-Fam Female", "Total Non-Fam Male", "Access Crop Insurer Name",
         "Intervention - Capacity Building", "Intervention - Expansion",
         "Intervention - Rehabilitation", "Intervention - Production Investment",
-        "Intervention - FMI", "File Name", "Uploaded By"]
-            if len(df.columns) != len(headers):
-                df = df.iloc[:, :len(headers)]
-                df.columns = headers[:len(df.columns)]
+        "Intervention - FMI", "File Name", "Uploaded By"
+    ]
+    def generate_excel_data():
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'constant_memory': True})
+        worksheet = workbook.add_worksheet('dcf_form_a_exported_file')
+        header_format = workbook.add_format({
+            'bold': True,'text_wrap': True,'valign': 'vcenter','align': 'center','fg_color': '#00cc66','border': 1
+        })
+        for col_num, header_text in enumerate(headers):
+            worksheet.write(0, col_num, header_text, header_format)
+        offset = 0
+        chunk_size = 1000
+        row_num = 1
+        adaptive_chunk = True 
+        while True:
+            try:
+                query_with_limit = query + f" LIMIT {chunk_size} OFFSET {offset}"
+                data_chunk = rapid_mysql.select(query_with_limit)
+                if not data_chunk:
+                    break
+                df_chunk = pd.DataFrame(data_chunk)
+                num_columns_in_df = len(df_chunk.columns)
+                num_expected_headers = len(headers)
 
-            # Convert problematic values to empty string
-            df = df.fillna('').astype(str).replace({'...': '', 'None': '', 'nan': ''})
+                if num_columns_in_df != num_expected_headers:
+                    print(
+                        f"Column count mismatch! DataFrame has {num_columns_in_df} columns, expected {num_expected_headers}."
+                    )
+                    if num_columns_in_df > num_expected_headers:
+                        df_chunk = df_chunk.iloc[:, :num_expected_headers]
+                    elif num_columns_in_df < num_expected_headers:
+                        local_headers = headers[:num_columns_in_df]
+                        df_chunk.columns = local_headers
+                    else:
+                        df_chunk.columns = headers
+                else:
+                    df_chunk.columns = headers
+                for row_data in df_chunk.itertuples(index=False, name=None):
+                    for col_num, cell_value in enumerate(row_data):
+                        worksheet.write(row_num, col_num, cell_value)
+                    row_num += 1
+                for idx, col in enumerate(df_chunk.columns):
+                    header_length = len(str(col)) + 2
+                    series = df_chunk[col].astype(str)
+                    data_max_length = series.apply(len).max()
+                    max_len = min(max(header_length, data_max_length), 40) 
+                    worksheet.set_column(idx, idx, max_len)
+                offset += chunk_size
+                yield output.getvalue()
+                output.seek(0)
+                output.truncate(0)
+                if adaptive_chunk:
+                    if len(df_chunk) < 100 and chunk_size > 500: 
+                        chunk_size -= 100
+                        print(f"Decreasing chunk size to {chunk_size}")
+                    elif len(df_chunk) > 900 and chunk_size < 3000:  
+                        chunk_size += 100
+                        print(f"Increasing chunk size to {chunk_size}")
+            except Exception as e:
+                print(f"Error during Excel data generation: {e}")
+                yield f"Error: {e}".encode()
+                break
 
-            # Create Excel in memory
-            output = BytesIO()
-            workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-            worksheet = workbook.add_worksheet('dcf_form_a_exported_file')
-            header_format = workbook.add_format({
-                'bold': True, 'text_wrap': True, 'valign': 'vcenter', 'align': 'center',
-                'fg_color': '#00cc66', 'border': 1
-            })
-
-            # Write headers
-            for col_num, header_text in enumerate(headers):
-                worksheet.write(0, col_num, header_text, header_format)
-
-            # Write rows
-            for row_num, row_data in enumerate(df.itertuples(index=False, name=None), 1):
-                for col_num, cell_value in enumerate(row_data):
-                    worksheet.write(row_num, col_num, cell_value)
-
-            # Auto-size columns
-            for idx, col in enumerate(headers):
-                max_len = max(
-                    len(str(col)),
-                    df.iloc[:, idx].astype(str).str.len().max() if not df.empty else 0
-                )
-                worksheet.set_column(idx, idx, min(max_len + 2, 40))
-
-            workbook.close()
-            output.seek(0)
-
-            # Save in-memory file to task store
-            EXPORT_TASKS[task_id] = {
-                "status": "complete",
-                "file_data": output.getvalue()
-            }
-
+        workbook.close()
+        yield output.getvalue()
+    def generate_response():
+        try:
+            return Response(
+                generate_excel_data(),
+                mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                headers={'Content-Disposition': 'attachment; filename=dcf_form_a_exported_file.xlsx'}
+            )
         except Exception as e:
-            EXPORT_TASKS[task_id] = {"status": "failed", "error": str(e)}
-
-    thread = threading.Thread(target=background_task, args=(task_id,))
-    thread.start()
-
-    return jsonify({"task_id": task_id})
-
-@app.route("/check-export-status/<task_id>", methods=["GET"])
-def check_export_status(task_id):
-    task = EXPORT_TASKS.get(task_id)
-    if not task:
-        return jsonify({"status": "not_found"})
-    # Exclude file_data from the response to avoid JSON serialization error
-    task_copy = dict(task)
-    if "file_data" in task_copy:
-        del task_copy["file_data"]
-    return jsonify(task_copy)
-
-@app.route("/download-exported-file/<task_id>", methods=["GET"])
-def download_exported_file(task_id):
-    task = EXPORT_TASKS.get(task_id)
-    if not task or task["status"] != "complete":
-        return jsonify({"error": "File not ready or invalid task"}), 400
-
-    file_data = BytesIO(task["file_data"])
-    return send_file(
-        file_data,
-        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        download_name="dcf_form_a_exported_file.xlsx",
-        as_attachment=True
-    )
+            print(f"Error creating response: {e}")
+            return "An error occurred while generating the Excel file.", 500 
+    return generate_response()
