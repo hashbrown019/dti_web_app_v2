@@ -22,35 +22,11 @@ class _main:
     def insert(TABLE):
         coloumn = ""
         values = ""
-
-        if TABLE == 'grievance' and 'grievance_image' in request.files:
-            file = request.files['grievance_image']
-            if file and allowed_file(file.filename):
-                ext = os.path.splitext(file.filename)[1]
-                filename = f"{uuid.uuid4()}{ext}"
-                filepath = os.path.join(UPLOAD_FOLDER, filename)
-                file.save(filepath)
-
-                coloumn += ",`grievance_image`"
-                values += f",'{url_for('static', filename=f'uploads/grievances/{filename}')}'"
-            else:
-                return jsonify({"status": "error", "message": "Invalid file type or no file selected"}), 400
-
         for ids in request.form:
             coloumn += f",`{ids}`"
-            values += f",'{request.form[ids]}'"
-
-        if TABLE == 'grievance' and 'created_by' not in request.form and 'USER_DATA' in session:
-            coloumn += ",`created_by`"
-            values += f",'{session['USER_DATA'][0]['id']}'"
-
+            values += f",'{request.form[ids]}' "
         res = rapid_mysql.do(f"INSERT {TABLE} ({coloumn[1:]}) VALUES ({values[1:]})")
-
-        if res:
-            return jsonify({"status": "success", "message": "Data inserted successfully", "result": res})
-        else:
-            return jsonify({"status": "error", "message": "Failed to insert data", "result": res}), 500
-
+        return jsonify(res)
 #--micro------------------------------------------------------------------------------------------------
     @app.route("/mis-v4-micro/test", methods=["POST", "GET"])
     @c.login_auth_web()
@@ -153,40 +129,14 @@ def delete_grievance_data(id):
 @app.route("/update_grievance_data/<int:id>", methods=["POST"])
 def update_grievance_data(id):
     try:
-        update_fields = []
-        
-        # Handle file upload if present
-        if 'grievance_image' in request.files:
-            file = request.files['grievance_image']
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                filepath = os.path.join(UPLOAD_FOLDER, filename)
-                file.save(filepath)
-                update_fields.append(f"`grievance_image` = '{url_for('static', filename=f'uploads/grievances/{filename}')}'")
-            elif file.filename == '': # No new file selected, but the input was present
-                pass # Do nothing, keep existing image path
-            else:
-                return jsonify({"status": "error", "message": "Invalid file type"}), 400
-        
-        # Process other form data
-        for key, value in request.form.items():
-            # Exclude the file input from this loop if already handled
-            if key == 'grievance_image':
-                continue
-            update_fields.append(f"`{key}` = '{value}'")
-        
-        # Add date_modified and created_by for update
-        update_fields.append(f"`date_modified` = '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}'")
-        if 'USER_DATA' in session:
-            update_fields.append(f"`created_by` = '{session['USER_DATA'][0]['id']}'")
-
-
-        if not update_fields:
-            return jsonify({"status": "error", "message": "No data provided for update"}), 400
-
-        query = f"UPDATE grievance SET {', '.join(update_fields)} WHERE Id = {id}"
+        data = request.json
+        if not data:
+            return jsonify({"status": "error", "message": "No data provided"}), 400
+        if not isinstance(data, dict):
+            return jsonify({"status": "error", "message": "Invalid data format"}), 400
+        update_fields = ", ".join([f"`{key}` = '{value}'" for key, value in data.items()])
+        query = f"UPDATE grievance SET {update_fields} WHERE Id = {id}"
         result = rapid_mysql.do(query)
-        
         if result is not None:  
             return jsonify({"status": "success", "message": "Record updated successfully"}), 200
         else:
