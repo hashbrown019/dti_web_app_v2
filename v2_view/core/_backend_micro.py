@@ -13,6 +13,8 @@ from werkzeug.utils import secure_filename
 import threading
 from io import BytesIO
 
+EXPORT_TASKS = {}
+
 app = Blueprint("_micro", __name__, template_folder='pages')
 rapid_mysql = mysql(*c.DB_CRED)
 
