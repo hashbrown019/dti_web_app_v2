@@ -9,62 +9,6 @@
 {% include "includes/sweetalert.html" %}
 
 <title>Form 5 Dashboard</title>
-<div class="right_col" role="main">
-  <!-- top tiles -->
-  <div class="row" style="display: inline-block;" >
-  			<div class="top_tiles">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form5}}</div>
-                  <h3>Total Entries</h3>
-                  <p>Total # of Entries.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form5male[0]['totalmale5']}}</div>
-                  <h3>Total Male</h3>
-                  <p>Total # of FO members by sex.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form5female[0]['totalfemale5']}} </div>
-                  <h3>Total Female</h3>
-                  <p>Total # of FO members by sex.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form5pwd[0]['totalpwd5']}}</div>
-                  <h3>Total PWD</h3>
-                  <p>Total # of FO members by sectoral group.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form5youth[0]['totalyouth5']}} </div>
-                  <h3>Total Youth</h3>
-                  <p>Total # of FO members by sectoral group.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form5ip[0]['totalip5']}} </div>
-                  <h3>Total IP</h3>
-                  <p>Total # of FO members by sectoral group.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form5sc[0]['totalsc5']}} </div>
-                  <h3>Total SC</h3>
-                  <p>Total # of FO members by sectoral group.</p>
-                </div>
-              </div>
-            </div>
-		</div>
-<!-- /top tiles -->
 
 <div class="row">
 	<div class="col-md-4 col-sm-4 ">
@@ -443,6 +387,19 @@
 			}
 		}
 
+		function scrollParentToframeCenter(){
+			// Scroll parent to center of the iframe
+			if (window.parent && window.frameElement) {
+				const iframeRect = window.frameElement.getBoundingClientRect();
+				const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+				const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+				window.parent.scrollTo({
+					top: centerY,
+					behavior: 'smooth'
+				});
+			}
+		}
+
 		function showLoadingAndRedirect(id, table, form) {
 			Swal.fire({
 				title: 'Loading...',
@@ -451,6 +408,7 @@
 				allowEscapeKey: false,
 				showConfirmButton: false,
 				didOpen: () => {
+					scrollParentToframeCenter();
 					Swal.showLoading();
 					setTimeout(() => {
 						window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
@@ -461,29 +419,36 @@
 
 		function showDeleteConfirmation(id) {
 			swalWithCustomButtons.fire({
-			  title: 'Are you sure?',
-			  text: "You won't be able to revert this!",
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonText: 'Yes, delete it!',
-			  cancelButtonText: 'No, cancel',
-			  reverseButtons: true,
-			  customClass: {
-				confirmButton: 'btn btn-success',
-				cancelButton: 'btn btn-danger',
-			},
-		}).then((result) => {
-		  if (result.isConfirmed) {
-			window.location.href = `/delete_record/dcf_matching_grant/${id}`;
-		} else if (result.dismiss === Swal.DismissReason.cancel) {
-			swalWithCustomButtons.fire(
-			  'Cancelled',
-			  'Your record is safe',
-			  'error'
-			  );
+				title: 'Are you sure?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, delete it!',
+				cancelButtonText: 'No, cancel',
+				reverseButtons: true,
+				position: 'center',
+				didOpen: () => {
+					scrollParentToframeCenter();
+				},
+				customClass: {
+					confirmButton: 'btn btn-success',
+					cancelButton: 'btn btn-danger',
+				},
+			}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.href = `/delete_record/dcf_matching_grant/${id}`;
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				swalWithCustomButtons.fire({
+				title: 'Cancelled',
+				text: 'Your record is safe',
+				icon: 'error',
+				position: 'center',
+				didOpen: () => {
+					scrollParentToframeCenter();
+				}
+			});
 		}
-	});
-
+		});
 		return false;
 	}
 
@@ -663,7 +628,6 @@
 <!-- End to do list -->
 
 <!-- end of weather widget -->
-</div>
 </div>
 </div>
 </div>

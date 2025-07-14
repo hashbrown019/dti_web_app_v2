@@ -1,3 +1,4 @@
+from logging import Filter
 import Configurations as c 
 from flask import Flask, Blueprint,request, flash, render_template, url_for,redirect, session,send_file, jsonify
 from decimal import Decimal
@@ -77,6 +78,35 @@ def dcf_dashboard_embed():
 	form_disp = display_dataform.displayform()
 	return render_template("dcf_dashboard_embed.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
+@app.route('/api/get_dip_names_by_region', methods=['GET'])
+def get_dip_names_by_region():
+	try:
+		region = request.args.get('region')
+		if not region:
+			return jsonify([])
+		if region.isdigit():
+			region_filter = f"CAST(form_1_rcus AS UNSIGNED) = {int(region)}"
+		else:
+			region_filter = f"form_1_rcus = '{region}'"
+		query = f"""
+			SELECT form_1_name_dip FROM dcf_prep_review_aprv_status WHERE {region_filter} AND form_1_name_dip IS NOT NULL AND TRIM(form_1_name_dip) != '' GROUP BY form_1_name_dip ORDER BY form_1_name_dip ASC
+		"""
+		result = db.select(query)
+		if not isinstance(result, list):
+			print("DIP query error or no result:", result)
+			return jsonify([])
+		dip_data = []
+		for row in result:
+			if isinstance(row, dict):
+				dip_data.append({'form_1_name_dip': row.get('form_1_name_dip', '')})
+			else:
+				dip_data.append({'form_1_name_dip': row[0]})
+		return jsonify(dip_data)
+	except Exception as e:
+		print(f"Error fetching DIP names for region {region}: {e}")
+		return jsonify({"error": "Error fetching DIP names"}), 500
+
+
 @app.route('/api/get_dip_names', methods=['GET'])
 def get_dip_names():
     try:
@@ -94,7 +124,7 @@ def get_msme_names():
         query = "SELECT DISTINCT reg_businessname FROM form_c WHERE reg_businessname IS NOT NULL AND TRIM(reg_businessname) != '';"
         result = db.select(query)
         msme_names = sorted({row['reg_businessname'].strip() for row in result if row['reg_businessname'].strip()})
-        msme_names = [{'reg_businessname': name} for name in msme_names]
+        msme_names = [dict(reg_businessname=row['reg_businessname']) for row in result]
         return jsonify(msme_names)
     except Exception as e:
         print(f"Error fetching MSME names: {e}")
@@ -102,13 +132,14 @@ def get_msme_names():
 
 @app.route('/api/get_fo_names', methods=['GET'])
 def get_fo_names():
-    query = "SELECT organization_registered_name FROM form_b ;"
-    result = db.select(query)
-    print(result)
-    # dip_names = [dict(form_1_name_dip=row['form_1_name_dip']) for row in result]
-    fo_names = result
-    return jsonify(fo_names)
-		
+	try:
+		query = "SELECT organization_registered_name FROM form_b ;"
+		result = db.select(query)
+		fo_names = [dict(organization_registered_name=row['organization_registered_name']) for row in result]
+		return jsonify(fo_names)
+	except Exception as e:
+		print(f"Error fetching DIP names: {e}")
+		return jsonify({"error": "Error fetching FO names"}), 500
 
 @app.route('/form1_dashboard')
 @c.login_auth_web()
@@ -1667,7 +1698,7 @@ def export_form2():
     query = '''
         SELECT 
             dcf.id, dcf.form_2_name_dip, dcf.form_2_rcus, dcf.form_2_pcu,
-            CONCAT(dcf.form_2_commodity, ', ', dcf.form_2_commodity_others) AS Commodity,
+            CONCAT(dcf.form_2_commodity, ', ', dcf.form_2_commodity_others) AS Commodity, dcf.form_2_types_of_agreements, dcf.form_2_types_of_market,
             CONCAT(dcf.form_2_dip_alignment, ', ', dcf.form_2_dip_alignment_yes) AS dip_alignment,
             dcf.form_2_name_owner_manager, dcf.form_2_sex_owner_manager, dcf.form_2_sector_owner_manager,
             dcf.form_2_businessname, dcf.form_2_business_owner_manager, dcf.form_2_partner_fo_engaged,
@@ -1686,7 +1717,7 @@ def export_form2():
     df = pd.DataFrame(data)
 
     headers = [
-        'ID', 'Name of DIP', 'RCUs', 'PCUs', 'Commodity', 'DIP Alignment', 'Name of Owner/Manager of the Anchor Firm/MSMEs',
+        'ID', 'Name of DIP', 'RCUs', 'PCUs', 'Commodity', 'Types of Agreements', 'Types of Market', 'DIP Alignment', 'Name of Owner/Manager of the Anchor Firm/MSMEs',
         'Sex of Owner/Manager', 'Sector of Owner/Manager', 'Business Name', 'Business Address of Owner/Manager',
         'Name of Partner FOs Engaged', 'Chairperson/Manager of Partner FO', 'Sex of Chairperson/Manager',
         'Sector of Chairperson/Manager', 'Office Address/Province of FO', 'Total # of FO Members',

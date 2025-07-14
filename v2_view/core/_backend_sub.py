@@ -1,11 +1,15 @@
+from ast import pattern
+import random
+import string
 from modules.Connections import mysql,sqlite
 import Configurations as c
-from flask import session, send_file
+from flask import jsonify, request, session, send_file, redirect
 from modules.Req_Brorn_util import file_from_request
 from werkzeug.datastructures import MultiDict 
 import json, os
-from flask import redirect
-
+import re
+import hashlib, time
+import re
 # from v2_view.core import _socketIO
 
 rapid_mysql = mysql(*c.DB_CRED)
@@ -20,49 +24,293 @@ class user_pofile:
 	def __init__(self):
 		super(user_pofile, self).__init__()
 
+	@staticmethod
+	def validate_input(field_name, field_value):
+
+		field_value = field_value.strip()
+
+		if not field_value:
+			return False, "", f"{field_name} cannot be empty"
+
+		validation_rules = {
+			'name': {
+				'pattern': r'^[a-zA-Z0-9\s\-\.]{2,50}$',
+				'description': 'Name can only contain letters, numbers, spaces, hyphens, and dots (2-50 characters)'
+			},
+			'username': {
+				'pattern': r'^[a-zA-Z0-9_]{3,20}$',
+				'description': 'Username can only contain letters, numbers, and underscores (3-20 characters)'
+			},
+			'email': {
+				'pattern': r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+				'description': 'Please enter a valid email address (e.g., name@domain.com)'
+			},
+			'password': {
+				'pattern': r'^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};\':"\\|,.<>\/?]{5,100}$',
+				'description': 'Password must be 5-100 characters long and contain only allowed special characters'
+			},
+			'phone': {
+				'pattern': r'^[0-9+\-\s()]{10,15}$',
+				'description': 'Phone number can only contain digits, +, -, spaces, and parentheses (10-15 characters)'
+			},
+			'mobile': {
+				'pattern': r'^[0-9+\-\s()]{10,15}$',
+				'description': 'Mobile number can only contain digits, +, -, spaces, and parentheses (10-15 characters)'
+			},
+			'address': {
+				'pattern': r'^[a-zA-Z0-9\s\-\.,#]{5,200}$',
+				'description': 'Address can contain letters, numbers, spaces, hyphens, dots, commas, and # (5-200 characters)'
+			},
+			'job': {
+				'pattern': r'^[a-zA-Z0-9\s&\-\.]{2,50}$',
+				'description': 'Job title can contain letters, numbers, spaces, hyphens, dots, and ampersands (2-50 characters)'
+			},
+			'pcu': {
+				'pattern': r'^[a-zA-Z0-9\s\-\.]{2,50}$',
+				'description': 'PCU can only contain letters, numbers, spaces, hyphens, and dots (2-50 characters)'
+			},
+			'rcu': {
+				'pattern': r'^[a-zA-Z0-9\s\-\.]{2,50}$',
+				'description': 'RCU can only contain letters, numbers, spaces, hyphens, and dots (2-50 characters)'
+			}
+		}
+		print(f"Validating {field_name}: {field_value}")
+
+		# Dangerous pattern check
+		dangerous_patterns = [
+			r'https?:\/\/',                                   # Block http://, https://
+			r'ftp:\/\/',                                      # Block ftp links
+			r'(\/|\\){2,}',                                   # Block repeated slashes
+			r'\.\.',                                          # Block path traversal
+			r'\b(select|insert|update|delete|drop|create|alter|union)\b',  # SQL keywords
+			r'\b(exec|eval|system|shell)\b',                  # Code execution
+			r'\b(script|javascript|vbscript)\b',              # Script injection
+			r'\.(php|asp|aspx|jsp|exe|sh|bat|cmd)\b',         # Dangerous file extensions
+			r'[<>]', r'[{}]', r'[\[\]]',                      # Code-related brackets
+			r'[|&;`]',                                        # Shell/meta characters
+			r'[\r\n]',                                        # Email header injection attempt
+		]
+
+		safe_fields_allowing_amp = {'job'}  # You can expand this as needed
+
+		for pattern in dangerous_patterns:
+			if pattern == r'[|&;`]':
+				if field_name in safe_fields_allowing_amp:
+					continue  # Allow these characters in safe fields
+			if re.search(pattern, field_value, re.IGNORECASE):
+				return False, "", f"{field_name} contains invalid or dangerous input (matched: {pattern})"
+
+		# Apply field-specific validation
+		if field_name in validation_rules:
+			rule = validation_rules[field_name]
+			if not re.match(rule['pattern'], field_value):
+				return False, "", f"{field_name}: {rule['description']}"
+
+		# Fallback length safety
+		if len(field_value) > 200:
+			return False, "", f"{field_name} is too long (maximum 200 characters)"
+
+		return True, field_value, ""
+	
+	@staticmethod
+	def verify_hash_token(user_agent, timestamp, received_hash, allowed_delay=180):
+		print("User Agent:", user_agent)
+		print("Timestamp:", timestamp)
+		print("Received Hash:", received_hash)
+
+		try:
+			timestamp = int(timestamp)
+			now = int(time.time() * 1000)
+			if now - timestamp > allowed_delay * 1000:
+				print("Form expired. Please refresh and try again.")
+				return False, "Form expired. Please refresh and try again."
+
+			expected_input = f"{user_agent}|{timestamp}"
+			expected_hash = hashlib.sha256(expected_input.encode('utf-8')).hexdigest()
+			print("Expected Hash:", expected_hash)
+
+			if expected_hash != received_hash:
+				print("Invalid hash token.")
+				return False, "Invalid hash token."
+
+			return True, ""
+		except Exception as e:
+			print("Error:", str(e))
+			return False, "Hash verification failed."
+
+	def user_registration_submit(req):
+		try:
+			data = dict(req.form)
+			
+			# Verify CAPTCHA first
+			user_input = request.form.get('captcha_input', '').strip().upper()
+			captcha_session = session.get('captcha_text', '')
+
+			if user_input != captcha_session:
+				session['captcha_text'] = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+				return {"error": "CAPTCHA is incorrect. Please try again."}
+
+			# If CAPTCHA is valid, proceed with hash token verification
+			user_agent = req.form.get('user_agent', '')
+			timestamp = req.form.get('timestamp', '')
+			received_hash = req.form.get('hash_token', '')
+			valid_token, token_error = user_pofile.verify_hash_token(user_agent, timestamp, received_hash)
+			if not valid_token:
+				return {"error": token_error}
+
+			# Validate required fields
+			required_fields = {'name', 'email', 'password', 'username'}
+			allowed_fields = {'name', 'email', 'password', 'phone', 'address', 'job', 'username', 'pcu', 'rcu', 'mobile'}
+			
+			missing_fields = required_fields - set(data.keys())
+			if missing_fields:
+				return jsonify({"success": False, "message": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+			
+			# Validate each field
+			validated_data = {}
+			for field_name, field_value in data.items():
+				if field_name not in allowed_fields:
+					continue
+					
+				is_valid, cleaned_value, error_message = user_pofile.validate_input(field_name, field_value)
+				
+				if not is_valid:
+					print(f"Invalid input for {field_name}: {field_value}")
+					return jsonify({"success": False, "message": error_message}), 400
+				
+				validated_data[field_name] = cleaned_value
+			
+			# Check for existing email/username
+			existing_email = rapid_mysql.select(
+				"SELECT id FROM `users` WHERE `email` = %s", 
+				[validated_data['email']]
+			)
+
+			existing_username = rapid_mysql.select(
+				"SELECT id FROM `users` WHERE `username` = %s", 
+				[validated_data['username']]
+			)
+
+			if existing_email:
+				return jsonify({"success": False, "message": "Email already registered"}), 400
+			
+			if existing_username:
+				return jsonify({"success": False, "message": "Username already taken"}), 400
+			
+			# Build and execute SQL
+			columns = []
+			placeholders = []
+			values = []
+			
+			for field_name, field_value in validated_data.items():
+				columns.append(f"`{field_name}`")
+				placeholders.append("%s")
+				values.append(field_value)
+			
+			columns.append("`status`")
+			placeholders.append("%s")
+			values.append("pending")
+			
+			sql = f"INSERT INTO `users` ({', '.join(columns)}) VALUES ({', '.join(placeholders)})"
+			
+			try:
+				result = rapid_mysql.do(sql, values)
+				return jsonify({
+					"success": True, 
+					"message": "Registration successful!",
+					"redirect": "/login"  # Frontend will handle redirect
+				})
+			except Exception as e:
+				print(f"Database error: {str(e)}")
+				return jsonify({"success": False, "message": "Registration failed. Please try again."}), 500
+
+		except Exception as e:
+			print(f"Unexpected error: {str(e)}")
+			return jsonify({"success": False, "message": "An unexpected error occurred"}), 500
+
 	def edit_user_profile(req):
 		data = dict(req.form)
-		key = [];val = [];args=""
-		is_exist = len(rapid_mysql.select("SELECT * FROM `users` WHERE `id` ='{}' ;".format(req.form['id'])))
-		if(is_exist==0):
-			for datum in data:
-				# print(datum)
-				key.append("`{}`".format(datum))
-				val.append("'{}'".format(data[datum]))
-			sql = ('''INSERT INTO `users` ({},`status`) VALUES ({},'pending');'''.format(", ".join(key),", ".join(val)))
-		else:
-			for datum in data:
-				args += ",`{}`='{}'".format(datum,data[datum])
-			sql = "UPDATE `users` SET  {}  WHERE `id`='{}';".format(args[1:],req.form['id'])
-		last_row_id = rapid_mysql.do(sql)
-		return last_row_id
-		# return redirect("/logout")
+		user_id = data.get('id')
 		
-	def user_registration_submit(req):
-		data = dict(req.form)
-		key = [];val = [];args="";
-		# res_email = len(rapid_mysql.do("SELECT * FROM `users` WHERE `email`='{}';".format(req.form['email']) ))
-		# res_name = len(rapid_mysql.do("SELECT * FROM `name` WHERE `email`='{}';".format(req.form['name']) ))
+		if not user_id:
+			return {"error": "User ID is required"}
 		
-		for datum in data:
-			# print(datum)
-			key.append("`{}`".format(datum))
-			val.append("'{}'".format(data[datum]))
-		sql = ('''INSERT INTO `users` ({},`status`) VALUES ({},'pending');'''.format(", ".join(key),", ".join(val)))
-		_res = rapid_mysql.do(sql)
-		return _res
+		# Validate user_id is numeric
+		if not re.match(r'^\d+$', str(user_id)):
+			return {"error": "Invalid user ID"}
+		
+		# Check if user exists
+		is_exist = rapid_mysql.select(
+			"SELECT * FROM `users` WHERE `id` = %s",
+			[user_id]
+		)
+		
+		if not is_exist:
+			return {"error": "User not found"}
+		
+		# Define allowed fields for update (excluding sensitive fields)
+		allowed_fields = {'name', 'phone', 'address', 'job', 'pcu', 'rcu', 'mobile','email', 'username'}
+		
+		# Validate each field
+		validated_data = {}
+		for field_name, field_value in data.items():
+			if field_name == 'id':
+				continue  # Skip ID field
+			
+			if field_name not in allowed_fields:
+				continue  # Skip unknown fields
+				
+			# Validate the field
+			is_valid, cleaned_value, error_message = user_pofile.validate_input(field_name, field_value)
 
+			
+			if not is_valid:
+				return {"error": error_message}
+			
+			validated_data[field_name] = cleaned_value
+		
+		if not validated_data:
+			return {"error": "No valid fields to update"}
+		
+		# Build UPDATE query
+		set_clauses = []
+		values = []
+		
+		for field, value in validated_data.items():
+			set_clauses.append(f"`{field}` = %s")
+			values.append(value)
+		
+		values.append(user_id)  # For WHERE clause
+		
+		sql = f"UPDATE `users` SET {', '.join(set_clauses)} WHERE `id` = %s"
+		
+		try:
+			rapid_mysql.do(sql, values)
+			return {"success": True, "message": "Profile updated successfully"}
+		except Exception as e:
+			return {"error": f"Database error: {str(e)}"}
+	
 	def edit_user_profilepic(req):
-		__f = FILE_REQ.save_file_from_request(req,"profilepic",c.RECORDS+"/objects/userpics/",False,True)
-		sql = "UPDATE `users` SET  `profilepic`= '{}' WHERE `id`='{}';".format(__f["file_arr_str"],req.form['id'])
-		rapid_mysql.do(sql)
+		__f = FILE_REQ.save_file_from_request(req, "profilepic", c.RECORDS + "/objects/userpics/", False, True)
+		profilepic = __f["file_arr_str"]
+		user_id = req.form.get('id')
+		if not user_id:
+			return {"error": "User ID is required"}
+		sql = "UPDATE `users` SET `profilepic` = %s WHERE `id` = %s;"
+		rapid_mysql.do(sql, [profilepic, user_id])
 		return __f
 
 	def edit_user_profilepass(req):
-		sql = "UPDATE `users` SET  `password`= '{}' WHERE `id`='{}' and `password`='{}';".format(req.form['password'],req.form['id'],req.form['current_pass'])
-		last_row=rapid_mysql.do(sql)
-		print(last_row)
-		return "--"
+		new_password = req.form.get('password')
+		user_id = req.form.get('id')
+		current_pass = req.form.get('current_pass')
+		if not all([new_password, user_id, current_pass]):
+			return {"error": "Missing required fields"}
+		sql = """UPDATE `users` SET `password` = %s WHERE `id` = %s AND `password` = %s;"""
+		result = rapid_mysql.do(sql, [new_password, user_id, current_pass])
+		if isinstance(result, dict) and 'error' in result:
+			return {"error": "Failed to update password"}
+		return {"success": True, "rows_affected": result}
 
 # ================================================
 # ================================================

@@ -7,8 +7,7 @@
 {% include "includes/sweetalert.html" %}
 
 <title>Form 1</title>
-	<div class="right_col" role="main">
-		<div class="row">
+
 	<div class="col-md-12 col-sm-12 x-card  x-light-grey">
 		<center>
 			<h2 class=" text-white  x-padding" style="background-color: #007399;">FORM 1 - PREPARATION, PREVIEW AND APPROVAL STATUS</h2>
@@ -30,7 +29,7 @@
 				<div class="x-padding">
 					<div class="x-col l4  x-padding">
 						<label class="">RCUs:</label>
-						<select class="FORM1_FIELDx-border x-select x-border" id="form_1_rcus" name="form_1_rcus"><br>
+						<select class="FORM1_FIELD x-border x-select x-border" id="form_1_rcus" name="form_1_rcus"><br>
 							<option value="">Choose your option</option>
 							<option value="8">Region Vlll - Eastern Visayas</option>
 							<option value="9">Region lX - Zamboanga Peninsula</option>
@@ -47,16 +46,7 @@
 						</div> -->
 					<div class="x-col l4  x-padding">
 						<label><span style="color: #007399;" class="tool" data-tip="DIP name format: Region<space>DIP Name (ex. R8 SC Global)" tabindex="1"><i class="fa fa-info-circle"></i></span>  Name of DIP:</label>
-						<!-- <input class="FORM1_FIELD  x-input x-border " id="form_1_name_dip" type="text" name="form_1_name_dip"
-							placeholder="" required x-required> -->
-						
-						<!-- <select onchange="renewal_field(this)" class="FORM1_FIELD x-border x-select x-border" id="form_1_name_dip" name="form_1_name_dip" required><br>
-		                    <option value="initial">DIP</option>
-		                    {% for entry in all_form_data %}
-		                        <option value="{{entry['id']}}">RAPID_CPA_{{entry['id']}} | {{entry['form_2_businessname']}}</option>
-		                    {% endfor %}
-		                </select> -->
-		                <select class="FORM1_FIELD x-input x-border" name="form_1_name_dip" id="form_1_name_dip">
+		                <select class="FORM1_FIELD x-input x-select x-border" name="form_1_name_dip" id="form_1_name_dip">
 							<option value="">Choose your option</option>
 						</select>
 					</div>
@@ -83,7 +73,7 @@
 										selectElement.appendChild(option);
 									});
 								})
-								.catch(error => console.error('Error fetching DIP names:', error));
+								.catch(error => console.error('Error fetching MSME names:', error));
 						}
 						// Wait for the full page load before executing the script
 						populateDipNames().then(() => {});
@@ -93,14 +83,13 @@
 						<label><span style="color: #007399;" class="tool" data-tip="Full Name of Main Anchor Firm based on official business registration (ex. SC Global Coco Products Inc. ) Add comma and <space> for multiple entries (ex. SC Global Coco Products Inc., Nestle Philippines " tabindex="1"><i class="fa fa-info-circle"></i></span> Anchor Firm:</label>
 						<!-- <input class="FORM1_FIELD  x-input x-border" id="form_1_anchor_firm" type="text" name="form_1_anchor_firm"
 							placeholder=""> -->
-						<select class="FORM1_FIELD x-input x-border" name="form_1_anchor_firm" id="form_1_anchor_firm">
+						<select class="FORM1_FIELD x-input x-select x-border" name="form_1_anchor_firm" id="form_1_anchor_firm">
 							<option value="">Choose your option</option>
 						</select>
 					</div>
-
-
+					
 					<script>
-						function populateMSMENames() {
+						function populateMSMENames(existingAnchorFirmValue) {
 							return fetch('/api/get_msme_names')
 								.then(response => {
 									if (!response.ok) {
@@ -110,23 +99,28 @@
 								})
 								.then(data => {
 									const selectElement = document.getElementById('form_1_anchor_firm');
-									println(data)
+					
 									// Clear existing options to prevent duplication
 									selectElement.innerHTML = '<option value="">Choose your option</option>';
+				
 									data.forEach(item => {
 										const option = document.createElement('option');
-										if(item.reg_businessname != "" || item.reg_businessname != " " || item.reg_businessname != undefined ){
-											option.value = item.reg_businessname;
-											option.textContent = item.reg_businessname;
-											selectElement.appendChild(option);
-										}
+										option.value = item.reg_businessname;
+										option.textContent = item.reg_businessname;
+										selectElement.appendChild(option);
 									});
+
+									// If an existing value is provided, set it as selected
+									if (existingAnchorFirmValue) {
+										selectElement.value = existingAnchorFirmValue;
+									}
 								})
-								.catch(error => console.error('Error fetching DIP names:', error));
-							}
+								.catch(error => console.error('Error fetching MSME names:', error));
+						}
+
 						// Wait for the full page load before executing the script
 						populateMSMENames().then(() => {});
-				</script>
+					</script>
 			
 				</div>
 

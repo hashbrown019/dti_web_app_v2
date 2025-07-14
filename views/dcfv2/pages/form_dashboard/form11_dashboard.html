@@ -9,7 +9,6 @@
 {% include "includes/sweetalert.html" %}
 <title>Form 11 Dashboard</title>
 
-<div class="right_col" role="main">
   <!-- top tiles -->
         <div class="row" style="display: inline-block;" >
           	<div class="top_tiles">
@@ -375,6 +374,19 @@
 			});
 		} 
 	}
+
+		function scrollParentToIframeCenter() {
+			if (window.parent && window.frameElement){
+				const iframeRect = window.frameElement.getBoundingClientRect();
+				const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+				const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+				window.parent.scrollTo({
+					top : centerY,
+					behavior: 'smooth'
+				});
+			}
+		}
+
 		function showLoadingAndRedirect(id, table, form) {
 			Swal.fire({
 				title: 'Loading...',
@@ -383,6 +395,7 @@
 				allowEscapeKey: false,
 				showConfirmButton: false,
 				didOpen: () => {
+					scrollParentToIframeCenter();
 					Swal.showLoading();
 					setTimeout(() => {
 						window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
@@ -400,6 +413,10 @@
 			  confirmButtonText: 'Yes, delete it!',
 			  cancelButtonText: 'No, cancel',
 			  reverseButtons: true,
+			  position: 'center',
+			  didOpen: () => {
+				scrollParentToIframeCenter();
+			  },
 			  customClass: {
 				confirmButton: 'btn btn-success',
 				cancelButton: 'btn btn-danger',
@@ -408,15 +425,19 @@
 		  if (result.isConfirmed) {
 			window.location.href = `/delete_record/dcf_access_financing/${id}`;
 		} else if (result.dismiss === Swal.DismissReason.cancel) {
-			swalWithCustomButtons.fire(
-			  'Cancelled',
-			  'Your record is safe',
-			  'error'
-			  );
+			swalWithCustomButtons.fire({
+			  title: 'Cancelled',
+			  text: 'Your record is safe',
+			  icon: 'error',
+			  position: 'center',
+			  didOpen: () => {
+				scrollParentToIframeCenter();
+			  },
+			});
 		}
 	});
-		return false;
-	}
+	return false;
+}
 
 	const swalWithCustomButtons = Swal.mixin({
 		customClass: {
@@ -601,7 +622,6 @@
 </div>
 <!-- End to do list -->
 <!-- end of weather widget -->
-</div>
 </div>
 </div>
 </div>

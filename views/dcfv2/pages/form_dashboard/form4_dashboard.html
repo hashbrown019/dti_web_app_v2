@@ -9,7 +9,6 @@
 {% include "includes/sweetalert.html" %}
 <title>Form 4 Dashboard</title>
 
-<div class="right_col" role="main">
   <!-- top tiles -->
   <div class="row" style="display: inline-block;" >
 			<div class="top_tiles">
@@ -215,9 +214,7 @@
 								</select>
 							</div>
 						</div>
-					<div class="form-row">
-						<div class="col"><button type="submit" class="btn btn-sm btn-dark"><span><i class="fa fa-cloud-download"></i></span>Download data</button></div>
-					</div>
+
 					</div>
 				</form>
                     <ul class="nav navbar-right panel_toolbox">
@@ -518,6 +515,18 @@
 			}
 		}
 
+		function scrollParentToIframeCenter(){
+			if (window.parent && window.frameElement){
+				const iframeRect = window.frameElement.getBoundingClientRect();
+				const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+				const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+				window.parent.scrollTo({
+					top : centerY,
+					behavior: 'smooth'
+				});
+			}
+		}
+
 		function showLoadingAndRedirect(id, table, form) {
 			Swal.fire({
 				title: 'Loading...',
@@ -526,6 +535,7 @@
 				allowEscapeKey: false,
 				showConfirmButton: false,
 				didOpen: () => {
+					scrollParentToIframeCenter();
 					Swal.showLoading();
 					setTimeout(() => {
 						window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
@@ -543,21 +553,33 @@
 			  confirmButtonText: 'Yes, delete it!',
 			  cancelButtonText: 'No, cancel',
 			  reverseButtons: true,
+			  position: 'center',
 			  customClass: {
-				confirmButton: 'btn btn-success',
-				cancelButton: 'btn btn-danger',
-			},
-		}).then((result) => {
-		  if (result.isConfirmed) {
-			window.location.href = `/delete_record/dcf_capacity_building/${id}`;
-		} else if (result.dismiss === Swal.DismissReason.cancel) {
-			swalWithCustomButtons.fire(
-			  'Cancelled',
-			  'Your record is safe',
-			  'error'
-			);
-		}
-	});
+				  confirmButton: 'btn btn-success',
+				  cancelButton: 'btn btn-danger',
+			  },
+			  didOpen: () => {
+				  scrollParentToIframeCenter();
+			  }
+		  }).then((result) => {
+			  if (result.isConfirmed) {
+				  window.location.href = `/delete_record/dcf_capacity_building/${id}`;
+			  } else if (result.dismiss === Swal.DismissReason.cancel) {
+				  swalWithCustomButtons.fire({
+						title: 'Cancelled',
+						text: 'Your record is safe',
+						icon: 'error',
+						position: 'center',
+						customClass: {
+							confirmButton: 'btn btn-success',
+							cancelButton: 'btn btn-danger',
+						},
+						didOpen: () => {
+							scrollParentToIframeCenter();
+						},
+					});
+				}		
+			});
 		return false;
 	}
 	const swalWithCustomButtons = Swal.mixin({
@@ -736,7 +758,6 @@
 </div>
 <!-- End to do list -->
 <!-- end of weather widget -->
-</div>
 </div>
 </div>
 </div>

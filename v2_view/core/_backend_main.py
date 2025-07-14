@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from flask import Blueprint, render_template, request, session, redirect, jsonify, send_file
+from flask import Blueprint, Response, render_template, request, session, redirect, jsonify, send_file
 from flask_session import Session
 from modules.Connections import mysql,sqlite
 import Configurations as c
@@ -10,7 +10,11 @@ from v2_view.core import dash_api
 from v2_view.core import dash_script
 from v2_view.core import _backend_sub
 from v2_view.core import _backend_pfa
-
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask import request, redirect, url_for
+from captcha.image import ImageCaptcha
+import io, random, string
 
 app = Blueprint("form_a_v2",__name__,template_folder='pages')
 
@@ -24,6 +28,10 @@ class _main:
 	def __init__(self, arg):
 		super(_main, self).__init__()
 		self.arg = arg
+
+	limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["100 per day", "15 per hour"])
 
 	def is_on_session(): return ('USER_DATA' in session)
 	@app.route("/mis-v4/<module>",methods=["POST","GET"])
@@ -60,13 +68,26 @@ class _main:
 			
 		);
 
-	@app.route("/warning",methods=["GET"])
+	@app.route("/warning", methods=["GET"])
 	def system_page():
 		_type = request.args['type']
-		sql = 'SELECT * FROM `users` WHERE `rcu` = "{}" AND `security_group` = "26";'.format(session["USER_DATA"][0]['rcu'])
-		print(sql)
-		res = rapid_mysql.select(sql)
-		return render_template("/chunks/system-pages/core-system-pages.html",type=_type, USER_DATA = session["USER_DATA"][0],_admin=res)
+		user_rcu = session["USER_DATA"][0]['rcu']
+		sql = "SELECT * FROM `users` WHERE `rcu` = %s AND `security_group` = '26';"
+		res = rapid_mysql.do(sql, [user_rcu])
+		return render_template("/chunks/system-pages/core-system-pages.html", type=_type, USER_DATA=session["USER_DATA"][0], _admin=res)
+
+	@app.route('/captcha')
+	def generate_captcha():
+		# Generate random text
+		captcha_text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+		
+		# Store the text in session
+		session['captcha_text'] = captcha_text
+
+		# Generate CAPTCHA image
+		image = ImageCaptcha()
+		data = image.generate(captcha_text)
+		return send_file(data, mimetype='image/png')
 
 	# =======================================
 	# =======================================
@@ -86,9 +107,17 @@ class _main:
 	def user_registration():
 		return render_template("/chunks/system-control/system-control-user-reg.html")
 
-	@app.route("/mis-v4/user-registration-submit",methods=["POST","GET"])
+	@app.route("/mis-v4/user-registration-submit", methods=["POST"])
+	@limiter.limit("5 per minute")
 	def user_registration_submit():
-		_backend_sub.user_pofile.user_registration_submit(request)
+		result = _backend_sub.user_pofile.user_registration_submit(request)
+		if isinstance(result, dict) and 'error' in result:
+			# Return JSON if it's an AJAX request
+			if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+				return jsonify({"success": False, "message": result['error']}), 400
+			return result['error'], 400
+		elif isinstance(result, Response):
+			return result
 		return redirect("/login")
 
 	@app.route("/api/user_pic/<file_name>")

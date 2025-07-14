@@ -11,11 +11,9 @@
         var ls_data = JSON.parse(all_data)
     </script>
 
-    <div class="right_col" role="main">
-        <div class="row">
-    <div class="col-md-12 col-sm-12 x-card  x-light-grey">
+    <div class="col-md-12 col-sm-12 x-card x-light-grey">
         <center>
-            <h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 2 - CPA TRACKER</h2>
+            <h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 2 - Market Access Tracker</h2>
 			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
         </center>
 
@@ -23,9 +21,9 @@
         <script type="text/javascript">
             SAM_FUNC_KAMOWN(get_recent_cpa)
             function get_recent_cpa(dd){
-                println("---formdata oyeah")
-                println(ls_data)
-                println(dd['form_2_recent_cpa'])
+                // println("---formdata oyeah")
+                // println(ls_data)
+                // println(dd['form_2_recent_cpa'])
                 for (var i = 0; i < ls_data.length; i++) {
                     if(parseInt(ls_data[i]["id"])==parseInt(dd['form_2_recent_cpa'])){
                         var notes = ` <span><i class="ti-bookmark"></i></span> CPA Track #: RAPID_CPA_${ls_data[i]['id']} | ${ls_data[i]['form_2_businessname']}`
@@ -70,8 +68,18 @@
                 </script>
             </div>
 
+            <div class="x-col l2 x-container x-padding">
+            <label class=""><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (ex. R8_SC Global)" tabindex="1"><i class="fa fa-info-circle"></i></span>   DIP Alignment:
+            </label>
+                <select class="FORM2_FIELD withother x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
+                    <option value="none">Choose your option</option>
+                    <option value="M/A">N/A</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No DIP Alignment">No</option>
+                </select>
+            </div>
             
-            <div class="x-col l5 x-container x-padding">
+            <div class="x-col l4 x-container x-padding">
                 <label><span style="color: #007399;" class="tool" tabindex="1"> </span>  Name of DIP:</label>
                     <select class="FORM2_FIELD x-input x-border" name="form_2_name_dip" id="form_2_name_dip">
                         <option value="">Choose your option</option>
@@ -102,7 +110,7 @@
                 populateDipNames().then(() => {});
 			</script>
 
-            <div class="x-col l3 x-container x-padding">
+            <div class="x-col l2 x-container x-padding">
                 <label class="">RCUs:</label>
                 <select class="FORM2_FIELD x-border x-select x-border" id="form_2_rcus" name="form_2_rcus" required><br>
                     <option value="">Choose your option</option>
@@ -153,7 +161,12 @@
                         <option value="Coconut - Whole Nuts">Whole Nuts</option>
                         <option value="Coconut - Copra">Copra</option>
                         <option value="Coconut - White Copra">White Copra</option>
-                        <option value="Coconut - White Copra">Twine</option>
+                        <option value="Coconut - Shell">Shell</option>
+                        <option value="Coconut - Twine">Twine</option>
+                        <option value="Coconut - Peat">Peat</option>
+                        <option value="Coconut - Charcoal">Charcoal</option>
+                        <option value="Coconut - Sugar">Sugar</option>
+                        <option value="Coconut - Virgin Coconut Oil">Virgin Coconut Oil</option>
                     </optgroup>
             
                     <optgroup label="Cacao">
@@ -178,26 +191,37 @@
                 </select>
             </div>     
             
-
-                <div class="x-col l3 x-container x-padding x-hide">
-                    <label class=""><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (ex. R8_SC Global)" tabindex="1"><i class="fa fa-info-circle"></i></span>   DIP Alignment:
-                    </label>
-                        <select class="FORM2_FIELD withother x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
-                            <option value="none">Choose your option</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No DIP Alignment">No</option>
-                        </select>
-                    <input type="text" class="FORM2_FIELD hidden-textboxdip x-input x-border" name="form_2_dip_alignment_yes" id="form_2_dip_alignment_yes" show-base="form_2_dip_alignment" show-trigger="Yes" placeholder="Enter DIP name">
-                </div>
         </div>
 
         <div class="x-row x-container x-padding">
-            <div class="x-col l5 x-container x-padding">
+            <div class="x-col l3 x-container x-padding">
+                <label class=""><span style="color: #007399;" class="tool" data-tip="If others, please specify the type of agreement." tabindex="1"><i class="fa fa-info-circle"></i></span> Types of Agreements:</label>
+                <input class="FORM2_FIELD x-input x-border" id="form_2_types_of_agreements" name="form_2_types_of_agreements" type="text" placeholder="Type of Agreement" list="form_2_types_of_agreements_list"/>
+                <datalist id="form_2_types_of_agreements_list">
+                    <option value="Signed CPAs"></option>
+                    <option value="Purchase orders"></option>
+                    <option value="Letter of Intent to buy"></option>
+                    <option value="Letter of commitment to supply"></option>
+                    <option value="Official receipt of transaction"></option>
+                </datalist>
+            </div>
+
+            <div class="x-col l2 x-container x-padding">
+                <label class=""><span style="color: #007399;" class="tool" data-tip="If others, please specify the type of market." tabindex="1"><i class="fa fa-info-circle"></i></span> Types of Market:</label>
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_types_of_market" name="form_2_types_of_market" required><br>
+                    <option value="">Choose your option</option>
+                    <option value="FO">FO</option>
+                    <option value="MSME">MSME</option>
+                    <option value="Anchor Firm">Anchor Firm</option>
+                </select>
+            </div>
+
+            <div class="x-col l3 x-container x-padding">
                 <label class="">Name of Owner or Manager of the anchor Firm/MSMEs:</label>
                 <input class="FORM2_FIELD x-input x-border" id="form_2_name_owner_manager" name="form_2_name_owner_manager"
                     type="text" autocomplete="on" placeholder="Full Name: (ex. Juan Dela Cruz)">
             </div>
-            <div class="x-col l3 x-container x-padding">
+            <div class="x-col l2 x-container x-padding">
                 <label class="">Sex of the Owner or Manager of the anchor Firm/MSMEs:</label>
                 <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sex_owner_manager"
                     name="form_2_sex_owner_manager"><br>
@@ -206,8 +230,7 @@
                     <option>Female</option>
                 </select>
             </div>
-
-            <div class="x-col l3 x-container x-padding">
+            <div class="x-col l2 x-container x-padding">
                 <label class="">Sector of Owner or manager of the anchor firm/MSMEs:</label>
                     <select class="FORM2_FIELD x-border x-select x-border" id="form_2_sector_owner_manager"
                     name="form_2_sector_owner_manager"><br>
@@ -219,10 +242,8 @@
                     <option>Abled</option>
                 </select>
             </div>
-
         </div>
-            
-           
+
         <div class="x-row x-container x-padding">
             <div class="x-col l6 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="Indicate full Business name of Anchor Firm/MSMEs based on official registration." tabindex="1"><i class="fa fa-info-circle"></i></span> Anchor Firm/FO:</label>
@@ -572,8 +593,6 @@
                 <button class="btn btn-primary btn-xs" type="button" onclick="submit_form('FORM2_FIELD','dcf_implementing_unit','/form2_dashboard')">Submit</button>
             </p>
         </div>
-    </div>
-</div>
 
     {% include 'formdata_handler.html' %}
 

@@ -9,53 +9,6 @@
 {% include "includes/sweetalert.html" %}
 <title>Form 10 Dashboard</title>
 
-<div class="right_col" role="main">
-  <!-- top tiles -->
-<!--           <div class="row" style="display: inline-block;" >
-		  <div class="tile_count">
-			 <div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"><i class="fa fa-users"></i> Total Entries</span>
-			  <div class="count">{{dcf_form5}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of Entries</span>
-
-			</div>
-				   <div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"><i class="fa fa-user"></i> Total Male</span>
-			  <div class="count _money_tag">{{dcf_form5male[0]['totalmale5']}} </div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sex</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
-			  <div class="count _money_tag">{{dcf_form5female[0]['totalfemale5']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sex</span>
-
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"> PWD</span>
-			  <div class="count _money_tag">{{dcf_form5pwd[0]['totalpwd5']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
-			</div>
-	 
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"> Youth</span>
-			  <div class="count _money_tag">{{dcf_form5youth[0]['totalyouth5']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"> IP</span>
-			  <div class="count _money_tag">{{dcf_form5ip[0]['totalip5']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"> SC</span>
-			  <div class="count _money_tag">{{dcf_form5sc[0]['totalsc5']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
-			</div>
-		  </div>
-	  </div> -->
-	  <!-- /top tiles -->
-
-
 	<div class="row" style="display: inline-block;" >
 			<div class="top_tiles">
               <div class="animated flipInY col-lg-4 col-md-4 col-sm-4 ">
@@ -236,6 +189,18 @@
 				};// Radar 
 			}
 
+		function scrollParentToIframeCenter() {
+			if (window.parent && window.frameElement) {
+				const iframeRect = window.frameElement.getBoundingClientRect();
+				const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+				const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+				window.parent.scrollTo({
+					top: centerY,
+					behavior: 'smooth'
+				});
+			}
+		}
+		
 		function showLoadingAndRedirect(id, table, form) {
 			Swal.fire({
 				title: 'Loading...',
@@ -244,6 +209,7 @@
 				allowEscapeKey: false,
 				showConfirmButton: false,
 				didOpen: () => {
+					scrollParentToIframeCenter();
 					Swal.showLoading();
 					setTimeout(() => {
 						window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
@@ -261,6 +227,10 @@
 			  confirmButtonText: 'Yes, delete it!',
 			  cancelButtonText: 'No, cancel',
 			  reverseButtons: true,
+			  position: 'center',
+			  didOpen: () => {
+				scrollParentToIframeCenter();
+			  },
 			  customClass: {
 				confirmButton: 'btn btn-success',
 				cancelButton: 'btn btn-danger',
@@ -269,11 +239,15 @@
 		  if (result.isConfirmed) {
 			window.location.href = `/delete_record/dcf_negosyo_center/${id}`;
 		} else if (result.dismiss === Swal.DismissReason.cancel) {
-			swalWithCustomButtons.fire(
-			  'Cancelled',
-			  'Your record is safe',
-			  'error'
-			  );
+			swalWithCustomButtons.fire({
+			  title: 'Cancelled',
+			  text: 'Your record is safe',
+			  icon: 'error',
+			  position: 'center',
+			  didOpen: () => {
+				scrollParentToIframeCenter();
+			  },
+			});
 		}
 	});
 		return false;
@@ -458,7 +432,6 @@
 </div>
 <!-- End to do list -->
 <!-- end of weather widget -->
-</div>
 </div>
 </div>
 </div>

@@ -1,6 +1,9 @@
 import mysql.connector as connects # TEMPORARY DISABLED
 import sqlite3
 import socket
+import re
+import mysql.connector
+from mysql.connector import errorcode
 
 class sqlite:
 	def __init__(self, database):
@@ -33,13 +36,13 @@ class sqlite:
 		return rows
 		
 	def dict_factory(cursor, row):
-	    d = {}
-	    for idx, col in enumerate(cursor.description):
-	        d[col[0]] = row[idx]
-	    return d
+		d = {}
+		for idx, col in enumerate(cursor.description):
+			d[col[0]] = row[idx]
+		return d
 
 class mysql:
-	def __init__(self, host,user,password,database,use_pure=False):
+	def __init__(self, host, user, password, database, use_pure=False):
 		'''
 			@params: host = Hostname of the database
 			@params: user = Username of the database
@@ -48,11 +51,11 @@ class mysql:
 			@params: use_pure = Use pure python connection
 		'''
 		super(mysql, self).__init__()
-		self.host=host
-		self.user=user
-		self.password=password
-		self.database=database
-		self.use_pure=use_pure
+		self.host = host
+		self.user = user
+		self.password = password
+		self.database = database
+		self.use_pure = use_pure
 		self.err_page = 1 
 
 	def info(self):
@@ -69,70 +72,72 @@ class mysql:
 			use_pure=self.use_pure)
 		return mydb
 
-	def do(self,sql):
-		if(self.err_page==1):
-			conn = mysql.init_db(self)
+	def do(self, sql, params=None):
+		conn = None
+		cur = None
+		try:
+			conn = self.init_db()
 			cur = conn.cursor()
-			cur.execute(sql)
+			cur.execute(sql, params if params else None)
 			conn.commit()
-			return cur.lastrowid
-		else:
-			try:
-				conn = mysql.init_db(self)
-				cur = conn.cursor()
-				cur.execute(sql)
-				conn.commit()
-				return {"response":"done","message":cur.lastrowid, "sql":sql}
-				# return cur.lastrowid
-			except Exception as e:
-				return {"response":"error","message":str(e), "sql":sql}
+			if self.err_page == 1:
+				return cur.lastrowid
+			else:
+				return {"response": "done", "message": cur.lastrowid, "sql": sql}
+		except Exception as e:
+			if conn:
+				conn.rollback()
+			return {"response": "error", "message": str(e), "sql": sql}
+		finally:
+			if cur:
+				cur.close()
+			if conn:
+				conn.close()
 
-	def select(self,sql,dict_=True):
-		if(self.err_page==1):
-			conn = mysql.init_db(self)
+	def select(self, sql, params=None, dict_=True):
+		conn = None
+		cur = None
+		try:
+			conn = self.init_db()
 			cur = conn.cursor(dictionary=dict_)
-			cur.execute(sql)
-			rows = cur.fetchall()
-			return rows
-		else:
-			try:
-				conn = mysql.init_db(self)
-				cur = conn.cursor(dictionary=dict_)
-				cur.execute(sql)
-				rows = cur.fetchall()
-				return rows
-			except Exception as e:
-				return {"response":"error","message":str(e), "sql":sql}
+			cur.execute(sql, params if params else None)
+			return cur.fetchall()
+		except Exception as e:
+			return {"response": "error", "message": str(e), "sql": sql}
+		finally:
+			if cur:
+				cur.close()
+			if conn:
+				conn.close()
 
-
-	def insert_or_add_to_db(self,req,table,ids):
-		'''
-			Insert or Update data to the database
-			@params: req = Json data from the request
-			@params: table = Table name to insert or update
-			@params: ids = ColName of the ID of the table
-		'''
-		status = 'uknown'
+	def insert_or_add_to_db(self, req, table, ids, allowed_fields=None):
 		data = dict(req.form)
-		key = [];val = [];args=""
-		is_ex_ssql = "SELECT * FROM `{}` WHERE `{}` ='{}' ;".format(table, ids, data[ids])
-		print(is_ex_ssql)
-		is_exist = len(self.select(is_ex_ssql))
-		if(is_exist==0):
-			for datum in data:
-				# print(datum)
-				key.append("`{}`".format(datum))
-				val.append("'{}'".format(data[datum]))
-			sql = ('''INSERT INTO `{}` ({}) VALUES ({});'''.format(table, ", ".join(key),", ".join(val)))
+
+		if not re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', table):
+			raise ValueError(f"Invalid table name: {table}")
+		if not re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', ids):
+			raise ValueError(f"Invalid column name: {ids}")
+
+		if allowed_fields:
+			data = {k: v for k, v in data.items() if k in allowed_fields}
+
+		is_exist = len(self.select(f"SELECT 1 FROM `{table}` WHERE `{ids}` = %s", [data[ids]]))
+
+		if is_exist == 0:
+			columns = [f"`{col}`" for col in data.keys()]
+			placeholders = ["%s"] * len(data)
+			values = list(data.values())
+			sql = f"INSERT INTO `{table}` ({', '.join(columns)}) VALUES ({', '.join(placeholders)})"
 			status = "inserted"
 		else:
-			for datum in data:
-				args += ",`{}`='{}'".format(datum,data[datum])
-			sql = "UPDATE `{}` SET  {}  WHERE `{}`='{}';".format(table, args[1:], ids, data[ids])
+			set_clause = [f"`{col}` = %s" for col in data.keys()]
+			values = list(data.values()) + [data[ids]]
+			sql = f"UPDATE `{table}` SET {', '.join(set_clause)} WHERE `{ids}` = %s"
 			status = "updated"
-		print(sql)
-		last_row_id = self.do(sql)
-		return {"lastrowid":last_row_id, "status":status}
+
+		last_row_id = self.do(sql, values)
+		return {"lastrowid": last_row_id, "status": status}
+		
 
 	# ==========FUNCTION ON MULTIPLE SIMULTANEUS TRANSACTION==========================================
 	# function(sql, mysql.init_db(self) )
@@ -181,3 +186,5 @@ class Struct_obj:
         self.__dict__.update(**entries)
 
 # =======================================================================
+
+	

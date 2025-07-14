@@ -44,6 +44,26 @@
 											<input type="password" name="password" class="login_field form-control" id="yourPassword" required>
 											<div class="invalid-feedback">Please enter your password!</div>
 										</div>
+										<div class="mb-3 text-center">
+											<label class="form-label d-block">Captcha Verification</label>
+											<div class="mb-2">
+												<img src="/captcha" alt="Captcha" id="captcha_img" class="rounded border shadow-sm" style="height: 100px;">
+											</div>
+											<div>
+												<button type="button" class="btn btn-outline-secondary btn-sm" style="width: 100%;" onclick="document.getElementById('captcha_img').src = '/captcha?' + Date.now();">
+													<i class="bi bi-arrow-clockwise me-1"></i> Reload Captcha
+												</button>
+											</div>
+										</div>
+
+										<div class="form-floating mb-3">
+											<input id="captcha_input" name="captcha_input" type="text" class="form-control" placeholder="Enter Captcha" required>
+											<label class="f_name" for="captcha_input">Enter the Captcha Code above</label>
+										</div>
+
+										<input type="hidden" name="hash_token" id="hash_token">
+										<input type="hidden" name="timestamp" id="timestamp">
+										<input type="hidden" name="user_agent" id="user_agent">
 
 										<div class="col-12">
 											<div class="form-check">
@@ -130,55 +150,97 @@
 		}
 
 
-		function login(){
-			var fields = $CLASS('login_field')
-			var cred = {
-				"user_name" :fields[0].value,
-				"password" :fields[1].value
-			}
+			function login() {
+			const fields = $CLASS('login_field');
+			const cred = {
+				"user_name": fields[0].value,
+				"password": fields[1].value,
+				"captcha_input": $ID('captcha_input').value,
+				"hash_token": $ID('hash_token').value,
+				"timestamp": $ID('timestamp').value,
+				"user_agent": $ID('user_agent').value
+			};
 
-			$ID('submit-btn').innerHTML = (`
+			$ID('submit-btn').innerHTML = `
 				Logging in 
 				<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
 				<span class="visually-hidden">Loading...</span>
-			`)
-
-			$ID('submit-btn').disabled=1
+			`;
+			$ID('submit-btn').disabled = true;
 
 			$send({
 				action : '/login_auth',
 				method : POST,
 				data : $DATA(cred),
 				func : function (__) {
-					var login = JSON.parse(__).success
-					var url = JSON.parse(__).url
-					println(login)
-					if(login){
-						if(JSON.parse(__)['user'][0]['status']=="halt"){
-							redirectto("/acct_dis") 
-						}else{
-							println(JSON.parse(__)['user'])
-						    if("urlvisit" in URL_ARGS){
-						        redirectto(URL_ARGS['urlvisit'])
-						    }else{
-								redirectto(url) // NEW VERSION
-						    }
-						}
-					}
+					let res = JSON.parse(__);
 					
-					else{
-						timeout(function(){$ID('submit-btn').innerHTML = "Try logginng in again";$ID('submit-btn').disabled=0},2000);
-						$ID("error_msg").innerHTML=(`
+					if (res.success) {
+						if (res.user[0]['status'] === "halt") {
+							redirectto("/acct_dis");
+						} else {
+							if ("urlvisit" in URL_ARGS) {
+								redirectto(URL_ARGS['urlvisit']);
+							} else {
+								redirectto(res.url);
+							}
+						}
+					} else {
+						// Handle CAPTCHA or login error
+						timeout(function() {
+							$ID('submit-btn').innerHTML = "Try logging in again";
+							$ID('submit-btn').disabled = false;
+						}, 2000);
+
+						$ID("error_msg").innerHTML = (`
 							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								Login failed. keep trying!
+								${res.message || "Login failed. Please try again."}
 								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 							</div>
-						`)
+						`);
+						document.getElementById("captcha_img").src = "/captcha?" + Date.now();
+						document.getElementById("captcha_input").value = "";
 					}
 				}
-			})
+			});
 		}
 
+		function showLoginError(message) {
+			$ID('submit-btn').innerHTML = "Try logging in again";
+			$ID('submit-btn').disabled = false;
+			$ID("error_msg").innerHTML = `
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					${message}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			`;
+			document.getElementById("captcha_img").src = "/captcha?" + Date.now();
+			document.getElementById("captcha_input").value = "";
+		}
+
+		// Auto-refresh CAPTCHA every 5 minutes
+		setInterval(() => {
+			document.getElementById("captcha_img").src = "/captcha?" + Date.now();
+		}, 300000); // 300,000 ms = 5 minutes
+
+	const userAgent = navigator.userAgent;
+		const timestamp = Date.now();
+
+		document.getElementById("user_agent").value = userAgent;
+		document.getElementById("timestamp").value = timestamp;
+		var hashTokenInput = document.querySelector("#hash_token");
+
+		// Generate hash from userAgent + timestamp (sent to server to validate)
+		async function generateHash() {
+			const encoder = new TextEncoder();
+			const data = encoder.encode(userAgent + '|' + timestamp);
+			const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+			const hashArray = Array.from(new Uint8Array(hashBuffer));
+			const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+			document.getElementById("hash_token").value = hashHex;
+		}
+
+		generateHash();
 	</script>
 </body>
 

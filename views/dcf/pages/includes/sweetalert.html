@@ -2,24 +2,29 @@
    {% with messages = get_flashed_messages(with_categories=true) %}
    {% if messages %}
    {% for category, message in messages %}
-   <script>
-      
-   swal.fire({
+       <script>
+              function scrollParentToIframeCenter() {
+                     if (window.parent && window.frameElement) {
+                     const iframeRect = window.frameElement.getBoundingClientRect();
+                     const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+                     const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+                     window.parent.scrollTo({
+                            top: centerY,
+                            behavior: 'smooth'
+                     });
+                     }
+              }
 
-          title:"{{ category.title() }}!",
-          // success , error , warning ,info
+              swal.fire({
+                     title: "{{ category.title() }}!", 
+                     text: "{{ message }}", 
+                     icon: "{{ category }}" == "danger" ? "error" : "{{ category }}",
+                     didOpen: () => {
+                     scrollParentToIframeCenter();
+                     }
+              });
+       </script>
 
-          text: "{{ message }}",
-          // Custom message flashed from your flask routes
-
-          icon: "{{ category }}" == "danger" ? "error" : "{{ category }}"
-          // success , error , warning ,info
-
-   })
-
-   
-
-   </script>
    {% endfor %}
    {% endif %}
    {% endwith %}

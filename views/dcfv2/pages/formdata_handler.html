@@ -372,14 +372,28 @@ function submit_form(class_name,table, url){
 	// println(form_data)
 
 
-	if(validate_form(class_name)){}
+	if(validate_form(class_name)){ }
 	else{
-		Swal.fire(
-			'Error!',
-			"Some fields are required",
-			'error'
-		);
-		return
+		Swal.fire({
+			title: 'Error!',
+			text: "Some fields are required",
+			icon: 'error',
+			position: 'center',
+			allowOutsideClick: false,
+			didOpen: () => {
+				// Scroll parent to center of the iframe
+				if (window.parent && window.frameElement) {
+					const iframeRect = window.frameElement.getBoundingClientRect();
+					const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+					const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+					window.parent.scrollTo({
+						top: centerY,
+						behavior: 'smooth'
+					});
+				}
+			}
+		});
+		return;
 	}
 
 
@@ -391,23 +405,51 @@ function submit_form(class_name,table, url){
 		func: function (r) {
 			var res = JSON.parse(r)
 			println(res)
-			if (res.id.response == "done") {
-				Swal.fire(
-					'Success!',
-					'Record Saved!',
-					'success'
-					).then((result) => {
+				if (res.id.response == "done") {
+					Swal.fire({
+						title: 'Success!',
+						text: 'Record Saved!',
+						icon: 'success',
+						position: 'center',
+						allowOutsideClick: false,
+						didOpen: () => {
+						// Scroll parent to center of the iframe
+							if (window.parent && window.frameElement) {
+								const iframeRect = window.frameElement.getBoundingClientRect();
+								const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+								const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+								window.parent.scrollTo({
+									top: centerY,
+									behavior: 'smooth'
+								});
+							}
+						}
+						}).then((result) => {
 						if (result.isConfirmed) {
 							window.location.href = url;
 						}
 					});
 				}
 				else {
-					Swal.fire(
-						'Error!',
-						res.id.message,
-						'error'
-						);
+					Swal.fire({
+						title: 'Error!',
+						text: res.id.message,
+						icon: 'error',
+						position: 'center',
+						allowOutsideClick: false,
+						didOpen: () => {
+							// Scroll parent to center of the iframe
+							if (window.parent && window.frameElement) {
+								const iframeRect = window.frameElement.getBoundingClientRect();
+								const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+								const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+								window.parent.scrollTo({
+									top: centerY,
+									behavior: 'smooth'
+								});
+							}
+						}
+					});
 				}
 			}
 		})
