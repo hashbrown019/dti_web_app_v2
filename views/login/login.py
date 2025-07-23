@@ -155,8 +155,8 @@ class _main:
 				})
 
 		# Use parameterized query to prevent SQL injection
-		sql = "SELECT * FROM `users` WHERE `username` = %s AND `password` = %s"
-		log_res = rapid_mysql.select(sql, [username, password])
+		sql = "SELECT * FROM `users` WHERE `username` = '{}' AND `password` = '{}'".format(username, password)
+		log_res = rapid_mysql.select(sql)
 
 		if len(log_res) == 0:
 			# Optional: reset CAPTCHA to prevent reuse
@@ -184,7 +184,8 @@ class _main:
 
 		# Attach security group info
 		try:
-			sg = rapid_mysql.select("SELECT * FROM `mis_2023`.`_securitygroup` WHERE `id` = %s", [user['security_group']])[0]
+			sg_sql = "SELECT * FROM `mis_2023`.`_securitygroup` WHERE `id` = '{}'".format(user['security_group'])
+			sg = rapid_mysql.select(sg_sql)[0]
 			session['USER_DATA'][0]['sg_info'] = sg
 		except Exception as e:
 			# If no role/security group found
@@ -248,5 +249,7 @@ class _main:
 		return send_file(c.RECORDS+"/downloadables/"+file_, as_attachment=True,download_name=def_name)
 
 
-
-	
+@app.route("/clear_session")
+def clear_session():
+    session.clear()
+    return "✅ Session cleared successfully!"

@@ -94,21 +94,22 @@ class mysql:
 			if conn:
 				conn.close()
 
-	def select(self, sql, params=None, dict_=True):
-		conn = None
-		cur = None
-		try:
-			conn = self.init_db()
+	def select(self,sql,dict_=True):
+		if(self.err_page==1):
+			conn = mysql.init_db(self)
 			cur = conn.cursor(dictionary=dict_)
-			cur.execute(sql, params if params else None)
-			return cur.fetchall()
-		except Exception as e:
-			return {"response": "error", "message": str(e), "sql": sql}
-		finally:
-			if cur:
-				cur.close()
-			if conn:
-				conn.close()
+			cur.execute(sql)
+			rows = cur.fetchall()
+			return rows
+		else:
+			try:
+				conn = mysql.init_db(self)
+				cur = conn.cursor(dictionary=dict_)
+				cur.execute(sql)
+				rows = cur.fetchall()
+				return rows
+			except Exception as e:
+				return {"response":"error","message":str(e), "sql":sql}
 
 	def insert_or_add_to_db(self, req, table, ids, allowed_fields=None):
 		data = dict(req.form)
