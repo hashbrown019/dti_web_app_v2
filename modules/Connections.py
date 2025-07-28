@@ -122,7 +122,9 @@ class mysql:
 		if allowed_fields:
 			data = {k: v for k, v in data.items() if k in allowed_fields}
 
-		is_exist = len(self.select(f"SELECT 1 FROM `{table}` WHERE `{ids}` = %s", [data[ids]]))
+		safe_id = data[ids].replace("'", "''")  # Basic SQL injection safety
+		is_exist = len(self.select(f"SELECT 1 FROM `{table}` WHERE `{ids}` = '{safe_id}'"))
+
 
 		if is_exist == 0:
 			columns = [f"`{col}`" for col in data.keys()]

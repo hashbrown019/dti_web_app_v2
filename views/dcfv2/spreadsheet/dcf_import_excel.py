@@ -393,7 +393,7 @@ def importcsvform5(request):
 			
 	return redirect("/dcfspreadsheet")
 
-def excel_upload_open5(path):  
+def excel_upload_open5(path):
 	book = xlrd.open_workbook(path)
 	sheet = book.sheet_by_index(0)
 	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
@@ -407,38 +407,60 @@ def excel_upload_open5(path):
 		upload_by = session["USER_DATA"][0]['id']
 		mgit_implementing_unit = row[0]
 		mgit_name_of_dip = row[1]
-		mgit_msme_recipient = row[2]
-		mgit_total_member_recipient = row[3]
-		mgit_commodity = row[4]
-		mgit_total_number_fo_gender_male = row[5]
-		mgit_total_number_fo_gender_female = row[6]
-		mgit_total_number_fo_sectoral_pwd = row[7]
-		mgit_total_number_fo_sectoral_youth = row[8]
-		mgit_total_number_fo_sectoral_IP = row[9]
-		mgit_total_number_fo_sectoral_SC = row[10]
-		mgit_type_of_investment = row[11]
-		mgit_total_mgas_based_approved_DIP = row[12]
-		mgit_total_mgas_signed = row[13]
-		mgit_total_mgas_not_yet_signed = row[14]
-		mgit_total_matching_grant_based_on_approved_business = row[15]
-		mgit_pmga_first_availment = row[16]
-		mgit_mgar_period_date = row[17]
-		mgit_remaining_matching_grant_balance = row[18]
-		mgit_inclusive_timeline_implementation_start = row[19]
-		mgit_inclusive_timeline_implementation_end = row[20]
-		mgit_time_elapse = row[21]
-		mgit_total_budget_approved_in_the_DIP = row[22]
-		mgit_actual_cost_of_procurement = row[23]
-		mgit_summary_of_actual_tools_procured = row[24]
-		mgit_inclusive_timeline_implementation_start1 = row[25]
-		mgit_inclusive_timeline_implementation_end1 = row[26]
-		mgit_time_elapse1 = row[27]
-		mgit_date_of_distribution = row[28]
-		mgit_remarks_on_the_deliverd_tools = row[29]                                                                                          
+		mgit_commodity = row[2]
+		mgit_type_of_beneficiary = row[3]
+		mgit_msme_recipient = row[4]
+		mgit_status_of_mga = row[5]
+		mgit_date_signed = row[6]
+		mgit_total_amount = row[7]
+		mgit_type_of_investment = row[8]
+		mgit_total_num_target_of_fo_expansion = row[9]
+		mgit_total_num_target_members_expansion = row[10]
+		mgit_total_amount_mgrr = row[11]
+		mgit_status_mgrr = row[12]
+		mgit_date = row[13]
+		mgit_amount_release = row[14]
+		mgit_remaining_balance = row[15]
+		mgit_target_total_amount_of_has = row[16]
+		mgit_inclusive_timeline_implementation_start = row[17]
+		mgit_inclusive_timeline_implementation_end = row[18]
+		mgit_time_elapse = row[19]
+		mgit_total_num_target_of_fo_rehab = row[20]
+		mgit_total_num_target_members_rehab = row[21]
+		mgit_total_amount_of_mooe = row[22]
+		mgit_total_amount_of_release = row[23]
+		mgit_date_released = row[24]
+		mgit_remaining_balance_rehab = row[25]
+		mgit_total_amount_of_members_received_rehab = row[26]
+		mgit_target_total_amount_of_has_for_rehabilitation = row[27]
+		mgit_inclusive_timeline_implementation_start1 = row[28]
+		mgit_inclusive_timeline_implementation_end1 = row[29]
+		mgit_time_elapse1 = row[30]
+		mgit_total_amount_of_mga_signed = row[31]
+		mgit_type_of_investment_prod = row[32]
+		mgit_productive_investment_requested = row[33]
+		mgit_total_amount_in_mgrr = row[34]
+		mgit_status_of_mgrr_prodInv = row[35]
+		mgit_date_productive_investment = row[36]
+		mgit_mgrr_amount_released_php = row[37]
+		mgit_total_actual_counterpart = row[38]
+		mgit_source_of_funds = row[39]
+		mgit_name_of_source = row[40]
+		mgit_amount_released_in_php = row[41]
+		mgit_remaining_balance_prod = row[42]
+		mgit_timeline_start_prod = row[43]
+		mgit_timeline_end_prod = row[44]
+		mgit_time_elapse_prod = row[45]
 		filename = UPLOAD_NAME
 
-		querycsv = ("INSERT INTO dcf_matching_grant ( upload_by,mgit_implementing_unit,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
-		format(upload_by,mgit_implementing_unit,mgit_name_of_dip,mgit_msme_recipient,mgit_total_member_recipient,mgit_commodity,mgit_total_number_fo_gender_male,mgit_total_number_fo_gender_female,mgit_total_number_fo_sectoral_pwd,mgit_total_number_fo_sectoral_youth,mgit_total_number_fo_sectoral_IP,mgit_total_number_fo_sectoral_SC,mgit_type_of_investment,mgit_total_mgas_based_approved_DIP,mgit_total_mgas_signed,mgit_total_mgas_not_yet_signed,mgit_total_matching_grant_based_on_approved_business,mgit_pmga_first_availment,mgit_mgar_period_date,mgit_remaining_matching_grant_balance,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_budget_approved_in_the_DIP,mgit_actual_cost_of_procurement,mgit_summary_of_actual_tools_procured,mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_date_of_distribution,mgit_remarks_on_the_deliverd_tools,filename))
+		querycsv = ("INSERT INTO dcf_matching_grant (upload_by, mgit_implementing_unit, mgit_name_of_dip, mgit_commodity, mgit_type_of_beneficiary, mgit_msme_recipient, mgit_status_of_mga, mgit_date_signed, mgit_total_amount, mgit_type_of_investment, mgit_total_num_target_of_fo_expansion, mgit_total_num_target_members_expansion, mgit_total_amount_mgrr, mgit_status_mgrr, mgit_date, mgit_amount_release, mgit_remaining_balance, mgit_target_total_amount_of_has, mgit_inclusive_timeline_implementation_start, mgit_inclusive_timeline_implementation_end, mgit_time_elapse, mgit_total_num_target_of_fo_rehab, mgit_total_num_target_members_rehab, mgit_total_amount_of_mooe, mgit_total_amount_of_release, mgit_date_released, mgit_remaining_balance_rehab, mgit_total_amount_of_members_received_rehab, mgit_target_total_amount_of_has_for_rehabilitation, mgit_inclusive_timeline_implementation_start1, mgit_inclusive_timeline_implementation_end1, mgit_time_elapse1, mgit_total_amount_of_mga_signed, mgit_type_of_investment_prod, mgit_productive_investment_requested, mgit_total_amount_in_mgrr, mgit_status_of_mgrr_prodInv, mgit_date_productive_investment, mgit_mgrr_amount_released_php, mgit_total_actual_counterpart, mgit_source_of_fund, mgit_name_of_source, mgit_amount_released_in_php, mgit_remaining_balance_prod, mgit_timeline_start_prod, mgit_timeline_end_prod, mgit_time_elapse_prod, filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by,mgit_implementing_unit,mgit_name_of_dip,mgit_commodity,mgit_type_of_beneficiary,mgit_msme_recipient,mgit_status_of_mga,mgit_date_signed,mgit_total_amount,mgit_type_of_investment,
+		 mgit_total_num_target_of_fo_expansion,mgit_total_num_target_members_expansion,mgit_total_amount_mgrr,mgit_status_mgrr,mgit_date,mgit_amount_release,mgit_remaining_balance,
+		 mgit_target_total_amount_of_has,mgit_inclusive_timeline_implementation_start,mgit_inclusive_timeline_implementation_end,mgit_time_elapse,mgit_total_num_target_of_fo_rehab,mgit_total_num_target_members_rehab,
+		 mgit_total_amount_of_mooe,mgit_total_amount_of_release,mgit_date_released,mgit_remaining_balance_rehab,mgit_total_amount_of_members_received_rehab,mgit_target_total_amount_of_has_for_rehabilitation,
+		 mgit_inclusive_timeline_implementation_start1,mgit_inclusive_timeline_implementation_end1,mgit_time_elapse1,mgit_total_amount_of_mga_signed,mgit_type_of_investment_prod,mgit_productive_investment_requested,
+		 mgit_total_amount_in_mgrr,mgit_status_of_mgrr_prodInv,mgit_date_productive_investment,mgit_mgrr_amount_released_php,mgit_total_actual_counterpart,mgit_source_of_funds,mgit_name_of_source,mgit_amount_released_in_php,
+		 mgit_remaining_balance_prod,mgit_timeline_start_prod,mgit_timeline_end_prod,mgit_time_elapse_prod,filename))
 		insert=db.do(querycsv)
 		print(insert)
 		print("===============================================")

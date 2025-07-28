@@ -7,11 +7,10 @@
 {% block content %}
 <title>Form 5</title>
     {% include "includes/sweetalert.html" %}
-    <div class="right_col" role="main">
         <div class="row">
     <div class="col-md-12 col-sm-12 x-card  x-light-grey">
         <center>
-            <h2 class=" x-container x-padding text-white" style="background-color: #007399;">FORM 5 - MATCHING GRANT IMPLEMENTATION TRACKER</h2>
+            <h2 class=" x-container x-padding text-white" style="background-color: #007399;">FORM 5 - Investment Tracker</h2>
 			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
         </center>
 
@@ -27,150 +26,274 @@
         </div>
 
 	<input class="FORM5_FIELD x-input" type="hidden"  id="id">
+        <!-- Implementing Unit -->
         <div class="x-col l3 x-container x-padding">
-            <label class="">Implementing Unit:</label>
-            <select class="FORM5_FIELD x-border x-select x-border" id="mgit_implementing_unit"
-                name="mgit_implementing_unit" required><br>
+            <label>Implementing Unit:</label>
+            <select class="FORM5_FIELD x-border x-select x-border" id="mgit_implementing_unit" name="mgit_implementing_unit" required>
                 <option value="">Choose your option</option>
-                <optgroup label="RCU">
-                    <option value="8">Region Vlll - Eastern Visayas</option>
-                    <option value="9">Region lX - Zamboanga Peninsula</option>
-                    <option value="10">Region X - Northern Mindanao</option>
-                    <option value="11">Region Xl - Davao Region</option>
-                    <option value="12">Region Xll - SOCCSKSARGEN</option>
-                    <option value="13">Region Xlll - Caraga</option>
+                    <option value="8">Region 8 - Eastern Visayas</option>
+                    <option value="9">Region 9 - Zamboanga Peninsula</option>
+                    <option value="10">Region 10 - Northern Mindanao</option>
+                    <option value="11">Region 11 - Davao Region</option>
+                    <option value="12">Region 12 - SOCCSKSARGEN</option>
+                    <option value="13">Region 13 - Caraga</option>
                     <option value="BARMM">BARMM</option>
-                </optgroup>
-                <optgroup label="PCU">
-
-                    <option>Northern Samar</option>
-                    <option>Leyte</option>
-                    <option>Southern Leyte</option>
-                    <option>Zamboanga del Norte</option>
-                    <option>Zamboanga Sibugay</option>
-                    <option>Zamboanga del Sur</option>
-                    <option>Misamis Oriental</option>
-                    <option>Bukidnon</option>
-                    <option>Lanao del Norte</option>
-                    <option>Davao de Oro</option>
-                    <option>Davao Oriental</option>
-                    <option>Davao del Norte</option>
-                    <option>Davao del Sur</option>
-                    <option>Davao Occidental</option>
-                    <option>North Cotabato</option>
-                    <option>Sultan Kudarat</option>
-                    <option>Sarangani</option>
-                    <option>Agusan del Norte</option>
-                    <option>Agusan del Sur</option>
-                    <option>Surigao del Sur</option>
-                    <option>Maguindanao</option>
-                </optgroup>
-                <option style="font-weight: bold;">NGA Partners</option>
             </select>
         </div>
 
-        <div class="x-container x-padding">
-            <style>
-                table,
-                th,
-                td {
-                    border: 1px solid black;
-                    border-collapse: collapse;
-                }
-            </style>
-            <table class="x-table x-container x-table-border">
-                <tr>
-                    <th rowspan="2">
-                        <center><span style="color: #007399;" class="tool" data-tip="DIP name format: Region_DIP Name (example: R8_SC Global)" tabindex="1"><i class="fa fa-info-circle"></i></span> Name Of DIP</center>
-                    </th>
-                    <th rowspan="2">
-                        <center><span style="color: #007399;" class="tool" data-tip="Provide full name of FO/MSME" tabindex="1"><i class="fa fa-info-circle"></i></span> Name of FO/MSME RECIPIENT (type name of FO / MSME)</center>
-                    </th>
-                    <th rowspan="2">
-                        <center><span style="color: #007399;" class="tool" data-tip="Refers to the FO members who will receive intervention thru Matching Grants" tabindex="1"><i class="fa fa-info-circle"></i></span> Total # of FO Member Recipients</center>
-                    </th>
-                </tr>
-                <tr></tr>
-                <tr>
-                    <!---gender--->
-                    <td><input required class="FORM5_FIELD x-light-grey x-input" id="mgit_name_of_dip" type="text"
-                            name="mgit_name_of_dip"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_msme_recipient" type="text"
-                            name="mgit_msme_recipient"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_member_recipient" type="text"
-                            name="mgit_total_member_recipient"></td>
-                </tr>
-            </table>
-        </div>
-        <div class="x-row">
-            <div class="x-col l4 x-container">
-                <span class="">Commodity:</span>
-                <select class="FORM5_FIELD x-border x-select x-border" id="mgit_commodity" name="mgit_commodity" required>
-                    <option value="">Choose your option</option>
-                    <option>Coffee</option>
-                    <option>Cacao</option>
-                    <option>Coconut</option>
-                    <option>PFN</option>
-                </select>
-                <input type="text" class="FORM5_FIELD hidden-textbox x-input x-border" name="mgit_commodity_others"
-                    id="mgit_commodity_others" show-base="mgit_commodity" show-trigger="PFN" placeholder="Please specify">
-            </div>
+        <!-- DIP name -->
+         <div class="x-col l6 x-container x-padding">
+            <label>Name of DIP:</label>
+            <select class="FORM5_FIELD x-border x-select x-border" id="mgit_name_of_dip" name="mgit_name_of_dip" required>
+                <option value="">Choose your option</option>
+            </select>
         </div>
 
-        <div class="x-container x-padding">
-            <style>
-                table,
-                th,
-                td {
-                    border: 1px solid black;
-                    border-collapse: collapse;
+        <script>
+            function populateDipNames() {
+                return fetch('/api/get_dip_names')
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => { throw new Error(text) });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const selectElement = document.getElementById('mgit_name_of_dip');
+                        selectElement.innerHTML = '<option value="">Choose your option</option>';
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.form_1_name_dip;
+                            option.textContent = item.form_1_name_dip;
+                            selectElement.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching DIP names:', error));
+            }
+
+            // On page load, show all DIPs
+            populateDipNames();
+
+            document.getElementById('mgit_implementing_unit').addEventListener('change', function() {
+                const region = this.value;
+                const dipDropdown = document.getElementById('mgit_name_of_dip');
+                dipDropdown.innerHTML = '<option value="">Choose your option</option>';
+                if (!region) {
+                    // If empty, show all DIPs
+                    populateDipNames();
+                    return;
                 }
-            </style>
-            <table class="x-table x-container x-table-border">
-                <tr>
-                    <th colspan="2">
-                        <center>Total number of FO members by Gender</center>
-                    </th>
-                    <th colspan="4">
-                        <center>Total number of FO members by sectoral group </center>
-                    </th>
-                </tr>
+                fetch(`/api/get_dip_names_by_region?region=${encodeURIComponent(region)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.form_1_name_dip;
+                            option.textContent = item.form_1_name_dip;
+                            dipDropdown.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        dipDropdown.innerHTML = '<option value="">Error loading DIPs</option>';
+                        console.error('Error fetching DIP names:', error);
+                    });
+            });
+        </script>
 
-                <tr>
-                    <!---gender---->
-                    <td>
-                        <center>Male</center>
-                    </td>
-                    <td>
-                        <center>Female</center>
-                    </td>
 
-                    <!---SectorG---->
-                    <td>
-                        <center>PWD</center>
-                    </td>
-                    <td>
-                        <center>Youth</center>
-                    </td>
-                    <td>
-                        <center>IP</center>
-                    </td>
-                    <td>
-                        <center>SC</center>
-                    </td>
-                </tr>
+         <!-- Commodity -->
+        <div class="x-col l3 x-container x-padding">
+            <label>Commodity:</label>
+            <select class="FORM5_FIELD x-border x-select x-border" id="mgit_commodity" name="mgit_commodity" required>
+                <option value="">Choose your option</option>
+                <option>Coffee</option>
+                <option>Cacao</option>
+                <option>Coconut</option>
+                <option>PFN</option>
+            </select>
+            <input type="text" class="FORM5_FIELD hidden-textbox x-input x-border" name="mgit_commodity_others"
+                id="mgit_commodity_others" show-base="mgit_commodity" show-trigger="PFN" placeholder="Please specify">
+        </div>
 
-                <tr>
-                    <!---gender--->
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_number_fo_gender_male" type="number"name="mgit_total_number_fo_gender_male"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_number_fo_gender_female" type="number"name="mgit_total_number_fo_gender_female"></td>
-                    <!--sectorG--->
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_number_fo_sectoral_pwd" type="number"name="mgit_total_number_fo_sectoral_pwd"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_number_fo_sectoral_youth" type="number"name="mgit_total_number_fo_sectoral_youth"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_number_fo_sectoral_IP" type="number"name="mgit_total_number_fo_sectoral_IP"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_number_fo_sectoral_SC" type="number"name="mgit_total_number_fo_sectoral_SC"></td>
-                </tr>
-            </table>
+    <div class="x-container x-padding">
+        <style>
+            table,
+            th,
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        </style>
+        <table class="x-table x-container x-table-border">
+            <tr>
+                <th rowspan="2">
+                    <center>
+                        <span style="color: #007399;" class="tool" data-tip="Select if the DIP is for MSME or FO" tabindex="1">
+                            <i class="fa fa-info-circle"></i>
+                        </span> Type of Beneficiaries
+                    </center>
+                </th>
+                <th rowspan="2">
+                    <center>
+                        <span style="color: #007399;" class="tool" data-tip="Select on the 'Type of Beneficiaries' to show the Recipients Option" tabindex="1">
+                            <i class="fa fa-info-circle"></i>
+                        </span> Name of FO/MSME Recipient
+                    </center>
+                </th>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>
+                    <select class="FORM5_FIELD x-border x-select x-border" id="mgit_type_of_beneficiary" name="mgit_type_of_beneficiary">
+                        <option value="">Select Type</option>
+                        <option value="MSME">MSME</option>
+                        <option value="FO">FO</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="FORM5_FIELD x-border x-select x-border" id="mgit_msme_recipient" name="mgit_msme_recipient">
+                        <option value="">Select Recipient</option>
+                    </select>
+                </td>
+            </tr>
+
+            <script>
+                function populateRecipientNames(existingValue, filterType) {
+                    return Promise.all([
+                        fetch('/api/get_msme_names')
+                            .then(response => {
+                                if (!response.ok) {
+                                    return response.text().then(text => { throw new Error(text) });
+                                }
+                                return response.json();
+                            }),
+                        fetch('/api/get_fo_names')
+                            .then(response => {
+                                if (!response.ok) {
+                                    return response.text().then(text => { throw new Error(text) });
+                                }
+                                return response.json();
+                            })
+                    ])
+                    .then(([msmeData, foData]) => {
+                        const selectElement = document.getElementById('mgit_msme_recipient');
+                        selectElement.innerHTML = '<option value="">Choose your option</option>';
+                        if (!filterType || filterType === "") {
+                            msmeData.forEach(item => {
+                                const option = document.createElement('option');
+                                option.value = item.reg_businessname;
+                                option.textContent = "MSME: " + item.reg_businessname;
+                                selectElement.appendChild(option);
+                            });
+                            foData.forEach(item => {
+                                const option = document.createElement('option');
+                                option.value = item.organization_registered_name;
+                                option.textContent = "FO: " + item.organization_registered_name;
+                                selectElement.appendChild(option);
+                            });
+                        } else if (filterType === "MSME") {
+                            msmeData.forEach(item => {
+                                const option = document.createElement('option');
+                                option.value = item.reg_businessname;
+                                option.textContent = "MSME: " + item.reg_businessname;
+                                selectElement.appendChild(option);
+                            });
+                        } else if (filterType === "FO") {
+                            foData.forEach(item => {
+                                const option = document.createElement('option');
+                                option.value = item.organization_registered_name;
+                                option.textContent = "FO: " + item.organization_registered_name;
+                                selectElement.appendChild(option);
+                            });
+                        }
+                        if (existingValue) {
+                            selectElement.value = existingValue;
+                        }
+                    })
+                    .catch(error => console.error('Error fetching recipient names:', error));
+                }
+                populateRecipientNames();
+                document.getElementById('mgit_type_of_beneficiary').addEventListener('change', function() {
+                    const type = this.value;
+                    populateRecipientNames(null, type);
+                });
+            </script>
+        </table>
+
+        <br>
+
+        <table class="x-table x-container x-table-border">
+            <tr>
+                <th rowspan="2">
+                    <center>
+                        <span style="color: #007399;" class="tool" tabindex="1">
+                        </span> Status of MGA
+                    </center>
+                </th>
+                <th rowspan="2">
+                    <center>
+                        <span style="color: #007399;" class="tool" tabindex="1">
+                        </span> Date Signed
+                    </center>
+                </th>
+                <th rowspan="2">
+                    <center>
+                        <span style="color: #007399;" class="tool" tabindex="1">
+                        </span> Total Amount of Signed Matching Grant Agreement (in PHP)
+                    </center>
+                </th>
+            </tr>
+            <tr>
+            <tr>
+                <td>
+                    <select required class="FORM5_FIELD x-input x-border" id="mgit_status_of_mga" name="mgit_status_of_mga">
+                        <option value="">Select Type</option>
+                        <option value="Ongoing">Ongoing</option>
+                        <option value="Preparation">Preparation</option>
+                        <option value="Signed">Signed</option>
+                    </select>
+                </td>
+                <td>
+                    <input required class="FORM5_FIELD x-input x-border" id="mgit_date_signed" name="mgit_date_signed" type="date"></input>
+                </td>
+                <td>
+                    <input required class="FORM5_FIELD x-input x-border" id="mgit_total_amount" name="mgit_total_amount" type="number"></input>
+                </td>
+            </tr>
+        </table>
+
+        <script>
+            function handleStatusOfMGAChange() {
+                const status = document.getElementById('mgit_status_of_mga').value;
+                const typeOfInvestment = document.getElementById('mgit_type_of_investment');
+                // Sections to hide/show
+                const exp = document.getElementById('exp');
+                const exp2 = document.getElementById('exp2');
+                const exp3 = document.getElementById('exp3');
+                const rehab = document.getElementById('rehab');
+                const rehab2 = document.getElementById('rehab2');
+                const prodInv = document.getElementById('prodInv');
+
+                if (typeOfInvestment) { // <-- Add this check
+                    if (status === "Signed") {
+                        typeOfInvestment.disabled = false;
+                    } else {
+                        typeOfInvestment.value = "";
+                        typeOfInvestment.disabled = true;
+                        // Hide all investment sections
+                        if(exp) exp.style.display = "none";
+                        if(exp2) exp2.style.display = "none";
+                        if(exp3) exp3.style.display = "none";
+                        if(rehab) rehab.style.display = "none";
+                        if(rehab2) rehab2.style.display = "none";
+                        if(prodInv) prodInv.style.display = "none";
+                    }
+                }
+            }
+            document.getElementById('mgit_status_of_mga').addEventListener('change', handleStatusOfMGAChange);
+            handleStatusOfMGAChange();
+        </script>
+
         </div>
 
         <div class="x-row">
@@ -179,111 +302,241 @@
                 <select class="FORM5_FIELD x-border x-select x-border" id="mgit_type_of_investment"
                     name="mgit_type_of_investment"><br>
                     <option value="">Choose your option</option>
-                    <!--<option disabled>Productive investments</option>
-                    <option disabled>Expansion</option>
-                    <option disabled>Rehabilitation</option>-->
-                    <option>Productive investments, Rehabilitation </option>
-                    <option>Expansion, Rehabilitation </option>
+                    <option>Expansion</option>
+                    <option>Rehabilitation</option>
+                    <option>Productive investments</option>
+                    <option>Expansion, Rehabilitation</option>
+                    <option>Expansion, Productive investments</option>
+                    <option>Rehabilitation, Productive investments</option>
+                    <option>Expansion, Productive investments, Rehabilitation</option>
                 </select>
             </div>
         </div>
 
         <script>
             $(document).ready(function () {
-                $("#prodex, #prodex2, #prodex3, #rehab, #rehab2").hide();
+                $("#exp, #exp2, #exp3, #rehab, #rehab2, #prodInv").hide();
                 $("#mgit_type_of_investment").change(function () {
-                    $("#prodex, #prodex2, #prodex3, #rehab, #rehab2").hide();
+                    $("#exp, #exp2, #exp3, #rehab, #rehab2, #prodInv").hide();
                     var selectedOption = $(this).val();
-                    if (selectedOption === "Productive investments" || selectedOption === "Expansion") {
-                        $("#prodex, #prodex2, #prodex3").show();
-                    } else if (selectedOption === "Rehabilitation") {
+                    if (selectedOption.includes("Expansion")) {
+                        $("#exp, #exp2, #exp3").show();
+                    }
+                    if (selectedOption.includes("Rehabilitation")) {
                         $("#rehab, #rehab2").show();
                     }
-                    else if (selectedOption === "Productive investments, Rehabilitation") {
-                        $("#prodex, #prodex2, #prodex3,#rehab, #rehab2").show();
-                    }
-                    else if (selectedOption === "Expansion, Rehabilitation") {
-                        $("#prodex, #prodex2, #prodex3,#rehab, #rehab2").show();
+                    if (selectedOption.includes("Productive investments")) {
+                        $("#prodInv").show();
                     }
                 });
             });
         </script>
 
-        <div id="prodex" class="x-container x-padding">
+        <!--------------------------------------------------------------- Expansion Section --------------------------------------------------------------------->
+
+        <div id="exp" class="x-container x-padding">
+            <h2 class=" x-container x-padding text-white" style="background-color: #007399; text-align: center;">EXPANSION</h2>
             <style>
-                table,
-                th,
-                td {
-                    border: 1px solid black;
-                    border-collapse: collapse;
-                }
+            table,
+            th,
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
             </style>
             <table class="x-table x-container x-table-border">
-                <tr>
-                    <th>
-                        <center>TOTAL OF MGAs based on approved DIP</center>
-                    </th>
-                    <th>
-                        <center>Total of MGAs Signed </center>
-                    </th>
-                    <th>
-                        <center>Total of MGAs not yet signed</center>
-                    </th>
-                    <th>
-                        <center>TOTAL MATCHING GRANT BASED ON APPROVED BUSINESS PLAN (IN PHP)</center>
-                    </th>
-                </tr>
+            <tr>
+                <th>
+                <center>Total No. of Target FO</center>
+                </th>
+                <th>
+                <center>Total No. of Target Members </center>
+                </th>
+                <th>
+                <center>Total Amount of MGRR</center>
+                </th>
+            </tr>
 
-                <tr>
-                    <!--sectorG--->
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_mgas_based_approved_DIP" type="text"
-                            name="mgit_total_mgas_based_approved_DIP"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_mgas_signed" type="text"
-                            name="mgit_total_mgas_signed"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_mgas_not_yet_signed" type="text"
-                            name="mgit_total_mgas_not_yet_signed"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_matching_grant_based_on_approved_business"
-                            type="text" name="mgit_total_matching_grant_based_on_approved_business"></td>
-                </tr>
+            <tr>
+                <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_num_target_of_fo_expansion" type="number"
+                    name="mgit_total_num_target_of_fo"></td>
+                <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_num_target_members_expansion" type="number"
+                    name="mgit_total_num_target_members"></td>
+                <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_mgrr" type="number"
+                    name="mgit_total_amount_mgrr"></td>
+            </tr>
+
+            <br>
+
+            <table class="x-table x-container x-table-border"  id="mgrr-history-table">
+            <thead>
+                <th><center>Date</center></th>
+                <th><center>Status of MGRR</center></th>
+            </thead>
+            <tbody>
+                <!-- Rows will be populated by JS -->
+            </tbody>
+            <tr>
+                <td>
+                <input class="x-input x-border" id="mgit_date_history" name="mgit_date_history" type="date">
+                <input class="FORM5_FIELD x-input x-border" type="text" id="mgit_date" name="mgit_date" style="background-color: #b3e6cc;">
+                </td>
+                <td>
+                <select class="x-input x-border" id="mgit_status_mgrr_history" name="mgit_status_mgrr_history">
+                    <option value="">Choose your option</option>
+                    <option value="Endorsed to NPCO">Endorsed to NPCO</option>
+                    <option value="Endorsed to HO">Endorsed to HO</option>
+                    <option value="Approved by HO">Approved by HO</option>
+                    <option value="Released">Released</option>
+                </select>
+                <input class="FORM5_FIELD x-input x-border" type="text" id="mgit_status_mgrr" name="mgit_status_mgrr" style="background-color: #b3e6cc;">
+                </td>
+            </tr>
             </table>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const dateVal = document.getElementById('mgit_date').value;
+                const statusVal = document.getElementById('mgit_status_mgrr').value;
+                if (dateVal) {
+                const arr = dateVal.split(',');
+                document.getElementById('mgit_date_history').value = arr[arr.length-1];
+                }
+                if (statusVal) {
+                const arr = statusVal.split(',');
+                document.getElementById('mgit_status_mgrr_history').value = arr[arr.length-1];
+                }
+
+                // Populate the history table
+                function populateMgrrHistoryTable() {
+                const dateArr = (document.getElementById('mgit_date').value || '').split(',');
+                const statusArr = (document.getElementById('mgit_status_mgrr').value || '').split(',');
+                const tbody = document.getElementById('mgrr-history-table').querySelector('tbody');
+                tbody.innerHTML = '';
+                // Use the longer length to avoid missing data
+                const maxLen = Math.max(dateArr.length, statusArr.length);
+                for (let i = 0; i < maxLen; i++) {
+                    // Only show rows if at least one value is present
+                    if ((dateArr[i] && dateArr[i].trim()) || (statusArr[i] && statusArr[i].trim())) {
+                    const tr = document.createElement('tr');
+                    const tdDate = document.createElement('td');
+                    tdDate.textContent = dateArr[i] ? dateArr[i] : '';
+                    const tdStatus = document.createElement('td');
+                    tdStatus.textContent = statusArr[i] ? statusArr[i] : '';
+                    tr.appendChild(tdDate);
+                    tr.appendChild(tdStatus);
+                    tbody.appendChild(tr);
+                    }
+                }
+                }
+
+                // Initial population
+                populateMgrrHistoryTable();
+
+                // Re-populate when the hidden fields change
+                // Use MutationObserver to detect value changes
+                function observeValueChange(elementId, callback) {
+                const el = document.getElementById(elementId);
+                let lastValue = el.value;
+                setInterval(function() {
+                    if (el.value !== lastValue) {
+                    lastValue = el.value;
+                    callback();
+                    }
+                }, 300);
+                }
+                observeValueChange('mgit_date', populateMgrrHistoryTable);
+                observeValueChange('mgit_status_mgrr', populateMgrrHistoryTable);
+            });
+
+            function updateHistoryField(historyInputId, hiddenFieldId, allowRemoval = true) {
+                const historyInput = document.getElementById(historyInputId);
+                const hiddenField = document.getElementById(hiddenFieldId);
+
+                historyInput.addEventListener('focus', function() {
+                let current = hiddenField.value;
+                if (current) {
+                    let arr = current.split(',');
+                    if (arr.length < 4 && arr[arr.length-1] !== historyInput.value) {
+                    arr.push('');
+                    hiddenField.value = arr.join(',');
+                    historyInput.value = '';
+                    }
+                } else {
+                    hiddenField.value = '';
+                }
+                });
+
+                historyInput.addEventListener('change', function() {
+                const newVal = this.value;
+                let current = hiddenField.value;
+                if (!current) {
+                    hiddenField.value = newVal;
+                } else {
+                    let arr = current.split(',');
+                    if (!newVal && arr.length > 1 && allowRemoval) {
+                    // Remove only the last added value
+                    arr.pop();
+                    hiddenField.value = arr.join(',');
+                    historyInput.value = arr[arr.length-1] || '';
+                    } else if (newVal && arr.length > 0) {
+                    arr[arr.length-1] = newVal;
+                    hiddenField.value = arr.join(',');
+                    }
+                }
+                });
+            }
+            updateHistoryField('mgit_date_history', 'mgit_date', true);
+            updateHistoryField('mgit_status_mgrr_history', 'mgit_status_mgrr', false);
+            </script>
         </div>
 
-        <div id="prodex2" class="x-container x-padding">
+        <div id="exp2" class="x-container x-padding">
             <style>
-                table,
-                th,
-                td {
-                    border: 1px solid black;
-                    border-collapse: collapse;
-                }
+            table,
+            th,
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
             </style>
             <table class="x-table x-container x-table-border">
-                <tr>
-                    <th>
-                        <center>PREVIOUS MATCHING GRANT AVAILMENT (IN PHP) - FIRST AVAILMENT</center>
-                    </th>
-                    <th>
-                        <center>MATCHING GRANT AVAILMENT AS OF THIS REPORTING PERIOD (IN PHP) and date</center>
-                    </th>
-                    <th>
-                        <center>REMAINING MATCHING GRANT BALANCE (in PHP)</center>
-                    </th>
-                </tr>
+            <tr>
+                <th>
+                <center>Amount Release in PHP</center>
+                </th>
+                <th>
+                <center>Remaining Balance</center>
+                </th>
+                <th>
+                <center>Target Total Area For Expansion (ha)</center>
+                </th>
+            </tr>
 
-                <tr>
-                    <!--sectorG--->
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_pmga_first_availment" type="text"
-                            name="mgit_pmga_first_availment"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_mgar_period_date" type="text"
-                            name="mgit_mgar_period_date"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_remaining_matching_grant_balance" type="text"
-                            name="mgit_remaining_matching_grant_balance"></td>
-                </tr>
+            <tr>
+                <td><input class="FORM5_FIELD  x-input x-border" id="mgit_amount_release" type="number"
+                    name="mgit_amount_release"></td>
+                <td><input readonly class="FORM5_FIELD x-input x-border" id="mgit_remaining_balance" type="number"
+                    name="mgit_remaining_balance"></td>
+                <td><input class="FORM5_FIELD  x-input x-border" id="mgit_target_total_amount_of_has" type="number"
+                    name="mgit_target_total_amount_of_has"></td>
+            </tr>
             </table>
+            <script>
+            function updateRemainingBalance() {
+                var totalMgrr = parseFloat(document.getElementById('mgit_total_amount_mgrr').value) || 0;
+                var amountReleased = parseFloat(document.getElementById('mgit_amount_release').value) || 0;
+                var remaining = totalMgrr - amountReleased;
+                // Set as plain number with 2 decimals, not formatted with commas
+                document.getElementById('mgit_remaining_balance').value = remaining.toFixed(2);
+                }
+                document.getElementById('mgit_total_amount_mgrr').addEventListener('input', updateRemainingBalance);
+                document.getElementById('mgit_amount_release').addEventListener('input', updateRemainingBalance);
+            </script>
         </div>
 
 
-        <div id="prodex3" class="x-col l5 x-container x-padding">
+        <div id="exp3" class="x-container x-padding">
             <style>
                 table,
                 th,
@@ -304,10 +557,10 @@
 
                 <tr>
                     <td>
-                        <center>Start</center>
+                        <center>Start of Procurement</center>
                     </td>
                     <td>
-                        <center>End</center>
+                        <center>End of Procurement</center>
                     </td>
                 </tr>
 
@@ -316,11 +569,31 @@
                             placeholder="" name="mgit_inclusive_timeline_implementation_start"></td>
                     <td><input class="FORM5_FIELD x-input x-border" id="mgit_inclusive_timeline_implementation_end" type="date"
                             placeholder="" name="mgit_inclusive_timeline_implementation_end"></td>
-                    <td><input readonly class="FORM5_FIELD x-light-grey x-input" id="mgit_time_elapse" type="text" name="mgit_time_elapse">
+                    <td><input readonly class="FORM5_FIELD x-input x-border" id="mgit_time_elapse" type="text" name="mgit_time_elapse">
                     </td>
                 </tr>
             </table>
         </div>
+
+        <script>
+                function handleMgrrStatusChange() {
+                    const status = document.getElementById('mgit_status_mgrr_history').value;
+                    const fields = [
+                        'mgit_amount_release',
+                        'mgit_target_total_amount_of_has',
+                        'mgit_inclusive_timeline_implementation_start',
+                        'mgit_inclusive_timeline_implementation_end',
+                    ];
+                    const readonly = (status === "Endorsed to NPCO" || status === "Approved by HO");
+                    fields.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.readOnly = readonly;
+                    });
+                }
+                document.getElementById('mgit_status_mgrr_history').addEventListener('change', handleMgrrStatusChange);
+                // Run on page load in case value is already set
+                handleMgrrStatusChange();
+        </script>
 
         <script>
             const startDateInput = document.getElementById('mgit_inclusive_timeline_implementation_start');
@@ -339,7 +612,10 @@
             endDateInput.addEventListener('input', calculateTimeElapsed);
         </script>
 
+        <!--------------------------------------------------------------- Rehabilitation Section --------------------------------------------------------------------->
+
         <div id="rehab" class="x-container x-padding">
+            <h2 class=" x-container x-padding text-white" style="background-color: #007399; text-align: center;">REHABILITATION</h2>
             <style>
                 table,
                 th,
@@ -350,26 +626,74 @@
             </style>
             <table class="x-table x-container x-table-border">
                 <th>
-                    <center>TOTAL BUDGET AS APPROVED IN THE DIP</center>
+                    <center>Total No. of Target FO</center>
                 </th>
                 <th>
-                    <center>ACTUAL COST OF PROCUREMENT</center>
+                    <center>Total No. of Target Members</center>
                 </th>
                 <th>
-                    <center>SUMMARY OF ACTUAL TOOLS PROCURED</center>
+                    <center>Total Amount of MOOE</center>
+                </th>
+                <th>
+                    <center>Total Amount Disbursed</center>
+                </th>
+                <th>
+                    <center>Date Disbursed</center>
                 </th>
                 </tr>
 
                 <tr>
                     <!--sectorG--->
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_total_budget_approved_in_the_DIP" type="text"
-                            name="mgit_total_budget_approved_in_the_DIP"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_actual_cost_of_procurement" type="text"
-                            name="mgit_actual_cost_of_procurement"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_summary_of_actual_tools_procured" type="text"
-                            name="mgit_summary_of_actual_tools_procured"></td>
+                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_num_target_of_fo_rehab" type="number"
+                            name="mgit_total_num_target_of_fo_rehab"></td>
+                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_num_target_members_rehab" type="number"
+                            name="mgit_total_num_target_members_rehab"></td>
+                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_mooe" type="number"
+                            name="mgit_total_amount_of_mooe"></td>
+                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_release" type="number"
+                            name="mgit_total_amount_of_release"></td>
+                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_date_released" type="date"
+                            name="mgit_date_released"></td>
                 </tr>
             </table>
+
+            <br>
+
+            <table class="x-table x-container x-table-border">
+                <th>
+                    <center>Remaining Balance</center>
+                </th>
+                <th>
+                    <center>Total No. of Members received</center>
+                </th>
+                <th>
+                    <center>Target Total Area of Has for Rehabilitation</center>
+                </th>
+                </tr>
+
+                <tr>
+                    <!--sectorG--->
+                    <td>
+                        <input readonly class="FORM5_FIELD x-input x-border" id="mgit_remaining_balance_rehab" type="number" name="mgit_remaining_balance_rehab">
+                    </td>
+                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_members_received_rehab" type="number"
+                            name="mgit_total_amount_of_members_received_rehab"></td>
+                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_target_total_amount_of_has_for_rehabilitation" type="number"
+                            name="mgit_target_total_amount_of_has_for_rehabilitation"></td>
+                </tr>
+            </table>
+            <script>
+                function updateRemainingBalanceRehab() {
+                    var totalMooe = parseFloat(document.getElementById('mgit_total_amount_of_mooe').value) || 0;
+                    var amountReleased = parseFloat(document.getElementById('mgit_total_amount_of_release').value) || 0;
+                    var remaining = totalMooe - amountReleased;
+                    // Set as plain number with 2 decimals, not formatted with commas
+                    document.getElementById('mgit_remaining_balance_rehab').value = remaining.toFixed(2);
+                }
+                document.getElementById('mgit_total_amount_of_mooe').addEventListener('input', updateRemainingBalanceRehab);
+                document.getElementById('mgit_total_amount_of_release').addEventListener('input', updateRemainingBalanceRehab);
+            </script>
+
         </div>
         <div id="rehab2" class="x-row x-container x-padding">
             <style>
@@ -388,29 +712,21 @@
                     <th rowspan="2">
                         <center>TIME ELAPSE (autocalculate: in reference tostart and end date)</center>
                     </th>
-                    <th rowspan="2">
-                        <center>DATE OF DISTRIBUTION/<br>TRAINING</center>
-                    </th>
-                    <th rowspan="2">
-                        <center>REMARKS ON THE DELIVERED TOOLS</center>
-                    </th>
                 </tr>
 
                 <tr>
                     <td>
-                        <center>Start</center>
+                        <center>Start of Procurement</center>
                     </td>
                     <td>
-                        <center>End</center>
+                        <center>End of Procurement</center>
                     </td>
                 </tr>
 
                 <tr>
                     <td><input class="FORM5_FIELD  x-input x-border" id="mgit_inclusive_timeline_implementation_start1"name="mgit_inclusive_timeline_implementation_start1" type="date" placeholder=""></td>
                     <td><input class="FORM5_FIELD  x-input x-border" id="mgit_inclusive_timeline_implementation_end1"name="mgit_inclusive_timeline_implementation_end1" type="date" placeholder=""></td>
-                    <td><input readonly class="FORM5_FIELD  x-light-grey x-input" id="mgit_time_elapse1" type="text"name="mgit_time_elapse1"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_date_of_distribution" type="text"name="mgit_date_of_distribution"></td>
-                    <td><input class="FORM5_FIELD  x-light-grey x-input" id="mgit_remarks_on_the_deliverd_tools" type="text"name="mgit_remarks_on_the_deliverd_tools"></td>
+                    <td><input readonly class="FORM5_FIELD x-input x-border" id="mgit_time_elapse1" type="text"name="mgit_time_elapse1"></td>
                 </tr>
             </table>
 
@@ -430,6 +746,308 @@
                 endDateInput2.addEventListener('input', calculateTimeElapsed2);
             </script>
         </div>
+
+        <!--------------------------------------------------------------- Productive Investment Section --------------------------------------------------------------------->
+
+        <div id="prodInv" class="x-container x-padding">
+            <h2 class=" x-container x-padding text-white" style="background-color: #007399; text-align: center;">PRODUCTIVE INVESTMENT</h2>
+            <style>
+                table, th, td {
+                    border: 1px solid black;
+                    border-collapse: collapse;
+                }
+            </style>
+        
+            <table class="x-table x-container x-table-border">
+                <tr>
+                    <th><center>Total Amount of MGA Signed (Productive Investment Only)</center></th>
+                    <th><center>Productive Investment requested (Based on the MGRR)</center></th>
+                    <th><center>Total Amount in the MGRR</center></th>
+                </tr>
+                <tr>
+                    <td><input class="FORM5_FIELD x-input x-border" id="mgit_total_amount_of_mga_signed" type="number" name="mgit_total_amount_of_mga_signed"></td>
+                    <td><input class="FORM5_FIELD x-input x-border" id="mgit_productive_investment_requested" type="text" name="mgit_productive_investment_requested"></td>
+                    <td><input class="FORM5_FIELD x-input x-border" id="mgit_total_amount_in_mgrr" type="number" name="mgit_total_amount_in_mgrr"></td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table class="x-table x-container x-table-border" id="mgrr-history-table-prodInv">
+                <thead>
+                    <tr>
+                        <th><center>Type of Investment (Based on the MGRR)</center></th>
+                        <th><center>Date</center></th>
+                        <th><center>Status of MGRR</center></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- JS will populate this -->
+                </tbody>
+                <tr>
+                    <td>
+                        <select class="FORM5_FIELD x-input x-border" id="mgit_type_of_investment_prod" name="mgit_type_of_investment_prod">
+                            <option value="">Choose your option</option>
+                            <option value="Equipment / Machineries">Equipment / Machineries</option>
+                            <option value="Logistics">Logistics</option>
+                            <option value="Facilities">Facilities</option>
+                        </select>
+                        <input class="FORM5_FIELD x-input x-border" id="mgit_type_of_investment_prod_history" name="mgit_type_of_investment_prod_history" type="text">
+                    </td>
+                    <td>
+                        <input class="x-input x-border" id="mgit_date_history_productive_investment" type="date">
+                        <input class="FORM5_FIELD x-input x-border" id="mgit_date_productive_investment" name="mgit_date_productive_investment" type="text">
+                    </td>
+                    <td>
+                        <select class="x-input x-border" id="mgit_status_mgrr_history_prodInv">
+                            <option value="">Choose your option</option>
+                            <option value="Endorsed to NPCO">Endorsed to NPCO</option>
+                            <option value="Endorsed to HO">Endorsed to HO</option>
+                            <option value="Approved by HO">Approved by HO</option>
+                            <option value="Released">Released</option>
+                        </select>
+                        <input class="FORM5_FIELD x-input x-border" id="mgit_status_of_mgrr_prodInv" name="mgit_status_of_mgrr_prodInv" type="text">
+                    </td>
+                </tr>
+            </table>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Set initial values for history fields
+                    const typeVal = document.getElementById('mgit_type_of_investment_prod_history').value;
+                    const dateVal = document.getElementById('mgit_date_productive_investment').value;
+                    const statusVal = document.getElementById('mgit_status_of_mgrr_prodInv').value;
+                    if (typeVal) {
+                        const arr = typeVal.split(',');
+                        document.getElementById('mgit_type_of_investment_prod').value = arr[arr.length - 1];
+                    }
+                    if (dateVal) {
+                        const arr = dateVal.split(',');
+                        document.getElementById('mgit_date_history_productive_investment').value = arr[arr.length - 1];
+                    }
+                    if (statusVal) {
+                        const arr = statusVal.split(',');
+                        document.getElementById('mgit_status_mgrr_history_prodInv').value = arr[arr.length - 1];
+                    }
+
+                    // Update table population to use all three histories
+                    function populateMgrrHistoryTable() {
+                        const typeArr = (document.getElementById('mgit_type_of_investment_prod_history').value || '').split(',');
+                        const dateArr = (document.getElementById('mgit_date_productive_investment').value || '').split(',');
+                        const statusArr = (document.getElementById('mgit_status_of_mgrr_prodInv').value || '').split(',');
+                        const tbody = document.getElementById('mgrr-history-table-prodInv').querySelector('tbody');
+                        tbody.innerHTML = '';
+                        const maxLen = Math.max(typeArr.length, dateArr.length, statusArr.length);
+                        for (let i = 0; i < maxLen; i++) {
+                            if (
+                                (typeArr[i] && typeArr[i].trim()) ||
+                                (dateArr[i] && dateArr[i].trim()) ||
+                                (statusArr[i] && statusArr[i].trim())
+                            ) {
+                                const tr = document.createElement('tr');
+                                const tdType = document.createElement('td');
+                                tdType.textContent = typeArr[i] ? typeArr[i] : '';
+                                const tdDate = document.createElement('td');
+                                tdDate.textContent = dateArr[i] ? dateArr[i] : '';
+                                const tdStatus = document.createElement('td');
+                                tdStatus.textContent = statusArr[i] ? statusArr[i] : '';
+                                tr.appendChild(tdType);
+                                tr.appendChild(tdDate);
+                                tr.appendChild(tdStatus);
+                                tbody.appendChild(tr);
+                            }
+                        }
+                    }
+
+                    // Observe changes for all three fields
+                    function observeValueChange(elementId, callback) {
+                        const el = document.getElementById(elementId);
+                        let lastValue = el.value;
+                        setInterval(function () {
+                            if (el.value !== lastValue) {
+                                lastValue = el.value;
+                                callback();
+                            }
+                        }, 300);
+                    }
+                    observeValueChange('mgit_type_of_investment_prod_history', populateMgrrHistoryTable);
+                    observeValueChange('mgit_date_productive_investment', populateMgrrHistoryTable);
+                    observeValueChange('mgit_status_of_mgrr_prodInv', populateMgrrHistoryTable);
+
+                    // History field logic for type, date, and status
+                    function updateHistoryField(historyInputId, hiddenFieldId, allowRemoval = true) {
+                        const historyInput = document.getElementById(historyInputId);
+                        const hiddenField = document.getElementById(hiddenFieldId);
+                        historyInput.addEventListener('focus', function () {
+                            let current = hiddenField.value;
+                            if (current) {
+                                let arr = current.split(',');
+                                if (arr.length < 4 && arr[arr.length - 1] !== historyInput.value) {
+                                    arr.push('');
+                                    hiddenField.value = arr.join(',');
+                                    historyInput.value = '';
+                                }
+                            } else {
+                                hiddenField.value = '';
+                            }
+                        });
+
+                        historyInput.addEventListener('change', function () {
+                            const newVal = this.value;
+                            let current = hiddenField.value;
+                            if (!current) {
+                                hiddenField.value = newVal;
+                            } else {
+                                let arr = current.split(',');
+                                if (!newVal && arr.length > 1 && allowRemoval) {
+                                    arr.pop();
+                                    hiddenField.value = arr.join(',');
+                                    historyInput.value = arr[arr.length - 1] || '';
+                                } else if (newVal && arr.length > 0) {
+                                    arr[arr.length - 1] = newVal;
+                                    hiddenField.value = arr.join(',');
+                                }
+                            }
+                        });
+                    }
+                    updateHistoryField('mgit_type_of_investment_prod', 'mgit_type_of_investment_prod_history', true);
+                    updateHistoryField('mgit_date_history_productive_investment', 'mgit_date_productive_investment', true);
+                    updateHistoryField('mgit_status_mgrr_history_prodInv', 'mgit_status_of_mgrr_prodInv', false);
+                });
+                </script>
+
+            <br>
+        
+            <table class="x-table x-container x-table-border">
+                <tr>
+                    <th><center>MGRR Amount Released in PHP</center></th>
+                    <th><center>Total Actual Counterpart/Equity</center></th>
+                    <th><center>Source of Fund</center></th>
+                    <th><center>Name of Source</center></th>
+                </tr>
+                <tr>
+                    <td><input class="FORM5_FIELD x-input x-border" id="mgit_mgrr_amount_released_php" type="number" name="mgit_mgrr_amount_released_php"></td>
+                    <td><input class="FORM5_FIELD x-input x-border" id="mgit_total_actual_counterpart" type="number" name="mgit_total_actual_counterpart"></td>
+                    <td><select class="FORM5_FIELD x-input x-border" id="mgit_source_of_fund" name="mgit_source_of_fund">
+                            <option value="">Choose your option</option>
+                            <option value="Internal Funds(self)">Internal Funds(self)</option>
+                            <option value="Loan">Loan</option>
+                            <option value="Cash Grant (NGAs/LGUs)">Cash Grant (NGAs/LGUs)</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="FORM5_FIELD x-input x-border" id="mgit_name_of_source" type="text" name="mgit_name_of_source">
+                    </td>
+                </tr>
+            </table>
+            <script>
+                document.getElementById('mgit_source_of_fund').addEventListener('change', function() {
+                    var source = this.value;
+                    var nameInput = document.getElementById('mgit_name_of_source');
+                    var foMsmeName = document.getElementById('mgit_msme_recipient').value;
+                    if (source === "Internal Funds(self)") {
+                        nameInput.value = foMsmeName;
+                        nameInput.readOnly = true;
+                    } else {
+                        nameInput.value = "";
+                        nameInput.readOnly = false;
+                    }
+                });
+                document.getElementById('mgit_msme_recipient').addEventListener('change', function() {
+                    var source = document.getElementById('mgit_source_of_fund').value;
+                    var nameInput = document.getElementById('mgit_name_of_source');
+                    if (source === "Internal Funds(self)") {
+                        nameInput.value = this.value;
+                    }
+                });
+            </script>
+            
+            <br>
+        
+            <table class="x-table x-container x-table-border">
+                <tr>
+                    <th><center>Amount Released in PHP (Counterpart/Equity)</center></th>
+                    <th><center>Remaining Balance (Total Amount of MGA - Total Amount of MGRR)</center></th>
+                    <th colspan="2"><center>INCLUSIVE TIMELINE OF IMPLEMENTATION (based on MGA)</center></th>
+                    <th><center>TIME ELAPSE<br>(auto-calculate)</center></th>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <input class="FORM5_FIELD x-input x-border" id="mgit_amount_released_in_php" type="number" name="mgit_amount_released_in_php">
+                    </td>
+                    <td rowspan="2">
+                        <input readonly class="FORM5_FIELD x-input x-border" id="mgit_remaining_balance_prod" type="number" name="mgit_remaining_balance_prod">
+                    </td>
+                    <td><center>Start of Procurement</center></td>
+                    <td><center>End of Procurement</center></td>
+                    <td rowspan="2">
+                        <input readonly class="FORM5_FIELD x-input x-border" id="mgit_time_elapse_prod" name="mgit_time_elapse_prod" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="FORM5_FIELD x-input x-border" id="mgit_timeline_start_prod" name="mgit_timeline_start_prod" type="date" placeholder="Start">
+                    </td>
+                    <td>
+                        <input class="FORM5_FIELD x-input x-border" id="mgit_timeline_end_prod" name="mgit_timeline_end_prod" type="date" placeholder="End">
+                    </td>
+                </tr>
+            </table>
+
+            <script>
+                function handleMgrrProdInvStatusChange() {
+                    const status = document.getElementById('mgit_status_mgrr_history_prodInv').value;
+                    const fields = [
+                        'mgit_mgrr_amount_released_php',
+                        'mgit_total_actual_counterpart',
+                        'mgit_source_of_fund',
+                        'mgit_name_of_source',
+                        'mgit_amount_released_in_php',
+                        'mgit_timeline_start_prod',
+                        'mgit_timeline_end_prod',
+                    ];
+                    const readonly = (status === "Approved by HO" || status === "Endorsed to NPCO" || status === "Endorsed to HO");
+                    fields.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) {
+                            if (el.tagName === "SELECT") {
+                                el.disabled = readonly;
+                            } else {
+                                el.readOnly = readonly;
+                            }
+                        }
+                    });
+                }
+                document.getElementById('mgit_status_mgrr_history_prodInv').addEventListener('change', handleMgrrProdInvStatusChange);
+                handleMgrrProdInvStatusChange();
+            </script>
+
+            <script>
+                function updateRemainingBalanceProd() {
+                    var totalMGA = parseFloat(document.getElementById('mgit_total_amount_of_mga_signed').value) || 0;
+                    var totalMGRR = parseFloat(document.getElementById('mgit_total_amount_in_mgrr').value) || 0;
+                    var remaining = totalMGA - totalMGRR;
+                    document.getElementById('mgit_remaining_balance_prod').value = remaining.toFixed(2);
+                }
+                document.getElementById('mgit_total_amount_of_mga_signed').addEventListener('input', updateRemainingBalanceProd);
+                document.getElementById('mgit_total_amount_in_mgrr').addEventListener('input', updateRemainingBalanceProd);
+
+                const startDateInput3 = document.getElementById('mgit_timeline_start_prod');
+                const endDateInput3 = document.getElementById('mgit_timeline_end_prod');
+                const timeElapsedInput3 = document.getElementById('mgit_time_elapse_prod');
+            
+                function calculateTimeElapsed() {
+                    const startDate = new Date(startDateInput3.value);
+                    const endDate = new Date(endDateInput3.value);
+                    const timeDiff = endDate - startDate;
+                    const daysElapsed = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                    timeElapsedInput3.value = daysElapsed + " days";
+                }
+            
+                startDateInput3.addEventListener('input', calculateTimeElapsed);
+                endDateInput3.addEventListener('input', calculateTimeElapsed);
+            </script>
+        </div>        
+        
         <!-- <div class="x-col l4 x-container x-padding">
             <button data-toggle="modal" data-target="#form5_modalpart" href=""
                 style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart"
@@ -499,7 +1117,7 @@
 </div>
 </div>
 </div>
-    </div>
+</div>
         {%endif%}   
             <p class="x-right" id="submit_btn_holder">
                 <button class="btn btn-primary" type="button" onclick="submit_form('FORM5_FIELD','dcf_matching_grant','/form5_dashboard')">Submit</button>
@@ -511,13 +1129,13 @@
 
 
 <script>
-    $onload(function () {
+    $(document).ready(function () {
         var record_id = URL_ARGS["id"]
         var table = URL_ARGS["table"]
         load_data(record_id, table, "FORM5_FIELD")
         window.setTimeout(f5_type_inv,1000)
         // submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
-    })
+    });
     function f5_type_inv(){
         triggerChange($ID("mgit_type_of_investment"))
     }

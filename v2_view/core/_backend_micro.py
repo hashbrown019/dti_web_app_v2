@@ -322,11 +322,20 @@ def get_salesT_data():
         return jsonify({"status": "error", "message": str(e)}), 500
     
 #PROFILING FORM A------------------------------------------------------------------------------------------------
-@app.route('/export_form_a', methods=['GET'])
+@app.route('/export_form_a_filtered', methods=['POST'])
 @c.login_auth_web()
-def export_form_a():
-    query = ('''SELECT
-            `excel_import_form_a`.`id`,
+def export_form_a_filtered():
+    try:
+        # ✅ 1. Get IDs from frontend
+        ids = request.json.get("ids", [])
+        if not ids:
+            return "No data to export.", 400
+
+        # ✅ 2. Prepare SQL (only export rows with those IDs)
+        id_list = ",".join(map(str, ids))
+        query = f"""
+            SELECT
+                `excel_import_form_a`.`id`,
             `excel_import_form_a`.`user_id`,
             `excel_import_form_a`.`DEV_@_ID_@_ID`,
             CONCAT(
@@ -535,10 +544,17 @@ def export_form_a():
             `users`.`name` AS 'Uploaded By'
         FROM excel_import_form_a
         LEFT JOIN users ON `excel_import_form_a`.`user_id` = `users`.`id`
-    ''')
+        WHERE excel_import_form_a.id IN ({id_list})
+        """
 
-    headers = [
-        "ID", "User ID", "DEV @ ID @ ID", "Full Name", "Sex",
+        # ✅ 3. Query Data
+        data = rapid_mysql.select(query)
+        if not data:
+            return "No data found.", 404
+
+        # ✅ 4. Headers (same as your existing export_form_a)
+        headers = [
+            "ID", "User ID", "DEV @ ID @ ID", "Full Name", "Sex",
         "Mobile Number", "Email Address", "Birthday", "Birthday Not Sure",
         "Civil Status", "Is Head of Household", "Name of Household Head",
         "Head HH Name", "Head HH Relationship", "Head HH Sex", "Head HH PWD",
@@ -611,79 +627,72 @@ def export_form_a():
         "Intervention - Capacity Building", "Intervention - Expansion",
         "Intervention - Rehabilitation", "Intervention - Production Investment",
         "Intervention - FMI", "File Name", "Uploaded By"
-    ]
-    def generate_excel_data():
+        ]
+
+        # ✅ 5. Generate Excel
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'constant_memory': True})
-        worksheet = workbook.add_worksheet('dcf_form_a_exported_file')
+        worksheet = workbook.add_worksheet('Filtered_Export')
+
         header_format = workbook.add_format({
-            'bold': True,'text_wrap': True,'valign': 'vcenter','align': 'center','fg_color': '#00cc66','border': 1
+            'bold': True, 'text_wrap': True, 'valign': 'vcenter',
+            'align': 'center', 'fg_color': '#00cc66', 'border': 1
         })
+
         for col_num, header_text in enumerate(headers):
             worksheet.write(0, col_num, header_text, header_format)
-        offset = 0
-        chunk_size = 1000
-        row_num = 1
-        adaptive_chunk = True 
-        while True:
-            try:
-                query_with_limit = query + f" LIMIT {chunk_size} OFFSET {offset}"
-                data_chunk = rapid_mysql.select(query_with_limit)
-                if not data_chunk:
-                    break
-                df_chunk = pd.DataFrame(data_chunk)
-                num_columns_in_df = len(df_chunk.columns)
-                num_expected_headers = len(headers)
 
-                if num_columns_in_df != num_expected_headers:
-                    print(
-                        f"Column count mismatch! DataFrame has {num_columns_in_df} columns, expected {num_expected_headers}."
-                    )
-                    if num_columns_in_df > num_expected_headers:
-                        df_chunk = df_chunk.iloc[:, :num_expected_headers]
-                    elif num_columns_in_df < num_expected_headers:
-                        local_headers = headers[:num_columns_in_df]
-                        df_chunk.columns = local_headers
-                    else:
-                        df_chunk.columns = headers
-                else:
-                    df_chunk.columns = headers
-                for row_data in df_chunk.itertuples(index=False, name=None):
-                    for col_num, cell_value in enumerate(row_data):
-                        worksheet.write(row_num, col_num, cell_value)
-                    row_num += 1
-                for idx, col in enumerate(df_chunk.columns):
-                    header_length = len(str(col)) + 2
-                    series = df_chunk[col].astype(str)
-                    data_max_length = series.apply(len).max()
-                    max_len = min(max(header_length, data_max_length), 40) 
-                    worksheet.set_column(idx, idx, max_len)
-                offset += chunk_size
-                yield output.getvalue()
-                output.seek(0)
-                output.truncate(0)
-                if adaptive_chunk:
-                    if len(df_chunk) < 100 and chunk_size > 500: 
-                        chunk_size -= 100
-                        print(f"Decreasing chunk size to {chunk_size}")
-                    elif len(df_chunk) > 900 and chunk_size < 3000:  
-                        chunk_size += 100
-                        print(f"Increasing chunk size to {chunk_size}")
-            except Exception as e:
-                print(f"Error during Excel data generation: {e}")
-                yield f"Error: {e}".encode()
-                break
+        # Convert to DataFrame to easily write rows
+        df = pd.DataFrame(data)
+        if len(df.columns) != len(headers):
+            df = df.iloc[:, :len(headers)]  # Trim if mismatch
+        df.columns = headers
+
+        row_num = 1
+        for row_data in df.itertuples(index=False, name=None):
+            for col_num, cell_value in enumerate(row_data):
+                worksheet.write(row_num, col_num, cell_value)
+            row_num += 1
+
+        # ✅ Auto column width (max 40)
+        for idx, col in enumerate(df.columns):
+            header_length = len(str(col)) + 2
+            series = df[col].astype(str)
+            data_max_length = series.apply(len).max()
+            max_len = min(max(header_length, data_max_length), 40)
+            worksheet.set_column(idx, idx, max_len)
 
         workbook.close()
-        yield output.getvalue()
-    def generate_response():
-        try:
-            return Response(
-                generate_excel_data(),
-                mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                headers={'Content-Disposition': 'attachment; filename=dcf_form_a_exported_file.xlsx'}
-            )
-        except Exception as e:
-            print(f"Error creating response: {e}")
-            return "An error occurred while generating the Excel file.", 500 
-    return generate_response()
+        output.seek(0)
+
+        # ✅ 6. Return as downloadable file
+        return Response(
+            output,
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            headers={'Content-Disposition': 'attachment; filename=Filtered_Form_A_Export.xlsx'}
+        )
+
+    except Exception as e:
+        print(f"Export error: {e}")
+        return f"An error occurred while exporting: {e}", 500
+#PROGRESS REPORT ------------------------------------------------------------------------------------------------
+@app.route("/get_progress_report_data", methods=["GET"])
+def get_progress_report_data():
+    try:
+        record_id = request.args.get('id')
+        if record_id:
+            query = f"SELECT * FROM progress_report WHERE id = {int(record_id)}"
+        else:
+            query = "SELECT * FROM progress_report"
+        data = rapid_mysql.select(query)
+        if record_id and not data:
+            return jsonify({"status": "error", "message": "Record not found"}), 404
+        return jsonify(data)
+    except Exception as e:
+        print("Error:", str(e))
+        return jsonify({"status": "error", "message": str(e)}), 500
+    
+@app.route("/core-file-manager", methods=["POST"])
+def core_file_manager_upload():
+    from v2_view.core import _backend_sub
+    return _backend_sub.file_manager.add_file(request)

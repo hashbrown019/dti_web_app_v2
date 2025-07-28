@@ -12,7 +12,7 @@
         }
     .input:hover,
     .input:focus {
-        border: 2px solid #4a9dec;
+        border: 2px solid #096272;
         box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
         background-color: white;
         }
@@ -24,16 +24,16 @@
     #pagination button {
         background-color: #fff;
         border: 1px solid #ddd;
-        color: #007bff;
+        color: #096272;
         padding: 5px 12px;
         border-radius: 5px;
         cursor: pointer;
         transition: background 0.3s, color 0.3s;
     }
     #pagination button.active {
-        background-color: #007bff;
+        background-color: #096272;
         color: #fff;
-        border-color: #007bff;
+        border-color: #096272;
     }
     #pagination button:disabled {
         background-color: #f8f9fa;
@@ -45,13 +45,13 @@
     }
     #profileTable thead th {
         border: 1px solid #ffffff;
-        background: #343a40; 
+        background: #096272;
         color: #ffffff; 
     }
     /* Loading spinner styles */
     .spinner {
         border: 4px solid rgba(0, 0, 0, 0.1);
-        border-left-color: #007bff;
+        border-left-color: #096272;
         border-radius: 50%;
         width: 20px;
         height: 20px;
@@ -85,8 +85,10 @@
                             <div class="x-padding">
                                 <input placeholder="Search Entry" type="text" name="text" class="input" id="searchInput">
                                 <button id="pfaSortButton" class="btn btn-sm" style="border-color: #3f464d;">SORT ▲</button>
-								<button type="button" class="btn btn-primary mb-2 x-right" onclick="exportFormAData()">
-									<i class="ri-file-excel-2-fill x-xlarge"></i> Open this table with spreadsheet App
+								<button id="exportBtn" type="button" class="btn btn-primary mb-2 x-right" style="background-color: #096272; border: #096272;" onclick="exportFormAData()">
+                                    <span id="exportSpinner" class="spinner" style="display: none;"></span>
+                                    <i class="ri-file-excel-2-fill x-xlarge"></i> 
+                                    <span id="exportBtnText">Open this table with spreadsheet App</span>
                                 </button>
                             </div>
                         </div>
@@ -230,8 +232,51 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script type="text/javascript">
-	function exportFormAData() {
-		// Redirect to the backend route to download the Excel file
-		window.location.href = '/export_form_a';
+    function exportFormAData() {
+        if (!profiles || profiles.length === 0) {
+            alert("No data to export.");
+            return;
+        }
+
+        const exportBtn = document.getElementById("exportBtn");
+        const exportSpinner = document.getElementById("exportSpinner");
+        const exportBtnText = document.getElementById("exportBtnText");
+
+        // Show loading state
+        exportSpinner.style.display = "inline-block";
+        exportBtn.disabled = true;
+        exportBtnText.textContent = "Exporting...";
+
+        const ids = profiles.map(p => p.id); // all filtered/sorted IDs
+
+        fetch("/export_form_a_filtered", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ids: ids })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Export failed.");
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "Filtered_Form_A_Export.xlsx";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(err => {
+            console.error("Export error:", err);
+            alert("Failed to export.");
+        })
+        .finally(() => {
+            // Hide loading state after completion
+            exportSpinner.style.display = "none";
+            exportBtn.disabled = false;
+            exportBtnText.textContent = "Open this table with spreadsheet App";
+        });
     }
 </script>
