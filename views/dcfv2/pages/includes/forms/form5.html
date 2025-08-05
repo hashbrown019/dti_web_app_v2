@@ -74,6 +74,29 @@
             // On page load, show all DIPs
             populateDipNames();
 
+            document.getElementById('mgit_name_of_dip').addEventListener('change', function() { 
+                const dipName = this.value;
+                const commoditySelect = document.getElementById('mgit_commodity');
+
+                if (!dipName || dipName === "Choose your option") {
+                    // Reset commodity select
+                    commoditySelect.value = "";
+                } else {
+                    fetch(`/api/get_dip_commodity?dip_name=${encodeURIComponent(dipName)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.form_1_commodity) {
+                                commoditySelect.value = data.form_1_commodity;
+                            } else {
+                                commoditySelect.value = "";
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching commodity:', error);
+                            commoditySelect.value = "";
+                        });
+                }
+            });
             document.getElementById('mgit_implementing_unit').addEventListener('change', function() {
                 const region = this.value;
                 const dipDropdown = document.getElementById('mgit_name_of_dip');
@@ -104,12 +127,12 @@
          <!-- Commodity -->
         <div class="x-col l3 x-container x-padding">
             <label>Commodity:</label>
-            <select class="FORM5_FIELD x-border x-select x-border" id="mgit_commodity" name="mgit_commodity" required>
+            <select class="FORM5_FIELD x-border x-select x-border" id="mgit_commodity" name="mgit_commodity" disabled>
                 <option value="">Choose your option</option>
-                <option>Coffee</option>
-                <option>Cacao</option>
-                <option>Coconut</option>
-                <option>PFN</option>
+                <option value="Coffee">Coffee</option>
+                <option value="Cacao">Cacao</option>
+                <option value="Coconut">Coconut</option>
+                <option value="PFN">PFN</option>
             </select>
             <input type="text" class="FORM5_FIELD hidden-textbox x-input x-border" name="mgit_commodity_others"
                 id="mgit_commodity_others" show-base="mgit_commodity" show-trigger="PFN" placeholder="Please specify">
@@ -151,71 +174,130 @@
                     </select>
                 </td>
                 <td>
-                    <select class="FORM5_FIELD x-border x-select x-border" id="mgit_msme_recipient" name="mgit_msme_recipient">
-                        <option value="">Select Recipient</option>
-                    </select>
+                    <input class="FORM5_FIELD x-border x-select x-border" list="mgit_msme_recipient_list" id="mgit_msme_recipient" name="mgit_msme_recipient" placeholder="Select or type recipient name">
+                    <datalist id="mgit_msme_recipient_list">
+                    </datalist>
                 </td>
             </tr>
-
             <script>
-                function populateRecipientNames(existingValue, filterType) {
-                    return Promise.all([
-                        fetch('/api/get_msme_names')
-                            .then(response => {
-                                if (!response.ok) {
-                                    return response.text().then(text => { throw new Error(text) });
-                                }
-                                return response.json();
-                            }),
-                        fetch('/api/get_fo_names')
-                            .then(response => {
-                                if (!response.ok) {
-                                    return response.text().then(text => { throw new Error(text) });
-                                }
-                                return response.json();
-                            })
-                    ])
-                    .then(([msmeData, foData]) => {
-                        const selectElement = document.getElementById('mgit_msme_recipient');
-                        selectElement.innerHTML = '<option value="">Choose your option</option>';
-                        if (!filterType || filterType === "") {
-                            msmeData.forEach(item => {
-                                const option = document.createElement('option');
-                                option.value = item.reg_businessname;
-                                option.textContent = "MSME: " + item.reg_businessname;
-                                selectElement.appendChild(option);
-                            });
-                            foData.forEach(item => {
-                                const option = document.createElement('option');
-                                option.value = item.organization_registered_name;
-                                option.textContent = "FO: " + item.organization_registered_name;
-                                selectElement.appendChild(option);
-                            });
-                        } else if (filterType === "MSME") {
-                            msmeData.forEach(item => {
-                                const option = document.createElement('option');
-                                option.value = item.reg_businessname;
-                                option.textContent = "MSME: " + item.reg_businessname;
-                                selectElement.appendChild(option);
-                            });
-                        } else if (filterType === "FO") {
-                            foData.forEach(item => {
-                                const option = document.createElement('option');
-                                option.value = item.organization_registered_name;
-                                option.textContent = "FO: " + item.organization_registered_name;
-                                selectElement.appendChild(option);
-                            });
-                        }
-                        if (existingValue) {
-                            selectElement.value = existingValue;
-                        }
-                    })
-                    .catch(error => console.error('Error fetching recipient names:', error));
+                // Load all DIP names into dropdown
+                async function populateDipNames() {
+                    try {
+                        const response = await fetch('/api/get_dip_names');
+                        if (!response.ok) throw new Error(await response.text());
+
+                        const data = await response.json();
+                        const dipSelect = document.getElementById('mgit_name_of_dip');
+                        dipSelect.innerHTML = '<option value="">Choose your option</option>';
+                        data.forEach(dip => {
+                            dipSelect.appendChild(new Option(dip.form_1_name_dip, dip.form_1_name_dip));
+                        });
+
+                        refreshRecipientList(); // Load recipients based on DIP
+                    } catch (err) {
+                        console.error('Error loading DIP names:', err);
+                    }
                 }
-                populateRecipientNames();
-                document.getElementById('mgit_type_of_beneficiary').addEventListener('change', function() {
-                    const type = this.value;
-                    populateRecipientNames(null, type);
+
+                // Load MSME and FO names based on selected DIP and type
+                async function populateRecipientNames(existingValue = null, type = null, dip = null) {
+                    const query = dip ? `?dip_name=${encodeURIComponent(dip)}` : '';
+                    try {
+                        const [msmes, fos] = await Promise.all([
+                            fetch(`/api/get_msme_names${query}`).then(r => r.ok ? r.json() : []),
+                            fetch(`/api/get_fo_names${query}`).then(r => r.ok ? r.json() : [])
+                        ]);
+
+                        const datalist = document.getElementById('mgit_msme_recipient_list');
+                        datalist.innerHTML = ''; // Clear old options
+                        const options = [];
+
+                        if (!type || type === "MSME") {
+                            msmes.forEach(msme => {
+                                const name = msme.reg_businessname?.trim();
+                                if (name) options.push({ label: `MSME: ${name}`, value: name });
+                            });
+                        }
+
+                        if (!type || type === "FO") {
+                            fos.forEach(fo => {
+                                const name = fo.organization_registered_name?.trim();
+                                if (name) options.push({ label: `FO: ${name}`, value: name });
+                            });
+                        }
+
+                        options.sort((a, b) => a.label.localeCompare(b.label));
+                        options.forEach(opt => {
+                            const option = new Option(opt.label, opt.value);
+                            datalist.appendChild(option);
+                        });
+
+                        if (existingValue) {
+                            const input = document.getElementById('mgit_msme_recipient');
+                            if (input) input.value = existingValue;
+                        }
+                    } catch (err) {
+                        console.error('Error loading recipients:', err);
+                    }
+                }
+
+                // Refresh list when filters change
+                function refreshRecipientList() {
+                    const type = document.getElementById('mgit_type_of_beneficiary')?.value || '';
+                    const dip = document.getElementById('mgit_name_of_dip')?.value || '';
+                    populateRecipientNames(null, type, dip);
+                }
+
+                // Handle DIP change to auto-fill commodity
+                document.addEventListener('DOMContentLoaded', () => {
+                    populateDipNames();               // Load DIP list
+
+                    document.getElementById('mgit_type_of_beneficiary')?.addEventListener('change', refreshRecipientList);
+                    document.getElementById('mgit_name_of_dip')?.addEventListener('change', function () {
+                        refreshRecipientList();
+
+                        const dipName = this.value;
+                        const commoditySelect = document.getElementById('mgit_commodity');
+                        if (!dipName) {
+                            commoditySelect.value = "";
+                            return;
+                        }
+
+                        fetch(`/api/get_dip_commodity?dip_name=${encodeURIComponent(dipName)}`)
+                            .then(r => r.ok ? r.json() : {})
+                            .then(data => {
+                                commoditySelect.value = data.form_1_commodity || "";
+                            })
+                            .catch(err => {
+                                console.error('Error getting commodity:', err);
+                                commoditySelect.value = "";
+                            });
+                    });
+
+                    // Filter DIP list when region changes
+                    document.getElementById('mgit_implementing_unit')?.addEventListener('change', function () {
+                        const region = this.value;
+                        const dipSelect = document.getElementById('mgit_name_of_dip');
+                        dipSelect.innerHTML = '<option value="">Choose your option</option>';
+
+                        if (!region) {
+                            populateDipNames(); // No region = show all DIPs
+                            return;
+                        }
+
+                        fetch(`/api/get_dip_names_by_region?region=${encodeURIComponent(region)}`)
+                            .then(r => r.ok ? r.json() : [])
+                            .then(data => {
+                                data.forEach(dip => {
+                                    dipSelect.appendChild(new Option(dip.form_1_name_dip, dip.form_1_name_dip));
+                                });
+                                refreshRecipientList();
+                            })
+                            .catch(err => {
+                                dipSelect.innerHTML = '<option value="">Error loading DIPs</option>';
+                                console.error('DIP load error:', err);
+                            });
+                    });
                 });
             </script>
         </table>
@@ -786,13 +868,13 @@
                 </tbody>
                 <tr>
                     <td>
-                        <select class="FORM5_FIELD x-input x-border" id="mgit_type_of_investment_prod" name="mgit_type_of_investment_prod">
+                        <select class="x-input x-border" id="mgit_type_of_investment_prod_history" name="mgit_type_of_investment_prod_history">
                             <option value="">Choose your option</option>
                             <option value="Equipment / Machineries">Equipment / Machineries</option>
                             <option value="Logistics">Logistics</option>
                             <option value="Facilities">Facilities</option>
                         </select>
-                        <input class="FORM5_FIELD x-input x-border" id="mgit_type_of_investment_prod_history" name="mgit_type_of_investment_prod_history" type="text">
+                        <input class="FORM5_FIELD x-input x-border" id="mgit_type_of_investment_prod" name="mgit_type_of_investment_prod" type="text">
                     </td>
                     <td>
                         <input class="x-input x-border" id="mgit_date_history_productive_investment" type="date">
@@ -813,7 +895,7 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     // Set initial values for history fields
-                    const typeVal = document.getElementById('mgit_type_of_investment_prod_history').value;
+                    const typeVal = document.getElementById('mgit_type_of_investment_prod').value;
                     const dateVal = document.getElementById('mgit_date_productive_investment').value;
                     const statusVal = document.getElementById('mgit_status_of_mgrr_prodInv').value;
                     if (typeVal) {
@@ -831,7 +913,7 @@
 
                     // Update table population to use all three histories
                     function populateMgrrHistoryTable() {
-                        const typeArr = (document.getElementById('mgit_type_of_investment_prod_history').value || '').split(',');
+                        const typeArr = (document.getElementById('mgit_type_of_investment_prod').value || '').split(',');
                         const dateArr = (document.getElementById('mgit_date_productive_investment').value || '').split(',');
                         const statusArr = (document.getElementById('mgit_status_of_mgrr_prodInv').value || '').split(',');
                         const tbody = document.getElementById('mgrr-history-table-prodInv').querySelector('tbody');
@@ -869,7 +951,7 @@
                             }
                         }, 300);
                     }
-                    observeValueChange('mgit_type_of_investment_prod_history', populateMgrrHistoryTable);
+                    observeValueChange('mgit_type_of_investment_prod', populateMgrrHistoryTable);
                     observeValueChange('mgit_date_productive_investment', populateMgrrHistoryTable);
                     observeValueChange('mgit_status_of_mgrr_prodInv', populateMgrrHistoryTable);
 
@@ -909,7 +991,7 @@
                             }
                         });
                     }
-                    updateHistoryField('mgit_type_of_investment_prod', 'mgit_type_of_investment_prod_history', true);
+                    updateHistoryField('mgit_type_of_investment_prod', 'mgit_type_of_investment_prod', true);
                     updateHistoryField('mgit_date_history_productive_investment', 'mgit_date_productive_investment', true);
                     updateHistoryField('mgit_status_mgrr_history_prodInv', 'mgit_status_of_mgrr_prodInv', false);
                 });

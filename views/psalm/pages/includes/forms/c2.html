@@ -6,7 +6,66 @@
         border-color: white !important;
         border: 2px solid white;
         }
-        
+        .card-body {
+            overflow-x: hidden; /* Prevents horizontal scrolling */
+            padding: 20px;
+        }
+
+        /* Responsive table wrapper */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Ensure tables don't break container */
+        .table {
+            width: 100% !important;
+            table-layout: auto; /* Let browser adjust column widths */
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            padding: 0.5rem !important;
+            vertical-align: top;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        /* Control textarea size */
+        .form-control {
+            min-height: 38px;
+            height: auto;
+            resize: vertical; /* Allow vertical resize only */
+            font-size: 0.95rem;
+        }
+
+        /* Prevent long words from breaking layout */
+        th, td {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Responsive adjustment */
+        @media (max-width: 768px) {
+            .card {
+                width: 100% !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                font-size: 0.9em;
+            }
+
+            .form-row {
+                flex-wrap: wrap;
+            }
+
+            .col-md-6, .col {
+                width: 100%;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
         </style>
     <div class="card-header" style="background-color: #334257;">
         <h3 style="color: white;">C-2 Business Information</h3>
@@ -1365,9 +1424,6 @@
 
                 </td>
             </tr>
-
-
-
             </tbody>
             </table>
         </div>
@@ -1376,4 +1432,3 @@
 
     </div>
 </div>
-

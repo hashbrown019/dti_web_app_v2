@@ -51,27 +51,23 @@
                             </strong><br>
                             <button type="submit" class="btn btn-md btn-dark"><span><i class="fa-solid fa-file-arrow-up"></i></span> Export</button>
                             
-                             <span style="cursor: pointer;" onclick="download_login_start('VC_FORM_C.xls')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download Form C (MSME) excel template</span>
+                             <span style="cursor: pointer;" onclick="download_login_start('VC_FORM_C.xlsx')" class="btn btn-success btn-xs"><i class="fa fa-file-text" aria-hidden="true"></i> Download Form C (MSME) excel template</span>
                         </div>
                     </div>
                 </div>
             </form>
-
-
-
-    
-    
-    
         </div>
     </div>
+
     <script>
-                function download_login_start(fff){
-                            let a= document.createElement('a');
-                            a.target= '_blank';
-                            a.href= '/login/download_file/'+fff;
-                            a.click();
-                        }
+    function download_login_start(fff){
+                let a= document.createElement('a');
+                a.target= '_blank';
+                a.href= '/login/download_file/'+fff;
+                a.click();
+            }
     </script>
+
     <div class="card" style="width:60%;  margin: 0 auto; margin-top: 20px; float: none; margin-bottom: 50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
         <div class="card-header" style="background-color: #334257;">
@@ -79,65 +75,46 @@
         </div>
     
         <div class="card-body" style="background-color: #b4cde4;;">
-    
             <form style="margin-left: 2%; margin-right: 2%;">
-  
                 <div class="form-group">
                     <div class="form-row" >
-    
                             <div class="table-responsive table py-4">
                                 <div id="datatable-buttons_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                  <table class="table table-flush dataTable"role="grid" aria-describedby="datatable-buttons_info" >
-                                <thead class="thead bg-theme text-white">
-                                  <tr role="row">
-                                    <th>Upload by</th>
-                                    <th>File name</th>
-                                    <th>Action</th>
-                                    </tr>
-                                </thead>
-                                                {% for row in uploaded_file_by_user %}
+                                <table class="table table-flush dataTable"role="grid" aria-describedby="datatable-buttons_info" >
+                                    <thead class="thead bg-theme text-white">
+                                        <tr role="row">
+                                            <th>Upload by</th>
+                                            <th>File name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    {% for row in uploaded_file_by_user %}
                             
-                                <tbody class=" bg-dark">
-                                  <tr>
-                                     <td>{{ row['name'] }}</td>
-                                    <td>{{ row['filename'] }}</td>
-                                    <td>
-                                                    <!-- {{row['upload_by']}} === {{user_data['id']}} -->
-                                                    <a style="color: #71dada;"  href="/download_/{{row['filename']| string | websafe_filename}}" target="_blank">
-
-
-                                                        <span><i class="fa fa-cloud-download"></i></span> Download
-                                                    </a>&nbsp;&nbsp;&nbsp;
-
-                                                    <a style="color: #ff704d;" onclick="confirmation(event)"  href="/delete/{{row['filename'] | string | websafe_filename}}">
-                                                        <span><i class="fa fa-trash"></i></span> Delete
-                                                    </a>
-                                                    
-
-
-                                                </td>
-                                  </tr>
-                                 <div>
-                                    {% endfor %}
-
-                                  </tbody>
-                        </table>
-                        
-</div>        
-</div>
-                              <br>
-                        </div>
-                    </form>
-                    <br> <br>
-
-                <br>
-               
-            
-    
-    
-    
-        </div>
-        
+                                    <tbody class=" bg-dark">
+                                    <tr>
+                                        <td>{{ row['name'] }}</td>
+                                        <td>{{ row['filename'] }}</td>
+                                        <td>
+                                        <!-- {{row['upload_by']}} === {{user_data['id']}} -->
+                                        <a style="color: #71dada;"  href="/download_/{{row['filename']| string | websafe_filename}}" target="_blank">
+                                            <span><i class="fa fa-cloud-download"></i></span> Download
+                                        </a>&nbsp;&nbsp;&nbsp;
+                                        <a style="color: #ff704d;" onclick="confirmation(event)"  href="/delete/{{row['filename'] | string | websafe_filename}}">
+                                            <span><i class="fa fa-trash"></i></span> Delete
+                                        </a>
+                                        </td>
+                                    </tr>
+                                    <div>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </div>        
+                            </div>
+                        <br>
+                    </div>
+                </form>
+            <br><br><br>    
+        </div>  
     </div>
     
 

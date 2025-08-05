@@ -78,6 +78,23 @@ def dcf_dashboard_embed():
 	form_disp = display_dataform.displayform()
 	return render_template("dcf_dashboard_embed.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
+@app.route('/api/get_dip_commodity', methods=['GET'])
+def get_dip_commodity():
+    try:
+        dip_name = request.args.get('dip_name')
+        query = f"""
+            SELECT form_1_commodity FROM dcf_prep_review_aprv_status WHERE form_1_name_dip = '{dip_name}'
+        """
+        result = db.select(query)
+        if not isinstance(result, list):
+            print("Commodity query error or no result:", result)
+            return jsonify({"error": "Error fetching commodity"})
+        commodity = result[0]['form_1_commodity']
+        return jsonify({"form_1_commodity": commodity})
+    except Exception as e:
+        print(f"Error fetching commodity: {e}")
+        return jsonify({"error": "Error fetching commodity"}), 500
+
 @app.route('/api/get_dip_names_by_region', methods=['GET'])
 def get_dip_names_by_region():
 	try:
@@ -121,9 +138,28 @@ def get_dip_names():
 @app.route('/api/get_msme_names', methods=['GET'])
 def get_msme_names():
     try:
-        query = "SELECT DISTINCT reg_businessname FROM form_c WHERE reg_businessname IS NOT NULL AND TRIM(reg_businessname) != '';"
+        dip_name = request.args.get('dip_name')
+        if dip_name:
+            # Filter MSME names by DIP name
+            query = f"""
+                SELECT DISTINCT reg_businessname 
+                FROM form_c 
+                WHERE reg_businessname IS NOT NULL 
+                AND TRIM(reg_businessname) != '' 
+                AND dip_name = '{dip_name}' 
+                ORDER BY reg_businessname ASC
+            """
+        else:
+            # Get all MSME names if no DIP filter is applied
+            query = """
+                SELECT DISTINCT reg_businessname 
+                FROM form_c 
+                WHERE reg_businessname IS NOT NULL 
+                AND TRIM(reg_businessname) != '' 
+                ORDER BY reg_businessname ASC
+            """
+        
         result = db.select(query)
-        msme_names = sorted({row['reg_businessname'].strip() for row in result if row['reg_businessname'].strip()})
         msme_names = [dict(reg_businessname=row['reg_businessname']) for row in result]
         return jsonify(msme_names)
     except Exception as e:
@@ -132,14 +168,34 @@ def get_msme_names():
 
 @app.route('/api/get_fo_names', methods=['GET'])
 def get_fo_names():
-	try:
-		query = "SELECT organization_registered_name FROM form_b ;"
-		result = db.select(query)
-		fo_names = [dict(organization_registered_name=row['organization_registered_name']) for row in result]
-		return jsonify(fo_names)
-	except Exception as e:
-		print(f"Error fetching DIP names: {e}")
-		return jsonify({"error": "Error fetching FO names"}), 500
+    try:
+        dip_name = request.args.get('dip_name')
+        if dip_name:
+            # Filter FO names by DIP name
+            query = f"""
+                SELECT DISTINCT organization_registered_name 
+                FROM form_b 
+                WHERE organization_registered_name IS NOT NULL 
+                AND TRIM(organization_registered_name) != '' 
+                AND name_of_dip = '{dip_name}' 
+                ORDER BY organization_registered_name ASC
+            """
+        else:
+            # Get all FO names if no DIP filter is applied
+            query = """
+                SELECT DISTINCT organization_registered_name 
+                FROM form_b 
+                WHERE organization_registered_name IS NOT NULL 
+                AND TRIM(organization_registered_name) != '' 
+                ORDER BY organization_registered_name ASC
+            """
+        
+        result = db.select(query)
+        fo_names = [dict(organization_registered_name=row['organization_registered_name']) for row in result]
+        return jsonify(fo_names)
+    except Exception as e:
+        print(f"Error fetching FO names: {e}")
+        return jsonify({"error": "Error fetching FO names"}), 500
 
 @app.route('/form1_dashboard')
 @c.login_auth_web()

@@ -692,6 +692,7 @@ def get_progress_report_data():
         print("Error:", str(e))
         return jsonify({"status": "error", "message": str(e)}), 500
     
+#FILE MANAGER ------------------------------------------------------------------------------------------------
 @app.route("/core-file-manager", methods=["POST"])
 def core_file_manager_upload():
     from v2_view.core import _backend_sub
