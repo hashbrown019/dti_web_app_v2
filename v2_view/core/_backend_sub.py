@@ -218,8 +218,8 @@ class user_pofile:
 				return jsonify({
 					"success": True, 
 					"message": "Registration successful!",
-					"redirect": "/login"  # Frontend will handle redirect
-				})
+					"location": "/login"  # Use Location header for redirect
+				}), 302
 			except Exception as e:
 				print(f"Database error: {str(e)}")
 				return jsonify({"success": False, "message": "Registration failed. Please try again."}), 500
@@ -240,16 +240,14 @@ class user_pofile:
 			return {"error": "Invalid user ID"}
 		
 		# Check if user exists
-		is_exist = rapid_mysql.select(
-			"SELECT * FROM `users` WHERE `id` = %s",
-			[user_id]
-		)
+		sql = f"SELECT * FROM `users` WHERE `id` = '{user_id}'"
+		is_exist = rapid_mysql.select(sql)
 		
 		if not is_exist:
 			return {"error": "User not found"}
 		
 		# Define allowed fields for update (excluding sensitive fields)
-		allowed_fields = {'name', 'phone', 'address', 'job', 'pcu', 'rcu', 'mobile','email', 'username'}
+		allowed_fields = {'name', 'phone', 'address', 'job', 'pcu', 'rcu', 'mobile','email', 'username', 'security_group', 'status'}
 		
 		# Validate each field
 		validated_data = {}
@@ -277,27 +275,24 @@ class user_pofile:
 		values = []
 		
 		for field, value in validated_data.items():
-			set_clauses.append(f"`{field}` = %s")
-			values.append(value)
+			set_clauses.append(f"`{field}` = '{value}'")
 		
-		values.append(user_id)  # For WHERE clause
-		
-		sql = f"UPDATE `users` SET {', '.join(set_clauses)} WHERE `id` = %s"
+		sql = f"UPDATE `users` SET {', '.join(set_clauses)} WHERE `id` = '{user_id}'"
 		
 		try:
-			rapid_mysql.do(sql, values)
+			rapid_mysql.do(sql)
 			return {"success": True, "message": "Profile updated successfully"}
 		except Exception as e:
 			return {"error": f"Database error: {str(e)}"}
-	
+
 	def edit_user_profilepic(req):
 		__f = FILE_REQ.save_file_from_request(req, "profilepic", c.RECORDS + "/objects/userpics/", False, True)
 		profilepic = __f["file_arr_str"]
 		user_id = req.form.get('id')
 		if not user_id:
 			return {"error": "User ID is required"}
-		sql = "UPDATE `users` SET `profilepic` = %s WHERE `id` = %s;"
-		rapid_mysql.do(sql, [profilepic, user_id])
+		sql = f"UPDATE `users` SET `profilepic` = '{profilepic}' WHERE `id` = '{user_id}'"
+		rapid_mysql.do(sql)
 		return __f
 
 	def edit_user_profilepass(req):
@@ -306,12 +301,11 @@ class user_pofile:
 		current_pass = req.form.get('current_pass')
 		if not all([new_password, user_id, current_pass]):
 			return {"error": "Missing required fields"}
-		sql = """UPDATE `users` SET `password` = %s WHERE `id` = %s AND `password` = %s;"""
-		result = rapid_mysql.do(sql, [new_password, user_id, current_pass])
+		sql = f"""UPDATE `users` SET `password` = '{new_password}' WHERE `id` = '{user_id}' AND `password` = '{current_pass}'"""
+		result = rapid_mysql.do(sql)
 		if isinstance(result, dict) and 'error' in result:
 			return {"error": "Failed to update password"}
-		return {"success": True, "rows_affected": result}
-
+		return {"success": True}
 # ================================================
 # ================================================
 # ================================================
