@@ -182,21 +182,22 @@ class user_pofile:
 			
 			# Check for existing email/username
 			existing_email = rapid_mysql.select(
-				"SELECT id FROM `users` WHERE `email` = %s", 
-				[validated_data['email']]
-			)
-
-			existing_username = rapid_mysql.select(
-				"SELECT id FROM `users` WHERE `username` = %s", 
-				[validated_data['username']]
+				f"SELECT id FROM `users` WHERE `email` = '{validated_data['email']}'"
 			)
 
 			if existing_email:
+				print(f"Email already exists: {validated_data['email']}")
 				return jsonify({"success": False, "message": "Email already registered"}), 400
-			
+
+			# Check for existing username
+			existing_username = rapid_mysql.select(
+				f"SELECT id FROM `users` WHERE `username` = '{validated_data['username']}'"
+			)
+
 			if existing_username:
+				print(f"Username already exists: {validated_data['username']}")
 				return jsonify({"success": False, "message": "Username already taken"}), 400
-			
+						
 			# Build and execute SQL
 			columns = []
 			placeholders = []
@@ -230,60 +231,46 @@ class user_pofile:
 
 	def edit_user_profile(req):
 		data = dict(req.form)
-		user_id = data.get('id')
-		
-		if not user_id:
-			return {"error": "User ID is required"}
-		
-		# Validate user_id is numeric
-		if not re.match(r'^\d+$', str(user_id)):
-			return {"error": "Invalid user ID"}
-		
-		# Check if user exists
-		sql = f"SELECT * FROM `users` WHERE `id` = '{user_id}'"
-		is_exist = rapid_mysql.select(sql)
-		
-		if not is_exist:
-			return {"error": "User not found"}
-		
+		key = [];val = [];args=""
+		is_exist = len(rapid_mysql.select("SELECT * FROM `users` WHERE `id` ='{}' ;".format(req.form['id'])))
+
 		# Define allowed fields for update (excluding sensitive fields)
-		allowed_fields = {'name', 'phone', 'address', 'job', 'pcu', 'rcu', 'mobile','email', 'username', 'security_group', 'status'}
-		
+		allowed_fields = {'name', 'phone', 'address', 'job', 'pcu', 'rcu', 'mobile','email', 'username', 'security_group', 'status', 'id'}
+
 		# Validate each field
 		validated_data = {}
 		for field_name, field_value in data.items():
-			if field_name == 'id':
-				continue  # Skip ID field
-			
 			if field_name not in allowed_fields:
 				continue  # Skip unknown fields
-				
+
 			# Validate the field
 			is_valid, cleaned_value, error_message = user_pofile.validate_input(field_name, field_value)
 
-			
 			if not is_valid:
 				return {"error": error_message}
-			
+
 			validated_data[field_name] = cleaned_value
-		
+
+		print("validated_data:", validated_data)
+
 		if not validated_data:
 			return {"error": "No valid fields to update"}
-		
-		# Build UPDATE query
-		set_clauses = []
-		values = []
-		
-		for field, value in validated_data.items():
-			set_clauses.append(f"`{field}` = '{value}'")
-		
-		sql = f"UPDATE `users` SET {', '.join(set_clauses)} WHERE `id` = '{user_id}'"
-		
-		try:
-			rapid_mysql.do(sql)
-			return {"success": True, "message": "Profile updated successfully"}
-		except Exception as e:
-			return {"error": f"Database error: {str(e)}"}
+
+		if(is_exist==0):
+			for datum in validated_data:
+				key.append("`{}`".format(datum))
+				val.append("'{}'".format(validated_data[datum]))
+			sql = ('''INSERT INTO `users` ({},`status`) VALUES ({},'pending');'''.format(", ".join(key),", ".join(val)))
+		else:
+			for datum in validated_data:
+				if datum != 'id':
+					args += ",`{}`='{}'".format(datum,validated_data[datum])
+			sql = "UPDATE `users` SET  {}  WHERE `id`='{}';".format(args[1:],req.form['id'])
+
+		print("SQL query:", sql)
+
+		last_row_id = rapid_mysql.do(sql)
+		return last_row_id
 
 	def edit_user_profilepic(req):
 		__f = FILE_REQ.save_file_from_request(req, "profilepic", c.RECORDS + "/objects/userpics/", False, True)
