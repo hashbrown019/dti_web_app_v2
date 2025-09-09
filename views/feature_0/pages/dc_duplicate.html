@@ -136,70 +136,74 @@
 	function change_page(dir) { render_duplicates_page(CURRENT_PAGE+dir, CURRENT_SEARCH); }
 	
 	function render_duplicates_page(page, searchTerm) {
-	CURRENT_PAGE = Math.max(1, page);
-	CURRENT_SEARCH = searchTerm || "";
+  CURRENT_PAGE = Math.max(1, page);
+  CURRENT_SEARCH = searchTerm || "";
 
-	var filteredData = DUPLICATE_DATA.filter(group =>
-		group.some(r => r.name.toLowerCase().includes(CURRENT_SEARCH.toLowerCase()))
-	);
+  var searchLower = CURRENT_SEARCH.toLowerCase();
+  // filter by name OR linked_info
+  var filteredData = DUPLICATE_DATA.filter(group =>
+    group.some(r =>
+      (r.name && r.name.toLowerCase().includes(searchLower)) ||
+      (r.linked_info && r.linked_info.toLowerCase().includes(searchLower))
+    )
+  );
 
-	var totalPages = Math.ceil(filteredData.length / PAGE_SIZE) || 1;
-	CURRENT_PAGE = Math.min(CURRENT_PAGE, totalPages);
+  var totalPages = Math.ceil(filteredData.length / PAGE_SIZE) || 1;
+  CURRENT_PAGE = Math.min(CURRENT_PAGE, totalPages);
 
-	var start = (CURRENT_PAGE - 1) * PAGE_SIZE;
-	var end = start + PAGE_SIZE;
-	var pageGroups = filteredData.slice(start, end);
+  var start = (CURRENT_PAGE - 1) * PAGE_SIZE;
+  var end = start + PAGE_SIZE;
+  var pageGroups = filteredData.slice(start, end);
 
-	var out = "";
-	pageGroups.forEach(records => {
-		if (!records || !records.length) return;
-		var group_name = records[0].name.split(" ")[0];
-		var group_key = safeKey(group_name);
-		var items = "";
+  var out = "";
+  pageGroups.forEach(records => {
+    if (!records || !records.length) return;
+    var group_name = records[0].name.split(" ")[0];
+    var group_key = safeKey(group_name);
+    var items = "";
 
-		records.forEach(r => {
-		const linkedStatus = r.linked_info || "";
-		items += `
-			<div id="record_${r.db_id}" class="duplicate-item">
-			<div class="duplicate-info">
-				<div class="duplicate-name">${r.name} <span style="color:#16a34a;">${linkedStatus}</span></div>
-				<div class="duplicate-meta">
-				<span class="meta-item"><span class="meta-label">ID:</span><strong>${r.db_id}</strong></span>
-				<span class="meta-item"><span class="meta-label">Input by:</span>${r.inputed}</span>
-				<span class="meta-item"><span class="meta-label">Reference:</span>
-					<code style="font-size:.85rem;background:#f3f4f6;padding:2px 6px;border-radius:4px;">${r.ref_code}</code>
-				</span>
-				</div>
-			</div>
-			<div class="duplicate-actions">
-				<button class="action-btn view" onclick="form_a_forms('${r.db_id}','${r.ref_code}')">View</button>
-				<button class="action-btn delete" onclick="del_dup_entry('${group_key}','${r.name}','${r.db_id}','${r.ref_code}')">Delete</button>
-			</div>
-			</div>`;
-		});
+    records.forEach(r => {
+      const linkedStatus = r.linked_info || "";
+      items += `
+        <div id="record_${r.db_id}" class="duplicate-item">
+          <div class="duplicate-info">
+            <div class="duplicate-name">${r.name} <span style="color:#16a34a;">${linkedStatus}</span></div>
+            <div class="duplicate-meta">
+              <span class="meta-item"><span class="meta-label">ID:</span><strong>${r.db_id}</strong></span>
+              <span class="meta-item"><span class="meta-label">Input by:</span>${r.inputed}</span>
+              <span class="meta-item"><span class="meta-label">Reference:</span>
+                <code style="font-size:.85rem;background:#f3f4f6;padding:2px 6px;border-radius:4px;">${r.ref_code}</code>
+              </span>
+            </div>
+          </div>
+          <div class="duplicate-actions">
+            <button class="action-btn view" onclick="form_a_forms('${r.db_id}','${r.ref_code}')">View</button>
+            <button class="action-btn delete" onclick="del_dup_entry('${group_key}','${r.name}','${r.db_id}','${r.ref_code}')">Delete</button>
+          </div>
+        </div>`;
+    });
 
-		out += `<div id="gr_${group_key}" class="duplicate-group">
-		<div class="duplicate-group-header">
-			<i class="fa fa-users" style="margin-right:8px;color:#64748b;"></i>
-			Duplicate Group: <span style="color:#1e40af;">${group_name}</span>
-			<span class="counter" style="float:right;background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:.85rem;">${records.length} records</span>
-		</div>
-		<div>${items}</div>
-		</div>`;
-	});
+    out += `<div id="gr_${group_key}" class="duplicate-group">
+      <div class="duplicate-group-header">
+        <i class="fa fa-users" style="margin-right:8px;color:#64748b;"></i>
+        Duplicate Group: <span style="color:#1e40af;">${group_name}</span>
+        <span class="counter" style="float:right;background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:.85rem;">${records.length} records</span>
+      </div>
+      <div>${items}</div>
+    </div>`;
+  });
 
-	duplicate_modal.dialog.querySelector("#dup_list_container").innerHTML = out;
+  duplicate_modal.dialog.querySelector("#dup_list_container").innerHTML = out;
 
-	var pageInfo = duplicate_modal.dialog.querySelector("#dup_page_info");
-	if (pageInfo) {
-		pageInfo.textContent = `Page ${CURRENT_PAGE} of ${totalPages}`;
-	}
+  var pageInfo = duplicate_modal.dialog.querySelector("#dup_page_info");
+  if (pageInfo) {
+    pageInfo.textContent = `Page ${CURRENT_PAGE} of ${totalPages}`;
+  }
 
-	duplicate_modal.dialog.querySelector("#dup_prev").disabled = (CURRENT_PAGE === 1);
-	duplicate_modal.dialog.querySelector("#dup_next").disabled = (CURRENT_PAGE === totalPages);
-	}
+  duplicate_modal.dialog.querySelector("#dup_prev").disabled = (CURRENT_PAGE === 1);
+  duplicate_modal.dialog.querySelector("#dup_next").disabled = (CURRENT_PAGE === totalPages);
+}
 
-	
 	// --- show modal ---
 	function view_duplicates() {
 		duplicate_modal = $dialog({

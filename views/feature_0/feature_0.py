@@ -762,9 +762,12 @@ class _main:
 		all_db_ids = []
 
 		for datum in _data:
-			fr_name = f"{datum[2]} {datum[3]} {datum[4]}"
-			if len(fr_name.replace(" ","")) <= 1:
-				fr_name = datum[14]
+			fr_name = f"{datum[2]} {datum[3]} {datum[4]}".strip()
+			if len(fr_name.replace(" ", "")) <= 1:
+				if len(datum) > 14:           
+					fr_name = datum[14]
+				else:                             
+					fr_name = datum[2] + " " + datum[3] 
 
 			display_name = fr_name
 			if datum[5]:
