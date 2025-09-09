@@ -1,5 +1,9 @@
 <hr>
-
+<div style="margin-bottom:10px;">
+	<button class="x-btn x-green x-round" onclick="refresh_table_data()">
+	  <i class="fa fa-sync"></i> Refresh Table
+	</button>
+  </div>
 <table class="display" id="table_id" >
 	<thead class="x-rapid-teal-heavy">
 		<tr class="">
@@ -221,11 +225,10 @@
 				.draw();
 			// println($(this).data('index'))
 		} );
-		$('#table_id tbody').on('mousedown', 'tr', function () {
+		$('#table_id tbody').off('mousedown').on('mousedown', 'tr', function () {
 			var data = TABLE.row(this).data();
-			// println( data );
-			form_a_forms(data[0],data[13])
-		})
+			form_a_forms(data[0], data[13]);
+		});
 
 		// $CLASS("dataTables_scroll")[0].style.width="80vh"
 		var tds = $(".dataTables_scroll td")
@@ -238,6 +241,48 @@
 	}
 	function show_t(){
 		// showing_table_ls_farmer()
+	}
+
+	function refresh_table_data() {
+		println("Refreshing farmer list...");
+		SPINNER_LOADER.show();
+
+		$send({
+			action : "/feature_0/filter_list_farmers",
+			method : POST,
+			err_dialog:true,
+			func : function (rest){
+				println("Refreshed farmer list.");
+				let res = JSON.parse(rest)['dash1'];
+
+				// If table already exists, destroy it first
+				if (TABLE) {
+					TABLE.destroy();
+					$('#table_id tbody').empty(); // clear old rows
+				}
+
+				// Rebuild table with fresh data
+				create_table(res);
+
+				SPINNER_LOADER.hide();
+			},
+			err : function(res){println(res)},
+			progress : function(e){
+				var response_length = parseFloat(e.total)
+				var response_loaded = parseFloat(e.loaded)
+				var percent_  = (response_loaded / response_length) * 100;
+				SPINNER_LOADER.loading(Math.round(percent_));
+				SPINNER_LOADER.message(`
+					<span>
+						Refreshing 
+						<b>`+Math.round(percent_)+`%</b><br>
+						<span class="x-small">
+							[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]
+						</span>
+					</span>
+				`);
+			}
+		})
 	}
 
 </script>

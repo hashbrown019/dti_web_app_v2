@@ -62,8 +62,7 @@
 			dialog_fa_v2.elem_buttons()[i].classList.add("x-round-large","x-margin-left")
 		}
 		dialog_fa_v2.dialog.classList.add("x-round-large")
-		dialog_fa_v2.dialog.style.width = '80vw'
-		dialog_fa_v2.dialog.style.paddingTop = '1px'
+		dialog_fa_v2.dialog.style.width = '95%'
 		dialog_fa_v2.show()
 		dom_refresh()
 	}
@@ -85,75 +84,133 @@
 	var profile_panel_basic
 	var full_details = undefined
 
-	function modeal_basic_info(full_details_){
-		full_details = full_details_[0][0]
-		profile_panel_basic = $dialog({
-			title : "Basic Information",
-			subtitle : " ",
-			content : (`
-			<div class="x-row">
-				<div class="x-container x-col l6 m6 s6">
-					<img class="" src="../static/img/male.png" style="width:100%">
-				</div>
-				<div class="x-container x-col l6 m6 s6">
-					<span style="line-height: 0.0px;">
-						<span class="x-text-grey" >Name:<br></span> 
-						<b class="x-xlarge">
-							<span >${full_details["frmer_prof_@_basic_Info_@_First_name"]}</span> 
-							<span >${full_details["frmer_prof_@_basic_Info_@_Middle_name"]}</span> 
-							<span >${full_details["frmer_prof_@_basic_Info_@_Last_name"]}</span>, 
-							<span >${full_details["frmer_prof_@_basic_Info_@_Extension_name"]}</span>
-						</b><br>
-						<br>
-					<span>
-					<span style="line-height: 0.0px;">
-						<span class="x-text-grey">Address:<br></span> 
-						<b class="x-xlarge"> 
-							<span >Region ${full_details["frmer_prof_@_frmer_addr_@_region"]}</span>, 
-							<span >${full_details["frmer_prof_@_frmer_addr_@_province"]}</span>, 
-							<span >${full_details["frmer_prof_@_frmer_addr_@_city_municipality"]}</span>, 
-							</b><br>
-						<br>
-					<span>
-					<span style="line-height: 0.0px;">
-						<span class="x-text-grey">Commodity:<br></span> 
-						<b class="x-xlarge" >${full_details["frmer_prof_@_Farming_Basic_Info_@_primary_crop"]}</b><br>
-						<br>
-					<span>
-					<span style="line-height: 0.0px;">
-						<span class="x-text-grey">Status:<br></span>
-						<label class="switch">
-							<input type="checkbox" >${full_details["togBtn"]}
-							<div class="slider round">
-								<!--ADDED HTML -->
-								<span class="x-padding on">Active</span>
-								<span class="x-padding off">Inactive</span>
-								<!--END-->
-							</div>
-						</label>
-						<br>
-					<span>
-					<br>
-					<br>
-					<br>
-					<span style="line-height: 0.0px;">
-						<span class="x-text-grey">More Actions:<br></span> 
-						<i class="x-large x-text-blue x-chip" onclick="see_full_details()">Edit This Profile</i><br>
-						<br>
-					<span>
-				</div>
-			</div>`),
-		})
-		profile_panel_basic.show()
+	function modeal_basic_info(full_details_) {
+    full_details = full_details_[0][0];
+    profile_panel_basic = $dialog({
+        title: "Basic Information",
+        subtitle: " ",
+        content: (`
+        <div class="x-row">
+            <div class="x-container x-col l6 m6 s6">
+                <img class="" src="../static/img/male.png" style="width:100%">
+            </div>
+            <div class="x-container x-col l6 m6 s6">
+                <span style="line-height: 0.0px;">
+                    <span class="x-text-grey" >Name:<br></span> 
+                    <b class="x-xlarge">
+                        <span>${full_details["frmer_prof_@_basic_Info_@_First_name"]}</span> 
+                        <span>${full_details["frmer_prof_@_basic_Info_@_Middle_name"]}</span> 
+                        <span>${full_details["frmer_prof_@_basic_Info_@_Last_name"]}</span>, 
+                        <span>${full_details["frmer_prof_@_basic_Info_@_Extension_name"]}</span>
+                    </b><br><br>
+                </span>
 
-	}
+                <span style="line-height: 0.0px;">
+                    <span class="x-text-grey">Address:<br></span> 
+                    <b class="x-xlarge"> 
+                        <span>Region ${full_details["frmer_prof_@_frmer_addr_@_region"]}</span>, 
+                        <span>${full_details["frmer_prof_@_frmer_addr_@_province"]}</span>, 
+                        <span>${full_details["frmer_prof_@_frmer_addr_@_city_municipality"]}</span>, 
+                    </b><br><br>
+                </span>
+
+                <span style="line-height: 0.0px;">
+                    <span class="x-text-grey">Commodity:<br></span> 
+                    <b class="x-xlarge">${full_details["frmer_prof_@_Farming_Basic_Info_@_primary_crop"]}</b><br><br>
+                </span>
+
+                <br><br>
+                <span style="line-height: 0.0px;">
+                    <span class="x-text-grey">More Actions:<br></span> 
+                    
+                    <!-- Edit Button -->
+                    <button 
+                        class="x-large x-text-blue x-chip" 
+                        onclick="see_full_details()" 
+                        style="cursor:pointer; background:none; border:none; padding:0;">
+                        Edit This Profile
+                    </button>
+
+                    <!-- Delete Button -->
+                    <button 
+                        class="x-large x-text-red x-chip" 
+                        onclick="delete_this_profile('${full_details["id"]}')" 
+                        style="cursor:pointer; background:none; border:none; padding:0; margin-left:10px;">
+                        Delete This Profile
+                    </button>
+                    <br><br>
+                </span>
+            </div>
+        </div>`),
+    });
+    profile_panel_basic.show();
+}
 
 	function see_full_details(){
-		profile_panel_basic.destroy()
-		show_dialog_fa_v2();
-		DICT_TO_INPUT(full_details[0][0],'FORM_DATA_A');
+    // Close the basic info panel
+    if(profile_panel_basic) profile_panel_basic.destroy();
 
-	}
+    // Show the full form dialog
+    show_dialog_fa_v2();
+
+    // Populate the form fields AFTER the dialog is rendered
+    // full_details is already a single object, no need for [0][0]
+    DICT_TO_INPUT(full_details, 'FORM_DATA_A');
+}
+
+function delete_this_profile(profileId) {
+    if (!profileId) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Missing ID',
+            text: 'Profile ID missing!',
+        });
+        return;
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This will permanently delete this profile.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Do the deletion
+            $send({
+                action: "/form_a/del_profile", // your actual delete endpoint
+                method: POST,
+                data: $DATA({ id: profileId }),
+                func: function (res) {
+                    // Close the profile modal
+                    if (profile_panel_basic) profile_panel_basic.destroy();
+
+                    // Remove from DUPLICATE_DATA
+                    DUPLICATE_DATA.forEach((group, gIndex) => {
+                        DUPLICATE_DATA[gIndex] = group.filter(r => String(r.db_id) !== String(profileId));
+                    });
+                    // Remove empty groups
+                    DUPLICATE_DATA = DUPLICATE_DATA.filter(g => g.length > 0);
+
+                    // Re-render the duplicates page
+                    render_duplicates_page(CURRENT_PAGE, CURRENT_SEARCH);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Profile has been deleted.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                },
+                err_dialog: true
+            });
+        }
+    });
+}
+
 </script>
 <div id="basic_panel" style="display: none;">
 </div>

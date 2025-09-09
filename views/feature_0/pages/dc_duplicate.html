@@ -1,182 +1,261 @@
+<style>
+	@keyframes shimmer {
+	  0% { opacity: 0.8; }
+	  50% { opacity: 1; }
+	  100% { opacity: 0.8; }
+	}
+	
+	/* Modal & duplicate group styling */
+	.duplicate-group {
+	  background: #f9fafb;
+	  margin-bottom: 24px;
+	  overflow: hidden;
+	  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+	}
+	.duplicate-group-header {
+	  background: linear-gradient(135deg, #cac9c9, #f1f5f9);
+	  padding: 16px 24px;
+	  border-bottom: 1px solid #e2e8f0;
+	  font-weight: 600;
+	  font-size: 1.2rem;
+	  color: #1e293b;
+	}
+	.duplicate-item {
+	  padding: 18px 24px;
+	  border: 1px solid #c0c0c0;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  transition: background 0.2s ease;
+	}
+	.duplicate-item:hover { background: #f8fafc; }
+	.duplicate-info { flex: 1; }
+	.duplicate-name { font-weight: 600; color: #0f172a; font-size: 1.1rem; margin-bottom: 6px; }
+	.duplicate-meta { color: #64748b; font-size: 0.95rem; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+	.meta-item { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
+	.meta-label { color: #94a3b8; font-size: 0.9rem; }
+	.duplicate-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+	.action-btn { border: none; padding: 9px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; font-size: 0.9rem; font-weight: 500; flex: 1 1 auto; text-align: center; min-width: 90px; }
+	.action-btn.view { background: #e0f2fe; color: #0369a1; }
+	.action-btn.view:hover { background: #bae6fd; transform: translateY(-1px); }
+	.action-btn.delete { background: #fee2e2; color: #b91c1c; }
+	.action-btn.delete:hover { background: #fecaca; transform: translateY(-1px); }
+	@media (max-width: 768px) { .action-btn { font-size: 0.85rem; padding: 8px 12px; } }
+	@media (max-width: 480px) { .action-btn { font-size: 0.8rem; padding: 7px 10px; flex: 1 1 100%; } }
+	
+	.modal-container { padding: 24px; max-height: 70vh; overflow-y: auto; background-color: #ffffff; border-radius: 12px; }
+	.modal-container::-webkit-scrollbar { width: 8px; }
+	.modal-container::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+	.modal-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+	.modal-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+	</style>
+	
+	<div class="x-container x-row x-padding">
+	  <div class="x-container x-padding x-col l3 m2 x-topbar x-border-grey">
+		<span>Start scanning for duplicates</span>
+		<button class="x-btn x-round x-orange" onclick="start_scan_dup()">
+		  Scan Duplicates <b class="fa fa-clone x-text-white"></b>
+		</button>
+	  </div>
+	  <div class="x-container x-padding x-col l2 m2 x-topbar x-border-green">
+		<div class="x-row x-container" id="dup_loading"></div>
+	  </div>
+	  <div class="x-container x-padding x-col l2 m2 x-topbar x-border-yellow">
+		<div class="x-row x-container" id="dup_res"></div>
+	  </div>
+	  <div class="x-container x-padding x-col l3 m2 x-topbar x-border-red">
+		<div class="x-row x-container" id="dup_excess"></div>
+	  </div>
+	  <div class="x-container x-padding x-col l2 m2 x-topbar x-border-grey">
+		<div class="x-row x-container" id="btn_dup"></div>
+	  </div>
+	</div>
+	
+	<div id="dup_modal" style="display: none;">
+	  <div style="margin-bottom: 12px;">
+		<input id="dup_search" type="text" placeholder="Search duplicate groups..." 
+			   style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #c0c0c0;" 
+			   oninput="render_duplicates_page(1,this.value)">
+	  </div>
+	  <div id="dup_list_container" style="overflow-y:scroll;height:60vh;"></div>
+	  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+		<button id="dup_prev" onclick="change_page(-1)">Prev</button>
+		<span id="dup_page_info">Page 1</span>
+		<button id="dup_next" onclick="change_page(1)">Next</button>
+	  </div>
+	</div>
+	
+	<script>
+	var duplicate_modal = null;
+	var DUPLICATE_DATA = [];
+	var CURRENT_PAGE = 1;
+	var PAGE_SIZE = 20;
+	var CURRENT_SEARCH = "";
+	
+	// --- helpers ---
+	function safeKey(s) { return String(s||"group").toLowerCase().replace(/\s+/g,"").replace(/[^a-z0-9]/g,""); }
+	
+	function start_scan_dup() {
+	  $ID("dup_loading").innerHTML = 'Loading, please wait...';
+	  $ID("dup_res").innerHTML = "";
+	  $ID("dup_excess").innerHTML = "";
+	  $ID("btn_dup").innerHTML = "";
+	
+	  $send({
+		action: "/feature_0/data_clean_duplicates",
+		method: POST,
+		func: function (_r) {
+		  var res = JSON.parse(_r) || [];
+		  DUPLICATE_DATA = res;
+	
+		  var total_excess = res.reduce((acc, g) => acc + g.length, 0);
+		  $ID("dup_res").innerHTML = `<div class="stat-number">${res.length}</div><div class="stat-label">Unique records with duplicates</div>`;
+		  $ID("dup_excess").innerHTML = `<div class="stat-number">${total_excess}</div><div class="stat-label">Total Duplicates</div>`;
+		  $ID("btn_dup").innerHTML = `<button class='x-btn x-green x-round-large' onclick="view_duplicates()">View Duplicates</button>`;
+	
+		  if(!duplicate_modal) {
+			duplicate_modal = $dialog({
+			  title: "Duplicated Records",
+			  subtitle: "Below are the list of records having duplicates",
+			  content: $ID("dup_modal").innerHTML
+			});
+			duplicate_modal.dialog.style.width = "75vw";
+		  }
+	
+		  render_duplicates_page(1,"");
+		  $ID("dup_loading").innerHTML = 'Scan complete';
+		},
+		progress: function(e) {
+		  var percent = e.total ? (e.loaded / e.total) * 100 : 0;
+		  $ID("dup_loading").innerHTML = `<div class="stat-label"><strong>Gathering Data: ${Math.round(percent)}%</strong></div>`;
+		}
+	  });
+	}
+	
+	// --- pagination & search ---
+	function change_page(dir) { render_duplicates_page(CURRENT_PAGE+dir, CURRENT_SEARCH); }
+	
+	function render_duplicates_page(page, searchTerm) {
+	CURRENT_PAGE = Math.max(1, page);
+	CURRENT_SEARCH = searchTerm || "";
 
-		<div class="x-container x-row x-padding">
-			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-grey">
-				<span>Click to start scanning database for duplicates</span>
-				<button class="x-btn x-round x-padding x-orange" onclick="start_scan_dup()">
-					Start Scanning Duplicates <b class="fa fa-clone x-text-white"></b>
-				</button>
+	var filteredData = DUPLICATE_DATA.filter(group =>
+		group.some(r => r.name.toLowerCase().includes(CURRENT_SEARCH.toLowerCase()))
+	);
+
+	var totalPages = Math.ceil(filteredData.length / PAGE_SIZE) || 1;
+	CURRENT_PAGE = Math.min(CURRENT_PAGE, totalPages);
+
+	var start = (CURRENT_PAGE - 1) * PAGE_SIZE;
+	var end = start + PAGE_SIZE;
+	var pageGroups = filteredData.slice(start, end);
+
+	var out = "";
+	pageGroups.forEach(records => {
+		if (!records || !records.length) return;
+		var group_name = records[0].name.split(" ")[0];
+		var group_key = safeKey(group_name);
+		var items = "";
+
+		records.forEach(r => {
+		const linkedStatus = r.linked_info || "";
+		items += `
+			<div id="record_${r.db_id}" class="duplicate-item">
+			<div class="duplicate-info">
+				<div class="duplicate-name">${r.name} <span style="color:#16a34a;">${linkedStatus}</span></div>
+				<div class="duplicate-meta">
+				<span class="meta-item"><span class="meta-label">ID:</span><strong>${r.db_id}</strong></span>
+				<span class="meta-item"><span class="meta-label">Input by:</span>${r.inputed}</span>
+				<span class="meta-item"><span class="meta-label">Reference:</span>
+					<code style="font-size:.85rem;background:#f3f4f6;padding:2px 6px;border-radius:4px;">${r.ref_code}</code>
+				</span>
+				</div>
 			</div>
-			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-green">
-				<div class="x-row x-container" id="dup_loading"></div>
+			<div class="duplicate-actions">
+				<button class="action-btn view" onclick="form_a_forms('${r.db_id}','${r.ref_code}')">View</button>
+				<button class="action-btn delete" onclick="del_dup_entry('${group_key}','${r.name}','${r.db_id}','${r.ref_code}')">Delete</button>
 			</div>
-			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-yellow">
-				<div class="x-row x-container" id="dup_res"></div>
-			</div>
-			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-red">
-				<div class="x-row x-container" id="dup_excess"></div>
-			</div>
-			<div class="x-container x-padding x-col l2 m2 x-topbar x-border-grey">
-				<div class="x-row x-container" id="btn_dup"></div>
-			</div>
+			</div>`;
+		});
+
+		out += `<div id="gr_${group_key}" class="duplicate-group">
+		<div class="duplicate-group-header">
+			<i class="fa fa-users" style="margin-right:8px;color:#64748b;"></i>
+			Duplicate Group: <span style="color:#1e40af;">${group_name}</span>
+			<span class="counter" style="float:right;background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:.85rem;">${records.length} records</span>
 		</div>
+		<div>${items}</div>
+		</div>`;
+	});
 
-		<div id="dup_modal" style="display: none;">
-			<div id="ls_dups" class="x-container" style="overflow-y:scroll;height: 60vh;">
-				Loading
-			</div>
-		</div>
+	duplicate_modal.dialog.querySelector("#dup_list_container").innerHTML = out;
 
-		<script type="text/javascript">
-			var duplicate_modal = undefined
-			var DUPLICATE_DATA = undefined
+	var pageInfo = duplicate_modal.dialog.querySelector("#dup_page_info");
+	if (pageInfo) {
+		pageInfo.textContent = `Page ${CURRENT_PAGE} of ${totalPages}`;
+	}
 
-			function start_scan_dup(last_name_del){
-				$ID("dup_loading").innerHTML = "Loading please wait"
-				$ID("dup_res").innerHTML = ""
-				$ID('dup_excess').innerHTML =""
-				$ID('btn_dup').innerHTML =""
-				$send({
-					action : "/feature_0/data_clean_duplicates",
-					method : POST,
-					func : function(_r){
-						var res = JSON.parse(_r)
-						DUPLICATE_DATA = res
-						var total_excess = 0
-						for (var i = 0; i < res.length; i++) {
-							total_excess+=res[i]['length']
-						}
-						$ID('dup_res').innerHTML = (`
-							<span class='x-center'>
-								<b class='x-large'>`+res['length']+`</b><br>
-								Unique records found that has a number duplicates 
-							</span>
-						`)
-						$ID('dup_excess').innerHTML = (`
-							<span class='x-center'>
-								<b class='x-large'>`+total_excess+`</b><br>
-								Total of excess entry <i class='x-text-grey'>(entry:#duplicate)</i>
-							</span>
-						`)
-						$ID('btn_dup').innerHTML = (`
-							<span>Click to the list of Records</span>
-							<button class='x-btn x-green x-round-large' onclick="view_duplicates()">
-								View Duplicate Results
-							</button>
-						`)
-						create_modal_duplicates(res,last_name_del)
-					},
-					progress : function(e){
-						// var response_length = parseFloat(headerMap(e)['total'])
-						var response_length = parseFloat(e.total)
-						var response_loaded = parseFloat(e.loaded)
-						var percent_  = (response_loaded / response_length) * 100;
-						var percent_rounded = Math.round(percent_ * 100) / 100
-						$ID("dup_loading").innerHTML = (`
-							<span>
-								Gathered
-								<b>`+Math.round(percent_)+`%</b><br>
-								<span class="x-small">
-									[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
-									<i>`+(response_length-response_loaded)+` bytes remaining</i>
-								</span>
-							</span>
-						`);
-					}
-				})
-			}
+	duplicate_modal.dialog.querySelector("#dup_prev").disabled = (CURRENT_PAGE === 1);
+	duplicate_modal.dialog.querySelector("#dup_next").disabled = (CURRENT_PAGE === totalPages);
+	}
 
-			function create_modal_duplicates(res_,last_name_del){
-				var out_dup = ""
-				for (var i = 0; i < res_.length; i++) {
-					var in_dup = ""
-					for (var x = 0; x < res_[i].length; x++) {
-						var LAST_NAME_SEL_DEL = res_[i][x]['name'].replaceAll(" ","").toLowerCase().replaceAll(/[^a-zA-Z0-9 ]/g,"")
-						in_dup +=(`
-							<div id="record_`+res_[i][x]['db_id']+`" class="x-row x-leftbar x-hover-border-red x-hover-pale-red">
-								<div class='x-col m10 l10'>
-									&nbsp;
-									<b>`+res_[i][x]['name']+`</b> |
-									<span><span class='x-text-grey'>Database ID :</span> 
-									`+res_[i][x]['db_id']+`</span> |
-									<span><span class='x-text-grey'>Inputed By :</span> 
-									`+res_[i][x]['inputed']+`</span><br>
-									&nbsp;
-									<span><span class='x-text-grey'>Reference :</span> 
-									<i class='x-tiny'>`+res_[i][x]['ref_code']+`</i></span>
-								</div>
-								<div class='x-col m2 l2'>
-									<button class='x-right x-btn x-red x-hover-black x-round-large' onclick="del_dup_entry('`+LAST_NAME_SEL_DEL+`','`+res_[i][x]['name']+`','`+res_[i][x]['db_id']+`','`+res_[i][x]['ref_code']+`')">
-										<span class='fa fa-trash'></span>
-									</button>
-									<button class='x-right x-btn x-blue x-hover-black x-round-large' onclick="form_a_forms('`+res_[i][x]['db_id']+`','`+res_[i][x]['ref_code']+`')">
-										<span class='fa fa-eye'></span>
-									</button>
-								</div>
-							</div>
-						`)
-					}
-					out_dup +=(`
-						<div id="gr_`+LAST_NAME_SEL_DEL+`" class="x-container x-padding" style='padding-bottom:10px;'>
-							<div class="x-container">`+in_dup+`</div>
-						</div>
-					`)
-				}
-				$ID('ls_dups').innerHTML = out_dup
-				duplicate_modal = $dialog({
-					title : "Duplicated Records",
-					subtitle : "Below are the list of records having a duplicates of two ore more",
-					content : $ID('dup_modal').innerHTML
-				})
-				view_duplicates()
-				try{
-					// window.find("last_name_del")
-					$ID("gr_"+last_name_del).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
-					println(last_name_del)
-				}catch(e){
-					warnprintln(e)
-				}
-			}
+	
+	// --- show modal ---
+	function view_duplicates() {
+		duplicate_modal = $dialog({
+			title: "Duplicated Records",
+			subtitle: "Below are the list of records having duplicates",
+			content: $ID("dup_modal").innerHTML
+		});
+		duplicate_modal.dialog.style.width = "75vw";
 
-			function view_duplicates(){
-				println("view_duplicates")
-				duplicate_modal.dialog.style.width = "75vw";
-				duplicate_modal.show()
-			}
+		// Render the current page after creating modal
+		render_duplicates_page(CURRENT_PAGE, CURRENT_SEARCH);
 
-			var del_diag ;
-			function del_dup_entry(last_name_del,name,ids,ref_num){
-				del_diag = $dialog({
-					title : "Delete Duplicated Entry ID ; "+ids,
-					type : 'warning',
-					subtitle : "You are about to delete one of the duplicate of an entry. Proceed with precautions",
-					content : (`
-						Name : <b>`+name+`</b><br>
-						DatabaseID : <b>`+ids+`</b><br>
-						Ref Code/ File : <b>`+ref_num+`</b><br>
-					`),
-					buttons : ["Delete Record  <span class='fa fa-trash'></span>"],
-					buttons_actions: [function(){
-						confirm_del(ids,last_name_del)
-					}]
-				})
-				del_diag.elem_buttons()[0].classList.remove("x-green")
-				del_diag.elem_buttons()[0].classList.add("x-red")
-				println(del_diag.elem_buttons()[0])
-				del_diag.show()
-				println("last_name_del = "+last_name_del)
-			}
-
-			function confirm_del(ids,last_name_del){
-				$send({
-					action :"/form_a/del_profile",
-					data : $DATA({"id":ids}),
-					method : POST,
-					func : function(res){
-						println(res)
-						del_diag.destroy()
-						duplicate_modal.destroy()
-						start_scan_dup(last_name_del)
-					}
-				})
-			}
-		</script>
+		duplicate_modal.show();
+	}
+	
+	// --- deletion ---
+	var del_diag;
+	function del_dup_entry(group_key,name,ids,ref_num) {
+	  del_diag = $dialog({
+		title: "Delete Duplicated Entry ID: "+ids,
+		type: "warning",
+		subtitle: "You are about to delete one of the duplicate entries. Proceed with caution.",
+		content: `<div style="background:#fef2f2;border-left:4px solid #dc2626;padding:15px;border-radius:6px;margin:15px 0;">
+					<div style="margin-bottom:10px;"><span style="color:#6b7280;">Name:</span><strong style="color:#1e293b;font-size:1.1rem;">${name}</strong></div>
+					<div style="margin-bottom:10px;"><span style="color:#6b7280;">Database ID:</span><strong style="color:#1e293b;">${ids}</strong></div>
+					<div><span style="color:#6b7280;">Reference Code/File:</span><code style="background:#f3f4f6;padding:4px 8px;border-radius:4px;color:#1e293b;">${ref_num}</code></div>
+				  </div>
+				  <p style="color:#dc2626;font-weight:500;margin-top:15px;"><i class="fa fa-exclamation-triangle"></i> This action cannot be undone.</p>`,
+		buttons: ["Delete Record  <span class='fa fa-trash'></span>"],
+		buttons_actions: [function(){ confirm_del(ids); }]
+	  });
+	  del_diag.elem_buttons()[0].classList.remove("x-green");
+	  del_diag.elem_buttons()[0].classList.add("x-red");
+	  del_diag.show();
+	}
+	
+	function confirm_del(ids) {
+	  $send({
+		action:"/form_a/del_profile",
+		data:$DATA({id:ids}),
+		method:POST,
+		func:function(res){
+		  if(del_diag) del_diag.destroy();
+	
+		  // remove from DUPLICATE_DATA
+		  DUPLICATE_DATA.forEach((g,i)=>{ DUPLICATE_DATA[i]=g.filter(r=>r.db_id!=ids); });
+	
+		  // re-render current page
+		  render_duplicates_page(CURRENT_PAGE, CURRENT_SEARCH);
+	
+		  // update stats
+		  var total_groups = DUPLICATE_DATA.filter(g=>g.length>0).length;
+		  var total_excess = DUPLICATE_DATA.reduce((acc,g)=>acc+g.length,0);
+		  $ID("dup_res").innerHTML = `<div class="stat-number">${total_groups}</div><div class="stat-label">Unique records with duplicates</div>`;
+		  $ID("dup_excess").innerHTML = `<div class="stat-number">${total_excess}</div><div class="stat-label">Total excess entries</div>`;
+		}
+	  });
+	}
+	</script>

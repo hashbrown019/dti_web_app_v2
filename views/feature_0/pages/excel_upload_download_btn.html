@@ -6,6 +6,10 @@
 <span class=" x-text-hover-blue" onclick="import_farmer_excel()">
 	<b class="x-text-grey">Import Spreadsheet</b> | <span class="x-text-blue fa fa-upload"></span>
 </span>
+&nbsp;&nbsp;&nbsp;
+<span class=" x-text-hover-orange" onclick="download_login_start('VC_FORM_A_v2.xls')">
+	<b class="x-text-grey">Download Template</b> | <span class="x-text-orange fa fa-download"></span>
+</span>
 
 <script type="text/javascript">
 function export_farmer_excel(argument) {
@@ -84,7 +88,7 @@ function import_farmer_excel(argument) {
 						Upload
 					</button>
 				</div>
-				<div class="x-padding x-container" style="overflow-y:scroll;height: 60vh;">
+				<div class="x-padding x-container">
 					<b class="x-text-teal">Uploaded Spreadsheets</b><br>
 					<div id="ls_uploaded_excel" class="x-container" >
 						<div class="x-padding x-center">
@@ -95,11 +99,14 @@ function import_farmer_excel(argument) {
 				</div>
 				<hr>
 			</div>
-		`)
-	})
-	excel_upload_dialog.dialog.style.width="80%"
-	excel_upload_dialog.show()
-	get_uploaded_excel()
+		 `)
+  })
+  excel_upload_dialog.dialog.style.width = "80%"
+  excel_upload_dialog.dialog.style.maxWidth = "800px" // add a max-width to prevent it from getting too wide
+  excel_upload_dialog.dialog.style.margin = "40px auto" // add some margin to center it horizontally
+  excel_upload_dialog.dialog.style.overflow = "auto" // add overflow:auto to make it scrollable if it gets too tall
+  excel_upload_dialog.show()
+  get_uploaded_excel()
 }
 
 function is_good_file(elem){
@@ -245,5 +252,11 @@ function delete_excel(fff){
 	del_dialog01.destroy()
 }
 
+function download_login_start(fff){
+	let a= document.createElement('a');
+	a.target= '_blank';
+	a.href= '/login/download_file/'+fff;
+	a.click();
+}
 
 </script>

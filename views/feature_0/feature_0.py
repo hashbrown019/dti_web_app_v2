@@ -367,9 +367,10 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
-				`excel_import_form_a`.`file_name` as 'reference'
-				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
-				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
+				`excel_import_form_a`.`file_name` as 'reference',
+				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_sectoral_data` as `sectoral_data`
+				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`
 			FROM `excel_import_form_a`
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False) # DEPRICATED MOBILE DATA
@@ -421,9 +422,10 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
 				`excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `is_head_hh`,
-				`excel_import_form_a`.`file_name` as 'reference'
-				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
-				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
+				`excel_import_form_a`.`file_name` as 'reference',
+				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_sectoral_data` as `sectoral_data`
+				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`
 			FROM `excel_import_form_a`
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,True) + rapid_mysql.select(sql_excel,True) # DEPRICTED MOBILE DATA
@@ -754,32 +756,60 @@ class _main:
 		# return sorted_dict.update(segre)
 		return segre
 
-	@app.route("/feature_0/data_clean_duplicates",methods=["POST","GET"])
+	@app.route("/feature_0/data_clean_duplicates", methods=["POST","GET"])
 	@c.login_auth_web()
 	def feature_0_data_clean_duplicates():
 		_data = _main.feature_0_get_farmer_data_a1()
 		unique_name_arr = {}
+		all_db_ids = []
+
 		for datum in _data:
-			fr_name = datum[2]+" "+datum[3]+" "+datum[4]
-			if(len(fr_name.replace(" ",""))<=1):
-				fr_name = datum[14];
-				# print(len(datum))
-			unique_name = re.sub(r'[^\w\s]', '',fr_name.replace(" ","") ).lower();
+			fr_name = f"{datum[2]} {datum[3]} {datum[4]}"
+			if len(fr_name.replace(" ","")) <= 1:
+				fr_name = datum[14]
 
-			if(unique_name not in unique_name_arr):
-				unique_name_arr[unique_name] = [];
-			unique_name_arr[unique_name].append({
-				"name":fr_name,
-				"db_id":datum[0],
-				"inputed":datum[1],
-				"ref_code":datum[13],
-			})
+			display_name = fr_name
+			if datum[5]:
+				display_name += " " + datum[5]
+			unique_name = re.sub(r"[^\w\s]", "", fr_name.replace(" ","")).lower()
 
-		new_unique_name_arr=[]
-		for arrs in unique_name_arr:
-			if(len(unique_name_arr[arrs])>=2):
-				# print("Duplicate : {}".format(len(unique_name_arr[arrs])))
-				new_unique_name_arr.append(unique_name_arr[arrs])
+			if unique_name not in unique_name_arr:
+				unique_name_arr[unique_name] = []
+
+			entry = {
+				"name": display_name,
+				"db_id": datum[0],
+				"inputed": datum[1],
+				"ref_code": datum[13],
+				"linked": False,
+				"linked_info": ""   # will store e.g. "(Linked to excel_import_form_a)"
+			}
+			unique_name_arr[unique_name].append(entry)
+			all_db_ids.append(str(datum[0]))
+
+		# get link_to_id and db_table in one shot
+		linked_map = {}
+		if all_db_ids:
+			id_list = ",".join(all_db_ids)
+			sql = f"""
+			SELECT link_to_id, db_table
+			FROM __data_link_1
+			WHERE link_to_id IN ({id_list})
+			"""
+			rows = rapid_mysql.select(sql)
+			# build map {id: db_table}
+			linked_map = {str(r['link_to_id']): r['db_table'] for r in rows}
+
+		# mark linked info
+		for group in unique_name_arr.values():
+			for entry in group:
+				db_id_str = str(entry["db_id"])
+				if db_id_str in linked_map:
+					entry["linked"] = True
+					entry["linked_info"] = f"(Linked to {linked_map[db_id_str]})"
+
+		# keep only duplicates
+		new_unique_name_arr = [g for g in unique_name_arr.values() if len(g) >= 2]
 		new_new_unique_name_arr = sorted(new_unique_name_arr, key=len, reverse=True)
 		return new_new_unique_name_arr
 
