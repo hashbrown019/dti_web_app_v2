@@ -367,11 +367,11 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
-				`excel_import_form_a`.`file_name` as 'reference',
-				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`,
-				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`
+				`excel_import_form_a`.`file_name` as 'reference'
+				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
+				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a`
-		INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
+			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False) # DEPRICATED MOBILE DATA
 		RES = rapid_mysql.select(sql_excel,False)
 		random.shuffle(RES)
@@ -421,11 +421,11 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
 				`excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `is_head_hh`,
-				`excel_import_form_a`.`file_name` as 'reference',
-				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`,
-				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`
+				`excel_import_form_a`.`file_name` as 'reference'
+				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
+				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a`
-		INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
+			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,True) + rapid_mysql.select(sql_excel,True) # DEPRICTED MOBILE DATA
 		RES = rapid_mysql.select(sql_excel,True)
 		random.shuffle(RES)
