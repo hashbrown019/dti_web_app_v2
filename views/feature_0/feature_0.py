@@ -371,7 +371,7 @@ class _main:
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`,
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`
 			FROM `excel_import_form_a`
-			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
+		INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False) # DEPRICATED MOBILE DATA
 		RES = rapid_mysql.select(sql_excel,False)
 		random.shuffle(RES)
@@ -425,7 +425,7 @@ class _main:
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`,
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`
 			FROM `excel_import_form_a`
-			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
+		INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,True) + rapid_mysql.select(sql_excel,True) # DEPRICTED MOBILE DATA
 		RES = rapid_mysql.select(sql_excel,True)
 		random.shuffle(RES)
