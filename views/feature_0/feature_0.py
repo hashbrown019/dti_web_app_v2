@@ -369,7 +369,6 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
 				`excel_import_form_a`.`file_name` as 'reference',
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`,
-				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_sectoral_data` as `sectoral_data`
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`
 			FROM `excel_import_form_a`
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
@@ -424,7 +423,6 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `is_head_hh`,
 				`excel_import_form_a`.`file_name` as 'reference',
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`,
-				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_sectoral_data` as `sectoral_data`
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`
 			FROM `excel_import_form_a`
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
