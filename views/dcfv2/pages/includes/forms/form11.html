@@ -7,288 +7,1429 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-<title>Form 11 </title>
+<title>Form 11 - Access to Financing Tracker</title>
 
-	{% include "includes/sweetalert.html" %}
-    <div class="col-md-12 col-sm-12 x-card  x-light-grey">
-		<center>
-			<h2 class=" x-container text-white x-padding" style="background-color: #007399;">FORM 11 - ACCESS TOFINANCING TRACKER</h2>
-			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
-		</center>
+{% include "includes/sweetalert.html" %}
 
-		<div class="x-container x-padding">
-			<style>
-				table,
-				th,
-				td {
-					border: 1px solid black;
-					border-collapse: collapse;
-				}
-			</style>
-		</div>
-
-		<div class="x-row x-container x-padding">
-            <input class="FORM11_FIELD x-input" type="hidden"  id="id">
-			<div class="x-col l4 x-container x-padding">
-				<label class="">DIP Alignment :</label>
-				<select id="form_11_dip_alignment" name="form_11_dip_alignment" class="FORM11_FIELD withother x-border x-select x-border"
-					required>
-					<option value="none">Choose your option</option>
-					<option value="Yes">Yes</option>
-					<option value="No DIP Alignment">No</option>
-				</select>
-				<input type="text" class="FORM11_FIELD hidden-textboxdip11 x-input x-border" name="form_11_dip_alignment_yes" id="form_11_dip_alignment_yes" show-base="form_11_dip_alignment" show-trigger="Yes"  placeholder="Please specify">
-			</div>
-
-			<div class="x-col l4 x-container x-padding" style="margin-left: 21%;">
-				<label>Activity Title:</label>
-				<input required class="FORM11_FIELD x-input x-border" id="form_11_activity_title" name="form_11_activity_title"
-					type="text" autocomplete="on" placeholder="">
-			</div>
-		</div>
-		<div class="x-row x-container x-padding">
-			<div class="x-col l8 x-container">
-				<label>Name of Beneficiary (Registered Business/FO Name):</label>
-				<input required class="FORM11_FIELD x-input x-border" id="form_11_name_of_beneficiary"
-					name="form_11_name_of_beneficiary" size="10" type="text" autocomplete="on" placeholder="">
-			</div>
-
-			<div class="x-col l3 x-container x-padding">
-				<span class="">Industry Cluster:</span>
-				<select class="FORM11_FIELD x-border x-select x-border" id="form_11_industry_cluster" name="form_11_industry_cluster"
-					required>
-					<option value="">Choose your option</option>
-					<option>Coffee</option>
-					<option>Cacao</option>
-					<option>Coconut</option>
-					<option>PFN</option>
-				</select>
-				<input type="text" class="FORM11_FIELD hidden-textbox x-input x-border" name="form_11_industry_pfn"
-					id="form_11_industry_pfn" show-base="form_11_industry_cluster" show-trigger="PFN" placeholder="Please specify">
-			</div>
-		</div>
-
-		<div class="x-row x-container x-padding">
-			<style>
-				table,
-				th,
-				td {
-					border: 1px solid black;
-					border-collapse: collapse;
-				}
-			</style>
-			<table class="x-table x-container x-table-border" style="border-color: transparent;">
-				<tr>
-					<th colspan="2">
-						<center>MSME/FO Location</center>
-					</th>
-					<th colspan="2">
-						<center>Sex</center>
-					</th>
-				</tr>
-
-				<tr>
-					<td>
-						<center>Region</center>
-					</td>
-					<td>
-						<center>Province</center>
-					</td>
-
-					<td>
-						<center>Male</center>
-					</td>
-					<td>
-						<center>Female</center>
-					</td>
-				</tr>
-
-				<tr>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_msme_regional" type="text"name="form_11_msme_regional"></td>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_msme_province" type="text"name="form_11_msme_province"></td>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_male" type="number" name="form_11_male"></td>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_female" type="number" name="form_11_female">
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="x-col 9 x-container x-padding">
-			<style>
-				table,
-				th,
-				td {
-					border: 1px solid black;
-					border-collapse: collapse;
-				}
-			</style>
-			<table class="x-table x-container x-table-border" style="border-color: transparent;">
-				<tr>
-					<th colspan="4">
-						<center>Sector</center>
-					</th>
-					<th colspan="2">
-						<center>Proposal Submission</center>
-					</th>
-				</tr>
-
-				<tr>
-					<td>
-						<center>PWD</center>
-					</td>
-					<td>
-						<center>Youth</center>
-					</td>
-					<td>
-						<center>IP</center>
-					</td>
-					<td>
-						<center>SC</center>
-					</td>
-					<td>
-						<center>Date Submitted to FSP</center>
-					</td>
-					<td>
-						<center>Date Approved</center>
-					</td>
-				</tr>
-
-				<tr>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_pwd" type="text" name="form_11_pwd"></td>
-					<td><input class=" x-light-grey x-input" id="form_11_youth" type="text" name="form_11_youth"></td>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_ip" type="text" name="form_11_ip"></td>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_sc" type="text" name="form_11_sc"></td>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_date_submitted" type="date"name="form_11_date_submitted"></td>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_date_approved" type="date"name="form_11_date_approved"></td>
-				</tr>
-			</table>
-		</div>
-		<div class="x-row x-container x-padding">
-			<style>
-				table,
-				th,
-				td {
-					border: 1px solid black;
-					border-collapse: collapse;
-				}
-			</style>
-			<table class="x-table x-container x-table-border" style="border-color: transparent;">
-				<tr>
-					<th colspan="2">
-						<center>Partner FSP</center>
-					</th>
-				</tr>
-				<tr>
-					<td>
-						<center>Name of FSP</center>
-					</td>
-					<td>
-						<center>Location/Address</center>
-					</td>
-				</tr>
-				<tr>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_name_of_fsp" type="text"name="form_11_name_of_fsp"></td>
-					<td><input class="FORM11_FIELD x-light-grey x-input" id="form_11_location_address" type="text"name="form_11_location_address"></td>
-				</tr>
-			</table>
-		</div>
-		<div class="x-row x-container x-padding">
-			<div class="x-col l6 x-container x-padding">
-				<label>Amount of Equity Financing Approved/Accessed:</label>
-				<input class="FORM11_FIELD x-input x-border" id="form_11_amount_of_equity" name="form_11_amount_of_equity"type="number" autocomplete="on" placeholder="">
-			</div>
-			<div class="x-col l4 x-container x-padding">
-				<label>Date Released:</label>
-				<input class="FORM11_FIELD x-input x-border" id="form_11_date_released" name="form_11_date_released" type="date"autocomplete="on" placeholder="">
-			</div>
-			<!-- <div class="x-col l4 x-container x-padding">
-				<button data-toggle="modal" data-target="#form11_modalpart" href=""
-					style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" type="button" id="btnpart"
-					class="x-teal btn"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Add Participants</button>
-			</div> -->
-		</div><br><br>
-
-{% if benef|length !=0 %}
-					<!-- Start to do list -->
-<div class="col-md-12 col-sm-12 ">
-	<div class="x_panel">
-	  <div class="x_title">
-		<h2>Participants&nbsp;&nbsp;&nbsp;
-			<a style="color: #339966;  cursor: pointer;" onclick='goto("/feature_0/link_data_dcf_form_a?&h="+URL_ARGS["id"]+"&i="+URL_ARGS["table"],true)'>
-				<span><i class="fa fa-pencil-square-o" style="color:#339966;"></i></span> Edit Participants
-			</a> </h2></h2>
-		<ul class="nav navbar-right panel_toolbox">
-			<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">Settings 1</a>
-						<a class="dropdown-item" href="#">Settings 2</a>
-					</div>
-				</li>
-			<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-		</ul>
-	<div class="clearfix"></div>
+<style>
+  body {
+    font-size: 0.875rem;
+  }
+  .wide-container {
+    width: 98%;
+    max-width: none;
+    margin: 0 auto;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  .form-section {
+    margin-bottom: 1rem;
+  }
+  .bg-teal {
+    background-color: #4B5F71;
+    color: #ffffff;
+  }
+  .form-header {
+    border-bottom: 1px solid #b8babb;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .section-divider {
+    background-color: #4B5F71;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 1rem 0 0.5rem;
+    text-align: center;
+  }
+  .custom-table-header th {
+    background-color: #4B5F71;
+    color: white;
+  }
+  .form-control, .form-select, textarea {
+    font-size: 0.875rem;
+    border-radius: 0;
+    padding: 10px;
+    height: auto;
+    border: 2px solid #c2bfbf;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  select.form-select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 30px;
+  }
+  .form-control:focus, .form-select:focus {
+    border-color: #4B5F71;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(75, 95, 113, 0.2);
+  }
+  @-moz-document url-prefix() {
+    select.form-select {
+      text-indent: 0.01px;
+      text-overflow: '';
+    }
+  }
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    select.form-select {
+      padding-right: 10px;
+      background-image: none;
+    }
+  }
+  label {
+    font-size: 0.875rem;
+    padding-top: 10px;
+  }
+  .card, .card-header, .card-body, .card-footer {
+    border-radius: 0;
+  }
+  button.btn {
+    font-size: 0.875rem;
+    border-radius: 0;
+  }
+  .card-header h5 {
+    text-align: center;
+  }
+  @media (max-width: 992px) {
+    .wide-container {
+      width: 95%;
+    }
+  }
+  .hidden-textbox {
+    display: none;
+    margin-top: 10px;
+  }
+  .total-display {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .registration-type-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  .card-footer.bg-light {
+    padding: 0.75rem 1rem;
+    margin-top: 0;
+  }
+  .card-body:last-child {
+    padding-bottom: 0.5rem;
+  }
+  .nav-tabs .nav-link {
+    color: #4B5F71;
+    font-weight: 500;
+  }
+  .nav-tabs .nav-link.active {
+    color: #4B5F71;
+    font-weight: 600;
+    border-bottom: 3px solid #4B5F71;
+  }
+  .tab-content {
+    padding-top: 1rem;
+  }
+</style>
+<input class="FORM11_FIELD x-input" type="hidden"  id="id">
+<div class="tab-container" style="margin-bottom: 1.5rem;">
+  <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="farmers-tab" data-bs-toggle="tab" data-bs-target="#farmers-profile" type="button" role="tab" aria-controls="farmers-profile" aria-selected="true">Farmer's Profiling</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="fo-msme-tab" data-bs-toggle="tab" data-bs-target="#fo-msme-profile" type="button" role="tab" aria-controls="fo-msme-profile" aria-selected="false">FOs/MSMEs Profiling</button>
+    </li>
+  </ul>
 </div>
-<div class="x_content">
-  <div class="row">
-	  <div class="col-sm-12">
-		<div class="card-box table-responsive">
-			<p class=" text-muted font-13 m-b-30">
-			  Farmer's Profile/ Participants/ Beneficiaries/ FO/ MSMEs/ DCF's
-		  	</p>
-		  
-		  	<table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-			  	<thead>
-				<tr>
-					<th>Name / Org Name</th>
-					<th>Sex</th>
-					<th>Birthday</th>
-					<th>Primary Crop (If Applicable)</th>
-					<th>Barangay</th>
-					<th>City/Municipality</th>
-					<th>Province</th>
-					<th>Region</th>
-			 	</tr>
-		 		</thead>
-		 		<tbody>
-					{% for parti in benef%}
-				<tr>
-					<td>{{parti['fname']}}</td>
-					<td>{{parti['sex']}}</td>
-					<td>{{parti['farmer_bday']}}</td>
-					<td>{{parti['farmer_primary_crop']}}</td>
-					<td>{{parti['addr_brgy']}}</td>
-					<td>{{parti['addr_city']}}</td>
-					<td>{{parti['addr_prov']}}</td>
-					<td>Region {{parti['addr_region']}}</td>
-				</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
-</div>
-</div>
-</div>
-{%endif%}
 
-			<p class="x-right" id="submit_btn_holder">
-				<button class="btn btn-primary" type="button" onclick="submit_form('FORM11_FIELD','dcf_access_financing','/form11_dashboard')">Submit</button>
-			</p>
+<div class="tab-content" id="profileTabsContent">
+  <!-- Farmer's Profiling Tab -->
+  <div class="tab-pane fade show active" id="farmers-profile" role="tabpanel" aria-labelledby="farmers-tab">
+    <div class="card shadow">
+      <div class="card-header text-white" style="background-color: #007399;">
+        <h5 class="mb-0 fs-5">Farmer's Profiling</h5>
+      </div>
+      <div class="card-body">
+        <!-- Farmer's Profiling Form -->
+        <section class="form-section">
+          <div class="row g-2 align-items-end">
+            <div class="col-6 col-md-3">
+              <label for="region-farmer" class="form-label">Region:</label>
+              <select id="form_11_farmer_region" name="form_11_farmer_region" class="FORM11_FIELD form-select form-select-sm" required>
+                <option value="">Choose your option</option>
+                  <option value="8">RCU 8 - Eastern Visayas</option>
+                  <option value="9">RCU 9 - Zamboanga Peninsula</option>
+                  <option value="10">RCU 10 - Northern Mindanao</option>
+                  <option value="11">RCU 11 - Davao Region</option>
+                  <option value="12">RCU 12 - SOCCSKSARGEN</option>
+                  <option value="13">RCU 13 - Caraga</option>
+                  <option value="BARMM">BARMM</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label for="region-farmer" class="form-label">PCU:</label>
+              <select id="form_11_farmer_pcu" name="form_11_farmer_pcu" class="FORM11_FIELD form-select form-select-sm" required>
+                <option value="">Choose your option</option>
+                  <option value="Northern Samar">Northern Samar</option>
+                  <option value="Leyte">Leyte</option>
+                  <option value="Southern Leyte">Southern Leyte</option>
+                  <option value="Zamboanga del Norte">Zamboanga del Norte</option>
+                  <option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+                  <option value="Zamboanga del Sur">Zamboanga del Sur</option>
+                  <option value="Misamis Oriental">Misamis Oriental</option>
+                  <option value="Bukidnon">Bukidnon</option>
+                  <option value="Lanao del Norte">Lanao del Norte</option>
+                  <option value="Davao de Oro">Davao de Oro</option>
+                  <option value="Davao Oriental">Davao Oriental</option>
+                  <option value="Davao del Norte">Davao del Norte</option>
+                  <option value="Davao del Sur">Davao del Sur</option>
+                  <option value="Davao Occidental">Davao Occidental</option>
+                  <option value="North Cotabato">North Cotabato</option>
+                  <option value="Sultan Kudarat">Sultan Kudarat</option>
+                  <option value="Sarangani">Sarangani</option>
+                  <option value="Agusan del Norte">Agusan del Norte</option>
+                  <option value="Agusan del Sur">Agusan del Sur</option>
+                  <option value="Surigao del Sur">Surigao del Sur</option>
+                  <option value="Maguindanao">Maguindanao</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label for="dip-name-farmer" class="form-label">DIP Name:</label>
+              <select class="FORM11_FIELD form-select form-select-sm" id="form_11_farmer_dip_name" required></select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label for="commodity-farmer" class="form-label">Commodity:</label>
+              <select class="FORM11_FIELD form-select form-select-sm" id="form_11_farmer_commodity" required>
+                <option value="">Choose your option</option>
+                <option value="Coconut">Coconut</option>
+                <option value="Coffee">Coffee</option>
+                <option value="Cacao">Cacao</option>
+                <option value="PFN">PFN</option>
+              </select>
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
+            <div class="col-md-4">
+              <label for="type-of-enterprise-farmer" class="form-label">Type of Enterprise:</label>
+              <select class="FORM11_FIELD form-select" id="form_11_farmer_type_of_enterprise" required>
+                <option value="">Choose your option</option>
+                <option value="FO">FO</option>
+                <option value="MSME">MSMEs</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="name-of-enterprise-farmer" class="form-label">Name of Enterprise:</label>
+              <select class="FORM11_FIELD form-select" id="form_11_farmer_name_of_enterprise" required>
+                <option value="">Choose your option</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="location-farmer" class="form-label">Location:</label>
+              <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_location" name="farmer_location" required>
+            </div>
+          </div>
+          <!-- Beneficiaries / Sex / Sector Row -->
+          <div class="row g-3 mt-1">
+            <!-- Name of Beneficiaries -->
+            <div class="col-md-4">
+              <label for="farmer_beneficiaries_name" class="form-label">Name of Beneficiaries:</label>
+              <input
+                type="text"
+                id="form_11_farmer_beneficiaries_name"
+                name="form_11_beneficiary_name"
+                class="FORM11_FIELD form-control"
+                placeholder=""
+                required />
+            </div>
+            <!-- Sex -->
+            <div class="col-md-4">
+              <div class="row g-2">
+                <!-- Male -->
+                <div class="col-6">
+                  <label for="armer_beneficiaries_male" class="form-label" style="font-size: 0.8rem; font-weight: 500;">Male</label>
+                  <input type="number" id="form_11_farmer_beneficiaries_male" name="form_11_male" class="FORM11_FIELD form-control" min="0" required />
+                </div>
+                <!-- Female -->
+                <div class="col-6">
+                  <label for="farmer_beneficiaries_female" class="form-label" style="font-size: 0.8rem; font-weight: 500;">Female</label>
+                  <input type="number" id="form_11_farmer_beneficiaries_female" name="form_11_female" class="FORM11_FIELD form-control" min="0" required />
+                </div>
+              </div>
+            </div>
+            <!-- Sector -->
+            <div class="col-md-4">
+              <div class="row g-2">
+                <!-- PWD -->
+                <div class="col-6 col-lg-3">
+                  <label for="farmer_beneficiaries_pwd" class="form-label" style="font-size: 0.8rem; font-weight: 500;">PWD</label>
+                  <input type="number" id="form_11_farmer_beneficiaries_pwd" name="form_11_pwd" class="FORM11_FIELD form-control" min="0" value="" />
+                </div>
+                <!-- IP -->
+                <div class="col-6 col-lg-3">
+                  <label for="farmer_beneficiaries_ip" class="form-label" style="font-size: 0.8rem; font-weight: 500;">IP</label>
+                  <input type="number" id="form_11_farmer_beneficiaries_ip" name="form_11_ip" class="FORM11_FIELD form-control" min="0" value="" />
+                </div>
+                <!-- Youth -->
+                <div class="col-6 col-lg-3">
+                  <label for="farmer_beneficiaries_youth" class="form-label" style="font-size: 0.8rem; font-weight: 500;">Youth</label>
+                  <input type="number" id="form_11_farmer_beneficiaries_youth" name="form_11_youth" class="FORM11_FIELD form-control" min="0" value="" />
+                </div>
+                <!-- SC -->
+                <div class="col-6 col-lg-3">
+                  <label for="farmer_beneficiaries_sc" class="form-label" style="font-size: 0.8rem; font-weight: 500;">SC</label>
+                  <input type="number" id="form_11_farmer_beneficiaries_sc" name="form_11_sc" class="FORM11_FIELD form-control" min="0" value="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-		</div>
+        <!-- Part 2: Farmer's Profiling Toggles -->
+        <div class="section-divider" style="background-color: #007399;">Finance Access Extensions</div>
+        <section class="form-section">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_loan_section">
+                <label class="form-check-label" for="farmer_show_loan_section">Loans / Cash Advance</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_savings_section">
+                <label class="form-check-label" for="farmer_show_savings_section">Savings and Investments</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_insurance_section">
+                <label class="form-check-label" for="farmer_show_insurance_section">Insurance</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_creditguarantee_section">
+                <label class="form-check-label" for="farmer_show_creditguarantee_section">Credit Guarantee</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_paidupcapital_section">
+                <label class="form-check-label" for="farmer_show_paidupcapital_section">Paid-Up Capital</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_inkind_section">
+                <label class="form-check-label" for="farmer_show_inkind_section">In-Kind Grants from Partner Enablers</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_cashgrant_section">
+                <label class="form-check-label" for="farmer_show_cashgrant_section">Cash Grant from Partner Enablers</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_cashforwork_section">
+                <label class="form-check-label" for="farmer_show_cashforwork_section">Cash for Work</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_mortuary_section">
+                <label class="form-check-label" for="farmer_show_mortuary_section">Mortuary Insurance/Assistance</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_digital_section">
+                <label class="form-check-label" for="farmer_show_digital_section">Use of Financial Digital Platforms</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="farmer_show_rapid_section">
+                <label class="form-check-label" for="farmer_show_rapid_section">RAPID Support</label>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Hidden sections for Farmer's Profiling toggles -->
+        <div id="farmer_loan_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">LOANS / CASH ADVANCE</div>
+          <section class="form-section">
+            <div class="row g-3">
+          <div class="col-md-3">
+            <label for="farmer_loan_fsp" class="form-label">NAME OF FSP</label>
+            <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_loan_fsp" name="farmer_loan_fsp" required>
+          </div>
+          <div class="col-md-3">
+            <label for="farmer_loan_type" class="form-label">TYPE OF FINANCING INSTITUTION</label>
+            <select class="FORM11_FIELD form-select" id="form_11_farmer_loan_type" name="farmer_loan_type[]" multiple required>
+              <option value="GFI">GFI</option>
+              <option value="GOCC">GOCC</option>
+              <option value="NGA">NGA</option>
+              <option value="COOP">COOP</option>
+              <option value="NGO">NGO</option>
+              <option value="Private FI">Private FI</option>
+              <option value="Market">Market</option>
+              <option value="Informal">Informal</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="farmer_loan_amount" class="form-label">APPROVED LOAN AMOUNT</label>
+            <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_loan_amount" name="farmer_loan_amount" min="0" step="0.01" required>
+          </div>
+          <div class="col-md-3">
+            <label for="farmer_loan_purpose" class="form-label">LOAN PURPOSE</label>
+            <select class="FORM11_FIELD form-select" id="form_11_farmer_loan_purpose" name="farmer_loan_purpose" required>
+              <option value="">Choose</option>
+              <option value="Equity">Equity</option>
+              <option value="Working">Working</option>
+              <option value="Relending">Relending</option>
+            </select>
+          </div>
+        </div>
+            <div class="mt-3">
+              <label for="farmer_total_loan_amount" class="form-label fw-bold">TOTAL LOAN AMOUNT:</label>
+              <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_total_loan_amount" name="farmer_total_loan_amount" readonly>
+            </div>
+          </section>
+        </div>
+
+        <div id="farmer_savings_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">SAVINGS AND INVESTMENTS</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">NAME OF FSP</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_savings_fsp">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">TYPE</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_savings_type">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">AMOUNT</label>
+                <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_savings_amount" min="0" step="0.01">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_insurance_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">INSURANCE</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">NAME OF FSP</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_insurance_fsp">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">TYPE</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_insurance_type">
+                  <option value="">Choose</option>
+                  <option value="Crop">Crop</option>
+                  <option value="Loan Protection">Loan Protection</option>
+                  <option value="Health">Health</option>
+                  <option value="Others">Others (please specify)</option>
+                </select>
+                <input type="text" class="form-control mt-2" id="form_11_farmer_insurance_type_other" placeholder="Please specify" style="display:none;">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">AMOUNT</label>
+                <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_insurance_amount" min="0" step="0.01">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_creditguarantee_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">CREDIT GUARANTEE</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">With Credit Guarantee</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_creditguarantee">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">AMOUNT</label>
+                <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_creditguarantee_amount" min="0" step="0.01">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_paidupcapital_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">PAID-UP CAPITAL</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Paid-Up Capital</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_paidupcapital">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">With PUC</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_with_puc">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">AMOUNT</label>
+                <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_paidupcapital_amount" min="0" step="0.01">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_inkind_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">IN-KIND GRANTS FROM PARTNER ENABLERS</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">NAME OF FSP</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_inkind_fsp">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">TYPE</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_inkind_type">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">With In-Kind</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_inkind_with">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Type of Input</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_inkind_input">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_cashgrant_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">CASH GRANT FROM PARTNER ENABLERS</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">NAME OF FSP</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_cashgrant_fsp">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">TYPE</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_cashgrant_type">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Cash Grant</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_cashgrant_with">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">AMOUNT</label>
+                <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_cashgrant_amount" min="0" step="0.01">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_cashforwork_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">CASH FOR WORK</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">NAME OF FSP</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_cashforwork_fsp">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">TYPE</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_cashforwork_type">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Cash for Work</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_cashforwork_with">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">AMOUNT</label>
+                <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_cashforwork_amount" min="0" step="0.01">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_mortuary_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">MORTUARY INSURANCE/ASSISTANCE</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">NAME OF FSP</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_mortuary_fsp">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">TYPE</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_mortuary_type">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Mortuary Assistance</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_mortuary_with">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">AMOUNT</label>
+                <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_mortuary_amount" min="0" step="0.01">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_digital_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">USE OF FINANCIAL DIGITAL PLATFORMS</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">NAME OF FSP</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_digital_fsp">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">TYPE</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_digital_type">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Use of Financial Digital Platforms</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_digital_with">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">AMOUNT</label>
+                <input type="number" class="FORM11_FIELD form-control" id="form_11_farmer_digital_amount" min="0" step="0.01">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="farmer_rapid_section" style="display:none;">
+          <div class="section-divider" style="background-color: #007399;">RAPID SUPPORT</div>
+          <section class="form-section">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">RAPID Matching Grant</label>
+                <select class="FORM11_FIELD form-select" id="form_11_farmer_rapid_mg">
+                  <option value="">Choose</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">TYPE</label>
+                <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_rapid_type">
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="card-footer bg-light">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-primary" type="button" onclick="submit_form('FORM11_FIELD','dcf_access_financing','/form11_dashboard')">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FO/MSMEs Profiling Tab -->
+  <div class="tab-pane fade" id="fo-msme-profile" role="tabpanel" aria-labelledby="fo-msme-tab">
+    <div class="wide-container">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="card shadow">
+            <div class="card-header bg-teal text-white" style="background-color: #007399;">
+              <h5 class="mb-0 fs-5">FOs/MSMEs Profiling</h5>
+              <span class="badge" style="background-color: #334257; color: #ffb366;" id="head_note"></span>
+            </div>
+            <div class="card-body">
+
+              <!-- Profile Section -->
+              <section class="form-section">
+                <div class="row g-2">
+                  <div class="col-6 col-md-3">
+                    <label for="region" class="form-label">Region:</label>
+                    <select id="form_11_fo_msme_regional" name="form_11_msme_regional" class="FORM11_FIELD form-select form-select-sm" required>
+                      <option value="">Choose your option</option>
+                        <option value="8">RCU 8 - Eastern Visayas</option>
+                        <option value="9">RCU 9 - Zamboanga Peninsula</option>
+                        <option value="10">RCU 10 - Northern Mindanao</option>
+                        <option value="11">RCU 11 - Davao Region</option>
+                        <option value="12">RCU 12 - SOCCSKSARGEN</option>
+                        <option value="13">RCU 13 - Caraga</option>
+                        <option value="BARMM">BARMM</option>
+                    </select>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <label for="pcu" class="form-label">PCU:</label>
+                    <select id="form_11_fo_msme_pcu" name="form_11_msme_pcu" class="FORM11_FIELD form-select form-select-sm" required>
+                      <option value="">Choose your option</option>
+                        <option value="Northern Samar">Northern Samar</option>
+                        <option value="Leyte">Leyte</option>
+                        <option value="Southern Leyte">Southern Leyte</option>
+                        <option value="Zamboanga del Norte">Zamboanga del Norte</option>
+                        <option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+                        <option value="Zamboanga del Sur">Zamboanga del Sur</option>
+                        <option value="Misamis Oriental">Misamis Oriental</option>
+                        <option value="Bukidnon">Bukidnon</option>
+                        <option value="Lanao del Norte">Lanao del Norte</option>
+                        <option value="Davao de Oro">Davao de Oro</option>
+                        <option value="Davao Oriental">Davao Oriental</option>
+                        <option value="Davao del Norte">Davao del Norte</option>
+                        <option value="Davao del Sur">Davao del Sur</option>
+                        <option value="Davao Occidental">Davao Occidental</option>
+                        <option value="North Cotabato">North Cotabato</option>
+                        <option value="Sultan Kudarat">Sultan Kudarat</option>
+                        <option value="Sarangani">Sarangani</option>
+                        <option value="Agusan del Norte">Agusan del Norte</option>
+                        <option value="Agusan del Sur">Agusan del Sur</option>
+                        <option value="Surigao del Sur">Surigao del Sur</option>
+                        <option value="Maguindanao">Maguindanao</option>
+                    </select>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <label for="fo_dip_name" class="form-label">DIP Name:</label>
+                    <select class="FORM11_FIELD form-select form-select-sm" id="form_11_fo_dip_name" required>
+                    </select>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <label for="fo_commodity" class="form-label">Commodity:</label>
+                    <select class="FORM11_FIELD form-select form-select-sm" id="form_11_fo_commodity" required>
+                      <option value="">Choose your option</option>
+                      <option value="Coconut">Coconut</option>
+                      <option value="Coffee">Coffee</option>
+                      <option value="Cacao">Cacao</option>
+                      <option value="PFN">PFN</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row g-2 mt-1">
+                  <div class="col-6 col-md-3">
+                    <label for="fo_type_of_enterprise" class="form-label">Type of Enterprise:</label>
+                    <select class="FORM11_FIELD form-select form-select-sm" id="form_11_fo_type_of_enterprise" required>
+                      <option value="">Choose your option</option>
+                      <option value="FO">FO</option>
+                      <option value="MSME">MSMEs</option>
+                    </select>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <label for="fo_name_of_beneficiary" class="form-label">Name of Enterprise:</label>
+                    <select class="FORM11_FIELD form-select form-select-sm" id="form_11_fo_name_of_beneficiary" required>
+                      <option value="">Choose your option</option>
+                    </select>
+                  </div>
+                    <div class="col-12 col-md-6">
+                    <label for="fo_msme_province" class="form-label">Location:</label>
+                    <input type="text" class="FORM11_FIELD form-control form-control-sm" 
+                      id="form_11_fo_msme_province" name="form_11_msme_province" required>
+                    </div>
+                </div>
+              </section>
+
+                <!-- Enterprise Details -->
+                <div class="section-divider" style="background-color: #007399;">Enterprise Details</div>
+                <section class="form-section">
+                  <div class="row g-3">
+                    <!-- Left Column -->
+                    <div class="col-lg-6">
+                      <div class="row g-2">
+                        <!-- Type of Enterprise based on Asset Size -->
+                        <div class="col-12">
+                          <label for="asset-size" class="form-label">Type of Enterprise based on Asset Size:</label>
+                          <select class="FORM11_FIELD form-select" id="form_11_fo_asset_size" required>
+                            <option value="">Choose your option</option>
+                            <option value="MICRO">MICRO</option>
+                            <option value="SMALL">SMALL</option>
+                            <option value="MEDIUM">MEDIUM</option>
+                            <option value="LARGE">LARGE</option>
+                          </select>
+                        </div>
+                        <!-- Number of Members - Male -->
+                        <div class="col-md-6">
+                          <label for="male-members" class="form-label">Number of Members - Male:</label>
+                          <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_male" name="form_11_male" min="0" required>
+                        </div>
+                        <!-- Number of Members - Female -->
+                        <div class="col-md-6">
+                          <label for="female-members" class="form-label">Number of Members - Female:</label>
+                          <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_female" name="form_11_female" min="0" required>
+                        </div>
+                        <!-- Total Members -->
+                        <div class="col-12" style="margin-top: 34px;">
+                          <div class="total-display">
+                            Total Members: <span id="form_11_fo_total_members">0</span>
+                          </div>
+                        </div>
+                        <!-- Spacer for balance -->
+                        <div class="col-12 d-none d-lg-block" style="height: 30px;"></div>
+                      </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-lg-6">
+                      <div class="row g-2">
+                        <div class="col-12">
+                          <label class="form-label mb-1" style="display:block;">Number of Members by Sector:</label>
+                          <div class="row g-1">
+                            <div class="col-3">
+                              <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_pwd" name="form_11_pwd" min="0" required placeholder="PWD">
+                            </div>
+                            <div class="col-3">
+                              <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_youth" name="form_11_youth" min="0" required placeholder="YOUTH">
+                            </div>
+                            <div class="col-3">
+                              <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_ip" name="form_11_ip" min="0" required placeholder="IP">
+                            </div>
+                            <div class="col-3">
+                              <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_sc" name="form_11_sc" min="0" required placeholder="SC">
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Type of Registration (beside specify field) -->
+                        <div class="col-12">
+                          <label for="registration-type" class="form-label">Type of Registration:</label>
+                          <div class="registration-type-container">
+                            <select class="FORM11_FIELD form-select" id="form_11_fo_registration_type" required style="width: 200px;">
+                              <option value="">Choose option</option>
+                              <option value="CDA">CDA</option>
+                              <option value="SEC">SEC</option>
+                              <option value="DOLE">DOLE</option>
+                              <option value="DOLE">DTI</option>
+                            </select>
+                            <input type="text" class="FORM11_FIELD form-control ms-2" id="others_specify" placeholder="Specify (if others)" style="width: 265px;"> 
+                          </div>
+                        </div>
+                        <!-- With Existing Lending for Members (below registration) -->
+                        <div class="col-12">
+                          <label for="lending-members" class="form-label">WITH EXISTING LENDING FOR MEMBERS:</label>
+                          <input type="text" class="FORM11_FIELD form-control" id="form_11_fo_lending_members" name="lending_members" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Finance Access Section Triggers -->
+                <div class="section-divider" style="background-color: #007399;">Finance Access Extensions</div>
+                <section class="form-section">
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_loan_section">
+                        <label class="form-check-label" for="fo_show_loan_section">Loans / Cash Advance</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_equity_section">
+                        <label class="form-check-label" for="fo_show_equity_section" >Equity Financing thru SBC</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_savings_section">
+                        <label class="form-check-label" for="fo_show_savings_section" >Savings and Investments</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_insurance_section">
+                        <label class="form-check-label" for="fo_show_insurance_section" >Insurance</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_creditguarantee_section">
+                        <label class="form-check-label" for="fo_show_creditguarantee_section" >Credit Guarantee</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_inkind_section">
+                        <label class="form-check-label" for="fo_show_inkind_section" >In-Kind Grants from Partner Enablers</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_cashgrant_section">
+                        <label class="form-check-label" for="fo_show_cashgrant_section" >Cash Grant from Partner Enablers</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_digital_section">
+                        <label class="form-check-label" for="fo_show_digital_section" >Use of Financial Digital Platforms</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fo_show_rapid_section">
+                        <label class="form-check-label" for="fo_show_rapid_section" >RAPID Support</label>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Finance Access Sections (hidden by default, shown by checkboxes) -->
+                <div id="fo_loan_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">LOANS / CASH ADVANCE</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-3">
+                        <label for="fo_loan_fsp" class="form-label">NAME OF FSP</label>
+                        <input type="text" class="FORM11_FIELD form-control" id="form_11_fo_loan_fsp" name="fo_loan_fsp" required>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="fo_loan_type" class="form-label">TYPE OF FINANCING INSTITUTION</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_loan_type" name="fo_loan_type[]" multiple required>
+                          <option value="GFI">GFI</option>
+                          <option value="GOCC">GOCC</option>
+                          <option value="NGA">NGA</option>
+                          <option value="COOP">COOP</option>
+                          <option value="NGO">NGO</option>
+                          <option value="Private FI">Private FI</option>
+                          <option value="Market">Market</option>
+                          <option value="Informal">Informal</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="fo_loan_amount" class="form-label">APPROVED LOAN AMOUNT</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_loan_amount" name="fo_loan_amount" min="0" step="0.01" required>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="fo_loan_purpose" class="form-label">LOAN PURPOSE</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_loan_purpose" name="fo_loan_purpose" required>
+                          <option value="">Choose</option>
+                          <option value="Equity">Equity</option>
+                          <option value="Working">Working</option>
+                          <option value="Relending">Relending</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="mt-3">
+                      <label for="fo_total_loan_amount" class="form-label fw-bold">TOTAL LOAN AMOUNT:</label>
+                      <input type="text" class="FORM11_FIELD form-control" id="form_11_fo_total_loan_amount" name="fo_total_loan_amount" readonly>
+                    </div>
+                  </section>
+                </div>
+
+                <div id="fo_equity_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">EQUITY FINANCING THRU SBC</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-4">
+                        <label for="fo_equity_availed" class="form-label">AVAILED</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_equity_availed" name="fo_equity_availed" required>
+                          <option value="">Choose</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="fo_equity_amount" class="form-label">INVESTMENT AMOUNT</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_equity_amount" name="fo_equity_amount" min="0" step="0.01">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="fo_equity_date" class="form-label">DATE RELEASED</label>
+                        <input type="date" class="FORM11_FIELD form-control" id="form_11_fo_equity_date" name="fo_equity_date">
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div id="fo_savings_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">SAVINGS AND INVESTMENTS</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="fo_savings_fsp" class="form-label">NAME OF FSP</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_savings_fsp" name="fo_savings_fsp">
+                          <option value="">Choose</option>
+                          <option value="Sample FSP 1">Sample FSP 1</option>
+                          <option value="Sample FSP 2">Sample FSP 2</option>
+                          <option value="Sample FSP 3">Sample FSP 3</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fo_savings_amount" class="form-label">Amount of SAVINGS GENERATED</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_savings_amount" name="fo_savings_amount" min="0" step="0.01">
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div id="fo_insurance_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">INSURANCE</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="fo_insurance_fsp" class="form-label">NAME OF FSP</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_insurance_fsp" name="fo_insurance_fsp">
+                          <option value="">Choose</option>
+                          <option value="Sample FSP 1">Sample FSP 1</option>
+                          <option value="Sample FSP 2">Sample FSP 2</option>
+                          <option value="Sample FSP 3">Sample FSP 3</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fo_insurance_amount" class="form-label">Amount of INSURANCE</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_insurance_amount" name="fo_insurance_amount" min="0" step="0.01">
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div id="fo_creditguarantee_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">CREDIT GUARANTEE</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="fo_credit_guarantee" class="form-label">With Credit Guarantee</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_credit_guarantee" name="fo_credit_guarantee">
+                          <option value="">Choose</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fo_credit_guarantee_amount" class="form-label">AMOUNT</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_credit_guarantee_amount" name="fo_credit_guarantee_amount" min="0" step="0.01">
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div id="fo_inkind_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">IN-KIND GRANTS FROM PARTNER ENABLERS</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="fo_inkind_fsp" class="form-label">NAME OF FSP</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_inkind_fsp" name="fo_inkind_fsp">
+                          <option value="">Choose</option>
+                          <option value="Sample FSP 1">Sample FSP 1</option>
+                          <option value="Sample FSP 2">Sample FSP 2</option>
+                          <option value="Sample FSP 3">Sample FSP 3</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fo_inkind_grant" class="form-label">GRANT FROM PARTNERS</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_inkind_grant" name="fo_inkind_grant" min="0" step="0.01">
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div id="fo_cashgrant_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">CASH GRANT FROM PARTNER ENABLERS</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="fo_cashgrant_fsp" class="form-label">NAME OF FSP</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_cashgrant_fsp" name="fo_cashgrant_fsp">
+                          <option value="">Choose</option>
+                          <option value="Sample FSP 1">Sample FSP 1</option>
+                          <option value="Sample FSP 2">Sample FSP 2</option>
+                          <option value="Sample FSP 3">Sample FSP 3</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fo_cashgrant_amount" class="form-label">Amount of CASH GRANT FROM PARTNER ENABLERS</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_cashgrant_amount" name="fo_cashgrant_amount" min="0" step="0.01">
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div id="fo_digital_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">USE OF FINANCIAL DIGITAL PLATFORMS</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-4">
+                        <label for="fo_digital_fsp" class="form-label">NAME OF FSP</label>
+                        <input type="text" class="FORM11_FIELD form-control" id="form_11_fo_digital_fsp" name="fo_digital_fsp">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="fo_digital_yes" class="form-label">YES</label>
+                        <select class="FORM11_FIELD form-select" id="form_11_fo_digital_yes" name="fo_digital_yes">
+                          <option value="">Choose</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="fo_digital_amount" class="form-label">AMOUNT</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_digital_amount" name="fo_digital_amount" min="0" step="0.01">
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div id="fo_rapid_section" style="display:none;">
+                  <div class="section-divider" style="background-color: #007399;">RAPID SUPPORT</div>
+                  <section class="form-section">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="fo_rapid_mg" class="form-label">RAPID Matching Grant</label>
+                        <input type="text" class="FORM11_FIELD form-control" id="form_11_fo_rapid_mg" name="fo_rapid_mg">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fo_rapid_amount" class="form-label">Amount</label>
+                        <input type="number" class="FORM11_FIELD form-control" id="form_11_fo_rapid_amount" name="fo_rapid_amount" min="0" step="0.01">
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+
+              <div class="card-footer bg-light">
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-primary" type="button" onclick="submit_form('FORM11_FIELD','dcf_access_financing','/form11_dashboard')">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% include 'formdata_handler.html' %}
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Farmer's Profiling toggles (form 1)
+    const toggles = [
+      'loan', 'savings', 'insurance', 'creditguarantee', 'paidupcapital',
+      'inkind', 'cashgrant', 'cashforwork', 'mortuary', 'digital', 'rapid'
+    ];
+    toggles.forEach(function(section) {
+      const checkbox = document.getElementById('farmer_show_' + section + '_section');
+      const target = document.getElementById('farmer_' + section + '_section');
+      if (checkbox && target) {
+        target.style.display = checkbox.checked ? '' : 'none';
+        checkbox.addEventListener('change', function() {
+          target.style.display = this.checked ? '' : 'none';
+        });
+      }
+    });
+
+    // Insurance type 'Others' logic (form 1)
+    const insuranceType = document.getElementById('form_11_farmer_insurance_type');
+    const insuranceOther = document.getElementById('form_11_farmer_insurance_type_other');
+    if (insuranceType && insuranceOther) {
+      insuranceType.addEventListener('change', function() {
+        insuranceOther.style.display = (this.value === 'Others') ? '' : 'none';
+      });
+    }
+
+    // FO/MSMEs form toggle functionality (form 2) ✅ fixed IDs
+    const foSectionMap = {
+      fo_show_loan_section: "fo_loan_section",
+      fo_show_equity_section: "fo_equity_section",
+      fo_show_savings_section: "fo_savings_section",
+      fo_show_insurance_section: "fo_insurance_section",
+      fo_show_creditguarantee_section: "fo_creditguarantee_section",
+      fo_show_inkind_section: "fo_inkind_section",
+      fo_show_cashgrant_section: "fo_cashgrant_section",
+      fo_show_digital_section: "fo_digital_section",
+      fo_show_rapid_section: "fo_rapid_section"
+    };
+
+    Object.keys(foSectionMap).forEach(function(checkboxId) {
+      const sectionId = foSectionMap[checkboxId];
+      const checkbox = document.getElementById(checkboxId);
+      const section = document.getElementById(sectionId);
+      if (checkbox && section) {
+        // Initialize state
+        section.style.display = checkbox.checked ? 'block' : 'none';
+        checkbox.addEventListener('change', function() {
+          section.style.display = this.checked ? 'block' : 'none';
+        });
+      }
+    });
+
+    // Calculate total members for FO/MSMEs form
+    function calculateTotalMembers() {
+      const male = parseInt(document.getElementById('form_11_fo_male').value) || 0;
+      const female = parseInt(document.getElementById('form_11_fo_female').value) || 0;
+      document.getElementById('form_11_fo_total_members').textContent = male + female;
+    }
+
+    const foMale = document.getElementById('form_11_fo_male');
+    const foFemale = document.getElementById('form_11_fo_female');
+    if (foMale && foFemale) {
+      foMale.addEventListener('input', calculateTotalMembers);
+      foFemale.addEventListener('input', calculateTotalMembers);
+    }
+
+    // Add event listeners to loan amount inputs
+    document.querySelectorAll('.loan-amount').forEach(input => {
+      input.addEventListener('input', calculateTotalLoanAmount);
+    });
+  });
+  
+document.addEventListener('DOMContentLoaded', function() {
+  // Enhance multi-select
+  const loanTypeSelect = document.getElementById('form_11_farmer_loan_type');
+  if (loanTypeSelect) {
+    new Choices(loanTypeSelect, {
+      removeItemButton: true,
+      placeholderValue: 'Select Financing  ',
+      searchPlaceholderValue: 'Search...',
+    });
+  }
+
+  // Calculate total loan amount when amount input changes
+  const loanAmountInput = document.getElementById('form_11_farmer_loan_amount');
+  if (loanAmountInput) {
+    loanAmountInput.addEventListener('input', calculateFarmerTotalLoanAmount);
+  }
+});
+
+function calculateFarmerTotalLoanAmount() {
+  const amount = parseFloat(document.getElementById('form_11_farmer_loan_amount').value) || 0;
+  document.getElementById('form_11_farmer_total_loan_amount').value = amount.toFixed(2);
+}
+</script>
 
 <script>
-	$onload(function () {
+function populateDipNames(selectElementId) {
+    return fetch('/api/get_dip_names')
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) });
+            }
+            return response.json();
+        })
+        .then(data => {
+            const selectElement = document.getElementById(selectElementId);
+            selectElement.innerHTML = '<option value="">Choose your option</option>';
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.form_1_name_dip;
+                option.textContent = item.form_1_name_dip;
+                selectElement.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching DIP names:', error));
+}
+
+// ✅ On page load, populate both dropdowns with all DIPs
+populateDipNames('form_11_farmer_dip_name');
+populateDipNames('form_11_fo_dip_name');
+
+// ✅ Function to handle filtering per region
+function setupDipFilter(regionSelectId, dipSelectId) {
+    const regionSelect = document.getElementById(regionSelectId);
+    const dipSelect = document.getElementById(dipSelectId);
+
+    regionSelect.addEventListener('change', function() {
+        const region = this.value;
+
+        // Reset dropdown
+        dipSelect.innerHTML = '<option value="">Choose your option</option>';
+
+        // If no region selected, repopulate all
+        if (!region) {
+            populateDipNames(dipSelectId);
+            return;
+        }
+
+        // Fetch filtered DIPs
+        fetch(`/api/get_dip_names_by_region?region=${encodeURIComponent(region)}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.form_1_name_dip;
+                    option.textContent = item.form_1_name_dip;
+                    dipSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching filtered DIPs:', error);
+                dipSelect.innerHTML = '<option value="">Error loading DIPs</option>';
+            });
+    });
+}
+
+// ✅ Apply filtering to both forms
+setupDipFilter('form_11_farmer_region', 'form_11_farmer_dip_name');
+setupDipFilter('form_11_fo_msme_regional', 'form_11_fo_dip_name');
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // ✅ Region to PCU mapping
+  const regionPCUMap = {
+    '8': ['Northern Samar', 'Leyte', 'Southern Leyte'],
+    '9': ['Zamboanga del Norte', 'Zamboanga Sibugay', 'Zamboanga del Sur'],
+    '10': ['Misamis Oriental', 'Bukidnon', 'Lanao del Norte'],
+    '11': ['Davao de Oro', 'Davao Oriental', 'Davao del Norte', 'Davao del Sur', 'Davao Occidental'],
+    '12': ['North Cotabato', 'Sultan Kudarat', 'Sarangani'],
+    '13': ['Agusan del Norte', 'Agusan del Sur', 'Surigao del Sur'],
+    'BARMM': ['Maguindanao']
+  };
+
+  // ✅ Function to set up dependent dropdown
+  function setupRegionPCUFilter(regionId, pcuId) {
+    const regionSelect = document.getElementById(regionId);
+    const pcuSelect = document.getElementById(pcuId);
+    const allPCUOptions = Array.from(pcuSelect.options);
+
+    regionSelect.addEventListener('change', function () {
+      const selectedRegion = this.value;
+      pcuSelect.innerHTML = '';
+
+      // Add back default
+      const defaultOption = document.createElement('option');
+      defaultOption.value = '';
+      defaultOption.textContent = 'Choose your option';
+      pcuSelect.appendChild(defaultOption);
+
+      // Filter matching PCUs
+      if (selectedRegion && regionPCUMap[selectedRegion]) {
+        const allowedPCUs = regionPCUMap[selectedRegion];
+        allPCUOptions.forEach(opt => {
+          if (allowedPCUs.includes(opt.value)) {
+            pcuSelect.appendChild(opt.cloneNode(true));
+          }
+        });
+      }
+    });
+  }
+
+  // ✅ Apply function to both forms
+  setupRegionPCUFilter('form_11_farmer_region', 'form_11_farmer_pcu');
+  setupRegionPCUFilter('form_11_fo_msme_regional', 'form_11_fo_msme_pcu');
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Enhance multi-select
+  const foLoanTypeSelect = document.getElementById('form_11_fo_loan_type');
+  if (foLoanTypeSelect) {
+    new Choices(foLoanTypeSelect, {
+      removeItemButton: true,
+      placeholderValue: 'Select Financing  ',
+      searchPlaceholderValue: 'Search...',
+    });
+  }
+
+  // Calculate total loan amount
+  const foLoanAmountInput = document.getElementById('form_11_fo_loan_amount');
+  if (foLoanAmountInput) {
+    foLoanAmountInput.addEventListener('input', calculateFoTotalLoanAmount);
+  }
+});
+
+function calculateFoTotalLoanAmount() {
+  const amount = parseFloat(document.getElementById('form_11_fo_loan_amount').value) || 0;
+  document.getElementById('form_11_fo_total_loan_amount').value = amount.toFixed(2);
+}
+</script>
+
+<script>
+  function populateRecipientNames(targetSelectId, existingValue, filterType) {
+      return Promise.all([
+          fetch('/api/get_msme_names')
+              .then(response => {
+                  if (!response.ok) {
+                      return response.text().then(text => { throw new Error(text) });
+                  }
+                  return response.json();
+              }),
+          fetch('/api/get_fo_names')
+              .then(response => {
+                  if (!response.ok) {
+                      return response.text().then(text => { throw new Error(text) });
+                  }
+                  return response.json();
+              })
+      ])
+      .then(([msmeData, foData]) => {
+          const selectElement = document.getElementById(targetSelectId);
+          selectElement.innerHTML = '<option value="">Choose your option</option>';
+
+          if (!filterType || filterType === "") {
+              // Show all
+              msmeData.forEach(item => {
+                  const option = document.createElement('option');
+                  option.value = item.reg_businessname;
+                  option.textContent = "MSME: " + item.reg_businessname;
+                  selectElement.appendChild(option);
+              });
+              foData.forEach(item => {
+                  const option = document.createElement('option');
+                  option.value = item.organization_registered_name;
+                  option.textContent = "FO: " + item.organization_registered_name;
+                  selectElement.appendChild(option);
+              });
+          } else if (filterType === "MSME") {
+              msmeData.forEach(item => {
+                  const option = document.createElement('option');
+                  option.value = item.reg_businessname;
+                  option.textContent = "MSME: " + item.reg_businessname;
+                  selectElement.appendChild(option);
+              });
+          } else if (filterType === "FO") {
+              foData.forEach(item => {
+                  const option = document.createElement('option');
+                  option.value = item.organization_registered_name;
+                  option.textContent = "FO: " + item.organization_registered_name;
+                  selectElement.appendChild(option);
+              });
+          }
+
+          if (existingValue) {
+              selectElement.value = existingValue;
+          }
+      })
+      .catch(error => console.error('Error fetching recipient names:', error));
+  }
+
+  // --- Setup for farmer form ---
+  populateRecipientNames('form_11_farmer_name_of_enterprise');
+  document.getElementById('form_11_farmer_type_of_enterprise').addEventListener('change', function() {
+      const type = this.value;
+      populateRecipientNames('form_11_farmer_name_of_enterprise', null, type);
+  });
+
+  // --- Setup for FO form ---
+  populateRecipientNames('form_11_fo_name_of_beneficiary');
+  document.getElementById('form_11_fo_type_of_enterprise').addEventListener('change', function() {
+      const type = this.value;
+      populateRecipientNames('form_11_fo_name_of_beneficiary', null, type);
+  });
+</script>
+
+<script>
+    $onload(function () {
 		var record_id = URL_ARGS["id"]
 		var table = URL_ARGS["table"]
 		load_data(record_id, table, "FORM11_FIELD")
+		get_participants_data(record_id, table, "FORM11_FIELD")
 		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)
-	})
-</script>
-
+		})
+  </script>
 {% endblock content %}
+
 {% block javascripts %}
 {% endblock javascripts %}

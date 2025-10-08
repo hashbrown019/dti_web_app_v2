@@ -573,13 +573,12 @@ def displayform():
 
 
 
-    dcf_form11ip=db.select("SELECT SUM(form_11_ip) AS total_ip11 FROM dcf_access_financing {};".format(position_data_filter()))
-    dcf_form11youth=db.select("SELECT SUM(form_11_youth) AS total_youth11 FROM dcf_access_financing {};".format(position_data_filter()))
-    dcf_form11pwd=db.select("SELECT SUM(form_11_pwd) AS total_pwd11 FROM dcf_access_financing {};".format(position_data_filter()))
-    dcf_form11sc=db.select("SELECT SUM(form_11_sc) AS total_sc11 FROM dcf_access_financing {};".format(position_data_filter()))
-
-    dcf_form11female=db.select("SELECT SUM(form_11_female) AS total_female11 FROM dcf_access_financing {};".format(position_data_filter()))
-    dcf_form11male=db.select("SELECT SUM(form_11_male) AS total_male11 FROM dcf_access_financing {};".format(position_data_filter()))
+    dcf_form11ip = db.select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_ip, 0) + COALESCE(form_11_fo_ip, 0)) AS total_ip11 FROM dcf_access_financing {};""".format(position_data_filter()))
+    dcf_form11youth = db.select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_youth, 0) + COALESCE(form_11_fo_youth, 0)) AS total_youth11 FROM dcf_access_financing {};""".format(position_data_filter()))
+    dcf_form11pwd = db.select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_pwd, 0) + COALESCE(form_11_fo_pwd, 0)) AS total_pwd11 FROM dcf_access_financing {};""".format(position_data_filter()))
+    dcf_form11sc = db.select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_sc, 0) + COALESCE(form_11_fo_sc, 0)) AS total_sc11 FROM dcf_access_financing {};""".format(position_data_filter()))
+    dcf_form11female = db.select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_female, 0) + COALESCE(form_11_fo_female, 0)) AS total_female11 FROM dcf_access_financing {};""".format(position_data_filter()))
+    dcf_form11male = db.select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_male, 0) + COALESCE(form_11_fo_male, 0)) AS total_male11 FROM dcf_access_financing {};""".format(position_data_filter()))
 
     dcf_form6actualbudget=db.select("SELECT SUM(form_6_rapid_actual_budget) AS total_actbug6 FROM dcf_product_development {};".format(position_data_filter()))
 
@@ -633,17 +632,17 @@ def displayform():
 
 ######################FORM11#################################################
 
-    dips_list11 = form11_datatable
-    over_all_commodity_count11 = {}
-    for index in range(len(dips_list11)):
-        DIP11 = dips_list11[index]
-        _comm_rule11 = ["cacao","coconut","coffee","pfn"]
-        _com11 = DIP11['form_11_industry_cluster']
-        if(_com11.lower() not in _comm_rule11):
-            _com11 = "Others"
-        if(_com11 not in over_all_commodity_count11):
-            over_all_commodity_count11[_com11 ] = 0
-        over_all_commodity_count11[_com11 ] += 1
+    # dips_list11 = form11_datatable
+    # over_all_commodity_count11 = {}
+    # for index in range(len(dips_list11)):
+    #     DIP11 = dips_list11[index]
+    #     _comm_rule11 = ["cacao","coconut","coffee","pfn"]
+    #     _com11 = DIP11['form_11_industry_cluster']
+    #     if(_com11.lower() not in _comm_rule11):
+    #         _com11 = "Others"
+    #     if(_com11 not in over_all_commodity_count11):
+    #         over_all_commodity_count11[_com11 ] = 0
+    #     over_all_commodity_count11[_com11 ] += 1
 
 
 
@@ -1799,7 +1798,7 @@ def displayform():
         'over_all_commodity_count5':over_all_commodity_count5,
         'over_all_commodity_count7':over_all_commodity_count7,
         'over_all_commodity_count10':over_all_commodity_count10,
-        'over_all_commodity_count11':over_all_commodity_count11,
+        #'over_all_commodity_count11':over_all_commodity_count11,
         'typebdsp':typebdsp,
         'form1_data_sep':form1_data_sep,
         'form1_data_oct':form1_data_oct,

@@ -2,552 +2,291 @@
 {% set active_page = "dcf_dashboard" %}
 {% block title %} Dashboard {% endblock title %}
 
-<!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 {% include "includes/sweetalert.html" %}
 <title>Form 11 Dashboard</title>
 
-  <!-- top tiles -->
-        <div class="row" style="display: inline-block;" >
-          	<div class="top_tiles">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form11}}</div>
-                  <h3>Total Entries</h3>
-                 	<p>Total # of Entries.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form11male[0]['total_male11']}} </div>
-                  <h3>Total Male</h3>
-                  	<p>Total # of MSME/FO by sex.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form11female[0]['total_female11']}} </div>
-                  <h3>Total Female</h3>
-                  	<p>Total # of MSME/FO by sex.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form11pwd[0]['total_pwd11']}}</div>
-                  <h3>PWD</h3>
-                  	<p>Total # of MSME/FO by sector.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form11youth[0]['total_youth11']}} </div>
-                  <h3>Youth</h3>
-               		<p>Total # of MSME/FO by sector.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form11ip[0]['total_ip11']}} </div>
-                  <h3>IP</h3>
-               		<p>Total # of MSME/FO by sector.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form11sc[0]['total_sc11']}} </div>
-                  <h3>SC</h3>
-               		<p>Total # of MSME/FO by sector.</p>
-                </div>
-              </div>
-            </div>
-<!-- 
-		  <div class="tile_count">
-			 <div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"><i class="fa fa-users"></i> Total Entries</span>
-			  <div class="count">{{dcf_form11}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of Entries</span>
-
-			</div>
-				   <div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"><i class="fa fa-user"></i> Total Male</span>
-			  <div class="count _money_tag">{{dcf_form11male[0]['total_male11']}} </div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sex</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"><i class="fa fa-user"></i> Total Female</span>
-			  <div class="count _money_tag">{{dcf_form11female[0]['total_female11']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sex</span>
-
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"> PWD</span>
-			  <div class="count _money_tag">{{dcf_form11pwd[0]['total_pwd11']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
-			</div>
-	 
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"> Youth</span>
-			  <div class="count _money_tag">{{dcf_form11youth[0]['total_youth11']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"> IP</span>
-			  <div class="count _money_tag">{{dcf_form11ip[0]['total_ip11']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-			  <span class="count_top"> SC</span>
-			  <div class="count _money_tag">{{dcf_form11sc[0]['total_sc11']}}</div>
-			  <span style="font-size: 10px;" class="count_bottom">Total # of FO members by sectoral group</span>
-			</div>
-		  </div> -->
-	  </div>
-	  <!-- /top tiles -->
-
-	  <div class="row">
-			<div class="col-md-4 col-sm-4 ">
-			  <br>
-			  <div class="x_panel tile overflow_hidden">
-				<div class="x_title">
-				  <h2>DIPs by Commodity</h2>
-				  <ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown">
-					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-					  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						  <a class="dropdown-item" href="#">Settings 1</a>
-						  <a class="dropdown-item" href="#">Settings 2</a>
-						</div>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a>
-					</li>
-				  </ul>
-				  <div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-				  <table class="" style="width:100%">
-					<tr>
-					  <th>
-						<p>Pie Chart Percentage</p>
-					  </th>
-					  <th>
-						  <p class="">Commodities</p> 
-					  </th>
-					</tr>
-					<tr>
-					  <td>
-						<canvas class="canvasDoughnut11" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-					  </td>
-					  <td>
-						<table class="tile_info">
-							{% for key in over_all_commodity_count11 %}
-						  <tr>
-							<td>
-							  {% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
-							  {% set color_index = loop.index0 % square_colors|length %}
-							  <p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count11[key] }}</p>
-							</td>
-						  </tr>
-						{% endfor %}
-						  </tr>
-						</table>
-					  </td>
-					</tr>
-				  </table>
-				</div>
-			  </div>
-		  </div>
-
-		<script>// Replace this with your actual variable or value
-			function init_chart_doughnut() {
-				if (typeof (Chart) === 'undefined') { return; }
-				console.log('init_chart_doughnut');
-				if ($('.canvasDoughnut11').length) {
-					var _labels = [];
-					var _data = [];
-					// Sample data
-					{% for key in over_all_commodity_count11 %}
-					_labels.push('{{key}}');
-					_data.push('{{over_all_commodity_count11[key]}}');
-					{% endfor %}
-					// Calculate total for _data
-					var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-					// Normalize _data to make its total equivalent to totalData
-					var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
-					var chart_doughnut_settings = {
-						type: 'doughnut',
-						tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-						data: {
-							labels: _labels,
-							datasets: [{
-							data: normalizedData, // Use normalizedData here
-							backgroundColor: [
-								"#BDC3C7",
-								"#5c5c3d",
-								"#994d00",
-								"#331a00",
-								"#23a98c"
-								],
-							hoverBackgroundColor: [
-								"#CFD4D8",
-								"#8a8a5c",
-								"#cc6600",
-								"#663500",
-								"#56dcbf"
-								]
-						}]
-						},
-						options: {
-							legend: false,
-							responsive: false,
-							tooltips: {
-								callbacks: {
-									label: function (tooltipItem, data) {
-										var dataset = data.datasets[tooltipItem.datasetIndex];
-										var currentValue = _data[tooltipItem.index];
-										var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
-										return _labels[tooltipItem.index] + ": " + percentage;
-									}
-								}
-							}
-						}
-					};
-					$('.canvasDoughnut11').each(function () {
-						var chart_element = $(this);
-						var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
-					});
-				}
-			}
-
-			function init_charts() {
-				console.log('run_charts  typeof [' + typeof (Chart) + ']');
-				if (typeof (Chart) === 'undefined') { return; }
-				console.log('init_charts');
-				Chart.defaults.global.legend = {
-					enabled: false
-				};
-
-				// Bar chart
-				if ($('#mybarChart').length) {
-					var _labelsrcu = [];
-					var approved_dips = [];
-					var pipeline_dips = [];
-					var ongoing_dips = [];
-					var not_started = [];
-					// Sample data
-					{% for dip in dips_list %}
-					var dipData = {
-						label: '{{dip}}',
-						approve: '{{dips_list[dip]["approve"]}}',
-						pipeline: '{{dips_list[dip]["pipeline"]}}',
-						ongoing: '{{dips_list[dip]["ongoing"]}}',
-						not_started: '{{dips_list[dip]["not_started"]}}',
-					};
-					
-	  				// Add region to each data entry in _labelsrcu
-					var regions = ['RCU'];
-					regions.forEach(function(region) {
-						var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
-						_labelsrcu.push(regionData.label);
-						approved_dips.push(regionData.approve);
-						pipeline_dips.push(regionData.pipeline);
-						ongoing_dips.push(regionData.ongoing);
-						not_started.push(regionData.not_started);
-					});
-					{% endfor %}
-					var totalApprovedDips = approved_dips.reduce(function(acc, val) {
-						return acc + parseFloat(val);
-					}, 0);
-					var totalpipelineDips = pipeline_dips.reduce(function(acc, val) {
-						return acc + parseFloat(val);
-					}, 0);
-					var totalongoingDips = ongoing_dips.reduce(function(acc, val) {
-						return acc + parseFloat(val);
-					}, 0);
-					var totalnotstartedDips = not_started.reduce(function(acc, val) {
-						return acc + parseFloat(val);
-					}, 0);
-
-					var ctx = document.getElementById("mybarChart");
-					var mybarChart = new Chart(ctx, {
-						type: 'bar',
-						data: {
-							labels: _labelsrcu,
-							datasets: [{
-								label: 'Approved DIPs',
-								backgroundColor: "#99e6ff",
-								data: approved_dips
-							}, {
-								label: 'Pipeline DIPs',
-								backgroundColor: "#33ccff",
-								data: pipeline_dips
-							},{
-								label: 'Ongoing DIPs',
-								backgroundColor: "#0099cc",
-								data: ongoing_dips
-							},{
-								label: 'Not Started',
-								backgroundColor: "#ff8080",
-								data: not_started
-							}]
-						},
-						options: {
-							scales: {
-								yAxes: [{
-									ticks: {
-										beginAtZero: true
-									}
-								}]
-							}
-						}
-					});
-				}
-
-
-				if ($('#mybarChart2').length) {
-				  var tooltips = [];
-				  var xValuesbar = [];
-				  var yValuesbar = [];
-				  var label_ = [];
-				  var all_perc = []
-				  var barColorsbar = ["red", "green", "blue", "orange", "brown", "yellow", "violet", "black"];
-				  var over_all = parseInt('{{dcf_form1sextotal[0]["total_sex"] | int}}') 
-				// Sample data
-				  {% for dip in dip_sex_group_per_region %}
-				  xValuesbar.push('RCU: ' + '{{dip}}');
-				  var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["total_bene"]}}')
-				// var rcu_total = parseInt('{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
-				  var perc = ((rcu_total / over_all) * 100).toFixed(2)
-				// yValuesbar.push(perc);
-				  all_perc.push(perc);
-				  yValuesbar.push(rcu_total);
-				  label_.push(rcu_total)
-				  tooltips.push([
-					  'Total with sex/tagged: ' +'{{dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}',
-					  'Total: ' +money('{{dip_sex_group_per_region[dip]["total_bene"]|int}}'),
-					  ' ',
-					  'Male: ' + '{{dip_sex_group_per_region[dip]["male"]["total"]}}',
-					  'Youth: ' + '{{dip_sex_group_per_region[dip]["male"]["youth"]}}',
-					  'IP: ' + '{{dip_sex_group_per_region[dip]["male"]["ip"]}}',
-					  'PWD: ' + '{{dip_sex_group_per_region[dip]["male"]["pwd"]}}',
-					  '--------------',
-					  'Female: ' + '{{dip_sex_group_per_region[dip]["female"]["total"]}}',
-					  'Youth: ' + '{{dip_sex_group_per_region[dip]["female"]["youth"]}}',
-					  'IP: ' + '{{dip_sex_group_per_region[dip]["female"]["ip"]}}',
-					  'PWD: ' + '{{dip_sex_group_per_region[dip]["female"]["pwd"]}}',
-					  '--------------',
-					  'Untagged: ' + '{{(dip_sex_group_per_region[dip]["total_bene"]-dip_sex_group_per_region[dip]["female"]["total"]+dip_sex_group_per_region[dip]["male"]["total"])|int}}',
-					  '--------------',
-					  'Overall Total',
-					  'Youth: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_youth"]}}',
-					  'IP: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_ip"]}}',
-					  'PWD: ' + '{{dip_sex_group_per_region[dip]["all_total"]["total_pwd"]}}',
-					  ])
-				  {% endfor %}
-				  var ctx = document.getElementById("mybarChart2");
-				  var mybarChart2 = new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels: xValuesbar,
-						tooltip_label:tooltips,
-						datasets: [{
-							backgroundColor: barColorsbar,
-							data: yValuesbar,
-							labels : label_
-						}]
-					},
-					options: {
-						tooltips: {
-							callbacks: {
-								label: function (tooltipItem, data) {
-				// Display only the percentage value without .00 in the tooltip
-								  println(tooltipItem)
-								  return data.tooltip_label[tooltipItem.index];
-							  },
-						  },
-						displayColors: false, // Set to false to hide the color squares in the tooltip
-					},
-				},
-			});
-		} 
-	}
-
-		function scrollParentToIframeCenter() {
-			if (window.parent && window.frameElement){
-				const iframeRect = window.frameElement.getBoundingClientRect();
-				const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
-				const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
-				window.parent.scrollTo({
-					top : centerY,
-					behavior: 'smooth'
-				});
-			}
-		}
-
-		function showLoadingAndRedirect(id, table, form) {
-			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait while we redirect you.',
-				allowOutsideClick: false,
-				allowEscapeKey: false,
-				showConfirmButton: false,
-				didOpen: () => {
-					scrollParentToIframeCenter();
-					Swal.showLoading();
-					setTimeout(() => {
-						window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
-					}, 1500); // Simulate a short delay
-				}
-			});
-		}
-
-		function showDeleteConfirmation(id) {
-			swalWithCustomButtons.fire({
-			  title: 'Are you sure?',
-			  text: "You won't be able to revert this!",
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonText: 'Yes, delete it!',
-			  cancelButtonText: 'No, cancel',
-			  reverseButtons: true,
-			  position: 'center',
-			  didOpen: () => {
-				scrollParentToIframeCenter();
-			  },
-			  customClass: {
-				confirmButton: 'btn btn-success',
-				cancelButton: 'btn btn-danger',
-			},
-		}).then((result) => {
-		  if (result.isConfirmed) {
-			window.location.href = `/delete_record/dcf_access_financing/${id}`;
-		} else if (result.dismiss === Swal.DismissReason.cancel) {
-			swalWithCustomButtons.fire({
-			  title: 'Cancelled',
-			  text: 'Your record is safe',
-			  icon: 'error',
-			  position: 'center',
-			  didOpen: () => {
-				scrollParentToIframeCenter();
-			  },
-			});
-		}
-	});
-	return false;
+<style>
+.dataTables_wrapper {
+  overflow-x: auto;
 }
 
-	const swalWithCustomButtons = Swal.mixin({
-		customClass: {
-		  confirmButton: 'btn btn-success',
-		  cancelButton: 'btn btn-danger'
-	  },
-	  buttonsStyling: false
-  });
+#datatable-responsive th,
+#datatable-responsive td {
+  vertical-align: middle;
+  text-align: left;
+}
 
-	function download_login_start(fff){
-	  let a= document.createElement('a');
-	  a.target= '_blank';
-	  a.href= '/login/download_file/'+fff;
-	  a.click();
+.truncate {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#datatable-responsive td.date-cell {
+  white-space: nowrap !important;
+}
+
+#datatable-responsive td,
+#datatable-responsive th {
+  word-wrap: break-word;
+}
+</style>
+
+<div class="row">
+
+<script>
+function scrollParentToIframeCenter() {
+  if (window.parent && window.frameElement) {
+    const iframeRect = window.frameElement.getBoundingClientRect();
+    const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+    const centerY =
+      iframeRect.top + parentScrollY + iframeRect.height / 2 - window.parent.innerHeight / 2;
+
+    window.parent.scrollTo({
+      top: centerY,
+      behavior: "smooth",
+    });
   }
+}
+
+function showLoadingAndRedirect(id, table, form) {
+  Swal.fire({
+    title: "Loading...",
+    text: "Please wait while we redirect you.",
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showConfirmButton: false,
+    didOpen: () => {
+      scrollParentToIframeCenter();
+      Swal.showLoading();
+      setTimeout(() => {
+        window.location.href = `/dcf/${form}?id=${id}&table=${table}`;
+      }, 1500);
+    },
+  });
+}
+
+function showDeleteConfirmation(id) {
+  swalWithCustomButtons
+    .fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel",
+      reverseButtons: true,
+      position: "center",
+      didOpen: () => {
+        scrollParentToIframeCenter();
+      },
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `/delete_record/dcf_access_financing/${id}`;
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithCustomButtons.fire({
+          title: "Cancelled",
+          text: "Your record is safe",
+          icon: "error",
+          position: "center",
+          didOpen: () => {
+            scrollParentToIframeCenter();
+          },
+        });
+      }
+    });
+  return false;
+}
+
+const swalWithCustomButtons = Swal.mixin({
+  customClass: {
+    confirmButton: "btn btn-success",
+    cancelButton: "btn btn-danger",
+  },
+  buttonsStyling: false,
+});
+
+function download_login_start(fff) {
+  let a = document.createElement("a");
+  a.target = "_blank";
+  a.href = "/login/download_file/" + fff;
+  a.click();
+}
 </script>
 
+<!-- ✅ Data Table -->
+<div class="col-md-12 col-sm-12">
+  <div class="x_panel">
+    <div class="x_title">
+      <h2>Form 11 <small>Access to Financing Dashboard</small></h2>
+      <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-wrench"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Settings 1</a>
+            <a class="dropdown-item" href="#">Settings 2</a>
+          </div>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
 
+    <div class="x_content">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card-box table-responsive">
+            <p class="text-muted font-13 m-b-30">
+              All entries of Form 11 are displayed below. Records are labeled based on whether they belong to a <strong>Farmer</strong> or <strong>FO/MSME</strong>.
+            </p>
 
+            <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Region</th>
+                  <th>Province</th>
+                  <th>DIP Name</th>
+                  <th>FO/MSME Name</th>
+                  <th>Farmer Name</th>
+                  <th>Action</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in form11_datatable %}
+                <tr>
+                  <!-- ID -->
+                  <td>{{ row['id'] }}</td>
 
-<!-- Start to do list -->
-<div class="col-md-12 col-sm-12 ">
-	<div class="x_panel">
-	  <div class="x_title">
-		<h2>Data<small>Table</small></h2>
-		<ul class="nav navbar-right panel_toolbox">
-		  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-		  </li>
-		  <li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				<a class="dropdown-item" href="#">Settings 1</a>
-				<a class="dropdown-item" href="#">Settings 2</a>
-			</div>
-		</li>
-		<li><a class="close-link"><i class="fa fa-close"></i></a>
-		</li>
-	</ul>
-	<div class="clearfix"></div>
-</div>
-<div class="x_content">
-  <div class="row">
-	  <div class="col-sm-12">
-		<div class="card-box table-responsive">
-			<p class=" text-muted font-13 m-b-30">
-			  All entries of Form 11 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
-		  </p>  
-		  <table id="datatable-responsive" class="table table-dark table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-			  <thead>
-				<tr>
-				  <th>ID</th>
-				  <th>Activity Title</th>
-				  <th>Industry Cluster</th>
-				  <th>Region</th>
-				  <th>Province</th>
-				  <th>Action</th>
-				  <th>Timestamp</th>
-			  </tr>
-		  </thead>
-		  <tbody>
-			<tr>
-			  <div>
-				{% for row in form11_datatable %}
-				<td>{{ row['id'] }}</td>
-				<td>{{ row['form_11_activity_title'] }}</td>
-				<td>{{ row['form_11_industry_cluster'] }} {{ row['form_11_industry_pfn'] }}</td>
-				<td>{{ row['form_11_msme_regional'] }}</td>
-				<td>{{ row['form_11_msme_province'] }}</td>
-				<td>
-				  <!-- {{row['upload_by']}} === {{user_data['id']}} -->
-				  	{% if row['upload_by']|string == user_data['id']|string %}
-				  	<a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_access_financing', 'form11');">
-						<span><i class="fa fa-pencil-square-o"></i></span> Edit
-					</a>&nbsp;&nbsp;
-				  	<a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="+{{ row["id"] }}+"&i=dcf_access_financing",true)'>
-				  		<span><i class="fa fa-user-plus"></i></span> Add Participants
-			  		</a> &nbsp;&nbsp;
-			  		<a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;"href="/delete_record/dcf_access_financing/{{ row['id'] }}">
-			  			<span><i class="fa fa-trash"></i></span> Delete
-		  			</a>
-		  			{% elif user_data['job'] == "Super Admin" %}
-		  			<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_access_financing', 'form11');">
-						<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-					</a>
-					{% else %}
-					<a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_access_financing', 'form11');">
-						<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
-					</a>
-					{% endif %}
-				</td>
-				<td class="date-cell"> {{ row['date_created'] }}<br>
-					{% if row['date_modified'] %}
-						<i style="font-size: smaller;color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp}}</i>
-					{% endif %}</i>
-				</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+                  <!-- Region -->
+                  <td>
+                    {% set region_display = row['form_11_farmer_region'] or row['form_11_fo_msme_regional'] %}
+                    <span class="truncate" title="{{ region_display }}">{{ region_display }}</span>
+                  </td>
 
-</div>
-</div>
-</div>
-</div>
+                  <!-- Province -->
+                  <td>
+                    {% set province_display = row['form_11_farmer_pcu'] or row['form_11_fo_msme_pcu'] %}
+                    <span class="truncate" title="{{ province_display }}">{{ province_display }}</span>
+                  </td>
+
+                  <!-- DIP Name -->
+                  <td>
+                    {% set dip_display = row['form_11_farmer_dip_name'] or row['form_11_fo_dip_name'] %}
+                    <span class="truncate" title="{{ dip_display }}">{{ dip_display }}</span>
+                  </td>
+
+                  <!-- FO/MSME Name -->
+                  <td>
+                    {% set fo_name = row['form_11_fo_name_of_beneficiary'] or '' %}
+                    <span class="truncate" title="{{ fo_name }}">{{ fo_name }}</span>
+                  </td>
+
+                  <!-- Farmer Name -->
+                  <td>
+                    {% set farmer_name = row['form_11_farmer_beneficiaries_name'] or '' %}
+                    <span class="truncate" title="{{ farmer_name }}">{{ farmer_name }}</span>
+                  </td>
+
+                  <!-- Action -->
+                  <td>
+                    {% if row['upload_by']|string == user_data['id']|string %}
+                      <a style="color: #00e673;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_access_financing', 'form11');">
+                        <i class="fa fa-pencil-square-o"></i> Edit
+                      </a><br>
+                      <a style="color: #ffc34d; cursor: pointer;" onclick='goto("feature_0/link_data_dcf_form_a?&h="+{{ row["id"] }}+"&i=dcf_access_financing",true)'>
+                        <i class="fa fa-user-plus"></i> Add Participants
+                      </a><br>
+                      <a style="color: #ff5c33;" onclick="showDeleteConfirmation('{{ row['id'] }}'); return false;" href="/delete_record/dcf_access_financing/{{ row['id'] }}">
+                        <i class="fa fa-trash"></i> Delete
+                      </a>
+                    {% else %}
+                      <a style="color: #33cccc;" href="javascript:void(0);" onclick="showLoadingAndRedirect('{{ row['id'] }}', 'dcf_access_financing', 'form11');">
+                        <i class="fa fa-eye" aria-hidden="true"></i> View
+                      </a>
+                    {% endif %}
+                  </td>
+
+                  <!-- Timestamp -->
+                  <td class="date-cell">
+                    {{ row['date_created'] }}<br>
+                    {% if row['date_modified'] %}
+                      <i style="font-size: smaller; color: #00cc66;">Updated: {{ row['date_modified'] | format_timestamp }}</i>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<script type="text/javascript">
-	function exportForm11Data() {
-		window.location.href = '/export_form11'; 
-	}
+<!-- ✅ Filtering Script -->
+<script>
+  function populateDipNames(selectElementId, region = '') {
+    const url = region
+      ? `/api/get_dip_names_by_region?region=${encodeURIComponent(region)}`
+      : '/api/get_dip_names';
+
+    return fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          return response.text().then(text => { throw new Error(text) });
+        }
+        return response.json();
+      })
+      .then(data => {
+        const selectElement = document.getElementById(selectElementId);
+        selectElement.innerHTML = '<option value="">Choose your option</option>';
+        data.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item.form_1_name_dip;
+          option.textContent = item.form_1_name_dip;
+          selectElement.appendChild(option);
+        });
+      })
+      .catch(error => {
+        console.error(`Error fetching DIP names for ${selectElementId}:`, error);
+      });
+  }
+
+  populateDipNames('form_11_fo_dip_name');
+  populateDipNames('form_11_farmer_dip_name');
+
+  document.getElementById('form_11_farmer_region')?.addEventListener('change', function() {
+    const region = this.value;
+    const dipDropdown = document.getElementById('form_11_farmer_dip_name');
+    dipDropdown.innerHTML = '<option value="">Choose your option</option>';
+    if (!region) return populateDipNames('form_11_farmer_dip_name');
+    populateDipNames('form_11_farmer_dip_name', region);
+  });
+
+  document.getElementById('form_11_fo_msme_regional')?.addEventListener('change', function() {
+    const region = this.value;
+    const dipDropdown = document.getElementById('form_11_fo_dip_name');
+    dipDropdown.innerHTML = '<option value="">Choose your option</option>';
+    if (!region) return populateDipNames('form_11_fo_dip_name');
+    populateDipNames('form_11_fo_dip_name', region);
+  });
 </script>
 
 <div class="col-md-12 col-sm-12 ">

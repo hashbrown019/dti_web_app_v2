@@ -36,14 +36,14 @@
         <div class="x-row x-container x-padding">
             <input class="FORM2_FIELD x-input" type="hidden"  id="id">
             <div id="cpa_select" class="x-col l3 x-container x-padding">
-                <label class="">Renewal for prev. CPA Track#</label>
+                <label class="">Renew Previous CPA</label>
                 <select onchange="renewal_field(this)" class="FORM2_FIELD x-border x-select x-border" id="form_2_recent_cpa" name="form_2_recent_cpa" required><br>
                     <option value="initial">New CPA</option>
                     {% for entry in all_form_data %}
                         <option value="{{entry['id']}}">RAPID_CPA_{{entry['id']}} | {{entry['form_2_businessname']}}</option>
                     {% endfor %}
                 </select>
-                <script type="text/javascript">
+            <script type="text/javascript">
                     function renewal_field(form_id){
                         for (var i = 0; i < ls_data.length; i++) {
                             // if(ls_data[i]["id"]=="form_2_recent_cpa"){continue}
@@ -78,37 +78,6 @@
                     <option value="No DIP Alignment">No</option>
                 </select>
             </div>
-            
-            <div class="x-col l4 x-container x-padding">
-                <label><span style="color: #007399;" class="tool" tabindex="1"> </span>  Name of DIP:</label>
-                    <select class="FORM2_FIELD x-input x-border" name="form_2_name_dip" id="form_2_name_dip">
-                        <option value="">Choose your option</option>
-                    </select>
-            </div>
-            <script>
-                function populateDipNames() {
-                    return fetch('/api/get_dip_names')
-                        .then(response => {
-                            if (!response.ok) {
-                                return response.text().then(text => { throw new Error(text) });
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            const selectElement = document.getElementById('form_2_name_dip');
-                            selectElement.innerHTML = '<option value="">Choose your option</option>';
-        
-                            data.forEach(item => {
-                                const option = document.createElement('option');
-                                option.value = item.form_1_name_dip;
-                                option.textContent = item.form_1_name_dip;
-                                selectElement.appendChild(option);
-                            });
-                        })
-                        .catch(error => console.error('Error fetching DIP names:', error));
-                }
-                populateDipNames().then(() => {});
-			</script>
 
             <div class="x-col l2 x-container x-padding">
                 <label class="">RCUs:</label>
@@ -123,7 +92,6 @@
                     <option value="BARMM">BARMM</option>
                 </select>
             </div>
-
             <div class="x-col l2 x-container x-padding">
                 <label class="">PCU:</label>
                 <select class="FORM2_FIELD x-border x-select x-border" id="form_2_pcu" name="form_2_pcu" required><br>
@@ -151,10 +119,19 @@
                     <option value="Maguindanao">Maguindanao</option>
                 </select>
             </div>
-
+            
+            <div class="x-col l3 x-container x-padding">
+                <label class="">Name of DIP:</label>
+                    <select class="FORM2_FIELD x-border x-select x-border" name="form_2_name_dip" id="form_2_name_dip">
+                        <option value="">Choose your option</option>
+                    </select>
+            </div>
+        </div>
+                
+        <div class="x-row x-container x-padding">
             <div class="x-col l2 x-container x-padding">
                 <label class="">Commodity:</label>
-                <select class="FORM2_FIELD withother x-border x-select x-border" id="form_2_commodity" name="form_2_commodity" required>
+                <select class="FORM2_FIELD x-border x-select x-border" id="form_2_commodity" name="form_2_commodity" required>
                     <option value="">Choose your option</option>
             
                     <optgroup label="Coconut">
@@ -189,12 +166,8 @@
                         <option value="PFN - Calamansi Puree">Calamansi Puree</option>
                     </optgroup>
                 </select>
-            </div>     
-            
-        </div>
-
-        <div class="x-row x-container x-padding">
-            <div class="x-col l3 x-container x-padding">
+            </div> 
+            <div class="x-col l2 x-container x-padding">
                 <label class=""><span style="color: #007399;" class="tool" data-tip="If others, please specify the type of agreement." tabindex="1"><i class="fa fa-info-circle"></i></span> Types of Agreements:</label>
                 <input class="FORM2_FIELD x-input x-border" id="form_2_types_of_agreements" name="form_2_types_of_agreements" type="text" placeholder="Type of Agreement" list="form_2_types_of_agreements_list"/>
                 <datalist id="form_2_types_of_agreements_list">
@@ -216,7 +189,7 @@
                 </select>
             </div>
 
-            <div class="x-col l3 x-container x-padding">
+            <div class="x-col l2 x-container x-padding">
                 <label class="">Name of Owner or Manager of the anchor Firm/MSMEs:</label>
                 <input class="FORM2_FIELD x-input x-border" id="form_2_name_owner_manager" name="form_2_name_owner_manager"
                     type="text" autocomplete="on" placeholder="Full Name: (ex. Juan Dela Cruz)">
@@ -263,42 +236,16 @@
                 <input class="FORM2_FIELD x-input x-border" id="form_2_business_owner_manager" name="form_2_business_owner_manager"
                     type="text" placeholder="">
             </div>
-            <div class="x-col l6  x-container x-padding">
-                <label class=""><span style="color: #007399;" class="tool" data-tip="Indicate full name of FO based on official regisration." tabindex="1"><i class="fa fa-info-circle"></i></span>Name of Partner FOs Engaged:</label>
-                <!-- <input class="FORM2_FIELD x-input x-border" id="form_2_partner_fo_engaged" name="form_2_partner_fo_engaged"
-                    type="text" placeholder=""> -->
+            <div class="x-col l6 x-container x-padding">
+                <label class="">
+                    <span style="color: #007399;" class="tool" data-tip="Indicate full name of FO based on official registration." tabindex="1">
+                        <i class="fa fa-info-circle"></i>
+                    </span>
+                    Name of Partner FOs Engaged:
+                </label>
                 <select class="FORM2_FIELD x-input x-border" name="form_2_partner_fo_engaged" id="form_2_partner_fo_engaged">
-                            <option value="">Choose your option</option>
-                 </select>
-
-                <script>
-                    function populateFONames() {
-                        return fetch('/api/get_fo_names')
-                            .then(response => {
-                                if (!response.ok) {
-                                    return response.text().then(text => { throw new Error(text) });
-                                }
-                                return response.json();
-                            })
-                            .then(data => {
-                                const selectElement = document.getElementById('form_2_partner_fo_engaged');
-                
-                                // Clear existing options to prevent duplication
-                                selectElement.innerHTML = '<option value="">Choose your option</option>';
-            
-                                data.forEach(item => {
-                                    const option = document.createElement('option');
-                                    option.value = item.organization_registered_name;
-                                    option.textContent = item.organization_registered_name;
-                                    selectElement.appendChild(option);
-                                });
-                            })
-                            .catch(error => console.error('Error fetching FO names:', error));
-                    }
-                
-                    // Wait for the full page load before executing the script
-                    populateFONames().then(() => {});
-                </script>
+                    <option value="">Choose your option</option>
+                </select>
             </div>
 
             <div class="x-col l6 x-container x-padding">
@@ -643,6 +590,107 @@
                     $('#form_2_days_remaining').val(daysRemaining);
                 }
             });
+    </script>
+   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const rcuSelect = document.getElementById("form_2_rcus");
+        const dipSelect = document.getElementById("form_2_name_dip");
+        const foSelect  = document.getElementById("form_2_partner_fo_engaged");
+
+        let editMode = false; // Flag for edit detection
+
+        // === Load DIP Names (optionally filtered by region) ===
+        async function populateDipNames(region = null, selectedValue = null) {
+            try {
+                const endpoint = region
+                    ? `/api/get_dip_names_by_region?region=${encodeURIComponent(region)}`
+                    : "/api/get_dip_names";
+
+                const response = await fetch(endpoint);
+                if (!response.ok) throw new Error(await response.text());
+                const data = await response.json();
+
+                dipSelect.innerHTML = '<option value="">Choose your option</option>';
+                data.forEach(dip => {
+                    const option = document.createElement("option");
+                    option.value = dip.form_1_name_dip;
+                    option.textContent = dip.form_1_name_dip;
+                    dipSelect.appendChild(option);
+                });
+
+                // ✅ Restore the selected DIP name after population (for edit mode)
+                if (selectedValue) {
+                    dipSelect.value = selectedValue;
+                }
+
+            } catch (error) {
+                console.error("Error fetching DIP names:", error);
+                dipSelect.innerHTML = '<option value="">Error loading DIPs</option>';
+            }
+        }
+
+        // === Load FO Names (always full list — not filtered) ===
+        async function populateFONames(selectedValue = null) {
+            try {
+                const response = await fetch("/api/get_fo_names");
+                if (!response.ok) throw new Error(await response.text());
+                const data = await response.json();
+
+                foSelect.innerHTML = '<option value="">Choose your option</option>';
+                data.forEach(item => {
+                    const name = item.organization_registered_name?.trim();
+                    if (name) {
+                        const option = document.createElement("option");
+                        option.value = name;
+                        option.textContent = name;
+                        foSelect.appendChild(option);
+                    }
+                });
+
+                // ✅ Restore FO if already selected (edit mode)
+                if (selectedValue) {
+                    foSelect.value = selectedValue;
+                }
+
+            } catch (error) {
+                console.error("Error fetching FO names:", error);
+                foSelect.innerHTML = '<option value="">Error loading FOs</option>';
+            }
+        }
+
+        // === Event Listener for region changes ===
+        rcuSelect.addEventListener("change", () => {
+            // Only trigger region filtering if user changes it manually (not during edit prefill)
+            if (!editMode) {
+                const region = rcuSelect.value;
+                dipSelect.innerHTML = '<option value="">Loading...</option>';
+                populateDipNames(region);
+            }
+        });
+
+        // === Initial Load ===
+        // Detect if we are in edit mode (record ID present in URL)
+        const urlParams = new URLSearchParams(window.location.search);
+        const recordId = urlParams.get("id");
+
+        if (recordId) {
+            editMode = true;
+
+            // Wait a bit for json_to_input() to fill the fields before populating
+            setTimeout(() => {
+                const currentRegion = rcuSelect.value;
+                const currentDip = dipSelect.getAttribute("value") || dipSelect.value;
+                const currentFO = foSelect.getAttribute("value") || foSelect.value;
+
+                // Load all DIPs first, then restore selected
+                populateDipNames(currentRegion || null, currentDip);
+                populateFONames(currentFO);
+            }, 700);
+        } else {
+            populateDipNames();
+            populateFONames();
+        }
+    });
     </script>
 
 {% endblock content %}

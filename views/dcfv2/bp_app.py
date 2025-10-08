@@ -271,7 +271,8 @@ def filter_dashboard():
         over_all_commodity_count2.setdefault(label, 0)
 
     specific_commodities = [
-		"Coconut - Whole Nuts", "Coconut - Copra", "Coconut - White Copra",
+		"Coconut - Whole Nuts", "Coconut - Copra", "Coconut - White Copra", "Coconut - Shell",
+		"Coconut - Twine", "Coconut - Peat", "Coconut - Charcoal", "Coconut - Sugar", "Coconut - Virgin Coconut Oil",
 		"Cacao - Wet Beans", "Cacao - Dried Beans", "Cacao - Dried Fermented Beans",
 		"Coffee - Red Cherries", "Coffee - Green Coffee Beans",
 		"PFN - Green Cardava Banana", "PFN - Banana Chips", "PFN - Vacuum Sealed Banana",
@@ -284,13 +285,22 @@ def filter_dashboard():
 
 	# Query and group by the exact commodity name, summing ST_totalsales
     sales_commodity_totals = db.select(f"""
-		SELECT TRIM(ST_commodity) AS commodity, SUM(CAST(ST_totalsales AS DECIMAL(20,2))) AS total_sales
+		SELECT TRIM(ST_commodity) AS commodity,
+			SUM(COALESCE(ST_totalsales, ST_ave_price * ST_vol_supplied)) AS total_sales
 		FROM sales_tracker {region_filter_sales}
+		WHERE TRIM(ST_commodity) <> ''
 		GROUP BY TRIM(ST_commodity)
 	""")
     for row in sales_commodity_totals:
-        comm_raw = (row['commodity'] or '').strip()
-        total_sales = float(row['total_sales'] or 0)
+		# Handle case where row may be a tuple or string
+        if isinstance(row, dict):
+            comm_raw = (row.get('commodity') or '').strip()
+            total_sales = float(row.get('total_sales') or 0)
+        elif isinstance(row, (list, tuple)) and len(row) >= 2:
+            comm_raw = (row[0] or '').strip()
+            total_sales = float(row[1] or 0)
+        else:
+            continue
         if comm_raw in specific_commodities:
             sales_commodity_data[comm_raw] += total_sales
         else:
@@ -298,7 +308,7 @@ def filter_dashboard():
 
 	# Only include specific commodities that have data, and "Others" if it has data
     filtered_sales_commodity_data = {
-		comm: sales_commodity_data[comm]
+		comm: round(sales_commodity_data[comm], 2)
 		for comm in specific_commodities
 		if sales_commodity_data[comm] > 0
 	}
@@ -1616,6 +1626,8 @@ FORM_NAME={
 	'dcf_negosyo_center' : 'form10_',
 	'dcf_access_financing' : 'form11_',
 	'form_c' : 'formc',
+	'form_b' : 'formb',
+	'excel_import_form_a' :	'forma'
 }
 
 _FORM_NAME={
@@ -1630,7 +1642,10 @@ _FORM_NAME={
 	 'form9_':'dcf_enablers_activity',
 	 'form10_':'dcf_negosyo_center',
 	 'form11_':'dcf_access_financing',
-	 'formc':'form_c'}
+	 'formc':'form_c',
+	 'formb':'form_b',
+	 'forma':'excel_import_form_a'
+	 }
 # if __name__ == "__main__":
 #     app.run(debug=True)
 
@@ -2279,59 +2294,196 @@ def export_form10():
 #FORM_11 ############################################################################################################
 @app.route('/export_form11', methods=['GET'])
 def export_form11():
-	query = '''
-		SELECT dcf_access_financing.id,
-					CONCAT(dcf_access_financing.form_11_dip_alignment, ', ', dcf_access_financing.form_11_dip_alignment_yes) AS 'form11_dip',
-					dcf_access_financing.form_11_activity_title,
-					dcf_access_financing.form_11_name_of_beneficiary,
-					CONCAT(dcf_access_financing.form_11_industry_cluster, ' ', dcf_access_financing.form_11_industry_pfn) AS 'industry_cluster',
-					dcf_access_financing.form_11_msme_regional,
-					dcf_access_financing.form_11_msme_province,
-					dcf_access_financing.form_11_male,
-					dcf_access_financing.form_11_female,
-					dcf_access_financing.form_11_pwd,
-					dcf_access_financing.form_11_youth,
-					dcf_access_financing.form_11_ip,
-					dcf_access_financing.form_11_sc,
-					dcf_access_financing.form_11_date_submitted,
-					dcf_access_financing.form_11_date_approved,
-					dcf_access_financing.form_11_name_of_fsp,
-					dcf_access_financing.form_11_location_address,
-					dcf_access_financing.form_11_amount_of_equity,
-					dcf_access_financing.form_11_date_released,
-					dcf_access_financing.date_created,
-					dcf_access_financing.date_modified,
-					users.name as 'Uploaded by'
-					FROM dcf_access_financing
-					LEFT JOIN users ON dcf_access_financing.upload_by = users.id
-	'''.format(position_data_filter())
-	data = db.select(query)
-	df = pd.DataFrame(data)
-	headers = [
-		'ID', 'DIP Alignment', 'Activity Title', 'Name of Beneficiary',
-		'Industry Cluster', 'MSME Regional', 'MSME Province', 'Male', 'Female',
-		'PWD', 'Youth', 'IP', 'SC', 'Date Submitted', 'Date Approved',
-		'Name of FSP', 'Location Address', 'Amount of Equity', 'Date Released',
-		'Date Created', 'Date Modified', 'Uploaded By'
-	]
-	df.columns = headers
-	file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form11_exported_file.xlsx')
-	writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
-	df.to_excel(writer, sheet_name='dcf_form11_exported_file', index=False)
-	workbook = writer.book
-	worksheet = writer.sheets['dcf_form11_exported_file']
-	header_format = workbook.add_format({
-		'bold': True,
-		'text_wrap': True,
-		'valign': 'top',
-		'fg_color': '#9bc1bc',
-		'border': 1
-	})
-	for col_num, value in enumerate(df.columns.values):
-		worksheet.write(0, col_num, value, header_format)
-	for idx, col in enumerate(df.columns):
-		series = df[col].astype(str)
-		max_len = max(series.map(len).max(), len(col)) + 2
-		worksheet.set_column(idx, idx, max_len)
-	writer.close()
-	return send_file(file_path, as_attachment=True, download_name='dcf_form11_exported_file.xlsx')
+    # --- Farmer Profiling ---
+    farmer_query = '''
+        SELECT 
+            dcf_access_financing.id AS farmer_id,
+            form_11_farmer_region,
+            form_11_farmer_pcu,
+            form_11_farmer_dip_name,
+            form_11_farmer_commodity,
+            form_11_farmer_type_of_enterprise,
+            form_11_farmer_name_of_enterprise,
+            form_11_farmer_location,
+            form_11_farmer_beneficiaries_name,
+            form_11_farmer_beneficiaries_male,
+            form_11_farmer_beneficiaries_female,
+            form_11_farmer_beneficiaries_pwd,
+            form_11_farmer_beneficiaries_ip,
+            form_11_farmer_beneficiaries_youth,
+            form_11_farmer_beneficiaries_sc,
+            form_11_farmer_loan_fsp,
+            form_11_farmer_loan_type,
+            form_11_farmer_loan_amount,
+            form_11_farmer_total_loan_amount,
+            form_11_farmer_loan_purpose,
+            form_11_farmer_savings_fsp,
+            form_11_farmer_savings_type,
+            form_11_farmer_savings_amount,
+            form_11_farmer_insurance_fsp,
+            form_11_farmer_insurance_type,
+            form_11_farmer_insurance_type_other,
+            form_11_farmer_insurance_amount,
+            form_11_farmer_creditguarantee,
+            form_11_farmer_creditguarantee_amount,
+            form_11_farmer_paidupcapital,
+            form_11_farmer_with_puc,
+            form_11_farmer_paidupcapital_amount,
+            form_11_farmer_inkind_fsp,
+            form_11_farmer_inkind_type,
+            form_11_farmer_inkind_with,
+            form_11_farmer_inkind_input,
+            form_11_farmer_cashgrant_fsp,
+            form_11_farmer_cashgrant_type,
+            form_11_farmer_cashgrant_with,
+            form_11_farmer_cashgrant_amount,
+            form_11_farmer_cashforwork_fsp,
+            form_11_farmer_cashforwork_type,
+            form_11_farmer_cashforwork_with,
+            form_11_farmer_cashforwork_amount,
+            form_11_farmer_mortuary_fsp,
+            form_11_farmer_mortuary_type,
+            form_11_farmer_mortuary_with,
+            form_11_farmer_mortuary_amount,
+            form_11_farmer_digital_fsp,
+            form_11_farmer_digital_type,
+            form_11_farmer_digital_with,
+            form_11_farmer_digital_amount,
+            form_11_farmer_rapid_mg,
+            form_11_farmer_rapid_type,
+            date_created,
+            date_modified,
+            users.name AS uploaded_by
+        FROM dcf_access_financing
+        LEFT JOIN users ON dcf_access_financing.upload_by = users.id
+    '''
+    
+    farmer_headers = [
+        'Farmer ID',
+        'Region', 'PCU', 'DIP Name', 'Commodity', 'Type of Enterprise',
+        'Name of Enterprise', 'Location', 'Name of Beneficiaries',
+        'Male', 'Female', 'PWD', 'IP', 'YOUTH', 'SC',
+        'NAME OF FSP', 'TYPE OF FINANCING', 'APPROVED LOAN AMOUNT',
+        'Total Loan Amount', 'LOAN PURPOSE',
+        'NAME OF FSP', 'TYPE', 'AMOUNT',
+        'NAME OF FSP', 'TYPE', 'Other Insurance Type', 'AMOUNT',
+        'With Credit Guarantee', 'AMOUNT',
+        'Paid-Up Capital', 'With PUC', 'AMOUNT',
+        'NAME OF FSP', 'TYPE', 'With In-Kind', 'Type of Input',
+        'NAME OF FSP', 'TYPE', 'With Cash Grant', 'AMOUNT',
+        'NAME OF FSP', 'TYPE', 'With Cash for Work', 'AMOUNT',
+        'NAME OF FSP', 'TYPE', 'With Mortuary Assistance', 'AMOUNT',
+        'NAME OF FSP', 'TYPE', 'With Digital Platform', 'AMOUNT',
+        'RAPID Matching Grant', 'TYPE',
+        'Date Created', 'Date Modified', 'Uploaded By'
+    ]
+    
+    farmer_data = db.select(farmer_query)
+    df_farmer = pd.DataFrame(farmer_data)
+    df_farmer.columns = farmer_headers
+
+    # --- FO Profiling ---
+    fo_query = '''
+        SELECT 
+            dcf_access_financing.id AS fo_id,
+            form_11_fo_msme_regional,
+            form_11_fo_msme_pcu,
+            form_11_fo_dip_name,
+            form_11_fo_commodity,
+            form_11_fo_type_of_enterprise,
+            form_11_fo_name_of_beneficiary,
+            form_11_fo_msme_province,
+            form_11_fo_asset_size,
+            form_11_fo_male,
+            form_11_fo_female,
+            form_11_fo_pwd,
+            form_11_fo_youth,
+            form_11_fo_ip,
+            form_11_fo_sc,
+            form_11_fo_registration_type,
+            others_specify,
+            form_11_fo_lending_members,
+            form_11_fo_loan_fsp,
+            form_11_fo_loan_type,
+            form_11_fo_loan_amount,
+            form_11_fo_total_loan_amount,
+            form_11_fo_loan_purpose,
+            form_11_fo_equity_availed,
+            form_11_fo_equity_amount,
+            form_11_fo_equity_date,
+            form_11_fo_savings_fsp,
+            form_11_fo_savings_amount,
+            form_11_fo_insurance_fsp,
+            form_11_fo_insurance_amount,
+            form_11_fo_credit_guarantee,
+            form_11_fo_credit_guarantee_amount,
+            form_11_fo_inkind_fsp,
+            form_11_fo_inkind_grant,
+            form_11_fo_cashgrant_fsp,
+            form_11_fo_cashgrant_amount,
+            form_11_fo_digital_fsp,
+            form_11_fo_digital_yes,
+            form_11_fo_digital_amount,
+            form_11_fo_rapid_mg,
+            form_11_fo_rapid_amount,
+            date_created,
+            date_modified,
+            users.name AS uploaded_by
+        FROM dcf_access_financing
+        LEFT JOIN users ON dcf_access_financing.upload_by = users.id
+    '''
+    
+    fo_headers = [
+        'FO ID',
+        'Region', 'PCU', 'DIP Name', 'Commodity', 'Type of Enterprise',
+        'Name of Beneficiary', 'Province', 'Asset Size',
+        'Male', 'Female', 'PWD', 'YOUTH', 'IP', 'SC',
+        'TYPE OF REGISTRATION', 'Others Specify',
+        'With Existing Lending for Members',
+        'NAME OF FSP', 'TYPE OF FINANCING', 'APPROVED LOAN AMOUNT',
+        'Total Loan Amount', 'LOAN PURPOSE',
+        'Equity Availed', 'Equity Amount', 'Date Released',
+        'NAME OF FSP', 'Amount of SAVINGS GENERATED',
+        'NAME OF FSP', 'Amount of INSURANCE',
+        'With Credit Guarantee', 'AMOUNT',
+        'NAME OF FSP', 'In-Kind Grant',
+        'NAME OF FSP', 'Amount of CASH GRANT',
+        'NAME OF FSP', 'With Digital Platform', 'AMOUNT',
+        'RAPID Matching Grant', 'Amount',
+        'Date Created', 'Date Modified', 'Uploaded By'
+    ]
+    
+    fo_data = db.select(fo_query)
+    df_fo = pd.DataFrame(fo_data)
+    df_fo.columns = fo_headers
+
+    # --- Write both into one Excel file ---
+    file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form11_export.xlsx')
+    writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+
+    df_farmer.to_excel(writer, sheet_name='Farmer Profiling', index=False)
+    df_fo.to_excel(writer, sheet_name='FO Profiling', index=False)
+
+    # --- Formatting ---
+    for sheet in writer.sheets:
+        worksheet = writer.sheets[sheet]
+        df = df_farmer if sheet == 'Farmer Profiling' else df_fo
+
+        header_format = writer.book.add_format({
+            'bold': True,
+            'text_wrap': True,
+            'valign': 'top',
+            'fg_color': '#9bc1bc',
+            'border': 1
+        })
+
+        for col_num, value in enumerate(df.columns.values):
+            worksheet.write(0, col_num, value, header_format)
+
+        for idx, col in enumerate(df.columns):
+            series = df[col].astype(str).fillna("")
+            max_len = max(series.apply(len).max(), len(col)) + 2
+            worksheet.set_column(idx, idx, max_len)
+
+    writer.close()
+    return send_file(file_path, as_attachment=True, download_name='dcf_form11_export.xlsx')

@@ -740,64 +740,171 @@ def excel_upload_open10(path):
 	
 
 def importcsvform11(request):
-	from datetime import date, datetime
-	today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
-	uploader = session["USER_DATA"][0]["id"]
-	if request.method == "POST":
-		try:
-			files = request.files
-			for file in files:
-				f = files[file]
-				global UPLOAD_NAME
-				UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
-				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
-				excel_upload_open11(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
-		except IndexError:
-			flash(f"Invalid file template!", "error")
-			
-	return redirect("/dcfspreadsheet")
+    from datetime import datetime
+    today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
+    uploader = session["USER_DATA"][0]["id"]
 
-def excel_upload_open11(path):  
-	book = xlrd.open_workbook(path)
-	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
-	header = data[4]
-	
-	print(sheet.name)
-	if(sheet.name !='form11'):
-		flash(f"Invalid file template!", "error")
-		return "done:Sheet Error"
-	for row in data[5:]:
-		upload_by = session["USER_DATA"][0]['id']
-		form_11_dip_alignment = row [0]
-		form_11_activity_title = row [1]
-		form_11_name_of_beneficiary = row [2]
-		form_11_industry_cluster = row [3]
-		form_11_msme_regional = row [4]
-		form_11_msme_province = row [5]
-		form_11_male = row [6]
-		form_11_female = row [7]
-		form_11_pwd = row [8]
-		form_11_youth = row [9]
-		form_11_ip = row [10]
-		form_11_sc = row [11]
-		form_11_date_submitted = row [12]
-		form_11_date_approved = row [13]
-		form_11_name_of_fsp = row [14]
-		form_11_location_address = row [15]
-		form_11_amount_of_equity = row [16]
-		form_11_date_released = row [17]                                                                                         
-		filename = UPLOAD_NAME
+    if request.method == "POST":
+        try:
+            files = request.files
+            for file in files:
+                f = files[file]
+                global UPLOAD_NAME
+                UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
+                f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+                excel_upload_open11(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+        except IndexError:
+            flash("Invalid file template!", "error")
 
-		querycsv = ("INSERT INTO dcf_access_financing ( upload_by, form_11_dip_alignment,form_11_activity_title,form_11_name_of_beneficiary,form_11_industry_cluster,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
-		format(upload_by, form_11_dip_alignment,form_11_activity_title,form_11_name_of_beneficiary,form_11_industry_cluster,form_11_msme_regional,form_11_msme_province,form_11_male,form_11_female,form_11_pwd,form_11_youth,form_11_ip,form_11_sc,form_11_date_submitted,form_11_date_approved,form_11_name_of_fsp,form_11_location_address,form_11_amount_of_equity,form_11_date_released,filename))
-		insert=db.do(querycsv)
-		print(insert)
-		print("===============================================")
+    return redirect("/dcfspreadsheet")
 
-	if(insert["response"]=="error"):
-		flash(f"An error occured!", "error")
-		print(str(insert))
-	else:
-		flash(f"The file was imported successfully!", "success")
-	return "done"
+
+def excel_upload_open11(path):
+    book = xlrd.open_workbook(path)
+
+    # Normalize sheet names (case-insensitive, strip spaces)
+    sheet_names = [s.strip().lower() for s in book.sheet_names()]
+    expected_sheets = ["farmer profile", "fos-msmes profile"]
+
+    # Debug: show detected sheets
+    print("Detected sheets:", sheet_names)
+
+    # Ensure both sheets exist
+    for expected in expected_sheets:
+        if expected not in sheet_names:
+            flash(f"Invalid file template! Missing sheet: {expected}", "error")
+            return "done:Sheet Error"
+
+    upload_by = session["USER_DATA"][0]["id"]
+    filename = UPLOAD_NAME
+    total_inserted = 0
+
+    # ---------------- Farmer Profile ----------------
+    sheet_farmer = book.sheet_by_name([s for s in book.sheet_names() if s.strip().lower() == "farmer profile"][0])
+    data_farmer = [[sheet_farmer.cell_value(r, c) for c in range(sheet_farmer.ncols)] for r in range(sheet_farmer.nrows)]
+
+    header_farmer = data_farmer[2]  # headers are on row 3
+    for row in data_farmer[3:]:
+        if not any(str(cell).strip() for cell in row):
+            continue  # skip empty rows
+
+        # Pad/trim row to 53 fields
+        row = (row + [""] * 53)[:53]
+
+        (form_11_farmer_region, form_11_farmer_pcu, form_11_farmer_dip_name, form_11_farmer_commodity, form_11_farmer_type_of_enterprise,
+         form_11_farmer_name_of_enterprise, form_11_farmer_location, form_11_farmer_beneficiaries_name,
+         form_11_farmer_beneficiaries_male, form_11_farmer_beneficiaries_female, form_11_farmer_beneficiaries_pwd,
+         form_11_farmer_beneficiaries_ip, form_11_farmer_beneficiaries_youth, form_11_farmer_beneficiaries_sc,
+         form_11_farmer_loan_fsp, form_11_farmer_loan_type, form_11_farmer_loan_amount, form_11_farmer_loan_purpose,
+         form_11_farmer_total_loan_amount, form_11_farmer_savings_fsp, form_11_farmer_savings_type,
+         form_11_farmer_savings_amount, form_11_farmer_insurance_fsp, form_11_farmer_insurance_type,
+         form_11_farmer_insurance_type_other, form_11_farmer_insurance_amount, form_11_farmer_creditguarantee,
+         form_11_farmer_creditguarantee_amount, form_11_farmer_paidupcapital, form_11_farmer_with_puc,
+         form_11_farmer_paidupcapital_amount, form_11_farmer_inkind_fsp, form_11_farmer_inkind_type,
+         form_11_farmer_inkind_with, form_11_farmer_inkind_input, form_11_farmer_cashgrant_fsp,
+         form_11_farmer_cashgrant_type, form_11_farmer_cashgrant_with, form_11_farmer_cashgrant_amount,
+         form_11_farmer_cashforwork_fsp, form_11_farmer_cashforwork_type, form_11_farmer_cashforwork_with,
+         form_11_farmer_cashforwork_amount, form_11_farmer_mortuary_fsp, form_11_farmer_mortuary_type,
+         form_11_farmer_mortuary_with, form_11_farmer_mortuary_amount, form_11_farmer_digital_fsp,
+         form_11_farmer_digital_type, form_11_farmer_digital_with, form_11_farmer_digital_amount,
+         form_11_farmer_rapid_mg, form_11_farmer_rapid_type) = row
+
+        querycsv = f"""
+        INSERT INTO dcf_access_financing (
+            upload_by, form_11_farmer_region, form_11_farmer_pcu, form_11_farmer_dip_name, form_11_farmer_commodity, form_11_farmer_type_of_enterprise,
+            form_11_farmer_name_of_enterprise, form_11_farmer_location, form_11_farmer_beneficiaries_name,
+            form_11_farmer_beneficiaries_male, form_11_farmer_beneficiaries_female, form_11_farmer_beneficiaries_pwd,
+            form_11_farmer_beneficiaries_ip, form_11_farmer_beneficiaries_youth, form_11_farmer_beneficiaries_sc,
+            form_11_farmer_loan_fsp, form_11_farmer_loan_type, form_11_farmer_loan_amount, form_11_farmer_loan_purpose,
+            form_11_farmer_total_loan_amount, form_11_farmer_savings_fsp, form_11_farmer_savings_type,
+            form_11_farmer_savings_amount, form_11_farmer_insurance_fsp, form_11_farmer_insurance_type,
+            form_11_farmer_insurance_type_other, form_11_farmer_insurance_amount, form_11_farmer_creditguarantee,
+            form_11_farmer_creditguarantee_amount, form_11_farmer_paidupcapital, form_11_farmer_with_puc,
+            form_11_farmer_paidupcapital_amount, form_11_farmer_inkind_fsp, form_11_farmer_inkind_type,
+            form_11_farmer_inkind_with, form_11_farmer_inkind_input, form_11_farmer_cashgrant_fsp,
+            form_11_farmer_cashgrant_type, form_11_farmer_cashgrant_with, form_11_farmer_cashgrant_amount,
+            form_11_farmer_cashforwork_fsp, form_11_farmer_cashforwork_type, form_11_farmer_cashforwork_with,
+            form_11_farmer_cashforwork_amount, form_11_farmer_mortuary_fsp, form_11_farmer_mortuary_type,
+            form_11_farmer_mortuary_with, form_11_farmer_mortuary_amount, form_11_farmer_digital_fsp,
+            form_11_farmer_digital_type, form_11_farmer_digital_with, form_11_farmer_digital_amount,
+            form_11_farmer_rapid_mg, form_11_farmer_rapid_type, filename
+        ) VALUES (
+            '{upload_by}', '{form_11_farmer_region}', '{form_11_farmer_pcu}', '{form_11_farmer_dip_name}', '{form_11_farmer_commodity}', '{form_11_farmer_type_of_enterprise}',
+            '{form_11_farmer_name_of_enterprise}', '{form_11_farmer_location}', '{form_11_farmer_beneficiaries_name}',
+            '{form_11_farmer_beneficiaries_male}', '{form_11_farmer_beneficiaries_female}', '{form_11_farmer_beneficiaries_pwd}',
+            '{form_11_farmer_beneficiaries_ip}', '{form_11_farmer_beneficiaries_youth}', '{form_11_farmer_beneficiaries_sc}',
+            '{form_11_farmer_loan_fsp}', '{form_11_farmer_loan_type}', '{form_11_farmer_loan_amount}', '{form_11_farmer_loan_purpose}',
+            '{form_11_farmer_total_loan_amount}', '{form_11_farmer_savings_fsp}', '{form_11_farmer_savings_type}',
+            '{form_11_farmer_savings_amount}', '{form_11_farmer_insurance_fsp}', '{form_11_farmer_insurance_type}',
+            '{form_11_farmer_insurance_type_other}', '{form_11_farmer_insurance_amount}', '{form_11_farmer_creditguarantee}',
+            '{form_11_farmer_creditguarantee_amount}', '{form_11_farmer_paidupcapital}', '{form_11_farmer_with_puc}',
+            '{form_11_farmer_paidupcapital_amount}', '{form_11_farmer_inkind_fsp}', '{form_11_farmer_inkind_type}',
+            '{form_11_farmer_inkind_with}', '{form_11_farmer_inkind_input}', '{form_11_farmer_cashgrant_fsp}',
+            '{form_11_farmer_cashgrant_type}', '{form_11_farmer_cashgrant_with}', '{form_11_farmer_cashgrant_amount}',
+            '{form_11_farmer_cashforwork_fsp}', '{form_11_farmer_cashforwork_type}', '{form_11_farmer_cashforwork_with}',
+            '{form_11_farmer_cashforwork_amount}', '{form_11_farmer_mortuary_fsp}', '{form_11_farmer_mortuary_type}',
+            '{form_11_farmer_mortuary_with}', '{form_11_farmer_mortuary_amount}', '{form_11_farmer_digital_fsp}',
+            '{form_11_farmer_digital_type}', '{form_11_farmer_digital_with}', '{form_11_farmer_digital_amount}',
+            '{form_11_farmer_rapid_mg}', '{form_11_farmer_rapid_type}', '{filename}'
+        )
+        """
+        insert = db.do(querycsv)
+        total_inserted += 1
+
+    # ---------------- FO/MSMEs Profile ----------------
+    sheet_fo = book.sheet_by_name([s for s in book.sheet_names() if s.strip().lower() == "fos-msmes profile"][0])
+    data_fo = [[sheet_fo.cell_value(r, c) for c in range(sheet_fo.ncols)] for r in range(sheet_fo.nrows)]
+
+    header_fo = data_fo[2]
+    for row in data_fo[3:]:
+        if not any(str(cell).strip() for cell in row):
+            continue  # skip empty rows
+
+        # Pad/trim row to 40 fields
+        row = (row + [""] * 40)[:40]
+
+        (form_11_fo_msme_regional, form_11_fo_msme_pcu, form_11_fo_dip_name, form_11_fo_commodity, form_11_fo_type_of_enterprise,
+         form_11_fo_name_of_beneficiary, form_11_fo_msme_province, form_11_fo_asset_size,
+         form_11_fo_male, form_11_fo_female, form_11_fo_pwd, form_11_fo_youth, form_11_fo_ip, form_11_fo_sc,
+         form_11_fo_registration_type, form_11_others_specify, form_11_fo_lending_members,
+         form_11_fo_loan_fsp, form_11_fo_loan_type, form_11_fo_loan_amount, form_11_fo_loan_purpose,
+         form_11_fo_total_loan_amount, form_11_fo_equity_availed, form_11_fo_equity_amount, form_11_fo_equity_date,
+         form_11_fo_savings_fsp, form_11_fo_savings_amount, form_11_fo_insurance_fsp, form_11_fo_insurance_amount,
+         form_11_fo_credit_guarantee, form_11_fo_credit_guarantee_amount, form_11_fo_inkind_fsp, form_11_fo_inkind_grant,
+         form_11_fo_cashgrant_fsp, form_11_fo_cashgrant_amount, form_11_fo_digital_fsp, form_11_fo_digital_yes,
+         form_11_fo_digital_amount, form_11_fo_rapid_mg, form_11_fo_rapid_amount) = row
+
+        querycsv = f"""
+        INSERT INTO dcf_access_financing (
+            upload_by, form_11_fo_msme_regional, form_11_fo_msme_pcu, form_11_fo_dip_name, form_11_fo_commodity, form_11_fo_type_of_enterprise,
+            form_11_fo_name_of_beneficiary, form_11_fo_msme_province, form_11_fo_asset_size,
+            form_11_fo_male, form_11_fo_female, form_11_fo_pwd, form_11_fo_youth, form_11_fo_ip, form_11_fo_sc,
+            form_11_fo_registration_type, form_11_others_specify, form_11_fo_lending_members,
+            form_11_fo_loan_fsp, form_11_fo_loan_type, form_11_fo_loan_amount, form_11_fo_loan_purpose,
+            form_11_fo_total_loan_amount, form_11_fo_equity_availed, form_11_fo_equity_amount, form_11_fo_equity_date,
+            form_11_fo_savings_fsp, form_11_fo_savings_amount, form_11_fo_insurance_fsp, form_11_fo_insurance_amount,
+            form_11_fo_credit_guarantee, form_11_fo_credit_guarantee_amount, form_11_fo_inkind_fsp, form_11_fo_inkind_grant,
+            form_11_fo_cashgrant_fsp, form_11_fo_cashgrant_amount, form_11_fo_digital_fsp, form_11_fo_digital_yes,
+            form_11_fo_digital_amount, form_11_fo_rapid_mg, form_11_fo_rapid_amount, filename
+        ) VALUES (
+            '{upload_by}', '{form_11_fo_msme_regional}', '{form_11_fo_msme_pcu}', '{form_11_fo_dip_name}', '{form_11_fo_commodity}', '{form_11_fo_type_of_enterprise}',
+            '{form_11_fo_name_of_beneficiary}', '{form_11_fo_msme_province}', '{form_11_fo_asset_size}',
+            '{form_11_fo_male}', '{form_11_fo_female}', '{form_11_fo_pwd}', '{form_11_fo_youth}', '{form_11_fo_ip}', '{form_11_fo_sc}',
+            '{form_11_fo_registration_type}', '{form_11_others_specify}', '{form_11_fo_lending_members}',
+            '{form_11_fo_loan_fsp}', '{form_11_fo_loan_type}', '{form_11_fo_loan_amount}', '{form_11_fo_loan_purpose}',
+            '{form_11_fo_total_loan_amount}', '{form_11_fo_equity_availed}', '{form_11_fo_equity_amount}', '{form_11_fo_equity_date}',
+            '{form_11_fo_savings_fsp}', '{form_11_fo_savings_amount}', '{form_11_fo_insurance_fsp}', '{form_11_fo_insurance_amount}',
+            '{form_11_fo_credit_guarantee}', '{form_11_fo_credit_guarantee_amount}', '{form_11_fo_inkind_fsp}', '{form_11_fo_inkind_grant}',
+            '{form_11_fo_cashgrant_fsp}', '{form_11_fo_cashgrant_amount}', '{form_11_fo_digital_fsp}', '{form_11_fo_digital_yes}',
+            '{form_11_fo_digital_amount}', '{form_11_fo_rapid_mg}', '{form_11_fo_rapid_amount}', '{filename}'
+        )
+        """
+        insert = db.do(querycsv)
+        total_inserted += 1
+
+    if total_inserted > 0:
+        flash(f"The file was imported successfully! {total_inserted} rows inserted.", "success")
+    else:
+        flash("The file contained no valid data.", "error")
+
+    return "done"
