@@ -1,0 +1,213 @@
+<div class="fa1-form">
+    <div class="x-row">
+        <h2 class="x-text-teal x-container"><b>Farmers Profiling Form</b></h2>
+        <div id="form_header" class="main-title">
+            <div class="x-right x-text-grey x-container">
+                Some fields aren't required to be filled up when there is no available data. You can come back and fill the fields and always check the <strong>Correct Spelling</strong> and <strong>observe the usage of special characters</strong> such as punctuation and numbers. contact the developers if you encountered an error or the input entry doesn't reflect to the dashboard or/and on the lists of entries. 
+            </div>
+    
+        </div>
+    </div>
+
+    {% include 'form_a_v2/fa1.html'%}
+    <div class="x-row x-container x-right" style="margin-top:15px; margin-bottom: 15px;">
+        <button id="fa1_submit_btn"
+                class="x-btn x-round-large x-border x-border-green"
+                onclick="submit_form('FORM_DATA_A','excel_import_form_a',)">
+            <span class="x-text-green fa fa-save"></span>
+            <span class="x-text-grey">Submit Form A</span>
+        </button>
+    </div>
+</div>
+
+
+<script>
+    $onload(function () {
+    var record_id = URL_ARGS["id"] || ""
+    var table = URL_ARGS["table"] || "excel_import_form_a"
+    if(record_id){
+        load_data(record_id, table, "FORM_DATA_A")
+    }
+})
+
+function scrollParentToIframeCenter(){
+    if (window.parent && window.frameElement){
+    const iframeRect = window.frameElement.getBoundingClientRect();
+    const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+    const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+    window.parent.scrollTo({
+        top : centerY,
+        behavior: 'smooth'
+    });
+    }
+}
+
+function submit_form(class_name, table, url) {
+    var x_ins = $CLASS(class_name);
+    var form_data = {};
+    for (let index = 0; index < x_ins.length; index++) {
+        if (x_ins[index].type === "checkbox") {
+            form_data[x_ins[index].id] = x_ins[index].checked;
+        } else {
+            form_data[x_ins[index].id] = x_ins[index].value;
+        }
+    }
+
+    $send({
+        action: "/set_data_a/" + table,
+        data: $DATA(form_data),
+        method: POST,
+        func: function (r) {
+            var res = JSON.parse(r);
+            println(res);
+
+            if (res.status === "success") {
+                Swal.fire({
+                    title: 'Success!',
+                    text: res.msg,
+                    icon: 'success',
+                    didOpen: () => {
+                        scrollParentToIframeCenter();
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: String(res.msg),
+                    icon: 'error',
+                    didOpen: () => {
+                        scrollParentToIframeCenter();
+                    }
+                });
+            }
+        }
+    });
+}
+
+
+function load_data(record_id, table, class_name) {
+    // http://127.0.0.1:5000/dcf/form8?id=1&table=form8
+    $send({
+        action: "/get_data/" + record_id + "/" + table,
+        method: POST,
+        func: function (r) {
+            var res = JSON.parse(r)[0];
+            var x_ins = $CLASS(class_name);
+
+            function sanitizeNumber(value) {
+                if (value === null || value === undefined || value === '') return '';
+                // Remove non-numeric characters except dot and minus
+                let clean = String(value).replace(/[^0-9.\-]/g, '');
+                let num = parseFloat(clean);
+                return isNaN(num) ? '' : num;
+            }
+
+            for (let index = 0; index < x_ins.length; index++) {
+                let element = x_ins[index];
+                let value_from_db = res[element.id];
+
+                if (element.type === "checkbox") {
+                    try {
+                        element.checked = (value_from_db === "true" || value_from_db === true);
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                } else if (element.type === "select-one") {
+                    try {
+                        element.value = value_from_db || '';
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                } else if (element.type === "number") {
+                    try {
+                        element.value = sanitizeNumber(value_from_db);
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                } else {
+                    try {
+                        element.value = value_from_db || '';
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                }
+            }
+        }
+    });
+}
+
+function toggleYouthSections(isYouth) {
+    const sectionIds = [
+        'section-household-head-info',
+        'section-household-profile',
+        'section-prod-cost',
+        'section-workers-laborers',
+        'section-post-harvest'
+    ];
+
+    sectionIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = isYouth ? 'none' : '';
+    });
+
+    // Hide specific farm info blocks
+    document.querySelectorAll('#section-farm-basic-info .card, #section-farm-basic-info fieldset').forEach(block => {
+        const title = (block.querySelector('.card-title,h4,h5')?.textContent || '').toLowerCase();
+        if (
+            title.includes('topography') ||
+            title.includes('trees') ||
+            title.includes('land tenurial') ||
+            title.includes('primary crop') ||
+            title.includes('secondary crop') ||
+            title.includes('expansion') ||
+            title.includes('rehabilitation')
+        ) {
+            block.style.display = isYouth ? 'none' : '';
+        }
+    });
+}
+
+/** Listen only to "Sectoral Data" dropdown */
+function evaluateYouthMode() {
+    const sectoralSelect = document.getElementById("frmer_prof_@_basic_Info_@_sectoral_data");
+    const sectoralIsYouth = (sectoralSelect && sectoralSelect.value === "Youth");
+    // toggleYouthSections is already defined globally/locally in the script block
+    toggleYouthSections(sectoralIsYouth);
+    return sectoralIsYouth; // Useful for external functions like lockFieldsIfYouth
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const sectoralSelect = document.getElementById("frmer_prof_@_basic_Info_@_sectoral_data");
+    if (sectoralSelect) {
+        // Attach the listener so manual changes still trigger the hide/show logic
+        sectoralSelect.addEventListener('change', evaluateYouthMode);
+    }
+});
+
+function populateDipNames() {
+    return fetch('/api/get_dip_names')
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) });
+            }
+            return response.json();
+        })
+        .then(data => {
+            const selectElement = document.getElementById('frmer_prof_@_Farming_Basic_Info_@_DIP_name');
+            selectElement.innerHTML = '<option value="">Choose your option</option>';
+
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.form_1_name_dip;
+                option.textContent = item.form_1_name_dip;
+                selectElement.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching DIP names:', error));
+}
+populateDipNames().then(() => {});
+</script>

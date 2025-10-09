@@ -1,216 +1,234 @@
-
 <script type="text/javascript">
-	let FORM_A_CONTENT_HOLDER = (`{% include 'form_a_v2/__sub_engine__.html'%}`.replaceAll("\n","").replaceAll("\t",""))
-
-
-	function get_record_data_farmer(RECORD_PROFILE_ID,REFNUM){
-		var _table = "";
-		if(REFNUM != undefined){
-			if(REFNUM.includes(".xl")){
-				_table = ["excel_import_form_a"]
-			}else{
-				_table = ["form_a_farmer_profiles","form_a_farm_land","form_a_hh_profile","form_a_prod_cost","form_a_farm_workers_laborers","form_a_farm_post_harvest","form_a_farm_marketing_sales","form_a_access_financial","form_a_feedback"]
-			}
-		}else{
-			//RETURN IF PAGE ALREADY LOADED OR ALREADY SELECTED A FARMER IN LIST
-			return
-		}
-		println(" === Loading Profile")
+	// ===== Fetch record and open modal =====
+	function get_record_data_farmer(RECORD_PROFILE_ID, REFNUM) {
+		var _table = ["excel_import_form_a"]; 
+		println(" === Loading Profile");
 		$send({
-			action : "/form_a/get_ind_data_val",
-			method : POST,
-			data : $DATA({"tables":_table,"record_id":RECORD_PROFILE_ID}),
-			err_dialog : true,
-			func : function(r){
-				var res = JSON.parse(r)
-				println(res)
-				if('farmer_code' in res){
-					println("Mobile")
-				}else{
-					println("EXCEL")
-					fill_data_inp_f_a(res['data'])
-				}
+			action: "/form_a/get_ind_data_val",
+			method: POST,
+			data: $DATA({ "tables": _table, "record_id": RECORD_PROFILE_ID }),
+			err_dialog: true,
+			func: function (r) {
+				var res = JSON.parse(r);
+				println(res);
+				println("OPENING FORM A DATA");
+				fill_data_inp_f_a(res['data']);
 			}
-		})
+		});
 	}
 
-	//1st to call from data table
-	function form_a_forms(RECORD_PROFILE_ID,REFNUM){
-		get_record_data_farmer(RECORD_PROFILE_ID,REFNUM)
+	// called from table row
+	function form_a_forms(RECORD_PROFILE_ID, REFNUM) {
+		get_record_data_farmer(RECORD_PROFILE_ID, REFNUM);
 	}
 
-	function show_hidden_view(val,elem_id){
-		var _true = {"true":"","yes":"","1":""}
-		if(val.toLowerCase() in _true){
-			$ID(elem_id).style.display = "none"
-		}else{
-			$ID(elem_id).style.display = "block"
-		}
-		dom_refresh()
-	}
-
-
-	// $onload(show_dialog_fa_v2) // UNCOMMENT TO TEMPORARILY SHOW FORM ON LOAD
-	function show_dialog_fa_v2(){
-		var dialog_fa_v2 = $dialog({
-			title : "Farmer's Profile",
-			subtitle : "This form will show you all the fields about Farmer's Profile. Carefull with spelling and usage of punctuations",
-			content : FORM_A_CONTENT_HOLDER,
-			// buttons : ["sample","alright"]
-		})
-		for (var i = 0; i < dialog_fa_v2.elem_buttons().length; i++) {
-			dialog_fa_v2.elem_buttons()[i].classList.add("x-round-large","x-margin-left")
-		}
-		dialog_fa_v2.dialog.classList.add("x-round-large")
-		dialog_fa_v2.dialog.style.width = '95%'
-		dialog_fa_v2.show()
-		dom_refresh()
-	}
-
+	// ======= Fill modal data =======
 	function fill_data_inp_f_a(data_){
-		// alert("====")
-		// show_dialog_fa_v2(); // to SHOW FULL DETAILS IN FORM A // DISABLED TEMPORARILY
-		modeal_basic_info(data_)
-		DICT_TO_INPUT(data_[0][0],'FORM_DATA_A');
+		modeal_basic_info(data_);
+		DICT_TO_INPUT(data_[0][0], 'FORM_DATA_A');
 	}
 
-	// $onload(function(){
-	// 	FORM_A_CONTENT_HOLDER = $ID("FORM_A_CONTENT_HOLDER").innerHTML;
-	// 	$ID("FORM_A_CONTENT_HOLDER").innerHTML = "WALA na HIIHIHI";
-	// })
-	// $onload(show_dialog_fa_v2)
-
-	// $onload(modeal_basic_info)
-	var profile_panel_basic
-	var full_details = undefined
+	// ======= Profile panel =======
+	var profile_panel_basic;
+	var full_details = undefined;
+	const CURRENT_USER_ID = {{ session["USER_DATA"][0]["id"]|tojson }};
 
 	function modeal_basic_info(full_details_) {
-    full_details = full_details_[0][0];
-    profile_panel_basic = $dialog({
-        title: "Basic Information",
-        subtitle: " ",
-        content: (`
-        <div class="x-row">
-            <div class="x-container x-col l6 m6 s6">
-                <img class="" src="../static/img/male.png" style="width:100%">
-            </div>
-            <div class="x-container x-col l6 m6 s6">
-                <span style="line-height: 0.0px;">
-                    <span class="x-text-grey" >Name:<br></span> 
-                    <b class="x-xlarge">
-                        <span>${full_details["frmer_prof_@_basic_Info_@_First_name"]}</span> 
-                        <span>${full_details["frmer_prof_@_basic_Info_@_Middle_name"]}</span> 
-                        <span>${full_details["frmer_prof_@_basic_Info_@_Last_name"]}</span>, 
-                        <span>${full_details["frmer_prof_@_basic_Info_@_Extension_name"]}</span>
-                    </b><br><br>
-                </span>
+		full_details = full_details_[0][0];
+		profile_panel_basic = $dialog({
+			title: "Basic Information",
+			subtitle: " ",
+			content: (`
+				<div class="x-row">
+					<div class="x-container x-col l6 m6 s6">
+						<img src="../static/img/male.png" style="width:100%">
+					</div>
+					<div class="x-container x-col l6 m6 s6">
+						<span>
+							<span class="x-text-grey">Name:<br></span> 
+							<b class="x-xlarge">
+								<span>${full_details["frmer_prof_@_basic_Info_@_First_name"]}</span> 
+								<span>${full_details["frmer_prof_@_basic_Info_@_Middle_name"]}</span> 
+								<span>${full_details["frmer_prof_@_basic_Info_@_Last_name"]}</span>, 
+								<span>${full_details["frmer_prof_@_basic_Info_@_Extension_name"]}</span>
+							</b><br><br>
+						</span>
 
-                <span style="line-height: 0.0px;">
-                    <span class="x-text-grey">Address:<br></span> 
-                    <b class="x-xlarge"> 
-                        <span>Region ${full_details["frmer_prof_@_frmer_addr_@_region"]}</span>, 
-                        <span>${full_details["frmer_prof_@_frmer_addr_@_province"]}</span>, 
-                        <span>${full_details["frmer_prof_@_frmer_addr_@_city_municipality"]}</span>, 
-                    </b><br><br>
-                </span>
+						<span>
+							<span class="x-text-grey">Address:<br></span> 
+							<b class="x-xlarge"> 
+								<span>Region ${full_details["frmer_prof_@_frmer_addr_@_region"]}</span>, 
+								<span>${full_details["frmer_prof_@_frmer_addr_@_province"]}</span>, 
+								<span>${full_details["frmer_prof_@_frmer_addr_@_city_municipality"]}</span>
+							</b><br><br>
+						</span>
 
-                <span style="line-height: 0.0px;">
-                    <span class="x-text-grey">Commodity:<br></span> 
-                    <b class="x-xlarge">${full_details["frmer_prof_@_Farming_Basic_Info_@_primary_crop"]}</b><br><br>
-                </span>
+						<span>
+							<span class="x-text-grey">Commodity:<br></span> 
+							<b class="x-xlarge">${full_details["frmer_prof_@_Farming_Basic_Info_@_primary_crop"]}</b><br><br>
+						</span>
 
-                <br><br>
-                <span style="line-height: 0.0px;">
-                    <span class="x-text-grey">More Actions:<br></span> 
-                    
-                    <!-- Edit Button -->
-                    <button 
-                        class="x-large x-text-blue x-chip" 
-                        onclick="see_full_details()" 
-                        style="cursor:pointer; background:none; border:none; padding:0;">
-                        Edit This Profile
-                    </button>
+						<br><br>
+						<span>
+							<span class="x-text-grey">More Actions:<br></span> 
+							<button class="x-large x-text-blue x-chip" 
+								onclick="see_full_details()" 
+								style="cursor:pointer; background:none; border:none; padding:0;">
+								Edit This Profile
+							</button>
 
-                    <!-- Delete Button -->
-                    <button 
-                        class="x-large x-text-red x-chip" 
-                        onclick="delete_this_profile('${full_details["id"]}')" 
-                        style="cursor:pointer; background:none; border:none; padding:0; margin-left:10px;">
-                        Delete This Profile
-                    </button>
-                    <br><br>
-                </span>
-            </div>
-        </div>`),
-    });
-    profile_panel_basic.show();
-}
+							<button class="x-large x-text-red x-chip" 
+								onclick="delete_this_profile('${full_details["id"]}')" 
+								style="cursor:pointer; background:none; border:none; padding:0; margin-left:10px;">
+								Delete This Profile
+							</button>
+							<br><br>
+						</span>
+					</div>
+				</div>
+			`)
+		});
+		profile_panel_basic.show();
+	}
 
-	function see_full_details(){
-    // Close the basic info panel
-    if(profile_panel_basic) profile_panel_basic.destroy();
+	// ======= Delete function =======
+	function delete_this_profile(profileId) {
+		if (!profileId) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Missing ID',
+				text: 'Profile ID missing!',
+			});
+			return;
+		}
+	
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "This will permanently delete this profile.",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$send({
+					action: "/form_a/del_profile",
+					method: POST,
+					data: $DATA({ id: profileId }),
+					func: function (res) {
+						if (profile_panel_basic) profile_panel_basic.destroy();
+						DUPLICATE_DATA.forEach((group, gIndex) => {
+							DUPLICATE_DATA[gIndex] = group.filter(r => String(r.db_id) !== String(profileId));
+						});
+						DUPLICATE_DATA = DUPLICATE_DATA.filter(g => g.length > 0);
+						render_duplicates_page(CURRENT_PAGE, CURRENT_SEARCH);
+						Swal.fire({
+							icon: 'success',
+							title: 'Deleted!',
+							text: 'Profile has been deleted.',
+							timer: 1500,
+							showConfirmButton: false
+						});
+					},
+					err_dialog: true
+				});
+			}
+		});
+	}
 
-    // Show the full form dialog
-    show_dialog_fa_v2();
+	// ======= See full details with proper checks =======
+	function see_full_details() {
+		if (profile_panel_basic) profile_panel_basic.destroy();                 
+		document.querySelectorAll('.page_content').forEach(div => div.style.display = 'none');
+		document.getElementById('forms').style.display = 'block';
+		setTimeout(() => {
+			lockFieldsIfYouth();
 
-    // Populate the form fields AFTER the dialog is rendered
-    // full_details is already a single object, no need for [0][0]
-    DICT_TO_INPUT(full_details, 'FORM_DATA_A');
-}
+			if (full_details && CURRENT_USER_ID) {
+				const recordOwnerId = String(full_details["user_id"]); 
+				if (recordOwnerId !== String(CURRENT_USER_ID)) {
+					disableForm();
+				} else {
+					enableForm();
+				}
+			}
+		}, 200);
+	}
 
-function delete_this_profile(profileId) {
-    if (!profileId) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Missing ID',
-            text: 'Profile ID missing!',
-        });
-        return;
-    }
+	// ======= Youth lock =======
+	function excelSerialToDate(serial) {
+		const excelEpoch = new Date(1899, 11, 30);
+		return new Date(excelEpoch.getTime() + Math.floor(serial) * 24 * 60 * 60 * 1000);
+	}
 
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "This will permanently delete this profile.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Do the deletion
-            $send({
-                action: "/form_a/del_profile", // your actual delete endpoint
-                method: POST,
-                data: $DATA({ id: profileId }),
-                func: function (res) {
-                    // Close the profile modal
-                    if (profile_panel_basic) profile_panel_basic.destroy();
+	function getAgeFromBirthday(birthdayValue) {
+		if (!birthdayValue) return null;
+		let birthDate = null;
+		if (typeof birthdayValue === 'number') {
+			birthDate = excelSerialToDate(birthdayValue);
+		} else if (!isNaN(birthdayValue)) {
+			birthDate = excelSerialToDate(parseFloat(birthdayValue));
+		} else {
+			birthDate = new Date(birthdayValue);
+		}
+		if (isNaN(birthDate)) return null;
+		const today = new Date();
+		let age = today.getFullYear() - birthDate.getFullYear();
+		const m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+		return age;
+	}
 
-                    // Remove from DUPLICATE_DATA
-                    DUPLICATE_DATA.forEach((group, gIndex) => {
-                        DUPLICATE_DATA[gIndex] = group.filter(r => String(r.db_id) !== String(profileId));
-                    });
-                    // Remove empty groups
-                    DUPLICATE_DATA = DUPLICATE_DATA.filter(g => g.length > 0);
+	function lockFieldsIfYouth() {
+		setTimeout(() => {
+			const birthdayInput = document.getElementById("frmer_prof_@_basic_Info_@_birthday");
+			if (!birthdayInput) return;
+			const birthdayVal = birthdayInput.value || birthdayInput.getAttribute('value');
+			if (!birthdayVal) return; 
+			const age = getAgeFromBirthday(birthdayVal);
+			if (age !== null && age >= 15 && age <= 35) {
+				const fieldsToHide = document.querySelectorAll(
+					'#section-household-head-info, #section-household-profile, #section-prod-cost, #section-workers-laborers, #section-post-harvest'
+				);
+				fieldsToHide.forEach(inp => { inp.style.display = 'none'; });
+				Swal.fire({
+					icon: 'info',
+					title: 'Youth Farmer',
+					text: `This farmer is ${age} years old. All fields have been hidden for youth farmers.`,
+					confirmButtonText: 'OK',
+					allowOutsideClick: false,
+					allowEscapeKey: false
+				});
+			}
+		}, 100);
+	}
 
-                    // Re-render the duplicates page
-                    render_duplicates_page(CURRENT_PAGE, CURRENT_SEARCH);
+	// ======= Enable/Disable helpers =======
+	function disableForm() {
+		var form_data_b = $CLASS("FORM_DATA_A");
+		for (var i = 0; i < form_data_b.length; i++) form_data_b[i].disabled = true;
+		["submit_btn_main", "submit_btn_header", "show_mem_modal_btn", "fa1_update_btn"].forEach(btnId => {
+			let btn = $ID(btnId);
+			if (btn) {
+				btn.disabled = true;
+				btn.style.pointerEvents = "none";
+				btn.style.opacity = "0.5";
+			}
+		});
+	}
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted!',
-                        text: 'Profile has been deleted.',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                },
-                err_dialog: true
-            });
-        }
-    });
-}
-
+	function enableForm() {
+		var form_data_b = $CLASS("FORM_DATA_A");
+		for (var i = 0; i < form_data_b.length; i++) form_data_b[i].disabled = false;
+		["submit_btn_main", "submit_btn_header", "show_mem_modal_btn", "fa1_update_btn"].forEach(btnId => {
+			let btn = $ID(btnId);
+			if (btn) {
+				btn.disabled = false;
+				btn.style.pointerEvents = "auto";
+				btn.style.opacity = "1";
+			}
+		});
+	}
 </script>
-<div id="basic_panel" style="display: none;">
-</div>
+<div id="basic_panel" style="display: none;"></div>

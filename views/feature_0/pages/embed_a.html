@@ -11,27 +11,22 @@
 
 
 		<!-- Overlay effect when opening sidebar on small screens -->
-
-		<div id="dashboard" class="page_content x-animate-left">
+		<div id="dashboard" class="page_content">
 			<br>{% include 'dashboard.html' %}
 		</div>
-		<div id="lists" class="page_content x-animate-left" style="display:none;">
+		<div id="lists" class="page_content" style="display:none;">
 			<br>{% include 'lists_profile.html' %}
 		</div>
-		<div id="data_cleaning" class="page_content x-animate-left" style="display:none;">
-			<br>{% include 'data_cleaning.html' %}
-		</div>
 		<div id="forms" class="page_content x-animate-left" style="display:none;">
-			<br>Forms
+			<br>{% include "form_a_v2/form.html" %}
 		</div>
-		<div id="settings" class="page_content x-animate-left" style="display:none;">
-			<br>settings
-		</div>
+		<div id="data_cleaning" class="page_content" style="display:none;">
+			<br>{% include 'data_cleaning.html' %}
+		</div>	
 
 		<script type="text/javascript">
 			show_view('{{page}}','page_content');
 		</script>
-		{% include "form_a/__engine__.html" %}
 		<script>
 			// $ID('top_br').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
 			

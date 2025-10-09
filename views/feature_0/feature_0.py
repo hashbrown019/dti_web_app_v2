@@ -319,10 +319,18 @@ class _main:
 			}
 		)
 
-	@app.route("/feature_0/get_uploaded_excel",methods=["POST","GET"])
+	@app.route("/feature_0/get_uploaded_excel", methods=["POST","GET"])
 	@c.login_auth_web()
 	def feature_0_get_uploaded_excel():
-		_sql = ("SELECT `file_name` as `key`, count(file_name) as `total` FROM `excel_import_form_a` WHERE `user_id`={} GROUP by `file_name`;".format(session["USER_DATA"][0]['id']))
+		_sql = """
+			SELECT `file_name` AS `key`, COUNT(`file_name`) AS `total`
+			FROM `excel_import_form_a`
+			WHERE `user_id` = {}
+			AND `file_name` IS NOT NULL
+			AND `file_name` LIKE '%#%#%'  -- only real uploaded files
+			GROUP BY `file_name`;
+		""".format(session["USER_DATA"][0]['id'])
+		
 		upld_excel = rapid_mysql.select(_sql)
 		return upld_excel
 
@@ -906,3 +914,43 @@ class Filter:
 			
 		return json.loads(json.dumps(new_dict_))
 
+	@app.route('/set_data_a/<table>', methods=['POST'])
+	@c.login_auth_web()
+	def set_data_a(table):
+		# Grab everything at the start
+		form_data = request.form.to_dict(flat=True)
+		print("===> incoming form_data:", form_data)
+
+		rec_id = form_data.pop("id", "").strip()
+		# Remove keys with empty column names
+		form_data = {k: v.strip() for k, v in form_data.items() if k.strip() != ""}
+
+		col = ""
+		val = ""
+		args = ""
+
+		if rec_id == "":  # INSERT
+			for k, v in form_data.items():
+				col += ",`{}`".format(k)
+				val += ",'{}'".format(v.replace("'", "''"))
+			sql = "INSERT INTO `{}` (`user_id`{}) VALUES ('{}'{})".format(
+				table, col, session["USER_DATA"][0]["id"], val
+			)
+		else:  # UPDATE
+			for k, v in form_data.items():
+				args += ",`{}`='{}'".format(k, v.replace("'", "''"))
+			sql = "UPDATE `{}` SET {} ,date_modified=CURRENT_TIMESTAMP WHERE `id`='{}';".format(
+				table, args[1:], rec_id
+			)
+
+		result = rapid_mysql.do(sql)
+		if isinstance(result, dict) and result.get('response') == 'error':
+			status = 'failed'
+			msg = result.get('message')
+			last_row_id = None
+		else:
+			status = 'success'
+			msg = 'Data was added to the database'
+			last_row_id = result
+
+		return jsonify({"status": status, "msg": msg, "id": last_row_id})

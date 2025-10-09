@@ -1,4 +1,3 @@
-
 <span class=" x-text-hover-orange" onclick="export_farmer_excel()">
 	<b class="x-text-grey">Export Data</b> | <span class="x-text-orange fa fa-download"></span>
 </span>
@@ -7,9 +6,21 @@
 	<b class="x-text-grey">Import Spreadsheet</b> | <span class="x-text-blue fa fa-upload"></span>
 </span>
 &nbsp;&nbsp;&nbsp;
-<span class=" x-text-hover-orange" onclick="download_login_start('VC_FORM_A_v2.xls')">
-	<b class="x-text-grey">Download Template</b> | <span class="x-text-orange fa fa-download"></span>
-</span>
+<label for="download-template" style="font-weight:bold;color:#555;">Download | <span class="x-text-orange fa fa-download"></span></label>
+<select id="download-template" onchange="handleTemplateDownload(this.value)">
+  <option value="">Select template</option>
+  <option value="VC_FORM_A_v2.xls">Farmers Template</option>
+  <option value="VC_FORM_A_v2_Youth.xls">Youth Farmers Template</option>
+</select>
+
+<script>
+	function handleTemplateDownload(fileName) {
+	  if (fileName) {
+		download_login_start(fileName);
+		document.getElementById('download-template').selectedIndex = 0;
+	  }
+	}
+</script>
 
 <script type="text/javascript">
 function export_farmer_excel(argument) {
@@ -216,7 +227,7 @@ function get_uploaded_excel(){
 	})
 }
 
-let del_dialog01
+var del_dialog01
 function confirm_delete_excel(fff){
 	del_dialog01 = $dialog({
 		title : "Precaution",
@@ -238,7 +249,7 @@ function delete_excel(fff){
 	SPINNER_LOADER.show()
 	// download_excel(fff)
 	$send({
-		action : "https://dtirapid.ph/delete_excel/",
+		action : "/delete_excel/",
 		method : POST,
 		err_dialog : true,
 		data : $DATA({"file":fff.replace("#","@@").replace("#","@@")}),

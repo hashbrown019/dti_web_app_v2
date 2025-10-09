@@ -1,6 +1,6 @@
 <div id="FORM_A_CONTENT_HOLDER_1" class="x-container">
-    <h1 class="card-title" style="text-align:center; font-size:25px;">Farmer Profile</h1>
-
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size:25px;">Farmer Profile</h1>
+    <input class="FORM_DATA_A" id="id" type="hidden" value="">
     <style>
         /* Global Styles */
         * {
@@ -14,6 +14,14 @@
           line-height: 1.6;
           color: #333;
           background-color: #f5f7fa;
+        }
+        
+        label {
+          font-weight: 500;
+        }
+        
+        h5 {
+        font-weight: bold;
         }
       
         /* Dashboard Styles */
@@ -166,47 +174,58 @@
       </style>
 
     <!-- =================== Farmer Basic Info =================== -->
-    <div class="card">
+    <div class="card" id="section-farmers-basic-info">
         <div class="card-body">
             <h4 class="card-title">Farmer Basic Information</h4>
             <form class="row g-3">
                 <div class="col-md-3">
+                    <label>First Name</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_First_name" placeholder="First Name">
                 </div>
                 <div class="col-md-2">
+                    <label>Middle Name</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_Middle_name" placeholder="Middle Name">
                 </div>
                 <div class="col-md-3">
+                    <label>Last Name</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_Last_name" placeholder="Last Name">
                 </div>
                 <div class="col-md-2">
+                    <label>Extension Name</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_Extension_name" placeholder="Extension Name">
                 </div>
                 <div class="col-md-2">
+                    <label>Mobile Number</label>
                     <input type="number" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_Mobile_number" placeholder="Mobile Number">
                 </div>
                 <div class="col-md-2">
+                    <label>Email Address</label>
                     <input type="email" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_email_address" placeholder="Email">
                 </div>
                 <div class="col-md-2">
+                    <label>Gender</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_basic_Info_@_Sex">
-                        <option selected disabled>Sex</option>
+                        <option value="">select option</option>
                         <option>Male</option>
                         <option>Female</option>
                     </select>
                 </div>
                 <div class="col-md-2">
+                    <label>Birthday</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_birthday" placeholder="Birthday (dd/mm/yyyy)" oninput="this.value=this.value.replace(/[^0-9/]/g,'')">
                 </div>
                 <div class="col-md-2">
+                    <label>Birthday not sure</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_basic_Info_@_bday_not_sure">
-                        <option selected disabled>Bday not sure</option>
+                        <option value="">select option</option>
+                        <option>Bday not sure</option>
                         <option>Yes</option>
                     </select>
                 </div>
                 <div class="col-md-2">
+                    <label>Civil Status</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_basic_Info_@_civil_status">
-                        <option selected disabled>Civil Status</option>
+                        <option value="">select option</option>
                         <option>Single</option>
                         <option>Married</option>
                         <option>Widowed</option>
@@ -214,8 +233,9 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select class="FORM_DATA_A form-select">
-                        <option selected disabled>Choose Sectoral Data</option>
+                    <label>Sectoral Data</label>
+                    <select class="FORM_DATA_A form-select" id="frmer_prof_@_basic_Info_@_sectoral_data">
+                        <option value="">select option</option>
                         <option>Youth</option>
                         <option>IP</option>
                         <option>PWD</option>
@@ -228,26 +248,30 @@
     <br>
 
     <!-- =================== Household Head Info =================== -->
-    <div class="card">
+    <div class="card" id="section-household-head-info">
         <div class="card-body">
             <h4 class="card-title">Household Head Info</h4>
             <form class="row g-3">
                 <div class="col-md-3">
+                    <label>is Head of Household?</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_hh_Head_Info_@_is_head_og_household">
-                        <option selected disabled>Is head of household</option>
+                        <option value="">select option</option>
                         <option>Yes</option>
                         <option>No</option>
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>Name of head of household</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_hh_Head_Info_@_name_head_household" placeholder="Name of head of household">
                 </div>
                 <div class="col-md-3">
+                    <label>Head hh name</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_hh_Head_Info_@_head_hh_name" placeholder="Head hh name">
                 </div>
                 <div class="col-md-3">
+                    <label>Head hh relationship</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_relationship">
-                        <option selected disabled>Head hh relationship</option>
+                        <option value="">select option</option>
                         <option>Spouse</option>
                         <option>Parent</option>
                         <option>Sibling</option>
@@ -257,31 +281,35 @@
                     </select>
                 </div>
                 <div class="col-md-2">
+                    <label>Head hh sex</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_sex">
-                        <option selected disabled>Head hh sex</option>
+                        <option value="">select option</option>
                         <option>Male</option>
                         <option>Female</option>
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>is Head hh pwd?</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_pwd">
-                        <option selected disabled>Head hh pwd</option>
+                        <option value="">select option</option>
                         <option>Yes</option>
                         <option>No</option>
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>is Head hh ofw?</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_ofw">
-                        <option selected disabled>Head hh ofw</option>
+                        <option value="">select option </option>
                         <option>Yes</option>
                         <option>No</option>
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>is Head hh ip?</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_hh_Head_Info_@_head_hh_ip">
-                        <option selected disabled>Head hh ip</option>
-                        <option>...</option>
-                        <option>...</option>
+                        <option value="">select option</option>
+                        <option>Yes</option>
+                        <option>No</option>
                     </select>
                 </div>
             </form>
@@ -290,29 +318,68 @@
     <br>
 
     <!-- =================== Farmer Address =================== -->
-    <div class="card">
+    <div class="card" id="section-farmers-address">
         <div class="card-body">
             <h4 class="card-title">Farmer Address</h4>
             <form class="row g-3">
                 <div class="col-md-3">
+                    <label>Longitude</label>
                     <input type="number" class="FORM_DATA_A form-control" id="frmer_prof_@_frmer_addr_@_longitude" placeholder="Longitude">
                 </div>
                 <div class="col-md-3">
+                    <label>Latitude</label>
                     <input type="number" class="FORM_DATA_A form-control" id="frmer_prof_@_frmer_addr_@_latitude" placeholder="Latitude">
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_frmer_addr_@_region" placeholder="Region">
+                    <label>Region</label>
+                    <select class="FORM_DATA_A form-select" id="frmer_prof_@_frmer_addr_@_region">
+                        <option value="">Choose your option</option>
+                        <option value="8">RCU 8 - Eastern Visayas</option>
+                        <option value="9">RCU 9 - Zamboanga Peninsula</option>
+                        <option value="10">RCU 10 - Northern Mindanao</option>
+                        <option value="11">RCU 11 - Davao Region</option>
+                        <option value="12">RCU 12 - SOCCSKSARGEN</option>
+                        <option value="13">RCU 13 - Caraga</option>
+                        <option value="BARMM">BARMM</option>
+                    </select>
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_frmer_addr_@_province" placeholder="Province">
+                    <label>Province</label>
+                    <select class="FORM_DATA_A form-select" id="frmer_prof_@_frmer_addr_@_province">
+                        <option value="">Choose your option</option>
+                        <option value="Northern Samar">Northern Samar</option>
+                        <option value="Leyte">Leyte</option>
+                        <option value="Southern Leyte">Southern Leyte</option>
+                        <option value="Zamboanga del Norte">Zamboanga del Norte</option>
+                        <option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+                        <option value="Zamboanga del Sur">Zamboanga del Sur</option>
+                        <option value="Misamis Oriental">Misamis Oriental</option>
+                        <option value="Bukidnon">Bukidnon</option>
+                        <option value="Lanao del Norte">Lanao del Norte</option>
+                        <option value="Davao de Oro">Davao de Oro</option>
+                        <option value="Davao Oriental">Davao Oriental</option>
+                        <option value="Davao del Norte">Davao del Norte</option>
+                        <option value="Davao del Sur">Davao del Sur</option>
+                        <option value="Davao Occidental">Davao Occidental</option>
+                        <option value="North Cotabato">North Cotabato</option>
+                        <option value="Sultan Kudarat">Sultan Kudarat</option>
+                        <option value="Sarangani">Sarangani</option>
+                        <option value="Agusan del Norte">Agusan del Norte</option>
+                        <option value="Agusan del Sur">Agusan del Sur</option>
+                        <option value="Surigao del Sur">Surigao del Sur</option>
+                        <option value="Maguindanao">Maguindanao</option>
+                    </select>
                 </div>
                 <div class="col-md-3">
+                    <label>City/Municipality</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_frmer_addr_@_city_municipality" placeholder="City/Municipality">
                 </div>
                 <div class="col-md-3">
+                    <label>Barangay</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_frmer_addr_@_brgy" placeholder="Barangay">
                 </div>
                 <div class="col-md-3">
+                    <label>Purok/Sitio/Street</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_frmer_addr_@_purok_sitio_street" placeholder="Purok/Sitio/Street">
                 </div>
             </form>
@@ -321,13 +388,14 @@
     <br>
 
     <!-- =================== Farming Basic Info =================== -->
-    <div class="card">
+    <div class="card" id="section-farming-basic-info">
         <div class="card-body">
             <h4 class="card-title">Farming Basic Info</h4>
             <form class="row g-3">
                 <div class="col-md-3">
+                    <label>Primary Crop</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_Farming_Basic_Info_@_primary_crop">
-                        <option selected disabled>Primary crop</option>
+                        <option value="">select option</option>
                         <option>Cacao</option>
                         <option>Coconut</option>
                         <option>Coffee</option>
@@ -336,35 +404,43 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_Farming_Basic_Info_@_DIP_name" placeholder="DIP Name">
+                    <label>Name of DIP</label>
+                    <select class="FORM_DATA_A form-select" id="frmer_prof_@_Farming_Basic_Info_@_DIP_name">
+                        <option value="">select option</option>
+                    </select>
                 </div>
                 <div class="col-md-3">
+                    <label>is Farmer PWD?</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_Farming_Basic_Info_@_Farmer_pwd">
-                        <option selected disabled>Farmer PWD</option>
+                        <option value="">select option</option>
                         <option>Yes</option>
                         <option>No</option>
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>is Farmer OFW?</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_Farming_Basic_Info_@_Farmer_ofw">
-                        <option selected disabled>Farmer OFW</option>
+                        <option value="">select option</option>
                         <option>Yes</option>
                         <option>No</option>
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>is Farmer IP?</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_Farming_Basic_Info_@_farmer_ip">
-                        <option selected disabled>Farmer IP</option>
-                        <option>...</option>
-                        <option>...</option>
+                        <option value="">select option</option>
+                        <option>Yes</option>
+                        <option>No</option>
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>Years of Farming</label>
                     <input type="number" class="FORM_DATA_A form-control" id="frmer_prof_@_Farming_Basic_Info_@_years_farming" placeholder="Years of Farming">
                 </div>
                 <div class="col-md-3">
-                    <select class="FORM_DATA_A form-select" >
-                        <option selected disabled>FO Membership</option>
+                    <label>FO Membership</label>
+                    <select class="FORM_DATA_A form-select" id="frmer_prof_@_Farming_Basic_Info_@_fo_member">
+                        <option value="">select option</option>
                         <option>Yes</option>
                         <option>No</option>
                         <option>Maybe / No Idea</option>
@@ -374,18 +450,21 @@
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_Farming_Basic_Info_@_Name_coop" placeholder="Name of Coop">
                 </div>
                 <div class="col-md-3">
+                    <label>Position/Designation in Coop</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_Farming_Basic_Info_@_position_in_coop">
-                        <option selected disabled>Position/Designation in Coop</option>
+                        <option value="">select option</option>
                         <option>Member</option>
                         <option>Officer</option>
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>Coop Member Since</label>
                     <input type="number" class="FORM_DATA_A form-control" id="frmer_prof_@_Farming_Basic_Info_@_coop_mem_since" placeholder="Coop Member Since">
                 </div>
                 <div class="col-md-3">
+                    <label>is Listed in RSBSA?</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_Farming_Basic_Info_@_is_listed_in_RSBSA">
-                        <option selected disabled>Is Listed in RSBSA</option>
+                        <option value="">select option</option>
                         <option>Yes</option>
                         <option>No</option>
                         <option>No Idea</option>
@@ -397,8 +476,9 @@
             <h4 class="card-title">Education</h4>
             <form class="row g-3">
                 <div class="col-md-3">
+                    <label>Highest Educational Attainment</label>
                     <select class="FORM_DATA_A form-select" id="frmer_prof_@_educ_@_highest_educational_attainment">
-                        <option selected disabled>Highest Educational Attainment</option>
+                        <option value="">select option</option>
                         <option>College Graduate</option>
                         <option>Undergraduate</option>
                         <option>High School Graduate</option>
@@ -409,54 +489,98 @@
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <label>Vocational Skills</label>
                     <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_educ_@_Vocational_Skills" placeholder="Vocational Skills">
                 </div>
             </form>
         </div>
+<!-- ===================  =================== -->
+<hr>
+<!-- ===================  =================== -->
     </div>
 
-<!-- ===================  =================== -->
- <hr>
-<!-- ===================  =================== -->
 
-<div class="card-body">
-    <h1 class="card-title text-center" style="font-size: 25px;">Farmer Information</h1>
+
+<div id="section-farm-basic-info">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Farm Information</h1>
 
     <!-- =================== Farm Basic Info =================== -->
     <div class="card mt-3">
         <div class="card-body">
-            <h4 class="card-title">Farmer Basic Info</h4>
+            <h4 class="card-title">Farm Basic Info</h4>
             <form class="row g-3">
                 <div class="col-md-3">
+                    <label>Longitude</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_Longitude" placeholder="Longitude">
                 </div>
                 <div class="col-md-3">
+                    <label>Latitude</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_Latitude" placeholder="Latitude">
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_region" placeholder="Region">
+                    <label>Region</label>
+                    <select class="FORM_DATA_A form-select" id="farm_info@_Farm_Basic_Info_@_region">
+                        <option value="">Choose your option</option>
+                        <option value="8">RCU 8 - Eastern Visayas</option>
+                        <option value="9">RCU 9 - Zamboanga Peninsula</option>
+                        <option value="10">RCU 10 - Northern Mindanao</option>
+                        <option value="11">RCU 11 - Davao Region</option>
+                        <option value="12">RCU 12 - SOCCSKSARGEN</option>
+                        <option value="13">RCU 13 - Caraga</option>
+                        <option value="BARMM">BARMM</option>
+                    </select>
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_province" placeholder="Province">
+                    <label>Province</label>
+                    <select class="FORM_DATA_A form-select" id="farm_info@_Farm_Basic_Info_@_province">
+                        <option value="">Choose your option</option>
+                        <option value="Northern Samar">Northern Samar</option>
+                        <option value="Leyte">Leyte</option>
+                        <option value="Southern Leyte">Southern Leyte</option>
+                        <option value="Zamboanga del Norte">Zamboanga del Norte</option>
+                        <option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+                        <option value="Zamboanga del Sur">Zamboanga del Sur</option>
+                        <option value="Misamis Oriental">Misamis Oriental</option>
+                        <option value="Bukidnon">Bukidnon</option>
+                        <option value="Lanao del Norte">Lanao del Norte</option>
+                        <option value="Davao de Oro">Davao de Oro</option>
+                        <option value="Davao Oriental">Davao Oriental</option>
+                        <option value="Davao del Norte">Davao del Norte</option>
+                        <option value="Davao del Sur">Davao del Sur</option>
+                        <option value="Davao Occidental">Davao Occidental</option>
+                        <option value="North Cotabato">North Cotabato</option>
+                        <option value="Sultan Kudarat">Sultan Kudarat</option>
+                        <option value="Sarangani">Sarangani</option>
+                        <option value="Agusan del Norte">Agusan del Norte</option>
+                        <option value="Agusan del Sur">Agusan del Sur</option>
+                        <option value="Surigao del Sur">Surigao del Sur</option>
+                        <option value="Maguindanao">Maguindanao</option>
+                    </select>
                 </div>
                 <div class="col-md-3">
+                    <label>City/Municipality</label>
                     <input type="text" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_municipality" placeholder="City/Municipality">
                 </div>
                 <div class="col-md-3">
+                    <label>Barangay</label>
                     <input type="text" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_Brgy" placeholder="Barangay">
                 </div>
                 <div class="col-md-3">
+                    <label>Purok/Sitio/Street</label>
                     <input type="text" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_street_purok_sitio" placeholder="Purok/Sitio/Street">
                 </div>
                 <div class="col-md-3">
+                    <label>Declared Area (Ha)</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_declared_area_Ha" placeholder="Declared Area (Ha)">
                 </div>
                 <div class="col-md-3">
+                    <label>Land Tenurial Status in Ha</label>
                     <input type="text" class="FORM_DATA_A form-control" id="farm_info@_Farm_Basic_Info_@_is_intercroping" placeholder="Is Intercropping">
                 </div>
                 <div class="col-md-3">
+                    <label>Primary Crop</label>
                     <select class="FORM_DATA_A form-select" id="farm_info@_Farm_Basic_Info_@_Primary_crop">
-                        <option selected disabled>Primary Crop</option>
+                        <option value="">select option</option>
                         <option>Cacao</option>
                         <option>Coconut</option>
                         <option>Coffee</option>
@@ -470,12 +594,16 @@
             <form class="row g-3 mt-3">
                 <fieldset class="col-md-6">
                     <h4 class="card-title">Topography</h4>
+                    <label>Sloping Area in Hectares</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Topography_@_slop_area_in_ha_greater_18_degrees" placeholder="Sloping area in hectares (>18°)">
+                    <label>Hilly Area in Hectares</label>
                     <input type="number" class="FORM_DATA_A form-control mt-2" id="farm_info@_Topography_@_flat_lain_area_in_hectares" placeholder="Flat/Plain area (Ha)">
                 </fieldset>
                 <fieldset class="col-md-6">
                     <h4 class="card-title">Trees</h4>
+                    <label>No. of Bearing Trees Planted</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Trees_@_No_bearing_trees_planted" placeholder="No. of bearing trees planted">
+                    <label>No. of Non-Bearing Trees Planted</label>
                     <input type="number" class="FORM_DATA_A form-control mt-2" id="farm_info@_Trees_@_No_bearing_non_trees_planted" placeholder="No. of non-bearing trees planted">
                 </fieldset>
             </form>
@@ -489,27 +617,31 @@
             <h4 class="card-title">Land Tenurial Status (Ha.)</h4>
             <form class="row g-3">
                 <div class="col-md-3">
-                    <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Land_Tenurial_Status_in_Ha_@_Owned" placeholder="Owned">
-                </div>
-                <div class="col-md-3">
+                    <label>Ownership</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Land_Tenurial_Status_in_Ha_@_Sole_ownership" placeholder="Sole Ownership">
                 </div>
                 <div class="col-md-3">
+                    <label>Co-Ownership</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Land_Tenurial_Status_in_Ha_@_co_ownership" placeholder="Co-Ownership">
                 </div>
                 <div class="col-md-3">
+                    <label>CLOA/Individual EP</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Land_Tenurial_Status_in_Ha_@_CLOA_individual_EP" placeholder="CLOA/Individual EP">
                 </div>
                 <div class="col-md-3">
+                    <label>Stewardship</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Land_Tenurial_Status_in_Ha_@_stewardship" placeholder="Stewardship">
                 </div>
                 <div class="col-md-3">
+                    <label>Usufruct</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Land_Tenurial_Status_in_Ha_@_usufruct" placeholder="Usufruct">
                 </div>
                 <div class="col-md-3">
+                    <label>Tenancy</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Land_Tenurial_Status_in_Ha_@_tenancy" placeholder="Tenancy">
                 </div>
                 <div class="col-md-3">
+                    <label>Others</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Land_Tenurial_Status_in_Ha_@_others" placeholder="Others">
                 </div>
             </form>
@@ -523,8 +655,11 @@
             <form class="row g-3">
                 <fieldset class="col-md-4">
                     <h4 class="card-title">Primary Crop Info</h4>
+                    <label>Ave. Production (2018-2019) (kg/cycle)</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Primary_Crop_Info_@_Ave_Prod_vol_w018_2019_kg_cycle" placeholder="Ave. Production (2018-2019) (kg/cycle)">
+                    <label>Total Land Area Covered (Ha)</label>
                     <input type="number" class="FORM_DATA_A form-control mt-2" id="farm_info@_Primary_Crop_Info_@_Crop_total_land_area_covered_Ha" placeholder="Total Land Area Covered (Ha)">
+                    <label>No. of Cycles</label>
                     <input type="number" class="FORM_DATA_A form-control mt-2" id="farm_info@_Primary_Crop_Info_@_Crop_No_Cycle_" placeholder="No. of Cycles">
                 </fieldset>
                 <fieldset class="col-md-8">
@@ -532,7 +667,7 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <select class="FORM_DATA_A form-select" id="farm_info@_Secondary_Crop_Info_@_Secondary_Crop_if_Any">
-                                <option selected disabled>Secondary Crop if Any</option>
+                                <option value="">Secondary Crop if Any</option>
                                 <option>Cacao</option>
                                 <option>Coconut</option>
                                 <option>Coffee</option>
@@ -541,12 +676,15 @@
                             </select>
                         </div>
                         <div class="col-md-6">
+                            <label>Ave. Production (2018-2019) (kg/cycle)</label>
                             <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Secondary_Crop_Info_@_Ave_Prod_vol_w018_2019_kg_cycle" placeholder="Ave. Production (2018-2019) (kg/cycle)">
                         </div>
                         <div class="col-md-6">
+                            <label>Total Land Area Covered (Ha)</label>
                             <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Secondary_Crop_Info_@_Crop_total_land_area_covered_Ha" placeholder="Total Land Area Covered (Ha)">
                         </div>
                         <div class="col-md-6">
+                            <label>No. of Cycles</label>
                             <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Secondary_Crop_Info_@_Crop_No_Cycle_" placeholder="No. of Cycles">
                         </div>
                     </div>
@@ -557,24 +695,30 @@
             <form class="row g-3 mt-3">
                 <fieldset class="col-md-6">
                     <h4 class="card-title">Area of Land for Expansion</h4>
-                    <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Area_land_for_Expansion_@_Sloping" placeholder="Sloping">
+                    <label>Sloping</label>
+                    <input type="number" class="FORM_DATA_A form-control" id="farm_info@_Area_land_for_Expansion_@_Sloping_" placeholder="Sloping">
+                    <label>Flat/Plain</label>
                     <input type="number" class="FORM_DATA_A form-control mt-2" id="farm_info@_Area_land_for_Expansion_@_Flat_Plain" placeholder="Flat/Plain">
                 </fieldset>
                 <fieldset class="col-md-6">
                     <h4 class="card-title">Area of Land for Rehabilitation</h4>
+                    <label>Sloping</label>
                     <input type="number" class="FORM_DATA_A form-control" id="farm_info@_area_land_for_rehabilitation_@_Sloping" placeholder="Sloping">
+                    <label>Flat/Plain</label>
                     <input type="number" class="FORM_DATA_A form-control mt-2" id="farm_info@_area_land_for_rehabilitation_@_flat_plain" placeholder="Flat/Plain">
                 </fieldset>
             </form>
         </div>
     </div>
-
 <!-- ===================  =================== -->
 <hr>
 <!-- ===================  =================== -->
+</div>
 
-<div class="card-body">
-    <h1 class="card-title" style="text-align: center; font-size: 25px;">Household Profile</h1>
+
+
+<div class="card-body" id="section-household-profile">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Household Profile</h1>
 
     <div class="card">
         <div class="card-body">
@@ -588,7 +732,7 @@
             <fieldset class="col-md-6">
                 <h5 class="card-title">Number HH member Age (15-30) per Gender</h5>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="No. Male" id="farm_info@_num_HH_mem_Age_15_30_per_Gender_@_No_Male">
-                <input type="number" class="FORM_DATA_A form-control mt-2" placeholder="No. Female" id="	farm_info@_num_HH_mem_Age_15_30_per_Gender_@_no_Female">
+                <input type="number" class="FORM_DATA_A form-control mt-2" placeholder="No. Female" id="farm_info@_num_HH_mem_Age_15_30_per_Gender_@_no_Female">
             </fieldset>  
 
             <fieldset class="col-md-6">
@@ -612,12 +756,12 @@
             <fieldset class="col-md-6">
                 <h5 class="card-title">Number of OFW HH Member</h5>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="No. Male" id="farm_info@_num_OFW_HH_Mem_@_No_Male">
-                <input type="number" class="FORM_DATA_A form-control mt-2" placeholder="No. Female" id="	farm_info@_num_OFW_HH_Mem_@_no_Female">
+                <input type="number" class="FORM_DATA_A form-control mt-2" placeholder="No. Female" id="farm_info@_num_OFW_HH_Mem_@_no_Female">
             </fieldset>
 
             <fieldset class="col-md-6">
                 <h5 class="card-title">Number of PWD IP Member</h5>
-                <input type="number" class="FORM_DATA_A form-control" placeholder="No. Male" id="	farm_info@_num_PWD_IP_Mem_@_No_Male">
+                <input type="number" class="FORM_DATA_A form-control" placeholder="No. Male" id="farm_info@_num_PWD_IP_Mem_@_No_Male">
                 <input type="number" class="FORM_DATA_A form-control mt-2" placeholder="No. Female" id="farm_info@_num_PWD_IP_Mem_@_no_Female">
             </fieldset>
 
@@ -634,12 +778,15 @@
             <h5 class="card-title">Household Income (Farming)</h5>
          <form class="row g-3">
             <div class="col-md-4">
+                <label>Estimated Total Annual Income (Php) - Primary Crop</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Estimated Total Annual Income (Php) - Primary Crop" id="farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Primary_Crop_">
             </div>
             <div class="col-md-4">
+                <label>Estimated Total Annual Income (Php) - Secondary Crop</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Estimated Total Annual Income (Php) - Secondary Crop" id="farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Secondary_Crop_">
             </div>
             <div class="col-md-4">
+                <label>Estimated Total Annual Income (Php) - Livestock/Fishing etc</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Estimated Total Annual Income (Php) - Livestock/Fishing etc" id="farm_info@_hh_Income_Farm_@_Est_year_Income_Php_Lvstock_Fish_etc">
             </div>
         </form>
@@ -652,40 +799,49 @@
             <h5 class="card-title">Household Income (Non-Farming)</h5>
          <form class="row g-3">
             <div class="col-md-3">
+                <label>Family Remittnaces</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Family Remittnaces" id="farm_info@_Household_Income_Non_Farming_@_fam_Remittnaces">
             </div>
             <div class="col-md-3">
+                <label>Employment</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Employment" id="farm_info@_Household_Income_Non_Farming_@_Employment">
             </div>
             <div class="col-md-3">
+                <label>Skilled Labor</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Skilled Labor" id="farm_info@_Household_Income_Non_Farming_@_Skilled_Labor">
             </div>
             <div class="col-md-3">
+                <label>Business</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Business" id="farm_info@_Household_Income_Non_Farming_@_Business">
             </div>
             <div class="col-md-3">
-                <input type="number" class="FORM_DATA_A form-control" placeholder="Social Pension" id="	farm_info@_Household_Income_Non_Farming_@_Social_Pension">
+                <label>Social Pension</label>
+                <input type="number" class="FORM_DATA_A form-control" placeholder="Social Pension" id="farm_info@_Household_Income_Non_Farming_@_Social_Pension">
             </div>
             <div class="col-md-3">
+                <label>Pantawid Beneficary</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Pantawid Beneficary" id="farm_info@_Household_Income_Non_Farming_@_Pantawid_Beneficary">
             </div>
             <div class="col-md-3">
+                <label>Other Subsidies</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="Other Subsidies" id="farm_info@_Household_Income_Non_Farming_@_Other_Subsidies">
             </div>
             <div class="col-md-3">
+                <label>If Others, Please specify</label>
                 <input type="number" class="FORM_DATA_A form-control" placeholder="If Others, Please specify" id="farm_info@_Household_Income_Non_Farming_@_If_Others_specify">
             </div>
         </form>
         </div>
     </div>
-</div>
-
 <!-- ===================  =================== -->
 <hr>
 <!-- ===================  =================== -->
+</div>
 
-<div class="card-body">
-    <h1 class="card-title text-center" style="font-size: 25px;">Production Cost Per Crop/Commodity</h1>
+
+
+<div class="card-body" id="section-prod-cost">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Production Cost Per Crop/Commodity</h1>
         <div class="card">
                 <div class="card-body">
                         <form class="row g-3">
@@ -694,7 +850,7 @@
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <select class="FORM_DATA_A form-select" id="prod_Cost_Per_Crop_@_Farmer_farm_info_@_Does_Farmer_Keep_Records">
-                                                    <option selected="" disabled>Does Farmer Keep Records</option>
+                                                    <option value="">Does Farmer Keep Records</option>
                                                     <option>Yes</option>
                                                     <option>No</option>
                                                 </select>
@@ -733,7 +889,7 @@
                                                     <input type="number" class="FORM_DATA_A form-control" placeholder="Crop Maintenance Activities" id="prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Mntnce_Acts">
                                             </div>
                                             <div class="col-md-6">
-                                                    <input type="number" class="FORM_DATA_A form-control" placeholder="Crop Harvesting" id="	prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Harvesting">
+                                                    <input type="number" class="FORM_DATA_A form-control" placeholder="Crop Harvesting" id="prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Crop_Harvesting">
                                             </div>
                                             <div class="col-md-6">
                                                     <input type="number" class="FORM_DATA_A form-control" placeholder="Post-Harvest Activities" id="prod_Cost_Per_Crop_@_Mtrls_inpts_P_Cyc_@_Post_Harv_Acts">
@@ -743,14 +899,15 @@
                         </form>
                 </div>
         </div>
-</div>
-
 <!-- ===================  =================== -->
 <hr>
 <!-- ===================  =================== -->
+</div>
 
-<div class="card-body">
-    <h1 class="card-title text-center" style="font-size: 25px;">Farm Workers and Laborers</h1>
+
+
+<div class="card-body" id="section-workers-laborers">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Farm Workers and Laborers</h1>
     <div class="card">
             <div class="card-body">
                 <form class="row g-3">
@@ -759,18 +916,23 @@
                             <h5 class="card-title">Number Male Family Workers</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Youth</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Youth" id="Workers_Laborers_@_num_Male_fam_Workers_@_Youth">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Senior Citizen</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Senior Citizen" id="Workers_Laborers_@_num_Male_fam_Workers_@_Senior_Citizen">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>PWD</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="PWD" id="Workers_Laborers_@_num_Male_fam_Workers_@_PWD">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>OFW</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="OFW" id="Workers_Laborers_@_num_Male_fam_Workers_@_OFW">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>IP</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="IP" id="Workers_Laborers_@_num_Male_fam_Workers_@_IP">
                                     </div>
                                 </div>
@@ -782,18 +944,23 @@
                             <h5 class="card-title">Number Female Family Workers</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Youth</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Youth" id="Workers_Laborers_@_num_Fem_fam_Workers_@_Youth">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Senior Citizen</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Senior Citizen" id="Workers_Laborers_@_num_Fem_fam_Workers_@_Senior_Citizen">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>PWD</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="PWD" id="Workers_Laborers_@_num_Fem_fam_Workers_@_PWD">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>OFW</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="OFW" id="Workers_Laborers_@_num_Fem_fam_Workers_@_OFW">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>IP</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="IP" id="Workers_Laborers_@_num_Fem_fam_Workers_@_IP">
                                     </div>
                                 </div>
@@ -805,19 +972,24 @@
                             <h5 class="card-title">Number Male Non-Family Workers</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Youth</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Youth" id="Workers_Laborers_@_num_Male_Non_fam_Workers_@_Youth">
                                     </div>
                                     <div class="col-md-6">
-                                            <input type="number" class="FORM_DATA_A form-control" placeholder="Senior Citizen" id="	Workers_Laborers_@_num_Male_Non_fam_Workers_@_Senior_Citizen">
+                                            <label>Senior Citizen</label>
+                                            <input type="number" class="FORM_DATA_A form-control" placeholder="Senior Citizen" id="Workers_Laborers_@_num_Male_Non_fam_Workers_@_Senior_Citizen">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>PWD</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="PWD" id="Workers_Laborers_@_num_Male_Non_fam_Workers_@_PWD">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>OFW</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="OFW" id="Workers_Laborers_@_num_Male_Non_fam_Workers_@_OFW">
                                     </div>
                                     <div class="col-md-6">
-                                            <input type="number" class="FORM_DATA_A form-control" placeholder="IP" id="	Workers_Laborers_@_num_Male_Non_fam_Workers_@_IP">
+                                            <label>IP</label>
+                                            <input type="number" class="FORM_DATA_A form-control" placeholder="IP" id="Workers_Laborers_@_num_Male_Non_fam_Workers_@_IP">
                                     </div>
                                 </div>
                         </fieldset>
@@ -828,18 +1000,23 @@
                             <h5 class="card-title">Number Female Non-Family Workers</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Youth</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Youth" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_Youth">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Senior Citizen</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Senior Citizen" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_Sr_Citizen">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>PWD</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="PWD" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_PWD">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>OFW</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="OFW" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_OFW">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>IP</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="IP" id="Workers_Laborers_@_num_Fem_Non_fam_Workers_@_IP">
                                     </div>
                                 </div>
@@ -858,10 +1035,10 @@
                             <h5 class="card-title">IP WORKERS</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                            <input type="text" class="FORM_DATA_A form-control" placeholder="List of IP group Present for FAMILY Workers" id="Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_fam_Workers">
+                                            <input type="number" class="FORM_DATA_A form-control" placeholder="List of IP group Present for FAMILY Workers" id="Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_fam_Workers">
                                     </div>
                                     <div class="col-md-6">
-                                            <input type="text" class="FORM_DATA_A form-control" placeholder="List of IP group Present for NON-FAMILY Workers" id="Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_NON_fam_Workers">
+                                            <input type="number" class="FORM_DATA_A form-control" placeholder="List of IP group Present for NON-FAMILY Workers" id="Workers_Laborers_@_IP_WORKERS_@_IP_g_Present_NON_fam_Workers">
                                     </div>
                                 </div>
                         </fieldset>
@@ -889,14 +1066,15 @@
                 </form>
             </div>
         </div>
-    </div>
-
 <!-- ===================  =================== -->
 <hr>
 <!-- ===================  =================== -->
+    </div>
 
-<div class="card-body">
-    <h1 class="card-title text-center" style="font-size: 25px;">Post Harvest / Semu Processing Capacity</h1>
+
+
+<div class="card-body" id="section-post-harvest">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Post Harvest / Semu Processing Capacity</h1>
         <div class="card">
                 <div class="card-body">
                     <form class="row g-3">  
@@ -905,21 +1083,59 @@
                                 <h5 class="card-title">PH Facility/Equipment Addresses</h5>
                                     <div class="row g-3">
                                         <div class="col-md-6">
+                                                <label>Longitude</label>
                                                 <input type="number" class="FORM_DATA_A form-control" placeholder="Longitude" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Longitude">
                                         </div>
                                         <div class="col-md-6">
+                                                <label>Latitude</label>
                                                 <input type="number" class="FORM_DATA_A form-control" placeholder="Latitude" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Latitude">
                                         </div>
                                         <div class="col-md-6">
-                                                <input type="text" class="FORM_DATA_A form-control" placeholder="Region" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Region">
+                                                <label>Region</label>
+                                                <select class="FORM_DATA_A form-select" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Region">
+                                                    <option value="">Choose your option</option>
+                                                    <option value="8">RCU 8 - Eastern Visayas</option>
+                                                    <option value="9">RCU 9 - Zamboanga Peninsula</option>
+                                                    <option value="10">RCU 10 - Northern Mindanao</option>
+                                                    <option value="11">RCU 11 - Davao Region</option>
+                                                    <option value="12">RCU 12 - SOCCSKSARGEN</option>
+                                                    <option value="13">RCU 13 - Caraga</option>
+                                                    <option value="BARMM">BARMM</option>
+                                                </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Province" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Province">
+                                                <label>Province</label>
+                                                <select class="FORM_DATA_A form-select" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_Province">
+                                                    <option value="">Choose your option</option>
+                                                    <option value="Northern Samar">Northern Samar</option>
+                                                    <option value="Leyte">Leyte</option>
+                                                    <option value="Southern Leyte">Southern Leyte</option>
+                                                    <option value="Zamboanga del Norte">Zamboanga del Norte</option>
+                                                    <option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+                                                    <option value="Zamboanga del Sur">Zamboanga del Sur</option>
+                                                    <option value="Misamis Oriental">Misamis Oriental</option>
+                                                    <option value="Bukidnon">Bukidnon</option>
+                                                    <option value="Lanao del Norte">Lanao del Norte</option>
+                                                    <option value="Davao de Oro">Davao de Oro</option>
+                                                    <option value="Davao Oriental">Davao Oriental</option>
+                                                    <option value="Davao del Norte">Davao del Norte</option>
+                                                    <option value="Davao del Sur">Davao del Sur</option>
+                                                    <option value="Davao Occidental">Davao Occidental</option>
+                                                    <option value="North Cotabato">North Cotabato</option>
+                                                    <option value="Sultan Kudarat">Sultan Kudarat</option>
+                                                    <option value="Sarangani">Sarangani</option>
+                                                    <option value="Agusan del Norte">Agusan del Norte</option>
+                                                    <option value="Agusan del Sur">Agusan del Sur</option>
+                                                    <option value="Surigao del Sur">Surigao del Sur</option>
+                                                    <option value="Maguindanao">Maguindanao</option>
+                                                </select>
                                         </div>
                                         <div class="col-md-6">
+                                                <label>City/Municipality</label>
                                                 <input type="text" class="FORM_DATA_A form-control" placeholder="City/Municipality" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_City_Muni">
                                         </div>
                                         <div class="col-md-6">
+                                                <label>Barangay</label>
                                                 <input type="text" class="FORM_DATA_A form-control" placeholder="Street/purok/sitio" id="Post_Harv_@_PH_Faci_Equipnt_Addresses_@_st_prkk_sitio">
                                         </div>
                                     </div>
@@ -936,10 +1152,10 @@
                                         <div class="col-md-6">
                                                 <input type="number" class="FORM_DATA_A form-control" placeholder="PH Capacity (qty)" id="Post_Harv_@_PH_Prod_Out_@_Cap_qty">
                                         </div>
-                                        <div class="col-md-6"><!-- ----to be followed---- -->
+                                        <div class="col-md-6">
                                                 <input type="number" class="FORM_DATA_A form-control" placeholder="PH Capacity unit (kg/metric_tons/sac/crate/box)" id="Post_Harv_@_PH_Prod_Out_@_Cap_unit_kg_metric_tons_sac_crate_box">
                                         </div>
-                                        <div class="col-md-6"><!-- ----to be followed---- -->
+                                        <div class="col-md-6">
                                                 <input type="number" class="FORM_DATA_A form-control" placeholder="PH Capacity Frequency (hr, day,month, year, cycle/harvest)" id="Post_Harv_@_PH_Prod_Out_@_Cap_Freq_hr_daymonth_year_cyc_harv">
                                         </div>
                                     </div>
@@ -952,7 +1168,7 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <select class="FORM_DATA_A form-select" id="Post_Harv_@_PH_Faci_Equipnt_@_Type_PH_Faci_Equipnt">
-                                                <option selected="" disabled>Type of PH Facility/Equipment</option>
+                                                <option value="">Type of PH Facility/Equipment</option>
                                                 <option>Mechanized</option>
                                                 <option>Manual</option>
                                                 <option>Both Mechanized & Manual</option>
@@ -967,14 +1183,15 @@
                 </form>
         </div>
     </div>
-</div>
-
 <!-- ===================  =================== -->
 <hr>
 <!-- ===================  =================== -->
+</div>
 
-<div class="card-body">
-    <h1 class="card-title text-center" style="font-size: 25px;">Market Sales</h1>
+
+
+<div class="card-body" id="section-market-sales">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Market Sales</h1>
         <div class="card">
             <div class="card-body">
                 <form class="row g-3">  
@@ -983,36 +1200,41 @@
                             <h5 class="card-title">Name of Primary Crop Distribution Point (if any/have)</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
+                                        <label>Farmers Org</label>
                                         <select class="FORM_DATA_A form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Farmers_Org">
-                                            <option selected="" disabled>Farmers Org</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>SME</label>
                                         <select class="FORM_DATA_A form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_SME">
-                                            <option selected="" disabled>SME</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Anchor Firm</label>
                                         <select class="FORM_DATA_A form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Anchor_Firm">
-                                            <option selected="" disabled>Anchor Firm</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Negosyo Center</label>
                                         <select class="FORM_DATA_A form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Negosyo_Center">
-                                            <option selected="" disabled>Negosyo Center</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Others</label>
                                         <select class="FORM_DATA_A form-select" id="Mrktng_Sales_@_Name_Primary_Crop_DistrPoint_@_Others">
-                                            <option selected="" disabled>Others</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
@@ -1027,20 +1249,20 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <select class="FORM_DATA_A form-select" id="Mrktng_Sales_@_Mrkt_@_Payterms_Cnsgnmnt_Cash_Cred_Other">
-                                            <option selected="" disabled>Payment Terms (Consignment, Cash, Credit, Others)</option>
+                                            <option value="">select option</option>
                                             <option>Consignment</option>
                                             <option>Cash</option>
                                             <option>Credit</option>
-                                            <option>Others</option><!-- ----to be followed---- -->
+                                            <option>Others</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <select class="FORM_DATA_A form-select" id="Mrktng_Sales_@_Mrkt_@_Buyer_Type_Trdr_Conso_Processor_Other">
-                                            <option selected="" disabled>Buyer Type (Trader, Consolidator, Processor. Others)</option>
+                                            <option value="">select option</option>
                                             <option>Trader</option>
                                             <option>Consolidator</option>
                                             <option>Processor</option>
-                                            <option>Others</option><!-- ----to be followed---- -->
+                                            <option>Others</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -1069,14 +1291,13 @@
                 </form>
             </div>
         </div>
-    </div>
-
 <!-- ===================  =================== -->
 <hr>
 <!-- ===================  =================== -->
+    </div>
 
-<div class="card-body">
-    <h1 class="card-title text-center" style="font-size: 25px;">Access to Finacial Services and Products</h1>
+<div class="card-body" id="section-access-to-finance">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Access to Finacial Services and Products</h1>
         <div class="card">
             <div class="card-body">
                 <form class="row g-3"> 
@@ -1091,7 +1312,9 @@
                         <div class="col-md-6">
                                 <fieldset class="col-md-12">
                                     <h5 class="card-title">Loan : Bank</h5>
-                                    <input type="text" class="FORM_DATA_A form-control mb-2" placeholder="Name of Govt. Bank (LBP. DBP) if any" id="cs_to_Finc_@_Loan_Bank_@_Name_Govt_Bank_LBP_DBP_if_any">
+                                    <label>Name of Govt. Bank (LBP. DBP) if any</label>
+                                    <input type="text" class="FORM_DATA_A form-control mb-2" placeholder="Name of Govt. Bank (LBP. DBP) if any" id="Acs_to_Finc_@_Loan_Bank_@_Name_Govt_Bank_LBP_DBP_if_any">
+                                    <label>Type of Loan</label>
                                     <input type="text" class="FORM_DATA_A form-control" placeholder="Type of Loan" id="Acs_to_Finc_@_Loan_Bank_@_Type_Loan">
                                 </fieldset>
                         </div>
@@ -1102,9 +1325,11 @@
                             <h5 class="card-title">Loan : Non-Bank</h5>
                                 <div class="row g-3">
                                         <div class="col-md-6">
+                                                <label>Name of Private Bank if any</label>
                                                 <input type="text" class="FORM_DATA_A form-control" placeholder="Name of Private Bank if any" id="Acs_to_Finc_@_Loan_Non_Bank_@_Name_Private_Bank_if_any">
                                         </div>
                                         <div class="col-md-6">
+                                                <label>Type of Loan</label>
                                                 <input type="text" class="FORM_DATA_A form-control" placeholder="Type of Loan" id="Acs_to_Finc_@_Loan_Non_Bank_@_Type_Loan">
                                         </div>
                                 </div>
@@ -1116,9 +1341,11 @@
                         <h5 class="card-title">Loan : Others</h5>
                             <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Loan Initiative (Relatives, Informal Lenders)</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Loan Initiative (Relatives, Informal Lenders)" id="Acs_to_Finc_@_Loan_Others_@_Loan_Init_Rltives_Informal_Lndrs">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Type of Loan</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Type of Loan" id="Acs_to_Finc_@_Loan_Others_@_Type_Loan">
                                     </div>
                             </div>
@@ -1130,13 +1357,16 @@
                         <h5 class="card-title">Deposits</h5>
                             <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Type of Deposits if any</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Type of Deposits if any" id="Acs_to_Finc_@_Depo_@_Type_Depo_if_any">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Name of bank if the  FSP is Bank</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Name of bank if the  FSP is Bank" id="Acs_to_Finc_@_Depo_@_Name_bank_if_the_FSP_is_Bank">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="FORM_DATA_A form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Depo_@_Name_non_bank_if_the_FSP_is_non_Bank">
+                                            <label>Name of non-bank if the  FSP is non-Bank</label>
+                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Depo_@_Name_non_bank_if_the_FSP_is_non_Bank">
                                     </div>
                             </div>
                     </fieldset>
@@ -1147,13 +1377,16 @@
                         <h5 class="card-title">Insurance</h5>
                             <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Type of Insurance if any</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Type of Insurance if any" id="Acs_to_Finc_@_Insurance_@_Type_Insurance_if_any">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Name of bank if the  FSP is Bank</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Name of bank if the  FSP is Bank" id="Acs_to_Finc_@_Insurance_@_Name_bank_if_the_FSP_is_Bank">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="FORM_DATA_A form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Insurance_@_Name_non_bank_if_the_FSP_is_non_Bank">
+                                            <label>Name of non-bank if the  FSP is non-Bank</label>
+                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Insurance_@_Name_non_bank_if_the_FSP_is_non_Bank">
                                     </div>
                             </div>
                     </fieldset>
@@ -1164,13 +1397,16 @@
                         <h5 class="card-title">Payments (Utilities)</h5>
                             <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Type of Insurance if any</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Type of Insurance if any" id="Acs_to_Finc_@_Paymnts_Util_@_Type_Payments_if_any">
                                     </div>
                                     <div class="col-md-6">
-                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Name of bank if the  FSP is Bank" id="	Acs_to_Finc_@_Paymnts_Util_@_Name_bank_if_the_FSP_is_Bank">
+                                            <label>Name of bank if the  FSP is Bank</label>
+                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Name of bank if the  FSP is Bank" id="Acs_to_Finc_@_Paymnts_Util_@_Name_bank_if_the_FSP_is_Bank">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="FORM_DATA_A form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Paymnts_Util_@_Name_non_bank_if_FSP_is_non_Bank">
+                                            <label>Name of non-bank if the  FSP is non-Bank</label>
+                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Name of non-bank if the  FSP is non-Bank" id="Acs_to_Finc_@_Paymnts_Util_@_Name_non_bank_if_FSP_is_non_Bank">
                                     </div>
                             </div>
                     </fieldset>
@@ -1182,7 +1418,7 @@
                             <fieldset class="col-md-12">
                                 <h5 class="card-title">Crop Insurance</h5>
                                     <select class="FORM_DATA_A form-select" id="Acs_to_Finc_@_Crop_Insurance_@_Crop_Insurance_yes_No">
-                                        <option selected="" disabled>Crop Insurance</option>
+                                        <option value="">select option</option>
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -1191,7 +1427,9 @@
                     <div class="col-md-6">
                             <fieldset class="col-md-12">
                                 <h5 class="card-title">Others</h5>
+                                <label>Name of bank if the FSP is Bank</label>
                                 <input type="text" class="FORM_DATA_A form-control mb-2" placeholder="Name of bank if the FSP is Bank" id="Acs_to_Finc_@_Others_@_Name_bank_if_the_FSP_is_Bank">
+                                <label>Name of non-bank if the FSP is non-Bank</label>
                                 <input type="text" class="FORM_DATA_A form-control" placeholder="Name of non-bank if the FSP is non-Bank" id="Acs_to_Finc_@_Others_@_Name_non_bank_if_the_FSP_is_non_Bank">
                             </fieldset>
                     </div>
@@ -1200,14 +1438,15 @@
             </form>
         </div>
     </div>
-</div>
-
 <!-- ===================  =================== -->
 <hr>
 <!-- ===================  =================== -->
+</div>
 
-<div class="card-body">
-    <h1 class="card-title text-center" style="font-size: 25px;">Competency and Industry Feedback</h1>
+
+
+<div class="card-body" id="section-competency-and-industry-feedback">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Competency and Industry Feedback</h1>
         <div class="card">
             <div class="card-body">
                 <form class="row g-3"> 
@@ -1216,14 +1455,17 @@
                         <fieldset class="col-md-12">
                             <h5 class="card-title">Core Competency</h5>
                                 <div class="row g-3">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6"> 
+                                                <label>Number of Farm-Related Trainings attended in the last 2-3 years</label>
                                                 <input type="number" class="FORM_DATA_A form-control" placeholder="Number of Farm-Related Trainings attended in the last 2-3 years" id="Competency_@_Core_@_num_Farm_Relate_Trainings_last_2_3_years">
                                         </div>
-                                        <div class="col-md-6"><!-- ----to be followed---- -->
+                                        <div class="col-md-6">
+                                                <label>List of Value Chain</label>
                                                 <input type="text" class="FORM_DATA_A form-control" placeholder="List of Value Chain" id="Competency_@_Core_@_List_Value_Chain">
                                         </div>
-                                        <div class="col-md-6"><!-- ----to be followed---- -->
-                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Farm Certification Acquired if any" id="Competency_@_Core_@_Farm_Certification_Acquired_if_any">
+                                        <div class="col-md-6">
+                                                <label>Farm Certification Acquired if any</label>
+                                                <input type="text" class="FORM_DATA_A form-control" placeholder="Farm Certification Acquired if any" id="Competency_@_Core_@_Farm_Certification_Acquired_if_any">
                                     </div>
                                 </div>
                         </fieldset>
@@ -1233,10 +1475,12 @@
                     <fieldset class="col-md-12">
                         <h5 class="card-title">Source of Information</h5>
                             <div class="row g-3">
-                                    <div class="col-md-6"><!-- ----to be followed---- -->
+                                    <div class="col-md-6">
+                                            <label>List of Medium/source of information</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="List of Medium/source of information" id="Competency_@_src_info@_ls_Medium_source_information">
                                     </div>
-                                    <div class="col-md-6"><!-- ----to be followed---- -->
+                                    <div class="col-md-6">
+                                            <label>List of  frequency of Medium/source of information</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="List of  frequency of Medium/source of information" id="Competency_@_src_info@_ls_frequency_Medium_source_info_">
                                     </div>
                             </div>
@@ -1248,21 +1492,25 @@
                         <h5 class="card-title">Others</h5>
                             <div class="row g-3">
                                     <div class="col-md-6">
+                                        <label>Type of Mobile Phone</label>
                                         <select class="FORM_DATA_A form-select" id="Competency_@_Others_@_Owns_what_Type_Mobile_Phone">
-                                            <option selected="" disabled>Owns what Type of Mobile Phone (None, Smartphone, Legacy_phone)</option>
+                                            <option value="">select option</option>
                                             <option>Smartphone</option>
                                             <option>Legacy Phone</option>
                                             <option>None</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Support Needed to improve farm productivity</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Support Needed to improve farm productivity" id="Competency_@_Others_@_Support_Needed_to_improve_farm_prodcvty">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="FORM_DATA_A form-control" placeholder="Farmer Comments about Rapid" id="Competency_@_Others_@_Farmer_Comments_about_Rapid">
+                                            <label>Farmer Comments about Rapid</label>
+                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Farmer Comments about Rapid" id="Competency_@_Others_@_Farmer_Comments_about_Rapid">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="FORM_DATA_A form-control" placeholder="Enumerator Remarks" id="Others_@_Others_@_Enumerator_Remarks">
+                                            <label>Enumerator Remarks</label>
+                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Enumerator Remarks" id="Others_@_Others_@_Enumerator_Remarks">
                                     </div>
                                 </div>
                             </fieldset>
@@ -1270,13 +1518,14 @@
                     </form>
                  </div>
             </div>
-        </div>
-
 <!-- ===================  =================== -->
 <hr>
 <!-- ===================  =================== -->
-<div class="card-body">
-    <h1 class="card-title text-center" style="font-size: 25px;">Additional Information Field</h1>
+        </div>
+
+
+<div class="card-body" id="section-additional-info-field">
+    <h1 class="x-text-white x-padding x-teal x-xlarge" style="text-align:center; font-size: 25px;">Additional Information Field</h1>
         <div class="card">
             <div class="card-body">
                 <form class="row g-3"> 
@@ -1286,10 +1535,12 @@
                             <h5 class="card-title">Enumerator</h5>
                                 <div class="row g-3">
                                         <div class="col-md-6">
-                                            <input type="FORM_DATA_A date" class="form-control" id="v2_date_enum">
+                                            <label>Date</label>
+                                            <input type="text" class="FORM_DATA_A date form-control" placeholder="Date of Enumerator (dd/mm/yyyy)" id="v2_date_enum">
                                         </div>
                                         <div class="col-md-6">
-                                                <input type="text" class="FORM_DATA_A form-control" placeholder="Name of Enumerator" id="v2_name_enum">
+                                            <label>Name of Enumerator</label>
+                                            <input type="text" class="FORM_DATA_A form-control" placeholder="Name of Enumerator" id="v2_name_enum">
                                         </div>
                                 </div>
                         </fieldset>
@@ -1300,15 +1551,19 @@
                             <h5 class="card-title">Number of Workers</h5>
                             <div class="row g-3">
                                     <div class="col-md-6">
+                                            <label>Family Female</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Total Female family workers" id="v2_workers_total_fam_female">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Family Male</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Total Male family workers" id="v2_workers_total_fam_male">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Non-Family Female</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Total female non-family workers" id="v2_workers_total_nonfam_female">
                                     </div>
                                     <div class="col-md-6">
+                                            <label>Non-Family Male</label>
                                             <input type="number" class="FORM_DATA_A form-control" placeholder="Total male non-family workers" id="v2_workers_total_nonfam_male">
                                     </div>
                             </div>
@@ -1319,7 +1574,8 @@
                     <fieldset class="col-md-12">
                             <h5 class="card-title">Access to Crop Insurance</h5>
                             <div class="row g-3">
-                                    <div class="col-md-6"><!-- ----to be followed---- -->
+                                    <div class="col-md-6">
+                                            <label>Name of FSP accessed for crop insurance</label>
                                             <input type="text" class="FORM_DATA_A form-control" placeholder="Name of FSP accessed for crop insurance" id="v2_access_crop_insur_name_fsp_access">
                                     </div>
                             </div>
@@ -1331,36 +1587,41 @@
                             <h5 class="card-title">Type of Intervention Received /accessed by beneficiaries based on approved DIPs</h5>
                             <div class="row g-3">
                                     <div class="col-md-6">
+                                        <label>Capbuild</label>
                                         <select class="FORM_DATA_A form-select" id="v2_interv_capbuild">
-                                            <option selected="" disabled>Capbuild</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Expansion</label>
                                         <select class="FORM_DATA_A form-select" id="v2_interv_expansion">
-                                            <option selected="" disabled>Expansion</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Rehabilitation</label>
                                         <select class="FORM_DATA_A form-select" id="v2_interv_rehab">
-                                            <option selected="" disabled>Rehabilitation</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Productive Investments</label>
                                         <select class="FORM_DATA_A form-select" id="v2_interv_prod_inv">
-                                            <option selected="" disabled>Productive Investments (Equipment, facilities)</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>FMI</label>
                                         <select class="FORM_DATA_A form-select" id="v2_interv_fmi">
-                                            <option selected="" disabled>FMI</option>
+                                            <option value="">select option</option>
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
