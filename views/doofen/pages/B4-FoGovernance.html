@@ -3,34 +3,36 @@
 
 </div>
 -->
-<div class="x-container x-padding-xlarge x-card x-light-grey">
-	<h2 class="x-teal x-padding x-round-xxlarge" id="b4">FO Governance, Communication, and Planning</h2>
-	<br>
+<div class="x-container x-card x-light-grey x-padding" >
+	<h2 class=" x-container x-teal x-padding x-xlarge" style="text-align:center;" id="b4">FO Governance, Communication, and Planning</h2>
 	<div class="x-container x-padding">
-		<div class="x-row x-container ">
-			<h4><label class=""><b>General Assembly</b></label></h4>
-			<span class=""> Frequency of GA (as required by the CBL)</span>
-			<div class="x-col l6">
-				<input class="form_data_b x-radio" id="fo_general_assembly_annual_checkbox" type="checkbox" name="scope"  >
-				<span class="">Annual</span>
-				<input class="form_data_b x-radio" id="fo_general_assembly_biannual_checkbox" type="checkbox" name="scope"  >
-				<span class="">Biannual</span>
-				<br>
-			</div> 
+		<div class="x-col l12 x-padding">
+			<h4 class="x-border-bottom"><b>General Assembly</b></h4>
 		</div>
-		<div class="x-col l6">
-			<span class="">Is the schedule being followed</span>
-			<br>
-		</div>
-		<div class="x-col l6">
-			<input class="form_data_b x-radio" id="fo_general_assembly_yes_checkbox" type="checkbox" name="scope"  >
-			<span class="">Yes</span>
-			<input class="form_data_b x-radio" id="fo_general_assembly_no_checkbox" type="checkbox" name="scope"  >
-			<span class="">No</span>
-			<br><br><br><br>
-		</div>
+		<div class="x-row" style="align-items: center; gap: 20px;">
+			
+			<!-- Frequency dropdown -->
+			<div class="x-col l6 x-padding">
+				<label for="fo_general_assembly_frequency"><span>Frequency of GA (as required by the CBL):</span></label>
+				<select class="form_data_b x-select x-border" id="fo_general_assembly_frequency" >
+					<option value="" disabled selected>Choose option</option>
+					<option value="annual">Annual</option>
+					<option value="biannual">Biannual</option>
+				</select>
+			</div>
+		
+			<!-- Schedule followed dropdown -->
+			<div class="x-col l6 x-padding">
+				<label for="fo_general_assembly_followed"><span>Is the schedule being followed?</span></label>
+				<select class="form_data_b x-select x-border" id="fo_general_assembly_followed">
+					<option value="" disabled selected>Choose option</option>
+					<option value="yes">Yes</option>
+					<option value="no">No</option>
+				</select>
+			</div>
+		</div>		
 
-		<div class="x-row x-container ">
+	<!--<div class="x-row x-container ">
 			<h4><label class=""><b>Board</b></label></h4>
 			<span class="">Board Members Composition</span>
 
@@ -43,61 +45,42 @@
 				<input class="form_data_b x-input x-light-grey" id="fo_board_female" type="number" placeholder="">
 				<br>
 			</div>
-		</div>
+		</div>-->	
 
-		<div class="x-col l6">
-			<span class="">How long is the Board’s term of office?</span>
-			<br>
-		</div>
-		<div class="x-col l6">
-			<input class="form_data_b x-radio" id="fo_board_1year_checkbox" type="checkbox" name="scope"  >
-			<span class="">1Year</span>
-			<input class="form_data_b x-radio" id="fo_board_2year_checkbox" type="checkbox" name="scope"  >
-			<span class="">2Year</span>
-			<input class="form_data_b x-radio" id="fo_board_3year_checkbox" type="checkbox" name="scope"  >
-			<span class="">3Year</span>
-		</div>
-		<br>
-		<div class="x-col l6">
+		<div class="x-row" style="align-items: center; gap: 20px;">
 
-			<br>
+			<!-- Board term (number input) -->
+			<div class="x-col l4 x-padding">
+				<label for="fo_board_term "><span>How long is the Board’s term of office (years)?</span></label>
+				<input class="form_data_b x-input x-border x-padding" type="number" id="fo_board_term"  min="1" placeholder="Enter years">
+			</div>
+		
+			<!-- Board meetings frequency -->
+			<div class="x-col l4 x-padding">
+				<label for="fo_board_meetings"><span>How often do Board Meetings take place?</span></label>
+				<select class="form_data_b x-select x-border x-padding" id="fo_board_meetings" >
+					<option value="" disabled selected>Choose option</option>
+					<option value="monthly">Monthly</option>
+					<option value="biannual">Biannual</option>
+					<option value="quarterly">Quarterly</option>
+					<option value="annual">Annual</option>
+				</select>
+			</div>
+		
+			<!-- Schedule followed -->
+			<div class="x-col l4 x-padding">
+				<label for="fo_board_schedule"><span>Is the schedule being followed?</span></label>
+				<select class="form_data_b x-select x-border x-padding" id="fo_board_schedule" >
+					<option value="" disabled selected>Choose option</option>
+					<option value="yes">Yes</option>
+					<option value="no">No</option>
+				</select>
+			</div>
 		</div>
-
-		<br>
-		<div class="x-col l6"->
-			<span class="">How often do the Board Meetings take place?</span>
-			<br>
-		</div>
-
-
-		<div class="x-col l6">
-			<input class="form_data_b x-radio" id="fo_board_monhtly_checkbox" type="checkbox" name="scope"  >
-			<span class="">Monthly</span>
-			<input class="form_data_b x-radio" id="fo_board_biannual_checkbox" type="checkbox" name="scope"  >
-			<span class="">Biannual</span>
-			<input class="form_data_b x-radio" id="fo_board_quarterly_checkbox" type="checkbox" name="scope"  >
-			<span class="">Quarterly</span>
-			<input class="form_data_b x-radio" id="fo_board_annual_checkbox" type="checkbox" name="scope"  >
-			<span class="">Annual</span>
-			<br>
-		</div>
-		<div class="x-col l6">
-			<span class="">Is the schedule being followed?</span>
-			<br>
-		</div>
-		<div class="x-col l6">
-			<input class="form_data_b x-radio" id="fo_board_yes_checkbox" type="checkbox" name="scope"  >
-			<span class="">Yes</span>
-			<input class="form_data_b x-radio" id="fo_board_no_checkbox" type="checkbox" name="scope"  >
-			<span class="">No</span>
-			<br>
-			<br>
-			<br>
-			<br>
-		</div> 
+		
 
 		<div class="x-row">
-			<div class="x-col l6 ">
+			<!--<div class="x-col l6 ">
 				<label class=""><b>Management Committee</b></label><br>
 				<br>
 				<span class="">Management Committee (ManCom) Composition</span>
@@ -129,160 +112,139 @@
 					<input class="form_data_b x-input x-light-grey " style="width: 100%;" id="fo_management_appiontment" type="text" placeholder="">
 					<br>
 				</div>
-			</div>
+			</div>-->
+			<br>
+			<div class="x-row">
 
-			<div class="x-col l0">
-				&nbsp;
+				<!-- Good Governance -->
+				<div class="x-col l12 x-padding">
+					<h4 class="x-border-bottom"><b>Good Governance</b></h4>
+				</div>
+			
+				<div class="x-col l6 x-padding">
+					<span>Is there a constitution/by-laws guiding your organization?</span>
+					<select class="form_data_b x-select x-border" id="fo_good_governance_constitution">
+						<option value="" disabled selected>Choose option</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div>
+
+				<div class="x-col l6 x-padding">
+					<span>Are key decisions of the FO/cooperative discussed at gen. assembly?</span>
+					<select class="form_data_b x-select x-border" id="fo_good_governance_decisions" >
+						<option value="" disabled selected>Choose option</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div>
+			
+				<div class="x-col l8 x-padding">
+					<span>Are collectively-owned assets managed according to the provisions contained in the by-laws?</span>
+					<select class="form_data_b x-select x-border" id="fo_good_governance_collectively" >
+						<option value="" disabled selected>Choose option</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div>
+
+
+				<!-- Communication -->
+				<div class="x-col l12 x-padding">
+					<br>
+					<h4 class="x-border-bottom"><b>Communication</b></h4>
+				</div>
+			
+				<div class="x-col l6 x-padding">
+					<span>Are the objectives of the organization clearly understood and shared among members?</span>
+					<select class="form_data_b x-select x-border" id="fo_good_governance_objectives" >
+						<option value="" disabled selected>Choose option</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div>
+			
+				<div class="x-col l6 x-padding">
+					<span>Members know how the organizations functions</span>
+					<select class="form_data_b x-select x-border" id="fo_good_governance_ofunctions">
+						<option value="" disabled selected>Choose option</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div>
+			
+				<div class="x-col l6 x-padding">
+					<span>Members received systematic feedback from meetings on decisions made by officers</span>
+					<select class="form_data_b x-select x-border" id="fo_good_governance_systematic" >
+						<option value="" disabled selected>Choose option</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div>
+			
+				<div class="x-col l6 x-padding">
+					<span>Information is circulated internally from top to bottom and vice versa</span>
+					<select class="form_data_b x-select x-border" id="fo_good_gevernance_information" >
+						<option value="" disabled selected>Choose option</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div>
 			</div>
-			<div class="x-col l6 ">
-				<h4><label class=""><b>Good Governance</b></label></h4>
-				<span class="">Is there a constitution/by-laws guiding your organization?</span>
-			</div>
-			<div class="x-col l6">
+			
+			<div class="x-col l12 x-padding">
 				<br>
-				<br>
-				<input class="form_data_b x-radio" id="fo_good_governance_constitution_yes_checkbox" type="checkbox" name="scope"  >
-				<span class="">Yes</span>
-				<input class="form_data_b x-radio" id="fo_good_governance_constitution_no_checkbox" type="checkbox" name="scope"  >
-				<span class="">No</span>
-			</div> 	
-			<div class="x-col l6 ">
-				<br>
-				<span class="">Are collectively-owned assets managed according to the provisions contained in the by-laws?</span>
+				<h4 class="x-border-bottom"><b>Planning</b></h4>
+			
+				<table class="x-table x-bordered x-striped" style="width:100%;">
+					<tr>
+						<td style="width: 50%;">Do you have an action plan/business plan?</td>
+						<td>
+							<select class="form_data_b x-select x-border" id="fo_planning_action_plan" >
+								<option value="" disabled selected>Choose option</option>
+								<option value="action_plan">Action Plan</option>
+								<option value="business_plan">Business Plan</option>
+								<option value="none">None</option>
+							</select>
+						</td>
+					</tr>
+			
+					<tr>
+						<td>Who facilitated the planning activity?</td>
+						<td>
+							<input class="form_data_b x-input" id="fo_planning_facilitated_activity" type="text" placeholder="Enter name">
+						</td>
+					</tr>
+			
+					<tr>
+						<td>Who participated in the planning activity?</td>
+						<td>
+							<input class="form_data_b x-input" id="fo_planning_participated_activity" type="text" placeholder="Enter participants">
+						</td>
+					</tr>
+			
+					<tr>
+						<td>How many years does it cover?</td>
+						<td>
+							<input class="form_data_b x-input" id="fo_planning_years_cover" type="text" placeholder="Enter number of years">
+						</td>
+					</tr>
+			
+					<tr>
+						<td>Is gender concerns considered/included in your planning?</td>
+						<td>
+							<select class="form_data_b x-select x-border" id="fo_planning_gender_concerns">
+								<option value="" disabled selected>Choose option</option>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</td>
+					</tr>
+				</table>
 			</div>
-			<div class="x-col l6">
-				<br>
-				<input class="form_data_b x-radio" id="fo_good_governance_collectively_yes_checkbox" type="checkbox" name="scope"  >
-				<span class="">Yes</span>
-				<input class="form_data_b x-radio" id="fo_good_governance_collectively_no_checkbox" type="checkbox" name="scope"  >
-				<span class="">No</span>
-			</div>
-
-			<div class="x-col l0">
-				&nbsp;
-			</div>
-
-			<div class="x-col l6 ">
-				<span class="">Are key decisions of the FO/cooperative discussed at gen. assembly?</span>
-			</div>
-			<div class="x-col l6">
-				<input class="form_data_b x-radio" id="fo_good_governance_decisions_yes_checkbox" type="checkbox" name="scope"  >
-				<span class="">Yes</span>
-				<input class="form_data_b x-radio" id="fo_good_governance_decisions_no_checkbox" type="checkbox" name="scope"  >
-				<span class="">No</span>
-				<br>
-				<br>
-			</div> 
-			<br>
-		</div><br><br>
-
-		<div class="x-col l6 ">
-			<label class=""><b>Communication</b></label><br>
-			<span class="">Are the objectives of the organization clearly understood and shared among members?</span>
-		</div>
-		<div class="x-col l6">
-			<br>
-			<input class="form_data_b x-radio" id="fo_good_governance_objectives_yes_checkbox" type="checkbox" name="scope"  >
-			<span class="">Yes</span>
-			<input class="form_data_b x-radio" id="fo_good_governance_objectives_no_checkbox" type="checkbox" name="scope"  >
-			<span class="">No</span>
-			<br>
-		</div> 	
-		<div class="x-col l6 ">
-			<br>
-			<span class="">Members know how the organizations functions</span>
-		</div>
-		<div class="x-col l6">
-			<br>
-			<input class="form_data_b x-radio" id="fo_good_governance_ofunctions_yes_checkbox" type="checkbox" name="scope"  >
-			<span class="">Yes</span>
-			<input class="form_data_b x-radio" id="fo_good_governance_ofunctions_no_checkbox" type="checkbox" name="scope"  >
-			<span class="">No</span>
-		</div>
-		<div class="x-col l0">
-			&nbsp;
-		</div>
-		<div class="x-col l6 ">
-			<span class="">Members received systematic feedback from meetings on decisions made by officers</span>
-		</div>
-		<div class="x-col l6">
-			<input class="form_data_b x-radio" id="fo_good_governance_systematic_yes_checkbox" type="checkbox" name="scope"  >
-			<span class="">Yes</span>
-			<input class="form_data_b x-radio" id="fo_good_governance_systematic_no_checkbox" type="checkbox" name="scope"  >
-			<span class="">No</span>
-			<br>
-			<br>
-		</div>
-		<div class="x-col l0">
-			&nbsp;
-		</div>
-		<div class="x-col l6 ">
-			<span class="">Information is circulated internally from top to bottom and vice versa</span>
-		</div>
-		<div class="x-col l6">
-			<input class="form_data_b x-radio" id="fo_good_gevernance_information_yes_checkbox" type="checkbox" name="scope"  >
-			<span class="">Yes</span>
-			<input class="form_data_b x-radio" id="fo_good_gevernance_information_no_checkbox" type="checkbox" name="scope"  >
-			<span class="">No</span>
-			<br>
-			<br>
-		</div><br><br>
-
-		<div class="x-col l6 ">
-			<br>
-			<h4><label class=""><b>Planning</b></label></h4>
-			<span class="">Do you have an action plan/business plan?</span>
-		</div>
-		<div class="x-col l6">
-			<br>
-			<br>
-			<br>
-			<input class="form_data_b x-radio" id="fo_planning_action_plan_checkbox" type="checkbox" name="scope"  >
-			<span class="">Action Plan</span>
-			<input class="form_data_b x-radio" id="fo_planning_business_plan_checkbox" type="checkbox" name="scope"  >
-			<span class="">Business Plan</span>
-			<input class="form_data_b x-radio" id="fo_planning_none_checkbox" type="checkbox" name="scope"  >
-			<span class="">None</span>
-			<br>
-		</div>
-		<div class="x-col l6 ">
-			<span class="">Who facilitated the planning activity?</span>
-			<div class="x-col l6">
-			</div>
-		</div>
-		<div class="x-col l4" style="margin-bottom: 5px; margin-left: 15px; width: 46%;">
-			<input class="form_data_b x-input x-light-grey" id="fo_planning_facilitated_activity" type="text" placeholder="">
-		</div>
-		<div class="x-col l6 ">
-			<span class="">Who participated in the planning activity? </span>
-			<div class="x-col l6 ">
-			</div>
-		</div>
-		<div class="x-col l4" style="margin-bottom: 5px; margin-left: 15px; width: 46%;">
-			<input class="form_data_b x-input x-light-grey" id="fo_planning_participated_activity" type="text" placeholder="">
-		</div>
-		<div class="x-col l6 ">
-			<span class="">How many years does it cover?</span>
-			<div class="x-col l6 ">
-			</div>
-		</div>
-		<div class="x-col l4" style="margin-bottom: 5px; margin-left: 15px; width: 46%;">
-			<input class="form_data_b x-input x-light-grey" id="fo_planning_years_cover" type="text" placeholder="">
-		</div>
-
-
-		<div class="x-col l6 ">
-			<span class="">Is gender concerns considered/included in your planning?</span>
-		</div>
-		<div class="x-col l6">
-			<input class="form_data_b x-radio" id="fo_planning_gender_concerns_yes_checkbox" type="checkbox" name="scope"  >
-			<span class="">Yes</span>
-			<input class="form_data_b x-radio" id="fo_planning_gender_concerns_no_checkbox" type="checkbox" name="scope"  >
-			<span class="">No</span>
-			<br>
-			<br>
-		</div>
+			
 	</div>
+</div>
 
 <!-- <div class="x-row">
 <p class="x-center">

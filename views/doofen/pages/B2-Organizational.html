@@ -1,23 +1,17 @@
 <!-- <div id="form_header" class="main-title"></div>-->
 
 <div class="x-container x-card x-light-grey">
-	<h2 class=" x-container x-teal x-padding x-round-xxlarge" id="b2">Organizational Profile</h2>
+	<h2 class=" x-container x-teal x-padding x-xlarge" style="text-align:center;" id="b2">Organizational Profile</h2>
 
-	<div class="x-container x-padding">
+	<div class=" x-padding">
 
 		<style> 
 			table, th, td{border: 1px solid black;border-collapse: collapse;}
 		</style>
 
 		<div class="x-row x-section x-padding ">
-			<div class="x-row">
-				<form class="x-container x-padding ">
-
-				</form>
-			</div>
-		</div>
-		<div class="x-row x-section x-padding ">
-			<div class="x-row x-container">
+			<div class="x-col x-container x-padding">
+				<!--this part is not included on the FORM B V2-->
 				<label for="organization_qualified_as_msme">Farmer Organization qualified as MSME:</label>
 				<select class="form_data_b x-input x-border" id="organization_qualified_as_msme" name="organization_qualified_as_msme">
 				  <option value="" disabled selected>Select an option</option>
@@ -25,131 +19,300 @@
 				  <option value="No">No</option>
 				</select>
 			  </div>			  
-			<div class="x-row x-container">
-				<label> Registered Name of Organization:</label>
-				<input class="form_data_b x-input x-border" id="organization_registered_name" type="text" placeholder="">
-			</div>
-			<div class="x-row x-container">
-				<label> Office/Business Address:</label>
-				<input class="form_data_b x-input x-border" id="office_business_adrress" type="text" placeholder="">
-			</div>
-			<div class="x-row x-container ">
-				<div class="x-col l6">
-					<label>GPS Coordinates: (Lat.)</label>
-					<input class="form_data_b x-input x-border" id="gps_coordinates_lat" type="text" placeholder="">
+			  <div class="x-row ">
+				<!-- Registered Name -->
+				<div class="x-col l6 x-container x-padding">
+					<label>Registered Name of Organization:</label>
+					<input class="form_data_b x-input x-border" id="organization_registered_name" type="text" placeholder="Enter Organization Name">
 				</div>
-				<div class="x-col l6">
+			
+				<!-- Office/Business Address -->
+				<div class="x-col l6 x-container x-padding">
+					<label>Office/Business Address:</label>
+					<input class="form_data_b x-input x-border" id="office_business_adrress" type="text" placeholder="Enter Office/Business Address">
+				</div>
+			</div>
+			
+			<div class="x-row">
+				<div class="x-col l6 x-container x-padding">
+					<label>GPS Coordinates: (Lat.)</label>
+					<input class="form_data_b x-input x-border" id="gps_coordinates_lat" type="text" placeholder="Enter GPS Coordinates">
+				</div>
+				<div class="x-col l6 x-container x-padding">
 					<label>GPS Coordinates:(Long.)</label>
-					<input class="form_data_b x-input x-border" id="gps_coordinates_long" type="text" placeholder="">
+					<input class="form_data_b x-input x-border" id="gps_coordinates_long" type="text" placeholder="Enter GPS Coordinates">
 				</div>
 			</div>	
-		</div>
 
-		<div class="x-row x-container x-padding">
-			<div class="x-col l6 x-container x-padding">
+			<div class="x-col l6 x-padding">
 				<span class="">Types of Organization:</span>
-				<select class="form_data_b x-border x-select x-border" id="types_of_organization" name="option"><br>
+				<select class="form_data_b x-border x-select x-border" id="types_of_organization" >
 					<option value="" disabled selected>Choose your option</option>
-					<option value="1">Farmers’/ Growers’ Association </option>
-					<option value="2">Farmers’ Cooperative Type of Cooperative</option>
-					<option value="3">Others, please specify</option>
+					<option value="Association">Farmers’/ Growers’ Association</option>
+					<option value="Cooperative">Farmers’ Cooperative</option>
+					<option value="Others">Others, please specify</option>
 				</select>
-				<textarea class="form_data_b x-border x-input " id="types_of_organization_others" type="text" placeholder="If others, please specify"s></textarea>
+				<textarea class="form_data_b x-border x-input" id="types_of_organization_others" placeholder="If others, please specify" style="display:none;"></textarea>
 			</div>
-			<div class="x-col l6 x-container x-padding">
+		
+			<div class="x-col l6 x-padding">
 				<span class="">Registering Agencies: </span>
-				<select class="form_data_b x-border x-select x-border" id="registering_agencies" name="option">
+				<select class="form_data_b x-border x-select x-border" id="registering_agencies" >
 					<option value="" disabled selected>Choose your option</option>
-					<option value="1"> Cooperative Development Authority  </option>
-					<option value="2"> Department of Labor and Employment </option>
-					<option value="3"> Securities and Exchange Commission </option>
-					<option value="4"> Department of Agriculture  </option>
-					<option value="5">Others, please specify</option>
+					<option value="Cooperative Development Authority">Cooperative Development Authority</option>
+					<option value="Department of Labor and Employment">Department of Labor and Employment</option>
+					<option value="Securities and Exchange Commission">Securities and Exchange Commission</option>
+					<option value="Department of Agriculture">Department of Agriculture</option>
+					<option value="Others">Others, please specify</option>
 				</select>
-				<textarea class="form_data_b x-border x-input " id="registering_agencies_others" type="text" placeholder="If others, please specify"s></textarea>
+				<textarea class="form_data_b x-border x-input" id="registering_agencies_others" placeholder="If others, please specify" style="display:none;"></textarea>
 			</div>
 		</div>
-
-
-		<div class="x-row x-padding x-container">
-			<div class="x-col l6 x-container x-padding">	
+		
+		<script>
+			function toggleTextarea(selectId, textareaId) {
+				const select = document.getElementById(selectId);
+				const textarea = document.getElementById(textareaId);
+				select.addEventListener("change", function () {
+					if (this.value === "Others") {
+						textarea.style.display = "block";
+					} else {
+						textarea.style.display = "none";
+						textarea.value = "";
+					}
+				});
+			}
+			toggleTextarea("types_of_organization", "types_of_organization_others");
+			toggleTextarea("registering_agencies", "registering_agencies_others");
+		</script>
+		
+		<div class="x-row x-padding">
+			<!-- Row 1: Date Registered + Years of Operation -->
+			<div class="x-col l6 x-container x-padding">    
 				<label>Date Registered:</label>
-				<input class="form_data_b x-input x-border" id="date_registered" type="date" placeholder="">
+				<input class="form_data_b x-input x-border" id="date_registered" type="date" placeholder="Enter Date Registered">
 			</div>
 			<div class="x-col l6 x-container x-padding">
 				<label>Total No. of years of operation:</label>
-				<input class="form_data_b x-input x-border" id="total_no_of_years" type="text" placeholder="">
-			</div>	
-		</div>	
-
-		<div class="x-row x-container x-padding">
-			<b class="x-row x-container x-padding">Area/ Scope of Operation:</b>
-			<div class="x-row x-padding x-container">
-				<input class="form_data_b x-radio" id="community_level" id="area_scope_community_level" type="radio" name="scope" value="community" >
-				<span class="x-text-grey">Community (Barangay) level</span>
-				<input class="form_data_b x-radio" id="municipal_level" id="area_scope_municipal_level" type="radio" name="scope" value="municipal">
-				<span class="x-text-grey">Municipal Level</span>
-				<input class="form_data_b x-radio" id="provincial_level" id="area_scope_provincial_level" type="radio" name="scope" value="provincial">
-				<span class="x-text-grey">Provincial Level</span>
-				<input class="form_data_b x-radio" id="regional_level" id="area_scope_regional_level" type="radio" name="scope" value="regional">
-				<span class="x-text-grey">Regional Level</span>
-				<input class="form_data_b x-radio" id="national_level" id="area_scope_national_level" type="radio" name="scope" value="national">
-				<span class="x-text-grey">National Level</span>
+				<input class="form_data_b x-input x-border" id="total_no_of_years" type="text" placeholder="Enter Total No. of years of operation" numberonly>
 			</div>
-		</div>
 
-		<div class="">
+			<!-- Row 2: Scope of Operation -->
+			<div class="x-col x-container x-padding">
+				<label for="area_scope">Area/ Scope of Operation:</label>
+				<select class="form_data_b x-border x-input" id="organization_area_scope" >
+					<option value="" disabled selected>Select scope</option>
+					<option value="Community (Barangay) level">Community (Barangay) level</option>
+					<option value="Municipal Level">Municipal Level</option>
+					<option value="Provincial Level">Provincial Level</option>
+					<option value="Regional Level">Regional Level</option>
+					<option value="National Level">National Level</option>
+				</select>
+			</div>
+		</div>		
+		
+
+		<div>
 			<div class="x-row x-section x-padding ">
-				<div class="x-col l6"><br><br>
-					<form class="x-container x-section">
+				<div class="x-col l6">
+					<form class="x-col x-container x-padding">
 						<label class="">Membership to an apex FO/Federation:</label><br>
-						<input class="form_data_b x-radio" id="membership_to_an_apex_fo_no_checkbox" type="checkbox" >
-						<span class="">NO</span>
-						<input class="fomat_data_b x-check" id="membership_to_an_apex_fo_yes_checkbox"  type="checkbox">
-						<label class="">Yes, Please Specify:</label><br><br>
-						<textarea class="form_data_b x-border x-input" placeholder="Please Specify" id="membership_to_an_apex_please_specify" type="text"></textarea>
+						<select class="form_data_b x-border x-input" id="membership_to_an_apex_fo" >
+							<option value="no">NO</option>
+							<option value="yes">Yes, Please Specify:</option>
+						</select>
+						<div id="membership_to_an_apex_please_specify_div" style="display:none;">
+							<textarea class="form_data_b x-border x-input" placeholder="Please Specify" id="membership_to_an_apex_please_specify" type="text"></textarea>
+						</div>
 					</form>
 				</div>
-			</div>	
-
-			<div class="x-row x-section x-padding ">
 				<div class="x-col l6">
-					<form class="x-container">
+					<form class="x-col x-container x-padding">
 						<label class="">Membership to other National and International Organizations/ Institution:</label><br>
-						<input class="form_data_b x-radio" id="membership_nat_internat_org_no_checkbox"type="checkbox" name="membership" value="yes" >
-						<label class="">NO</label>
-						<input class="form_data_b x-radio" id="membership_nat_internat_org_yes_checkbox" type="checkbox" name="membership" value="no">
-						<label class="">Yes, Please Specify:</label><br><br>
-						<textarea class="form_data_b x-border x-input" placeholder="Please Specify" id="membership_nat_internat_org_specify" type="text"></textarea>
+						<select class="form_data_b x-border x-input" id="membership_nat_internat_org" >
+							<option value="no">NO</option>
+							<option value="yes">Yes, Please Specify:</option>
+						</select>
+						<div id="membership_nat_internat_org_specify_div" style="display:none;">
+							<textarea class="form_data_b x-border x-input" placeholder="Please Specify" id="membership_nat_internat_org_specify" type="text"></textarea>
+						</div>
 					</form>
-					<br>
+				</div>
+				<div class="x-col">
+					<form class="x-col x-container x-padding">
+						<label class="">Do you have Vision, Mission, Objectives in the Organization (VMGO)? </label><br>
+						<select class="form_data_b x-border x-input" id="organization_vmgo" >
+							<option value="no">NO</option>
+							<option value="yes">Yes, Please Specify:</option>
+						</select>
+						<div id="vmo_please_specify_div" style="display:none;">
+							<textarea class="form_data_b x-border x-input" placeholder="Please Specify" id="vmgo_please_specify" type="text"></textarea>
+						</div>
+					</form>
 				</div>
 			</div>
 
-			<div class="x-row x-section x-padding ">
-				<div class="x-col l6">
-					<form class="x-container">
-						<label class="">Do you have Vision, Mission, Objectives in the Organization (VMGO)? </label><br>
-						<input class="form_data_b x-radio" id="vmo_no_checkbox" type="checkbox" name="membership" value="yes">
-						<label class="">NO</label>
-						<input class="form_data_b x-radio" id="vmo_yes_checkbox" type="checkbox" name="membership" value="no">
-						<label class="">Yes, Please Specify:</label><br><br>
-						<textarea class="form_data_b x-border x-input" placeholder="Please Specify" id="vmo_please_specify" type="text"></textarea>
-					</form>
+			<script>
+				document.addEventListener("DOMContentLoaded", function() {
+				const dropdowns = document.querySelectorAll("select.form_data_b");
+
+				dropdowns.forEach(function(dropdown) {
+					dropdown.addEventListener("change", function() {
+					const textareaDiv = dropdown.parentNode.querySelector("div");
+					if (textareaDiv) {
+						if (dropdown.value === "yes") {
+						textareaDiv.style.display = "block";
+						} else {
+						textareaDiv.style.display = "none";
+						}
+					}
+					});
+				});
+				});
+			</script>
+
+			<div class="x-row x-section x-padding x-container">
+				<!-- Mission and Vision in one row -->
+				<div class="x-col l6 x-container x-padding">
+					<label class="">Mission:</label><br>
+					<textarea class="form_data_b x-border x-input" id="organizational_mission" placeholder="Enter Mission here"></textarea>
+				</div>
+
+				<div class="x-col l6 x-container x-padding">
+					<label class="">Vision:</label><br>
+					<textarea class="form_data_b x-border x-input" id="organizational_vision" placeholder="Enter Vision here"></textarea>
+				</div>
+
+				<!-- Objectives alone in second row -->
+				<div class="x-col x-container">
+					<label class="">Objectives:</label><br>
+					<input class="form_data_b x-border x-input" id="organizational_objectives" placeholder="Enter Objectives here"></input>
 				</div>
 			</div>
+
 		</div>
 	</div>
 
+	<div class="x-container x-padding">
 
-	<div class="x-row x-col x-section  ">
-		<div class="x-col l6 ">
-			<form class="x-container ">
-				<label class=""><h5><b>Membership Profile</b></h5></label>
-				<span class="">Please register the organizations total active members based on the following category:</span><br>
-			</form>
+	<div class="x-row x-col x-section x-padding">
+		<div class="x-col l12 x-border-bottom x-padding x-container">
+				<h4><b>Membership Profile</b></h4>
+				<span>Please register the organizations total active members based on the following category:</span><br>
 		</div>
 
+		
+		<div class="x-row x-section">
+			<!-- Commodity -->
+			<div class="x-col l4 m6 s12 x-padding">
+				<label for="commodity"><b>Commodity:</b></label>
+				<select class="form_data_b x-input x-border" id="organizational_commodity" >
+					<option value="" selected disabled>Please Select</option>
+					<option value="Cacao">Cacao</option>
+					<option value="Coffee">Coffee</option>
+					<option value="Coconut">Coconut</option>
+					<option value="PFN">PFN</option>
+				</select>
+			</div>
+
+			<div class="x-col l4 m6 s12 x-padding">
+				<label for="regular_paying_male"><b>Regular Paying	Male:</b></label>
+				<input class="form_data_b x-input x-border" id="organizational_regular_paying_male" type="text" placeholder="Enter Regular Paying Male" numberonly>
+			</div>
+		
+			<!-- Regular Paying Female -->
+			<div class="x-col l4 m6 s12 x-padding">
+				<label for="regular_paying_female"><b>Regular Paying Female:</b></label>
+				<input class="form_data_b x-input x-border" id="organizational_regular_paying_female" type="text" placeholder="Enter Regular Paying Female" numberonly>
+			</div>
+		</div>		
+
+		<div class="x-row x-section">
+			<!-- Associate Male -->
+			<div class="x-col l6 m4 s12 x-padding">
+				<label><b>Associate Male:</b></label>
+				<input class="form_data_b x-input x-border" id="organizational_associate_male" type="text" placeholder="Enter Associate Male" numberonly>
+			</div>
+		
+			<!-- Associate Female -->
+			<div class="x-col l6 m4 s12 x-padding">
+				<label><b>Associate Female:</b></label>
+				<input class="form_data_b x-input x-border" id="organizational_associate_female" type="text" placeholder="Enter Associate Female" numberonly>
+			</div>
+		</div>		
+
+		<div class="x-row x-section">
+			<div class="x-col l4 x-container x-padding">
+				<label><b>Total Male:</b></label>
+				<input class="form_data_b x-input x-border" id="organizational_total_male" type="text" placeholder="Enter Total Male" numberonly>
+			</div>
+		
+			<div class="x-col l4 x-container x-padding">
+				<label><b>Total Female:</b></label>
+				<input class="form_data_b x-input x-border" id="organizational_total_female" type="text" placeholder="Enter Total Female" numberonly>
+			</div>
+			<div class="x-col l4 x-container x-padding">
+				<label><b>Overall Total:</b></label>
+				<input class="form_data_b x-input x-border" id="organizational_total_overall" type="text" placeholder="Enter Total overall" numberonly>
+			</div>
+		</div>	
+		
+		<script>
+			// Get the input fields
+			const regularPayingMaleInput = document.getElementById('organizational_regular_paying_male');
+			const regularPayingFemaleInput = document.getElementById('organizational_regular_paying_female');
+			const associateMaleInput = document.getElementById('organizational_associate_male');
+			const associateFemaleInput = document.getElementById('organizational_associate_female');
+			const totalMaleInput = document.getElementById('organizational_total_male');
+			const totalFemaleInput = document.getElementById('organizational_total_female');
+			const overallTotalInput = document.getElementById('organizational_total_overall');
+
+			// Add event listeners to the input fields
+			regularPayingMaleInput.addEventListener('input', calculateTotals);
+			regularPayingFemaleInput.addEventListener('input', calculateTotals);
+			associateMaleInput.addEventListener('input', calculateTotals);
+			associateFemaleInput.addEventListener('input', calculateTotals);
+
+			// Function to calculate the totals
+			function calculateTotals() {
+			const regularPayingMale = parseInt(regularPayingMaleInput.value) || 0;
+			const regularPayingFemale = parseInt(regularPayingFemaleInput.value) || 0;
+			const associateMale = parseInt(associateMaleInput.value) || 0;
+			const associateFemale = parseInt(associateFemaleInput.value) || 0;
+
+			const totalMale = regularPayingMale + associateMale;
+			const totalFemale = regularPayingFemale + associateFemale;
+			const overallTotal = totalMale + totalFemale;
+
+			totalMaleInput.value = totalMale.toString();
+			totalFemaleInput.value = totalFemale.toString();
+			overallTotalInput.value = overallTotal.toString();
+			}
+		</script>
+
+		<div class="x-row x-section">
+			<!-- Non-Priority Crop Male -->
+			<div class="x-col l4 m4 s12 x-padding">
+				<label><b>Number of Farmer-Members (non-Priority Crop)<br>Male:</b></label>
+				<input class="form_data_b x-input x-border" id="non_priority_crop_male" type="text" placeholder="Enter Non-Priority Crop Male" numberonly>
+			</div>
+		
+			<!-- Non-Priority Crop Female -->
+			<div class="x-col l4 m4 s12 x-padding">
+				<label><b>Number of Farmer-Members (non-Priority Crop)<br>Female:</b></label>
+				<input class="form_data_b x-input x-border" id="non_priority_crop_female" type="text" placeholder="Enter Non-Priority Crop Female" numberonly>
+			</div>
+		
+			<!-- Average Land Area -->
+			<div class="x-col l4 m4 s12 x-padding">
+				<label><b>Average Land Area/Farmer<br>(hectares):</b></label>
+				<input class="form_data_b x-input x-border" id="avg_land_area_farmer" type="text" step="0.01" placeholder="Enter Avg Land Area in hectares" numberonly>
+			</div>
+		</div>		
+		
+	</div>			
+
+	<!-- 
 		<div class="x-container x-padding">
 			<style>table, th, td{border: 1px solid black; border-collapse: collapse;}</style>
 			<table class="x-table x-container x-table-border">
@@ -267,12 +430,13 @@
 
 		<div class="x-center">
 			<p class="x-center">
-			<!-- 					<input class="x-blue x-form_data_b" id="org_button_back" type="button" onclick="get_forms('/formb/respondents');" value="Back" />
-				<input class="x-blue x-form_data_b" id="org_button_next" type="button" onclick="get_forms('/formb/operational');" value="Next" /> -->
+				<input class="x-blue x-form_data_b" id="org_button_back" type="button" onclick="get_forms('/formb/respondents');" value="Back" />
+				<input class="x-blue x-form_data_b" id="org_button_next" type="button" onclick="get_forms('/formb/operational');" value="Next" /> 
 			</p>
-		</div>
+		</div>-->
 	</div>
 </div>
+
 <button id="back-to-top-btn"><i class="fa-solid fa-chevrons-up"></i></button>
 <style type="text/css">
 	#back-to-top-btn {

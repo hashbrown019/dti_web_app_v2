@@ -58,14 +58,21 @@
 	</div>
 </div>
 <div class="x-row x-container x-right">
-	<b class="x-btn x-round-large x-border x-border-blue" style="margin-top:5px" onclick="show_mem_modal()">
-		<span class="x-text-blue fa fa-users"></span>
-		<span class="x-text-grey">Farmer Members</span>
-	</b>
-	<b class="x-btn x-round-large x-border x-border-green" style="margin-top:5px" onclick="save_form()">
-		<span class="x-text-green fa fa-save"></span>
-		<span class="x-text-grey">Save</span>
-	</b>
+    <b id="show_mem_modal_btn" 
+       class="x-btn x-round-large x-border x-border-blue" 
+       style="margin-top:5px" 
+       onclick="show_mem_modal()">
+        <span class="x-text-blue fa fa-users"></span>
+        <span class="x-text-grey">Farmer Members</span>
+    </b>
+
+    <b id="submit_btn_main"
+       class="x-btn x-round-large x-border x-border-green" 
+       style="margin-top:5px"
+       onclick="submit_form('form_data_b','form_b','/formbembed/e?page=list_data_table')">
+        <span class="x-text-green fa fa-save"></span>
+        <span class="x-text-grey">Save</span>
+    </b>
 </div>
 <br>
 <div >
@@ -84,7 +91,7 @@
 
 	</div>
 	<div class="x-col m10">
-		<input class="form_data_b" id="id" name="first" type="text" hidden required>
+		<input class="form_data_b" id="id" type="hidden" value="">
 		<div id="respondents" class="form_container x-container" style="display:block;">
 			{% include "B1-Respondents.html" %}
 		</div>
@@ -108,87 +115,152 @@
 		</div>
 
 		<div id="form_header" class="main-title">
-			<p class="x-left" >FORM B</p>
-			<p class="x-btn x-right x-green" onclick="save_form();scroll_to_id('b1');scroll_to_id('b1')">Save</p>
-		</div>
+            <p class="x-left">FORM B</p>
+            <p id="submit_btn_header" 
+               class="x-btn x-right x-green" 
+               onclick="submit_form();scroll_to_id('b1');scroll_to_id('b1')">
+               Save
+            </p>
+        </div>
 	</div>
 </div>
 {% include "modal_add_member.html" %}
 {% include "modal_table_member.html" %}
 <script src="../static/js/qr/qrcode.min.js"></script>
 
+
+
 <script>
+$onload(function () {
+    var record_id = URL_ARGS["id"] || ""
+    var table = URL_ARGS["table"] || "form_b"
+    if(record_id){
+        load_data(record_id, table, "form_data_b")
+    }
+})
 
-    // var imgs = $ID('prof_imgs')
-    // var qrs = $ID('qrcode')
-    // // var qr1 = new QRCode($ID("qrcode"), "MISFORMB"+$ID("id").value,{width:"1px"});
-    // var qrcode = new QRCode("qrcode", {
-	//     text: "MISFORMB"+$ID("id").value,
-	//     width: 59,
-	//     height: 59,
-	//     colorDark : "#000000",
-	//     colorLight : "#ffffff",
-	//     correctLevel : QRCode.CorrectLevel.H
-	// });
-    // println(qrcode)
-    // println($ID('qrs_holder').clientWidth)
-    // qrs.querySelectorAll("canvas").width = "20px"
+function scrollParentToIframeCenter(){
+    if (window.parent && window.frameElement){
+    const iframeRect = window.frameElement.getBoundingClientRect();
+    const parentScrollY = window.parent.scrollY || window.parent.pageYOffset;
+    const centerY = iframeRect.top + parentScrollY + (iframeRect.height / 2) - (window.parent.innerHeight / 2);
+    window.parent.scrollTo({
+        top : centerY,
+        behavior: 'smooth'
+    });
+    }
+}
 
-	function save_form(){
-		var FORM_DATA = {}
-		var form_data_b = $CLASS("form_data_b")
-		for (var i = 0; i < form_data_b.length; i++) {
-			var input_type = form_data_b[i].type
-			if(form_data_b[i].id==""){
-				continue
-			}
-			if( (["text","textarea","select-one","date","time","hidden"]).includes(input_type) ){
-				FORM_DATA[form_data_b[i].id] = form_data_b[i].value
-			}
-			if( (["checkbox","radio"]).includes(input_type) ){
-				FORM_DATA[form_data_b[i].id] = form_data_b[i].checked
-			}
-		}
-		$send({
-			action : "/formb/save_form",
-			method : POST,
-			data : $DATA(FORM_DATA),
-			func : function(r){
-				SPINNER_LOADER.hide()
-				// println(r)
-				var res = JSON.parse(r)
-				// println(res)
-				var diadata = {} 
-				if(res['status']=="failed"){
-					diadata = {
-						type :"error",
-						title : "Data insertion Failed",
-						content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
-						buttons : ['Finished Transaction'],
-						buttons_actions : [done_transac_excel]
-					}
-					SPINNER_LOADER.hide()
-					var dialog = $dialog(diadata)
-					dialog.show()
-				}
-				else if(res['status']=="success"){
-					diadata = {
-						title : "Data insertion Success",
-						type :"success",
-						content : "Your Data insertion had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
-						buttons : ['Finished Transaction'],
-						buttons_actions : [done_transac_excel]
-					}
-					SPINNER_LOADER.hide()
-					var dialog = $dialog(diadata)
-					dialog.show()
-				}
-				SPINNER_LOADER.hide()
-			}
-		})
-	}
-	function done_transac_excel(){
-		location.reload()
-	}
+function submit_form(class_name, table, url) {
+    var x_ins = $CLASS(class_name);
+    var form_data = {};
+    for (let index = 0; index < x_ins.length; index++) {
+        if (x_ins[index].type === "checkbox") {
+            form_data[x_ins[index].id] = x_ins[index].checked;
+        } else {
+            form_data[x_ins[index].id] = x_ins[index].value;
+        }
+    }
+
+    $send({
+        action: "/set_data_b/" + table,
+        data: $DATA(form_data),
+        method: POST,
+        func: function (r) {
+            var res = JSON.parse(r);
+            println(res);
+
+            if (res.status === "success") {
+                Swal.fire({
+                    title: 'Success!',
+                    text: res.msg,
+                    icon: 'success',
+                    didOpen: () => {
+                        scrollParentToIframeCenter();
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: String(res.msg),
+                    icon: 'error',
+                    didOpen: () => {
+                        scrollParentToIframeCenter();
+                    }
+                });
+            }
+        }
+    });
+}
+
+
+function load_data(record_id, table, class_name) {
+    // http://127.0.0.1:5000/dcf/form8?id=1&table=form8
+    $send({
+        action: "/get_data/" + record_id + "/" + table,
+        method: POST,
+        func: function (r) {
+            var res = JSON.parse(r)[0];
+            var x_ins = $CLASS(class_name);
+
+            function sanitizeNumber(value) {
+                if (value === null || value === undefined || value === '') return '';
+                // Remove non-numeric characters except dot and minus
+                let clean = String(value).replace(/[^0-9.\-]/g, '');
+                let num = parseFloat(clean);
+                return isNaN(num) ? '' : num;
+            }
+
+            for (let index = 0; index < x_ins.length; index++) {
+                let element = x_ins[index];
+                let value_from_db = res[element.id];
+
+                if (element.type === "checkbox") {
+                    try {
+                        element.checked = (value_from_db === "true" || value_from_db === true);
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                } else if (element.type === "select-one") {
+                    try {
+                        element.value = value_from_db || '';
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                } else if (element.type === "number") {
+                    try {
+                        element.value = sanitizeNumber(value_from_db);
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                } else {
+                    try {
+                        element.value = value_from_db || '';
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                }
+            }
+        }
+    });
+}
+</script>
+
+<script>
+    // Automatically attach numeric-only behavior to all inputs with 'numberonly' attribute
+    document.querySelectorAll('input[numberonly]').forEach(input => {
+        input.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, ''); // remove non-digits
+        });
+
+        input.addEventListener('paste', function(e) {
+            const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+            if (/\D/.test(pasteData)) e.preventDefault(); // block non-digit paste
+        });
+    });
 </script>
 <!-- ==================================================================================================== -->

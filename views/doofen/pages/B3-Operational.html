@@ -5,280 +5,460 @@
 </div>
 -->
 <div class="x-container x-card x-light-grey x-padding" >
-	<h2 class=" x-container x-teal x-padding x-round-xxlarge" id="b3">Operational Profile</h2>
+	<h2 class=" x-container x-teal x-padding x-xlarge" style="text-align:center;" id="b3">Operational Profile</h2>
 
-	<div class="x-container x-padding" >
+	<div class="x-padding" >
 		<style> 
 			table, th, td{border: 1px solid black;border-collapse: collapse;}
 		</style>
 
-		<div class="x-row x-section x-padding ">
-			<div class="x-col l6 ">
-				<span class="">Main Organization’s Activities (multiple answers)</span>
-			</div>
-
-
-			<div class="x-container x-padding">
-				<table class="x-table x-container x-table-border">
-					<tr>
-						<th>
-							Main Activities
-						</th>
-
-						<th>
-							For Farmer-member
-						</th>
-					</tr>
-
-					<tr>
-						<td>
-							Extension
-						</td>
-						<td>
-							<div class="x-row x-container x-padding">
-
-								<label class="">Capacity Building,please specify</label>
-								<textarea class="form_data_b x-border x-input" id="operational_capacity_building" placeholder="Please Specify" type="text" style="width: 100%;"></textarea>
-
-								<label class="">Agricultural Advisory Services,please specify</label><br>
-								<textarea class="form_data_b x-border x-input" id="operational_agricultural_advisory" placeholder="Please Specify" type="text" style="width: 100%;"></textarea>
+		<div class="x-col l12 x-padding">
+			<h4 class="x-border-bottom x-container x-padding"><b>Main Organization’s Activities (multiple answers)</b></h4>
+		</div>
+			<div class="x-row x-section x-padding ">
+					<div class="x-row">
+					
+						<!-- Extension -->
+						<div class="x-row x-container x-padding">
+						<!-- Capacity Building -->
+						<div class="x-col l6 m6 s12">
+							<label>Capacity Building, please specify</label>
+							<textarea class="form_data_b x-border x-input" id="operational_capacity_building" placeholder="Please Specify" style="width: 100%;"></textarea>
+						</div>
+					
+						<!-- Agricultural Advisory Services -->
+						<div class="x-col l6 m6 s12">
+							<label>Agricultural Advisory Services, please specify</label>
+							<textarea class="form_data_b x-border x-input" id="operational_agricultural_advisory" placeholder="Please Specify" style="width: 100%;"></textarea>
+						</div>
+						</div>
+					
+						<div class="x-row x-container x-padding">
+						<!-- Technical Assistance -->
+						<div class="x-col l12">
+							<label>Technical Assistance to Farmers</label>
+							<select class="form_data_b x-border x-input" id="operational_technical_assistance_farmers" style="width: 100%;">
+							<option value="" selected disabled>Please Select</option>
+							<option value="Agri-technicians">Agri-technicians</option>
+							<option value="Business Development Services">Business Development Services</option>
+							</select>
+						</div>
+						</div>
+					</div>
+					
+					<br>
+					
+					<!-- Enterprise Section -->
+					<h4 class="x-border-bottom x-container x-padding"><b>Enterprise (For Farmer-Member)</b></h4>
+					<div class="x-row">
+						<div class="x-row x-container x-padding">
+							<div class="x-col l12">
+								<label><b>Scope of Enterprise:</b></label>
+								<select class="form_data_b x-border x-input" id="operational_enterprise_scope" style="width: 100%;" onchange="toggleOthers(this)">
+									<option value="" selected disabled>Please Select</option>
+									<option value="Input Supplier">Input Supplier</option>
+									<option value="Equipment Servicing">Equipment Servicing</option>
+									<option value="Trading (Buy and Sell)">Trading (Buy and Sell)</option>
+									<option value="Consumer Store">Consumer Store</option>
+									<option value="Processing">Processing (ex. Tablea, roasted coffee, etc.)</option>
+									<option value="Others">Others</option>
+								</select>
+								<input class="form_data_b x-input x-animate-top" id="enterprise_others_ps_dropdown_specify" type="text" placeholder="Others, please specify" style="display: none; margin-top: 8px; width: 100%;">
 							</div>
-						</td>
-					</tr>
+						</div>
+					</div>
 
-					<tr>
-						<td>
-							Enterprise
-						</td>
+				  	<br>
 
-						<td>							
-							<div class="x-row x-container x-padding">
-								<input class="form_data_b x-radio" id="input_supplier_checkbox" type="checkbox"name="scope">
-								<span class="">Input Supplier</span><br>
-								<input class="form_data_b x-radio" id="equipment_servicing_checkbox" type="checkbox"name="scope">
-								<span class="">Equipment Servicing</span><br>
-								<input class="form_data_b x-radio" id="trading_buy_sell_checkbox" type="checkbox"name="scope">
-								<span class="">Trading (Buy and Sell)</span><br>
-								<input class="form_data_b x-radio" id="consumer_stor_checkbox" type="checkbox"name="scope">
-								<span class="">Consumer Store</span><br>
-								<input class="form_data_b x-radio" id="processing_checkbox" type="checkbox"name="scope">
-								<span class="">Processing (ex. Tablea, roasted coffee, etc.)</span><br>
-								<input class="form_data_b x-radio" id="others_ps_checkbox" type="checkbox"name="scope" onchange="show_others(this,'enterprise_others_ps_checkbox_specify')">
-								<span class="">Others</span><br>
-								<input class="form_data_b x-input x-animate-top" id="enterprise_others_ps_checkbox_specify" type="text" name="scope" placeholder="Others, please specify " style="display: none;" value="">
-								<br>
+				  
+					<!-- Financial Services -->
+					<div class="x-section">
+						<h4 class="x-border-bottom x-padding x-container"><b>Financial Services (For Farmer-Member)</b></h4>
+					  
+						<div style="text-align: center;">
+						  <h4><b>Products and Services</b></h4>
+						</div>
+					  
+						<!-- Row 1 -->
+						<div class="x-row">
+						  <!-- Products and Services offered -->
+						  <div class="x-col l6 m6 s12 x-padding">
+							<label>Products and Services offered</label>
+							<select class="form_data_b x-input x-border" id="operational_products_services_offered" onchange="toggleOthers(this)">
+							  <option value="" disabled selected>Please Select</option>
+							  <option value="Savings">Savings</option>
+							  <option value="Mobile Apps/ATM">Mobile Apps/ATM</option>
+							  <option value="Loans">Loans</option>
+							  <option value="Insurance/Guarantee Funds">Insurance/Guarantee Funds</option>
+							  <option value="Others">Others</option>
+							</select>
+							<input class="form_data_b x-input x-border x-animate-top" id="enterprise_others_ps_dropdown_specify" type="text" placeholder="If Others, please specify" style="display:none;">
+						  </div>
+					  
+						  <!-- Working Capital -->
+						  <div class="x-col l6 m6 s12 x-padding">
+							<label>Have available Working Capital?</label>
+							<select class="form_data_b x-input x-border" id="operational_working_capital">
+							  <option value="" disabled selected>Please Select</option>
+							  <option value="Yes">Yes</option>
+							  <option value="No">No</option>
+							</select>
+						  </div>
+						</div>
+					  
+						<!-- Row 2 -->
+						<div class="x-row">
+						  <!-- Interest Rate -->
+						  <div class="x-col l6 m6 s12 x-padding">
+							<label>Interest Rate per annum of loan</label>
+							<input class="form_data_b x-input x-border" id="operational_interest_rate" type="text" placeholder="Enter % per annum" numberonly>
+						  </div>
+					  
+						  <!-- Term of Loan -->
+						  <div class="x-col l6 m6 s12 x-padding">
+							<label>Term of Loan</label>
+							<input class="form_data_b x-input x-border" id="operational_loan_term" type="text" placeholder="Enter Loan Term">
+						  </div>
+						</div>
+					  
+						<!-- Row 3 -->
+						<div class="x-row">
+						  <!-- Credit Line -->
+						  <div class="x-col l6 m6 s12 x-padding">
+							<label>Have Credit line for relending to farmer-members</label>
+							<select class="form_data_b x-input x-border" id="operational_credit_line" onchange="toggleSpecify(this,'credit_line_specify')">
+							  <option value="" disabled selected>Please Select</option>
+							  <option value="Yes">Yes</option>
+							  <option value="No">No</option>
+							</select>
+							<input class="form_data_b x-input x-border x-animate-top" id="credit_line_specify" type="text" placeholder="If Yes, please specify" style="display:none;">
+						  </div>
+					  
+						  <!-- Coop Affiliation -->
+						  <div class="x-col l6 m6 s12 x-padding">
+							<label>With Existing affiliation with Coop Federations (for coops)</label>
+							<select class="form_data_b x-input x-border" id="operational_coop_affiliation" onchange="toggleSpecify(this,'coop_affiliation_specify')">
+							  <option value="" disabled selected>Please Select</option>
+							  <option value="Yes">Yes</option>
+							  <option value="No">No</option>
+							</select>
+							<input class="form_data_b x-input x-border x-animate-top" id="coop_affiliation_specify" type="text" placeholder="If Yes, please specify" style="display:none;">
+						  </div>
+						</div>
+					  
+						<!-- Row 4 -->
+						<div class="x-row">
+						  <div class="x-col l12 x-padding">
+							<label>Available partnership with enablers (NGAs, projects, NGOs, Academe, etc.)</label>
+							<input class="form_data_b x-input x-border" id="operational_partnership_enablers" type="text" placeholder="Enter available partnerships">
+						  </div>
+						</div>
+					  </div>
+					  
+					<br>
+
+					<div style="text-align: center;">
+						<h4><b>Financial Services Provided to Farmer Beneficiaries</b></h4>
+					</div>
+					<div class="x-row">
+						<!-- Loan / Cash Advance -->
+						<div class="x-col l3 m6 s12 x-padding">
+						  <label>Loan / Cash Advance</label>
+						  <input class="form_data_b x-input x-border" type="text" id="operational_loan_cash_purpose" placeholder="Purpose of Loan">
+						  <input class="form_data_b x-input x-border" type="text" id="operational_loan_cash_interest" placeholder="Interest Rate (%)" numberonly>
+						  <input class="form_data_b x-input x-border" type="text" id="operational_loan_cash_term" placeholder="Loan Term">
+						</div>
+					  
+						<!-- Savings -->
+						<div class="x-col l3 m6 s12 x-padding">
+						  <label>Savings / Investments</label>
+						  <select class="form_data_b x-input x-border" id="operational_savings_type" required>
+							<option value=""selected></option>
+							<option value="Top-up">Top-up</option>
+							<option value="New">New</option>
+						  </select>						  
+						  <input class="form_data_b x-input x-border" type="text" id="operational_savings_provider" placeholder="Name of Provider">
+						</div>
+					  
+						<!-- Insurance -->
+						<div class="x-col l3 m6 s12 x-padding">
+						  <label>Insurance</label>
+						  <select class="form_data_b x-input x-border" id="operational_insurance_purpose">
+							<option value="" disabled selected>Purpose (Crop, Life, Medical...)</option>
+							<option value="Crop">Crop</option>
+							<option value="Life">Life</option>
+							<option value="Medical">Medical</option>
+							<option value="Credit">Credit</option>
+							<option value="Others">Others</option>
+						  </select>
+						  <input class="form_data_b x-input x-border" type="text" id="operational_insurance_provider" placeholder="Name of Provider">
+						</div>
+					  
+						<!-- Credit Guarantee -->
+						<div class="x-col l3 m6 s12 x-padding">
+						  <label>Credit Guarantee</label>
+						  <input class="form_data_b x-input x-border" type="text" id="operational_credit_purpose" placeholder="Purpose of Loan">
+						  <input class="form_data_b x-input x-border" type="text" id="operational_credit_guarantee" placeholder="Guarantee">
+						  <input class="form_data_b x-input x-border" type="text" id="operational_credit_coop" placeholder="Name of Cooperative">
+						</div>
+					  </div>
+					  
+					  <!-- Next Row -->
+					  <div class="x-row">
+						<div class="x-col l3 m6 s12 x-padding">
+							<label>Paid-up capital (top-up, new)</label>
+							<select class="form_data_b x-input x-border" id="operational_capital_type" required>
+							  <option value="" selected></option>
+							  <option value="Top-up">Top-up</option>
+							  <option value="New">New</option>
+							</select>						  
+						</div>
+
+						<!-- In-kind grant -->
+						<div class="x-col l3 m6 s12 x-padding">
+						  <label>In-kind grant from partner enablers (RAPID)</label>
+						  <input class="form_data_b x-input x-border" type="text" id="operational_inkind_source" placeholder="Source of Grant">
+						  <input class="form_data_b x-input x-border" type="text" id="operational_inkind_type" placeholder="Type of Grant">
+						</div>
+					  
+						<!-- Cash Grant -->
+						<div class="x-col l3 m6 s12 x-padding">
+						  <label>Cash Grant</label>
+						  <input class="form_data_b x-input x-border" type="text" id="operational_cash_enabler" placeholder="Name of Enabler">
+						  <input class="form_data_b x-input x-border" type="text" id="operational_cash_amount" placeholder="Amount" numberonly>
+						</div>
+
+						<!-- Cash for work -->
+						<div class="x-col l3 m6 s12 x-padding">
+							<label>Cash for Work</label>
+							<input class="form_data_b x-input x-border" type="text" id="operational_CashFW_source" placeholder="Source">
+						</div>
+					  
+						<!-- Mortuary -->
+						<div class="x-col l3 m6 s12 x-padding">
+						  <label>Mortuary Insurance / Assistance</label>
+						  <input class="form_data_b x-input x-border" type="text" id="operational_mortuary_source" placeholder="Source of insurance/assitance for motuary">
+						</div>
+					  
+						<!-- Digital Platforms -->
+						<div class="x-col l3 m6 s12 x-padding">
+						  <label>Use of financial digital platforms</label>
+						  <input class="form_data_b x-input x-border" type="text" id="operational_digital_type" placeholder="Type(s)">
+						  <input class="form_data_b x-input x-border" type="text" id="operational_digital_purpose" placeholder="Purpose">
+						</div>
+
+						<!-- RAPID Support -->
+						<div class="x-col l3 m6 s12 x-padding">
+							<label class="x-block">RAPID Support</label>
+							<div class="x-row" style="flex-wrap: wrap; gap: 15px;">
+								<label><input type="checkbox" class="rapid_checkbox" value="Seedlings"> Seedlings</label>
+								<label><input type="checkbox" class="rapid_checkbox" value="Tools"> Tools</label><br>
+								<label><input type="checkbox" class="rapid_checkbox" value="Inputs"> Inputs</label>
+								<label><input type="checkbox" class="rapid_checkbox" value="Productive Investments"> Productive Investments</label>
 							</div>
-						</td>
-					</tr>
+							<!-- Hidden input field -->
+							<input class="form_data_b" type="hidden" id="operational_rapid_support">
+						</div>
 
-
-					<tr>
-						<td>
-							Financial Services
-						</td>
-						<td>							
-							<div class="x-row x-container x-padding">
-								<input class="form_data_b x-radio" id="operational_credit_checkbox" type="checkbox"name="scope">
-								<span class="">Credit</span><br>
-								<input class="form_data_b x-radio" id="operational_savings_checkbox" type="checkbox"name="scope">
-								<span class="">Savings</span><br>
-								<input class="form_data_b x-radio" id="operational_remittances_checkbox" type="checkbox"name="scope">
-								<span class="">Remittances and payment services</span><br>
-								<input class="form_data_b x-radio" id="operational_atm_checkbox" type="checkbox"name="scope">
-								<span class="">ATM</span><br>
-								<input class="form_data_b x-radio" id="operational_others_ps_checkbox" type="checkbox"name="scope" onchange="show_others(this,'finance_others_ps_checkbox_specify')">
-								<span class="">Others</span><br>
-								<input class="form_data_b x-input x-animate-top" id="operational_finance_others_ps_checkbox_specify" type="text" name="scope" placeholder="Others, please specify " style="display: none;" value="">
-								<br>
-							</div>
-						</td>
-					</tr>
-
-					<tr>
-						<td>
-							Other Services
-						</td>
-						<td>							
-							<div class="x-row x-container x-padding">
-								<textarea class="form_data_b x-border x-input" id="operational_other_services" placeholder="Please Specify" type="text"></textarea>
-								<br>
-							</div>
-						</td>
-					</tr>
-				</table>
+						<!-- Other Services -->
+						<div class="x-col l6 m6 s12 x-padding">
+							<label>Other Services (For Farmer-Member)</label>
+							<textarea class="form_data_b x-input x-border" id="operational_other_services" placeholder="Please Specify"></textarea>
+						  </div>
+					  </div>
+					  
+					  <script>
+						function updateRapidSupport() {
+						  let selected = [];
+						  document.querySelectorAll(".rapid_checkbox:checked").forEach(cb => {
+							selected.push(cb.value);
+						  });
+						  document.getElementById("operational_rapid_support").value = selected.join(",");
+						}
+					  
+						// Attach listener
+						document.querySelectorAll(".rapid_checkbox").forEach(cb => {
+						  cb.addEventListener("change", updateRapidSupport);
+						});
+					  
+						// Run once in case some are pre-checked
+						updateRapidSupport();
+					  </script>					  
+				  </div>
+				  
+				  <script>
+				  function toggleOthers(select) {
+					const othersInput = document.getElementById("enterprise_others_ps_dropdown_specify");
+					if (select.value === "Others") {
+					  othersInput.style.display = "block";
+					} else {
+					  othersInput.style.display = "none";
+					  othersInput.value = "";
+					}
+				  }
+				  
+				  function toggleSpecify(select, inputId) {
+					document.getElementById(inputId).style.display = select.value === "Yes" ? "block" : "none";
+				  }
+				  </script>
+				  
 				<br>
 
-				<div class="x-row x-section x-padding ">
-					<div class="x-col l6 ">
-						<label class=""><h5><b>Marketing/ Sales Distribution Channel</b></h5></label>
+			<div class="x-row x-padding">
+				<div class="x-row x-section">
+					<div class="x-col ">
+						<h4 class="x-border-bottom"><b>Marketing/ Sales Distribution Channel</b></h4>
 						<span class="">Where do you sell FOs products/services? For Both (consolidated, own produced crops)</span><br>
 					</div>
 				</div>
-			</div>
-			<div class="x-row x-container x-padding">
 				<table class="x-table x-table-border">
 					<tr>
-						<th>
-							Crop /Commodity<br>(priority crop only)
-						</th>
-						<th>
-							Product Form
-						</th>
-						<th style="width: 15%;">
-							Type of Delivery
-						</th>
-						<th>
-							Volume<br>(Delivery) 
-						</th>
-						<th>
-							Farm Gate Price<br>(in Php/kg)
-						</th>
-						<th style="width: 15%;"> 
-							Payment Terms
-						</th>
-						<th>
-							Total Sales<br>(in PhP)
-						</th>
+					  <th>Crop / Commodity<br>(priority crop only)</th>
+					  <th>Product Form</th>
+					  <th style="width: 15%;">Type of Delivery</th>
+					  <th>Volume<br>(Delivery)</th>
+					  <th>Farm Gate Price<br>(in Php/kg)</th>
+					  <th>Payment<br>Terms</th>
+					  <th>Payment Term<br>(No. of days)</th>
+					  <th>Total Sales<br>(in PhP)</th>
 					</tr>
+				  
+					<!-- ROW 1 -->
 					<tr>
-						<td>
-							<input class="form_data_b x-input x-light-grey " id="operational_crop_commodity_1" type="text" name="scope"  value="">
-						</td>
-						<td>							
-							<input class="form_data_b x-input x-light-grey" id="operational_marketing_product_fomr_1" type="text" name="scope" value="">
-						</td>
-						<td>							
-							<select class="x-select x-border" id="operational_type_of_delivery_1" >
-								<option selected disabled>Select type</option>
-								<option>Delivery</option>
-								<option>Pick-Up</option>
-								<option>Both</option>
-							</select>
-						</td>
-						<td>							
-							<input class="form_data_b x-input x-light-grey" id="operatinal_volume_delivery_1" type="text" name="scope" value="">
-						</td>
-						<td>							
-							<input class="form_data_b x-input x-light-grey" id="operational_farm_gate_price_1" type="text" name="scope" value="">
-						</td>
-						<td>							
-							<select class="x-select x-border" id="operational_payment_terms_1">
-								<option selected disabled>Select type</option>
-								<option>Consignment</option>
-								<option>COD</option>
-								<option>Term (No. of days)</option>
-							</select>
-						</td>
-
-						<td>							
-							<input class="form_data_b x-input x-light-grey" id="operational_total_sale_1" type="text" name="scope" placeholder="" value="">
-						</td>
-
+					  <td>
+						<select class="form_data_b x-select x-border" id="operational_crop_commodity">
+						  <option disabled selected></option>
+						  <option>Cacao</option>
+						  <option>Coffee</option>
+						  <option>Coconut</option>
+						  <option>Banana Cardava</option>
+						  <option>Calamansi</option>
+						</select>
+					  </td>
+					  <td>
+						<select class="form_data_b x-select x-border" id="operational_marketing_product_form">
+						  <option disabled selected></option>
+						  <optgroup label="Coffee">
+							<option>fresh cherries</option>
+							<option>dried beans / green coffee beans</option>
+							<option>roasted beans</option>
+							<option>roasted ground coffee</option>
+						  </optgroup>
+						  <optgroup label="Cacao">
+							<option>wet beans</option>
+							<option>sun dried beans</option>
+							<option>fermented beans</option>
+							<option>tablea (cocoa mass)</option>
+							<option>cacao nibs</option>
+							<option>chocolates</option>
+						  </optgroup>
+						  <optgroup label="Coconut">
+							<option>whole nuts (dehusked)</option>
+							<option>whole nut with husk</option>
+							<option>copra</option>
+							<option>desiccated coconut</option>
+							<option>virgin coconut oil</option>
+							<option>coco vinegar</option>
+							<option>lump charcoal</option>
+							<option>coconut fiber</option>
+							<option>pressed coconut husk</option>
+						  </optgroup>
+						  <optgroup label="Calamansi">
+							<option>fresh calamansi</option>
+							<option>calamansi concentrate</option>
+							<option>calamansi puree</option>
+							<option>raw calamansi juice</option>
+							<option>calamansi powder</option>
+						  </optgroup>
+						  <optgroup label="Banana">
+							<option>defingered banana</option>
+							<option>first fry banana</option>
+							<option>first fry banana chips</option>
+							<option>fresh cardaba banana</option>
+							<option>banana flour</option>
+						  </optgroup>
+						  <optgroup label="OTHERS">
+							<option>OTHERS</option>
+						  </optgroup>
+						</select>
+					  </td>
+					  <td>
+						<select class="form_data_b x-select x-border" id="operational_type_of_delivery">
+						  <option selected></option>
+						  <option>Delivery</option>
+						  <option>Pick-Up</option>
+						  <option>Both</option>
+						</select>
+					  </td>
+					  <td><input class="form_data_b x-input" id="operational_volume_delivery" type="text" numberonly></td>
+					  <td><input class="form_data_b x-input" id="operational_farm_gate_price" type="text" numberonly></td>
+					  <td>
+						<select class="form_data_b x-select x-border" id="operational_payment_terms">
+						  <option selected></option>
+						  <option>Consignment</option>
+						  <option>COD</option>
+						</select>
+					  </td>
+					  <td><input class="form_data_b x-input" id="operational_payment_terms_no_days" type="text" numberonly></td>
+					  <td><input class="form_data_b x-input" id="operational_total_sale" type="text" numberonly></td>
 					</tr>
-
-					<tr>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_crop_commodity_2" type="text" name="scope" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_marketing_product_fomr_2" type="text" name="scope" value=""></td>
-						<td><select class="x-select x-border" id="operational_type_of_delivery_2" >
-							<option selected disabled>Select type</option>
-							<option>Delivery</option>
-							<option>Pick-Up</option>
-							<option>Both</option>
-						</select></td>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_volume_delivery_2" type="text" name="scope" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_farm_gate_price_2" type="text" name="scope" value=""></td>
-						<td><select class="x-select x-border" id="operational_payment_terms_1">
-							<option selected disabled>Select type</option>
-							<option>Consignment</option>
-							<option>COD</option>
-							<option>Term (No. of days)</option>
-						</select></td>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_total_sale_2" type="text" name="scope" value=""></td>
-
-					</tr>
-
-					<tr>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_crop_commodity_3" type="text" name="scope" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_marketing_product_fomr_3" type="text" name="scope" value=""></td>
-						<td><select class="x-select x-border" id="operational_type_of_delivery_3" >
-							<option selected disabled>Select type</option>
-							<option>Delivery</option>
-							<option>Pick-Up</option>
-							<option>Both</option>
-						</select></td>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_volume_delivery_3" type="text" name="scope" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_farm_gate_price_3" type="text" name="scope" value=""></td>
-						<td><select class="x-select x-border" id="operational_payment_terms_1">
-							<option selected disabled>Select type</option>
-							<option>Consignment</option>
-							<option>COD</option>
-							<option>Term (No. of days)</option>
-						</select></td>
-						<td><input class="form_data_b x-input x-light-grey" id="operational_total_sale_3" type="text" name="scope" value=""></td>
-
-
-					</tr>
-
-				</table>
+				  </table>
 			</div>
 			<hr>
 
-			<div class="x-row x-section x-padding ">
-				<div class="x-col l6 ">
-					<label class=""><h5><b>Post Harvest (PH)/ Semi-Processing Capacity</b></h5></label>
-					<span class="">Do you have any available post-harvest facility/ equipment</span><br>
-				</div>
-
-				<div class="x-col l6"><br><br>
-					<input class="form_data_b x-radio" id="operational_yes_checkbox_1" type="checkbox"name="membership" value="yes">
-					<label class="">Yes "If Yes, please fill in the table below"</label><br>
-					<input class="form_data_b x-radio" id="operational_no_checkbox_1" type="checkbox"name="membership" value="no">
-					<label class="">No "If  No, please skip this part"</label>
-				</div>
+			<div class="x-row x-padding">
+				  <h4 class="x-border-bottom">
+					<b>Post-Harvest (PH) / Semi Processing Capacity</b>
+				  </h4>
 			</div>
 
-
-			<div class="x-container x-padding">
+			<div class="x-col l6 x-row x-padding">
+				<label for="operational_facility_select">
+				  <span>Do you have any available post-harvest facility/ equipment?</span>
+				</label>
+			  
+				<select class="form_data_b x-input x-border" id="operational_yes_checkbox" name="operational_facility_select">
+				  <option value="">Please Select</option>
+				  <option value="yes">Yes (If Yes, please fill in the table below)</option>
+				  <option value="no">No (If No, please skip this part)</option>
+				</select>
+			</div>			  
+			  
+			  <div class="x-container x-padding">
 				<table class="x-table x-container x-table-border">
+				  <thead>
 					<tr>
-						<th><center>Crop(Same above)</center></th>
-						<th>PH Equipment/ Facility</th>
-						<th colspan="">
-							Location (Brgy and Municipality)
-						</th>
-						<th>
-							Product Form
-						</th>
+					  <th><center>Commodity</center></th>
+					  <th>PH Equipment / Facility</th>
+					  <th>Location (Brgy and Municipality)</th>
+					  <th>Product Form</th>
 					</tr>
-
+				  </thead>
+				  <tbody>
 					<tr>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_corp_1" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ph_equipment_facility_1" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_location_1" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_post_product_fomr_1" type="text" name="scope" placeholder="" value=""></td>
+					  <td>
+						<select class="form_data_b x-select x-border" id="operational_corp">
+						  <option value="">Select</option>
+						  <option value="Cacao">Cacao</option>
+						  <option value="Coffee">Coffee</option>
+						  <option value="Coconut">Coconut</option>
+						  <option value="Banana Cardava">Banana Cardava</option>
+						  <option value="Calamansi">Calamansi</option>
+						</select>
+					  </td>
+					  <td><input class="form_data_b x-input" id="operational_ph_equipment_facility" type="text" value=""></td>
+					  <td><input class="form_data_b x-input" id="operational_location" type="text" value=""></td>
+					  <td><input class="form_data_b x-input" id="operational_post_product_form" type="text" value=""></td>
 					</tr>
-
-					<tr>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_corp_2" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ph_equipment_facility_2" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_location_2" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_post_product_fomr_2" type="text" name="scope" placeholder="" value=""></td>
-					</tr>
-
-					<tr>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_corp_3" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ph_equipment_facility_3" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_location_2" type="text" name="scope" placeholder="" value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_post_product_fomr_3" type="text" name="scope" placeholder="" value=""></td>
-					</tr>
+				  </tbody>
 				</table>
-			</div>
+			  </div>			  
 			<hr>
 
 
 			<div class="x-container x-padding">
 				<table class="x-table x-container x-table-border">
-					<span class=""><b>Number of Workers/Laborers</b></span>
+					<h4 class="x-border-bottom"><b>Number of Workers/Laborers</b></h4>
 					<tr>
 						<th>Type of Labor/Workers</th>
 						<th colspan="2">
@@ -290,7 +470,7 @@
 						<th colspan="2">
 							<center>Youth member</center>
 						</th>
-						<th colspan="2">
+						<th colspan="1">
 							Ave. # of workdays/mo.
 						</th>
 						<th>
@@ -300,60 +480,60 @@
 
 					<tr>
 						<td>No. of in-house</td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_number_of_workers_r1" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operationalnumber_of_workers_l1" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ip_member_r1" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operationalip_member_l1" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_youth_member_r1" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_youth_member_l1" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_of_workdays_r1" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_of_workdays_l1" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_salary_wage_1"  type="text" name="scope"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_number_of_workers_r1" type="text"   value=""></td>
+						<td><input class="form_data_b x-input " id="operationalnumber_of_workers_l1" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_ip_member_r1" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operationalip_member_l1" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_youth_member_r1" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_youth_member_l1" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_ave_of_workdays_r1" type="text"  value=""></td>
+						
+						<td><input class="form_data_b x-input " id="operational_ave_salary_wage_1"  type="text"  value=""></td>
 					</tr>
 
 					<tr>
 						<td>No. of sub-contractor</td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_number_of_workers_r12" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operationalnumber_of_workers_l2" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ip_member_r2" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operationalip_member_l2" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_youth_member_r2" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_youth_member_l2" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_of_workdays_r2" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_of_workdays_l2" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_salary_wage_2"  type="text" name="scope"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_number_of_workers_r12" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operationalnumber_of_workers_l2" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_ip_member_r2" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operationalip_member_l2" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_youth_member_r2" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_youth_member_l2" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_ave_of_workdays_r2" type="text"  value=""></td>
+						
+						<td><input class="form_data_b x-input " id="operational_ave_salary_wage_2"  type="text"  value=""></td>
 					</tr>
 
 					<tr>
 						<td>No. of piece rate (pakyaw)</td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_number_of_workers_r3" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operationalnumber_of_workers_l3" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ip_member_r3" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operationalip_member_l3" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_youth_member_r3" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_youth_member_l3" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_of_workdays_r3" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_of_workdays_l3" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_salary_wage_3"  type="text" name="scope"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_number_of_workers_r3" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operationalnumber_of_workers_l3" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_ip_member_r3" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operationalip_member_l3" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_youth_member_r3" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_youth_member_l3" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_ave_of_workdays_r3" type="text"  value=""></td>
+						
+						<td><input class="form_data_b x-input " id="operational_ave_salary_wage_3"  type="text"  value=""></td>
 					</tr>
 
 					<tr>
 						<td>Total</td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_number_of_workers_r4" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operationalnumber_of_workers_l4" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ip_member_r4" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operationalip_member_l4" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_youth_member_r4" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_youth_member_l4" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_of_workdays_r4" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_of_workdays_l4" type="text" name="scope"  value=""></td>
-						<td><input class="form_data_b x-input x-light-grey " id="operational_ave_salary_wage_4"  type="text" name="scope"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_number_of_workers_r4" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operationalnumber_of_workers_l4" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_ip_member_r4" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operationalip_member_l4" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_youth_member_r4" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_youth_member_l4" type="text"  value=""></td>
+						<td><input class="form_data_b x-input " id="operational_ave_of_workdays_r4" type="text"  value=""></td>
+						
+						<td><input class="form_data_b x-input " id="operational_ave_salary_wage_4"  type="text"  value=""></td>
 					</tr>
 					<hr>
 				</table>
 				<br>
 
-				<div class="x-row x-section x-padding ">
+			<!--	<div class="x-row x-section x-padding ">
 					<div class="x-col l6 ">
 						<span class="">External Support Received. Did you receive any form of business development support from other organization? </span><br>
 					</div>
@@ -377,18 +557,18 @@
 							</tr>
 
 							<tr>
-								<td><input class="form_data_b x-input x-light-grey " id="operational_type_of_support_1" type="text" name="scope" placeholder="" value=""></td>
-								<td><input class="form_data_b x-input x-light-grey " id="operational_partner_1" type="text" name="scope" placeholder="" value=""></td>
+								<td><input class="form_data_b x-input " id="operational_type_of_support" type="text" placeholder="" value=""></td>
+								<td><input class="form_data_b x-input " id="operational_partner" type="text" placeholder="" value=""></td>
 							</tr>
 
 							<tr>
-								<td><input class="form_data_b x-input x-light-grey " id="operational_type_of_support_2" type="text" name="scope" placeholder="" value=""></td>
-								<td><input class="form_data_b x-input x-light-grey " id="operational_partner_2" type="text" name="scope" placeholder="" value=""></td>
+								<td><input class="form_data_b x-input " id="operational_type_of_support_2" type="text" placeholder="" value=""></td>
+								<td><input class="form_data_b x-input " id="operational_partner_2" type="text" placeholder="" value=""></td>
 							</tr>
 
 							<tr>
-								<td><input class="form_data_b x-input x-light-grey " id="operational_type_of_support_3" type="text" name="scope" placeholder="" value=""></td>
-								<td><input class="form_data_b x-input x-light-grey " id="operational_partner_3" type="text" name="scope" placeholder="" value=""></td>
+								<td><input class="form_data_b x-input " id="operational_type_of_support_3" type="text" placeholder="" value=""></td>
+								<td><input class="form_data_b x-input " id="operational_partner_3" type="text" placeholder="" value=""></td>
 							</tr>
 						</table>
 						<br>
@@ -401,7 +581,7 @@
 					<span class="">Sources of Funding:</span><br><br>
 					<input class="form_data_b x-radio" id="operational_membership_fee_checkbox"type="checkbox"name="membership" value="yes">
 					<label class="">Membership Fee: Amount per member:</label>
-					<input class="form_data_b x-input " id="operational_ammount_per_checkbox" type="text" name="scope" style="width: 55vh;" placeholder=" Php" value="">
+					<input class="form_data_b x-input " id="operational_ammount_per_checkbox" type="text" style="width: 55vh;" placeholder=" Php" value="">
 					<input class="form_data_b x-radio" id="operational_sales_financing_checkbox" type="checkbox" name="membership" value="no">
 					<label class="">Sales from Enterprise and Financing units of the FO</label>
 				</div>
@@ -409,20 +589,19 @@
 				<div class="x-col l4"><br><br>
 					<input class="form_data_b x-radio" id="opertaional_grand_govermenrt_checkbox" type="checkbox"name="membership" value="yes">
 					<label class="">Grant from Government or NGOs, specify:</label>
-					<input class="form_data_b x-input" type="text" name="scope" style="width: 100;" placeholder=" Specify" value="">
+					<input class="form_data_b x-input" type="text" style="width: 100;" placeholder=" Specify" value="">
 					<input class="form_data_b x-radio" id="operational_oders_source_checkbox" type="checkbox"name="membership" value="no">
 					<label class=""> Other source: </label>
-					<input class="form_data_b x-input" type="text" name="scope" style="width: 100%;" placeholder="Other Sources" value="">
+					<input class="form_data_b x-input" type="text" style="width: 100%;" placeholder="Other Sources" value="">
 					<br>
 					<br>	
 					<br>
 					<br>
 					<br>
-				</div>
+				</div>-->
 			</div>
 		</div>
 	</div>
-</div>
 
 
 	<script type="text/javascript">
@@ -433,4 +612,16 @@
 				document.getElementById(id).style.display= "none"
 			}
 		}
+
+		document.querySelectorAll('select').forEach(function(sel){
+		sel.addEventListener('change', function(){
+			// suppose you store target in data-target
+			var targetId = sel.dataset.target;
+			var t = targetId ? document.getElementById(targetId) : null;
+			if (t) {
+			t.style.display = 'block';
+			}
+		});
+		});
+
 	</script>

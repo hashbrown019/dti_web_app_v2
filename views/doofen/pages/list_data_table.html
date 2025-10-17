@@ -1,4 +1,3 @@
-
 <div class="x-row x-container">
 	<h2 class="x-text-teal"><b>Farmers' Organization Entry Lists</b></h2>
 
@@ -48,34 +47,6 @@
 		<span class=""></span>
 	</div>
 	<!-- =============== -->
-	<div class="x-col x-zoom x-bottombar x-container x-card x-round-large x-white x-padding x-margin x-border x-border-orange" style="width:20%;">
-		<div class="" style="line-height: 10%;">
-			<div class="x-half" >
-				<span class="" style="color: #0099cc">
-					Male&nbsp;<i style="height: 40px;width: 40px; color: #0099cc;" class="fa fa-solid fa-user"></i>
-				</span><br>
-				<b class="x-xxlarge" id="num_input_fo_male" style="color: #0099cc;">{{num_fo_sex['total_male_board']}}</b>
-			</div>
-			<div class="x-half" >
-				<span class="" style="color: #FF5733;">
-					Female&nbsp;<i style="height: 40px;width: 40px; color: #FF5733;" class="fa fa-solid fa-user"></i>
-				</span><br>
-				<b class="x-xxlarge" style="color: #FF5733;" id="num_input_fo_female">{{num_fo_sex['total_female_board']}}</b>
-				
-			</div>
-		</div>
-		<br>
-		<br>
-		<br>
-		<div class="card-progress" style="line-height: 90%;">
-			<small class="x-text-grey">
-				<b>F.O's Decision Making Body group by Sex (BOARD)</b><br>
-				<span class="x-tiny">Chairperson, Chairwoman, Coop Chairperson, General Manager, Manager, President/Chairman</span>
-			</small>
-		</div>
-		<span class=""></span>
-	</div>
-	<!-- =============== -->
 	<div class="x-col x-zoom x-bottombar x-container x-card x-round-large x-white x-padding x-margin x-border x-border-green" style="width:20%;">
 		<div class="" style="line-height: 10%;">
 			<div class="x-half" >
@@ -104,6 +75,248 @@
 		<span class=""></span>
 	</div>
 </div>
+
+<style>
+	.action-btn {
+	  cursor: pointer;
+	  padding: 6px 2px;
+	  border-radius: 6px;
+	  transition: all 0.2s ease-in-out;
+	  display: inline-block;
+	}
+	.action-btn:hover {
+	  background-color: #f0f0f0;
+	  transform: scale(1.05);
+	}
+	.action-btn:active {
+	  background-color: #ddd;
+	  transform: scale(0.95);
+	}
+  </style>
+  
+<div style="max-width:100%;" class="x-container">
+	<h3 class="x-text-teal">
+	  <b>Actions</b>
+	</h3>
+	<div>
+	  <span class="x-text-hover-orange action-btn" onclick="download_login_start('VC_FORM_B.xls')">
+		<b class="x-text-grey">Download Excel Template</b> | 
+		<span class="x-text-orange fa fa-file-text"></span>
+	  </span>
+	  &nbsp;&nbsp;&nbsp;
+	  <span class="x-text-hover-orange action-btn" onclick="goto('/formb/get_list_fo_full')">
+		<b class="x-text-grey">Export Data</b> | 
+		<span class="x-text-orange fa fa-download"></span>
+	  </span>
+	  &nbsp;&nbsp;&nbsp;
+	  <span class="x-text-hover-blue action-btn" onclick="import_farmer_excel_b()">
+		<b class="x-text-grey">Import Spreadsheet</b> | 
+		<span class="x-text-blue fa fa-upload"></span>
+	  </span>
+	</div>
+  </div>
+  <br>
+  
+<script>
+	function import_farmer_excel_b(argument) {
+	excel_upload_dialog = $dialog({
+		title : "import",
+		subtitle : "Spreadsheet Uploader for Farmer's Profiles",
+		content :(`
+			<div class="x-container">
+				<div class="x-row">
+					<p class="x-padding x-pale-yellow x-leftbar x-border-yellow"><b class="x-text-orange">The only Accepted File for the uploads is [<i>*.xls</i>]</b> .Due to the memory resource available in handling all spreadsheet files is limited to 2.8Gib, we suggest that all uploads are in XLS file format. You can convert this files (.xlxs, .csv, etc) using Microsoft Office Excel or other application that manage spreadsheets</p>
+					<input id="excel_file" type="file" class="x-col l8 x-input x-file x-border"  accept=".xls" multiple style="height:50px">
+					<button class="x-input x-btn x-green x-col l4" onclick="upload_excel_b()" style="height:50px">
+						Upload
+					</button>
+				</div>
+				<div class="x-padding x-container">
+					<b class="x-text-teal">Uploaded Spreadsheets</b><br>
+					<div id="ls_uploaded_excel" class="x-container" >
+						<div class="x-padding x-center">
+							<span class="fa fa-circle-o-notch fa-spin x-xlarge"></span><br>
+							<b class="x-text-grey">Now loading. Please wait . . .</b> 
+						</div>
+					</div>
+				</div>
+				<hr>
+			</div>
+		 `)
+  })
+  excel_upload_dialog.dialog.style.width = "80%"
+  excel_upload_dialog.dialog.style.maxWidth = "900px" // add a max-width to prevent it from getting too wide
+  excel_upload_dialog.dialog.style.margin = "40px auto" // add some margin to center it horizontally
+  excel_upload_dialog.dialog.style.overflow = "auto" // add overflow:auto to make it scrollable if it gets too tall
+  excel_upload_dialog.show()
+  get_uploaded_excel()
+}
+
+function upload_excel_b(){
+	SPINNER_LOADER.show()
+	excel_upload_dialog.hide()
+	var uploader_id  = ("{{USER_DATA['id']}}")
+	$send({
+		action : "/excel_upload_b",
+		data : $DATA({"uploader" : uploader_id}).appendFile($ID("excel_file")),
+		err_dialog:true,
+		method : POST,
+		err : function(r){
+			SPINNER_LOADER.hide()
+			println("ERROR")
+			println(r)
+		},
+		func : function(r){
+			SPINNER_LOADER.hide()
+			println(r)
+			excel_upload_dialog.destroy()
+			var res = JSON.parse(r)
+			println(res)
+			var diadata = {} 
+			if(res['status']=="failed"){
+				diadata = {
+					type :"error",
+					title : "Excel Upload Failed",
+					content : "Something went wrong while we read your upload, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+					buttons : ['Finished Transaction'],
+					buttons_actions : [done_transac_excel]
+				}
+				SPINNER_LOADER.hide()
+				var dialog = $dialog(diadata)
+				dialog.show()
+			}
+			else if(res['status']=="success"){
+				diadata = {
+					title : "Excel Upload Success",
+					type :"success",
+					content : "Your upload had a safe journey, please refer to the transaction message below<br><br>status : ["+res['msg']+"]",
+					buttons : ['Finished Transaction'],
+					buttons_actions : [done_transac_excel]
+				}
+				SPINNER_LOADER.hide()
+				var dialog = $dialog(diadata)
+				dialog.show()
+			}
+			SPINNER_LOADER.hide()
+		}
+	})
+}
+function done_transac_excel(){
+	location.reload()
+}
+
+function get_uploaded_excel(){
+	$ID("ls_uploaded_excel").innerHTML = ""
+	var uploader_id  = ("{{USER_DATA['id']}}")
+	$send({
+		action : "/by_app/get_uploaded_excel",
+		err_dialog : true,
+		method : POST,
+		func : function(res){
+			excel_upload_dialog.show()
+			var ls_excel = JSON.parse(res)
+			var ls_excel_card = ""
+
+			for (var i = 0; i < ls_excel.length; i++) {
+				var colr  = "green"
+				var note  = "Synced"
+				var del_ = ""
+				del_ = (`
+					<b class="x-text-orange" onclick="confirm_delete_excel('`+ls_excel[i]["key"]+`')">
+						Option 
+						<span class="fa fa-trash"></span> 
+					</b>
+					<b style="display:none" class="x-text-blue x-hidden" onclick="download_excel('`+ls_excel[i].file_name+`')">
+						Download 
+						<span class="fa fa-download"></span> 
+					</b>
+				`)
+				ls_excel_card += (`
+					<div class="x-row x-padding x-border-dashed x-border-light-grey">
+						<div class="x-container x-col l2">
+							<b class="x-pale-`+colr+` x-text-`+colr+` x-leftbar x-border-`+colr+`">[`+note+`]</b>
+						</div>
+						<div class="x-container x-col l5">
+							<span class="x-small">`+ls_excel[i]["key"]+`</span>
+						</div>
+						<div class="x-container x-col l2">
+							<span>`+ls_excel[i]["total"]+`</span>
+						</div>
+						<div class="x-container x-col l3">
+							`+del_+`
+						</div>
+					</div>
+				`)
+			}
+			$ID("ls_uploaded_excel").innerHTML = ls_excel_card
+			SPINNER_LOADER.hide()
+		}
+	})
+}
+
+let del_dialog01
+function confirm_delete_excel(fff){
+	del_dialog01 = $dialog({
+		title : "Precaution",
+		type : "error",
+		content : (`
+			if want to delete <b>[`+fff+`]</b> <br>
+			a copy of this file will automatically downloaded as for fail-safe
+		`),
+		buttons : ["Download","Delete","Cancel"],
+		buttons_actions : [function (){download_excel(fff)},function (){delete_excel(fff)}]
+
+	})
+	del_dialog01.show()
+}
+
+
+function delete_excel(fff){
+    SPINNER_LOADER.show()
+    $send({
+        action : "/delete_excel_b",
+        method : POST,
+        err_dialog : true,
+        data : $DATA({"file": fff.replace("#","@@").replace("#","@@")}),
+        func : function(res){
+            SPINNER_LOADER.hide()
+            get_uploaded_excel()
+            location.reload()
+        }
+    })
+    del_dialog01.destroy()
+}
+
+function download_excel(fff){
+	let a= document.createElement('a');
+	a.target= '_blank';
+	a.href= '/download_excel/'+fff.replace("#","@@").replace("#","@@");
+	a.click();
+	get_notif()
+}
+</script>
+  
+<script>
+	function download_login_start(fff){
+		let a= document.createElement('a');
+		a.target= '_blank';
+		a.href= '/login/download_file/'+fff;
+		a.click();
+	}
+</script>
+
+<!-- SweetAlert Success -->
+{% if session.get("import_success") %}
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Import Successful!',
+        showConfirmButton: false,
+        timer: 1500
+    });
+</script>
+{% set session.import_success = None %}
+{% endif %}
 
 <div class="x-row x-container">
 	<table class="display" id="table_id_fo" style="width:100%">
@@ -147,7 +360,6 @@
 <script type="text/javascript">
 	var init_counter = 0
 	let TABLE
-
 	function showing_table_ls_farmer(){
 		SPINNER_LOADER.show()
 		$send({
@@ -158,9 +370,7 @@
 				println(" -- Getting List Farmers Done")
 				var raw_data = JSON.parse(rest)
 				$ID('num_input_fo').innerHTML = raw_data.length
-
 				var res = popu__int_toData(raw_data)
-
 				try{
 					create_table(res)
 				}catch(e){
@@ -168,7 +378,6 @@
 					alert("An Error/Warning occurred during Data Loading\n\nErro/Warningr message\n[ "+e+" ]\n\n You may continue your transaction by clicking the button below")
 				}
 				SPINNER_LOADER.hide()
-
 			},
 			err : function(res){println(res);SPINNER_LOADER.hide()},
 			progress : function(e){
@@ -191,7 +400,6 @@
 			}
 		})
 		// TABLE.ajax.url('/feature_0/filter_list_farmers')
-
 		// TABLE.ajax.reload()
 	}
 
@@ -199,7 +407,7 @@
 	function create_table(data_) {
 	println(" -- Creating Data Table")
 	TABLE = new DataTable('#table_id_fo', {
-		"scrollY": '60vh',
+		"scrollY": '50vh',
 		"scrollX": true,
 		"data": data_,
 		"pageLength": 25,
@@ -214,21 +422,8 @@
 			"searchable": false,
 		},
 		],
-		"order": [[ 0, "desc" ]], // Add this line to sort by date in descending order
-		"initComplete": function () {
-		// Add Export button right after the search bar
-		const exportBtn = `
-			<span class="x-zoom x-text-grey x-round-xxlarge x-hover-shadow" 
-			onclick="goto('/formb/get_list_fo_full')" 
-			style="cursor: pointer; padding: 8px 12px; margin-left: 10px;">
-			<span class="x-text-orange fa fa-download"></span>
-			<span class="x-small">Export Data</span>
-			</span>
-		`;
-		$('.dataTables_filter').append(exportBtn);
-		}
+		"order": [[ 0, "desc" ]],
 	});
-
 	set_search_field();
 	}
 
@@ -313,7 +508,6 @@
 			}
 			form_data_b[i].disabled = false
 		}
-
 	}
 
 	function show_fo_ind_(ids){
@@ -322,34 +516,76 @@
 			method : POST,
 			data : $DATA({"id":ids}),
 			func : function(rrr){
-				var resp = JSON.parse(rrr)
-				println(resp)
+    var resp = JSON.parse(rrr);
+    println(resp);
 
-				var FORM_DATA = {}
-				var form_data_b = $CLASS("form_data_b")
-				for (var i = 0; i < form_data_b.length; i++) {
-					var input_type = form_data_b[i].type
-					if(form_data_b[i].id==""){continue}
-					if( (["text","textarea","select-one","date","time"]).includes(input_type) ){
-						form_data_b[i].value = resp[0][form_data_b[i].id]
-					}
-					else if( (["radio"]).includes(input_type) ){
-						form_data_b[i].checked = resp[0][form_data_b[i].id]
-					}
-					else if( (["checkbox"]).includes(input_type) ){
-						if(resp[0][form_data_b[i].id]==true || resp[0][form_data_b[i].id]=='true'){
-							form_data_b[i].click()
-						}
-					}
-					// if(parseInt(form_data_b[i].uploaded_by)==parseInt("{{USER_DATA['name']}}")){
-					// 	println('OWNED')
-					// 	form_data_b[i].disabled = true
-					// }
-				}
-				show_view('forms','page_content')
-			}
-		})
-		// showing_table_ls_farmer()
+    if ($ID("id")) {
+        $ID("id").value = resp[0]["id"];
+    }
+
+    var form_data_b = $CLASS("form_data_b");
+    for (var i = 0; i < form_data_b.length; i++) {
+        var input_type = form_data_b[i].type;
+        if (form_data_b[i].id == "") { continue }
+        if (["text","textarea","select-one","date","time"].includes(input_type)) {
+            form_data_b[i].value = resp[0][form_data_b[i].id];
+        }
+        else if (["radio"].includes(input_type)) {
+            form_data_b[i].checked = resp[0][form_data_b[i].id];
+        }
+        else if (["checkbox"].includes(input_type)) {
+            if (resp[0][form_data_b[i].id] == true || resp[0][form_data_b[i].id] == 'true') {
+                form_data_b[i].click();
+            }
+        }
+    }
+
+
+    if (String(resp[0].uploaded_by) !== String(CURRENT_USER_ID)) {
+		disableForm();
+	} else {
+		enableForm();
 	}
 
+    show_view('forms','page_content');
+}
+		})
+
+	}
+</script>
+
+<script>
+const CURRENT_USER_ID = {{ session["USER_DATA"][0]["id"] }};
+function disableForm() {
+    var form_data_b = $CLASS("form_data_b");
+    for (var i = 0; i < form_data_b.length; i++) {
+        form_data_b[i].disabled = true;
+    }
+
+    // disable all 3 buttons
+    if ($ID("submit_btn_main")) $ID("submit_btn_main").style.pointerEvents = "none";
+    if ($ID("submit_btn_main")) $ID("submit_btn_main").style.opacity = "0.5";
+
+    if ($ID("submit_btn_header")) $ID("submit_btn_header").style.pointerEvents = "none";
+    if ($ID("submit_btn_header")) $ID("submit_btn_header").style.opacity = "0.5";
+
+    if ($ID("show_mem_modal_btn")) $ID("show_mem_modal_btn").style.pointerEvents = "none";
+    if ($ID("show_mem_modal_btn")) $ID("show_mem_modal_btn").style.opacity = "0.5";
+}
+
+function enableForm() {
+    var form_data_b = $CLASS("form_data_b");
+    for (var i = 0; i < form_data_b.length; i++) {
+        form_data_b[i].disabled = false;
+    }
+
+    if ($ID("submit_btn_main")) $ID("submit_btn_main").style.pointerEvents = "auto";
+    if ($ID("submit_btn_main")) $ID("submit_btn_main").style.opacity = "1";
+
+    if ($ID("submit_btn_header")) $ID("submit_btn_header").style.pointerEvents = "auto";
+    if ($ID("submit_btn_header")) $ID("submit_btn_header").style.opacity = "1";
+
+    if ($ID("show_mem_modal_btn")) $ID("show_mem_modal_btn").style.pointerEvents = "auto";
+    if ($ID("show_mem_modal_btn")) $ID("show_mem_modal_btn").style.opacity = "1";
+}
 </script>

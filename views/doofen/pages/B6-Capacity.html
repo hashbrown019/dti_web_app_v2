@@ -5,16 +5,14 @@
  -->
 
 <div class="x-container x-card x-light-grey">
-	<h2 class=" x-container x-teal x-padding x-round-xxlarge" id="b6">Capacity and Needs Assessment</h2>
+	<h2 class=" x-container x-teal x-padding x-xlarge" style="text-align:center;" id="b6">Capacity and Needs Assessment</h2>
 	<br>
 
 
 	<div class="x-container x-row x-padding " >
-		<h4><b>Input and equipment supply</b></h4>
-		<style> 
-			table, th, td{border: 1px solid black;border-collapse: collapse;}
-		</style>
-		<table class="x-row	 x-table x-border x-card">
+		<div class="x-padding x-container">
+		<h4 class="x-border-bottom"><b>Input and equipment supply</b></h4>
+		<table class="x-row x-table x-border">
 			<tr>
 				<td>How do you assess your members'<br>needs for inputs and equipment?</td>
 				<td><textarea class="form_data_b x-border x-input " id="capacity_inputs_and_equipment" style="width: 100%;" type="text"></textarea>
@@ -23,26 +21,23 @@
 			<tr>
 				<td>How do you ensure that all members <br> have access to needs of funds, inputs or equipment?</td>
 				<td>
-					<div class="">
-						<form class="x-container x-row x-padding">
-							<input class="form_data_b x-radio" id="capacity_inputs_requirment_yes_checkbox" type="checkbox" name="scope">
-							<span class="">Yes</span>
-							<input class="form_data_b x-radio" id="capacity_inputs_requirment_no_checkbox" type="checkbox" name="scope">
-							<span class="">No</span>
-						</form>
-						<br>
-					</div>
-				</td>
+					<select class="form_data_b x-input x-border" id="capacity_inputs_requirment_dropdown" style="width: 100%;">
+						<option value="" disabled selected>Select</option>
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select>
+				</td>				
 			</tr>
 			<tr>
 				<td>How do you identify your suppliers?</td>
 				<td><textarea class="form_data_b x-border x-input " id="capacity_identify_your_suppliers" style="width: 100%;" type="text"></textarea></td>	   	
 			</tr>
 		</table>
+		</div>
 		<br>
 
 
-		<div class="x-row x-container x-padding">
+		<!--<div class="x-row x-container x-padding">
 			<div class="x-col l6 ">
 				<form class="x-container x-padding "><br>
 					<h4><b>Training and Capacity Building</b></h4>
@@ -82,12 +77,12 @@
 					<textarea class="form_data_b x-border x-input " id="capacity_training_in_what_area" style="width: 100%;" type="text"></textarea><br>
 				</form>
 			</div>
-
-		</div>
+		</div>-->
 	</div>
 
+	<div class="x-padding x-container">
 	<div class="x-row x-container">
-		<h6><label class="">Collecting, bulking, marketing of products (identifying new clients, signing contracts, conducting market studies, promoting products)</label></h6>
+		<h4><label class="x-border-bottom">Collecting, bulking, marketing of products <br>(identifying new clients, signing contracts, conducting market studies, promoting products)</label></h4>
 	</div>
 
 	<div class="x-container x-padding">
@@ -96,54 +91,58 @@
 				<td>
 					Does the Organization undertake marketing activities?
 				</td>
-				<td>							
-					<input class="form_data_b x-radio" id="capacity_undertake_yes_checkbox" type="checkbox" name="scope">
-					<span class="">Yes</span>
-					<input class="form_data_b x-radio" id="capacity_undertake_no_checkbox" type="checkbox" name="scope">
-					<span class="">No</span>
+				<td>
+					<select class="form_data_b x-input x-border" id="capacity_undertake_dropdown" style="width: 100%;">
+						<option value="" disabled selected>Select</option>
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select>
 				</td>
-			</tr>
+			</tr>			
 			<tr>
 				<td>How do you estimate your members' production level?</td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_production_level" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_production_level" type="text"></td>
 			</tr>
 
 			<tr>
 				<td>How does your organization linked to markets/buyers? </td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_markets_buyers" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_markets_buyers" type="text"></td>
 			</tr>
 
 			<tr>
 				<td>What is your process in collecting products from members?</td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_products_from_members" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_products_from_members" type="text"></td>
 			</tr>
 
 			<tr>
 				<td>How do you intend to manage and sustain your marketing activities?</td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_marketing_activities" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_marketing_activities" type="text"></td>
 			</tr>
 		</table>
 	</div>
+	</div>
 	<hr>
 
-	<div class="x-row x-section x-padding ">
-		<div class="x-col l6 ">
-			<form class="x-container x-padding ">
-				<label class=""><b><h4>Storage Facilities</b></h4></label>
-				<span class="">Does the organization have storage<br>facilities?</span><br>
+	<div class="x-row x-section x-padding">
+		<div class="x-col">
+			<form class="x-container x-padding">
+				<h4 class="x-border-bottom"><label>Storage Facilities</h4>
 			</form>
 		</div>
-
-		<div class="x-col l6"><br><br>
-			<input class="form_data_b x-radio" id="capacity_org_storage_yes_checkbox" type="checkbox" name="membership" value="yes">
-			<label class="">Yes</label>
-			<input class="form_data_b x-radio" id="capacity_org_storage_no_checkbox" type="checkbox" name="membership" value="no">
-			<label class="">No "If yes, please fill up the matrix below"</label>
+	
+		<div class="x-col l6 x-padding x-container">
+			<span>Does the organization have storage facilities?</span>
+			<select class="form_data_b x-input x-border x-padding x-container" id="capacity_org_storage_dropdown" style="width: 100%;">
+				<option value="" disabled selected>Select</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No (If yes, please fill up the matrix below)</option>
+			</select>
 		</div>
-	</div>
+	</div>	
 
+	<div class="x-row x-section x-padding">
 	<div class="x-container x-padding">
-		<table class="x-table x-container x-table-border">
+		<table class="x-row x-table x-container x-table-border">
 			<tr>
 				<th>Storage<br>Facility</th>
 				<th>Description</th>
@@ -161,58 +160,166 @@
 				<td>
 					1
 				</td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_description_1" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_location_include_1" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_size_area_1" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_capacity_volume_1" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_storage_feeper_day_1" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_manpower_paidworkers_1" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_description_1" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_location_include_1" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_size_area_1" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_capacity_volume_1" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_storage_feeper_day_1" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_manpower_paidworkers_1" type="text"></td>
 			</tr>
 
 			<tr>
 				<td>
 					2 
 				</td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_description_2" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_location_include_2" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_size_area_2" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_capacity_volume_2" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_storage_feeper_day_2" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_manpower_paidworkers_2" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_description_2" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_location_include_2" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_size_area_2" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_capacity_volume_2" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_storage_feeper_day_2" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_manpower_paidworkers_2" type="text"></td>
 			</tr>
 
 			<tr>
 				<td>
 					3
 				</td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_description_3" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_location_include_3" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_size_area_3" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_capacity_volume_3" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_storage_feeper_day_3" type="text"></td>
-				<td><input class="form_data_b x-light-grey x-input" id="capacity_manpower_paidworkers_3" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_description_3" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_location_include_3" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_size_area_3" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_capacity_volume_3" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_storage_feeper_day_3" type="text"></td>
+				<td><input class="form_data_b x-input" id="capacity_manpower_paidworkers_3" type="text"></td>
 			</tr>
 		</table>
 		<label class=""><p>*RAPID Staff to take a photo of the facility using geotagging apps</p></label>
 	</div>
-	<hr>
+	</div>
 
 	<div class="x-row x-section x-padding x-round">
-		<div class="x-col l6 ">
-			<form class="x-container x-padding ">
+		<div class="x-col l6">
+			<form class="x-container x-padding">
 				<label class=""><h5><b>Market Information System</b></h5></label>
-				<span class="">Does the organization have internal Market Information System?</span><br>
-				<input class="form_data_b x-radio" id="capacity_org_market_yes_checkbox" type="checkbox" name="membership" value="yes">
-				<label class="">Yes</label>
-				<input class="form_data_b x-radio" id="capacity_org_market_no_checkbox" type="checkbox" name="membership" value="no">
-				<label class="">No "If yes, how does it work?"</label><br><br>
-				<textarea class="form_data_b x-border x-input " id="registering_agencies_others" style="height: 20vh;" type="text"></textarea>
+				<span class="">Does the organization have an internal Market Information System?</span><br>
+				
+				<select class="form_data_b x-input x-border" id="capacity_org_market_dropdown" style="width: 100%;">
+					<option value="" disabled selected>Select</option>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
+				</select>
+				
+				<br>
+				<label for="capacity_org_market_details">If Yes, how does it work?</label>
+				<textarea class="form_data_b x-border x-input" id="capacity_org_market_details" style="height: 20vh; width: 100%;"></textarea>
 			</form>
 		</div>
 	</div>
 
+		<div class="x-row x-container x-padding">
+			<h4 class="x-border-bottom x-padding"><b>Financial Service Accessed by FO</b></h4>
+	  	</div>
+	  
+	  <div class="x-row x-padding">
+		<!-- Loan / Cash Advance -->
+		<div class="x-col l3 m6 s12 x-padding">
+		  <label>Loan / Cash Advance</label>
+		  <input class="form_data_b x-input x-border" type="text" id="loan_purpose" placeholder="Purpose of Loan">
+		  <input class="form_data_b x-input x-border" type="text" id="loan_interest" placeholder="Interest Rate (%)" numberonly>
+		  <input class="form_data_b x-input x-border" type="text" id="loan_term" placeholder="Loan Term">
+		</div>
+	  
+		<!-- Savings -->
+		<div class="x-col l3 m6 s12 x-padding">
+		  <label>Savings</label>
+		  <select class="form_data_b x-input x-border" id="savings_type">
+			<option value="" disabled selected>Select Type</option>
+			<option value="Top-up">Top-up</option>
+			<option value="New">New</option>
+		  </select>
+		  <input class="form_data_b x-input x-border" type="text" id="savings_provider" placeholder="Name of Provider">
+		</div>
+	  
+		<!-- Insurance -->
+		<div class="x-col l3 m6 s12 x-padding">
+		  <label>Insurance</label>
+		  <select class="form_data_b x-input x-border" id="insurance_purpose">
+			<option value="" disabled selected>Purpose</option>
+			<option value="Crop">Crop</option>
+			<option value="Life">Life</option>
+			<option value="Medical">Medical</option>
+			<option value="Credit">Credit</option>
+			<option value="Others">Others</option>
+		  </select>
+		  <input class="form_data_b x-input x-border" type="text" id="insurance_provider" placeholder="Name of Provider">
+		</div>
 
-	<div class="x-row x-section x-padding">
+		<!-- Credit Guarantee -->
+		<div class="x-col l3 m6 s12 x-padding">
+			<label>Credit Guarantee</label>
+			<input class="form_data_b x-input x-border" type="text" id="credit_purpose" placeholder="Purpose of Loan">
+			<input class="form_data_b x-input x-border" type="text" id="credit_guarantee" placeholder="Guarantee">
+			<input class="form_data_b x-input x-border" type="text" id="credit_provider" placeholder="Name of Provider">
+		  </div>
+	  </div>
+	  
+	  <!-- Next Row -->
+	  <div class="x-row x-padding">
+		<!-- In-kind Grant -->
+		<div class="x-col l3 m6 s12 x-padding">
+		  <label>In-kind Grant (RAPID)</label>
+		  <input class="form_data_b x-input x-border" type="text" id="inkind_source" placeholder="Source">
+		  <input class="form_data_b x-input x-border" type="text" id="inkind_type" placeholder="Type of Grant">
+		</div>
+	  
+		<!-- Cash Grant -->
+		<div class="x-col l3 m6 s12 x-padding">
+		  <label>Cash Grant</label>
+		  <input class="form_data_b x-input x-border" type="text" id="cash_provider" placeholder="Name of Enabler">
+		  <input class="form_data_b x-input x-border" type="text" id="cash_amount" placeholder="Amount" numberonly>
+		</div>
+	  
+		<!-- Financial Digital Platforms -->
+		<div class="x-col l3 m6 s12 x-padding">
+		  <label>Financial Digital Platforms</label>
+		  <input class="form_data_b x-input x-border" type="text" id="digital_type" placeholder="Type(s)">
+		  <input class="form_data_b x-input x-border" type="text" id="digital_purpose" placeholder="Purpose">
+		</div>
+
+		<div class="x-col l3 m6 s12 x-padding">
+			<label class="x-block">RAPID Support</label>
+			<div class="x-row" style="flex-wrap: wrap; gap: 10px;">
+			  <label><input type="checkbox" class="form_data_b rapid_checkbox" value="Seedlings"> Seedlings</label>
+			  <label><input type="checkbox" class="form_data_b rapid_checkbox" value="Tools"> Tools</label><br>
+			  <label><input type="checkbox" class="form_data_b rapid_checkbox" value="Inputs"> Inputs</label>
+			  <label><input type="checkbox" class="form_data_b rapid_checkbox" value="Productive Investments"> Productive Investments</label>
+			</div>
+			<!-- Hidden field to capture selections -->
+			<input class="form_data_b" type="hidden" id="rapid_support" >
+		  </div>
+	  </div>
+	  
+	  <!-- RAPID Support -->
+	  <div class="x-row x-padding">
+		<!-- Other Services -->
+		<div class="x-col l6 m6 s12 x-padding">
+		  <label>Other Services (For Farmer-Member)</label>
+		  <textarea class="form_data_b x-input x-border" id="financial_other_services" placeholder="Please Specify"></textarea>
+		</div>
+	  </div>
+	  
+	  <script>
+		// Script to update hidden field from checkboxes
+		document.querySelectorAll('.rapid_checkbox').forEach(cb => {
+		  cb.addEventListener('change', () => {
+			let values = Array.from(document.querySelectorAll('.rapid_checkbox:checked')).map(c => c.value);
+			document.getElementById('rapid_support').value = values.join(',');
+		  });
+		});
+	  </script>
+	  
+
+
+	<!--<div class="x-row x-section x-padding">
 		<div class="x-col l6 x-round ">
 			<form class="x-container x-padding ">
 				<label class=""><h5><b>Facilitating access to credit/insurance</b></h5></label>
@@ -283,10 +390,9 @@
 
 		<div class="x-col l6"><br><br>
 		</div>
-	</div>
+	</div>-->
 	<br>
-	<br>
-	<br>
+
 </div>
 
 <!-- 
