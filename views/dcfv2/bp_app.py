@@ -40,6 +40,7 @@ from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form4
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form5
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form6
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form7
+from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form8
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form9
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form10
 from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_form11
@@ -632,6 +633,11 @@ def insert_form6():
 def insert_form7():
 	insertData7.insert_form7(request)
 	return redirect("/dcf/form7")
+
+@app.route('/importcsvform8',methods = ['GET','POST'])
+def importcsvform8():
+	importcsv_form8.importcsvform8(request)
+	return redirect("/fmi_dashboard")
 
 @app.route('/insert_form9', methods = ['POST'])
 def insert_form9():
@@ -2191,6 +2197,101 @@ def export_form7():
 		writer.close()
 		return send_file(file_path, as_attachment=True, download_name='dcf_form7_exported_file.xlsx')
 
+#FORM_8 ############################################################################################################
+@app.route('/export_form8', methods=['GET'])
+def export_form8():
+    query = '''
+		SELECT 
+			dcf_fmi.id,
+			dcf_fmi.form_8_profile_batch,
+			dcf_fmi.form_8_profile_dipName,
+			dcf_fmi.form_8_profile_name_of_fmr,
+			dcf_fmi.form_8_profile_project_title,
+			dcf_fmi.form_8_profile_municipality_province,
+			dcf_fmi.form_8_profile_region,
+			dcf_fmi.form_8_profile_length,
+			dcf_fmi.form_8_profile_commodity,
+			dcf_fmi.form_8_profile_appvd_budget_cost,
+			dcf_fmi.form_8_profile_relative_weight,
+			dcf_fmi.form_8_procurement_itb_posting,
+			dcf_fmi.form_8_procurement_openingBids,
+			dcf_fmi.form_8_procurement_NOAdate,
+			dcf_fmi.form_8_procurement_NTPdate,
+			dcf_fmi.form_8_procurement_contractorName,
+			dcf_fmi.form_8_implementation_ifadLP,
+			dcf_fmi.form_8_implementation_LGUcounterpart,
+			dcf_fmi.form_8_implementation_totalOrigCC,
+			dcf_fmi.form_8_implementation_totalRevisedCC,
+			dcf_fmi.form_8_implementation_revisionReason,
+			dcf_fmi.form_8_implementation_dateStarted,
+			dcf_fmi.form_8_implementation_original,
+			dcf_fmi.form_8_implementation_revised,
+			dcf_fmi.form_8_implementation_extensionReason,
+			dcf_fmi.form_8_implementation_status,
+			dcf_fmi.form_8_implementation_actualAccomplishment,
+			dcf_fmi.form_8_implementation_slippage,
+			dcf_fmi.form_8_implementation_relativeWeight,
+			dcf_fmi.form_8_implementation_actualLength,
+			dcf_fmi.form_8_implementation_target,
+			dcf_fmi.form_8_implementation_revised_target,
+			dcf_fmi.form_8_implementation_actual,
+			dcf_fmi.form_8_implementation_turnoverDate,
+			dcf_fmi.form_8_implementation_acceptanceDate,
+			dcf_fmi.form_8_remarks,
+			dcf_fmi.form_8_financial_fiananceAccomplishment,
+			dcf_fmi.form_8_financial_subAllotment,
+			dcf_fmi.form_8_financial_issuedDate,
+			dcf_fmi.form_8_financial_amount,
+			dcf_fmi.form_8_financial_difference,
+			dcf_fmi.form_8_financial_issuedDatefirstTranche,
+			dcf_fmi.form_8_financial_amountfirstTranche,
+			dcf_fmi.form_8_financial_issuedDatesecondTranche,
+			dcf_fmi.form_8_financial_amountsecondTranche,
+			dcf_fmi.form_8_financial_issuedDatethirdTranche,
+			dcf_fmi.form_8_financial_amountthirdTranche,
+			dcf_fmi.form_8_financial_balance,
+			dcf_fmi.filename,
+			dcf_fmi.date_created,
+			dcf_fmi.date_modified,
+			users.name as 'Uploaded by'
+		FROM dcf_fmi
+		LEFT JOIN users ON dcf_fmi.upload_by = users.id
+	'''.format(position_data_filter())
+    data = db.select(query)
+    df = pd.DataFrame(data)
+    headers = [
+		'ID', 'Batch', 'Dip Name', 'Name of FMR', 'Project Title',
+		'Municipality/Province', 'Region', 'Length', 'Commodity',
+		'Approved Budget Cost', 'Relative Weight', 'ITB Posting', 'Opening of Bids',
+		'Date of NOA', 'Date of NTP', 'Name of Contractor', 'IFAD Loan Proceeds', 'LGU Counterpart',
+		'Total Original Contract Cost', 'Total Revised Contract Cost', 'Reason of Revision', 'Date Started',
+		'Original Contract Duration', 'Revised Contract Duration', 'Reason of Extension', 'Status', 'Actual Accomplishment', 'Slippage',
+		'Relative Weight', 'Actual Length', 'Target', 'Revised Target', 'Actual', 'Date of Turnover', 'Date of Acceptance', 'Remarks',
+		'Financial Accomplishment', 'Sub-Allotment Advice No.', 'Date Issued', 'Amount', 'Difference',
+		'1st Tranche Date', '1st Tranche Amount', '2nd Tranche Date', '2nd Tranche Amount', '3rd Tranche Date', '3rd Tranche Amount',
+		'Balance', 'Filename', 'Date Created', 'Date Modified','Upload By'
+	]
+    df.columns = headers
+    file_path = os.path.join(c.RECORDS, 'objects/_temp_/dcf_form8_exported_file.xlsx')
+    writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='dcf_form8_exported_file', index=False)
+    workbook = writer.book
+    worksheet = writer.sheets['dcf_form8_exported_file']
+    header_format = workbook.add_format({
+        'bold': True,
+        'text_wrap': True,
+        'valign': 'top',
+        'fg_color': '#b8b8ff',
+        'border': 1
+    })
+    for col_num, value in enumerate(df.columns.values):
+        worksheet.write(0, col_num, value, header_format)
+    for idx, col in enumerate(df.columns):
+        max_len = max(df[col].astype(str).apply(len).max(), len(col)) + 2
+        worksheet.set_column(idx, idx, max_len)
+    writer.close()
+    return send_file(file_path, as_attachment=True, download_name='dcf_form8_exported_file.xlsx')
+
 #FORM_9 ############################################################################################################
 @app.route('/export_form9', methods=['GET'])
 def export_form9():
@@ -2306,12 +2407,8 @@ def export_form11():
             form_11_farmer_name_of_enterprise,
             form_11_farmer_location,
             form_11_farmer_beneficiaries_name,
-            form_11_farmer_beneficiaries_male,
-            form_11_farmer_beneficiaries_female,
-            form_11_farmer_beneficiaries_pwd,
-            form_11_farmer_beneficiaries_ip,
-            form_11_farmer_beneficiaries_youth,
-            form_11_farmer_beneficiaries_sc,
+            form_11_farmer_gender,
+            form_11_farmer_sectoral_data,
             form_11_farmer_loan_fsp,
             form_11_farmer_loan_type,
             form_11_farmer_loan_amount,
@@ -2362,7 +2459,7 @@ def export_form11():
         'Farmer ID',
         'Region', 'PCU', 'DIP Name', 'Commodity', 'Type of Enterprise',
         'Name of Enterprise', 'Location', 'Name of Beneficiaries',
-        'Male', 'Female', 'PWD', 'IP', 'YOUTH', 'SC',
+        'Gender', 'Sector',
         'NAME OF FSP', 'TYPE OF FINANCING', 'APPROVED LOAN AMOUNT',
         'Total Loan Amount', 'LOAN PURPOSE',
         'NAME OF FSP', 'TYPE', 'AMOUNT',

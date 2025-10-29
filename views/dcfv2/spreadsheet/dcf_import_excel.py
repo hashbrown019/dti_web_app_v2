@@ -614,6 +614,102 @@ def excel_upload_open7(path):
 		flash(f"The file was imported successfully!", "success")
 	return "done"
 
+def importcsvform8(request):
+	from datetime import date, datetime
+	today = str(datetime.today()).replace("-", "").replace(" ", "").replace(":", "").replace(".", "")
+	uploader = session["USER_DATA"][0]["id"]
+	if request.method == "POST":
+		try:
+			files = request.files
+			for file in files:
+				f = files[file]
+				global UPLOAD_NAME
+				UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
+				f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+				excel_upload_open8(os.path.join(c.RECORDS + "/objects/spreadsheets_dcf/queued/", UPLOAD_NAME))
+		except IndexError:
+			flash(f"Invalid file template!", "error")
+			
+	return redirect("/dcfspreadsheet")
+
+def excel_upload_open8(path):  
+	book = xlrd.open_workbook(path)
+	sheet = book.sheet_by_index(0)
+	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	header = data[4]
+	
+	print(sheet.name)
+	if(sheet.name !='form8'):
+		flash(f"Invalid file template!", "error")
+		return "done:Sheet Error"
+	insert = None
+	rows = list(data[4:])
+	if not rows:
+		flash("No data rows found in file!", "error")
+		return "done:No data"
+	for row in rows:
+		upload_by = session["USER_DATA"][0]['id']
+		form_8_profile_batch = row[0]
+		form_8_profile_dipName = row[1]
+		form_8_profile_name_of_fmr = row[2]
+		form_8_profile_project_title = row[3]
+		form_8_profile_municipality_province = row[4]
+		form_8_profile_region = row[5]
+		form_8_profile_length = row[6]
+		form_8_profile_commodity = row[7]
+		form_8_profile_appvd_budget_cost = row[8]
+		form_8_profile_relative_weight = row[9]
+		form_8_procurement_itb_posting = row [10]
+		form_8_procurement_openingBids = row [11]
+		form_8_procurement_NOAdate = row [12]
+		form_8_procurement_NTPdate = row [13]
+		form_8_procurement_contractorName = row [14]
+		form_8_implementation_ifadLP = row [15]
+		form_8_implementation_LGUcounterpart = row [16]
+		form_8_implementation_totalOrigCC = row [17]
+		form_8_implementation_totalRevisedCC = row [18]
+		form_8_implementation_revisionReason = row [19]
+		form_8_implementation_dateStarted = row [20]
+		form_8_implementation_original = row [21]
+		form_8_implementation_revised = row [22]
+		form_8_implementation_extensionReason = row [23]
+		form_8_implementation_status = row [24]
+		form_8_implementation_actualAccomplishment = row [25]
+		form_8_implementation_slippage = row [26]
+		form_8_implementation_relativeWeight = row [27]
+		form_8_implementation_actualLength = row [28]
+		form_8_implementation_target = row [29]
+		form_8_implementation_revised_target = row [30]
+		form_8_implementation_actual = row [31]
+		form_8_implementation_turnoverDate = row [32]
+		form_8_implementation_acceptanceDate = row [33]
+		form_8_remarks = row [34]
+		form_8_financial_fiananceAccomplishment = row [35]
+		form_8_financial_subAllotment = row [36]
+		form_8_financial_issuedDate = row [37]
+		form_8_financial_amount = row [38]
+		form_8_financial_difference = row [39]
+		form_8_financial_issuedDatefirstTranche = row [40]
+		form_8_financial_amountfirstTranche = row [41]
+		form_8_financial_issuedDatesecondTranche = row [42]
+		form_8_financial_amountsecondTranche = row [43]
+		form_8_financial_issuedDatethirdTranche = row [44]
+		form_8_financial_amountthirdTranche = row [45]
+		form_8_financial_balance = row [46]
+		filename = UPLOAD_NAME
+		querycsv = ("INSERT INTO dcf_fmi ( upload_by, form_8_profile_batch, form_8_profile_dipName, form_8_profile_name_of_fmr, form_8_profile_project_title, form_8_profile_municipality_province, form_8_profile_region, form_8_profile_length, form_8_profile_commodity, form_8_profile_appvd_budget_cost, form_8_profile_relative_weight, form_8_procurement_itb_posting, form_8_procurement_openingBids, form_8_procurement_NOAdate, form_8_procurement_NTPdate, form_8_procurement_contractorName, form_8_implementation_ifadLP, form_8_implementation_LGUcounterpart, form_8_implementation_totalOrigCC, form_8_implementation_totalRevisedCC, form_8_implementation_revisionReason, form_8_implementation_dateStarted, form_8_implementation_original, form_8_implementation_revised, form_8_implementation_extensionReason, form_8_implementation_status, form_8_implementation_actualAccomplishment, form_8_implementation_slippage, form_8_implementation_relativeWeight, form_8_implementation_actualLength, form_8_implementation_target, form_8_implementation_revised_target, form_8_implementation_actual, form_8_implementation_turnoverDate, form_8_implementation_acceptanceDate, form_8_remarks, form_8_financial_fiananceAccomplishment, form_8_financial_subAllotment, form_8_financial_issuedDate, form_8_financial_amount, form_8_financial_difference, form_8_financial_issuedDatefirstTranche, form_8_financial_amountfirstTranche, form_8_financial_issuedDatesecondTranche, form_8_financial_amountsecondTranche, form_8_financial_issuedDatethirdTranche, form_8_financial_amountthirdTranche, form_8_financial_balance, filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by, form_8_profile_batch, form_8_profile_dipName, form_8_profile_name_of_fmr, form_8_profile_project_title, form_8_profile_municipality_province, form_8_profile_region, form_8_profile_length, form_8_profile_commodity, form_8_profile_appvd_budget_cost, form_8_profile_relative_weight, form_8_procurement_itb_posting, form_8_procurement_openingBids, form_8_procurement_NOAdate, form_8_procurement_NTPdate, form_8_procurement_contractorName, form_8_implementation_ifadLP, form_8_implementation_LGUcounterpart, form_8_implementation_totalOrigCC, form_8_implementation_totalRevisedCC, form_8_implementation_revisionReason, form_8_implementation_dateStarted, form_8_implementation_original, form_8_implementation_revised, form_8_implementation_extensionReason, form_8_implementation_status, form_8_implementation_actualAccomplishment, form_8_implementation_slippage, form_8_implementation_relativeWeight, form_8_implementation_actualLength, form_8_implementation_target, form_8_implementation_revised_target, form_8_implementation_actual, form_8_implementation_turnoverDate, form_8_implementation_acceptanceDate, form_8_remarks, form_8_financial_fiananceAccomplishment, form_8_financial_subAllotment, form_8_financial_issuedDate, form_8_financial_amount, form_8_financial_difference, form_8_financial_issuedDatefirstTranche, form_8_financial_amountfirstTranche, form_8_financial_issuedDatesecondTranche, form_8_financial_amountsecondTranche, form_8_financial_issuedDatethirdTranche, form_8_financial_amountthirdTranche, form_8_financial_balance, filename))
+		insert = db.do(querycsv)
+		print(insert)
+		print("===============================================")
+	if insert is None:
+		flash("No data rows found in file!", "error")
+	elif insert.get("response") == "error":
+		flash(f"An error occured!", "error")
+		print(str(insert))
+	else:
+		flash(f"The file was imported successfully!", "success")
+	return "done"
 
 def importcsvform9(request):
 	from datetime import date, datetime
@@ -788,13 +884,12 @@ def excel_upload_open11(path):
         if not any(str(cell).strip() for cell in row):
             continue  # skip empty rows
 
-        # Pad/trim row to 53 fields
-        row = (row + [""] * 53)[:53]
+        # Pad/trim row to 49 fields
+        row = (row + [""] * 49)[:49]
 
         (form_11_farmer_region, form_11_farmer_pcu, form_11_farmer_dip_name, form_11_farmer_commodity, form_11_farmer_type_of_enterprise,
          form_11_farmer_name_of_enterprise, form_11_farmer_location, form_11_farmer_beneficiaries_name,
-         form_11_farmer_beneficiaries_male, form_11_farmer_beneficiaries_female, form_11_farmer_beneficiaries_pwd,
-         form_11_farmer_beneficiaries_ip, form_11_farmer_beneficiaries_youth, form_11_farmer_beneficiaries_sc,
+         form_11_farmer_gender, form_11_farmer_sectoral_data,
          form_11_farmer_loan_fsp, form_11_farmer_loan_type, form_11_farmer_loan_amount, form_11_farmer_loan_purpose,
          form_11_farmer_total_loan_amount, form_11_farmer_savings_fsp, form_11_farmer_savings_type,
          form_11_farmer_savings_amount, form_11_farmer_insurance_fsp, form_11_farmer_insurance_type,
@@ -813,8 +908,7 @@ def excel_upload_open11(path):
         INSERT INTO dcf_access_financing (
             upload_by, form_11_farmer_region, form_11_farmer_pcu, form_11_farmer_dip_name, form_11_farmer_commodity, form_11_farmer_type_of_enterprise,
             form_11_farmer_name_of_enterprise, form_11_farmer_location, form_11_farmer_beneficiaries_name,
-            form_11_farmer_beneficiaries_male, form_11_farmer_beneficiaries_female, form_11_farmer_beneficiaries_pwd,
-            form_11_farmer_beneficiaries_ip, form_11_farmer_beneficiaries_youth, form_11_farmer_beneficiaries_sc,
+            form_11_farmer_gender, form_11_farmer_sectoral_data,
             form_11_farmer_loan_fsp, form_11_farmer_loan_type, form_11_farmer_loan_amount, form_11_farmer_loan_purpose,
             form_11_farmer_total_loan_amount, form_11_farmer_savings_fsp, form_11_farmer_savings_type,
             form_11_farmer_savings_amount, form_11_farmer_insurance_fsp, form_11_farmer_insurance_type,
@@ -831,8 +925,7 @@ def excel_upload_open11(path):
         ) VALUES (
             '{upload_by}', '{form_11_farmer_region}', '{form_11_farmer_pcu}', '{form_11_farmer_dip_name}', '{form_11_farmer_commodity}', '{form_11_farmer_type_of_enterprise}',
             '{form_11_farmer_name_of_enterprise}', '{form_11_farmer_location}', '{form_11_farmer_beneficiaries_name}',
-            '{form_11_farmer_beneficiaries_male}', '{form_11_farmer_beneficiaries_female}', '{form_11_farmer_beneficiaries_pwd}',
-            '{form_11_farmer_beneficiaries_ip}', '{form_11_farmer_beneficiaries_youth}', '{form_11_farmer_beneficiaries_sc}',
+            '{form_11_farmer_gender}', '{form_11_farmer_sectoral_data}',
             '{form_11_farmer_loan_fsp}', '{form_11_farmer_loan_type}', '{form_11_farmer_loan_amount}', '{form_11_farmer_loan_purpose}',
             '{form_11_farmer_total_loan_amount}', '{form_11_farmer_savings_fsp}', '{form_11_farmer_savings_type}',
             '{form_11_farmer_savings_amount}', '{form_11_farmer_insurance_fsp}', '{form_11_farmer_insurance_type}',

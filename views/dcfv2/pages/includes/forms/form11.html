@@ -257,43 +257,28 @@
             <!-- Sex -->
             <div class="col-md-4">
               <div class="row g-2">
-                <!-- Male -->
-                <div class="col-6">
-                  <label for="armer_beneficiaries_male" class="form-label" style="font-size: 0.8rem; font-weight: 500;">Male</label>
-                  <input type="number" id="form_11_farmer_beneficiaries_male" name="form_11_male" class="FORM11_FIELD form-control" min="0" required />
-                </div>
-                <!-- Female -->
-                <div class="col-6">
-                  <label for="farmer_beneficiaries_female" class="form-label" style="font-size: 0.8rem; font-weight: 500;">Female</label>
-                  <input type="number" id="form_11_farmer_beneficiaries_female" name="form_11_female" class="FORM11_FIELD form-control" min="0" required />
+                <div class="col-12">
+                  <label for="form_11_farmer_gender" class="form-label" style="font-size: 0.8rem; font-weight: 500;">
+                    Farmer Gender
+                  </label>
+                  <select id="form_11_farmer_gender" name="form_11_farmer_gender" class="FORM11_FIELD form-select" required>
+                    <option value="" selected disabled> Select Gender </option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
                 </div>
               </div>
             </div>
             <!-- Sector -->
-            <div class="col-md-4">
-              <div class="row g-2">
-                <!-- PWD -->
-                <div class="col-6 col-lg-3">
-                  <label for="farmer_beneficiaries_pwd" class="form-label" style="font-size: 0.8rem; font-weight: 500;">PWD</label>
-                  <input type="number" id="form_11_farmer_beneficiaries_pwd" name="form_11_pwd" class="FORM11_FIELD form-control" min="0" value="" />
-                </div>
-                <!-- IP -->
-                <div class="col-6 col-lg-3">
-                  <label for="farmer_beneficiaries_ip" class="form-label" style="font-size: 0.8rem; font-weight: 500;">IP</label>
-                  <input type="number" id="form_11_farmer_beneficiaries_ip" name="form_11_ip" class="FORM11_FIELD form-control" min="0" value="" />
-                </div>
-                <!-- Youth -->
-                <div class="col-6 col-lg-3">
-                  <label for="farmer_beneficiaries_youth" class="form-label" style="font-size: 0.8rem; font-weight: 500;">Youth</label>
-                  <input type="number" id="form_11_farmer_beneficiaries_youth" name="form_11_youth" class="FORM11_FIELD form-control" min="0" value="" />
-                </div>
-                <!-- SC -->
-                <div class="col-6 col-lg-3">
-                  <label for="farmer_beneficiaries_sc" class="form-label" style="font-size: 0.8rem; font-weight: 500;">SC</label>
-                  <input type="number" id="form_11_farmer_beneficiaries_sc" name="form_11_sc" class="FORM11_FIELD form-control" min="0" value="" />
-                </div>
-              </div>
-            </div>
+          <div class="col-md-4">
+            <label for="form_11_farmer_sectoral_data" class="form-label">Sector</label>
+            <select class="FORM11_FIELD form-select" id="form_11_farmer_sectoral_data" name="farmer_sectoral_data[]" multiple required>
+              <option value="IP">IP</option>
+              <option value="PWD">PWD</option>
+              <option value="Youth">YOUTH</option>
+              <option value="SC">SC</option>
+            </select>
+          </div>
           </div>
         </section>
 
@@ -1179,13 +1164,14 @@
   });
   
 document.addEventListener('DOMContentLoaded', function() {
-  // Enhance multi-select
+  // Enhance multi-select (register in CHOICES_SELECT so loader can pre-select values)
   const loanTypeSelect = document.getElementById('form_11_farmer_loan_type');
   if (loanTypeSelect) {
-    new Choices(loanTypeSelect, {
+    CHOICES_SELECT['form_11_farmer_loan_type'] = new Choices('#form_11_farmer_loan_type', {
       removeItemButton: true,
-      placeholderValue: 'Select Financing  ',
+      placeholderValue: 'Select Financing',
       searchPlaceholderValue: 'Search...',
+      shouldSort: false
     });
   }
 
@@ -1200,6 +1186,21 @@ function calculateFarmerTotalLoanAmount() {
   const amount = parseFloat(document.getElementById('form_11_farmer_loan_amount').value) || 0;
   document.getElementById('form_11_farmer_total_loan_amount').value = amount.toFixed(2);
 }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Enhance multi-select for Sectoral Data (register instance)
+    const sectoralSelect = document.getElementById('form_11_farmer_sectoral_data');
+    if (sectoralSelect) {
+      CHOICES_SELECT['form_11_farmer_sectoral_data'] = new Choices('#form_11_farmer_sectoral_data', {
+        removeItemButton: true,
+        placeholder: true,
+        placeholderValue: 'Select Sectoral Group',
+        searchPlaceholderValue: 'Search...',
+        itemSelectText: '',
+        shouldSort: false
+      });
+    }
+  });
 </script>
 
 <script>
@@ -1323,13 +1324,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Enhance multi-select
+  // Enhance multi-select for FO loan type (register instance)
   const foLoanTypeSelect = document.getElementById('form_11_fo_loan_type');
   if (foLoanTypeSelect) {
-    new Choices(foLoanTypeSelect, {
+    CHOICES_SELECT['form_11_fo_loan_type'] = new Choices('#form_11_fo_loan_type', {
       removeItemButton: true,
-      placeholderValue: 'Select Financing  ',
+      placeholderValue: 'Select Financing',
       searchPlaceholderValue: 'Search...',
+      shouldSort: false
     });
   }
 

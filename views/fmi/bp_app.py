@@ -43,3 +43,4 @@ def fmi_form_e():
 def project_profile():
     if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
     return render_template("fmi_includes/forms/project_profile.html",user_data=session["USER_DATA"][0])
+    
