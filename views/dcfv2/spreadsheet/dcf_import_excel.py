@@ -6,6 +6,7 @@ import xlrd
 from werkzeug.utils import secure_filename
 import os
 
+
 db = mysql(*c.DB_CRED)
 db.err_page = 0
 def is_on_session(): return ('USER_DATA' in session)

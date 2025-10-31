@@ -1,4 +1,4 @@
-<!-- End Page Title -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="col-lg-9">
 	<section class="section profile">
 		<style>
@@ -14,8 +14,11 @@
 				display: block;
 			}
 		</style>
-		
+		<div class="rapid_embed_loading">
+			<i class="x-text-blue fa-solid fa-spinner fa-spin"></i> Loading...
+		</div>
 		<iframe 
+			style="border-style: none; overflow: hidden; opacity: 0;"
 			loading="lazy"
 			id="embed_page"
 			src="#"
@@ -35,6 +38,11 @@
 			function iframe_load (iframe_content){
 				EMBED__SCRIPT(iframe_content,formcdashboard)
 				EMBED__SCRIPT(iframe_content,EMBED_OUTER_LINK_IFRAME)
+
+				const iframe = document.getElementById('embed_page');
+				const loading = document.getElementsByClassName('rapid_embed_loading');
+				if (iframe) { iframe.style.opacity = 1; }
+				for (let i = 0; i < loading.length; i++) { loading[i].style.display = 'none'; }
 			}
 
 			function formcdashboard(_BODY_,obj){

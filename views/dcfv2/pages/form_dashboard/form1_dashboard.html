@@ -8,52 +8,53 @@
 
 <title>Form 1 Dashboard</title>
 	<!-- top tiles -->
-	<div class="row" style="display: inline-block;" >
+
+	<div class="row">
 		<div class="top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag">{{dcf_form1}}</div>
-					<h3>Total Entries</h3>
+					<h3>Entries</h3>
 					<p>Total # of Entries.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag">{{dcf_form1male[0]['total_male']}}</div>
-					<h3>Total Male</h3>
+					<h3>Male</h3>
 					<p>Smallholder Farming Households.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag">{{dcf_form1female[0]['total_female']}} </div>
 					<h3>Total Female</h3>
 					<p>Smallholder Farming Households.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag">{{dcf_form1msme[0]['total_large_entep']}}</div>
 					<h3>Large Enterprise</h3>
 					<p>Total # of Large Enterprises.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag">{{dcf_form1msme2[0]['total_medium_entep']}}</div>
 					<h3>Medium Enterprises</h3>
 					<p>Total # of Medium Enterprises.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag">{{dcf_form1msme3[0]['total_small_entep']}}</div>
 					<h3>Small Enterprises</h3>
 					<p>Total # of Small Enterprises.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag">{{dcf_form1msme4[0]['total_micro_entep']}}</div>
 					<h3>Micro Enterprises</h3>
 					<p>Total # of Micro Enterprises.</p>
@@ -61,93 +62,39 @@
 			</div>
 		</div>
 		<br>
-		<!--  <form action="/exportdashboardcsv1" method="POST"  enctype="multipart/form-data" >
-						<div class="form-row" >
-								<div class="col">
-										<button type="submit" class="btn btn-md btn-success"><span><i class="fa-solid fa-file-arrow-up"></i></span> Download Dashboard Data</button>
-								</div>
-						</div>
-					</form> -->
-				</div>
+		</div>
 				<!-- /top tiles -->
-
 				<div class="row">
-					<div class="col-md-12 col-sm-12 ">
-						<div class="dashboard_graph">
-							<div class="col-md-6 col-sm-6  ">
-								<div class="x_panel">
-									<div class="x_title">
-										<h2>DIPs by Region <small>Bar Chart</small></h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-											</li>
-											<li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a class="dropdown-item" href="#">Settings 1</a>
-													<a class="dropdown-item" href="#">Settings 2</a>
-												</div>
-											</li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div class="x_content">
-										<canvas id="mybarChart"></canvas>
-									</div>
-									<div style="text-align: center;">
-										<p><i class="fa fa-square" style="color:#99e6ff "></i> Approved DIPs: <span id="totalApprovedDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i>Pipeline DIPs: <span id="totalpipelineDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc "></i> Ongoing DIPs: <span id="totalongoingDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ff8080 "></i> Not Started: <span id="totalnotstartedDipsValue"></span></p>
-									</div>
-								</div>
+					<div class="col-md-6 col-sm-6">
+						<div class="x_panel" style="border-radius: 15px;">
+							<div class="x_title">
+								<h2>DIPs by Region <small>Bar Chart</small></h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+									</li>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">Settings 1</a>
+											<a class="dropdown-item" href="#">Settings 2</a>
+										</div>
+									</li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a>
+									</li>
+								</ul>
 								<div class="clearfix"></div>
-								<div class="x_content">
-								</div>
 							</div>
-
-							<div class="col-md-6 col-sm-6  bg-white">
-								<div class="table-responsive">
-								<div class="x_title">
-									<h2>DIPs by Region <small>Table</small></h2>
-									<div class="clearfix"></div>
-								</div>
-								<div class="col-md-3 col-sm-3 ">
-									<table class="table table-bordered" style="width:17vh;">
-										<thead>
-											<tr>
-												<th>RCU</th>
-												<th>Approved DIPs</th>
-												<th>Pipeline DIPs</th>
-												<th>Ongoing DIPs</th>
-												<th>Not Started</th>
-											</tr>
-										</thead>
-										<tbody>
-											{% for dip in dips_list %}
-											<tr>
-												<th scope="row">{{dip}}</th>
-												<td>{{dips_list[dip]["approve"]}}</td>
-												<td>{{dips_list[dip]["pipeline"]}}</td>
-												<td>{{dips_list[dip]["ongoing"]}}</td>
-												<td>{{dips_list[dip]["not_started"]}}</td>
-											</tr>
-											{% endfor %}
-										</tbody>
-									</table>
-								</div>
+							<div class="x_content">
+								<canvas id="mybarChart"></canvas>
 							</div>
-							<div class="clearfix"></div>
-						</div>
+							<div style="text-align: center;">
+								<p><i class="fa fa-square" style="color:#99e6ff "></i> Approved DIPs: <span id="totalApprovedDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#33ccff ">&nbsp;&nbsp;&nbsp;</i>Pipeline DIPs: <span id="totalpipelineDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc "></i> Ongoing DIPs: <span id="totalongoingDipsValue"></span>&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ff8080 "></i> Not Started: <span id="totalnotstartedDipsValue"></span></p>
+							</div>
 						</div>
 					</div>
-				</div>
-				<br />
 
-				<div class="row">
-					<div class="col-md-12 col-sm-12 ">
-						<div class="dashboard_graph">
-							<div class="col-md-6 col-sm-6  ">
-								<div class="x_panel">
+					<div class="col-md-6 col-sm-6  ">
+								<div class="x_panel" style="border-radius: 15px;">
 									<div class="x_title">
 										<h2>Smallholder Farming Households By Region<small>Bar Chart</small></h2>
 										<ul class="nav navbar-right panel_toolbox">
@@ -160,8 +107,6 @@
 													<a class="dropdown-item" href="#">Settings 2</a>
 												</div>
 											</li>
-											<li><a class="close-link"><i class="fa fa-close"></i></a>
-											</li>
 										</ul>
 										<div class="clearfix"></div>
 									</div>
@@ -169,57 +114,91 @@
 										<canvas id="mybarChart2"></canvas>
 									</div>
 								</div>
+							</div>
+						</div>
+				<br />
+
+				<div class="row">
+					<div class="col-md-6 col-sm-6">
+							<div class="x_panel table-responsive" style="border-radius: 15px;">
+							<div class="x_title">
+								<h2>DIPs by Region <small>Table</small></h2>
 								<div class="clearfix"></div>
-								<div class="x_content">
-								</div>
 							</div>
-							<div class="col-md-6 col-sm-6 bg-white">
-								<div class="x_title">
-									<h2>Smallholder Farming Households By Region<small>Table</small></h2>
-									<div class="clearfix"></div>
-								</div>
-								<div class="col-md-12 col-sm-12">
-									<div class="table-responsive">
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th>RCU</th>
-													<th>Male</th>
-													<th>Male <small>Youth</small></th>
-													<th>Male <small>IP</small></th>
-													<th>Male <small>PWD</small></th>
-													<th>Female</th>
-													<th>Female <small>Youth</small></th>
-													<th>Female <small>IP</small></th>
-													<th>Female <small>PWD</small></th>
-												</tr>
-											</thead>
-											<tbody>
-												{% for dip in dip_sex_group_per_region %}
-												<tr>
-													<th scope="row">{{dip}}</th>
-													<td>{{dip_sex_group_per_region[dip]["male"]["total"]}}</td>
-													<td>{{dip_sex_group_per_region[dip]["male"]["youth"]}}</td>
-													<td>{{dip_sex_group_per_region[dip]["male"]["ip"]}}</td>
-													<td>{{dip_sex_group_per_region[dip]["male"]["pwd"]}}</td>
-													<td>{{dip_sex_group_per_region[dip]["female"]["total"]}}</td>
-													<td>{{dip_sex_group_per_region[dip]["female"]["youth"]}}</td>
-													<td>{{dip_sex_group_per_region[dip]["female"]["ip"]}}</td>
-													<td>{{dip_sex_group_per_region[dip]["female"]["pwd"]}}</td>
-												</tr>
-												{% endfor %}
-											</tbody>
-										</table>
-									</div>
-								</div>
+							<div class="col-md-12 col-sm-12">
+								<table class="table table-striped table-bordered">
+									<thead style="background-color: #0099cc; color: white">
+										<tr>
+											<th>RCU</th>
+											<th>Approved DIPs</th>
+											<th>Pipeline DIPs</th>
+											<th>Ongoing DIPs</th>
+											<th>Not Started</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for dip in dips_list %}
+										<tr>
+											<th scope="row">{{dip}}</th>
+											<td>{{dips_list[dip]["approve"]}}</td>
+											<td>{{dips_list[dip]["pipeline"]}}</td>
+											<td>{{dips_list[dip]["ongoing"]}}</td>
+											<td>{{dips_list[dip]["not_started"]}}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
 							</div>
-						<div class="clearfix"></div>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-sm-6">
+						<div class="x_panel table-responsive" style="border-radius: 15px;">
+						<div class="x_title">
+							<h2>Smallholder Farming Households By Region<small>Table</small></h2>
+							<div class="clearfix"></div>
+						</div>
+						<div class="col-md-12 col-sm-12">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered">
+									<thead style="background-color: #0099cc; color: white">
+										<tr>
+											<th>RCU</th>
+											<th>Male</th>
+											<th>Male <small>Youth</small></th>
+											<th>Male <small>IP</small></th>
+											<th>Male <small>PWD</small></th>
+											<th>Female</th>
+											<th>Female <small>Youth</small></th>
+											<th>Female <small>IP</small></th>
+											<th>Female <small>PWD</small></th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for dip in dip_sex_group_per_region %}
+										<tr>
+											<th scope="row">{{dip}}</th>
+											<td>{{dip_sex_group_per_region[dip]["male"]["total"]}}</td>
+											<td>{{dip_sex_group_per_region[dip]["male"]["youth"]}}</td>
+											<td>{{dip_sex_group_per_region[dip]["male"]["ip"]}}</td>
+											<td>{{dip_sex_group_per_region[dip]["male"]["pwd"]}}</td>
+											<td>{{dip_sex_group_per_region[dip]["female"]["total"]}}</td>
+											<td>{{dip_sex_group_per_region[dip]["female"]["youth"]}}</td>
+											<td>{{dip_sex_group_per_region[dip]["female"]["ip"]}}</td>
+											<td>{{dip_sex_group_per_region[dip]["female"]["pwd"]}}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+						</div>
 					</div>
 				</div>
-
-				<div class="col-md-6 col-sm-6  ">
-					<br>
-						<div class="x_panel">
+					
+					<div class="row">
+					<div class="col-md-6 col-sm-6">
+						<div class="x_panel" style="border-radius: 15px;">
 							<div class="x_title">
 								<h2>Overall Total Smallholder Farming Households <small>Pie Chart</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
@@ -246,9 +225,8 @@
 							</div>
 						</div>
 
-						<div class="col-md-4 col-sm-4 ">
-							<br>
-							<div class="x_panel tile overflow_hidden">
+						<div class="col-md-6 col-sm-6 ">
+							<div class="x_panel" style="border-radius: 15px;">
 								<div class="x_title">
 									<h2>DIPs by Commodity</h2>
 									<ul class="nav navbar-right panel_toolbox">
@@ -299,6 +277,7 @@
 							</div>
 						</div>
 					</div>
+				</div>
 
 					<script>
 						var formattedTotal = Math.floor({{total_untagged}}).toLocaleString();
@@ -685,8 +664,7 @@
 					</script>
 
 					<!-- Start to do list -->
-					<div class="col-md-12 col-sm-12 ">
-						<div class="x_panel">
+						<div class="x_panel" style="border-radius: 15px;">
 							<div class="x_title">
 								<h2>Data<small>Table</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
@@ -711,8 +689,8 @@
 											<p class=" text-muted font-13 m-b-30">
 												All entries of Form 1 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
 											</p>
-											<table id="datatable-responsive" class="table table-dark table-striped table-bordered" cellspacing="0" width="100%">
-												<thead>
+											<table id="datatable-responsive" class="table table-striped table-bordered" cellspacing="0" width="100%">
+												<thead style="background-color: #0099cc; color: white">
 													<tr>
 														<th>ID</th>
 														<th>DIP Name | Anchor Firm</th>
@@ -783,6 +761,7 @@
 					</div>
 				</div>
 
+
 				<script type="text/javascript">
 					function exportForm1Data() {
 						// Redirect to the backend route to download the Excel file
@@ -790,8 +769,7 @@
 					}
 				</script>
 
-				<div class="col-md-12 col-sm-12 ">
-					<div class="x_panel tile">
+					<div class="x_panel tile" style="border-radius: 15px;">
 						<div class="x_title">
 							<h2>FORM 1 PREPARATION, REVIEW AND APPROVAL STATUS <small>SPREADSHEET MANAGEMENT</small></h2>
 							<ul class="nav navbar-right panel_toolbox">
@@ -858,12 +836,6 @@
 								</form>
 							</div>
 						</div>
-					</div>
-					<!-- End to do list -->
-					<!-- end of weather widget -->
-				</div>
-			</div>
-		</div>
 
 	{% endblock content %}
 	<!-- Specific JS goes HERE -->

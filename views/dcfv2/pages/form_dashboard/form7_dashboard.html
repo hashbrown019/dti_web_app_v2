@@ -9,160 +9,46 @@
 {% include "includes/sweetalert.html" %}
 <title>Form 7 Dashboard</title>
 
-	<!-- top tiles -->
-	<div class="row" style="display: inline-block;" >
-		<div class="top_tiles">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7}}</div>
-                  <h3>Total Entries</h3>
-                  <p>Total # of Entries.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7msme[0]['totalmsme7']}}</div>
-                  <h3>Total MSME</h3>
-                  <p>Total # of Beneficiary.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7fo[0]['totalfo7']}} </div>
-                  <h3>Total FO</h3>
-                  <p>Total # of Beneficiary.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7farmer[0]['totalfarmer7']}}</div>
-                  <h3>Total Farmer</h3>
-                  <p>Total # of Beneficiary.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7male[0]['totalmale7']}} </div>
-                  <h3>Total Male</h3>
-                  <p>Total # of male outputs.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7female[0]['totalfemale7']}} </div>
-                  <h3>Total Female</h3>
-                  <p>Total # of male outputs.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7pwd[0]['totalpwd7']}} </div>
-                  <h3>Total PWD</h3>
-                  <p>Total # of output per sector.</p>
-                </div>
-              </div>
-				<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7youth[0]['totalyouth7']}} </div>
-                  <h3>Total Youth</h3>
-                  <p>Total # of output per sector.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7ip[0]['totalip7']}} </div>
-                  <h3>Total IP</h3>
-                  <p>Total # of output per sector.</p>
-                </div>
-              </div>         
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7sc[0]['totalsc7']}} </div>
-                  <h3>Total SC</h3>
-                  <p>Total # of output per sector.</p>
-                </div>
-              </div>   
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form7abled[0]['totalabled7']}} </div>
-                  <h3>Total Abled</h3>
-                  <p>Total # of output per sector.</p>
-                </div>
-              </div> 
-            </div>
-<!-- 
-		<div class="tile_count">
-		 <div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"><i class="fa fa-users"></i> Total Entries</span>
-			<div class="count">{{dcf_form7}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of Entries</span>
-
-		</div>
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"> Total MSME</span>
-			<div class="count _money_tag">{{dcf_form7msme[0]['totalmsme7']}} </div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of Beneficiary</span>
-		</div>
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"> Total FO</span>
-			<div class="count _money_tag">{{dcf_form7fo[0]['totalfo7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of Beneficiary</span>
-
-		</div>
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"> Total Farmer</span>
-			<div class="count _money_tag">{{dcf_form7farmer[0]['totalfarmer7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of Beneficiary</span>
-		</div>
-		
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"><i class="fa fa-user"></i> Total Male</span>
-			<div class="count _money_tag">{{dcf_form7male[0]['totalmale7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of male outputs</span>
-		</div>
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"><i class="fa fa-user"></i> Total Female</span>
-			<div class="count _money_tag">{{dcf_form7female[0]['totalfemale7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of female outputs</span>
-		</div>
-
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"><i class="fa fa-user"></i> Total PWD</span>
-			<div class="count _money_tag">{{dcf_form7pwd[0]['totalpwd7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
-		</div>
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"><i class="fa fa-user"></i> Total Youth</span>
-			<div class="count _money_tag">{{dcf_form7youth[0]['totalyouth7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
-		</div>
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"><i class="fa fa-user"></i> Total IP</span>
-			<div class="count _money_tag">{{dcf_form7ip[0]['totalip7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
-		</div>
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"><i class="fa fa-user"></i> Total SC</span>
-			<div class="count _money_tag">{{dcf_form7sc[0]['totalsc7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
-		</div>
-		<div class="col-md-2 col-sm-4  tile_stats_count">
-			<span class="count_top"><i class="fa fa-user"></i> Total Abled</span>
-			<div class="count _money_tag">{{dcf_form7abled[0]['totalabled7']}}</div>
-			<span style="font-size: 10px;" class="count_bottom">Total # of output per sector</span>
-		</div>
-		
-	</div> -->
-</div>
-<!-- /top tiles -->
-
-
-
 <div class="row">
-	<div class="col-md-4 col-sm-4 ">
-		<div class="x_panel tile overflow_hidden">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+    <div class="tile-stats" style="border-radius: 15px;">
+      <div class="count _money_tag">{{dcf_form7}}</div>
+      <h3>Total Entries</h3>
+      <p>Total # of Beneficiary</p>
+    </div>
+  </div>
+
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+    <div class="tile-stats" style="border-radius: 15px;">
+      <div class="count _money_tag">{{dcf_form7msme[0]['totalmsme7']}}</div>
+      <h3>Total MSME</h3>
+      <p>Total # of MSME.</p>
+    </div>
+  </div>
+
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+    <div class="tile-stats" style="border-radius: 15px;">
+      <div class="count _money_tag">{{dcf_form7fo[0]['totalfo7']}}</div>
+      <h3>Total FO</h3>
+      <p>Total # of FO.</p>
+    </div>
+  </div>
+
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+    <div class="tile-stats" style="border-radius: 15px;">
+      <div class="count _money_tag">{{dcf_form7farmer[0]['totalfarmer7']}}</div>
+      <h3>Total Farmer</h3>
+      <p>Total # of Farmer.</p>
+    </div>
+  </div>
+</div>
+
+<!-- /top tiles -->
+<div class="row">
+	<div class="col-md-6 col-sm-6">
+		<div class="x_panel" style="border-radius: 15px;">
 			<div class="x_title">
-				<h2>Commodity</h2>
+				<h2>Type of Activity <small>Bar Chart</small></h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>
@@ -179,130 +65,16 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<table class="" style="width:100%">
-					<tr>
-						<th>
-							<p>Pie Chart Percentage</p>
-						</th>
-						<th>
-							<p class="">Commodities</p>
-						</th>
-					</tr>
-					<tr>
-						<td>
-							<canvas class="canvasDoughnut7" height="200" width="200" style="margin: 15px 10px 10px 0"></canvas>
-						</td>
-						<td>
-							<table class="tile_info">
-								{% for key in over_all_commodity_count7 %}
-								<tr>
-									<td>
-										{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
-										{% set color_index = loop.index0 % square_colors|length %}
-										<p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>{{ key }}: {{ over_all_commodity_count7[key] }}</p>
-									</td>
-								</tr>
-								{% endfor %}
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+				<canvas id="mybarChart7"></canvas>
+			</div>
+			<div style="text-align: center;">
+				<p><i class="fa fa-square" style="color:#884dff "></i> Provincial: <span class="_money_tag">{{dcf7_TFP[0]['tfp7']}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ac7339 "></i> Regional: <span class="_money_tag">{{dcf7_TFR[0]['tfr7'] + dcf7_TSMPR[0]['tsmpr7'] + dcf7_BMPR[0]['bmpr7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ffa31a "></i> National: <span class="_money_tag">{{dcf7_TFN[0]['tfn7'] + dcf7_TSMN[0]['tsmn7'] + dcf7_BMN[0]['bmn7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <i class="fa fa-square" style="color:#ff4d4d "></i> International: <span class="_money_tag">{{dcf7_TFI[0]['tfi7'] + dcf7_TSMI[0]['tsmi7'] + dcf7_BMI[0]['bmi7']}}</span></p>
+			</div>
 		</div>
 	</div>
 </div>
-
-
-<div class="col-md-6 col-sm-6">
-	<div class="x_panel">
-		<div class="x_title">
-			<h2>Sales Generated per MSME <small>Bar Chart</small></h2>
-			<ul class="nav navbar-right panel_toolbox">
-				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">Settings 1</a>
-						<a class="dropdown-item" href="#">Settings 2</a>
-					</div>
-				</li>
-				<li><a class="close-link"><i class="fa fa-close"></i></a>
-				</li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>
-		<div class="x_content">
-			<canvas id="mybarChart7"></canvas>
-		</div>
-		<div style="text-align: center;">
-			<p><i class="fa fa-square" style="color:#884dff "></i> Cash Sales: <span class="_money_tag">{{dcf_form7cashsales[0]['total_cash7']}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ac7339 "></i> Booked Sales: <span class="_money_tag">{{dcf_form7bookedsales[0]['total_booked7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ffa31a "></i> Under Negotiations: <span class="_money_tag">{{dcf_form7undernego[0]['total_undernego']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Total: <span class="_money_tag">{{dcf_form7total[0]['total_ovrlltotal']}}</span></p>
-		</div>
-	</div>
-</div>
-
 
 <script>
-	function init_chart_doughnut() {
-		if (typeof (Chart) === 'undefined') { return; }
-		console.log('init_chart_doughnut');
-		if ($('.canvasDoughnut7').length) {
-			var _labels = [];
-			var _data = [];
-			// Sample data
-			{% for key in over_all_commodity_count7 %}
-			_labels.push('{{key}}');
-			_data.push('{{over_all_commodity_count7[key]}}');
-			{% endfor %}
-			// Calculate total for _data
-			var totalData = _data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-			// Normalize _data to make its total equivalent to totalData
-			var normalizedData = _data.map(value => ((parseFloat(value) / totalData) * 100).toFixed(2));
-			var chart_doughnut_settings = {
-				type: 'doughnut',
-				tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-				data: {
-					labels: _labels,
-					datasets: [{
-						data: normalizedData, // Use normalizedData here
-						backgroundColor: [
-							"#BDC3C7",
-							"#5c5c3d",
-							"#994d00",
-							"#331a00",
-							"#23a98c"
-							],
-						hoverBackgroundColor: [
-							"#CFD4D8",
-							"#8a8a5c",
-							"#cc6600",
-							"#663500",
-							"#56dcbf"
-							]
-					}]
-				},
-				options: {
-					legend: false,
-					responsive: false,
-					tooltips: {
-						callbacks: {
-							label: function (tooltipItem, data) {
-								var dataset = data.datasets[tooltipItem.datasetIndex];
-								var currentValue = _data[tooltipItem.index];
-								var percentage = ((currentValue / totalData) * 100).toFixed(2) + "%";
-								return _labels[tooltipItem.index] + ": " + percentage;
-							}
-						}
-					}
-				}
-			};
-			$('.canvasDoughnut7').each(function () {
-				var chart_element = $(this);
-				var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
-			});
-		}
-	}
-
 	function init_charts() {
 		console.log('run_charts  typeof [' + typeof (Chart) + ']');
 		if (typeof (Chart) === 'undefined') { return; }
@@ -314,11 +86,11 @@
 		if ($("#mybarChart7").length) e = document.getElementById("mybarChart7"), new Chart(e, {
 			type: "bar",
 			data: {
-				labels: ["Cash Sales", "Booked Sales","Under Negotiations"],
+				labels: ["Provincial", "Regional","National", "International"],
 				datasets: [{
 					label: "Total",
-					backgroundColor:  ["#884dff", "#ac7339", "#ffa31a"],
-					data: [{{dcf_form7cashsales[0]['total_cash7']}}, {{dcf_form7bookedsales[0]['total_booked7']}},{{dcf_form7undernego[0]['total_undernego']}}]
+					backgroundColor:  ["#884dff", "#ac7339", "#ffa31a", "#ff4d4d"],
+					data: [{{dcf7_TFP[0]['tfp7']}}, {{dcf7_TFR[0]['tfr7'] + dcf7_TSMPR[0]['tsmpr7'] + dcf7_BMPR[0]['bmpr7']}},{{dcf7_TFN[0]['tfn7'] + dcf7_TSMN[0]['tsmn7'] + dcf7_BMN[0]['bmn7']}}, {{dcf7_TFI[0]['tfi7'] + dcf7_TSMI[0]['tsmi7'] + dcf7_BMI[0]['bmi7']}} ]
 				},]
 			},
 			options: {
@@ -500,8 +272,7 @@
 	</script>
 
 	<!-- Start to do list -->
-	<div class="col-md-12 col-sm-12 ">
-		<div class="x_panel">
+		<div class="x_panel" style="border-radius: 15px;">
 			<div class="x_title">
 				<h2>Data<small>Table</small></h2>
 				<ul class="nav navbar-right panel_toolbox">
@@ -588,11 +359,10 @@
 	function exportForm7Data() {
 		window.location.href = '/export_form7';
 	}
-</script>>
+</script>
 
 
-<div class="col-md-12 col-sm-12 ">
-	<div class="x_panel tile">
+	<div class="x_panel tile" style="border-radius: 15px;">
 		<div class="x_title">
 			<h2>FORM 7 Trade Promotion Services Tracker <small>SPREADSHEET MANAGEMENT</small></h2>
 			<ul class="nav navbar-right panel_toolbox">
@@ -660,11 +430,8 @@
 				</form>
 			</div>
 		</div>
-	</div>
 	<!-- End to do list -->
 	<!-- end of weather widget -->
-</div>
-</div>
 </div>
 {% endblock content %}
 <!-- Specific JS goes HERE -->

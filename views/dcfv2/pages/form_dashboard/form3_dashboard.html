@@ -10,65 +10,23 @@
 <title>Form 3 Dashboard</title>
 
 	<!-- top tiles -->
-	<div class="row" style="display: inline-block;" >
-			<div class="top_tiles">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form3}}</div>
-                  <h3>Total Entries</h3>
-                  <p>Total # of Entries.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form3male}}</div>
-                  <h3>Total Male</h3>
-                  <p>Total # of Entries by Sex.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{dcf_form3female}} </div>
-                  <h3>Total Female</h3>
-                  <p>Total # of Entries by Sex.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{form3_agri[0]['total_agri']}}</div>
-                  <h3>Agri-technical</h3>
-                  <p>Field of Expertise.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{form3_entrep[0]['total_entrep']}}</div>
-                  <h3>Entrepreneurial</h3>
-                  <p>Field of Expertise.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{form3_extserv[0]['total_extserv']}}</div>
-                  <h3>Extension Service</h3>
-                  <p>Field of Expertise.</p>
-                </div>
-              </div>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-                <div class="tile-stats">
-                  <div class="count _money_tag">{{form3_org[0]['total_org']}}</div>
-                  <h3>Organizational</h3>
-                  <p>Field of Expertise.</p>
-                </div>
-              </div>
-            </div>
+	<div class="row g-3"> <!-- g-3 adds spacing between columns -->
+		<div class="col-lg-4 col-md-4 col-sm-12">
+			<div class="tile-stats" style="border-radius: 15px;">
+			<div class="count _money_tag">{{dcf_form3}}</div>
+			<h3>Total BDSP</h3>
+			<p>Total # of BDSP</p>
+			</div>
 		</div>
+		
+	</div>
+
 	<!-- /top tiles -->
 	<br />
 
 <div class="row">
  	<div class="col-md-6 col-sm-6  ">
-		<div class="x_panel">
+		<div class="x_panel" style="border-radius: 15px;">
 			<div class="x_title">
 				<h2>Philgeps Registered <small>Pie Chart</small></h2>
 				<ul class="nav navbar-right panel_toolbox">
@@ -89,14 +47,14 @@
 			<div class="x_content">
 				<canvas id="pieChart3"></canvas>
 				<div style="text-align: center;">
-					<p><i class="fa fa-square" style="color:#cc3300 "></i> Red: {{form3red[0]['totalred']}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#cfccc9 "></i> Platinum: {{form3plat[0]['totalplat']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-square" style="color:#669999 "></i> Unregistered: {{form3unreg[0]['totalunreg']}}
+					<p><i class="fa fa-square" style="color:#cc3300 "></i> Agri-technical: {{form3_agri[0]['total_agri']}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#cfccc9 "></i> Entrepreneurial: {{form3_entrep[0]['total_entrep']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-square" style="color:#669999 "></i> Extension Service: {{form3_extserv[0]['total_extserv']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-square" style="color:#976699 "></i> Organizational: {{form3_org[0]['total_org']}}>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="col-md-6 col-sm-6  ">
-		<div class="x_panel">
+		<div class="x_panel" style="border-radius: 15px;">
 			<div class="x_title">
 				<h2>Type of BDSP <small>Bar Chart</small></h2>
 				<ul class="nav navbar-right panel_toolbox">
@@ -118,7 +76,7 @@
 				<canvas id="mybarChart3"></canvas>
 			</div>
 			<div style="text-align: center;">
-				<p>Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp; Organizational/Firm: {{form3orgfirm[0]['totalorgfirm']}}</p>
+				<p><i class="fa fa-square" style="color:#009999 "></i> Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#666699 "></i> Organizational/Firm: {{form3orgfirm[0]['totalorgfirm']}}</p>
 			</div>
 		</div>
 	</div>
@@ -216,17 +174,19 @@
 
 						if ($('#pieChart3').length) {
 							var xValues2 = [
-								'Red: ' + {{form3red[0]['totalred']}},
-								'Platinum: ' + {{form3plat[0]['totalplat']}},
-								'Unregistered: ' + {{form3unreg[0]['totalunreg']}}
-								];
-								var yValues2 = [
-								{{form3red[0]['totalred']}},
-								{{form3plat[0]['totalplat']}},
-								{{form3unreg[0]['totalunreg']}}
+								'Agri-technical: ' + {{form3_agri[0]['total_agri']}},
+								'Entrepreneurial: ' + {{form3_entrep[0]['total_entrep']}},
+								'Extension Service: ' + {{form3_extserv[0]['total_extserv']}},
+								'Organizational: ' + {{form3_org[0]['total_org']}}
+							];
+							var yValues2 = [
+								{{form3_agri[0]['total_agri']}},
+								{{form3_entrep[0]['total_entrep']}},
+								{{form3_extserv[0]['total_extserv']}},
+								{{form3_org[0]['total_org']}}
 								// {{total_untagged}},
 								];
-									var barColors = ['#cc3300', '#cfccc9', '#669999'];
+									var barColors = ['#cc3300', '#cfccc9', '#669999', '#976699'];
 									var total = yValues2.reduce((a, b) => a + b, 0);
 									var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
 									var ctx = document.getElementById("pieChart3");
@@ -348,7 +308,7 @@
 
 						<!-- Start to do list -->
 						<div class="col-md-12 col-sm-12 ">
-							<div class="x_panel">
+							<div class="x_panel" style="border-radius: 15px;">
 								<div class="x_title">
 									<h2>Data<small>Table</small></h2>
 									<ul class="nav navbar-right panel_toolbox">
@@ -436,9 +396,9 @@
 						function exportForm3Data() {
 							window.location.href = '/export_form3';
 						}
-					</script>>
-					<div class="col-md-12 col-sm-12 ">
-						<div class="x_panel tile">
+					</script>
+					
+						<div class="x_panel tile" style="border-radius: 15px;">
 							<div class="x_title">
 								<h2>FORM 3 BDSP REGISTRY <small>SPREADSHEET MANAGEMENT</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
@@ -506,7 +466,6 @@
 									</form>
 								</div>
 							</div>
-						</div>
 						<!-- End to do list -->
 						<!-- end of weather widget -->
 					</div>

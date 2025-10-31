@@ -12,9 +12,9 @@
 	<!-- top tiles -->
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" >
         <label for="regionFilter">Select Region</label>
-        <select id="regionFilter" class="form-control">
+        <select id="regionFilter" class="form-control" style="border-radius: 15px;">
             <option value="">All Regions</option>
             <option value="8">Region 8</option>
             <option value="9">Region 9</option>
@@ -141,55 +141,55 @@
 	<div class="row" style="display: inline-block;" >
 		<div class="top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalEntries">{{ dcf_form2 }}</div>
 					<h3>Total Entries</h3>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalMembers">{{ dcf_form2sextotal[0]['total_sex2'] | int }}</div>
 					<h3>Total Members</h3>
 					<p>Total # of FO Members.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalMale">{{ dcf_form2FOmale[0]['total_male2'] | int }}</div>
 					<h3>Total Male</h3>
 					<p>Total # of FO Members by Sex.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalFemale">{{ dcf_form2FOfemale[0]['total_female2'] | int }}</div>
 					<h3>Total Female</h3>
 					<p>Total # of FO Members by Sex.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalPWD">{{ dcf_form2FOpwd[0]['total_pwd'] | int }}</div>
 					<h3>PWD</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalYouth">{{ dcf_form2FOyouth[0]['total_youth'] | int }}</div>
 					<h3>Youth</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalIP">{{ dcf_form2FOip[0]['total_ip'] | int }}</div>
 					<h3>IP</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalSC">{{ dcf_form2FOsc[0]['total_sc'] | int }}</div>
 					<h3>SC</h3>
 					<p>Total # of FO members by Sector.</p>
@@ -200,8 +200,8 @@
 	<!-- /top tiles -->
 
 	<div class="row">
-		<div class="col-md-6 col-sm-6  ">
-			<div class="x_panel">
+		<div class="col-md-6 col-sm-6 " style="display: flex; flex-wrap: wrap;">
+			<div class="x_panel" style="border-radius: 15px;">
 				<div class="x_title">
 					<h2>Remarks/Status <small>Pie chart</small></h2>
 					<ul class="nav navbar-right panel_toolbox">
@@ -226,8 +226,8 @@
 				</div>
 			</div>
 
-			<div class="col-md-6 col-sm-6">
-				<div class="x_panel tile overflow_hidden">
+			<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+				<div class="x_panel tile" style="border-radius: 15px;">
 					<div class="x_title">
 					<h2>Commodity</h2>
 					<ul class="nav navbar-right panel_toolbox">
@@ -244,13 +244,11 @@
 					<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-					<div class="row">
-						<div class="col-md-8 col-sm-6">
+						<div class="col-md-12 col-sm-12">
 						<p>Pie Chart Percentage</p>
 						<canvas id="canvasDoughnut" ></canvas>
 						</div>
-						<div class="col-md-4 col-sm-6">
-						<p class="">Commodities</p>
+						<div class="col-md-12 col-sm-12">
 						<table class="tile_info" id="commodityLegend">
 							{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
 							{% for key in over_all_commodity_count2 %}
@@ -262,7 +260,6 @@
 							</tr>
 							{% endfor %}
 						</table>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -270,8 +267,8 @@
 	</div>
 	<h2 class=" x-container text-white x-padding" style="background-color: #007399; text-align: center;">Sales Monitoring</h2>
 	<div class="row">
-	<div class="col-md-6 col-sm-6">
-		<div class="x_panel">
+	<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+		<div class="x_panel" style="border-radius: 15px;" >
 			<div class="x_title">
 				<h2>SALES MONITORING (by Commodity)</h2>
 				<div class="clearfix"></div>
@@ -302,8 +299,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6 col-sm-6">
-		<div class="x_panel tile overflow_hidden">
+	<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+		<div class="x_panel tile" style="border-radius: 15px;">
 			<div class="x_title">
 				<h2>Commodity Bar Chart</h2>
 				<ul class="nav navbar-right panel_toolbox">
@@ -427,15 +424,18 @@
 							// Update legend
 							const legendContainer = document.getElementById("commodityLegend");
 							legendContainer.innerHTML = '';
+							const legendRow = document.createElement('tr');
 							for (let i = 0; i < labels.length; i++) {
-								legendContainer.innerHTML += `
-									<tr>
-										<td>
-											<p><i class="fa fa-square" style="color:${colors[i % colors.length]}"></i> ${labels[i]}: ${data[i]}</p>
-										</td>
-									</tr>
+								const legendItem = document.createElement('td');
+								legendItem.innerHTML = `
+									<p>
+										<i class="fa fa-square" style="color:${colors[i % colors.length]}"></i>
+										${labels[i]}: ${data[i]}
+									</p>
 								`;
+								legendRow.appendChild(legendItem);
 							}
+							legendContainer.appendChild(legendRow);
 						}
 
 						let polarChartInstance = null;
@@ -575,7 +575,7 @@
 
 					<!-- Start to do list -->
 					<div class="col-md-12 col-sm-12 ">
-						<div class="x_panel ">
+						<div class="x_panel " style="border-radius: 15px;">
 							<div class="x_title">
 								<h2>Data<small>Table</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
@@ -702,8 +702,8 @@
 				}
 			</script>
 
-				<div class="col-md-12 col-sm-12 ">
-					<div class="x_panel tile">
+
+					<div class="x_panel tile" style="border-radius: 15px;">
 						<div class="x_title">
 							<h2>FORM 2 CPA TRACKER<small>SPREADSHEET MANAGEMENT</small></h2>
 							<ul class="nav navbar-right panel_toolbox">
@@ -770,7 +770,6 @@
 								</form>
 							</div>
 						</div>
-					</div>
 					<!-- End to do list -->
 					<!-- end of weather widget -->
 				</div>

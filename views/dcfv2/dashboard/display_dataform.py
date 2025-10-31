@@ -1,4 +1,4 @@
-from flask import app, flash, jsonify,render_template,redirect, request,session
+from flask import app, Blueprint, flash, jsonify,render_template,redirect, request,session
 import Configurations as c
 from modules.Connections import mysql
 from flask_session import Session
@@ -7,6 +7,8 @@ from werkzeug.utils import secure_filename
 from flask import Flask
 
 app = Flask(__name__)
+
+app = Blueprint("display_dataform",__name__,template_folder='templates')
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -525,6 +527,24 @@ def displayform():
     dcf_form5ip=db.select("SELECT SUM(mgit_total_number_fo_sectoral_IP) AS totalip5 FROM dcf_matching_grant {}; ".format(position_data_filter()))
     dcf_form5sc=db.select("SELECT SUM(mgit_total_number_fo_sectoral_SC) AS totalsc5 FROM dcf_matching_grant {}; ".format(position_data_filter()))
 
+    dcf_form5FOMSME=db.select("SELECT COUNT(mgit_msme_recipient) AS totalFOMSME5 FROM dcf_matching_grant {}; ".format(position_data_filter()))
+
+    dcf_form5_FOExpansion = db.select("""
+        SELECT SUM((LENGTH(mgit_type_of_investment) - LENGTH(REPLACE(mgit_type_of_investment, 'Expansion', ''))) / LENGTH('Expansion')) AS FO_Expansion
+        FROM dcf_matching_grant {};
+    """.format(position_data_filter()))
+
+    dcf_form5_FOProductive = db.select("""
+        SELECT SUM((LENGTH(mgit_type_of_investment) - LENGTH(REPLACE(mgit_type_of_investment, 'Productive investments', ''))) / LENGTH('Productive investments')) AS FO_Productive
+        FROM dcf_matching_grant {};
+    """.format(position_data_filter()))
+
+    dcf_form5_FORehab = db.select("""
+        SELECT SUM((LENGTH(mgit_type_of_investment) - LENGTH(REPLACE(mgit_type_of_investment, 'Rehabilitation', ''))) / LENGTH('Rehabilitation')) AS FO_Rehabilitation
+        FROM dcf_matching_grant {};
+    """.format(position_data_filter()))
+
+
 
     selectdcf_form3male=db.select("SELECT form_3_sex AS total_male3 FROM dcf_bdsp_reg {} AND form_3_sex = 'male';".format(position_data_filter()))
     selectdcf_form3female=db.select("SELECT form_3_sex AS total_female3 FROM dcf_bdsp_reg {} AND form_3_sex = 'female';".format(position_data_filter()))
@@ -567,10 +587,18 @@ def displayform():
     dcf_form9meetings=db.select("SELECT COUNT(form_9_type_of_training) AS totalmeetings9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Meetings';".format(position_data_filter()))
     dcf_form9policy=db.select("SELECT COUNT(form_9_type_of_training) AS totalpolicy9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Policy issuances';".format(position_data_filter()))
     dcf_form9budg=db.select("SELECT SUM(form_9_rapid_actual_budget) as totalact9 FROM dcf_enablers_activity {};".format(position_data_filter()))
+    dcf_form9other = db.select("""
+        SELECT COUNT(form_9_othertypetraining) AS totalother9
+        FROM dcf_enablers_activity
+        {}
+        AND form_9_othertypetraining IS NOT NULL
+        AND TRIM(form_9_othertypetraining) <> ''
+    """.format(position_data_filter()))
+
 
     dcf_form10female=db.select("SELECT SUM(form_10_sex_female) AS total_female10 FROM dcf_negosyo_center {};".format(position_data_filter()))
     dcf_form10male=db.select("SELECT SUM(form_10_sex_male) AS total_male10 FROM dcf_negosyo_center {};".format(position_data_filter()))
-
+    dcf_form10nc=db.select("SELECT COUNT(form_10_name_of_nc) AS total_nc10 FROM dcf_negosyo_center {} AND form_10_name_of_nc IS NOT NULL AND TRIM(form_10_name_of_nc) <> '';".format(position_data_filter()))
 
 
     dcf_form11ip = db.select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_ip, 0) + COALESCE(form_11_fo_ip, 0)) AS total_ip11 FROM dcf_access_financing {};""".format(position_data_filter()))
@@ -581,10 +609,58 @@ def displayform():
     dcf_form11male = db.select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_male, 0) + COALESCE(form_11_fo_male, 0)) AS total_male11 FROM dcf_access_financing {};""".format(position_data_filter()))
 
     dcf_form6actualbudget=db.select("SELECT SUM(form_6_rapid_actual_budget) AS total_actbug6 FROM dcf_product_development {};".format(position_data_filter()))
+    dcf_form6male=db.select("SELECT SUM(form_6_male) AS total_male6 FROM dcf_product_development {};".format(position_data_filter()))
+    dcf_form6female=db.select("SELECT SUM(form_6_female) AS total_female6 FROM dcf_product_development {};".format(position_data_filter()))
+    dcf_form6pwd=db.select("SELECT SUM(form_6_pwd) AS total_pwd6 FROM dcf_product_development {};".format(position_data_filter()))
+    dcf_form6ip=db.select("SELECT SUM(form_6_ip) AS total_ip6 FROM dcf_product_development {};".format(position_data_filter()))
+    dcf_form6youth=db.select("SELECT SUM(form_6_youth) AS total_youth6 FROM dcf_product_development {};".format(position_data_filter()))
+    dcf_form6sc=db.select("SELECT SUM(form_6_sc) AS total_sc6 FROM dcf_product_development {};".format(position_data_filter()))
+    dcf_form6act = db.select("""SELECT COUNT(form_6_type_of_activity) AS total_act6 FROM dcf_product_development {} AND form_6_type_of_activity IS NOT NULL AND TRIM(form_6_type_of_activity) <> ''""".format(position_data_filter()))
 
+    dcf_form6_Cacao = db.select("""SELECT SUM(form_6_commodity LIKE '%Cacao%') AS total_cacao6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    dcf_form6_Coffee = db.select(""" SELECT SUM(form_6_commodity LIKE '%Coffee%') AS total_coffee6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    dcf_form6_Coconut = db.select(""" SELECT SUM(form_6_commodity LIKE '%Coconut%') AS total_coconut6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    dcf_form6_PFN = db.select(""" SELECT SUM(form_6_commodity LIKE '%PFN%') AS total_pfn6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
 
+    # Product Development
+    dcf_form6_prod = db.select("""
+        SELECT COUNT(*) AS total_prod6 
+        FROM dcf_product_development 
+        {} 
+        AND form_6_type_of_activity LIKE '%Product Development%'
+        AND form_6_type_of_activity IS NOT NULL 
+        AND TRIM(form_6_type_of_activity) <> ''
+    """.format(position_data_filter()))
 
+    # Training
+    dcf_form6_training = db.select("""
+        SELECT COUNT(*) AS total_training6 
+        FROM dcf_product_development 
+        {} 
+        AND form_6_type_of_activity LIKE '%Training%'
+        AND form_6_type_of_activity IS NOT NULL 
+        AND TRIM(form_6_type_of_activity) <> ''
+    """.format(position_data_filter()))
 
+    # Consultation
+    dcf_form6_consultation = db.select("""
+        SELECT COUNT(*) AS total_consultation6 
+        FROM dcf_product_development 
+        {} 
+        AND form_6_type_of_activity LIKE '%Consultation%'
+        AND form_6_type_of_activity IS NOT NULL 
+        AND TRIM(form_6_type_of_activity) <> ''
+    """.format(position_data_filter()))
+
+    # Orientation
+    dcf_form6_orientation = db.select("""
+        SELECT COUNT(*) AS total_orientation6 
+        FROM dcf_product_development 
+        {} 
+        AND form_6_type_of_activity LIKE '%Orientation%'
+        AND form_6_type_of_activity IS NOT NULL 
+        AND TRIM(form_6_type_of_activity) <> ''
+    """.format(position_data_filter()))
 
     dcf_form2sextotal=db.select("SELECT SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form2FOmale=db.select("SELECT SUM(form_2_male) AS total_male2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
@@ -1304,7 +1380,7 @@ def displayform():
     dcf4_FOGOV=db.select("SELECT COUNT(cbb_types_of_training) AS FOGOV FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Governance';".format(position_data_filter()))
     dcf4_FOOM=db.select("SELECT COUNT(cbb_types_of_training) AS FOOM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Organizational Management';".format(position_data_filter()))
     dcf4_FOOP=db.select("SELECT COUNT(cbb_types_of_training) AS FOOP FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Operations';".format(position_data_filter()))
-    dcf4_FOTPD=db.select("SELECT COUNT(cbb_types_of_training) AS FOTPD FROM dcf_capacity_building {} AND cbb_types_of_training LIKE '%FO-Technology and Product Development%';".format(position_data_filter()))
+    dcf4_FOTPD=db.select("SELECT COUNT(cbb_types_of_training) AS FOTPD FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Technology and Product Development';".format(position_data_filter()))
     dcf4_FOIMM=db.select("SELECT COUNT(cbb_types_of_training) AS FOIMM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Institutional Marketing Management';".format(position_data_filter()))
     dcf4_FOHRM=db.select("SELECT COUNT(cbb_types_of_training) AS FOHRM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Human Resource Management';".format(position_data_filter()))
     dcf4_FOFM=db.select("SELECT COUNT(cbb_types_of_training) AS FOFM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Financial Management';".format(position_data_filter()))
@@ -1338,6 +1414,32 @@ def displayform():
 
 
     return {
+        'dcf_form5FOMSME' : dcf_form5FOMSME,
+        'dcf_form5_FOExpansion': dcf_form5_FOExpansion,
+        'dcf_form5_FOProductive': dcf_form5_FOProductive,
+        'dcf_form5_FORehab': dcf_form5_FORehab,
+        'dcf_form6male': dcf_form6male,
+        'dcf_form6female': dcf_form6female,
+        'dcf_form6pwd': dcf_form6pwd,
+        'dcf_form6ip': dcf_form6ip,
+        'dcf_form6youth': dcf_form6youth,
+        'dcf_form6sc': dcf_form6sc,
+        'dcf_form6act': dcf_form6act,
+
+        'dcf_form6_Cacao': dcf_form6_Cacao,
+        'dcf_form6_Coffee': dcf_form6_Coffee,
+        'dcf_form6_Coconut': dcf_form6_Coconut,
+        'dcf_form6_PFN': dcf_form6_PFN,
+
+        'dcf_form6_prod': dcf_form6_prod,
+        'dcf_form6_training': dcf_form6_training,
+        'dcf_form6_consultation': dcf_form6_consultation,
+        'dcf_form6_orientation' : dcf_form6_orientation,
+
+        'dcf_form9other': dcf_form9other,
+
+        'dcf_form10nc': dcf_form10nc,
+
         'DIPnames' : DIPnames,
         'dcf4_FOOEC':dcf4_FOOEC,
         'dcf4_FOGOV':dcf4_FOGOV,
