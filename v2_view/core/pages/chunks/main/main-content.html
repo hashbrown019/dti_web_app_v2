@@ -517,36 +517,549 @@
 										<hr>
 										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>F4 - CapBuild</b></h4>
 										<hr>
+										<div class="row">
+											<!-- Total Entries -->
+											<!-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form4 }}</div>
+												<h3>Total Entries</h3>
+												<p>Total # of Entries.</p>
+												</div>
+											</div> -->
+
+											<!-- Total Male -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form4male[0]['total_male4'] }}</div>
+												<h3>Total Male</h3>
+												<p>Total # of Participants by Sex.</p>
+												</div>
+											</div>
+
+											<!-- Total Female -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form4female[0]['total_female4'] }}</div>
+												<h3>Total Female</h3>
+												<p>Total # of Participants by Sex.</p>
+												</div>
+											</div>
+
+											<!-- Total IP -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats">
+												<div class="count _money_tag" style="border-radius: 15px;">
+													{{ dashboard_data.dcf_form4maleip[0]['total_male4ip'] + dashboard_data.dcf_form4femaleip[0]['total_female4ip'] }}
+												</div>
+												<h3>Total IP</h3>
+												<p>
+													Male: {{ dashboard_data.dcf_form4maleip[0]['total_male4ip'] }} |
+													Female: {{ dashboard_data.dcf_form4femaleip[0]['total_female4ip'] }}
+												</p>
+												</div>
+											</div>
+
+											<!-- Total Youth -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats">
+												<div class="count _money_tag" style="border-radius: 15px;">
+													{{ dashboard_data.dcf_form4maleyouth[0]['total_male4youth'] + dashboard_data.dcf_form4femaleyouth[0]['total_female4youth'] }}
+												</div>
+												<h3>Total Youth</h3>
+												<p>
+													Male: {{ dashboard_data.dcf_form4maleyouth[0]['total_male4youth'] }} |
+													Female: {{ dashboard_data.dcf_form4femaleyouth[0]['total_female4youth'] }}
+												</p>
+												</div>
+											</div>
+
+											<!-- Total PWD -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats">
+												<div class="count _money_tag" style="border-radius: 15px;">
+													{{ dashboard_data.dcf_form4malepwd[0]['total_male4pwd'] + dashboard_data.dcf_form4femalepwd[0]['total_female4pwd'] }}
+												</div>
+												<h3>Total PWD</h3>
+												<p>
+													Male: {{ dashboard_data.dcf_form4malepwd[0]['total_male4pwd'] }} |
+													Female: {{ dashboard_data.dcf_form4femalepwd[0]['total_female4pwd'] }}
+												</p>
+												</div>
+											</div>
+
+											<!-- Total SC -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats">
+												<div class="count _money_tag" style="border-radius: 15px;">
+													{{ dashboard_data.dcf_form4malesc[0]['total_male4sc'] + dashboard_data.dcf_form4femalesc[0]['total_female4sc'] }}
+												</div>
+												<h3>Total SC</h3>
+												<p>
+													Male: {{ dashboard_data.dcf_form4malesc[0]['total_male4sc'] }} |
+													Female: {{ dashboard_data.dcf_form4femalesc[0]['total_female4sc'] }}
+												</p>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-md-4 col-12">
+												<div class="card">
+													<div class="card-body">
+														<div class="card-title">Training <small class="d-block"><b>Farmer Organization</b></small> </div>
+														<div class="text-center">
+															<canvas id="DCF_F4_training_fo"></canvas>
+														</div>
+														<br>
+														<div >
+															<table class="tile_info" id="fo_table"><!-- DYNAMIC LABELS FOR FO --> </table>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4 col-12">
+												<div class="card">
+													<div class="card-body">
+														<div class="card-title">Training <small class="d-block"><b>MSMEs</b></small> </div>
+														<div class="text-center">
+															<canvas id="DCF_f4_training_msme"></canvas>
+														</div>
+														<br>
+														<div >
+															<table class="tile_info" id="msme_table"><!-- DYNAMIC LABELS FOR FO --> </table>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4 col-12">
+												<div class="card">
+													<div class="card-body">
+														<div class="card-title">Training <small class="d-block"><b>INDIVIDUAL</b></small> </div>
+														<div class="text-center">
+															<canvas id="DCF_f4_training_individual"></canvas>
+														</div>
+														<br>
+														<div >
+															<table class="tile_info" id="indv_table"><!-- DYNAMIC LABELS FOR FO --> </table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="f5" role="tabpanel" aria-labelledby="contact-tab">
 										<hr>
 										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>F5 - Investment Tracker</b></h4>
 										<hr>
+										<div class="row">
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form7farmer[0]['totalfarmer7']}}</div>
+												<h3>Total Farmer</h3>
+												<p>Total # of Farmer.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form5_FOExpansion[0]['FO_Expansion'] }}</div>
+												<h3>Expansion</h3>
+												<p>Total number of Expansion.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form5_FORehab[0]['FO_Rehabilitation'] }}</div>
+												<h3>Rehabilitation</h3>
+												<p>Total number of Rehabilitation.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form5_FOProductive[0]['FO_Productive'] }}</div>
+												<h3>Productive Inves.</h3>
+												<p>Total number of Productive Investments.</p>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="f6" role="tabpanel" aria-labelledby="contact-tab">
 										<hr>
 										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>F6 - Product Dev</b></h4>
 										<hr>
+										<div class="row" >
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6act[0]['total_act6'] }}</div>
+												<h3>Total Activities</h3>
+												<p>Total # of Activities.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6male[0]['total_male6'] + dashboard_data.dcf_form6female[0]['total_female6'] }}</div>
+												<h3>Total Participants</h3>
+												<p>Total # of Participants.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6male[0]['total_male6'] }}</div>
+												<h3>Total Male</h3>
+												<p>Total # of FO members by male.</p>
+
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6female[0]['total_female6'] }}</div>
+												<h3>Total Female</h3>
+												<p>Total # of FO members by female.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6pwd[0]['total_pwd6'] }}</div>
+												<h3>Total PWD</h3>
+												<p>Total # of FO members by pwd.</p>
+
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6youth[0]['total_youth6'] }}</div>
+												<h3>Total Youth</h3>
+												<p>Total # of FO members by sectoral group.</p>
+
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6ip[0]['total_ip6'] }}</div>
+												<h3>Total IP</h3>
+												<p>Total # of FO members by sectoral group.</p>
+
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6sc[0]['total_sc6'] }}</div>
+												<h3>Total SC</h3>
+												<p>Total # of FO members by sectoral group.</p>
+
+												</div>
+											</div> 
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
+												<div class="card">
+													<div class="card-body">
+														<div class="card-title">Type of Commodity</div>
+														<div class="container">
+															<canvas id="DCF_F6_typeofcomm" min-height="350"></canvas>
+														</div>
+														<div style="text-align: center;">
+															<p style="font-size: 12px;"><i class="fa fa-square" style="color:#FDE7B3 "></i> Cacao: {{dashboard_data.dcf_form6_Cacao[0]['total_cacao6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#FFC50F "></i> Coffee: {{dashboard_data.dcf_form6_Coffee[0]['total_coffee6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#63A361 "></i> Coconut: {{dashboard_data.dcf_form6_Coconut[0]['total_coconut6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#5B532C "></i> PFN: {{dashboard_data.dcf_form6_PFN[0]['total_pfn6']}}</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<div class="card">
+													<div class="card-body">
+														<div class="card-title">Type of Activity</div>
+														<div class="container">
+															<canvas id="DCF_F6_typeofact" min-height="350"></canvas>
+														</div>
+														<div style="text-align: center;">
+															<p style="font-size: 12px;"><i class="fa fa-square" style="color:#FF6384 "></i>Product Development: {{ dashboard_data.dcf_form6_prod[0]['total_prod6'] }} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#36A2EB "></i> Training: {{ dashboard_data.dcf_form6_training[0]['total_training6'] }} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#FFCE56 "></i> Consultation: {{ dashboard_data.dcf_form6_consultation[0]['total_consultation6'] }} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#4BC0C0 "></i> Orientation: {{ dashboard_data.dcf_form6_orientation[0]['total_orientation6'] }}</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="f7" role="tabpanel" aria-labelledby="contact-tab">
 										<hr>
 										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>F7 - Trade Promotion</b></h4>
 										<hr>
+										<div class="row">
+											<!-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form7}}</div>
+												<h3>Total Entries</h3>
+												<p>Total # of Beneficiary</p>
+												</div>
+											</div> -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form7msme[0]['totalmsme7']}}</div>
+												<h3>Total MSME</h3>
+												<p>Total # of MSME.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form7fo[0]['totalfo7']}}</div>
+												<h3>Total FO</h3>
+												<p>Total # of FO.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form7farmer[0]['totalfarmer7']}}</div>
+												<h3>Total Farmer</h3>
+												<p>Total # of Farmer.</p>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div class="col-md-6 col-sm-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="card-title">Type of Activity</div>
+													<div class="container">
+														<canvas id="DCF_F7_typeofact" min-height="350"></canvas>
+													</div>
+													<div style="text-align: center;">
+														<p style="font-size: 12px;"><i class="fa fa-square" style="color:#884dff "></i> Provincial: <span class="_money_tag">{{dashboard_data.dcf7_TFP[0]['tfp7']}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ac7339 "></i> Regional: <span class="_money_tag">{{dashboard_data.dcf7_TFR[0]['tfr7'] + dashboard_data.dcf7_TSMPR[0]['tsmpr7'] + dashboard_data.dcf7_BMPR[0]['bmpr7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ffa31a "></i> National: <span class="_money_tag">{{dashboard_data.dcf7_TFN[0]['tfn7'] + dashboard_data.dcf7_TSMN[0]['tsmn7'] + dashboard_data.dcf7_BMN[0]['bmn7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <i class="fa fa-square" style="color:#ff4d4d "></i> International: <span class="_money_tag">{{dashboard_data.dcf7_TFI[0]['tfi7'] + dashboard_data.dcf7_TSMI[0]['tsmi7'] + dashboard_data.dcf7_BMI[0]['bmi7']}}</span></p>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="f8" role="tabpanel" aria-labelledby="contact-tab">
 										<hr>
 										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>F8 - FMI</b></h4>
 										<hr>
+										<style>
+											.card-fmi-dashboard {
+												    padding: 0px 10px;
+													margin: 10px 5px;
+													box-shadow: 0px 0px 10px #8a8a8a;
+													background-color: #F6F9FF;
+													min-height: 120px;
+													border-radius: 10px;
+													padding-top: 10px;
+											}
+											.card-fmi-dashboard:hover b {
+												color: #0D6EFD;
+												/* text-shadow: 2px 2px 5px #1F2937; */
+											}
+											.card-fmi .count {
+												font-size: 2em;
+												font-weight: bold;
+												margin-top: 10px;
+												color: #1F2937;
+												/* text-shadow: 2px 2px 2px #F8BD7A; */
+											}
+											.card-fmi .count p {
+												margin-bottom: 0px;
+												position: relative;
+												font-size: 0.4em;
+											}
+											.card-fmi .count p b {
+												position: absolute;
+												right: 0px;
+											}
+											.card-fmi h4 {
+												font-weight: bold; 
+												border-top: 1px solid #0D6EFD; 
+												padding-top: 5px; 
+												margin-top: 5px; 
+												text-align: right;
+											}
+											.card-fmi-dashboard h4 {
+												color: #629DDD;    
+												font-size: 14px!important;
+											}
+										</style>
+										<div class="row">
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag text-end"><b>{{fmi_data.FMR_total}}</b></div>
+														<h4>Total FMR Projects</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag rapid_fmr_completed">
+															<p>No. of Completed : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_completed['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_completed['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_completed['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>COMPLETED</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_ongoing['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_ongoing['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_ongoing['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>ONGOING</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_no1['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_no1['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_no1['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>FOR NO 1</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_no2['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_no2['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_no2['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>FOR NO 2</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_no3['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_no3['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_no3['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>FOR NO 3</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_noa['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_noa['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_noa['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>TOTAL ISSUANCE OF NOA</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_pending['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_pending['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_pending['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>PENDING</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 15px;">
+														<div class="count _money_tag text-end"><b>{{ "{:,.2f}".format(fmi_data.FMR_totalkm_completed_ongoing) }}</b></div>
+														<h4>KILOMETER COMPLETED BASE ON % ACCOMPLISHED</h4>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-3">
+												<div class="card" style="box-shadow: 0px 0px 5px #F8BD7A;">
+													<div class="card-body">
+														<h6 class="card-title text-center">
+															<b># of Batch 1 / Status</b>
+														</h6>
+														<div class="container">
+															<br>
+															<canvas id="FMR_batch1_barchart" height="450"></canvas>
+														</div>
+													</div>
+												</div>   
+											</div>
+											<div class="col-3">
+												<div class="card" style="box-shadow: 0px 0px 5px #1f29367d;">
+													<div class="card-body">
+														<h6 class="card-title text-center">
+															<b># of Batch 2 / Status</b>
+														</h6>
+														<div class="container">
+															<br>
+															<canvas id="FMR_batch2_barchart" height="450"></canvas>
+														</div>
+													</div>
+												</div>   
+											</div>
+											<div class="col-3">
+												<div class="card" style="box-shadow: 0px 0px 5px #F8BD7A;">
+													<div class="card-body">
+														<h6 class="card-title text-center">
+															<b># of Batch 3 / Status</b>
+														</h6>
+														<div class="container">
+															<br>
+															<canvas id="FMR_batch3_barchart" height="450"></canvas>
+														</div>
+													</div>
+												</div>   
+											</div>
+											<div class="col-3">
+												<div class="card" style="box-shadow: 0px 0px 5px #1f29367d;">
+													<div class="card-body">
+														<h6 class="card-title text-center">
+															<b># of Batch 4 / Status</b>
+														</h6>
+														<div class="container">
+															<br>
+															<canvas id="FMR_batch4_barchart" height="450"></canvas>
+														</div>
+													</div>
+												</div>   
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="f9" role="tabpanel" aria-labelledby="contact-tab">
 										<hr>
 										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>F9 - Enablers Activity</b></h4>
 										<hr>
+										<div class="col-md-6 col-sm-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="card-title">Type of Activity</div>
+													<div class="container">
+														<canvas id="DCF_F9_typeofact" min-height="350"></canvas>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="f10" role="tabpanel" aria-labelledby="contact-tab">
 										<hr>
 										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>F10 - Negosyo Center</b></h4>
 										<hr>
+										<div class="row">
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 15px;">
+														<div class="count _money_tag">{{dashboard_data.dcf_form10nc[0]['total_nc10']}}</div>
+														<h3>Negosyo Center</h3>
+														<p>Total # of Negosyo Centers.</p>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="f11" role="tabpanel" aria-labelledby="contact-tab">
 										<hr>
@@ -1227,9 +1740,391 @@
 							display: false
 						}
 					}
+			});
+
+			if ($('#DCF_F4_training_fo').length) {
+				const labels = [
+					"Entrepreneurial Competency",
+					"Governance",
+					"Management",
+					"Operations",
+					"Technology and Product Development",
+					"Institutional Marketing Management",
+					"Human Resource Management",
+					"Financial Management",
+					"Networking and Linkage-Building",
+					"GESI",
+					"Social Environment & Climate",
+					"Managing Natural Resources"
+				];
+
+				const dataValues = [
+					{{ dashboard_data.dcf4_FOOEC[0]['FOOEC'] }},
+					{{ dashboard_data.dcf4_FOGOV[0]['FOGOV'] }},
+					{{ dashboard_data.dcf4_FOOM[0]['FOOM'] }},
+					{{ dashboard_data.dcf4_FOOP[0]['FOOP'] }},
+					{{ dashboard_data.dcf4_FOTPD[0]['FOTPD'] }},
+					{{ dashboard_data.dcf4_FOIMM[0]['FOIMM'] }},
+					{{ dashboard_data.dcf4_FOHRM[0]['FOHRM'] }},
+					{{ dashboard_data.dcf4_FOFM[0]['FOFM'] }},
+					{{ dashboard_data.dcf4_FONLB[0]['FONLB'] }},
+					{{ dashboard_data.dcf4_FOGESI[0]['FOGESI'] }},
+					{{ dashboard_data.dcf4_FOSEC[0]['FOSEC'] }},
+					{{ dashboard_data.dcf4_FOMNR[0]['FOMNR'] }}
+				];
+
+				const colors = [
+					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF',
+					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF'
+				];
+
+				const ctx = document.getElementById("DCF_F4_training_fo");
+				const DCF_F4_training_fo = new Chart(ctx, {
+					type: 'doughnut',
+					data: {
+						labels: labels,
+						datasets: [{
+							label: 'Total',
+							data: dataValues,
+							backgroundColor: colors,
+							borderColor: colors,
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: { display: false }
+						}
+					}
 				});
 
 
+				const table = document.getElementById("fo_table");
+				labels.forEach((label, i) => {
+					const value = dataValues[i];
+					const color = colors[i];
+					const row = document.createElement("tr");
+					row.innerHTML = `
+						<td>
+							<p style="margin-bottom: 0px; font-size: 12px;"><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
+						</td>
+					`;
+					table.appendChild(row);
+				});
+			}
+
+			// Doughnut chart MSME
+			if ($('#DCF_f4_training_msme').length) {
+				const labels = [
+					"Entrepreneurial Competency",
+					"Operations",
+					"Management",
+					"Technology and Product Development",
+					"Marketing Management",
+					"Human Resource Management",
+					"Financial Management",
+					"Networking and Linkage-Building",
+					"GESI",
+					"Social Environment & Climate",
+					"Managing Natural Resources"
+				];
+
+				const dataValues = [
+					{{ dashboard_data.dcf4_MSMEEC[0]['MSMEEC'] }},
+					{{ dashboard_data.dcf4_MSMEOP[0]['MSMEOP'] }},
+					{{ dashboard_data.dcf4_MSMEM[0]['MSMEM'] }},
+					{{ dashboard_data.dcf4_MSMETPD[0]['MSMETPD'] }},
+					{{ dashboard_data.dcf4_MSMEMM[0]['MSMEMM'] }},
+					{{ dashboard_data.dcf4_MSMEHRM[0]['MSMEHRM'] }},
+					{{ dashboard_data.dcf4_MSMEFM[0]['MSMEFM'] }},
+					{{ dashboard_data.dcf4_MSMENLB[0]['MSMENLB'] }},
+					{{ dashboard_data.dcf4_MSMEGESI[0]['MSMEGESI'] }},
+					{{ dashboard_data.dcf4_MSMESEC[0]['MSMESEC'] }},
+					{{ dashboard_data.dcf4_MSMEMNR[0]['MSMEMNR'] }}
+				];
+
+				const colors = [
+					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF',
+					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF'
+				];
+
+				const ctx = document.getElementById("DCF_f4_training_msme");
+				const DCF_f4_training_msme = new Chart(ctx, {
+					type: 'doughnut',
+					data: {
+						labels: labels,
+						datasets: [{
+							label: 'Total',
+							data: dataValues,
+							backgroundColor: colors,
+							borderColor: colors,
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: { display: false }
+						}
+					}
+				});
+
+
+				const table = document.getElementById("msme_table");
+				labels.forEach((label, i) => {
+					const value = dataValues[i];
+					const color = colors[i];
+					const row = document.createElement("tr");
+					row.innerHTML = `
+						<td>
+							<p style="margin-bottom: 0px; font-size: 12px;"><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
+						</td>
+					`;
+					table.appendChild(row);
+				});
+			}
+
+			if ($('#DCF_f4_training_individual').length) {
+				const labels = [
+					"Farmer-Managing Natural Resources",
+					"Farmer-Managing Finances",
+					"Farmer-Marketing",
+					"Farmer-Innovation",
+					"Farmer-Teamwork",
+					"Farmer-GESI",
+					"Farmer-Social Environment & Climate"
+				];
+
+				const dataValues = [
+					{{ dashboard_data.dcf4_IFMNR[0]['IFMNR'] }},
+					{{ dashboard_data.dcf4_IFMF[0]['IFMF'] }},
+					{{ dashboard_data.dcf4_IFM[0]['IFM'] }},
+					{{ dashboard_data.dcf4_IFI[0]['IFI'] }},
+					{{ dashboard_data.dcf4_IFT[0]['IFT'] }},
+					{{ dashboard_data.dcf4_IFGESI[0]['IFGESI'] }},
+					{{ dashboard_data.dcf4_IFSEC[0]['IFSEC'] }}
+				];
+
+				const colors = [
+					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF', '#00FF00'
+				];
+
+				const ctx = document.getElementById("DCF_f4_training_individual");
+				const DCF_f4_training_individual = new Chart(ctx, {
+					type: 'doughnut',
+					data: {
+						labels: labels,
+						datasets: [{
+							label: 'Total',
+							data: dataValues,
+							backgroundColor: colors,
+							borderColor: colors,
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: { display: false }
+						}
+					}
+				});
+
+				const table = document.getElementById("indv_table");
+				labels.forEach((label, i) => {
+					const value = dataValues[i];
+					const color = colors[i];
+					const row = document.createElement("tr");
+					row.innerHTML = `
+						<td>
+							<p style="margin-bottom: 0px; font-size: 12px;"><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
+						</td>
+					`;
+					table.appendChild(row);
+				});
+			}
+
+
+			if ($("#DCF_F6_typeofcomm").length) e = document.getElementById("DCF_F6_typeofcomm"), new Chart(e, {
+				type: "bar",
+				data: {
+					labels: ["Cacao", "Coffee", "Coconut", "PFN"],
+					datasets: [{
+					label: "Total",
+					backgroundColor:  ["#FDE7B3", "#FFC50F", "#63A361", "#5B532C"],
+					data: [{{dashboard_data.dcf_form6_Cacao[0]['total_cacao6']}}, {{dashboard_data.dcf_form6_Coffee[0]['total_coffee6']}}, {{dashboard_data.dcf_form6_Coconut[0]['total_coconut6']}}, {{dashboard_data.dcf_form6_PFN[0]['total_pfn6']}}]
+					},]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: !0
+							}
+						}]
+					}
+				}
+			});
+
+			if ($("#DCF_F6_typeofact").length) e = document.getElementById("DCF_F6_typeofact"), new Chart(e, {
+				type: "pie",
+				data: {
+					labels: ["Product development", "Training", "Consultation","Orientation"],
+					datasets: [{
+					label: "Total",
+					backgroundColor:  ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+					data: [{{ dashboard_data.dcf_form6_prod[0]['total_prod6'] }},{{ dashboard_data.dcf_form6_training[0]['total_training6'] }},{{ dashboard_data.dcf_form6_consultation[0]['total_consultation6'] }},{{ dashboard_data.dcf_form6_orientation[0]['total_orientation6'] }}]}]
+				},
+				options: {
+					scales: {
+						
+					}
+				}
+			});
+
+			if ($("#DCF_F7_typeofact").length) e = document.getElementById("DCF_F7_typeofact"), new Chart(e, {
+				type: "bar",
+				data: {
+					labels: ["Provincial", "Regional","National", "International"],
+					datasets: [{
+						label: "Total",
+						backgroundColor:  ["#884dff", "#ac7339", "#ffa31a", "#ff4d4d"],
+						data: [{{dashboard_data.dcf7_TFP[0]['tfp7']}}, {{dashboard_data.dcf7_TFR[0]['tfr7'] + dashboard_data.dcf7_TSMPR[0]['tsmpr7'] + dashboard_data.dcf7_BMPR[0]['bmpr7']}},{{dashboard_data.dcf7_TFN[0]['tfn7'] + dashboard_data.dcf7_TSMN[0]['tsmn7'] + dashboard_data.dcf7_BMN[0]['bmn7']}}, {{dashboard_data.dcf7_TFI[0]['tfi7'] + dashboard_data.dcf7_TSMI[0]['tsmi7'] + dashboard_data.dcf7_BMI[0]['bmi7']}} ]
+					},]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: !0
+							}
+						}]
+					}
+				}
+			});
+
+
+			// FMI 
+
+			var chart_data_fmr  = JSON.parse('{{ fmi_data_chart | safe }}');
+        
+			ctx_FMR_batch1 = document.getElementById('FMR_batch1_barchart').getContext('2d');
+			ctx_FMR_batch2 = document.getElementById('FMR_batch2_barchart').getContext('2d');
+			ctx_FMR_batch3 = document.getElementById('FMR_batch3_barchart').getContext('2d');
+			ctx_FMR_batch4 = document.getElementById('FMR_batch4_barchart').getContext('2d');
+			
+			var chartFMR_B1 = new Chart(ctx_FMR_batch1, {
+				type: 'bar',
+				data: {
+					labels: chart_data_fmr.FMR_Batch1_data.labels ,
+					datasets: [{
+						label: "# of Batch 1",
+						data: chart_data_fmr.FMR_Batch1_data.data,
+						backgroundColor: chart_data_fmr.FMR_Batch1_data.background_colors,
+						borderColor: '#1F2937',
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+
+			var chartFMR_B2 = new Chart(ctx_FMR_batch2, {
+				type: 'bar',
+				data: {
+					labels: chart_data_fmr.FMR_Batch2_data.labels ,
+					datasets: [{
+						label: "# of Batch 2",
+						data: chart_data_fmr.FMR_Batch2_data.data,
+						backgroundColor: chart_data_fmr.FMR_Batch2_data.background_colors,
+						borderColor: '#1F2937',
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+
+			var chartFMR_B3 = new Chart(ctx_FMR_batch3, {
+				type: 'bar',
+				data: {
+					labels: chart_data_fmr.FMR_Batch3_data.labels ,
+					datasets: [{
+						label: "# of Batch 2",
+						data: chart_data_fmr.FMR_Batch3_data.data,
+						backgroundColor: chart_data_fmr.FMR_Batch3_data.background_colors,
+						borderColor: '#1F2937',
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+
+			var chartFMR_B4 = new Chart(ctx_FMR_batch4, {
+				type: 'bar',
+				data: {
+					labels: chart_data_fmr.FMR_Batch4_data.labels ,
+					datasets: [{
+						label: "# of Batch 2",
+						data: chart_data_fmr.FMR_Batch4_data.data,
+						backgroundColor: chart_data_fmr.FMR_Batch4_data.background_colors,
+						borderColor: '#1F2937',
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+
+			// ==================================================
+			// F9
+			// ==================================================
+			if ($("#DCF_F9_typeofact").length) e = document.getElementById("DCF_F9_typeofact"), new Chart(e, {
+				type: "bar",
+				data: {
+					labels: ["Capbuild", "Meetings","Policy Issuances", "Others"],
+					datasets: [{
+						label: "Total",
+						backgroundColor:  ["#884dff", "#ac7339", "#ffa31a", "#ff4d4d"],
+						data: [{{ dashboard_data.dcf_form9capb[0]['totalcapbuild9']}}, {{ dashboard_data.dcf_form9meetings[0]['totalmeetings9']}}, {{ dashboard_data.dcf_form9policy[0]['totalpolicy9']}}, {{ dashboard_data.dcf_form9other[0]['totalother9']}}]
+					},]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: !0
+							}
+						}]
+					}
+				}
+			});
+			
 		});
 
 		function showSection(showId, hideId) {
