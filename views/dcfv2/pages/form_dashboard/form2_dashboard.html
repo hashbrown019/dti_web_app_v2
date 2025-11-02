@@ -12,9 +12,9 @@
 	<!-- top tiles -->
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" >
         <label for="regionFilter">Select Region</label>
-        <select id="regionFilter" class="form-control">
+        <select id="regionFilter" class="form-control" style="border-radius: 15px;">
             <option value="">All Regions</option>
             <option value="8">Region 8</option>
             <option value="9">Region 9</option>
@@ -141,55 +141,56 @@
 	<div class="row" style="display: inline-block;" >
 		<div class="top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalEntries">{{ dcf_form2 }}</div>
-					<h3>Total Entries</h3>
+					<h3>Entries</h3>
+					<p>Total # of Entries.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalMembers">{{ dcf_form2sextotal[0]['total_sex2'] | int }}</div>
-					<h3>Total Members</h3>
+					<h3>Members</h3>
 					<p>Total # of FO Members.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalMale">{{ dcf_form2FOmale[0]['total_male2'] | int }}</div>
-					<h3>Total Male</h3>
+					<h3>Male</h3>
 					<p>Total # of FO Members by Sex.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalFemale">{{ dcf_form2FOfemale[0]['total_female2'] | int }}</div>
-					<h3>Total Female</h3>
+					<h3>Female</h3>
 					<p>Total # of FO Members by Sex.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalPWD">{{ dcf_form2FOpwd[0]['total_pwd'] | int }}</div>
 					<h3>PWD</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalYouth">{{ dcf_form2FOyouth[0]['total_youth'] | int }}</div>
 					<h3>Youth</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalIP">{{ dcf_form2FOip[0]['total_ip'] | int }}</div>
 					<h3>IP</h3>
 					<p>Total # of FO members by Sector.</p>
 				</div>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
-				<div class="tile-stats">
+				<div class="tile-stats" style="border-radius: 15px;">
 					<div class="count _money_tag" id="totalSC">{{ dcf_form2FOsc[0]['total_sc'] | int }}</div>
 					<h3>SC</h3>
 					<p>Total # of FO members by Sector.</p>
@@ -200,40 +201,42 @@
 	<!-- /top tiles -->
 
 	<div class="row">
-		<div class="col-md-6 col-sm-6  ">
-			<div class="x_panel">
+		<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+			<div class="x_panel" style="border-radius: 15px;">
 				<div class="x_title">
 					<h2>Remarks/Status <small>Pie chart</small></h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">Settings 1</a>
-										<a class="dropdown-item" href="#">Settings 2</a>
-									</div>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">Settings 1</a>
+									<a class="dropdown-item" href="#">Settings 2</a>
+								</div>
 							</li>
 						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 					</ul>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
 				<canvas id="polarArea"></canvas>
 					<div style="text-align: center;" id="polarLegend">
 						<p><i class="fa fa-square" style="color:#ff5c33 "></i> Cancelled: {{dcf_form2cancelled}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc">&nbsp;&nbsp;&nbsp;</i>On-going: {{dcf_form2og}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#999999">&nbsp;&nbsp;&nbsp;</i>Non-renewal: {{dcf_form2nonrenewal}}
 					</div>
-					</div>
 				</div>
 			</div>
+		</div>
 
-			<div class="col-md-6 col-sm-6">
-				<div class="x_panel tile overflow_hidden">
+			<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+				<div class="x_panel" style="border-radius: 15px;">
 					<div class="x_title">
 					<h2>Commodity</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 						<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+							<i class="fa fa-wrench"></i>
+						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" href="#">Settings 1</a>
 							<a class="dropdown-item" href="#">Settings 2</a>
@@ -243,43 +246,56 @@
 					</ul>
 					<div class="clearfix"></div>
 					</div>
+
 					<div class="x_content">
-					<div class="row">
-						<div class="col-md-8 col-sm-6">
-						<p>Pie Chart Percentage</p>
-						<canvas id="canvasDoughnut" ></canvas>
-						</div>
-						<div class="col-md-4 col-sm-6">
-						<p class="">Commodities</p>
-						<table class="tile_info" id="commodityLegend">
+					<table style="width: 100%;">
+						<tr>
+						<th>
+							<p>Pie Chart Percentage</p>
+						</th>
+						<th>
+							<p>Commodities</p>
+						</th>
+						</tr>
+						<tr>
+						<td style="width: 60%; text-align: center; vertical-align: middle;">
+							<canvas id="canvasDoughnut" style="width: 350px; height: 350px;"></canvas>
+						</td>
+						<td style="vertical-align: top;">
+							<table class="tile_info" id="commodityLegend">
 							{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
 							{% for key in over_all_commodity_count2 %}
+							{% set color_index = loop.index0 % square_colors|length %}
 							<tr>
-							<td>
-								{% set color_index = loop.index0 % square_colors|length %}
-								<p><i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i> {{ key }}: {{ over_all_commodity_count2[key] }}</p>
-							</td>
+								<td>
+								<p>
+									<i class="fa fa-square" style="color: {{ square_colors[color_index] }}"></i>
+									{{ key }}: {{ over_all_commodity_count2[key] }}
+								</p>
+								</td>
 							</tr>
 							{% endfor %}
-						</table>
-						</div>
+							</table>
+						</td>
+						</tr>
+					</table>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<h2 class=" x-container text-white x-padding" style="background-color: #007399; text-align: center;">Sales Monitoring</h2>
+
+	<h2 class=" x-container text-white x-padding" style="background-color: #007399; text-align: center; border-radius: 10px;">Sales Monitoring</h2>
 	<div class="row">
-	<div class="col-md-6 col-sm-6">
-		<div class="x_panel">
+	<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+		<div class="x_panel table-responsive" style="border-radius: 15px;" >
 			<div class="x_title">
 				<h2>SALES MONITORING (by Commodity)</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
 				<div class="table-container">
-					<table class="ui-table table table-bordered table-striped" id="salesCommodityTable">
-						<thead>
+					<table class="ui-table table table-bordered table-striped table-hover" id="salesCommodityTable">
+						<thead style="background-color: #007399; color: white">
 							<tr>
 								<th>COMMODITY</th>
 								<th>TOTAL SALES</th>
@@ -302,8 +318,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6 col-sm-6">
-		<div class="x_panel tile overflow_hidden">
+	<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+		<div class="x_panel tile" style="border-radius: 15px;">
 			<div class="x_title">
 				<h2>Commodity Bar Chart</h2>
 				<ul class="nav navbar-right panel_toolbox">
@@ -575,7 +591,7 @@
 
 					<!-- Start to do list -->
 					<div class="col-md-12 col-sm-12 ">
-						<div class="x_panel ">
+						<div class="x_panel " style="border-radius: 15px;">
 							<div class="x_title">
 								<h2>Data<small>Table</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
@@ -599,8 +615,8 @@
 											<p class="text-muted font-13 m-b-30">
 												All entries of Form 2 are displayed in this data table. If you are the one who encoded that form, you can edit, delete, and add participants. If you are not the encoder, you can only view the form.
 											</p>
-											<table id="datatable-responsive" class="table table-dark table-striped table-bordered" cellspacing="0" width="100%">
-												<thead>
+											<table id="datatable-responsive" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+												<thead style="background-color: #007399; color: white">
 													<tr>
 														<th>ID</th>
 														<th>Name of F.O Engaged</th>
@@ -627,19 +643,19 @@
 															{% set status =  row['form_2_recent_cpa'] | cpa_status(row['form_2_cpa_date_signing'],row['form_2_cpa_date_expiration'],row['form_2_cpa_date_renewed'],row['form_2_name_owner_manager'])%}
 															{% if status["status"] == 'Active'%}
 															<td style="color: #00e673;"> {{status["status"]}} || {{status["cpa"]}}<br>
-																<span style="color: #d9d9d9;"><i class="ti-info-alt"></i> {{status["note"]}}</span><br>
+																<span style="color: #757575;"><i class="ti-info-alt"></i> {{status["note"]}}</span><br>
 															</td>
 															{%elif(status["status"]=="Expired")%}
 															<td style="color: #ff5c33;"> {{status["status"]}} || {{status["cpa"]}}<br>
-																<span style="color: #d9d9d9;"><i class="ti-info-alt"></i> {{status["note"]}}  &nbsp&nbsp <a style="cursor:pointer; color: #00bfff;"><i class="ti-new-window"></i> Renew CPA</a></span><br>
+																<span style="color: #757575;"><i class="ti-info-alt"></i> {{status["note"]}}  &nbsp&nbsp <a style="cursor:pointer; color: #00bfff;"><i class="ti-new-window"></i> Renew CPA</a></span><br>
 															</td>
 															{%elif(status["status"]=="To be expire")%}
 															<td style="color: #ffc34d;"> {{status["status"]}} || {{status["cpa"]}}<br>
-																<span style="color: #d9d9d9;"><i class="ti-info-alt"></i> {{status["note"]}}&nbsp&nbsp <a style="cursor:pointer; color: #00bfff;"><i class="ti-file"></i> Create draft</a></span><br>
+																<span style="color: #757575;"><i class="ti-info-alt"></i> {{status["note"]}}&nbsp&nbsp <a style="cursor:pointer; color: #00bfff;"><i class="ti-file"></i> Create draft</a></span><br>
 															</td>
 															{%else%}
-															<td style="color: #d9b3ff;"> {{status["status"]}} || {{status["cpa"]}}<br>
-																<span style="color: #d9d9d9;"><i class="ti-info-alt"></i> {{status["note"]}}</span><br>
+															<td style="color: #b265ff;"> {{status["status"]}} || {{status["cpa"]}}<br>
+																<span style="color: #757575;"><i class="ti-info-alt"></i> {{status["note"]}}</span><br>
 															</td>
 															{%endif%}
 															<td>
@@ -702,8 +718,8 @@
 				}
 			</script>
 
-				<div class="col-md-12 col-sm-12 ">
-					<div class="x_panel tile">
+
+					<div class="x_panel tile" style="border-radius: 15px;">
 						<div class="x_title">
 							<h2>FORM 2 CPA TRACKER<small>SPREADSHEET MANAGEMENT</small></h2>
 							<ul class="nav navbar-right panel_toolbox">
@@ -770,7 +786,6 @@
 								</form>
 							</div>
 						</div>
-					</div>
 					<!-- End to do list -->
 					<!-- end of weather widget -->
 				</div>

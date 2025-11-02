@@ -1,104 +1,2495 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- <link href="/static/psalm_static/dcf_static/assets/vendors2/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+<!-- <link href="/static/psalm_static/dcf_static/assets/build/css/custom.css" rel="stylesheet"> -->
+<style>
+.tile-stats {
+  position: relative;
+  display: block;
+  margin-bottom: 12px;
+  border: 1px solid #E4E4E4;
+  -webkit-border-radius: 5px;
+  overflow: hidden;
+  padding-bottom: 5px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
+  border-radius: 5px;
+  background-clip: padding-box;
+  background: #FFF;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out; }
 
+.tile-stats:hover .icon i {
+  animation-name: tansformAnimation;
+  animation-duration: .5s;
+  animation-iteration-count: 1;
+  color: rgba(58, 58, 58, 0.41);
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: tansformAnimation;
+  -webkit-animation-duration: .5s;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-name: tansformAnimation;
+  -moz-animation-duration: .5s;
+  -moz-animation-iteration-count: 1;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: forwards; }
+
+.tile-stats .icon {
+  width: 20px;
+  height: 20px;
+  color: #BAB8B8;
+  position: absolute;
+  right: 53px;
+  top: 22px;
+  z-index: 1; }
+
+.tile-stats .icon i {
+  margin: 0;
+  font-size: 60px;
+  line-height: 0;
+  vertical-align: bottom;
+  padding: 0; }
+
+.tile-stats .count {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.65857143; }
+
+.tile-stats .count, .tile-stats h3, .tile-stats p {
+  position: relative;
+  margin: 0;
+  margin-left: 10px;
+  z-index: 5;
+  padding: 0; }
+
+.tile-stats h3 {
+  color: #BAB8B8;
+  font-size: 1.2rem;
+}
+
+.tile-stats p {
+  margin-top: 5px;
+  font-size: 12px; }
+
+.tile-stats > .dash-box-footer {
+  position: relative;
+  text-align: center;
+  margin-top: 5px;
+  padding: 3px 0;
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.1);
+  text-decoration: none; }
+
+.tile-stats > .dash-box-footer:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.15); }
+
+.tile-stats > .dash-box-footer:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.15); }
+
+.x-card, .x-light-grey {
+    background: #fff !important; /* Ensure main containers are white */
+}
+
+h2{
+	font-weight: bold;
+}
+
+.tile-stats {
+	background: #fff;
+	padding: 10px;
+	box-shadow: 0px 0px 15px 15px rgba(179, 179, 179, 0.1);
+	transition: all 0.3s ease;
+}
+
+.tile-stats:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+</style>
 <div class="col-lg-9">
 	<div class="row">
-		<!-- Sales Card -->
 		<div class="pagetitle">
-			<h5 class="card-title">My Dashboard <span>/Create your own dashboard here</span></h5>
+			<h5 class="card-title">Main Dashboard <span>/ All data on this dashboard is sourced from PF A-C and DCF 1-11.</span></h5>
 		</div>
-		<!-- ----- START CARD--------- -->
-		<div class="col-xxl-4 col-md-6" style="display:none">
-			<div class="card info-card sales-card">
+			<ul class="nav nav-tabs" id="toggleTab" role="tablist" style="margin-bottom: 10px;">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link active" id="new-tab" data-bs-toggle="tab" data-bs-target="#NEW" type="button" role="tab" aria-controls="NEW" aria-selected="true" onclick="showSection('NEW','OLD')">
+					NEW
+					</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="old-tab" data-bs-toggle="tab" data-bs-target="#OLD" type="button" role="tab" aria-controls="OLD" aria-selected="false" onclick="showSection('OLD','NEW')">
+					OLD
+					</button>
+				</li>
+			</ul>
+		<div class="row" id="NEW">
+			<div class="card">
 				<div class="card-body">
-					<h5 class="card-title">No Personal Dashboard created</h5>
-
-					<div class="d-flex align-items-center" onclick="module_restricted()">
-						<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-							<i class="ri-add-circle-line"></i>
+					<h5 class="card-title">
+						<span>PF & DCF Dashboard - Summary</span>
+						<i class="fa fa-spinner fa-spin rapid_dashboardSumm_loading" style="position: absolute; right: 15px; font-size: 30px; color: #0D6EFD;"></i>
+					</h5>
+					<div class="container">
+						<div class="row">
+							<hr>
+							<h6 class="" style="margin-bottom: 20px; color: #7CA03F!important; font-weight: bold;">
+								<img src="/static/psalm_static/assets/img/icons/Sectors_Smallholder Farmer.png" width="30px" style="margin-right:5px;"/>
+								SMALL HOLDER FARMERS</h6>
+							<hr>
+							<div class="col-md-3 col-12">
+								<br>
+								<table class="table table-striped" style="font-size: 10px;">
+									<tbody>
+										<tr>
+											<th>TOTAL # OF SHFs</th>
+											<th class="text-end"><span class="SHF_total">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF MALE</th>
+											<th class="text-end"><span class="SHF_total_male">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF FEMALE</th>
+											<th class="text-end"><span class="SHF_total_female">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF IP</th>
+											<th class="text-end"><span class="SHF_total_ip">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF YOUTH</th>
+											<th class="text-end"><span class="SHF_total_youth">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF PWD</th>
+											<th class="text-end"><span class="SHF_total_pwd">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF SC</th>
+											<th class="text-end"><span class="SHF_total_sc">-</span></th>
+										</tr>
+									</tbody>
+								</table>
+								<button onclick="show_adv_filter()" class="rapid_viewAreaFilterForm_btn" style="border: 0px; background: 0; text-decoration: underline; font-size: 12px; font-weight: bold;"><i class="fa fa-filter text-primary"></i> View Area Filter Form</button>
+								<br>
+							</div>
+							<div class="col-md-6 col-12">
+								<br>
+								<div style="width: 100%; margin: auto;">
+									<canvas id="SHF_region_piechart"></canvas>
+								</div>
+								<br>
+							</div>
+							<div class="col-md-3 col-12 text-center">
+								<br>
+								<div class="SHF_Comm_Dashboard"></div>
+								<br>
+								<!-- <div style="width: 100%; margin: auto;">
+									<canvas id="SHF_PC_barchart"></canvas>
+								</div> -->
+							</div>
 						</div>
-						<div class="ps-3">
-							<span class="text-success small pt-1 fw-bold">Create dashboard from Forms and Database</span><br>
+						<br>
+						<hr>
+						<div class="row">
+							<h6 class="" style="margin-bottom: 20px; color: #2C9196!important; font-weight: bold;">
+								<img src="/static/psalm_static/assets/img/icons/Sectors_Farmer Organization.png" width="30px" style="margin-right:5px;"/>
+								FARMER ORGANIZATION </h6>
+							<hr>
+							<div class="col-md-3 col-12">
+								<br>
+								<table class="table table-striped" style="font-size: 10px;">
+									<tbody>
+										<tr>
+											<th>TOTAL # OF FO's</th>
+											<th class="text-end"><span class="FO_total">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF COOP</th>
+											<th class="text-end"><span class="FO_total_coop">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF ASSOC</th>
+											<th class="text-end"><span class="FO_total_assoc">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF MEMBERS</th>
+											<th class="text-end"><span class="FO_total_members">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF MALE</th>
+											<th class="text-end"><span class="FO_total_male">-</span></th>
+										</tr>
+										<tr>
+											<th>TOTAL # OF FEMALE</th>
+											<th class="text-end"><span class="FO_total_female">-</span></th>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<hr>
+								<br>
+								<div style="width: 100%; margin: auto;">
+									<canvas id="FO_TO_barchart" height="300"></canvas>
+								</div>
+								<br>
+							</div>
+							<div class="col-md-6 col-12">
+								<br>
+								<div style="width: 100%; margin: auto;">
+									<canvas id="FO_region_piechart"></canvas>
+								</div>
+								<br>
+							</div>
+							<div class="col-md-3 col-12">
+								<br>
+								<div class="FO_Comm_Dashboard text-center"></div>
+								<br>
+								<!-- <div style="width: 100%; margin: auto;">
+									<canvas id="FO_PC_barchart"></canvas>
+								</div> -->
+							</div>
+						</div>
+						<br>
+						<hr>
+						<div class="row">
+							<h6 class="" style="margin-bottom: 20px; color: #ce8e04!important; font-weight: bold;">
+								<img src="/static/psalm_static/assets/img/icons/Sectors_MSME.png" width="30px" style="margin-right:5px;"/>MICRO, SMALL, MEDIUM ENTERPRISES </h6>
+							<hr>
+							<div class="col-md-3 col-12">
+								<br>
+								<table class="table table-striped" style="font-size: 10px;">
+									<tbody>
+										<tr>
+											<th>TOTAL # OF MSME's</th>
+											<th class="text-end"><span class="MSME_total">-</span></th>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<hr>
+								<br>
+								<div style="width: 100%; margin: auto;">
+									<canvas id="MSME_BT_barchart" height="300"></canvas>
+								</div>
+								<br>
+							</div>
+							<div class="col-md-6 col-12">
+								<br>
+								<div style="width: 100%; margin: auto;">
+									<canvas id="MSME_region_piechart"></canvas>
+								</div>
+								<br>
+							</div>
+							<div class="col-md-3 col-12">
+								<br>
+								<div class="MSME_Comm_Dashboard text-center"></div>
+								<br>
+								<!-- <div style="width: 100%; margin: auto;">
+									<canvas id="MSME_IC_barchart"></canvas>
+								</div> -->
+							</div>
+						</div>
+						<br>
+						<hr>
+						<div class="row">
+							<h6 class="" style="margin-bottom: 20px; color: #ce8e04!important; font-weight: bold;">
+								DATA CAPTURE FORM </h6></div>
+							<hr>
+							<div >
+								<ul class="nav nav-tabs" id="myTab" role="tablist">
+									<li class="nav-item" role="presentation">
+										<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#f1" type="button" role="tab" aria-controls="home" aria-selected="true">DCF1</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#f2" type="button" role="tab" aria-controls="profile" aria-selected="false">DCF2</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f3" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF3</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f4" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF4</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f5" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF5</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f6" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF6</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f7" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF7</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f8" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF8</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f9" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF9</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f10" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF10</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#f11" type="button" role="tab" aria-controls="contact" aria-selected="false">DCF11</button>
+									</li>
+								</ul>
+								<div class="tab-content" id="myTabContent">
+									<div class="tab-pane fade show active" id="f1" role="tabpanel" aria-labelledby="home-tab">
+										<hr>
+										<h5 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>DIP Prep</b></h5>
+										<hr>
+										<div class="row">
+											<!-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag">{{dashboard_data.dcf_form1}}</div>
+													<h3>Entries</h3>
+													<p>Total # of Entries.</p>
+												</div>
+											</div> -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag">{{dashboard_data.dcf_form1male[0]['total_male']}}</div>
+													<h3>Male</h3>
+													<p>Smallholder Farming Households.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag">{{dashboard_data.dcf_form1female[0]['total_female']}} </div>
+													<h3>Female</h3>
+													<p>Smallholder Farming Households.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag">{{dashboard_data.dcf_form1msme[0]['total_large_entep']}}</div>
+													<h3>Large Enterprise</h3>
+													<p>Total # of Large Enterprises.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag">{{dashboard_data.dcf_form1msme2[0]['total_medium_entep']}}</div>
+													<h3>Medium Enterprises</h3>
+													<p>Total # of Medium Enterprises.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag">{{dashboard_data.dcf_form1msme3[0]['total_small_entep']}}</div>
+													<h3>Small Enterprises</h3>
+													<p>Total # of Small Enterprises.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag">{{dashboard_data.dcf_form1msme4[0]['total_micro_entep']}}</div>
+													<h3>Micro Enterprises</h3>
+													<p>Total # of Micro Enterprises.</p>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div class="row align-items-stretch">
+											<!-- Left Card -->
+											<div class="col-md-6 col-sm-6 d-flex">
+												<div class="card x_panel flex-fill d-flex flex-column w-100 h-100">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">DIPs / Region</div>
+
+													<!-- Chart fills available space -->
+													<div class="d-flex flex-grow-1">
+													<canvas id="DCF_F1_dipbyregion_bar" class="w-100"></canvas>
+													</div>
+
+													<!-- Legend -->
+													<div class="text-center mt-2" style="font-size: 12px;">
+													<p>
+														<i class="fa fa-square" style="color:#99e6ff"></i> Approved DIPs:
+														<span id="totalApprovedDipsValue"></span>&nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#33ccff"></i> Pipeline DIPs:
+														<span id="totalpipelineDipsValue"></span>&nbsp;&nbsp;&nbsp;<br>
+														<i class="fa fa-square" style="color:#0099cc"></i> Ongoing DIPs:
+														<span id="totalongoingDipsValue"></span>&nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#ff8080"></i> Not Started:
+														<span id="totalnotstartedDipsValue"></span>
+													</p>
+													</div>
+												</div>
+												</div>
+											</div>
+
+											<!-- Right Card -->
+											<div class="col-md-6 col-sm-6 d-flex">
+												<div class="card x_panel flex-fill d-flex flex-column w-100 h-100">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Smallholder Farming Households / Region</div>
+													<div class="d-flex flex-grow-1">
+													<canvas id="DCF_F1_SFHbyregion_bar" class="w-100"></canvas>
+													</div>
+												</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="f2" role="tabpanel" aria-labelledby="profile-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>Market Access Tracker</b></h4>
+										<hr>
+										<div class="row" >
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag" id="totalMembers">{{ dashboard_data.dcf_form2sextotal[0]['total_sex2'] | int }}</div>
+													<h3>Members</h3>
+													<p>Total # of FO Members.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag" id="totalMale">{{ dashboard_data.dcf_form2FOmale[0]['total_male2'] | int }}</div>
+													<h3>Male</h3>
+													<p>Total # of FO Members by Sex.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag" id="totalFemale">{{ dashboard_data.dcf_form2FOfemale[0]['total_female2'] | int }}</div>
+													<h3>Female</h3>
+													<p>Total # of FO Members by Sex.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag" id="totalPWD">{{ dashboard_data.dcf_form2FOpwd[0]['total_pwd'] | int }}</div>
+													<h3>PWD</h3>
+													<p>Total # of FO members by Sector.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag" id="totalYouth">{{ dashboard_data.dcf_form2FOyouth[0]['total_youth'] | int }}</div>
+													<h3>Youth</h3>
+													<p>Total # of FO members by Sector.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag" id="totalIP">{{ dashboard_data.dcf_form2FOip[0]['total_ip'] | int }}</div>
+													<h3>IP</h3>
+													<p>Total # of FO members by Sector.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+													<div class="count _money_tag" id="totalSC">{{ dashboard_data.dcf_form2FOsc[0]['total_sc'] | int }}</div>
+													<h3>SC</h3>
+													<p>Total # of FO members by Sector.</p>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div class="row align-items-stretch">
+											<!-- Left Card -->
+											<div class="col-md-6 col-sm-6 d-flex">
+												<div class="card x_panel flex-fill d-flex flex-column w-100 h-100">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Remarks / Status</div>
+
+													<!-- Chart Area -->
+													<div class="d-flex justify-content-center align-items-center flex-grow-1" style="min-height: 200px; max-height: 250px;">
+													<canvas id="DCF_2_polarArea" class="w-100 h-auto" style="max-height: 250px;"></canvas>
+													</div>
+
+													<!-- Legend -->
+													<div class="text-center mt-2" id="polarLegend" style="font-size: 12px;">
+													<p>
+														<i class="fa fa-square" style="color:#ff5c33"></i> Cancelled:
+														{{ dashboard_data.dcf_form2cancelled }} &nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#0099cc"></i> On-going:
+														{{ dashboard_data.dcf_form2og }} &nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#999999"></i> Non-renewal:
+														{{ dashboard_data.dcf_form2nonrenewal }}
+													</p>
+													</div>
+												</div>
+												</div>
+											</div>
+
+											<!-- Right Card -->
+											<div class="col-md-6 col-sm-6 d-flex">
+												<div class="card x_panel flex-fill d-flex flex-column w-100 h-100">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title mb-3">Commodity</div>
+
+													<!-- Chart Container -->
+													<div class="d-flex justify-content-center align-items-center flex-grow-1" style="min-height: 200px; max-height: 250px;">
+													<canvas id="DCF_2_canvasDoughnut" class="w-100 h-auto" style="max-height: 250px;"></canvas>
+													</div>
+
+													<!-- Legend Section -->
+													<div class="text-center mt-3" id="commodityLegend" style="font-size: 13px;">
+													<div class="d-flex flex-wrap justify-content-center gap-3">
+														{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
+														{% for key in dashboard_data.over_all_commodity_count2 %}
+														{% set color_index = loop.index0 % square_colors|length %}
+														<div class="d-flex align-items-center">
+															<i class="fa fa-square me-1" style="color: {{ square_colors[color_index] }}"></i>
+															<span>{{ key }}: <strong>{{ dashboard_data.over_all_commodity_count2[key] }}</strong></span>
+														</div>
+														{% endfor %}
+													</div>
+													</div>
+												</div>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div>
+											<h4 class="text-center">Sales Monitoring</h4>
+
+										<div class="col-md-6 col-sm-6">
+											<div class="x_panel table-responsive">
+												<div class="x_content">
+													<div class="table-container">
+														<table class="ui-table table table-bordered table-striped table-hover" id="salesCommodityTable">
+															<thead style="background-color: #007399; color: white">
+																<tr>
+																	<th>COMMODITY</th>
+																	<th>SALES</th>
+																	<th>VOL. SUPPLIED</th>
+																	<th>TRANSACTION</th>
+																</tr>
+															</thead>
+																{% set grouped = {'Coffee': 0, 'Coconut': 0, 'Cacao': 0, 'PFN': 0, 'Others': 0} %}
+																{% set grouped_vol = {'Coffee': 0, 'Coconut': 0, 'Cacao': 0, 'PFN': 0, 'Others': 0} %}
+																{% set grouped_txn = {'Coffee': 0, 'Coconut': 0, 'Cacao': 0, 'PFN': 0, 'Others': 0} %}
+																{% for row in dashboard_data.st_commodity_totals %}
+																	{% set commodity_name = row.ST_commodity | lower %}
+																	{% if 'coffee' in commodity_name %}
+																		{% set key = 'Coffee' %}
+																	{% elif 'coconut' in commodity_name %}
+																		{% set key = 'Coconut' %}
+																	{% elif 'cacao' in commodity_name %}
+																		{% set key = 'Cacao' %}
+																	{% elif 'pfn' in commodity_name %}
+																		{% set key = 'PFN' %}
+																	{% else %}
+																		{% set key = 'Others' %}
+																	{% endif %}
+																	{% set grouped = grouped.update({key: grouped[key] + row.total_sales}) %}
+																	{% set grouped_vol = grouped_vol.update({key: grouped_vol[key] + row.total_vol}) %}
+																	{% set grouped_txn = grouped_txn.update({key: grouped_txn[key] + row.total_transaction}) %}
+																{% endfor %}
+																<tbody>
+																	{% for key in ['Coffee', 'Coconut', 'Cacao', 'PFN', 'Others'] %}
+																	<tr>
+																		<td>{{ key | upper }}</td>
+																		<td>{{ "{:,.0f}".format(grouped[key]) }}</td>
+																		<td>{{ "{:,.0f}".format(grouped_vol[key]) }}</td>
+																		<td>{{ "{:,.0f}".format(grouped_txn[key]) }}</td>
+																	</tr>
+																	{% endfor %}
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+									<div class="tab-pane fade" id="f3" role="tabpanel" aria-labelledby="contact-tab">
+									<hr>
+									<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>BDSP</b></h4>
+									<hr>
+
+									<div class="row align-items-stretch">
+										<!-- Left Card (Pie Chart) -->
+										<div class="col-md-6 col-sm-6 d-flex">
+										<div class="card flex-fill d-flex flex-column w-100 h-100">
+											<div class="card-body d-flex flex-column">
+											<div class="card-title">Philgeps Registered</div>
+											<!-- Adjust pie chart height to match bar -->
+											<div class="d-flex flex-grow-1 align-items-center justify-content-center" style="min-height: 200px;">
+												<canvas id="DCF_F3_philgeps_registered" class="w-100" style="max-height: 300px;"></canvas>
+											</div>
+											</div>
+										</div>
+										</div>
+
+										<!-- Right Card (Bar Chart) -->
+										<div class="col-md-6 col-sm-6 d-flex">
+										<div class="card flex-fill d-flex flex-column w-100 h-100">
+											<div class="card-body d-flex flex-column">
+											<div class="card-title">Type of BDSP</div>
+											<div class="d-flex flex-grow-1" style="min-height: 200px;">
+												<canvas id="DCF_F3_typeofbdsp" class="w-100" style="max-height: 350px;"></canvas>
+											</div>
+											<div class="text-center mt-2" style="font-size: 12px;">
+												<p>
+												<i class="fa fa-square" style="color:#009999"></i> Individual:
+												{{dashboard_data.form3indiv[0]['totalindiv']}}&nbsp;&nbsp;&nbsp;
+												<i class="fa fa-square" style="color:#666699"></i> Organizational/Firm:
+												{{dashboard_data.form3orgfirm[0]['totalorgfirm']}}
+												</p>
+											</div>
+											</div>
+										</div>
+										</div>
+									</div>
+									</div>
+
+
+									<div class="tab-pane fade" id="f4" role="tabpanel" aria-labelledby="contact-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>CapBuild</b></h4>
+										<hr>
+										<div class="row">
+
+											<!-- Total Male -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form4male[0]['total_male4'] }}</div>
+												<h3>Male</h3>
+												<p>Total # of Participants by Sex.</p>
+												</div>
+											</div>
+
+											<!-- Total Female -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form4female[0]['total_female4'] }}</div>
+												<h3>Female</h3>
+												<p>Total # of Participants by Sex.</p>
+												</div>
+											</div>
+
+											<!-- Total IP -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats">
+												<div class="count _money_tag" style="border-radius: 10px;">
+													{{ dashboard_data.dcf_form4maleip[0]['total_male4ip'] + dashboard_data.dcf_form4femaleip[0]['total_female4ip'] }}
+												</div>
+												<h3>IP</h3>
+												<p>
+													Male: {{ dashboard_data.dcf_form4maleip[0]['total_male4ip'] }} |
+													Female: {{ dashboard_data.dcf_form4femaleip[0]['total_female4ip'] }}
+												</p>
+												</div>
+											</div>
+
+											<!-- Total Youth -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats">
+												<div class="count _money_tag" style="border-radius: 10px;">
+													{{ dashboard_data.dcf_form4maleyouth[0]['total_male4youth'] + dashboard_data.dcf_form4femaleyouth[0]['total_female4youth'] }}
+												</div>
+												<h3>Youth</h3>
+												<p>
+													Male: {{ dashboard_data.dcf_form4maleyouth[0]['total_male4youth'] }} |
+													Female: {{ dashboard_data.dcf_form4femaleyouth[0]['total_female4youth'] }}
+												</p>
+												</div>
+											</div>
+
+											<!-- Total PWD -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats">
+												<div class="count _money_tag" style="border-radius: 10px;">
+													{{ dashboard_data.dcf_form4malepwd[0]['total_male4pwd'] + dashboard_data.dcf_form4femalepwd[0]['total_female4pwd'] }}
+												</div>
+												<h3>PWD</h3>
+												<p>
+													Male: {{ dashboard_data.dcf_form4malepwd[0]['total_male4pwd'] }} |
+													Female: {{ dashboard_data.dcf_form4femalepwd[0]['total_female4pwd'] }}
+												</p>
+												</div>
+											</div>
+
+											<!-- Total SC -->
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats">
+												<div class="count _money_tag" style="border-radius: 10px;">
+													{{ dashboard_data.dcf_form4malesc[0]['total_male4sc'] + dashboard_data.dcf_form4femalesc[0]['total_female4sc'] }}
+												</div>
+												<h3>SC</h3>
+												<p>
+													Male: {{ dashboard_data.dcf_form4malesc[0]['total_male4sc'] }} |
+													Female: {{ dashboard_data.dcf_form4femalesc[0]['total_female4sc'] }}
+												</p>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div class="row d-flex align-items-stretch">
+											<div class="col-md-4 col-12 d-flex">
+												<div class="card flex-fill">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Training <small class="d-block"><b>Small Holder Farmers</b></small></div>
+													<div class="text-center flex-grow-1">
+													<canvas id="DCF_f4_training_individual"></canvas>
+													</div>
+													<br>
+													<div>
+													<table class="tile_info" id="indv_table"></table>
+													</div>
+												</div>
+												</div>
+											</div>
+											<div class="col-md-4 col-12 d-flex">
+												<div class="card flex-fill">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Training <small class="d-block"><b>Farmer Organization</b></small></div>
+													<div class="text-center flex-grow-1">
+													<canvas id="DCF_F4_training_fo"></canvas>
+													</div>
+													<br>
+													<div>
+													<table class="tile_info" id="fo_table"></table>
+													</div>
+												</div>
+												</div>
+											</div>
+
+											<div class="col-md-4 col-12 d-flex">
+												<div class="card flex-fill">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Training <small class="d-block"><b>MSMEs</b></small></div>
+													<div class="text-center flex-grow-1">
+													<canvas id="DCF_f4_training_msme"></canvas>
+													</div>
+													<br>
+													<div>
+													<table class="tile_info" id="msme_table"></table>
+													</div>
+												</div>
+												</div>
+											</div>
+											</div>
+									</div>
+									<div class="tab-pane fade" id="f5" role="tabpanel" aria-labelledby="contact-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>Investment Tracker</b></h4>
+										<hr>
+										<div class="row">
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form5_FOExpansion[0]['FO_Expansion'] }}</div>
+												<h3>Expansion</h3>
+												<p>Total number of Expansion.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form5_FORehab[0]['FO_Rehabilitation'] }}</div>
+												<h3>Rehabilitation</h3>
+												<p>Total number of Rehabilitation.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form5_FOProductive[0]['FO_Productive'] }}</div>
+												<h3>Productive Inves.</h3>
+												<p>Total number of Productive Investments.</p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="f6" role="tabpanel" aria-labelledby="contact-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>Product Development</b></h4>
+										<hr>
+										<div class="row" >
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6act[0]['total_act6'] }}</div>
+												<h3>Activities</h3>
+												<p>Total # of Activities.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6male[0]['total_male6'] + dashboard_data.dcf_form6female[0]['total_female6'] }}</div>
+												<h3>Participants</h3>
+												<p>Total # of Participants.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6male[0]['total_male6'] }}</div>
+												<h3>Male</h3>
+												<p>Total # of FO members by male.</p>
+
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6female[0]['total_female6'] }}</div>
+												<h3>Female</h3>
+												<p>Total # of FO members by female.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6pwd[0]['total_pwd6'] }}</div>
+												<h3>PWD</h3>
+												<p>Total # of FO members by pwd.</p>
+
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6youth[0]['total_youth6'] }}</div>
+												<h3>Youth</h3>
+												<p>Total # of FO members by sector.</p>
+
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6ip[0]['total_ip6'] }}</div>
+												<h3>IP</h3>
+												<p>Total # of FO members by sector.</p>
+
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{ dashboard_data.dcf_form6sc[0]['total_sc6'] }}</div>
+												<h3>SC</h3>
+												<p>Total # of FO members by sector.</p>
+
+												</div>
+											</div> 
+										</div>
+										<hr>
+										<div class="row align-items-stretch">
+											<!-- Type of Commodity -->
+											<div class="col-md-6 col-sm-6 d-flex">
+												<div class="card x_panel flex-fill d-flex flex-column w-100 h-100">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Type of Commodity</div>
+
+													<!-- Chart area -->
+													<div class="d-flex justify-content-center align-items-center" style="flex: 1 0 auto; min-height: 250px;">
+													<canvas id="DCF_F6_typeofcomm" class="w-100" style="max-height: 300px;"></canvas>
+													</div>
+
+													<!-- Legend -->
+													<div class="text-center mt-2" style="font-size: 12px;">
+													<p>
+														<i class="fa fa-square" style="color:#FDE7B3"></i> Cacao:
+														{{ dashboard_data.dcf_form6_Cacao[0]['total_cacao6'] }} &nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#FFC50F"></i> Coffee:
+														{{ dashboard_data.dcf_form6_Coffee[0]['total_coffee6'] }} &nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#63A361"></i> Coconut:
+														{{ dashboard_data.dcf_form6_Coconut[0]['total_coconut6'] }} &nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#5B532C"></i> PFN:
+														{{ dashboard_data.dcf_form6_PFN[0]['total_pfn6'] }}
+													</p>
+													</div>
+												</div>
+												</div>
+											</div>
+
+											<!-- Type of Activity -->
+											<div class="col-md-6 col-sm-6 d-flex">
+												<div class="card x_panel flex-fill d-flex flex-column w-100 h-100">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Type of Activity</div>
+
+													<!-- Chart area -->
+													<div class="d-flex justify-content-center align-items-center" style="flex: 1 0 auto; min-height: 300px;">
+													<canvas id="DCF_F6_typeofact" class="w-100" style="max-height: 300px;"></canvas>
+													</div>
+
+													<!-- Legend -->
+													<div class="text-center mt-2" style="font-size: 12px;">
+													<p>
+														<i class="fa fa-square" style="color:#FF6384"></i> Product Development:
+														{{ dashboard_data.dcf_form6_prod[0]['total_prod6'] }} &nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#36A2EB"></i> Training:
+														{{ dashboard_data.dcf_form6_training[0]['total_training6'] }} &nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#FFCE56"></i> Consultation:
+														{{ dashboard_data.dcf_form6_consultation[0]['total_consultation6'] }} &nbsp;&nbsp;&nbsp;
+														<i class="fa fa-square" style="color:#4BC0C0"></i> Orientation:
+														{{ dashboard_data.dcf_form6_orientation[0]['total_orientation6'] }}
+													</p>
+													</div>
+												</div>
+												</div>
+											</div>
+											</div>
+									</div>
+									<div class="tab-pane fade" id="f7" role="tabpanel" aria-labelledby="contact-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>Trade Promotion</b></h4>
+										<hr>
+										<div class="row">
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form7msme[0]['totalmsme7']}}</div>
+												<h3>MSME</h3>
+												<p>Total # of MSME.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form7fo[0]['totalfo7']}}</div>
+												<h3>FO</h3>
+												<p>Total # of FO.</p>
+												</div>
+											</div>
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+												<div class="count _money_tag">{{dashboard_data.dcf_form7farmer[0]['totalfarmer7']}}</div>
+												<h3>Farmer</h3>
+												<p>Total # of Farmer.</p>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div class="col-md-6 col-sm-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="card-title">Type of Activity</div>
+													<div class="container">
+														<canvas id="DCF_F7_typeofact" min-height="350"></canvas>
+													</div>
+													<div style="text-align: center;">
+														<p style="font-size: 12px;"><i class="fa fa-square" style="color:#884dff "></i> Provincial: <span class="_money_tag">{{dashboard_data.dcf7_TFP[0]['tfp7']}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ac7339 "></i> Regional: <span class="_money_tag">{{dashboard_data.dcf7_TFR[0]['tfr7'] + dashboard_data.dcf7_TSMPR[0]['tsmpr7'] + dashboard_data.dcf7_BMPR[0]['bmpr7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ffa31a "></i> National: <span class="_money_tag">{{dashboard_data.dcf7_TFN[0]['tfn7'] + dashboard_data.dcf7_TSMN[0]['tsmn7'] + dashboard_data.dcf7_BMN[0]['bmn7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <i class="fa fa-square" style="color:#ff4d4d "></i> International: <span class="_money_tag">{{dashboard_data.dcf7_TFI[0]['tfi7'] + dashboard_data.dcf7_TSMI[0]['tsmi7'] + dashboard_data.dcf7_BMI[0]['bmi7']}}</span></p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="f8" role="tabpanel" aria-labelledby="contact-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>FMI</b></h4>
+										<hr>
+										<style>
+											.card-fmi-dashboard {
+												    padding: 0px 10px;
+													margin: 10px 5px;
+													box-shadow: 0px 0px 10px #8a8a8a;
+													background-color: #F6F9FF;
+													min-height: 120px;
+													border-radius: 10px;
+													padding-top: 10px;
+											}
+											.card-fmi-dashboard:hover b {
+												color: #0D6EFD;
+												/* text-shadow: 2px 2px 5px #1F2937; */
+											}
+											.card-fmi .count {
+												font-size: 2em;
+												font-weight: bold;
+												margin-top: 10px;
+												color: #1F2937;
+												/* text-shadow: 2px 2px 2px #F8BD7A; */
+											}
+											.card-fmi .count p {
+												margin-bottom: 0px;
+												position: relative;
+												font-size: 0.4em;
+											}
+											.card-fmi .count p b {
+												position: absolute;
+												right: 0px;
+											}
+											.card-fmi h4 {
+												font-weight: bold; 
+												border-top: 1px solid #0D6EFD; 
+												padding-top: 5px; 
+												margin-top: 5px; 
+												text-align: right;
+											}
+											.card-fmi-dashboard h4 {
+												color: #629DDD;    
+												font-size: 14px!important;
+											}
+										</style>
+										<div class="row">
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag text-end"><b>{{fmi_data.FMR_total}}</b></div>
+														<h4>Total FMR Projects</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag rapid_fmr_completed">
+															<p>No. of Completed : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_completed['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_completed['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_completed['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>COMPLETED</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_ongoing['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_ongoing['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_ongoing['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>ONGOING</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_no1['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_no1['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_no1['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>FOR NO 1</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_no2['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_no2['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_no2['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>FOR NO 2</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_no3['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_no3['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_no3['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>FOR NO 3</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_noa['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_noa['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_noa['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>TOTAL ISSUANCE OF NOA</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag ">
+															<p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(fmi_data.FMR_pending['total']) }}</b></p>
+															<p>No. of km : <b>{{ "{:,.2f}".format(fmi_data.FMR_pending['total_km']) }}</b></p>
+															<p>Amnt Approved : <b>{{ "P{:,.2f}".format(fmi_data.FMR_pending['total_appr_budget']) }}</b></p>
+														</div>
+													<h4>PENDING</h4>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6">
+												<div class="card-fmi card-fmi-dashboard">
+													<div class="" style="border-radius: 10px;">
+														<div class="count _money_tag text-end"><b>{{ "{:,.2f}".format(fmi_data.FMR_totalkm_completed_ongoing) }}</b></div>
+														<h4>KILOMETER COMPLETED BASE ON % ACCOMPLISHED</h4>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-3">
+												<div class="card" style="box-shadow: 0px 0px 5px #F8BD7A;">
+													<div class="card-body">
+														<h6 class="card-title text-center">
+															<b># of Batch 1 / Status</b>
+														</h6>
+														<div class="container">
+															<br>
+															<canvas id="FMR_batch1_barchart" height="450"></canvas>
+														</div>
+													</div>
+												</div>   
+											</div>
+											<div class="col-3">
+												<div class="card" style="box-shadow: 0px 0px 5px #1f29367d;">
+													<div class="card-body">
+														<h6 class="card-title text-center">
+															<b># of Batch 2 / Status</b>
+														</h6>
+														<div class="container">
+															<br>
+															<canvas id="FMR_batch2_barchart" height="450"></canvas>
+														</div>
+													</div>
+												</div>   
+											</div>
+											<div class="col-3">
+												<div class="card" style="box-shadow: 0px 0px 5px #F8BD7A;">
+													<div class="card-body">
+														<h6 class="card-title text-center">
+															<b># of Batch 3 / Status</b>
+														</h6>
+														<div class="container">
+															<br>
+															<canvas id="FMR_batch3_barchart" height="450"></canvas>
+														</div>
+													</div>
+												</div>   
+											</div>
+											<div class="col-3">
+												<div class="card" style="box-shadow: 0px 0px 5px #1f29367d;">
+													<div class="card-body">
+														<h6 class="card-title text-center">
+															<b># of Batch 4 / Status</b>
+														</h6>
+														<div class="container">
+															<br>
+															<canvas id="FMR_batch4_barchart" height="450"></canvas>
+														</div>
+													</div>
+												</div>   
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="f9" role="tabpanel" aria-labelledby="contact-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>Enablers Activity</b></h4>
+										<hr>
+										<div class="col-md-6 col-sm-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="card-title">Type of Activity</div>
+													<div class="container">
+														<canvas id="DCF_F9_typeofact" min-height="350"></canvas>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="f10" role="tabpanel" aria-labelledby="contact-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>Negosyo Center</b></h4>
+										<hr>
+										<div class="row">
+											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+												<div class="tile-stats" style="border-radius: 10px;">
+														<div class="count _money_tag">{{dashboard_data.dcf_form10nc[0]['total_nc10']}}</div>
+														<h3>Negosyo Center</h3>
+														<p>Total # of Negosyo Centers.</p>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="f11" role="tabpanel" aria-labelledby="contact-tab">
+										<hr>
+										<h4 class="text-primary" style="margin-top: 20px; margin-left: 5px;"><b>Access to Finance</b></h4>
+										<hr>
+										<div class="row">
+										<div class="col-lg-4 col-md-3 col-sm-6">
+											<div class="tile-stats" style="border-radius: 10px;">
+											<div class="count _money_tag">{{ dashboard_data.dcf_form11_fs_total[0]['total_farmers_with_fs'] }}</div>
+											<h3>Farmer</h3>
+											<p>Total # of Farmer Access the Financial Services.</p>
+											</div>
+										</div>
+
+										<div class="col-lg-4 col-md-3 col-sm-6">
+											<div class="tile-stats" style="border-radius: 10px;">
+											<div class="count _money_tag">{{ dashboard_data.dcf_form11_fo_total[0]['total_fos_with_fs'] }}</div>
+											<h3>FO/MSME</h3>
+											<p>Total # of FO/MSME access the Financial Services.</p>
+											</div>
+										</div>
+										</div>
+											<!-- Type of Financial Services Access by Farmer -->
+											<div class="col-md-12 col-sm-12 d-flex">
+												<div class="card x_panel flex-fill d-flex flex-column w-100 h-100">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Type of Financial Services Access by Farmer</div>
+
+													<div class="row flex-grow-1 align-items-center">
+													<!-- Chart -->
+													<div class="col-md-8 col-sm-8 d-flex align-items-center">
+														<canvas id="DCF_11_mybarChartFFS" class="w-100 h-100"></canvas>
+													</div>
+
+													<!-- Table -->
+													<div class="col-md-4 col-sm-4 d-flex align-items-center">
+														<div class="table-responsive w-100">
+														<table class="table table-bordered table-striped table-hover mb-0 text-sm">
+															<tbody>
+															<tr><td><i class="fa fa-square" style="color:#009999"></i> Loans / Cash Advance</td><td>{{ dashboard_data.dcf_form11_fsls[0]['farmer_loan'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#007399"></i> Savings and Investments</td><td>{{ dashboard_data.dcf_form11_fsss[0]['farmer_savings'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#3366cc"></i> Insurance</td><td>{{ dashboard_data.dcf_form11_fsis[0]['farmer_insurance'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#33cccc"></i> Credit Guarantee</td><td>{{ dashboard_data.dcf_form11_fscs[0]['farmer_credit'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#339966"></i> Paid-Up Capital</td><td>{{ dashboard_data.dcf_form11_fspups[0]['farmer_paidup'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#993366"></i> In-Kind Grants</td><td>{{ dashboard_data.dcf_form11_fsiks[0]['farmer_inkind'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#cc6600"></i> Cash Grants</td><td>{{ dashboard_data.dcf_form11_fscgs[0]['farmer_cashgrant'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#999900"></i> Cash for Work</td><td>{{ dashboard_data.dcf_fomr11_fscfws[0]['farmer_cashforwork'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#6666cc"></i> Mortuary Insurance/Assistance</td><td>{{ dashboard_data.dcf_form11_fsms[0]['farmer_mortuary'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#cc6699"></i> Digital Platforms</td><td>{{ dashboard_data.dcf_form11_fsds[0]['farmer_digital'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#66cc66"></i> RAPID Support</td><td>{{ dashboard_data.dcf_form11_fsrs[0]['farmer_rapid'] }}</td></tr>
+															</tbody>
+														</table>
+														</div>
+													</div>
+													</div> <!-- row -->
+												</div>
+												</div>
+											</div>
+
+											<!-- Type of Financial Services Access by FO/MSMEs -->
+											<div class="col-md-12 col-sm-12 d-flex">
+												<div class="card x_panel flex-fill d-flex flex-column w-100 h-100">
+												<div class="card-body d-flex flex-column">
+													<div class="card-title">Type of Financial Services Access by FO/MSMEs</div>
+
+													<div class="row flex-grow-1 align-items-center">
+													<div class="col-md-8 col-sm-8 d-flex align-items-center">
+														<canvas id="DCF_11_mybarChartFOFS" class="w-100 h-100"></canvas>
+													</div>
+													
+													<!-- Table -->
+													<div class="col-md-4 col-sm-4 d-flex align-items-center">
+														<div class="table-responsive w-100">
+														<table class="table table-bordered table-striped table-hover mb-0 text-sm">
+															<tbody>
+															<tr><td><i class="fa fa-square" style="color:#009999"></i> Loans / Cash Advance</td><td>{{ dashboard_data.dcf_form11_fosls[0]['fo_loan'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#339966"></i> Equity</td><td>{{ dashboard_data.dcf_form11_foes[0]['fo_paidup'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#007399"></i> Savings and Investments</td><td>{{ dashboard_data.dcf_form11_foss[0]['fo_savings'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#3366cc"></i> Insurance</td><td>{{ dashboard_data.dcf_form11_fosis[0]['fo_insurance'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#33cccc"></i> Credit Guarantee</td><td>{{ dashboard_data.dcf_form11_foscs[0]['fo_credit'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#993366"></i> In-Kind Grants</td><td>{{ dashboard_data.dcf_form11_fosiks[0]['fo_inkind'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#cc6600"></i> Cash Grants</td><td>{{ dashboard_data.dcf_form11_foscgs[0]['fo_cashgrant'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#cc6699"></i> Digital Platforms</td><td>{{ dashboard_data.dcf_form11_fosds[0]['fo_digital'] }}</td></tr>
+															<tr><td><i class="fa fa-square" style="color:#66cc66"></i> RAPID Support</td><td>{{ dashboard_data.dcf_form11_fosrs[0]['fo_rapid'] }}</td></tr>
+															</tbody>
+														</table>
+														</div>
+													</div>
+													</div> <!-- row -->
+												</div>
+												</div>
+											</div>										
+									</div>		
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
-		
-		<!-- End  Card -->	
-		<!--
-		<div class="col-xxl-4 col-md-6">
-			<div class="card info-card sales-card">
-				<div class="card-body">
-					<h5 class="card-title">PF-A <span>| Farmers</span></h5>
-					<div class="d-flex align-items-center">
-						<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-							<i class="bx bxs-user"></i>
-						</div> 
-						<div class="ps-3">
-							<h6>145</h6>
-							<span class="text-success small pt-1 fw-bold">200</span> <span class="text-muted small pt-2 ps-1">Target</span><br>
-							<span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">Slippage</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		-->
-		<!-- End  Card -->
 
-	</div>
-	<div class="row" style="display: _none;">
+
+	<div class="row d-none" id="OLD">
 		<div class="card">
 			<div class="card-body">
 				<h5 class="card-title">PF/DCF Dashboard<span>/ generic dashboard</span></h5>
 
-				<!-- Bordered Tabs -->
 				<ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
 					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1" onclick="$ID('dash_core_embed').src='/dcf_dashboard_embed' ;">Data Capture Forms</button>
+						<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home"
+							type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1"
+							onclick="$ID('dash_core_embed').src='/dcf_dashboard_embed';">Data Capture Forms</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1" onclick="$ID('dash_core_embed').src='/profiling_form_a/e?page=dashboard' ;">Profiling Form A</button>
+						<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile"
+							type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1"
+							onclick="$ID('dash_core_embed').src='/profiling_form_a/e?page=dashboard';">Profiling Form A</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-contact" type="button" role="tab" aria-controls="contact" aria-selected="true" onclick="$ID('dash_core_embed').src='/formbembed/e?page=dash_conso' ;">Profiling Form B</button>
+						<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-contact"
+							type="button" role="tab" aria-controls="contact" aria-selected="true"
+							onclick="$ID('dash_core_embed').src='/formbembed/e?page=dash_conso';">Profiling Form B</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="harv-tab" data-bs-toggle="tab" data-bs-target="#bordered-harv" type="button" role="tab" aria-controls="harv" aria-selected="true" onclick="$ID('dash_core_embed').src='/formcdashboard' ;">Profiling Form C</button>
+						<button class="nav-link" id="harv-tab" data-bs-toggle="tab" data-bs-target="#bordered-harv"
+							type="button" role="tab" aria-controls="harv" aria-selected="true"
+							onclick="$ID('dash_core_embed').src='/formcdashboard';">Profiling Form C</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="others-tab" data-bs-toggle="tab" data-bs-target="#bordered-others" type="button" role="tab" aria-controls="others" aria-selected="true" onclick="$ID('dash_core_embed').src='' ;">Others</button>
+						<button class="nav-link" id="others-tab" data-bs-toggle="tab" data-bs-target="#bordered-others"
+							type="button" role="tab" aria-controls="others" aria-selected="true"
+							onclick="$ID('dash_core_embed').src='';">Others</button>
 					</li>
 				</ul>
 				<div class="tab-content pt-2" id="borderedTabContent">
 					<div class="pagetitle">
-						<iframe id="dash_core_embed" src="/dcf_dashboard_embed" frameborder="0" scrolling="no" style="width: 100%;" onload="EMBED__SCRIPT(this,formcdashboard)">
-							Loading ...
-						</iframe>
+						<iframe id="dash_core_embed" src="" frameborder="0" scrolling="no"
+						style="width: 100%; height: 100%;" onload="EMBED__SCRIPT(this, formcdashboard)"></iframe>
 					</div>
-				</div><!-- End Bordered Tabs -->
-
+				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
-	<script type="text/javascript">
-		function formcdashboard(_BODY_,obj){
-			try{
-				var in_url =  (urls)=> {return obj.src.split("/").indexOf(urls)>0}
-				if(in_url('formcdashboard') || in_url('dcf_dashboard_embed')){
-					println("-==-=-==--=-==-=--=")
-					_BODY_.getElementsByClassName("main-content")[0].style['margin-left'] = "0px" 
-				}
-				if(in_url('formbembed')){
 
-					var main_cont = obj.contentWindow.$ID("TOP_TITLE").style['padding-top']="1px"
-					println(main_cont)
+	{% include 'advance_filter_a_dashboard.html' %}
+
+	<script type="text/javascript">
+		function formcdashboard(_BODY_, obj) {
+			try {
+				const in_url = (urls) => obj && obj.src && obj.src.split("/").indexOf(urls) >= 0;
+				if (in_url('formcdashboard') || in_url('dcf_dashboard_embed')) {
+					if (_BODY_ && _BODY_.getElementsByClassName("main-content")[0]) {
+						_BODY_.getElementsByClassName("main-content")[0].style['margin-left'] = "0px";
+					}
 				}
-			}
-			catch(e){
-				warnprintln(e)				
+				if (in_url('formbembed')) {
+					if (obj && obj.contentWindow && obj.contentWindow.$ID) {
+						const main_cont = obj.contentWindow.$ID("TOP_TITLE");
+						if (main_cont) main_cont.style['padding-top'] = "1px";
+					}
+				}
+			} catch (e) {
+				console.warn(e);
 			}
 		}
 
+		$(document).ready(function(){
+			
+			$.ajax({
+                type    : 'POST',
+                url     : '/dashboard_summary',
+                cache   : false,
+                async   : false,
+                // headers: {
+                //     'X-CSRFToken': $('meta[name="csrf-token"]').attr('content') 
+                // },
+                // data    : formData,
+                success : function(response){
+                    console.log('entered here!');
+					console.log(response);
+
+					var chart_data_shf 		= response.SHF['SHF_byRegion'];
+					var chart_data_shf_pc 	= response.SHF['SHF_PC_data'];
+					var chart_data_fo  		= response.FO['FO_byRegion'];
+					var chart_data_fo_to  	= response.FO['FO_byOrgType'];
+					var chart_data_fo_pc  	= response.FO['FO_PC_data'];
+					var chart_data_msme  	= response.MSME['MSME_byRegion'];
+					var chart_data_msme_pc  = response.MSME['MSME_PC_data'];
+					var chart_data_msme_ic  = response.MSME['MSME_IC_data'];
+
+					// Small Holder Farmers - Total List
+					$('.SHF_total').html(Money(response.SHF['SHF_Total']));
+					$('.SHF_total_male').html(Money(response.SHF['SHF_Total_Male']));
+					$('.SHF_total_female').html(Money(response.SHF['SHF_Total_Female']));
+					$('.SHF_total_ip').html(Money(response.SHF['SHF_Total_IP']));
+					$('.SHF_total_youth').html(Money(response.SHF['SHF_Total_Youth']));
+					$('.SHF_total_pwd').html(Money(response.SHF['SHF_Total_PWD']));
+					$('.SHF_total_sc').html(Money(response.SHF['SHF_Total_SC']));
+
+					$('.SHF_Comm_Dashboard').html(getCommodityDashboard("# of SHF's / Commodity",chart_data_shf_pc['data'][0],chart_data_shf_pc['data'][1],chart_data_shf_pc['data'][2],chart_data_shf_pc['data'][3],chart_data_shf_pc['data'][4]));
+					$('.FO_Comm_Dashboard').html(getCommodityDashboard("# of FO's / Commodity",chart_data_fo_pc['data'][0],chart_data_fo_pc['data'][1],chart_data_fo_pc['data'][2],chart_data_fo_pc['data'][3],chart_data_fo_pc['data'][4]));
+					$('.MSME_Comm_Dashboard').html(getCommodityDashboard("# of MSME's / Commodity",chart_data_msme_ic['data'][0],chart_data_msme_ic['data'][1],chart_data_msme_ic['data'][2],chart_data_msme_ic['data'][3],chart_data_msme_ic['data'][4]));
+
+					// Farmer Organization - Total List
+					$('.FO_total').html(Money(response.FO['FO_Total']));
+					$('.FO_total_coop').html(Money(response.FO['FO_Total_Coop']));
+					$('.FO_total_assoc').html(Money(response.FO['FO_Total_Assoc']));
+					$('.FO_total_members').html(Money(response.FO['FO_Total_Members']));
+					$('.FO_total_male').html(Money(response.FO['FO_Total_Male']));
+					$('.FO_total_female').html(Money(response.FO['FO_Total_Female']));
+
+					// MSME - Total List
+					$('.MSME_total').html(Money(response.MSME['MSME_Total']));
+					
+					
+					var ctx_SHF = document.getElementById('SHF_region_piechart').getContext('2d');
+					// var ctx_SHF_PC = document.getElementById('SHF_PC_barchart').getContext('2d');
+					var ctx_FO = document.getElementById('FO_region_piechart').getContext('2d');
+					var ctx_FO_TO = document.getElementById('FO_TO_barchart').getContext('2d');
+					// var ctx_FO_PC = document.getElementById('FO_PC_barchart').getContext('2d');
+					var ctx_MSME = document.getElementById('MSME_region_piechart').getContext('2d');
+					var ctx_MSME_PC = document.getElementById('MSME_BT_barchart').getContext('2d');
+					// var ctx_MSME_IC = document.getElementById('MSME_IC_barchart').getContext('2d');
+
+					// SHF Chart - Pie
+					const chartSHF = new Chart(ctx_SHF, {
+						type: 'pie',
+						data: {
+							labels: chart_data_shf.labels,
+							datasets: [{
+								label: '',
+								data: chart_data_shf.data,
+								backgroundColor: chart_data_shf.background_colors,
+								hoverOffset: 4
+							}]
+						},
+						options: {
+							responsive: true,
+							plugins: {
+								legend: {
+									position: 'bottom',
+									labels: {
+										boxWidth: 15,
+      									boxHeight: 15,
+										font: {
+											size: 12
+										}
+									}
+								},
+								title: {
+									display: true,
+									text: "SHF's / Region"
+								},
+								tooltip: {
+									callbacks: {
+										label: function(context) {
+											return context.parsed+"%";
+										}
+									}
+								}
+							}
+						}
+					});
+
+
+					// ===========================================================
+					// SHF Commodities - Bar Chart
+					// ===========================================================
+					// var chartSHF_PC = new Chart(ctx_SHF_PC, {
+					// 	type: 'bar',
+					// 	data: {
+					// 		labels: chart_data_shf_pc.labels,
+					// 		datasets: [{
+					// 			label: 'SHF / Commodity',
+					// 			data: chart_data_shf_pc.data,
+					// 			backgroundColor: chart_data_shf_pc.background_colors,
+					// 			borderColor: '#8D5630',
+					// 			borderWidth: 1
+					// 		}]
+					// 	},
+					// 	options: {
+					// 		title: {
+					// 			display: true,
+					// 			text: "SHF's / Region"
+					// 		},
+					// 		scales: {
+					// 			y: {
+					// 				beginAtZero: true
+					// 			}
+					// 		}
+					// 	}
+					// });
+					
+					// FO Chart - Pie
+					const chartFO = new Chart(ctx_FO, {
+						type: 'pie',
+						data: {
+							labels: chart_data_fo.labels,
+							datasets: [{
+								label: '',
+								data: chart_data_fo.data,
+								backgroundColor: chart_data_fo.background_colors,
+								hoverOffset: 4
+							}]
+						},
+						options: {
+							responsive: true,
+							plugins: {
+								legend: {
+									position: 'bottom',
+									labels: {
+										boxWidth: 15,
+      									boxHeight: 15,
+										font: {
+											size: 12
+										}
+									}
+								},
+								title: {
+									display: true,
+									text: "FO's / Region"
+								},
+								tooltip: {
+									callbacks: {
+										label: function(context) {
+											return context.parsed+"%";
+										}
+									}
+								}
+							}
+						}
+					});
+
+					var chartFO_TO = new Chart(ctx_FO_TO, {
+						type: 'bar',
+						data: {
+							labels: chart_data_fo_to.labels,
+							datasets: [{
+								label: "# of Members / Type of FO's",
+								data: chart_data_fo_to.data,
+								backgroundColor: chart_data_fo_to.background_colors,
+								borderColor: '#8D5630',
+								borderWidth: 1
+							}]
+						},
+						options: {
+							title: {
+								display: true,
+								text: "# of Members / Type of FO's"
+							},
+							scales: {
+								y: {
+									beginAtZero: true
+								}
+							}
+						}
+					});
+
+					// ===========================================================
+					// FO Commodities - Bar Chart
+					// ===========================================================
+					// var chartFO_PC = new Chart(ctx_FO_PC, {
+					// 	type: 'bar',
+					// 	data: {
+					// 		labels: chart_data_fo_pc.labels,
+					// 		datasets: [{
+					// 			label: "# of FO's / Commodity",
+					// 			data: chart_data_fo_pc.data,
+					// 			backgroundColor: chart_data_fo_pc.background_colors,
+					// 			borderColor: '#8D5630',
+					// 			borderWidth: 1
+					// 		}]
+					// 	},
+					// 	options: {
+					// 		scales: {
+					// 			y: {
+					// 				beginAtZero: true
+					// 			}
+					// 		}
+					// 	}
+					// });
+
+					// MSME Chart - Pie
+					const chartMSME = new Chart(ctx_MSME, {
+						type: 'pie',
+						data: {
+							labels: chart_data_msme.labels,
+							datasets: [{
+								label: '',
+								data: chart_data_msme.data,
+								backgroundColor: chart_data_msme.background_colors,
+								hoverOffset: 4
+							}]
+						},
+						options: {
+							responsive: true,
+							plugins: {
+								legend: {
+									position: 'bottom',
+									labels: {
+										boxWidth: 15,
+      									boxHeight: 15,
+										font: {
+											size: 12
+										}
+									}
+								},
+								title: {
+									display: true,
+									text: "MSME's / Region"
+								},
+								tooltip: {
+									callbacks: {
+										label: function(context) {
+											return context.parsed+"%";
+										}
+									}
+								}
+							}
+						}
+					});
+
+					var chartMSME_PC = new Chart(ctx_MSME_PC, {
+						type: 'bar',
+						data: {
+							labels: chart_data_msme_pc.labels,
+							datasets: [{
+								label: "MSME's / Asset Size",
+								data: chart_data_msme_pc.data,
+								backgroundColor: chart_data_msme_pc.background_colors,
+								borderColor: '#8D5630',
+								borderWidth: 1
+							}]
+						},
+						options: {
+							scales: {
+								y: {
+									beginAtZero: true
+								}
+							}
+						}
+					});
+
+					// ===========================================================
+					// MSME Commodities - Bar Chart
+					// ===========================================================
+					// var chartMSME_IC = new Chart(ctx_MSME_IC, {
+					// 	type: 'bar',
+					// 	data: {
+					// 		labels: chart_data_msme_ic.labels,
+					// 		datasets: [{
+					// 			label: "# of MSME's / Commodity",
+					// 			data: chart_data_msme_ic.data,
+					// 			backgroundColor: chart_data_msme_ic.background_colors,
+					// 			borderColor: '#8D5630',
+					// 			borderWidth: 1
+					// 		}]
+					// 	},
+					// 	options: {
+					// 		scales: {
+					// 			y: {
+					// 				beginAtZero: true
+					// 			}
+					// 		}
+					// 	}
+					// });
+
+					setTimeout(function(){
+						$('.rapid_dashboardSumm_loading').addClass('d-none');
+					},200);
+                },
+                error : function(err) {
+                    alert(err.statusText);
+                }
+            });
+
+			$('.rapid_viewAreaFilterForm_btn').click(function(){
+				$('body').addClass('toggle-sidebar');
+			});
+
+			function getCommodityDashboard(title,cacao,coconut,coffee,pfn,untagged){
+				var html = "";
+				html += 	'<small style="display: block; margin-bottom: 10px; color:#666666;"><b>'+title+'</b></small>';
+				html += 	'<div class="row">';
+				html += 		'<div class="col-6">';
+				html += 			'<div class="card card-stats" style="margin-bottom: 15px!important; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">';
+				html += 				'<div class="card-body" style="padding: 10px; background: rgb(242 166 32 / 40%);">';
+				html += 					'<div class="icon icon-shape text-center" style="margin-top: 10px; ">';
+				html += 						'<img src="/static/psalm_static/assets/img/icons/Commodities_Cacao.png" style="width: 80%;" class="img-fluid" loading="lazy">';
+				html += 					'</div>';
+				html += 					'<h5 class="card-title text-uppercase text-muted mb-0 text-center" style="font-size:0.7em; margin: 0px; padding: 0px; margin-top: 10px; color: #EF8D22 !important;">Cacao</h5>';
+				html += 					'<span class="d-block h1 font-weight-bold mb-0 text-center SHF_comm_cacao" style="font-size: 1em;">'+Money(cacao)+'</span>';
+				html += 				'</div>';
+				html += 			'</div>';
+				html += 		'</div>';
+				html += 		'<div class="col-6">';
+				html += 			'<div class="card card-stats" style="margin-bottom: 15px!important; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">';
+				html += 				'<div class="card-body" style="padding: 10px; background: rgb(124 160 102 / 40%);;">';
+				html += 					'<div class="icon icon-shape text-center" style="margin-top: 10px;">';
+				html += 						'<img src="/static/psalm_static/assets/img/icons/Commodities_Coconut.png" style="width: 80%;" class="img-fluid" loading="lazy">';
+				html += 					'</div>';
+				html += 					'<h5 class="card-title text-uppercase text-muted mb-0 text-center" style="font-size:0.7em; margin: 0px; padding: 0px; margin-top: 10px; color: #6D8C31 !important;">Coconut</h5>';
+				html += 					'<span class="d-block h1 font-weight-bold mb-0 text-center SHF_comm_coconut" style="font-size: 1em;">'+Money(coconut)+'</span>';
+				html += 				'</div>';
+				html += 			'</div>';
+				html += 		'</div>';
+				html += 		'<div class="col-6">';
+				html += 			'<div class="card card-stats" style="margin-bottom: 15px!important; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">';
+				html += 				'<div class="card-body" style="padding: 10px; background: rgb(179 24 0 / 30%);">';
+				html += 					'<div class="icon icon-shape text-center" style="margin-top: 10px;">';
+				html += 						'<img src="/static/psalm_static/assets/img/icons/Commodities_Coffee.png" style="width: 80%;" class="img-fluid" loading="lazy">';
+				html += 					'</div>';
+				html += 					'<h5 class="card-title text-uppercase text-muted mb-0 text-center" style="font-size:0.7em; margin: 0px; padding: 0px; margin-top: 10px; color: #9E1204!important;">Coffee</h5>';
+				html += 					'<span class="d-block h1 font-weight-bold mb-0 text-center SHF_comm_coffee" style="font-size: 1em;">'+Money(coffee)+'</span>';
+				html += 				'</div>';
+				html += 			'</div>';
+				html += 		'</div>';
+				html += 		'<div class="col-6">';
+				html += 			'<div class="card card-stats" style="margin-bottom: 15px!important; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">';
+				html += 				'<div class="card-body" style="padding: 10px; background:rgb(29 168 168 / 30%);">';
+				html += 					'<div class="icon icon-shape text-center" style="margin-top: 10px;">';
+				html += 						'<img src="/static/psalm_static/assets/img/icons/Commodities_PFN.png" style="width: 80%;" class="img-fluid" loading="lazy">';
+				html += 					'</div>';
+				html += 					'<h5 class="card-title text-uppercase text-muted mb-0 text-center" style="font-size:0.7em; margin: 0px; padding: 0px; margin-top: 10px; color: #189B97 !important;">PFN</h5>';
+				html += 					'<span class="d-block h1 font-weight-bold mb-0 text-center SHF_comm_pfn" style="font-size: 1em;">'+Money(pfn)+'</span>';
+				html += 				'</div>';
+				html += 			'</div>';
+				html += 		'</div>';
+				html += 		'<p class="text-center" style="font-size:0.8em;">UNTAGGED : <b>'+Money(untagged)+'</b></p>';
+				html += 	'</div>';
+
+				return html;
+			}
+
+			if ($('#DCF_F1_dipbyregion_bar').length) {
+				var _labelsrcu = [];
+				var approved_dips = [];
+				var pipeline_dips = [];
+				var ongoing_dips = [];
+				var not_started = [];	
+				// Sample data
+				{% for dip in dashboard_data.dips_list %}
+				var dipData = {
+					label: '{{dip}}',
+					approve: '{{dashboard_data.dips_list[dip]["approve"]}}',
+					pipeline: '{{dashboard_data.dips_list[dip]["pipeline"]}}',
+					ongoing: '{{dashboard_data.dips_list[dip]["ongoing"]}}',
+					not_started: '{{dashboard_data.dips_list[dip]["not_started"]}}',
+				};		
+				// Add region to each data entry in _labelsrcu
+				var regions = ['RCU'];
+				regions.forEach(function(region) {
+					var regionData = Object.assign({}, dipData, { label: region + ' ' + dipData.label });
+					_labelsrcu.push(regionData.label);
+					approved_dips.push(regionData.approve);
+					pipeline_dips.push(regionData.pipeline);
+					ongoing_dips.push(regionData.ongoing);
+					not_started.push(regionData.not_started);
+				});
+				{% endfor %}
+				var totalApprovedDips = approved_dips.reduce(function(acc, val) {
+					return acc + parseFloat(val);
+				}, 0);
+				var totalpipelineDips = pipeline_dips.reduce(function(acc, val) {
+					return acc + parseFloat(val);
+				}, 0);
+				var totalongoingDips = ongoing_dips.reduce(function(acc, val) {
+					return acc + parseFloat(val);
+				}, 0);
+				var totalnotstartedDips = not_started.reduce(function(acc, val) {
+					return acc + parseFloat(val);
+				}, 0);
+				document.getElementById('totalApprovedDipsValue').innerText = totalApprovedDips.toFixed(0);
+				document.getElementById('totalpipelineDipsValue').innerText = totalpipelineDips.toFixed(0);
+				document.getElementById('totalongoingDipsValue').innerText = totalongoingDips.toFixed(0);
+				document.getElementById('totalnotstartedDipsValue').innerText = totalnotstartedDips.toFixed(0);
+				var ctx = document.getElementById("DCF_F1_dipbyregion_bar");
+				var DCF_F1_dipbyregion_bar = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: _labelsrcu,
+						datasets: [{
+							label: 'Approved DIPs',
+							backgroundColor: "#99e6ff",
+							data: approved_dips
+						}, {
+							label: 'Pipeline DIPs',
+							backgroundColor: "#33ccff",
+							data: pipeline_dips
+						},{
+							label: 'Ongoing DIPs',
+							backgroundColor: "#0099cc",
+							data: ongoing_dips
+						},{
+							label: 'Not Started',
+							backgroundColor: "#ff8080",
+							data: not_started
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero: true
+								}
+							}]
+						},
+						plugins: {
+							legend: {
+								display: false
+							}
+						}
+					}
+				});
+			}
+
+			if ($('#DCF_F1_SFHbyregion_bar').length) {
+				var tooltips = [];
+				var xValuesbar = [];
+				var yValuesbar = [];
+				var label_ = [];
+				var all_perc = []
+				var barColorsbar = ["red", "green", "blue", "orange", "brown", "yellow", "violet", "black"];
+				var over_all = parseInt('{{dashboard_data.dcf_form1sextotal[0]["total_sex"] | int}}')
+				// Sample data
+				{% for dip in dashboard_data.dip_sex_group_per_region %}
+				xValuesbar.push('RCU: ' + '{{dip}}');
+				var rcu_total = parseInt('{{dashboard_data.dip_sex_group_per_region[dip]["total_bene"]}}')
+				// var rcu_total = parseInt('{{dashboard_data.dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}')
+				var perc = ((rcu_total / over_all) * 100).toFixed(2)
+				// yValuesbar.push(perc);
+				all_perc.push(perc);
+				yValuesbar.push(rcu_total);
+				label_.push(rcu_total)
+				tooltips.push([
+					'Total with sex/tagged: ' +'{{dashboard_data.dip_sex_group_per_region[dip]["all_total"]["total_sex"]}}',
+					'Total: ' +money('{{dashboard_data.dip_sex_group_per_region[dip]["total_bene"]|int}}'),
+					' ',
+					'Male: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["male"]["total"]}}',
+					'Youth: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["male"]["youth"]}}',
+					'IP: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["male"]["ip"]}}',
+					'PWD: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["male"]["pwd"]}}',
+					'--------------',
+					'Female: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["female"]["total"]}}',
+					'Youth: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["female"]["youth"]}}',
+					'IP: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["female"]["ip"]}}',
+					'PWD: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["female"]["pwd"]}}',
+					'--------------',
+					'Untagged: ' + '{{(dashboard_data.dip_sex_group_per_region[dip]["total_bene"]-dashboard_data.dip_sex_group_per_region[dip]["female"]["total"]+dashboard_data.dip_sex_group_per_region[dip]["male"]["total"])|int}}',
+					'--------------',
+					'Overall Total',
+					'Youth: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["all_total"]["total_youth"]}}',
+					'IP: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["all_total"]["total_ip"]}}',
+					'PWD: ' + '{{dashboard_data.dip_sex_group_per_region[dip]["all_total"]["total_pwd"]}}',
+					])
+				{% endfor %}
+				var ctx = document.getElementById("DCF_F1_SFHbyregion_bar");
+				var DCF_F1_SFHbyregion_bar = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: xValuesbar,
+						tooltip_label:tooltips,
+						datasets: [{
+							backgroundColor: barColorsbar,
+							data: yValuesbar,
+							labels : label_
+						}]
+					},
+					options: {
+						tooltips: {
+							callbacks: {
+								label: function (tooltipItem, data) {
+								// Display only the percentage value without .00 in the tooltip
+									println(tooltipItem)
+									return data.tooltip_label[tooltipItem.index];
+								},
+							},
+						displayColors: false, // Set to false to hide the color squares in the tooltip
+						},
+						plugins: {
+							legend: {
+								display: false
+							}
+						}
+					},
+				});
+			}
+			// DCF 2 ----------------------------------------------------------------------------------------
+			if ($("#DCF_2_polarArea").length) e = document.getElementById("DCF_2_polarArea"), new Chart(e, {
+				type: "polarArea",
+				data: {
+					labels: ["Cancelled", "On-going", "Non-renewal"],
+					datasets: [{
+					label: "Total",
+					backgroundColor:  ["#ff5c33", "#0099cc", "#999999"],
+					data: [{{ dashboard_data.dcf_form2cancelled }}, {{dashboard_data.dcf_form2og}}, {{dashboard_data.dcf_form2nonrenewal}}]
+					},]
+				},
+				options: {
+					scale: {
+						ticks: {
+							beginAtZero: true,
+							userCallback: function(label, index, labels) {
+							// when the floored value is the same as the value we have a whole number
+								if (Math.floor(label) === label) {
+									return label;
+								}
+
+							}
+						},
+					}
+				}
+			});
+
+			if ($("#DCF_2_canvasDoughnut").length) {
+				const ctx = document.getElementById("DCF_2_canvasDoughnut");
+
+				new Chart(ctx, {
+					type: "doughnut",
+					data: {
+						labels: [{% for key in dashboard_data.over_all_commodity_count2 %}"{{ key }}",{% endfor %}],
+						datasets: [{
+							data: [{% for key in dashboard_data.over_all_commodity_count2 %}{{ dashboard_data.over_all_commodity_count2[key] }},{% endfor %}],
+							backgroundColor: ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"],
+							borderColor: "#fff",
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: { display: false },
+							tooltip: { enabled: true }
+						}
+					}
+				});
+			}
+
+			
+
+			if ($('#DCF_F3_philgeps_registered').length) {
+				var xValues2 = [
+					'Agri-technical: ' + {{dashboard_data.form3_agri[0]['total_agri']}},
+					'Entrepreneurial: ' + {{dashboard_data.form3_entrep[0]['total_entrep']}},
+					'Extension Service: ' + {{dashboard_data.form3_extserv[0]['total_extserv']}},
+					'Organizational: ' + {{dashboard_data.form3_org[0]['total_org']}}
+				];
+
+				var yValues2 = [
+					{{dashboard_data.form3_agri[0]['total_agri']}},
+					{{dashboard_data.form3_entrep[0]['total_entrep']}},
+					{{dashboard_data.form3_extserv[0]['total_extserv']}},
+					{{dashboard_data.form3_org[0]['total_org']}}
+					// {{total_untagged}},
+				];
+				var barColors = ['#cc3300', '#cfccc9', '#669999', '#976699'];
+				var total = yValues2.reduce((a, b) => a + b, 0);
+				var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
+				var ctx = document.getElementById("DCF_F3_philgeps_registered");
+				var data = {
+					datasets: [{
+						data: yValues2,
+						backgroundColor: barColors,
+						label: 'My dataset' // for legend
+					}],
+					labels: xValues2
+				};
+				
+				var DCF_F3_philgeps_registered = new Chart(ctx, {
+					data: data,
+					type: 'doughnut',
+					options: {
+						plugins: {
+							datalabels: {
+								color: 'white',
+								formatter: (value, context) => {
+									return percentageValues[context.dataIndex] + '%';
+								}
+							}
+						},
+						tooltips: {
+							callbacks: {
+								label: function (tooltipItem, data) {
+									var label = data.labels[tooltipItem.index];
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+									var percentage = percentageValues[tooltipItem.index] + '%';
+									return `${label} (${percentage})`;
+								},
+							},
+						},
+					},
+				});
+			}
+
+
+			if ($("#DCF_F3_typeofbdsp").length) e = document.getElementById("DCF_F3_typeofbdsp"), new Chart(e, {
+				type: "bar",
+				data: {
+					labels: ["Individual", "Organizational/Firm"],
+					datasets: [{
+					label: "Total",
+					backgroundColor:  ["#009999", "#666699"],
+					data: [{{dashboard_data.form3indiv[0]['totalindiv']}}, {{dashboard_data.form3orgfirm[0]['totalorgfirm']}}]
+					},]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: !0
+								}
+							}]
+						}
+					},
+					plugins: {
+						legend: {
+							display: false
+						}
+					}
+			});
+
+			if ($('#DCF_F4_training_fo').length) {
+				const labels = [
+					"Entrepreneurial Competency",
+					"Governance",
+					"Management",
+					"Operations",
+					"Technology and Product Development",
+					"Institutional Marketing Management",
+					"Human Resource Management",
+					"Financial Management",
+					"Networking and Linkage-Building",
+					"GESI",
+					"Social Environment & Climate",
+					"Managing Natural Resources"
+				];
+
+				const dataValues = [
+					{{ dashboard_data.dcf4_FOOEC[0]['FOOEC'] }},
+					{{ dashboard_data.dcf4_FOGOV[0]['FOGOV'] }},
+					{{ dashboard_data.dcf4_FOOM[0]['FOOM'] }},
+					{{ dashboard_data.dcf4_FOOP[0]['FOOP'] }},
+					{{ dashboard_data.dcf4_FOTPD[0]['FOTPD'] }},
+					{{ dashboard_data.dcf4_FOIMM[0]['FOIMM'] }},
+					{{ dashboard_data.dcf4_FOHRM[0]['FOHRM'] }},
+					{{ dashboard_data.dcf4_FOFM[0]['FOFM'] }},
+					{{ dashboard_data.dcf4_FONLB[0]['FONLB'] }},
+					{{ dashboard_data.dcf4_FOGESI[0]['FOGESI'] }},
+					{{ dashboard_data.dcf4_FOSEC[0]['FOSEC'] }},
+					{{ dashboard_data.dcf4_FOMNR[0]['FOMNR'] }}
+				];
+
+				const colors = [
+					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF',
+					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF'
+				];
+
+				const ctx = document.getElementById("DCF_F4_training_fo");
+				const DCF_F4_training_fo = new Chart(ctx, {
+					type: 'doughnut',
+					data: {
+						labels: labels,
+						datasets: [{
+							label: 'Total',
+							data: dataValues,
+							backgroundColor: colors,
+							borderColor: colors,
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: { display: false }
+						}
+					}
+				});
+
+
+				const table = document.getElementById("fo_table");
+				labels.forEach((label, i) => {
+					const value = dataValues[i];
+					const color = colors[i];
+					const row = document.createElement("tr");
+					row.innerHTML = `
+						<td>
+							<p style="margin-bottom: 0px; font-size: 12px;"><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
+						</td>
+					`;
+					table.appendChild(row);
+				});
+			}
+
+			// Doughnut chart MSME
+			if ($('#DCF_f4_training_msme').length) {
+				const labels = [
+					"Entrepreneurial Competency",
+					"Operations",
+					"Management",
+					"Technology and Product Development",
+					"Marketing Management",
+					"Human Resource Management",
+					"Financial Management",
+					"Networking and Linkage-Building",
+					"GESI",
+					"Social Environment & Climate",
+					"Managing Natural Resources"
+				];
+
+				const dataValues = [
+					{{ dashboard_data.dcf4_MSMEEC[0]['MSMEEC'] }},
+					{{ dashboard_data.dcf4_MSMEOP[0]['MSMEOP'] }},
+					{{ dashboard_data.dcf4_MSMEM[0]['MSMEM'] }},
+					{{ dashboard_data.dcf4_MSMETPD[0]['MSMETPD'] }},
+					{{ dashboard_data.dcf4_MSMEMM[0]['MSMEMM'] }},
+					{{ dashboard_data.dcf4_MSMEHRM[0]['MSMEHRM'] }},
+					{{ dashboard_data.dcf4_MSMEFM[0]['MSMEFM'] }},
+					{{ dashboard_data.dcf4_MSMENLB[0]['MSMENLB'] }},
+					{{ dashboard_data.dcf4_MSMEGESI[0]['MSMEGESI'] }},
+					{{ dashboard_data.dcf4_MSMESEC[0]['MSMESEC'] }},
+					{{ dashboard_data.dcf4_MSMEMNR[0]['MSMEMNR'] }}
+				];
+
+				const colors = [
+					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF',
+					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF'
+				];
+
+				const ctx = document.getElementById("DCF_f4_training_msme");
+				const DCF_f4_training_msme = new Chart(ctx, {
+					type: 'doughnut',
+					data: {
+						labels: labels,
+						datasets: [{
+							label: 'Total',
+							data: dataValues,
+							backgroundColor: colors,
+							borderColor: colors,
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: { display: false }
+						}
+					}
+				});
+
+
+				const table = document.getElementById("msme_table");
+				labels.forEach((label, i) => {
+					const value = dataValues[i];
+					const color = colors[i];
+					const row = document.createElement("tr");
+					row.innerHTML = `
+						<td>
+							<p style="margin-bottom: 0px; font-size: 12px;"><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
+						</td>
+					`;
+					table.appendChild(row);
+				});
+			}
+
+			if ($('#DCF_f4_training_individual').length) {
+				const labels = [
+					"Farmer-Managing Natural Resources",
+					"Farmer-Managing Finances",
+					"Farmer-Marketing",
+					"Farmer-Innovation",
+					"Farmer-Teamwork",
+					"Farmer-GESI",
+					"Farmer-Social Environment & Climate"
+				];
+
+				const dataValues = [
+					{{ dashboard_data.dcf4_IFMNR[0]['IFMNR'] }},
+					{{ dashboard_data.dcf4_IFMF[0]['IFMF'] }},
+					{{ dashboard_data.dcf4_IFM[0]['IFM'] }},
+					{{ dashboard_data.dcf4_IFI[0]['IFI'] }},
+					{{ dashboard_data.dcf4_IFT[0]['IFT'] }},
+					{{ dashboard_data.dcf4_IFGESI[0]['IFGESI'] }},
+					{{ dashboard_data.dcf4_IFSEC[0]['IFSEC'] }}
+				];
+
+				const colors = [
+					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF', '#00FF00'
+				];
+
+				const ctx = document.getElementById("DCF_f4_training_individual");
+				const DCF_f4_training_individual = new Chart(ctx, {
+					type: 'doughnut',
+					data: {
+						labels: labels,
+						datasets: [{
+							label: 'Total',
+							data: dataValues,
+							backgroundColor: colors,
+							borderColor: colors,
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: { display: false }
+						}
+					}
+				});
+
+				const table = document.getElementById("indv_table");
+				labels.forEach((label, i) => {
+					const value = dataValues[i];
+					const color = colors[i];
+					const row = document.createElement("tr");
+					row.innerHTML = `
+						<td>
+							<p style="margin-bottom: 0px; font-size: 12px;"><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
+						</td>
+					`;
+					table.appendChild(row);
+				});
+			}
+
+
+			if ($("#DCF_F6_typeofcomm").length) e = document.getElementById("DCF_F6_typeofcomm"), new Chart(e, {
+				type: "bar",
+				data: {
+					labels: ["Cacao", "Coffee", "Coconut", "PFN"],
+					datasets: [{
+					label: "Total",
+					backgroundColor:  ["#FDE7B3", "#FFC50F", "#63A361", "#5B532C"],
+					data: [{{dashboard_data.dcf_form6_Cacao[0]['total_cacao6']}}, {{dashboard_data.dcf_form6_Coffee[0]['total_coffee6']}}, {{dashboard_data.dcf_form6_Coconut[0]['total_coconut6']}}, {{dashboard_data.dcf_form6_PFN[0]['total_pfn6']}}]
+					},]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: !0
+							}
+						}]
+					}
+				}
+			});
+
+			if ($("#DCF_F6_typeofact").length) e = document.getElementById("DCF_F6_typeofact"), new Chart(e, {
+				type: "doughnut",
+				data: {
+					datasets: [{
+					label: "Total",
+					backgroundColor:  ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+					data: [{{ dashboard_data.dcf_form6_prod[0]['total_prod6'] }},{{ dashboard_data.dcf_form6_training[0]['total_training6'] }},{{ dashboard_data.dcf_form6_consultation[0]['total_consultation6'] }},{{ dashboard_data.dcf_form6_orientation[0]['total_orientation6'] }}]}]
+				},
+				options: {
+					scales: {
+						
+					}
+				}
+			});
+
+			if ($("#DCF_F7_typeofact").length) e = document.getElementById("DCF_F7_typeofact"), new Chart(e, {
+				type: "bar",
+				data: {
+					labels: ["Provincial", "Regional","National", "International"],
+					datasets: [{
+						label: "Total",
+						backgroundColor:  ["#884dff", "#ac7339", "#ffa31a", "#ff4d4d"],
+						data: [{{dashboard_data.dcf7_TFP[0]['tfp7']}}, {{dashboard_data.dcf7_TFR[0]['tfr7'] + dashboard_data.dcf7_TSMPR[0]['tsmpr7'] + dashboard_data.dcf7_BMPR[0]['bmpr7']}},{{dashboard_data.dcf7_TFN[0]['tfn7'] + dashboard_data.dcf7_TSMN[0]['tsmn7'] + dashboard_data.dcf7_BMN[0]['bmn7']}}, {{dashboard_data.dcf7_TFI[0]['tfi7'] + dashboard_data.dcf7_TSMI[0]['tsmi7'] + dashboard_data.dcf7_BMI[0]['bmi7']}} ]
+					},]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: !0
+							}
+						}]
+					}
+				}
+			});
+
+
+			// FMI 
+
+			var chart_data_fmr  = JSON.parse('{{ fmi_data_chart | safe }}');
+        
+			ctx_FMR_batch1 = document.getElementById('FMR_batch1_barchart').getContext('2d');
+			ctx_FMR_batch2 = document.getElementById('FMR_batch2_barchart').getContext('2d');
+			ctx_FMR_batch3 = document.getElementById('FMR_batch3_barchart').getContext('2d');
+			ctx_FMR_batch4 = document.getElementById('FMR_batch4_barchart').getContext('2d');
+			
+			var chartFMR_B1 = new Chart(ctx_FMR_batch1, {
+				type: 'bar',
+				data: {
+					labels: chart_data_fmr.FMR_Batch1_data.labels ,
+					datasets: [{
+						label: "# of Batch 1",
+						data: chart_data_fmr.FMR_Batch1_data.data,
+						backgroundColor: chart_data_fmr.FMR_Batch1_data.background_colors,
+						borderColor: '#1F2937',
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+
+			var chartFMR_B2 = new Chart(ctx_FMR_batch2, {
+				type: 'bar',
+				data: {
+					labels: chart_data_fmr.FMR_Batch2_data.labels ,
+					datasets: [{
+						label: "# of Batch 2",
+						data: chart_data_fmr.FMR_Batch2_data.data,
+						backgroundColor: chart_data_fmr.FMR_Batch2_data.background_colors,
+						borderColor: '#1F2937',
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+
+			var chartFMR_B3 = new Chart(ctx_FMR_batch3, {
+				type: 'bar',
+				data: {
+					labels: chart_data_fmr.FMR_Batch3_data.labels ,
+					datasets: [{
+						label: "# of Batch 2",
+						data: chart_data_fmr.FMR_Batch3_data.data,
+						backgroundColor: chart_data_fmr.FMR_Batch3_data.background_colors,
+						borderColor: '#1F2937',
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+
+			var chartFMR_B4 = new Chart(ctx_FMR_batch4, {
+				type: 'bar',
+				data: {
+					labels: chart_data_fmr.FMR_Batch4_data.labels ,
+					datasets: [{
+						label: "# of Batch 2",
+						data: chart_data_fmr.FMR_Batch4_data.data,
+						backgroundColor: chart_data_fmr.FMR_Batch4_data.background_colors,
+						borderColor: '#1F2937',
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+
+			// ==================================================
+			// F9
+			// ==================================================
+			if ($("#DCF_F9_typeofact").length) e = document.getElementById("DCF_F9_typeofact"), new Chart(e, {
+				type: "bar",
+				data: {
+					labels: ["Capbuild", "Meetings","Policy Issuances", "Others"],
+					datasets: [{
+						label: "Total",
+						backgroundColor:  ["#884dff", "#ac7339", "#ffa31a", "#ff4d4d"],
+						data: [{{ dashboard_data.dcf_form9capb[0]['totalcapbuild9']}}, {{ dashboard_data.dcf_form9meetings[0]['totalmeetings9']}}, {{ dashboard_data.dcf_form9policy[0]['totalpolicy9']}}, {{ dashboard_data.dcf_form9other[0]['totalother9']}}]
+					},]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: !0
+							}
+						}]
+					}
+				}
+			});
+
+
+			// ==================================================
+			// F11
+			// ==================================================
+
+			if ($("#DCF_11_mybarChartFFS").length) {
+			var e = document.getElementById("DCF_11_mybarChartFFS");
+			new Chart(e, {
+				type: "bar",
+				data: {
+				labels: ["Loans/Cash Advance", "Savings & Investments", "Insurance", "Credit Guarantee", "Paid-Up Capital", "In-Kind Grants", "Cash Grants", "Cash for Work", "Mortuary Insurance/Assistance", "Digital Platforms", "RAPID Support"],
+				datasets: [{
+					label:"Total",
+					backgroundColor: ["#009999", "#007399", "#3366cc", "#33cccc", "#339966", "#993366", "#cc6600", "#999900", "#6666cc", "#cc6699", "#66cc66"],
+					data: [{{ dashboard_data.dcf_form11_fsls[0]['farmer_loan'] }}, {{ dashboard_data.dcf_form11_fsss[0]['farmer_savings'] }}, {{ dashboard_data.dcf_form11_fsis[0]['farmer_insurance'] }}, {{ dashboard_data.dcf_form11_fscs[0]['farmer_credit'] }}, {{ dashboard_data.dcf_form11_fspups[0]['farmer_paidup'] }}, {{ dashboard_data.dcf_form11_fsiks[0]['farmer_inkind'] }}, {{ dashboard_data.dcf_form11_fscgs[0]['farmer_cashgrant'] }}, {{ dashboard_data.dcf_fomr11_fscfws[0]['farmer_cashforwork'] }}, {{ dashboard_data.dcf_form11_fsms[0]['farmer_mortuary'] }}, {{ dashboard_data.dcf_form11_fsds[0]['farmer_digital'] }}, {{ dashboard_data.dcf_form11_fsrs[0]['farmer_rapid'] }}]
+				}]
+				},
+				options: {
+				maintainAspectRatio: false,
+				scales: {
+					yAxes: [{
+					ticks: { beginAtZero: true }
+					}]
+				}
+				}
+			});
+			}
+
+			if ($("#DCF_11_mybarChartFOFS").length) {
+			var e = document.getElementById("DCF_11_mybarChartFOFS");
+			new Chart(e, {
+				type: "bar",
+				data: {
+				labels: ["Loans/Cash Advance", "Equity", "Savings and Investments", "Insurance", "Credit Guarantee", "In-Kind Grants", "Cash Grants", "Digital Platforms", "RAPID Support"],
+				datasets: [{
+					label:"Total",
+					backgroundColor: ["#009999", "#007399", "#3366cc", "#33cccc", "#339966", "#993366", "#cc6600", "#999900", "#6666cc", "#cc6699", "#66cc66"],
+					data: [{{ dashboard_data.dcf_form11_fosls[0]['fo_loan'] }}, {{ dashboard_data.dcf_form11_foes[0]['fo_paidup'] }}, {{ dashboard_data.dcf_form11_foss[0]['fo_savings'] }}, {{ dashboard_data.dcf_form11_fosis[0]['fo_insurance'] }}, {{ dashboard_data.dcf_form11_foscs[0]['fo_credit'] }}, {{ dashboard_data.dcf_form11_fosiks[0]['fo_inkind'] }}, {{ dashboard_data.dcf_form11_foscgs[0]['fo_cashgrant'] }}, {{ dashboard_data.dcf_form11_fosds[0]['fo_digital'] }}, {{ dashboard_data.dcf_form11_fosrs[0]['fo_rapid'] }}]
+				}]
+				},
+				options: {
+				maintainAspectRatio: false,
+				scales: {
+					yAxes: [{
+					ticks: { beginAtZero: true }
+					}]
+				}
+				}
+			});
+			}
+			
+		});
+
+		function showSection(showId, hideId) {
+		const showEl = document.getElementById(showId);
+		const hideEl = document.getElementById(hideId);
+
+		if (showEl) {
+			showEl.classList.remove('d-none');
+			showEl.style.display = '';
+		}
+		if (hideEl) {
+			hideEl.classList.add('d-none');
+			hideEl.style.display = 'none';
+		}
+
+		// Toggle button active states
+		const btnNEW = document.getElementById('btnNEW');
+		const btnOLD = document.getElementById('btnOLD');
+		if (btnNEW) btnNEW.classList.toggle('active', showId === 'NEW');
+		if (btnOLD) btnOLD.classList.toggle('active', showId === 'OLD');
+
+		// Only load OLD dashboard once
+		if (showId === 'OLD') {
+			const iframe = document.getElementById('dash_core_embed');
+			if (iframe && !iframe.dataset.loaded) {
+				iframe.src = "/dcf_dashboard_embed"; // Load once
+				iframe.dataset.loaded = "true"; // Prevent reloading
+			}
+		}
+	}
 	</script>
 </div>

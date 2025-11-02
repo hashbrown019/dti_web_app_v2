@@ -16,7 +16,15 @@ from flask import request, redirect, url_for
 from captcha.image import ImageCaptcha
 import io, random, string
 
+from v2_view.core import _dashboard
+from views.dcfv2.dashboard.display_dataform import displayform
+from views.fmi.bp_app import fmi_dashboard_data
+from views.fmi.bp_app import fmi_dashboard_data_chart
+
 app = Blueprint("form_a_v2",__name__,template_folder='pages')
+
+app.register_blueprint(_dashboard.app)
+# app.register_blueprint(display_dataform.app)
 
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
 # rapid= sqlite("assets\\db\\dti_rapidxi.db")
@@ -53,6 +61,9 @@ class _main:
 			USER_DATA = session["USER_DATA"][0],
 			staff_list=dash_api.get_area_staff(),
 			databases=dash_api.get_databases(),
+			dashboard_data=displayform(),
+			fmi_data=fmi_dashboard_data(),
+			fmi_data_chart=fmi_dashboard_data_chart(),
 			security_group_ls=dash_api.get_security_group() if "core-system-control" in module else None ,
 			# =====FOR PERSONAL FORMS========
 			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None ,
@@ -239,4 +250,3 @@ class _main:
 	@app.route("/playground")
 	def playground():
 		return render_template("/parts/__playground.html",USER_DATA = session["USER_DATA"][0])
-

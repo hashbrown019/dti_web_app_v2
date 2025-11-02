@@ -68,14 +68,36 @@
     html, body {
         height: 100%;
         margin: 0;
-        padding: 0;
-        background: #fff !important; /* Set to your preferred background */
+        padding: 20px;
+        background: #f6f9ff !important; /* Set to your preferred background */
     }
-    body {
-        min-height: 100vh;
-    }
-    .x-card, .x-light-grey, .col-md-12, .col-sm-12 {
+    .x-card, .x-light-grey {
         background: #fff !important; /* Ensure main containers are white */
+    }
+
+    h2{
+      font-weight: bold;
+    }
+
+    .x_panel {
+      background: #fff;
+      border-radius: 15px;
+      padding: 10px;
+      box-shadow: 0px 0px 15px 15px rgba(179, 179, 179, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .tile-stats {
+      background: #fff;
+      border-radius: 15px;
+      padding: 10px;
+      box-shadow: 0px 0px 15px 15px rgba(146, 146, 146, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .tile-stats:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 </style>
 
@@ -92,11 +114,8 @@
   <body class="_nav-md">
     <div class="container body">
       <div class="main_container">
-  {% include "includes/dcf_sidenav.html" %}
-
-    {% include "includes/navigations.html" %}
-
-
+        {% include "includes/dcf_sidenav.html" %}
+        {% include "includes/navigations.html" %}
 
     {% block content %}{% endblock content %}
 </div>

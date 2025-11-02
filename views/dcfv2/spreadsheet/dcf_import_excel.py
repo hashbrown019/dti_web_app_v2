@@ -884,12 +884,15 @@ def excel_upload_open11(path):
         if not any(str(cell).strip() for cell in row):
             continue  # skip empty rows
 
-        # Pad/trim row to 49 fields
-        row = (row + [""] * 49)[:49]
+        # Pad/trim row to 60 fields
+        row = (row + [""] * 60)[:60]
 
         (form_11_farmer_region, form_11_farmer_pcu, form_11_farmer_dip_name, form_11_farmer_commodity, form_11_farmer_type_of_enterprise,
          form_11_farmer_name_of_enterprise, form_11_farmer_location, form_11_farmer_beneficiaries_name,
-         form_11_farmer_gender, form_11_farmer_sectoral_data,
+         form_11_farmer_gender, form_11_farmer_sectoral_data, farmer_show_loan_section,
+		 farmer_show_savings_section, farmer_show_insurance_section, farmer_show_creditguarantee_section,
+		 farmer_show_paidupcapital_section, farmer_show_inkind_section, farmer_show_cashgrant_section,
+		 farmer_show_cashforwork_section, farmer_show_mortuary_section, farmer_show_digital_section, farmer_show_rapid_section,
          form_11_farmer_loan_fsp, form_11_farmer_loan_type, form_11_farmer_loan_amount, form_11_farmer_loan_purpose,
          form_11_farmer_total_loan_amount, form_11_farmer_savings_fsp, form_11_farmer_savings_type,
          form_11_farmer_savings_amount, form_11_farmer_insurance_fsp, form_11_farmer_insurance_type,
@@ -908,7 +911,10 @@ def excel_upload_open11(path):
         INSERT INTO dcf_access_financing (
             upload_by, form_11_farmer_region, form_11_farmer_pcu, form_11_farmer_dip_name, form_11_farmer_commodity, form_11_farmer_type_of_enterprise,
             form_11_farmer_name_of_enterprise, form_11_farmer_location, form_11_farmer_beneficiaries_name,
-            form_11_farmer_gender, form_11_farmer_sectoral_data,
+            form_11_farmer_gender, form_11_farmer_sectoral_data, farmer_show_loan_section,
+			farmer_show_savings_section, farmer_show_insurance_section, farmer_show_creditguarantee_section,
+			farmer_show_paidupcapital_section, farmer_show_inkind_section, farmer_show_cashgrant_section,
+			farmer_show_cashforwork_section, farmer_show_mortuary_section, farmer_show_digital_section, farmer_show_rapid_section,
             form_11_farmer_loan_fsp, form_11_farmer_loan_type, form_11_farmer_loan_amount, form_11_farmer_loan_purpose,
             form_11_farmer_total_loan_amount, form_11_farmer_savings_fsp, form_11_farmer_savings_type,
             form_11_farmer_savings_amount, form_11_farmer_insurance_fsp, form_11_farmer_insurance_type,
@@ -925,7 +931,10 @@ def excel_upload_open11(path):
         ) VALUES (
             '{upload_by}', '{form_11_farmer_region}', '{form_11_farmer_pcu}', '{form_11_farmer_dip_name}', '{form_11_farmer_commodity}', '{form_11_farmer_type_of_enterprise}',
             '{form_11_farmer_name_of_enterprise}', '{form_11_farmer_location}', '{form_11_farmer_beneficiaries_name}',
-            '{form_11_farmer_gender}', '{form_11_farmer_sectoral_data}',
+            '{form_11_farmer_gender}', '{form_11_farmer_sectoral_data}', '{farmer_show_loan_section}',
+			'{farmer_show_savings_section}', '{farmer_show_insurance_section}', '{farmer_show_creditguarantee_section}',
+			'{farmer_show_paidupcapital_section}', '{farmer_show_inkind_section}', '{farmer_show_cashgrant_section}',
+			'{farmer_show_cashforwork_section}', '{farmer_show_mortuary_section}', '{farmer_show_digital_section}', '{farmer_show_rapid_section}',
             '{form_11_farmer_loan_fsp}', '{form_11_farmer_loan_type}', '{form_11_farmer_loan_amount}', '{form_11_farmer_loan_purpose}',
             '{form_11_farmer_total_loan_amount}', '{form_11_farmer_savings_fsp}', '{form_11_farmer_savings_type}',
             '{form_11_farmer_savings_amount}', '{form_11_farmer_insurance_fsp}', '{form_11_farmer_insurance_type}',
@@ -953,13 +962,15 @@ def excel_upload_open11(path):
         if not any(str(cell).strip() for cell in row):
             continue  # skip empty rows
 
-        # Pad/trim row to 40 fields
-        row = (row + [""] * 40)[:40]
+        # Pad/trim row to 49 fields
+        row = (row + [""] * 49)[:49]
 
         (form_11_fo_msme_regional, form_11_fo_msme_pcu, form_11_fo_dip_name, form_11_fo_commodity, form_11_fo_type_of_enterprise,
          form_11_fo_name_of_beneficiary, form_11_fo_msme_province, form_11_fo_asset_size,
          form_11_fo_male, form_11_fo_female, form_11_fo_pwd, form_11_fo_youth, form_11_fo_ip, form_11_fo_sc,
-         form_11_fo_registration_type, form_11_others_specify, form_11_fo_lending_members,
+         form_11_fo_registration_type, others_specify, form_11_fo_lending_members, fo_show_loan_section,
+		 fo_show_equity_section, fo_show_savings_section, fo_show_insurance_section, fo_show_creditguarantee_section, 
+		 fo_show_inkind_section, fo_show_cashgrant_section, fo_show_digital_section, fo_show_rapid_section,
          form_11_fo_loan_fsp, form_11_fo_loan_type, form_11_fo_loan_amount, form_11_fo_loan_purpose,
          form_11_fo_total_loan_amount, form_11_fo_equity_availed, form_11_fo_equity_amount, form_11_fo_equity_date,
          form_11_fo_savings_fsp, form_11_fo_savings_amount, form_11_fo_insurance_fsp, form_11_fo_insurance_amount,
@@ -972,7 +983,9 @@ def excel_upload_open11(path):
             upload_by, form_11_fo_msme_regional, form_11_fo_msme_pcu, form_11_fo_dip_name, form_11_fo_commodity, form_11_fo_type_of_enterprise,
             form_11_fo_name_of_beneficiary, form_11_fo_msme_province, form_11_fo_asset_size,
             form_11_fo_male, form_11_fo_female, form_11_fo_pwd, form_11_fo_youth, form_11_fo_ip, form_11_fo_sc,
-            form_11_fo_registration_type, form_11_others_specify, form_11_fo_lending_members,
+            form_11_fo_registration_type, others_specify, form_11_fo_lending_members, fo_show_loan_section,
+		 fo_show_equity_section, fo_show_savings_section, fo_show_insurance_section, fo_show_creditguarantee_section, 
+		 fo_show_inkind_section, fo_show_cashgrant_section, fo_show_digital_section, fo_show_rapid_section,
             form_11_fo_loan_fsp, form_11_fo_loan_type, form_11_fo_loan_amount, form_11_fo_loan_purpose,
             form_11_fo_total_loan_amount, form_11_fo_equity_availed, form_11_fo_equity_amount, form_11_fo_equity_date,
             form_11_fo_savings_fsp, form_11_fo_savings_amount, form_11_fo_insurance_fsp, form_11_fo_insurance_amount,
@@ -983,7 +996,9 @@ def excel_upload_open11(path):
             '{upload_by}', '{form_11_fo_msme_regional}', '{form_11_fo_msme_pcu}', '{form_11_fo_dip_name}', '{form_11_fo_commodity}', '{form_11_fo_type_of_enterprise}',
             '{form_11_fo_name_of_beneficiary}', '{form_11_fo_msme_province}', '{form_11_fo_asset_size}',
             '{form_11_fo_male}', '{form_11_fo_female}', '{form_11_fo_pwd}', '{form_11_fo_youth}', '{form_11_fo_ip}', '{form_11_fo_sc}',
-            '{form_11_fo_registration_type}', '{form_11_others_specify}', '{form_11_fo_lending_members}',
+            '{form_11_fo_registration_type}', '{others_specify}', '{form_11_fo_lending_members}', '{fo_show_loan_section}',
+		 	'{fo_show_equity_section}', '{fo_show_savings_section}', '{fo_show_insurance_section}', '{fo_show_creditguarantee_section}',
+		 	'{fo_show_inkind_section}', '{fo_show_cashgrant_section}', '{fo_show_digital_section}', '{fo_show_rapid_section}',
             '{form_11_fo_loan_fsp}', '{form_11_fo_loan_type}', '{form_11_fo_loan_amount}', '{form_11_fo_loan_purpose}',
             '{form_11_fo_total_loan_amount}', '{form_11_fo_equity_availed}', '{form_11_fo_equity_amount}', '{form_11_fo_equity_date}',
             '{form_11_fo_savings_fsp}', '{form_11_fo_savings_amount}', '{form_11_fo_insurance_fsp}', '{form_11_fo_insurance_amount}',

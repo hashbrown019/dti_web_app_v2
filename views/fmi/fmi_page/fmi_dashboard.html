@@ -6,80 +6,216 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    .card-dashboard {
+        padding: 0px 10px;
+        margin: 10px 5px;
+        box-shadow: 0px 0px 10px #F0BC74;
+        background-color: #f0bc74a6;
+        min-height: 120px;
+    }
+    .card-dashboard:hover b {
+        color: #fff;
+        text-shadow: 2px 2px 5px #1F2937;
+    }
+    .card .count {
+        font-size: 2em;
+        font-weight: bold;
+        margin-top: 10px;
+        color: #1F2937;
+        text-shadow: 2px 2px 2px #F8BD7A;
+    }
+    .card .count p {
+        margin-bottom: 0px;
+        position: relative;
+        font-size: 0.45em;
+    }
+    .card .count p b {
+        position: absolute;
+        right: 0px;
+    }
+    .card h4 {
+        font-weight: bold; 
+        border-top: 1px solid #EEB15D; 
+        padding-top: 5px; 
+        margin-top: 5px; 
+        text-align: right;
+    }
+    .card-dashboard h4 {
+        color: #c77e17;    
+        font-size: 16px!important;
+    }
+</style>
 <div class="row">
-    <div class="card col-lg-3 col-md-3 col-sm-6">
-        <div class="tile-stats" style="border-radius: 15px;">
-        <div class="count _money_tag">0</div>
-        <h3>Total FMR Projects</h3>
-        <p>Total # of FMR Projects</p>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag text-end"><b>{{FMR_data.FMR_total}}</b></div>
+                <h4>Total FMR Projects</h4>
+            </div>
         </div>
     </div>
-
-    <div class="card col-lg-3 col-md-3 col-sm-6">
-        <div class="tile-stats" style="border-radius: 15px;">
-        <div class="count _money_tag">0</div>
-        <h3>Total Completed</h3>
-        <p>Total # of Completed Projects</p>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag rapid_fmr_completed">
+                    <p>No. of Completed : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_completed['total']) }}</b></p>
+                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_completed['total_km']) }}</b></p>
+                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_completed['total_appr_budget']) }}</b></p>
+                </div>
+            <h4>COMPLETED</h4>
+            </div>
         </div>
     </div>
-
-    <div class="card col-lg-3 col-md-3 col-sm-6">
-        <div class="tile-stats" style="border-radius: 15px;">
-        <div class="count _money_tag">0</div>
-        <h3>Total Ongoing Projects</h3>
-        <p>Total # of Ongoing Projects</p>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag ">
+                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_ongoing['total']) }}</b></p>
+                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_ongoing['total_km']) }}</b></p>
+                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_ongoing['total_appr_budget']) }}</b></p>
+                </div>
+            <h4>ONGOING</h4>
+            </div>
         </div>
     </div>
-
-    <div class="card col-lg-3 col-md-3 col-sm-6">
-        <div class="tile-stats" style="border-radius: 15px;">
-        <div class="count _money_tag">0</div>
-        <h3>Total N.0 1</h3>
-        <p>Total # of N.0 1</p>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag ">
+                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no1['total']) }}</b></p>
+                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no1['total_km']) }}</b></p>
+                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no1['total_appr_budget']) }}</b></p>
+                </div>
+            <h4>FOR NO 1</h4>
+            </div>
         </div>
     </div>
-
-    <div class="card col-lg-3 col-md-3 col-sm-6">
-        <div class="tile-stats" style="border-radius: 15px;">
-        <div class="count _money_tag">0</div>
-        <h3>Total N.0 2</h3>
-        <p>Total # of N.0 2</p>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag ">
+                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no2['total']) }}</b></p>
+                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no2['total_km']) }}</b></p>
+                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no2['total_appr_budget']) }}</b></p>
+                </div>
+            <h4>FOR NO 2</h4>
+            </div>
         </div>
     </div>
-    <div class="card col-lg-3 col-md-3 col-sm-6">
-        <div class="tile-stats" style="border-radius: 15px;">
-        <div class="count _money_tag">0</div>
-        <h3>Total N.0 3</h3>
-        <p>Total # of N.0 3</p>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag ">
+                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no3['total']) }}</b></p>
+                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no3['total_km']) }}</b></p>
+                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no3['total_appr_budget']) }}</b></p>
+                </div>
+            <h4>FOR NO 3</h4>
+            </div>
         </div>
     </div>
-    <div class="card col-lg-3 col-md-3 col-sm-6">
-        <div class="tile-stats" style="border-radius: 15px;">
-        <div class="count _money_tag">0</div>
-        <h3>Total Issuance of NTP</h3>
-        <p>Total # of Issuance of NTP</p>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag ">
+                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_noa['total']) }}</b></p>
+                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_noa['total_km']) }}</b></p>
+                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_noa['total_appr_budget']) }}</b></p>
+                </div>
+            <h4>TOTAL ISSUANCE OF NOA</h4>
+            </div>
         </div>
     </div>
-    <div class="card col-lg-3 col-md-3 col-sm-6">
-        <div class="tile-stats" style="border-radius: 15px;">
-        <div class="count _money_tag">0</div>
-        <h3>Total Pending</h3>
-        <p>Total # of Pending</p>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag ">
+                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_pending['total']) }}</b></p>
+                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_pending['total_km']) }}</b></p>
+                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_pending['total_appr_budget']) }}</b></p>
+                </div>
+            <h4>PENDING</h4>
+            </div>
         </div>
     </div>
-
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="card card-dashboard">
+            <div class="tile-stats" style="border-radius: 15px;">
+                <div class="count _money_tag text-end"><b>{{ "{:,.2f}".format(FMR_data.FMR_totalkm_completed_ongoing) }}</b></div>
+                <h4>KILOMETER COMPLETED BASE ON % ACCOMPLISHED</h4>
+            </div>
+        </div>
+    </div>
+    
 </div>
-
-    <div class="py-4">
+<hr>
+<div class="row">
+    <div class="col-3">
+        <div class="card" style="box-shadow: 0px 0px 5px #F8BD7A;">
+			<div class="card-body">
+				<h6 class="card-title text-center">
+					<b># of Batch 1 / Status</b>
+				</h6>
+				<div class="container">
+                    <br>
+                    <canvas id="FMR_batch1_barchart" height="450"></canvas>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="col-3">
+        <div class="card" style="box-shadow: 0px 0px 5px #1f29367d;">
+			<div class="card-body">
+				<h6 class="card-title text-center">
+					<b># of Batch 2 / Status</b>
+				</h6>
+				<div class="container">
+                    <br>
+                    <canvas id="FMR_batch2_barchart" height="450"></canvas>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="col-3">
+        <div class="card" style="box-shadow: 0px 0px 5px #F8BD7A;">
+			<div class="card-body">
+				<h6 class="card-title text-center">
+					<b># of Batch 3 / Status</b>
+				</h6>
+				<div class="container">
+                    <br>
+                    <canvas id="FMR_batch3_barchart" height="450"></canvas>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="col-3">
+        <div class="card" style="box-shadow: 0px 0px 5px #1f29367d;">
+			<div class="card-body">
+				<h6 class="card-title text-center">
+					<b># of Batch 4 / Status</b>
+				</h6>
+				<div class="container">
+                    <br>
+                    <canvas id="FMR_batch4_barchart" height="450"></canvas>
+                </div>
+            </div>
+        </div>   
+    </div>
+</div>
+<hr>
+    <!-- <div class="py-4">
         <div class="dropdown">
             <button class="btn btn-gray-800 d-inline-flex align-items-center me-2" onclick="window.location.href='/fmi_form_a'">
                 <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                 ADD PROJECT
             </button>
         </div>
-    </div>
+    </div> -->
  
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-12 col-xl-8">
             <div class="row">
                 <div class="col-12 mb-4">
@@ -133,9 +269,9 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="col-12 mb-4">
+                <!-- <div class="col-12 mb-4">
                     <div class="card border-2 shadow">
                         <div class="card-header">
                             <div class="row align-items-center">
@@ -188,9 +324,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         
-        <div class="col-12 col-xl-4">
+        <!-- <div class="col-12 col-xl-4">
             <div class="col-12 px-0 mb-4">
                 <div class="card border-2 shadow">
                     <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
@@ -219,7 +355,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 <!-- dashboard here -->
  <style>
@@ -247,6 +383,101 @@
     outline: none;
   }
 </style>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var chart_data_fmr  = JSON.parse('{{ FMR_data_chart | safe }}');
+        
+        ctx_FMR_batch1 = document.getElementById('FMR_batch1_barchart').getContext('2d');
+        ctx_FMR_batch2 = document.getElementById('FMR_batch2_barchart').getContext('2d');
+        ctx_FMR_batch3 = document.getElementById('FMR_batch3_barchart').getContext('2d');
+        ctx_FMR_batch4 = document.getElementById('FMR_batch4_barchart').getContext('2d');
+        
+        var chartFMR_B1 = new Chart(ctx_FMR_batch1, {
+            type: 'bar',
+            data: {
+                labels: chart_data_fmr.FMR_Batch1_data.labels ,
+                datasets: [{
+                    label: "# of Batch 1",
+                    data: chart_data_fmr.FMR_Batch1_data.data,
+                    backgroundColor: chart_data_fmr.FMR_Batch1_data.background_colors,
+                    borderColor: '#1F2937',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var chartFMR_B2 = new Chart(ctx_FMR_batch2, {
+            type: 'bar',
+            data: {
+                labels: chart_data_fmr.FMR_Batch2_data.labels ,
+                datasets: [{
+                    label: "# of Batch 2",
+                    data: chart_data_fmr.FMR_Batch2_data.data,
+                    backgroundColor: chart_data_fmr.FMR_Batch2_data.background_colors,
+                    borderColor: '#1F2937',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var chartFMR_B3 = new Chart(ctx_FMR_batch3, {
+            type: 'bar',
+            data: {
+                labels: chart_data_fmr.FMR_Batch3_data.labels ,
+                datasets: [{
+                    label: "# of Batch 2",
+                    data: chart_data_fmr.FMR_Batch3_data.data,
+                    backgroundColor: chart_data_fmr.FMR_Batch3_data.background_colors,
+                    borderColor: '#1F2937',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var chartFMR_B4 = new Chart(ctx_FMR_batch4, {
+            type: 'bar',
+            data: {
+                labels: chart_data_fmr.FMR_Batch4_data.labels ,
+                datasets: [{
+                    label: "# of Batch 2",
+                    data: chart_data_fmr.FMR_Batch4_data.data,
+                    backgroundColor: chart_data_fmr.FMR_Batch4_data.background_colors,
+                    borderColor: '#1F2937',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
 
  <script type="text/javascript">
 	function exportForm8Data() {

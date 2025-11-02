@@ -1,0 +1,445 @@
+<div id="adv_f_holder" class="x-container x-padding x-card x-white x-round" style="display: none;">
+<!-- <div id="adv_f_holder" class="x-container x-padding x-card x-white x-round" style="display: none;"> -->
+	<div class="x-row x-container x-padding">
+		<div class="">
+			<span class="x-text-grey">Area</span>
+			<select id="f_rcu" class="FILTER_FIELD x-input x-select x-border x-round">
+				<option value="all"  selected disabled>Select Region Area</option>
+				<option value="all" >All</option>
+				<option>RCU 8</option>
+				<option>RCU 9</option>
+				<option>RCU 10</option>
+				<option>RCU 11</option>
+				<option>RCU 12</option>
+				<option>RCU 13</option>
+				<option>BARMM</option>
+			</select>
+		</div>
+		<div class="x-hide">
+			<span class="x-text-grey">Sub-Form A</span>
+			<select id="f_subform" class="FILTER_FIELD x-input x-select x-border x-round">
+				<option value="all" selected disabled>Select Subform</option>
+				<option value="form_a_farmer_profiles">A1: Farmer Profile</option>
+				<option disabled value="form_a_farm_land">A2: Farm Information</option>
+				<option disabled value="form_a_hh_profile">A3: Household Profiles</option>
+				<option disabled value="form_a_prod_cost">A4: Production Cost</option>
+				<option disabled value="form_a_farm_workers_laborers">A5: Farm Workers and Labors</option>
+				<option disabled value="form_a_farm_post_harvest">A6: Post Harvest</option>
+				<option disabled value="form_a_farm_marketing_sales">A7: Marketing/Sales Distribution Channels</option>
+				<option disabled value="form_a_access_financial">A8: Access to Financial Services and Products</option>
+				<option disabled value="form_a_feedback">A9: Industry Feedback</option>
+			</select>
+			<span style="padding:5px;" class="x-red x-round-large">On-Dev</span>
+		</div>
+		<br>
+		<div class="x-container  x-right">
+			<div class="row">
+				<button class="x-btn x-blue x-round x-block" onclick="filter()">
+					Filter <span class="fa fa-filter"></span>
+					<span id="fltr_load" class="x-animate-fading" style="display:none;">| Loading</span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- =========================== --> 
+	<!-- <div class="x-container">
+		<h3>Filter result</h3>
+	</div>
+	<div class="x-container  x-row">
+		<span class="w3-badge x-round-xlarge x-small x-red" style="padding:2px;">On Dev</span>
+	</div> -->
+	<div id="filter_panel" style="display:none;">
+		<div class="x-container">
+			<b class="x-xlarge">Farmer Profile</b>
+		</div>
+		<div class="x-row x-container x-padding">
+			<!-- DASH FOR MALE -->
+			<div class="x-container x-padding x-col l6 m6 x-border x-border-dashed" style="min-height: 4050px;">
+				<div class="x-row">
+					<div class="x-col l4 m4">
+						<div class="x-row x-container x-padding">
+							<div class="x-container x-center x-blue x-padding x-round x-border-dashed x-border-blue">
+								<b id="total_mal" class="x-xxlarge _money_tag"> 00 </b><br>
+								<b class="x-large">
+									<i class="fa-solid fa-child"></i> Male<br>
+								</b>
+							</div>
+						</div>
+						<div class="x-row ">
+							<div class="x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-blue">
+									<b id="male_is_pwd" class="x-large _money_tag x-text-blue"> 00 </b><br>
+									<span class="x-small">
+										<b>PWD</b><br>
+									</span>
+								</div>
+							</div>
+							<div class="x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-blue">
+									<b id="male_is_ip" class="x-large _money_tag x-text-blue"> 00 </b><br>
+									<span class="x-small">
+										<b>IP</b><br>
+									</span>
+								</div>
+							</div>
+							<div class=" x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-blue">
+									<b id="male_is_youth" class="x-large _money_tag x-text-blue"> 00 </b><br>
+									<span class="x-small">
+										<b>Youth</b><br>
+									</span>
+								</div>
+							</div>
+							<div class="x-hide x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-blue">
+									<b id="male_is_sen_cit" class="x-large _money_tag x-text-blue"> 00 </b><br>
+									<span class="x-small">
+										<b>Senior Citizen</b><br>
+									</span>
+								</div>
+							</div>
+							<div class="x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-blue">
+									<b id="male_is_head_hh" class="x-large _money_tag x-text-blue"> 00 </b><br>
+									<span class="x-small">
+										<b>Head of the Household</b><br>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="x-col l4 m4 x-container x-padding">
+						<b class="x-center x-container x-block x-blue" style="padding-bottom: 5px;">Male Landholding Income</b>
+						<hr style="padding: 0px;margin: 0px; color: #fff;">
+						<div class="x-hide-scrollbar" style="overflow-y:scroll;height: 520px;">
+							<table class="x-table x-bordered" style="font-size: 12px;">
+								<thead class="x-blue">
+									<th>Hectares</th>
+									<th class="text-end"># of SFH</th>
+									<th class="text-end">Avg Income</th>
+								</thead>
+								<tbody id="male_ha_dash">
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="x-col l4 m4 x-container x-padding">
+						<b class="x-center x-container x-block x-blue x-large" style="padding-bottom: 5px;">Male<br>Age Range</b>
+						<hr style="padding: 0px;margin: 0px; color: #fff;">
+						<div  class="x-hide-scrollbar" style="overflow-y:scroll;height: 420px;">
+							<table class="x-table x-bordered" style="font-size: 12px;">
+								<thead class="x-blue">
+									<th>Age Range</th>
+									<th class="text-end">Number of Farmers</th>
+								</thead>
+								<tbody id="male_age_dash">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="x-row " id="ha_male_per_crop">
+				</div>
+			</div>
+			<!-- DASH FOR FEMALE -->
+			<div class="x-container x-padding x-col l6 m6 x-border x-border-dashed" style="min-height: 4050px;">
+				<div class="x-row">
+					<div class="x-col l4 m4">
+						<div class="x-row x-container x-padding">
+							<div class="x-container x-center x-pink x-padding x-round x-border-dashed x-border-pink">
+								<b id="total_female" class="x-xxlarge _money_tag"> 00 </b><br>
+								<b class="x-large">
+									<i class="fa-solid fa-child-dress"></i> Female<br>
+								</b>
+							</div>
+						</div>
+						<div class="x-row ">
+							<div class="x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-pink">
+									<b id="female_is_pwd" class="x-large _money_tag x-text-pink"> 00 </b><br>
+									<span class="x-small">
+										<b>PWD</b><br>
+									</span>
+								</div>
+							</div>
+							<div class="x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-pink">
+									<b id="female_is_ip" class="x-large _money_tag x-text-pink"> 00 </b><br>
+									<span class="x-small">
+										<b>IP</b><br>
+									</span>
+								</div>
+							</div>
+							<div class=" x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-pink">
+									<b id="female_is_youth" class="x-large _money_tag x-text-pink"> 00 </b><br>
+									<span class="x-small">
+										<b>Youth</b><br>
+									</span>
+								</div>
+							</div>
+							<div class="x-hide x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-pink">
+									<b id="female_is_sen_cit" class="x-large _money_tag x-text-pink"> 00 </b><br>
+									<span class="x-small">
+										<b>Senior Citizen</b><br>
+									</span>
+								</div>
+							</div>
+							<div class="x-container x-padding">
+								<div class="x-container x-center x-padding x-round x-border-dashed x-border-pink">
+									<b id="female_is_head_hh" class="x-large _money_tag x-text-pink"> 00 </b><br>
+									<span class="x-small">
+										<b>Head of the Household</b><br>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="x-col l4 m4 x-container x-padding">
+						<b class="x-center x-container x-block x-pink" style="padding-bottom: 5px;">Female Landholding Income</b>
+						<hr style="padding: 0px;margin: 0px; color: #fff;">
+						<div class="x-hide-scrollbar" style="overflow-y:scroll;height: 520px;">
+							<table class="x-table x-bordered"  style="font-size: 12px;">
+								<thead class="x-pink">
+									<th>Hectares</th>
+									<th class="text-end"># of SFH</th>
+									<th class="text-end">Avg Income</th>
+								</thead>
+								<tbody id="female_ha_dash">
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="x-col l4 m4 x-container x-padding">
+						<b class="x-center x-container x-block x-pink x-large" style="padding-bottom: 5px;">Female<br>Age Range</b>
+						<hr style="padding: 0px;margin: 0px; color: #fff;">
+						<div class="x-hide-scrollbar" style="overflow-y:scroll;height: 420px;">
+							<table class="x-table x-bordered"  style="font-size: 12px;">
+								<thead class="x-pink">
+									<th>Age Range</th>
+									<th class="text-end">Number of Farmers</th>
+								</thead>
+								<tbody id="female_age_dash">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="x-row " id="ha_female_per_crop">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- =========================== -->
+</div>
+<script type="text/javascript">
+
+	var _LABEL ={
+		"below_to_0_5" : "below 0.5" ,
+		"0_5_to_1" : "0.5 to 1" ,
+		"1_01_to_1_5" : "1.01 to 1.5" ,
+		"1_6_to_2" : "1.51 to 2" ,
+		"2_01_to_2_5" : "2.01 to 2.5" ,
+		"2_6_to_3" : "2.51 to 3" ,
+		"3_01_to_3_5" : "3.01 to 3.5 ",
+		"3_6_to_4" : "3.51 to 4" ,
+		"4_01_to_4_5" : "4.01 to 4.5 ",
+		"4_59_to_5" : "4.51 to 5 ",
+		"5_above" : "5 above" ,
+		"untagged" : "Untagged"
+
+	}
+
+	
+	var adv_f_holder = "EMPTY"
+	function dash_get_form_a1(datum){
+		var male_res = datum["male"]
+		for(key in male_res ){
+			// println(key)
+			try{$ID(key).innerHTML = Money(male_res[key])}
+			catch(e){warnprintln(e)}
+		}
+		var female_res = datum["female"]
+		for(key in female_res ){
+			// println(key)
+			try{$ID(key).innerHTML =  Money(female_res[key])}
+			catch(e){warnprintln(e)}
+		}
+		// showing_table_ls_farmer()
+		// __money_tag_exec()
+	}
+
+	function filter_field_dash(area){
+		$send({
+			action : "/form_a/dash_a1/dash_get_form_a1/"+area,
+			method : POST,
+			func : function(r){
+				var res = JSON.parse(r)
+				dash_get_form_a1(res)
+				// println(" Requesting Done")
+				$ID('fltr_load').style.display = "none"
+				create_ha_dash(res['ha_area'])
+				create_age_sex_range(res['age_sex_area'])
+				$ID("filter_panel").style.display = "block"
+
+			}
+		})
+		// println(" Requesting Data")
+	}
+
+	function filter() {
+		$ID("filter_panel").style.display = "none"
+		$ID('fltr_load').style.display = "inline-block"
+		var filter_field_vals = {}
+		var filter_field = $CLASS('FILTER_FIELD')
+		for (var i = 0; i < filter_field.length; i++) {
+			filter_field_vals[filter_field[i].id] = filter_field[i].value
+		}
+		// warnprintln(filter_field_vals)
+		filter_field_dash(filter_field_vals['f_rcu'])
+	}
+	function show_adv_filter(){
+		var adv_filter = $dialog({
+			title : "Area Filter",
+			subtitle : (`
+				Some profiles will not reflect in the dashboard filter, this data is either corrupt, untagged in a specific category or an orphan data (data that has no associated user creator). some of this data are subject in validation and data cleansing `),
+			content : adv_f_holder
+		})
+		adv_filter.dialog.style.width = '95%';
+		adv_filter.show()
+	}
+
+	$onload(function(){
+		adv_f_holder = $ID('adv_f_holder').innerHTML;
+		$ID('adv_f_holder').innerHTML = ""
+	})
+
+	function create_ha_dash(_data){
+		var ha_male = _data['simple']['male']
+		var ha_holdaer_male = ""
+		for(ha in ha_male){
+			ha_holdaer_male += (`
+				<tr>
+					<td>${_LABEL[ha]}</td>
+					<td class="_money_tag text-end">${  Money(Math.round(ha_male[ha]['num_farmer_has_inc']* 100) / 100) }</td>
+					<td class="_money_tag text-end">${  Money(Math.round(ha_male[ha]['ave_income']* 100) / 100) }</td>
+				</tr>
+			`)
+		}
+		$ID("male_ha_dash").innerHTML = ha_holdaer_male
+
+		var ha_female = _data['simple']['female']
+		var ha_holdaer_female = ""
+		for(ha in ha_female){
+			ha_holdaer_female += (`
+				<tr>
+					<td>${_LABEL[ha]}</td>
+					<td class="_money_tag text-end">${  Money(Math.round(ha_female[ha]['num_farmer_has_inc']* 100) / 100) }</td>
+					<td class="_money_tag text-end">${  Money(Math.round(ha_female[ha]['ave_income']* 100) / 100) }</td>
+				</tr>
+			`)
+		}
+		$ID("female_ha_dash").innerHTML = ha_holdaer_female
+
+		create_ha_dash_detailed(_data['detailed'])
+	}
+
+	function create_ha_dash_detailed(d_data){
+		println(d_data)
+		var ls_table_ha = {"female":"","male":""}
+		var sex_all_table = ""
+		var __TABLE =  (`
+			<div class="" style="margin-top:10px;">
+				<b class="x-container x-block x-light-grey x-large">
+					<span class="x-small">Average income based on Hectare and Commodity for <u>??SEX??</u> with having <u>??HA??</u> Ha</span>
+				</b>
+				<div class="x-topbar">
+					<table class="x-table x-bordered" >
+						<thead class="x-light-grey">
+							<th>Hectares</th>
+							<th># of Farmers</th>
+							<th>Ave. Income</th>
+						</thead>
+						<tbody>
+							??TBODY??
+						</tbody>
+					</table>
+				</div>
+			</div>
+		`);
+		// var _LABEL ={
+		// "below_to_0_5":"below 0.5",
+		// "0_5_to_1":"0.5 to 1",
+		// "1_to_1_5":"1 to 1.5",
+		// "1_5_to_2":"1.5 to 2",
+		// "2_to_2_5":"2 to 2.5",
+		// "2_5_to_3":"2.5 to 3",
+		// "3_to_3_5":"3 to 3.5",
+		// "3_to_above":"3.5 above",
+		// "untagged":"untagged"
+
+		// }
+
+		for(SEX in d_data){
+			sex_all_table= ""
+			for(HA in d_data[SEX]){
+				var __TEM___TABLE = __TABLE
+				//BUILDING ROWS
+				var table_row_holder = ""
+				for(CROP in d_data[SEX][HA]["commodity"]){
+					HA_CROP = d_data[SEX][HA]["commodity"][CROP]
+					if(CROP=="" || CROP == " "){continue}
+					table_row_holder += (`
+						<tr>
+							<td>${CROP}</td>
+							<td class="_money_tag">${  Money(Math.round(HA_CROP["num_farmers_has_inc"]* 100) / 100) }</td>
+							<td class="_money_tag">${  Money(Math.round(HA_CROP["income_avg"]* 100) / 100) }</td>
+						</tr>
+					`)
+					// println(HA_CROP)
+				}
+				__TEM___TABLE = __TEM___TABLE.replaceAll("??SEX??",SEX)
+				__TEM___TABLE = __TEM___TABLE.replaceAll("??HA??",_LABEL[HA])
+				__TEM___TABLE = __TEM___TABLE.replaceAll("??TBODY??",table_row_holder)
+				sex_all_table += __TEM___TABLE
+			}
+			// println(__TABLE)
+			ls_table_ha[SEX] += sex_all_table
+			$ID("ha_"+SEX+"_per_crop").innerHTML = ls_table_ha[SEX]
+		}
+
+	}
+
+
+	function create_age_sex_range(_data){
+		var sex_range_male = _data['age_range']
+		var sex_range_holdaer_male = ""
+		for(_range in sex_range_male){
+			sex_range_holdaer_male += (`
+				<tr>
+					<td>${_range}</td>
+					<td class="_money_tag text-end">${  Money(Math.round(sex_range_male[_range]['male']* 100) / 100) }</td>
+				</tr>
+			`)
+		}
+		$ID("male_age_dash").innerHTML = sex_range_holdaer_male
+		// ======================
+
+		var sex_range_female = _data['age_range']
+		var sex_range_holdaer_female = ""
+		for(_range in sex_range_female){
+			sex_range_holdaer_female += (`
+				<tr>
+					<td>${_range}</td>
+					<td class="_money_tag text-end">${  Money(Math.round(sex_range_female[_range]['female']* 100) / 100) }</td>
+				</tr>
+			`)
+		}
+		$ID("female_age_dash").innerHTML = sex_range_holdaer_female
+
+		$ID("male_is_youth").innerHTML =  Money(Math.round(sex_range_male["youth"]['male']* 100) / 100)
+		$ID("female_is_youth").innerHTML =  Money(Math.round(sex_range_female["youth"]['female']* 100) / 100)
+	}
+</script>
