@@ -47,6 +47,12 @@ class _main:
 
         SHF_PC_data = [SHF_PC_cacao[0]['total'],SHF_PC_coconut[0]['total'],SHF_PC_coffee[0]['total'],SHF_PC_pfn[0]['total'],SHF_PC_untagged[0]['total']]
 
+        SHF_total_HH_head_male = rapid_sql.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` = 'Male' WHERE dl.db_table='dcf_capacity_building'")
+        SHF_total_HH_head_female = rapid_sql.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` = 'Female' WHERE dl.db_table='dcf_capacity_building'")
+        SHF_total_HH_head_untagged = rapid_sql.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` != 'Male' AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` != 'Female' WHERE dl.db_table='dcf_capacity_building'")
+
+        SHF_total_HH_head_data = [SHF_total_HH_head_male[0]['total'],SHF_total_HH_head_female[0]['total'],SHF_total_HH_head_untagged[0]['total']];
+
         # FARMER ORGANIZATION
         FO_Total = rapid_sql.select("SELECT COUNT(*) AS total FROM form_b")
         FO_Total_Coop = rapid_sql.select("SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization='Cooperative'")
@@ -225,6 +231,11 @@ class _main:
                     'labels' : ['Cacao','Coconut','Coffee','PFN'],
                     'data' : SHF_PC_data,
                     'background_colors' : background_colors_comm
+                },
+                'SHF_HH_Head_data' : {
+                    'labels' : ['Male','Female','Untagged'],
+                    'data' : SHF_total_HH_head_data,
+                    'background_colors' : background_colors
                 }
             },
             'FO' : {

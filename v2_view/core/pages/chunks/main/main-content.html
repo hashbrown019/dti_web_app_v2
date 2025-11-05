@@ -120,7 +120,7 @@ h2{
 		<div class="pagetitle">
 			<h5 class="card-title">Main Dashboard <span>/ All data on this dashboard is sourced from PF A-C and DCF 1-11.</span></h5>
 		</div>
-			<ul class="nav nav-tabs" id="toggleTab" role="tablist" style="margin-bottom: 10px;">
+			<!-- <ul class="nav nav-tabs" id="toggleTab" role="tablist" style="margin-bottom: 10px;">
 				<li class="nav-item" role="presentation">
 					<button class="nav-link active" id="new-tab" data-bs-toggle="tab" data-bs-target="#NEW" type="button" role="tab" aria-controls="NEW" aria-selected="true" onclick="showSection('NEW','OLD')">
 					NEW
@@ -131,7 +131,7 @@ h2{
 					OLD
 					</button>
 				</li>
-			</ul>
+			</ul> -->
 		<div class="row" id="NEW">
 			<div class="card">
 				<div class="card-body">
@@ -181,6 +181,12 @@ h2{
 									</tbody>
 								</table>
 								<button onclick="show_adv_filter()" class="rapid_viewAreaFilterForm_btn" style="border: 0px; background: 0; text-decoration: underline; font-size: 12px; font-weight: bold;"><i class="fa fa-filter text-primary"></i> View Area Filter Form</button>
+								<br>
+								<hr>
+								<br>
+								<div style="width: 100%; margin: auto;">
+									<canvas id="SHF_HH_Head_barchart" height="300"></canvas>
+								</div>
 								<br>
 							</div>
 							<div class="col-md-6 col-12">
@@ -1308,7 +1314,7 @@ h2{
 		</div>
 
 
-	<div class="row d-none" id="OLD">
+	<!-- <div class="row d-none" id="OLD">
 		<div class="card">
 			<div class="card-body">
 				<h5 class="card-title">PF/DCF Dashboard<span>/ generic dashboard</span></h5>
@@ -1348,29 +1354,29 @@ h2{
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	{% include 'advance_filter_a_dashboard.html' %}
 
 	<script type="text/javascript">
-		function formcdashboard(_BODY_, obj) {
-			try {
-				const in_url = (urls) => obj && obj.src && obj.src.split("/").indexOf(urls) >= 0;
-				if (in_url('formcdashboard') || in_url('dcf_dashboard_embed')) {
-					if (_BODY_ && _BODY_.getElementsByClassName("main-content")[0]) {
-						_BODY_.getElementsByClassName("main-content")[0].style['margin-left'] = "0px";
-					}
-				}
-				if (in_url('formbembed')) {
-					if (obj && obj.contentWindow && obj.contentWindow.$ID) {
-						const main_cont = obj.contentWindow.$ID("TOP_TITLE");
-						if (main_cont) main_cont.style['padding-top'] = "1px";
-					}
-				}
-			} catch (e) {
-				console.warn(e);
-			}
-		}
+		// function formcdashboard(_BODY_, obj) {
+		// 	try {
+		// 		const in_url = (urls) => obj && obj.src && obj.src.split("/").indexOf(urls) >= 0;
+		// 		if (in_url('formcdashboard') || in_url('dcf_dashboard_embed')) {
+		// 			if (_BODY_ && _BODY_.getElementsByClassName("main-content")[0]) {
+		// 				_BODY_.getElementsByClassName("main-content")[0].style['margin-left'] = "0px";
+		// 			}
+		// 		}
+		// 		if (in_url('formbembed')) {
+		// 			if (obj && obj.contentWindow && obj.contentWindow.$ID) {
+		// 				const main_cont = obj.contentWindow.$ID("TOP_TITLE");
+		// 				if (main_cont) main_cont.style['padding-top'] = "1px";
+		// 			}
+		// 		}
+		// 	} catch (e) {
+		// 		console.warn(e);
+		// 	}
+		// }
 
 		$(document).ready(function(){
 			
@@ -1387,14 +1393,15 @@ h2{
                     console.log('entered here!');
 					console.log(response);
 
-					var chart_data_shf 		= response.SHF['SHF_byRegion'];
-					var chart_data_shf_pc 	= response.SHF['SHF_PC_data'];
-					var chart_data_fo  		= response.FO['FO_byRegion'];
-					var chart_data_fo_to  	= response.FO['FO_byOrgType'];
-					var chart_data_fo_pc  	= response.FO['FO_PC_data'];
-					var chart_data_msme  	= response.MSME['MSME_byRegion'];
-					var chart_data_msme_pc  = response.MSME['MSME_PC_data'];
-					var chart_data_msme_ic  = response.MSME['MSME_IC_data'];
+					var chart_data_shf 			= response.SHF['SHF_byRegion'];
+					var chart_data_shf_pc 		= response.SHF['SHF_PC_data'];
+					var chart_data_shf_hh_head 	= response.SHF['SHF_HH_Head_data'];
+					var chart_data_fo  			= response.FO['FO_byRegion'];
+					var chart_data_fo_to  		= response.FO['FO_byOrgType'];
+					var chart_data_fo_pc  		= response.FO['FO_PC_data'];
+					var chart_data_msme  		= response.MSME['MSME_byRegion'];
+					var chart_data_msme_pc  	= response.MSME['MSME_PC_data'];
+					var chart_data_msme_ic  	= response.MSME['MSME_IC_data'];
 
 					// Small Holder Farmers - Total List
 					$('.SHF_total').html(Money(response.SHF['SHF_Total']));
@@ -1422,14 +1429,14 @@ h2{
 					
 					
 					var ctx_SHF = document.getElementById('SHF_region_piechart').getContext('2d');
-					// var ctx_SHF_PC = document.getElementById('SHF_PC_barchart').getContext('2d');
+					var ctx_SHF_HH_head = document.getElementById('SHF_HH_Head_barchart').getContext('2d');
 					var ctx_FO = document.getElementById('FO_region_piechart').getContext('2d');
 					var ctx_FO_TO = document.getElementById('FO_TO_barchart').getContext('2d');
 					// var ctx_FO_PC = document.getElementById('FO_PC_barchart').getContext('2d');
 					var ctx_MSME = document.getElementById('MSME_region_piechart').getContext('2d');
 					var ctx_MSME_PC = document.getElementById('MSME_BT_barchart').getContext('2d');
 					// var ctx_MSME_IC = document.getElementById('MSME_IC_barchart').getContext('2d');
-
+					
 					// SHF Chart - Pie
 					const chartSHF = new Chart(ctx_SHF, {
 						type: 'pie',
@@ -1623,6 +1630,27 @@ h2{
 											return context.parsed+"%";
 										}
 									}
+								}
+							}
+						}
+					});
+					
+					var chartSHF_HH_Head = new Chart(ctx_SHF_HH_head, {
+						type: 'bar',
+						data: {
+							labels: chart_data_shf_hh_head.labels,
+							datasets: [{
+								label: "Household - Head / Sex",
+								data: chart_data_shf_hh_head.data,
+								backgroundColor: chart_data_shf_hh_head.background_colors,
+								borderColor: '#8D5630',
+								borderWidth: 1
+							}]
+						},
+						options: {
+							scales: {
+								y: {
+									beginAtZero: true
 								}
 							}
 						}
@@ -2463,33 +2491,33 @@ h2{
 			
 		});
 
-		function showSection(showId, hideId) {
-		const showEl = document.getElementById(showId);
-		const hideEl = document.getElementById(hideId);
+	// 	function showSection(showId, hideId) {
+	// 	const showEl = document.getElementById(showId);
+	// 	const hideEl = document.getElementById(hideId);
 
-		if (showEl) {
-			showEl.classList.remove('d-none');
-			showEl.style.display = '';
-		}
-		if (hideEl) {
-			hideEl.classList.add('d-none');
-			hideEl.style.display = 'none';
-		}
+	// 	if (showEl) {
+	// 		showEl.classList.remove('d-none');
+	// 		showEl.style.display = '';
+	// 	}
+	// 	if (hideEl) {
+	// 		hideEl.classList.add('d-none');
+	// 		hideEl.style.display = 'none';
+	// 	}
 
-		// Toggle button active states
-		const btnNEW = document.getElementById('btnNEW');
-		const btnOLD = document.getElementById('btnOLD');
-		if (btnNEW) btnNEW.classList.toggle('active', showId === 'NEW');
-		if (btnOLD) btnOLD.classList.toggle('active', showId === 'OLD');
+	// 	// Toggle button active states
+	// 	const btnNEW = document.getElementById('btnNEW');
+	// 	const btnOLD = document.getElementById('btnOLD');
+	// 	if (btnNEW) btnNEW.classList.toggle('active', showId === 'NEW');
+	// 	if (btnOLD) btnOLD.classList.toggle('active', showId === 'OLD');
 
-		// Only load OLD dashboard once
-		if (showId === 'OLD') {
-			const iframe = document.getElementById('dash_core_embed');
-			if (iframe && !iframe.dataset.loaded) {
-				iframe.src = "/dcf_dashboard_embed"; // Load once
-				iframe.dataset.loaded = "true"; // Prevent reloading
-			}
-		}
-	}
+	// 	// Only load OLD dashboard once
+	// 	if (showId === 'OLD') {
+	// 		const iframe = document.getElementById('dash_core_embed');
+	// 		if (iframe && !iframe.dataset.loaded) {
+	// 			iframe.src = "/dcf_dashboard_embed"; // Load once
+	// 			iframe.dataset.loaded = "true"; // Prevent reloading
+	// 		}
+	// 	}
+	// }
 	</script>
 </div>
