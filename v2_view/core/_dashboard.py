@@ -11,8 +11,7 @@ from views.dcfv2.dashboard.display_dataform import displayform
 
 app = Blueprint("_dashboard",__name__,template_folder='templates')
 rapid_sql = mysql(*c.DB_CRED)
-
-API_KEY = "dtirapid@2025!"
+api_key = "dtirapid@2025!"
 
 class _main:
     def __init__(self, arg):
@@ -286,11 +285,45 @@ class _main:
         }
 
         return jsonify(data)
+    
     @app.route("/dashboard_analytic_shf", methods=["GET"])
     def dashboard_analytic_shf():
-        key = request.headers.get("Authorization")
-        if key != f"Bearer {API_KEY}":
+        key = request.headers.get("x-api-key")
+        if key != api_key:
             return jsonify({"error": "Unauthorized"}), 401
         
         SHF_Data = rapid_sql.select("SELECT * FROM excel_import_form_a")
         return jsonify(SHF_Data)
+
+    @app.route("/dashboard_analytic_shf_v2", methods=["GET"])
+    def dashboard_analytic_shf_v2():
+        SHF_Data = rapid_sql.select("SELECT * FROM excel_import_form_a")
+        return jsonify(SHF_Data) 
+    
+    @app.route("/dashboard_analytic_fo", methods=["GET"])
+    def dashboard_analytic_fo():
+        key = request.headers.get("x-api-key")
+        if key != api_key:
+            return jsonify({"error": "Unauthorized"}), 401
+        
+        SHF_Data = rapid_sql.select("SELECT * FROM form_b")
+        return jsonify(SHF_Data)
+
+    @app.route("/dashboard_analytic_fo_v2", methods=["GET"])
+    def dashboard_analytic_fo_v2():
+        SHF_Data = rapid_sql.select("SELECT * FROM form_b")
+        return jsonify(SHF_Data) 
+    
+    @app.route("/dashboard_analytic_msme", methods=["GET"])
+    def dashboard_analytic_msme():
+        key = request.headers.get("x-api-key")
+        if key != api_key:
+            return jsonify({"error": "Unauthorized"}), 401
+        
+        SHF_Data = rapid_sql.select("SELECT * FROM form_c")
+        return jsonify(SHF_Data)
+
+    @app.route("/dashboard_analytic_msme_v2", methods=["GET"])
+    def dashboard_analytic_msme_v2():
+        SHF_Data = rapid_sql.select("SELECT * FROM form_c")
+        return jsonify(SHF_Data) 
