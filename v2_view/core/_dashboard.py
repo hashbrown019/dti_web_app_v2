@@ -12,8 +12,11 @@ from views.dcfv2.dashboard.display_dataform import displayform
 app = Blueprint("_dashboard",__name__,template_folder='templates')
 rapid_sql = mysql(*c.DB_CRED)
 
+API_KEY = "dtirapid@2025!"
+
 class _main:
     def __init__(self, arg):
+        
         super(_main, self).__init__()
         self.arg = arg
 
@@ -46,6 +49,12 @@ class _main:
         SHF_PC_untagged = rapid_sql.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Cacao%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Coconut%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Copra%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Coffee%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Banana%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Banana Cardava%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%BananaCardava%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Cardava%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Calamansi%'")
 
         SHF_PC_data = [SHF_PC_cacao[0]['total'],SHF_PC_coconut[0]['total'],SHF_PC_coffee[0]['total'],SHF_PC_pfn[0]['total'],SHF_PC_untagged[0]['total']]
+
+        SHF_total_HH_head_male = rapid_sql.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` = 'Male' WHERE dl.db_table='dcf_capacity_building'")
+        SHF_total_HH_head_female = rapid_sql.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` = 'Female' WHERE dl.db_table='dcf_capacity_building'")
+        SHF_total_HH_head_untagged = rapid_sql.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` != 'Male' AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` != 'Female' WHERE dl.db_table='dcf_capacity_building'")
+
+        SHF_total_HH_head_data = [SHF_total_HH_head_male[0]['total'],SHF_total_HH_head_female[0]['total'],SHF_total_HH_head_untagged[0]['total']];
 
         # FARMER ORGANIZATION
         FO_Total = rapid_sql.select("SELECT COUNT(*) AS total FROM form_b")
@@ -225,6 +234,11 @@ class _main:
                     'labels' : ['Cacao','Coconut','Coffee','PFN'],
                     'data' : SHF_PC_data,
                     'background_colors' : background_colors_comm
+                },
+                'SHF_HH_Head_data' : {
+                    'labels' : ['Male','Female','Untagged'],
+                    'data' : SHF_total_HH_head_data,
+                    'background_colors' : background_colors
                 }
             },
             'FO' : {
@@ -272,3 +286,11 @@ class _main:
         }
 
         return jsonify(data)
+    @app.route("/dashboard_analytic_shf", methods=["GET"])
+    def dashboard_analytic_shf():
+        key = request.headers.get("Authorization")
+        if key != f"Bearer {API_KEY}":
+            return jsonify({"error": "Unauthorized"}), 401
+        
+        SHF_Data = rapid_sql.select("SELECT * FROM excel_import_form_a")
+        return jsonify(SHF_Data)
