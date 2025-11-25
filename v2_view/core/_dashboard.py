@@ -12,8 +12,11 @@ from views.dcfv2.dashboard.display_dataform import displayform
 app = Blueprint("_dashboard",__name__,template_folder='templates')
 rapid_sql = mysql(*c.DB_CRED)
 
+API_KEY = "dtirapid@2025!"
+
 class _main:
     def __init__(self, arg):
+        
         super(_main, self).__init__()
         self.arg = arg
 
@@ -283,3 +286,11 @@ class _main:
         }
 
         return jsonify(data)
+    @app.route("/dashboard_analytic_shf", methods=["GET"])
+    def dashboard_analytic_shf():
+        key = request.headers.get("Authorization")
+        if key != f"Bearer {API_KEY}":
+            return jsonify({"error": "Unauthorized"}), 401
+        
+        SHF_Data = rapid_sql.select("SELECT * FROM excel_import_form_a")
+        return jsonify(SHF_Data)

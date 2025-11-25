@@ -1,10 +1,21 @@
 <!--NAVBAR-->
-<nav class="navbar navbar-expand-sm navbar-light bg-white" style="height: 70px;">
+<nav class="navbar navbar-expand-sm navbar-light bg-white" >
 	<div class="container">
 		<a class="navbar-brand d-lg-none d-md-none d-sm-none d-xl-block" href="/">
 			<img src="../../static/webrepstatic/img/RAPID.svg" width="70" height="70" class="" alt="home">
 		</a>
-		<ul id="navbar_top_" class="navbar-nav mx-auto">
+		
+		<div class="float-end">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#rapid_navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a style="background: #fff; border: 1px solid #004450; color: #004450; padding: 15px 10px;" type="button" class="navbar-toggler btn btn-outline-dark rounded-2 mt-1" href="/login">
+				MIS <b class="fa fa-arrow-right"></b>
+			</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="rapid_navbar">
+		<ul id="navbar_top_" class="navbar-nav mx-auto ">
 			<li class="nav-item dropdown">
 				<a class="nav-link ps-4 ms-3" type="button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/rapid/about/about.html">About</a>
 				<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -163,9 +174,10 @@
 				</li>	            
 			{% endif %}
 		</ul>
+		</div>
 
 		{% if is_session :%}
-		<div id="menu_btn_" class="">
+		<div id="menu_btn_" class="d-none d-sm-block">
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item dropdown">
 					<a class="nav-link ps-4 ms-3" type="button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/menuv2">Menu</a>
@@ -178,13 +190,14 @@
 			</ul>
 		</div>
 		{% else : %}
-		<div class="">
+		<div class="d-none d-sm-block">
 			<a type="button" class="btn btn-outline-dark rounded-2 mt-1" href="/login">
 				RAPID&nbsp;Growth&nbsp;Project&nbsp;-&nbsp;MIS&nbsp;<b class="fa fa-arrow-right"></b>
 				<!-- <img src="../../static/webrepstatic/img/mis_2023_v2.svg" width="7%" height="7%" class="" alt="home"> -->
 			</a>
 		</div>
 		{% endif %}
+		
 	</div>
 </nav>
 <!-- <script defer src="../../static/js/Brorn.min.js" onload="pages_scope_selector()"></script> -->
