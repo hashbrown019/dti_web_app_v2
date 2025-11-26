@@ -334,13 +334,6 @@ class _main:
             "data": SHF_Data
         })
     
-        # key = request.headers.get("x-api-key")
-        # if key != api_key:
-        #     return jsonify({"error": "Unauthorized"}), 401
-        
-        # SHF_Data = rapid_sql.select("SELECT * FROM form_b")
-        # return jsonify(SHF_Data)
-    
     @app.route("/dashboard_analytic_msme", methods=["GET"])
     def dashboard_analytic_msme():
         key = request.headers.get("x-api-key")
@@ -364,10 +357,3 @@ class _main:
             "limit": limit,
             "data": SHF_Data
         })
-    
-        # key = request.headers.get("x-api-key")
-        # if key != api_key:
-        #     return jsonify({"error": "Unauthorized"}), 401
-        
-        # SHF_Data = rapid_sql.select("SELECT * FROM form_c")
-        # return jsonify(SHF_Data)
