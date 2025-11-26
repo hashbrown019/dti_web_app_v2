@@ -291,39 +291,69 @@ class _main:
         key = request.headers.get("x-api-key")
         if key != api_key:
             return jsonify({"error": "Unauthorized"}), 401
-        
-        SHF_Data = rapid_sql.select("SELECT * FROM excel_import_form_a")
-        return jsonify(SHF_Data)
 
-    @app.route("/dashboard_analytic_shf_v2", methods=["GET"])
-    def dashboard_analytic_shf_v2():
-        SHF_Data = rapid_sql.select("SELECT * FROM excel_import_form_a")
-        return jsonify(SHF_Data) 
+        # 📥 Get query params (default: page=1, limit=100)
+        page = int(request.args.get("page", 1))
+        limit = int(request.args.get("limit", 100))
+
+        # 🧮 Calculate offset
+        offset = (page - 1) * limit
+
+        # 📊 Fetch paginated data
+        query = f"SELECT * FROM excel_import_form_a LIMIT {limit} OFFSET {offset}"
+        SHF_Data = rapid_sql.select(query)
+
+        # 📦 Return with metadata
+        return jsonify({
+            "page": page,
+            "limit": limit,
+            "data": SHF_Data
+        })
     
     @app.route("/dashboard_analytic_fo", methods=["GET"])
     def dashboard_analytic_fo():
         key = request.headers.get("x-api-key")
         if key != api_key:
             return jsonify({"error": "Unauthorized"}), 401
-        
-        SHF_Data = rapid_sql.select("SELECT * FROM form_b")
-        return jsonify(SHF_Data)
 
-    @app.route("/dashboard_analytic_fo_v2", methods=["GET"])
-    def dashboard_analytic_fo_v2():
-        SHF_Data = rapid_sql.select("SELECT * FROM form_b")
-        return jsonify(SHF_Data) 
+        # 📥 Get query params (default: page=1, limit=100)
+        page = int(request.args.get("page", 1))
+        limit = int(request.args.get("limit", 100))
+
+        # 🧮 Calculate offset
+        offset = (page - 1) * limit
+
+        # 📊 Fetch paginated data
+        query = f"SELECT * FROM form_b LIMIT {limit} OFFSET {offset}"
+        SHF_Data = rapid_sql.select(query)
+
+        # 📦 Return with metadata
+        return jsonify({
+            "page": page,
+            "limit": limit,
+            "data": SHF_Data
+        })
     
     @app.route("/dashboard_analytic_msme", methods=["GET"])
     def dashboard_analytic_msme():
         key = request.headers.get("x-api-key")
         if key != api_key:
             return jsonify({"error": "Unauthorized"}), 401
-        
-        SHF_Data = rapid_sql.select("SELECT * FROM form_c")
-        return jsonify(SHF_Data)
 
-    @app.route("/dashboard_analytic_msme_v2", methods=["GET"])
-    def dashboard_analytic_msme_v2():
-        SHF_Data = rapid_sql.select("SELECT * FROM form_c")
-        return jsonify(SHF_Data) 
+        # 📥 Get query params (default: page=1, limit=100)
+        page = int(request.args.get("page", 1))
+        limit = int(request.args.get("limit", 100))
+
+        # 🧮 Calculate offset
+        offset = (page - 1) * limit
+
+        # 📊 Fetch paginated data
+        query = f"SELECT * FROM form_c LIMIT {limit} OFFSET {offset}"
+        SHF_Data = rapid_sql.select(query)
+
+        # 📦 Return with metadata
+        return jsonify({
+            "page": page,
+            "limit": limit,
+            "data": SHF_Data
+        })
