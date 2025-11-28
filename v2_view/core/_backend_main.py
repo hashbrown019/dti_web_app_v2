@@ -110,7 +110,7 @@ class _main:
 		if(task=='edit'): res = _backend_sub.user_pofile.edit_user_profile(request)
 		elif(task=='editpic'):res =  _backend_sub.user_pofile.edit_user_profilepic(request)
 		elif(task=='editpass'):res =  _backend_sub.user_pofile.edit_user_profilepass(request)
-		# return res
+		
 		# return redirect("/logout?urlvisit=/mis-v4/core-user-profile")
 		return redirect("/mis-v4/core-system-control")
 

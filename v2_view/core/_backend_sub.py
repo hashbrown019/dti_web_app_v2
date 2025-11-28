@@ -232,8 +232,9 @@ class user_pofile:
 	def edit_user_profile(req):
 		data = dict(req.form)
 		key = [];val = [];args=""
-		is_exist = len(rapid_mysql.select("SELECT * FROM `users` WHERE `id` ='{}' ;".format(req.form['id'])))
 
+		is_exist = len(rapid_mysql.select("SELECT * FROM `users` WHERE `id` ='{}' ;".format(req.form['id'])))
+		
 		# Define allowed fields for update (excluding sensitive fields)
 		allowed_fields = {'name', 'phone', 'address', 'job', 'pcu', 'rcu', 'mobile','email', 'username', 'security_group', 'status', 'id'}
 
@@ -258,9 +259,11 @@ class user_pofile:
 
 		if(is_exist==0):
 			for datum in validated_data:
-				key.append("`{}`".format(datum))
-				val.append("'{}'".format(validated_data[datum]))
-			sql = ('''INSERT INTO `users` ({},`status`) VALUES ({},'pending');'''.format(", ".join(key),", ".join(val)))
+				if datum != 'id': 
+					key.append("`{}`".format(datum))
+					val.append("'{}'".format(validated_data[datum]))
+			sql = ('''INSERT INTO `users` ({},`password`) VALUES ({},'dtirapid');'''.format(", ".join(key),", ".join(val)))
+			# sql = ('''INSERT INTO `users` ({},`status`) VALUES ({},'pending');'''.format(", ".join(key),", ".join(val)))
 		else:
 			for datum in validated_data:
 				if datum != 'id':
