@@ -120,18 +120,6 @@ h2{
 		<div class="pagetitle">
 			<h5 class="card-title">Main Dashboard <span>/ All data on this dashboard is sourced from PF A-C and DCF 1-11.</span></h5>
 		</div>
-			<ul class="nav nav-tabs" id="toggleTab" role="tablist" style="margin-bottom: 10px;">
-				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="new-tab" data-bs-toggle="tab" data-bs-target="#NEW" type="button" role="tab" aria-controls="NEW" aria-selected="true" onclick="showSection('NEW','OLD')">
-					NEW
-					</button>
-				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="old-tab" data-bs-toggle="tab" data-bs-target="#OLD" type="button" role="tab" aria-controls="OLD" aria-selected="false" onclick="showSection('OLD','NEW')">
-					OLD
-					</button>
-				</li>
-			</ul>
 		<div class="row" id="NEW">
 			<div class="card">
 				<div class="card-body">
@@ -819,14 +807,14 @@ h2{
 											</div>
 											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 												<div class="tile-stats" style="border-radius: 10px;">
-												<div class="count _money_tag">{{ dashboard_data.dcf_form6male[0]['total_male6'] + dashboard_data.dcf_form6female[0]['total_female6'] }}</div>
+												<div class="count _money_tag">{{ (dashboard_data.dcf_form6male[0]['total_male6'] or 0) + (dashboard_data.dcf_form6female[0]['total_female6'] or 0) }}</div>
 												<h3>Participants</h3>
 												<p>Total # of Participants.</p>
 												</div>
 											</div>
 											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 												<div class="tile-stats" style="border-radius: 10px;">
-												<div class="count _money_tag">{{ dashboard_data.dcf_form6male[0]['total_male6'] }}</div>
+												<div class="count _money_tag">{{ (dashboard_data.dcf_form6male[0]['total_male6'] or 0) }}</div>
 												<h3>Male</h3>
 												<p>Total # of FO members by male.</p>
 
@@ -834,14 +822,14 @@ h2{
 											</div>
 											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 												<div class="tile-stats" style="border-radius: 10px;">
-												<div class="count _money_tag">{{ dashboard_data.dcf_form6female[0]['total_female6'] }}</div>
+												<div class="count _money_tag">{{ (dashboard_data.dcf_form6female[0]['total_female6'] or 0) }}</div>
 												<h3>Female</h3>
 												<p>Total # of FO members by female.</p>
 												</div>
 											</div>
 											<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 												<div class="tile-stats" style="border-radius: 10px;">
-												<div class="count _money_tag">{{ dashboard_data.dcf_form6pwd[0]['total_pwd6'] }}</div>
+												<div class="count _money_tag">{{ (dashboard_data.dcf_form6pwd[0]['total_pwd6'] or 0) }}</div>
 												<h3>PWD</h3>
 												<p>Total # of FO members by pwd.</p>
 
@@ -1306,49 +1294,6 @@ h2{
 				</div>
 			</div>
 		</div>
-
-
-	<div class="row d-none" id="OLD">
-		<div class="card">
-			<div class="card-body">
-				<h5 class="card-title">PF/DCF Dashboard<span>/ generic dashboard</span></h5>
-
-				<ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
-					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home"
-							type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1"
-							onclick="$ID('dash_core_embed').src='/dcf_dashboard_embed';">Data Capture Forms</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile"
-							type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1"
-							onclick="$ID('dash_core_embed').src='/profiling_form_a/e?page=dashboard';">Profiling Form A</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-contact"
-							type="button" role="tab" aria-controls="contact" aria-selected="true"
-							onclick="$ID('dash_core_embed').src='/formbembed/e?page=dash_conso';">Profiling Form B</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="harv-tab" data-bs-toggle="tab" data-bs-target="#bordered-harv"
-							type="button" role="tab" aria-controls="harv" aria-selected="true"
-							onclick="$ID('dash_core_embed').src='/formcdashboard';">Profiling Form C</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="others-tab" data-bs-toggle="tab" data-bs-target="#bordered-others"
-							type="button" role="tab" aria-controls="others" aria-selected="true"
-							onclick="$ID('dash_core_embed').src='';">Others</button>
-					</li>
-				</ul>
-				<div class="tab-content pt-2" id="borderedTabContent">
-					<div class="pagetitle">
-						<iframe id="dash_core_embed" src="" frameborder="0" scrolling="no"
-						style="width: 100%; height: 100%;" onload="EMBED__SCRIPT(this, formcdashboard)"></iframe>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	{% include 'advance_filter_a_dashboard.html' %}
 

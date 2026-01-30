@@ -46,28 +46,34 @@ function _export(args){
 			data : $DATA({"form":mobile_export_selection}),
 			err_dialog:true,
 			func : function (res){
-				println(" Generating Table")
-				var RES = JSON.parse(res) 
-				printtable(res)
-				println(" Generating Table ended")
-				get_notif()
+				println("File exported successfully")
 			}
-
 		})
 	}
 	if(args==1){
-		$send({
-			action : "/migrations/export_excel_excel",
-			err_dialog:true,
-			method : POST,
-			func : function (res){
-				println(" Generating Table")
-				var RES = JSON.parse(res) 
-				printtable(res)
-				println(" Generating Table ended")
-				get_notif()
-			}
-
+		// Direct download using fetch API for file handling
+		fetch('/migrations/export_excel_excel', {
+			method: 'POST',
+		})
+		.then(response => {
+			if (!response.ok) throw new Error('Export failed');
+			return response.blob();
+		})
+		.then(blob => {
+			// Create a download link for the file
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'farmer_export_' + new Date().getTime() + '.xlsx';
+			document.body.appendChild(a);
+			a.click();
+			window.URL.revokeObjectURL(url);
+			document.body.removeChild(a);
+			println("File exported successfully")
+		})
+		.catch(error => {
+			console.error('Export error:', error);
+			alert('Error exporting file: ' + error.message);
 		})
 	}
 }

@@ -163,13 +163,17 @@ class _main:
 	def export_excel_mobile():
 		mobile_export_selection = request.form['form']
 		print(" *  Getting Data ")
-		return outbound.export_excel_mobile(mobile_export_selection)
+		result = outbound.export_excel_mobile(mobile_export_selection)
+		file_path = c.RECORDS + '/objects/spreadsheets/exports/' + result['file_name']
+		return send_file(file_path, as_attachment=True, download_name=result['file_name'])
 
 	@app.route("/migrations/export_excel_excel",methods=["POST","GET"])
 	@c.login_auth_web()
 	def export_excel_excel():
 		print(" *  Getting Data ")
-		return outbound.export_excel_excel()
+		result = outbound.export_excel_excel()
+		file_path = c.RECORDS + '/objects/spreadsheets/exports/' + result['file_name']
+		return send_file(file_path, as_attachment=True, download_name=result['file_name'])
 
 	@app.route("/excel_upload",methods=["POST","GET"])
 	@c.login_auth_web()
@@ -368,6 +372,7 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Middle_name` as `m_name`,
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Last_name` as `l_name`,
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_birthday` as `bday`,
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,
@@ -787,9 +792,10 @@ class _main:
 
 			entry = {
 				"name": display_name,
+				"bday": datum[6],
 				"db_id": datum[0],
 				"inputed": datum[1],
-				"ref_code": datum[13],
+				"ref_code": datum[14],
 				"linked": False,
 				"linked_info": ""   # will store e.g. "(Linked to excel_import_form_a)"
 			}
@@ -817,9 +823,26 @@ class _main:
 					entry["linked"] = True
 					entry["linked_info"] = f"(Linked to {linked_map[db_id_str]})"
 
-		# keep only duplicates
-		new_unique_name_arr = [g for g in unique_name_arr.values() if len(g) >= 2]
-		new_new_unique_name_arr = sorted(new_unique_name_arr, key=len, reverse=True)
+		# keep only duplicates and separate by birthdate
+		duplicates_by_name = [g for g in unique_name_arr.values() if len(g) >= 2]
+		
+		# further group by birthdate to separate entries with same name but different birthdate
+		final_duplicates = []
+		for group in duplicates_by_name:
+			# group entries by birthdate to identify true duplicates
+			bday_groups = {}
+			for entry in group:
+				bday_key = str(entry["bday"]) if entry["bday"] else "NULL"
+				if bday_key not in bday_groups:
+					bday_groups[bday_key] = []
+				bday_groups[bday_key].append(entry)
+			
+			# only keep groups with 2+ entries (same name AND same birthdate = true duplicates)
+			for bday_group in bday_groups.values():
+				if len(bday_group) >= 2:
+					final_duplicates.append(bday_group)
+		
+		new_new_unique_name_arr = sorted(final_duplicates, key=len, reverse=True)
 		return new_new_unique_name_arr
 
 

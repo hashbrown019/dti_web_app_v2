@@ -95,6 +95,17 @@
 	// --- helpers ---
 	function safeKey(s) { return String(s||"group").toLowerCase().replace(/\s+/g,"").replace(/[^a-z0-9]/g,""); }
 	
+	function excelDateToDate(excelDate) {
+	  if (!excelDate || isNaN(excelDate)) return "N/A";
+	  const dateNum = parseFloat(excelDate);
+	  if (dateNum < 0) return "N/A";
+	  // Excel epoch: January 1, 1900 (adjusted for Excel's leap year bug)
+	  const excelEpoch = new Date(1899, 11, 30);
+	  const millisecondsPerDay = 24 * 60 * 60 * 1000;
+	  const date = new Date(excelEpoch.getTime() + dateNum * millisecondsPerDay);
+	  return date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+	}
+	
 	function start_scan_dup() {
 	  $ID("dup_loading").innerHTML = 'Loading, please wait...';
 	  $ID("dup_res").innerHTML = "";
@@ -140,11 +151,12 @@
   CURRENT_SEARCH = searchTerm || "";
 
   var searchLower = CURRENT_SEARCH.toLowerCase();
-  // filter by name OR linked_info
   var filteredData = DUPLICATE_DATA.filter(group =>
     group.some(r =>
       (r.name && r.name.toLowerCase().includes(searchLower)) ||
-      (r.linked_info && r.linked_info.toLowerCase().includes(searchLower))
+      (r.linked_info && r.linked_info.toLowerCase().includes(searchLower)) ||
+      (r.bday && r.bday.toString().toLowerCase().includes(searchLower)) ||
+      (excelDateToDate(r.bday) && excelDateToDate(r.bday).toLowerCase().includes(searchLower))
     )
   );
 
@@ -164,10 +176,11 @@
 
     records.forEach(r => {
       const linkedStatus = r.linked_info || "";
+      const formattedBday = excelDateToDate(r.bday);
       items += `
         <div id="record_${r.db_id}" class="duplicate-item">
           <div class="duplicate-info">
-            <div class="duplicate-name">${r.name} <span style="color:#16a34a;">${linkedStatus}</span></div>
+            <div class="duplicate-name">${r.name} <span style="color:#16a34a;">${linkedStatus}</span> | bday: <span>${formattedBday}</span></div>
             <div class="duplicate-meta">
               <span class="meta-item"><span class="meta-label">ID:</span><strong>${r.db_id}</strong></span>
               <span class="meta-item"><span class="meta-label">Input by:</span>${r.inputed}</span>

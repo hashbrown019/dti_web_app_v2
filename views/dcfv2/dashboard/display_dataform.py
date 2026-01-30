@@ -608,17 +608,39 @@ def displayform():
 
     dcf_form6actualbudget=db.select("SELECT SUM(form_6_rapid_actual_budget) AS total_actbug6 FROM dcf_product_development {};".format(position_data_filter()))
     dcf_form6male=db.select("SELECT SUM(form_6_male) AS total_male6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6male, dict) and dcf_form6male.get("response") == "error":
+        dcf_form6male = [{'total_male6': 0}]
     dcf_form6female=db.select("SELECT SUM(form_6_female) AS total_female6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6female, dict) and dcf_form6female.get("response") == "error":
+        dcf_form6female = [{'total_female6': 0}]
     dcf_form6pwd=db.select("SELECT SUM(form_6_pwd) AS total_pwd6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6pwd, dict) and dcf_form6pwd.get("response") == "error":
+        dcf_form6pwd = [{'total_pwd6': 0}]
     dcf_form6ip=db.select("SELECT SUM(form_6_ip) AS total_ip6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6ip, dict) and dcf_form6ip.get("response") == "error":
+        dcf_form6ip = [{'total_ip6': 0}]
     dcf_form6youth=db.select("SELECT SUM(form_6_youth) AS total_youth6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6youth, dict) and dcf_form6youth.get("response") == "error":
+        dcf_form6youth = [{'total_youth6': 0}]
     dcf_form6sc=db.select("SELECT SUM(form_6_sc) AS total_sc6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6sc, dict) and dcf_form6sc.get("response") == "error":
+        dcf_form6sc = [{'total_sc6': 0}]
     dcf_form6act = db.select("""SELECT COUNT(form_6_type_of_activity) AS total_act6 FROM dcf_product_development {} AND form_6_type_of_activity IS NOT NULL AND TRIM(form_6_type_of_activity) <> ''""".format(position_data_filter()))
+    if isinstance(dcf_form6act, dict) and dcf_form6act.get("response") == "error":
+        dcf_form6act = [{'total_act6': 0}]
 
     dcf_form6_Cacao = db.select("""SELECT SUM(form_6_commodity LIKE '%Cacao%') AS total_cacao6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    if isinstance(dcf_form6_Cacao, dict) and dcf_form6_Cacao.get("response") == "error":
+        dcf_form6_Cacao = [{'total_cacao6': 0}]
     dcf_form6_Coffee = db.select(""" SELECT SUM(form_6_commodity LIKE '%Coffee%') AS total_coffee6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    if isinstance(dcf_form6_Coffee, dict) and dcf_form6_Coffee.get("response") == "error":
+        dcf_form6_Coffee = [{'total_coffee6': 0}]
     dcf_form6_Coconut = db.select(""" SELECT SUM(form_6_commodity LIKE '%Coconut%') AS total_coconut6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    if isinstance(dcf_form6_Coconut, dict) and dcf_form6_Coconut.get("response") == "error":
+        dcf_form6_Coconut = [{'total_coconut6': 0}]
     dcf_form6_PFN = db.select(""" SELECT SUM(form_6_commodity LIKE '%PFN%') AS total_pfn6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    if isinstance(dcf_form6_PFN, dict) and dcf_form6_PFN.get("response") == "error":
+        dcf_form6_PFN = [{'total_pfn6': 0}]
 
     # Product Development
     dcf_form6_prod = db.select("""
@@ -629,6 +651,8 @@ def displayform():
         AND form_6_type_of_activity IS NOT NULL 
         AND TRIM(form_6_type_of_activity) <> ''
     """.format(position_data_filter()))
+    if isinstance(dcf_form6_prod, dict) and dcf_form6_prod.get("response") == "error":
+        dcf_form6_prod = [{'total_prod6': 0}]
 
     # Training
     dcf_form6_training = db.select("""
@@ -639,6 +663,8 @@ def displayform():
         AND form_6_type_of_activity IS NOT NULL 
         AND TRIM(form_6_type_of_activity) <> ''
     """.format(position_data_filter()))
+    if isinstance(dcf_form6_training, dict) and dcf_form6_training.get("response") == "error":
+        dcf_form6_training = [{'total_training6': 0}]
 
     # Consultation
     dcf_form6_consultation = db.select("""
@@ -649,6 +675,8 @@ def displayform():
         AND form_6_type_of_activity IS NOT NULL 
         AND TRIM(form_6_type_of_activity) <> ''
     """.format(position_data_filter()))
+    if isinstance(dcf_form6_consultation, dict) and dcf_form6_consultation.get("response") == "error":
+        dcf_form6_consultation = [{'total_consultation6': 0}]
 
     # Orientation
     dcf_form6_orientation = db.select("""
@@ -659,6 +687,8 @@ def displayform():
         AND form_6_type_of_activity IS NOT NULL 
         AND TRIM(form_6_type_of_activity) <> ''
     """.format(position_data_filter()))
+    if isinstance(dcf_form6_orientation, dict) and dcf_form6_orientation.get("response") == "error":
+        dcf_form6_orientation = [{'total_orientation6': 0}]
 
     dcf_form2sextotal=db.select("SELECT SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form2FOmale=db.select("SELECT SUM(form_2_male) AS total_male2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
@@ -683,6 +713,9 @@ def displayform():
         {}
         GROUP BY ST_commodity
     """.format(position_data_filter()))
+
+    if isinstance(st_commodity_totals, dict) and st_commodity_totals.get("response") == "error":
+        st_commodity_totals = []
 
 
     dcf_form1msme=db.select("SELECT SUM(total_large_enterprise) as total_large_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
