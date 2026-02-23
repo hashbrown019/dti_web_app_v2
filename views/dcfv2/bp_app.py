@@ -167,6 +167,66 @@ def get_msme_names():
         print(f"Error fetching MSME names: {e}")
         return jsonify({"error": "Error fetching MSME names"}), 500
 
+@app.route('/api/get_msme_respondents', methods=['GET'])
+def get_msme_respondents():
+    try:
+        business_name = (request.args.get('business_name') or '').strip()
+        if not business_name:
+            return jsonify([])
+        safe = business_name.replace("'", "''")
+
+        def _fetch(name_col: str, gender_col=None):
+            gender_select = f", {gender_col} AS respondents_gender" if gender_col else ""
+            query = f"""
+                SELECT DISTINCT {name_col} AS respondent{gender_select}
+                FROM form_c
+                WHERE reg_businessname = '{safe}'
+                AND {name_col} IS NOT NULL
+                AND TRIM({name_col}) != ''
+                ORDER BY {name_col} ASC
+            """
+            res = db.select(query)
+            if isinstance(res, dict) and res.get('response') == 'error':
+                return None
+            if not isinstance(res, list):
+                return None
+            respondents = []
+            for row in res:
+                if isinstance(row, dict):
+                    val = row.get('respondent', '') or ''
+                    gender = row.get('respondents_gender', '') or ''
+                else:
+                    val = row[0] if len(row) > 0 else ''
+                    gender = row[1] if len(row) > 1 else ''
+                val = (val or '').strip()
+                if val:
+                    respondents.append({
+                        'name_of_respondent': val,
+                        'respondents_gender': gender or ''
+                    })
+            return respondents
+
+        respondents = None
+        gender_cols = ("respondents_gender", "sex", None)
+        for name_col in ("name_of_respondent", "name"):
+            for gender_col in gender_cols:
+                try:
+                    respondents = _fetch(name_col, gender_col)
+                except Exception:
+                    respondents = None
+                if respondents is not None:
+                    break
+            if respondents is not None:
+                break
+
+        if respondents is None:
+            print("MSME respondent query error or no result for:", business_name)
+            return jsonify([])
+        return jsonify(respondents)
+    except Exception as e:
+        print(f"Error fetching MSME respondents for {business_name}: {e}")
+        return jsonify({"error": "Error fetching MSME respondents"}), 500
+
 @app.route('/api/get_fo_names', methods=['GET'])
 def get_fo_names():
     try:
@@ -197,6 +257,116 @@ def get_fo_names():
     except Exception as e:
         print(f"Error fetching FO names: {e}")
         return jsonify({"error": "Error fetching FO names"}), 500
+
+@app.route('/api/get_beneficiary_province', methods=['GET'])
+def get_beneficiary_province():
+    def _fetch_from_form_c(safe_name: str):
+        query = (
+            "SELECT business_addr AS province "
+            "FROM form_c "
+            f"WHERE reg_businessname = '{safe_name}' LIMIT 1"
+        )
+        res = db.select(query)
+        if isinstance(res, list):
+            return [dict(province=row.get('province', '') or '') for row in res]
+        return []
+
+    def _fetch_from_form_b(safe_name: str):
+        query = (
+            "SELECT office_business_adrress AS province "
+            "FROM form_b "
+            f"WHERE organization_registered_name = '{safe_name}' LIMIT 1"
+        )
+        res = db.select(query)
+        if isinstance(res, dict) and res.get('response') == 'error':
+            query = (
+                "SELECT office_business_address AS province "
+                "FROM form_b "
+                f"WHERE organization_registered_name = '{safe_name}' LIMIT 1"
+            )
+            res = db.select(query)
+        if isinstance(res, list):
+            return [dict(province=row.get('province', '') or '') for row in res]
+        return []
+
+    try:
+        name = (request.args.get('name') or '').strip()
+        if not name:
+            return jsonify([])
+        safe = name.replace("'", "''")
+        t = (request.args.get('type') or '').strip().upper()
+        msme_types = {"MSME", "MSMES", "FORM_C", "FORM C", "C"}
+        fo_types = {"FO", "FOS", "FORM_B", "FORM B", "B"}
+        if t in msme_types:
+            return jsonify(_fetch_from_form_c(safe))
+        if t in fo_types:
+            return jsonify(_fetch_from_form_b(safe))
+        prov = _fetch_from_form_c(safe)
+        if prov:
+            return jsonify(prov)
+        return jsonify(_fetch_from_form_b(safe))
+    except Exception as e:
+        print(f"Error fetching beneficiary province: {e}")
+        return jsonify({"error": "Error fetching beneficiary province"}), 500
+
+@app.route('/api/get_pfa_by_coop', methods=['GET'])
+def get_pfa_by_coop():
+    try:
+        coop_name = (request.args.get('coop_name') or '').strip()
+        if not coop_name:
+            return jsonify([])
+        safe = coop_name.replace("'", "''")
+        query = f"""
+            SELECT
+                id,
+                TRIM(CONCAT_WS(' ',
+                    NULLIF(TRIM(`frmer_prof_@_basic_Info_@_First_name`), ''),
+                    NULLIF(TRIM(`frmer_prof_@_basic_Info_@_Middle_name`), ''),
+                    NULLIF(TRIM(`frmer_prof_@_basic_Info_@_Last_name`), ''),
+                    NULLIF(TRIM(`frmer_prof_@_basic_Info_@_Extension_name`), '')
+                )) AS full_name,
+                TRIM(`frmer_prof_@_basic_Info_@_Sex`) AS gender
+            FROM excel_import_form_a
+            WHERE LOWER(TRIM(`frmer_prof_@_Farming_Basic_Info_@_Name_coop`)) = LOWER('{safe}')
+            AND (
+                TRIM(`frmer_prof_@_basic_Info_@_First_name`) <> ''
+                OR TRIM(`frmer_prof_@_basic_Info_@_Last_name`) <> ''
+            )
+            ORDER BY full_name ASC
+        """
+        result = db.select(query)
+        if not isinstance(result, list):
+            print("PFA query error or no result:", result)
+            return jsonify([])
+        pfa_data = []
+        for row in result:
+            if isinstance(row, dict):
+                pfa_data.append({
+                    'id': row.get('id'),
+                    'full_name': row.get('full_name', '') or '',
+                    'gender': row.get('gender', '') or ''
+                })
+            else:
+                pfa_data.append({
+                    'id': row[0] if len(row) > 0 else None,
+                    'full_name': row[1] if len(row) > 1 else '',
+                    'gender': row[2] if len(row) > 2 else ''
+                })
+        return jsonify(pfa_data)
+    except Exception as e:
+        print(f"Error fetching PFA names for coop {coop_name}: {e}")
+        return jsonify({"error": "Error fetching PFA names"}), 500
+
+@app.route('/api/get_form3_names', methods=['GET'])
+def get_form3_names():
+    try:
+        query = "SELECT form_3_contact_person FROM dcf_bdsp_reg WHERE form_3_contact_person IS NOT NULL AND form_3_contact_person != '' GROUP BY form_3_contact_person ORDER BY form_3_contact_person ASC"
+        result = db.select(query)
+        dip_data = [dict(form_3_contact_person=row['form_3_contact_person']) for row in result]
+        return jsonify(dip_data)
+    except Exception as e:
+        print(f"Error fetching form 3 names: {e}")
+        return jsonify({"error": "Error fetching form 3 names"}), 500
 
 @app.route('/form1_dashboard')
 @c.login_auth_web()

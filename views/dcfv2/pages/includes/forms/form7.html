@@ -24,16 +24,69 @@
                     border-collapse: collapse;
                 }
             </style>
+            <style>
+                .dropdown-check-list {
+                    display: inline-block;
+                    position: relative;
+                    width: 100%;
+                }
+                .dropdown-check-list .anchor {
+                    position: relative;
+                    cursor: pointer;
+                    display: block;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    background-color: white;
+                    width: 100%;
+                    min-height: 30px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+                .dropdown-check-list .anchor:after {
+                    position: absolute;
+                    content: "";
+                    border-left: 2px solid black;
+                    border-top: 2px solid black;
+                    padding: 5px;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%) rotate(-135deg);
+                }
+                .dropdown-check-list .items {
+                    display: none;
+                    position: absolute;
+                    background: white;
+                    width: 100%;
+                    border: 1px solid #ccc;
+                    max-height: 200px;
+                    overflow-y: auto;
+                    z-index: 1000;
+                    padding: 5px;
+                }
+                .dropdown-check-list .items li {
+                    list-style: none;
+                    padding: 5px;
+                }
+                .dropdown-check-list .items li strong {
+                    display: block;
+                    padding: 5px;
+                    background-color: #f2f2f2;
+                    font-weight: bold;
+                }
+                .dropdown-check-list.visible .items {
+                    display: block;
+                }
+            </style>
         </div>
 
         <div class="x-row x-container x-padding">
             <input class="FORM7_FIELD x-input" type="hidden"  id="id">
-            <div class="x-col l3 x-container x-padding">
+            <div class="x-col l6 x-container x-padding">
                 <label class="">Implementing Unit:</label>
                 <select required class="FORM7_FIELD x-border x-select x-border" id="form_7_implementing_unit"
                     name="form_7_implementing_unit"><br>
                     <option value="">Choose your option</option>
-                    <optgroup label="RCU">
                         <option value="8">Region Vlll - Eastern Visayas</option>
                         <option value="9">Region lX - Zamboanga Peninsula</option>
                         <option value="10">Region X - Northern Mindanao</option>
@@ -41,31 +94,6 @@
                         <option value="12">Region Xll - SOCCSKSARGEN</option>
                         <option value="13">Region Xlll - Caraga</option>
                         <option value="BARMM">BARMM</option>
-                    </optgroup>
-                    <optgroup label="PCU">
-
-                        <option>Northern Samar</option>
-                        <option>Leyte</option>
-                        <option>Southern Leyte</option>
-                        <option>Zamboanga del Norte</option>
-                        <option>Zamboanga Sibugay</option>
-                        <option>Zamboanga del Sur</option>
-                        <option>Misamis Oriental</option>
-                        <option>Bukidnon</option>
-                        <option>Lanao del Norte</option>
-                        <option>Davao de Oro</option>
-                        <option>Davao Oriental</option>
-                        <option>Davao del Norte</option>
-                        <option>Davao del Sur</option>
-                        <option>Davao Occidental</option>
-                        <option>North Cotabato</option>
-                        <option>Sultan Kudarat</option>
-                        <option>Sarangani</option>
-                        <option>Agusan del Norte</option>
-                        <option>Agusan del Sur</option>
-                        <option>Surigao del Sur</option>
-                        <option>Maguindanao</option>
-                    </optgroup>
                     <option style="font-weight: bold;">NGA Partners</option>
                 </select>
             </div>
@@ -96,9 +124,43 @@
             </div>
             <div class="x-col l5 x-container x-padding">
                 <label>DIP (indicate NO if none):</label>
-                <input class="FORM7_FIELD x-input x-border" id="form_7_dip_indicate" name="form_7_dip_indicate" type="text"
-                    autocomplete="on" placeholder="">
+                <select class="FORM7_FIELD x-input x-border" id="form_7_dip_indicate" name="form_7_dip_indicate">
+
+                </select>
             </div>
+            <script>
+                function populateDipNames() {
+                    return fetch('/api/get_dip_names')
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.text().then(text => { throw new Error(text) });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            const selectElement = document.getElementById('form_7_dip_indicate');
+                            // Clear existing options to prevent duplication
+                           selectElement.innerHTML = `
+                                <option value="">Choose your option</option>
+                                <option value="No">No</option>
+                            `;
+                            data.forEach(item => {
+                                const option = document.createElement('option');
+                                option.value = item.form_1_name_dip;
+                                option.textContent = item.form_1_name_dip;
+                                selectElement.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching DIP names:', error));
+                }
+                // Wait for the full page load before executing the script
+                populateDipNames().then(() => {
+                    var record_id = URL_ARGS["id"];
+                    var table = URL_ARGS["table"];
+                    load_data(record_id, table, "FORM7_FIELD");
+                    get_participants_data(record_id, table, "FORM7_FIELD");
+                });
+            </script>
         </div>
 
         <div class="x-container x-padding">
@@ -169,7 +231,7 @@
             </div>
         </div>
         <div class="x-row x-container x-padding">
-            <div class="x-col l5 x-container x-padding">
+            <div class="x-col l6 x-container x-padding">
                 <label>Venue: </label>
                 <input class="FORM7_FIELD x-input x-border" id="form_7_venue" name="form_7_venue" type="text" autocomplete="on"
                     placeholder="">
@@ -185,23 +247,301 @@
                 <h2 class=" x-container text-white x-padding" style="background-color: #007399;">Outputs</h2>
             </center>
             <div class="x-row x-container x-padding">
-                <label>Name of Beneficiary: </label>
-                <input class="FORM7_FIELD x-input x-border" id="form_7_name_of_beneficiary" name="form_7_name_of_beneficiary"type="text" autocomplete="on" placeholder="">
+                <div class="x-col l6 x-container">
+                    <label>Name of Beneficiary: </label>
+                    <div id="form_7_name_of_beneficiary_dropdown" class="dropdown-check-list x-input" tabindex="100">
+                        <span class="anchor">Choose your option</span>
+                        <ul class="items" id="form_7_name_of_beneficiary_items"></ul>
+                    </div>
+                    <input class="FORM7_FIELD" name="form_7_name_of_beneficiary" id="form_7_name_of_beneficiary" type="hidden">
+                </div>
+                <div class="x-col l6 x-container">
+                    <label class="">Commodity:</label>
+                    <div id="form_7_commodity_dropdown" class="dropdown-check-list x-input" tabindex="100">
+                        <span class="anchor">Choose your option</span>
+                        <ul class="items" id="form_7_commodity_items">
+                            <li><label><input type="checkbox" value="Coffee"> Coffee</label></li>
+                            <li><label><input type="checkbox" value="Cacao"> Cacao</label></li>
+                            <li><label><input type="checkbox" value="Coconut"> Coconut</label></li>
+                            <li><label><input type="checkbox" value="PFN"> PFN</label></li>
+                        </ul>
+                    </div>
+                    <input class="FORM7_FIELD" id="form_7_commodity" name="form_7_commodity" type="hidden">
+                    <select class="FORM7_FIELD x-select x-border" name="form_7_commodity_others"
+                        id="form_7_commodity_others" style="display: none;" show-base="form_7_commodity" show-trigger="PFN">
+                        <option value="">Choose your option</option>
+                        <option>Calamansi</option>
+                        <option>Banana</option>
+                    </select>
+                </div>
             </div>
+            <script>
+            let form7BeneficiaryPendingValue = null;
+            function parseBeneficiaryValues(valueString) {
+                if (!valueString) {
+                    return [];
+                }
+                return valueString
+                    .split(',')
+                    .map(value => value.trim())
+                    .filter(value => value.length > 0);
+            }
 
+            function getBeneficiaryDropdown() {
+                return document.getElementById('form_7_name_of_beneficiary_dropdown');
+            }
+
+            function getBeneficiaryCheckboxes() {
+                const list = document.getElementById('form_7_name_of_beneficiary_items');
+                return list ? list.querySelectorAll("input[type='checkbox']") : [];
+            }
+
+            function updateBeneficiaryDropdownText() {
+                const dropdown = getBeneficiaryDropdown();
+                const hiddenElement = document.getElementById('form_7_name_of_beneficiary');
+                if (!dropdown || !hiddenElement) {
+                    return;
+                }
+                const anchor = dropdown.querySelector('.anchor');
+                const selected = [];
+                getBeneficiaryCheckboxes().forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        selected.push(checkbox.value);
+                    }
+                });
+                if (anchor) {
+                    anchor.textContent = selected.length > 0 ? selected.join(", ") : "Choose your option";
+                }
+                hiddenElement.value = selected.join(',');
+            }
+
+            function setBeneficiarySelection(valueString) {
+                const values = parseBeneficiaryValues(valueString);
+                const valueSet = new Set(values);
+                getBeneficiaryCheckboxes().forEach(function (checkbox) {
+                    checkbox.checked = valueSet.has(checkbox.value);
+                });
+                updateBeneficiaryDropdownText();
+            }
+
+            function bindBeneficiaryDropdown() {
+                const dropdown = getBeneficiaryDropdown();
+                if (!dropdown || dropdown.dataset.bound) {
+                    return;
+                }
+                const anchor = dropdown.querySelector('.anchor');
+                if (anchor) {
+                    anchor.addEventListener('click', function (event) {
+                        dropdown.classList.toggle('visible');
+                        event.stopPropagation();
+                    });
+                }
+                document.addEventListener('click', function (event) {
+                    if (!dropdown.contains(event.target)) {
+                        dropdown.classList.remove('visible');
+                    }
+                });
+                dropdown.dataset.bound = "true";
+            }
+
+            function renderRecipientCheckboxes(msmeData, foData) {
+                const list = document.getElementById('form_7_name_of_beneficiary_items');
+                if (!list) {
+                    return;
+                }
+                list.innerHTML = '';
+
+                if (msmeData && msmeData.length > 0) {
+                    const header = document.createElement('li');
+                    header.innerHTML = "<strong>MSME</strong>";
+                    list.appendChild(header);
+
+                    msmeData.forEach(item => {
+                        const li = document.createElement('li');
+                        const label = document.createElement('label');
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.value = item.reg_businessname;
+                        label.appendChild(checkbox);
+                        label.appendChild(document.createTextNode(" MSME: " + item.reg_businessname));
+                        li.appendChild(label);
+                        list.appendChild(li);
+                    });
+                }
+
+                if (foData && foData.length > 0) {
+                    const header = document.createElement('li');
+                    header.innerHTML = "<strong>FO</strong>";
+                    list.appendChild(header);
+
+                    foData.forEach(item => {
+                        const li = document.createElement('li');
+                        const label = document.createElement('label');
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.value = item.organization_registered_name;
+                        label.appendChild(checkbox);
+                        label.appendChild(document.createTextNode(" FO: " + item.organization_registered_name));
+                        li.appendChild(label);
+                        list.appendChild(li);
+                    });
+                }
+                getBeneficiaryCheckboxes().forEach(function (checkbox) {
+                    checkbox.addEventListener('change', updateBeneficiaryDropdownText);
+                });
+            }
+
+            function populateRecipientNames(targetSelectId, existingValue, filterType) {
+                return Promise.all([
+                    fetch('/api/get_msme_names')
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.text().then(text => { throw new Error(text) });
+                            }
+                            return response.json();
+                        }),
+                    fetch('/api/get_fo_names')
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.text().then(text => { throw new Error(text) });
+                            }
+                            return response.json();
+                        })
+                ])
+                .then(([msmeData, foData]) => {
+                    const hiddenElement = document.getElementById('form_7_name_of_beneficiary');
+                    renderRecipientCheckboxes(msmeData, foData);
+                    bindBeneficiaryDropdown();
+                    const resolvedValue = (typeof existingValue === 'string' ? existingValue : null)
+                        || form7BeneficiaryPendingValue
+                        || (hiddenElement ? hiddenElement.value : "");
+                    if (resolvedValue) {
+                        setBeneficiarySelection(resolvedValue);
+                        form7BeneficiaryPendingValue = null;
+                    } else {
+                        updateBeneficiaryDropdownText();
+                    }
+                })
+                .catch(error => console.error('Error fetching recipient names:', error));
+            }
+            populateRecipientNames('form_7_name_of_beneficiary_list');
+            SAM_FUNC_KAMOWN(function(res){
+                if (!res || res.form_7_name_of_beneficiary === undefined || res.form_7_name_of_beneficiary === null) {
+                    return;
+                }
+                form7BeneficiaryPendingValue = res.form_7_name_of_beneficiary;
+                const list = document.getElementById('form_7_name_of_beneficiary_items');
+                if (list && list.children.length > 0) {
+                    setBeneficiarySelection(form7BeneficiaryPendingValue);
+                    form7BeneficiaryPendingValue = null;
+                }
+            });
+            </script>
+
+            <script>
+            let form7CommodityPendingValue = null;
+
+            function getCommodityDropdown() {
+                return document.getElementById('form_7_commodity_dropdown');
+            }
+
+            function getCommodityCheckboxes() {
+                const list = document.getElementById('form_7_commodity_items');
+                return list ? list.querySelectorAll("input[type='checkbox']") : [];
+            }
+
+            function toggleCommodityOther(selectedValues) {
+                const otherInput = document.getElementById('form_7_commodity_others');
+                if (!otherInput) {
+                    return;
+                }
+                const hasPfn = selectedValues.includes('PFN');
+                otherInput.style.display = hasPfn ? 'block' : 'none';
+                otherInput.required = hasPfn;
+                if (!hasPfn) {
+                    otherInput.value = '';
+                }
+            }
+
+            function updateCommodityDropdownText() {
+                const dropdown = getCommodityDropdown();
+                const hiddenElement = document.getElementById('form_7_commodity');
+                if (!dropdown || !hiddenElement) {
+                    return;
+                }
+                const anchor = dropdown.querySelector('.anchor');
+                const selected = [];
+                getCommodityCheckboxes().forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        selected.push(checkbox.value);
+                    }
+                });
+                toggleCommodityOther(selected);
+                if (anchor) {
+                    anchor.textContent = selected.length > 0 ? selected.join(", ") : "Choose your option";
+                }
+                hiddenElement.value = selected.join(',');
+            }
+
+            function setCommoditySelection(valueString) {
+                const values = parseBeneficiaryValues(valueString);
+                const valueSet = new Set(values);
+                getCommodityCheckboxes().forEach(function (checkbox) {
+                    checkbox.checked = valueSet.has(checkbox.value);
+                });
+                updateCommodityDropdownText();
+            }
+
+            function bindCommodityDropdown() {
+                const dropdown = getCommodityDropdown();
+                if (!dropdown || dropdown.dataset.bound) {
+                    return;
+                }
+                const anchor = dropdown.querySelector('.anchor');
+                if (anchor) {
+                    anchor.addEventListener('click', function (event) {
+                        dropdown.classList.toggle('visible');
+                        event.stopPropagation();
+                    });
+                }
+                document.addEventListener('click', function (event) {
+                    if (!dropdown.contains(event.target)) {
+                        dropdown.classList.remove('visible');
+                    }
+                });
+                dropdown.dataset.bound = "true";
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                getCommodityCheckboxes().forEach(function (checkbox) {
+                    checkbox.addEventListener('change', updateCommodityDropdownText);
+                });
+                const otherInput = document.getElementById('form_7_commodity_others');
+                if (otherInput) {
+                    otherInput.addEventListener('change', updateCommodityDropdownText);
+                }
+                bindCommodityDropdown();
+                const hiddenElement = document.getElementById('form_7_commodity');
+                if (hiddenElement && hiddenElement.value) {
+                    setCommoditySelection(hiddenElement.value);
+                } else {
+                    updateCommodityDropdownText();
+                }
+            });
+
+            SAM_FUNC_KAMOWN(function(res){
+                if (!res || res.form_7_commodity === undefined || res.form_7_commodity === null) {
+                    return;
+                }
+                form7CommodityPendingValue = res.form_7_commodity;
+                const list = document.getElementById('form_7_commodity_items');
+                if (list && list.children.length > 0) {
+                    setCommoditySelection(form7CommodityPendingValue);
+                    form7CommodityPendingValue = null;
+                }
+            });
+            </script>
             <div class="x-col l4 x-container x-padding">
-                <label class="">Commodity:</label>
-                <select class="FORM7_FIELD x-border x-select x-border" id="form_7_commodity" name="form_7_commodity" required>
-                    <option value="">Choose your option</option>
-                    <option>Coffee</option>
-                    <option>Cacao</option>
-                    <option>Coconut</option>
-                    <option>PFN</option>
-                </select>
-                <input type="text" class="FORM7_FIELD hidden-textbox x-input x-border" name="form_7_commodity_others"
-                    id="form_7_commodity_others" show-base="form_7_commodity" show-trigger="PFN" placeholder="Please specify">
-            </div>
-            <div class="x-col l3 x-container x-padding">
                 <label class="">Type of Beneficiary:</label>
                 <select class="FORM7_FIELD x-border x-select x-border" id="form_7_beneficiary" name="form_7_beneficiary"
                     required><br>
@@ -212,7 +552,7 @@
                 </select>
             </div>
 
-            <div class="x-col l2 x-container x-padding">
+            <div class="x-col l4 x-container x-padding">
                 <label class="">Sex:</label>
                 <select class="FORM7_FIELD x-border x-select x-border" id="form_7_sex" name="form_7_sex" required><br>
                     <option selected value="">Choose your option</option>
@@ -221,7 +561,7 @@
                 </select>
             </div>
 
-            <div class="x-col l3 x-container x-padding">
+            <div class="x-col l4 x-container x-padding">
                 <label class="">Sector:</label>
                 <select class="FORM7_FIELD x-border x-select x-border" id="form_7_sector" name="form_7_sector" required><br>
                     <option selected value="">Choose   option</option>

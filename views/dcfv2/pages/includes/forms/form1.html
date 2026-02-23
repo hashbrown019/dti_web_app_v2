@@ -95,7 +95,7 @@
 				</div>
 
 				<div class="x-row x-padding ">
-					<div class="x-col l2  x-padding">
+					<div class="x-col l3  x-padding">
 						<label class=""><span style="color: #007399;" class="tool" data-tip="For multiple entries of anchor firm, click the sizes of anchor firm according to order of anchor firms identified in previous box." tabindex="1"><i class="fa fa-info-circle"></i></span> Size of Anchor Firm:</label>
 						<select x-required class="FORM1_FIELD" id="form_1_size_of_anchor" name="form_1_size_of_anchor[]" multiple>
 							<option value="Large">Large</option>
@@ -105,8 +105,8 @@
 						</select>
 					</div>
 
-					<div class="x-col l2  x-padding">
-						<label class=""><span style="color: #007399;" class="tool" data-tip="You can select multiple options from the provided list; text input won't be recorded." tabindex="1"><i class="fa fa-info-circle"></i></span> MSMEs:</label>
+					<div class="x-col l3  x-padding">
+						<label class=""><span style="color: #007399;" class="tool" data-tip="You can select multiple options from the provided list; text input won't be recorded." tabindex="1"><i class="fa fa-info-circle"></i></span> Type of Enterprise:</label>
 						<select class="FORM1_FIELD" id="form_1_msmes" name="form_1_msmes[]" multiple>
 							<option value="Large">Large</option>
 							<option value="Medium">Medium</option>
@@ -129,7 +129,7 @@
 						})
 					</script> -->
 
-					<div class="x-col l5  x-padding">
+					<div class="x-col l4  x-padding">
 						<label class=""><span style="color: #007399;" class="tool" data-tip="You can select multiple options from the provided list; text input won't be recorded." tabindex="1"><i class="fa fa-info-circle"></i></span> Scope/Provinces:</label>
 						<select class="FORM1_FIELD choicesjs" id="form_1_scope_provinces" name="form_1_scope_provinces[]" multiple>
 							<option value="Northern Samar">Northern Samar</option>
@@ -156,18 +156,21 @@
 						</select>
 					</div>
 
-					<div class="x-col l3  x-padding">
+					<div class="x-col l2  x-padding">
 						<label class="">Commodity:</label>
 							<select class="FORM1_FIELD withother x-border x-select x-border" id="form_1_commodity" name="form_1_commodity"
 								required>
-								<option selected disabled value="none">Choose your option</option>
+								<option selected disabled value="none">Select Option</option>
 								<option value="Coffee">Coffee</option>
 								<option value="Cacao">Cacao</option>
 								<option value="Coconut">Coconut</option>
 								<option value="PFN">PFN</option>
 							</select>
-						<input type="text" class="FORM1_FIELD hidden-textbox x-input x-border" name="form_1_commodity_others"
-							id="form_1_commodity_others" show-base="form_1_commodity" show-trigger="PFN"  placeholder="Please specify">
+						<select type="text" class="FORM1_FIELD hidden-textbox x-select x-border" name="form_1_commodity_others"
+							id="form_1_commodity_others" show-base="form_1_commodity" show-trigger="PFN">
+							<option>Calamansi</option>
+                    		<option>Banana</option>
+						</select>
 					</div>
 				</div>
 
@@ -516,7 +519,7 @@
 									<center>Partner's Total Counterpart</center>
 								</td>
 								<td>
-									<center>Total Project Cost (Project funds)</center>
+									<center>Total Project Cost with Counterpart</center>
 								</td>
 								<td>
 									<center>Total MG Cost</center>
@@ -565,7 +568,7 @@
 									<center>Others</center>
 								</td>
 								<td>
-									<center>Total Project Cost (Project funds)</center>
+									<center>Total Capbuild Cost</center>
 								</td>
 								<td>
 									<center>Partner's Total Counterpart</center>
@@ -672,7 +675,7 @@
 									<center>FMI</center>
 								</td>
 								<td>
-									<center>Total</center>
+									<center>Total Project Cost (Project Total)</center>
 								</td>
 							</tr>
 
@@ -899,11 +902,14 @@
 			x_inputss_[index].addEventListener('keyup', function (ee) {
 				var nums1 = parseFloat($ID("form_1_total_rehab").value); 
 				var nums2 = parseFloat($ID("form_1_total_exp").value); 
-				var nums3 = parseFloat($ID("form_1_totalcost_prodinvest2").value); 
+				var nums3 = parseFloat($ID("form_1_totalcost_prodinvest2").value);
+				var nums4 = parseFloat($ID("form_1_partners_counterpart").value) 
 				if (isNaN(nums1)) { nums1 = 0 }
 				if (isNaN(nums2)) { nums2 = 0 }
 				if (isNaN(nums3)) { nums3 = 0 }
-				$ID('form_1_total_matching_grant').value = nums1 + nums2 + nums3
+				if (isNaN(nums4)) { nums4 = 0 }
+				$ID('form_1_total_matching_grant').value = nums1 + nums2 + nums3 + nums4
+				$ID('form1_total_mg_cost').value = nums1 + nums2 + nums3
 
 			})
 		}
