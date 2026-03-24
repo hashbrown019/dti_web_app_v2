@@ -168,6 +168,69 @@ class _main:
             # return send_from_directory(os.path.join(app.static_folder, "img"), "no_img.png")
             # return send_from_directory(os.path.join(app.static_folder, "img", "no_img.png"))
 
+    @app.route("/embed_forum_talks/<f_id>",methods=["POST","GET"])
+    def embed_forum_talks(f_id):
+        if(_main.is_on_session()):
+            forum = db.select("SELECT `webrep_forum_topics`.*, `users`.`name` as 'uploader', `users`.`profilepic`, `users`.`job` FROM `webrep_forum_topics` INNER JOIN `users` ON `webrep_forum_topics`.`created_by`= `users`.`id` WHERE `webrep_forum_topics`.`id`='{}';".format(f_id))
+            return render_template(
+				'forum/embed_forum.html',
+				USER_DATA = session['USER_DATA'][0],
+				forum = forum[0]
+			)
+        else:
+            return redirect("/login?force_url=1")
+
+    @app.route("/forum/send_comment",methods=["POST","GET"])
+    def send_comment():
+        print("  * send_comment")
+        FILE_REQ = file_from_request(app)
+        data = dict(request.form)
+        key = [];val = [];args=""
+
+        is_exist = len(db.select("SELECT * FROM `webrep_forum_comments` WHERE `id` ='{}' ;".format(request.form['id'])))
+        if(is_exist==0):
+            print(" >> Adding Forum")
+            for datum in data:
+                key.append("`{}`".format(datum))
+                val.append("'{}'".format(data[datum]))
+            sql = ('''INSERT INTO `webrep_forum_comments` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+        else:
+            print(" >> Editing Forum")
+            for datum in data:
+                args += ",`{}`='{}'".format(datum,data[datum])
+            sql = "UPDATE `webrep_forum_comments` SET  {}, `edit`='1' WHERE `id`='{}';".format(args[1:],request.form['id'])
+            pass
+        last_row_id = db.do(sql)
+        return jsonify({"last_row_id":last_row_id})
+    
+    @app.route("/forum/send_comment_like/<com_id>",methods=["POST","GET"])
+    def send_comment_like(com_id):
+        sql = "UPDATE `webrep_forum_comments` SET `likes` = `likes` + 1 WHERE `id`='{}';".format(com_id)
+        last_row_id = db.do(sql)
+        return jsonify({"last_row_id":last_row_id})
+
+    @app.route("/forum/delete_comment/<com_id>",methods=["POST","GET"])
+    def delete_comment(com_id):
+        sql = "UPDATE `webrep_forum_comments` SET `removed`='1' WHERE `id`='{}';".format(com_id)
+        last_row_id = db.do(sql)
+        return jsonify({"last_row_id":last_row_id})
+
+    @app.route("/forum/get_comment/<com_id>",methods=["POST","GET"])
+    def get_comment(com_id):
+        if(_main.is_on_session()):
+            comments = db.select("SELECT `webrep_forum_comments`.*, `users`.`name` as 'commenter', `users`.`id` as 'commenter_id', `users`.`profilepic` as 'profilepic', `users`.`job` FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by`= `users`.`id` WHERE `webrep_forum_comments`.`topic_id`='{}' ORDER BY `id` DESC;".format(com_id))
+            return [comments,_main.get_topic_people(com_id)]
+        else:
+            return redirect("/login?force_url=1")
+
+    @app.route("/forum/get_topic_people/<com_id>",methods=["POST","GET"])
+    def get_topic_people(com_id):
+        if(_main.is_on_session()):
+            comments = db.select("SELECT `webrep_forum_comments`.`id` as 'first_comment_id', `users`.`name` as 'commenter' FROM `webrep_forum_comments` INNER JOIN `users` ON `webrep_forum_comments`.`comment_by` = `users`.`id` WHERE `webrep_forum_comments`.`topic_id` = '{}' GROUP BY `users`.`name`;".format(com_id))
+            return comments
+        else:
+            return redirect("/login?force_url=1")
+
     def getLatestArticles():
         articles = db.select("SELECT * FROM webrep_articles_v2 WHERE status='posted' AND removed=0 ORDER BY id DESC LIMIT 6")
         data = []
