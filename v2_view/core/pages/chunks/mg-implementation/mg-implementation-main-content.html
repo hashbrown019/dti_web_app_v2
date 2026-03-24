@@ -1,0 +1,506 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+<style>
+.btn-xs {
+  padding: .25rem .4rem;
+  font-size: .875rem;
+  line-height: .5;
+  border-radius: .2rem;
+}
+.x_panel {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 17px;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #E6E9ED;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+    opacity: 1;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+.x_panel {
+    background: #CECECE;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0px 0px 15px 15px rgba(179, 179, 179, 0.1);
+    transition: all 0.3s ease;
+}
+.x_title {
+    border-bottom: 2px solid #E6E9ED;
+    padding: 1px 5px 6px;
+    margin-bottom: 10px;
+}
+.x_title h2 {
+    margin: 5px 0 6px;
+    float: left;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 16px;
+}
+.x_content {
+    padding: 0 3px 6px;
+    position: relative;
+    width: 100%;
+    float: left;
+    clear: both;
+    margin-top: 5px;
+}
+.file-upload {
+    display: block;
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+.file-upload .file-select {
+    display: block;
+    border: 2px solid #dce4ec;
+    color: #34495e;
+    cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    background: #FFFFFF;
+    overflow: hidden;
+    position: relative;
+}
+.file-upload .file-select .file-select-button {
+    background: #dce4ec;
+    padding: 0 10px;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+}
+.file-upload .file-select .file-select-name {
+    line-height: 40px;
+    display: inline-block;
+    padding: 0 10px;
+}
+.file-upload .file-select input[type=file] {
+    z-index: 100;
+    cursor: pointer;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+#mgi_table {
+    width: 100%;
+}
+#mgi_table>tbody,
+#mgi_table>thead {    
+    display: block;
+}
+#mgi_table>thead>tr>th,
+#mgi_table>tbody>tr>td {
+    width: 16%!important;
+    font-size: 12px;
+    vertical-align: top;
+    border-bottom: 1px solid #cacaca;
+}
+#mgi_table>thead>tr>th:first-child,
+#mgi_table>tbody>tr>td:first-child {
+    width: 4%!important;
+}
+/* #mgi_table>thead>tr>th:last-child,
+#mgi_table>tbody>tr>td:last-child {
+    width: 150px!important;
+} */
+#mgi_table>tbody  {
+    height: 400px; 
+    overflow: auto;
+}
+@media (max-width: 1200px) {
+    .x_title h2 {
+        width: 62%;
+        font-size: 17px;
+    }
+}
+</style>
+<div class="col-lg-9">
+	<section class="section profile">
+        <div class="row">
+            <div class="col-6">
+                <select class="form-select" id="mgi_data_type">
+                    <option value="fo">Farmer Organization</option>
+                    <option value="shf">Small Holder Farmers</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-primary btn-sm" id="loadDataBtn"><i class="fa fa-refresh"></i> Load Data</button>
+                <a href="/mis-v4/core-mg-implementation-form?form=fo&action=addnew" class="btn btn-success btn-sm" id="addDataBtn"><i class="fa fa-plus"></i> Add New - FO</a>
+                <a href="/mis-v4/core-mg-implementation-form?form=shf&action=addnew" class="btn btn-success btn-sm" id="addDataBtn"><i class="fa fa-plus"></i> Add New - SHF</a>
+                <!-- <button class="btn btn-info btn-sm" id="exportDataBtn"><i class="fa fa-cloud-download"></i> Export</button> -->
+            </div>
+        </div>
+        <hr>
+		<table class="table table-striped fixedHeaderTable" id="mgi_table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        RCU
+                        <hr class="mt-2 mb-2">
+                        <select class="form-select form-select-sm" id="filterRCU" onchange="filterTable('rcu')">
+                            <option value="All">All</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="BARMM">BARMM</option>
+                        </select>
+                    </th>
+                    <th>
+                        PCU
+                        <hr class="mt-2 mb-2">
+                        <select class="form-select form-select-sm " id="filterPCU" onchange="filterTable('pcu')">
+                            <option value="All">All</option>
+                            <option value="northern samar" data-rcu="8">Northern Samar</option>
+                            <option value="leyte" data-rcu="8">Leyte</option>
+                            <option value="southern leyte" data-rcu="8">Southern Leyte</option>
+                            <option value="zamboanga del norte" data-rcu="9">Zamboanga del Norte</option>
+                            <option value="zamboanga sibugay" data-rcu="9">Zamboanga Sibugay</option>
+                            <option value="zamboanga del sur" data-rcu="9">Zamboanga del Sur</option>
+                            <option value="misamis oriental" data-rcu="10">Misamis Oriental</option>
+                            <option value="bukidnon" data-rcu="10">Bukidnon</option>
+                            <option value="lanao del norte" data-rcu="10">Lanao del Norte</option>
+                            <option value="davao de oro" data-rcu="11">Davao de Oro</option>
+                            <option value="davao oriental" data-rcu="11">Davao Oriental</option>
+                            <option value="davao del norte" data-rcu="11">Davao del Norte</option>
+                            <option value="davao del sur" data-rcu="11">Davao del Sur</option>
+                            <option value="davao occidental" data-rcu="11">Davao Occidental</option>
+                            <option value="north cotabato" data-rcu="12">North Cotabato</option>
+                            <option value="sultan kudarat" data-rcu="12">Sultan Kudarat</option>
+                            <option value="sarangani" data-rcu="12">Sarangani</option>
+                            <option value="agusan del norte" data-rcu="13">Agusan del Norte</option>
+                            <option value="agusan del sur" data-rcu="13">Agusan del Sur</option>
+                            <option value="surigao del sur" data-rcu="13">Surigao del Sur</option>
+                            <option value="maguindanao" data-rcu="BARMM">Maguindanao</option>
+                        </select>
+                    </th>
+                    <th>
+                        Commodity
+                        <hr class="mt-2 mb-2">
+                        <select class="form-select form-select-sm" id="filterCommodity" onchange="filterTable('commodity')">
+                            <option value="All">All</option>
+                            <option value="cacao">Cacao</option>
+                            <option value="coffee">Coffee</option>
+                            <option value="coconut">Coconut</option>
+                            <option value="pfn">Processed Fruits & Nuts</option>
+                        </select>
+                    </th>
+                    <th>
+                        DIP Name
+                        <hr class="mt-2 mb-2">
+                        <input type="text" class="form-control form-control-sm" id="filterDIPName" placeholder="Search DIP Name" onchange="filterTable('searchdip')">
+                    </th>
+                    <th>
+                        <span class="mgi_table_name">Farmer Name</span>
+                        <hr class="mt-2 mb-2">
+                        <input type="text" class="form-control form-control-sm" id="filterName" placeholder="Search Name" onchange="filterTable('searchname')">
+                    </th>
+                    <th class="text-end"><i class="fa fa-cog"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be populated dynamically -->
+            </tbody>
+        </table>
+        <br>
+        <hr>
+        <div class="x_panel tile" style="border-radius: 15px;">
+            <div class="x_title">
+                <h2>DIP/MG IMPLEMENTATION <small>SPREADSHEET MANAGEMENT</small></h2>
+                <!-- <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul> -->
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <!-- <form action="/dcf" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col">
+                                <select id="export_type" name="export_type" class="form-select">
+                                    <option value="mgi_fo">MG Implementation - FO</option>
+                                    <option value="mgi_shs">MG Implementation - SHS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class="col">
+                                <strong>
+                                    <label for="position">Export Data:</label>
+                                </strong><br>
+                                <button type="button" class="btn btn-sm btn-dark" onclick="exportForm1Data()">
+                                    <span><i class="fa fa-cloud-download"></i></span> Export
+                                </button>
+                            </div>
+                        </div> 
+                    </div>
+                </form>
+                <br> -->
+                <form action="/importcsv_mgimplementation" method="POST" enctype="multipart/form-data">
+                    {% include "includes/sweetalert.html" %}
+                    <div class="form-group">
+                        <div class="form-row mb-3">
+                            <div class="col">
+                                <select id="import_type" name="import_type" class="form-select">
+                                    <option value="fo">MG Implementation - FO</option>
+                                    <option value="shf">MG Implementation - SHF</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <strong>
+                                    <label for="position">Import Data:</label>
+                                </strong><br>
+                                <div class="file-upload mt-2">
+                                    <div class="file-select">
+                                        <div class="file-select-button" id="fileName">Choose File</div>
+                                        <div class="file-select-name" id="noFile">No file chosen...</div>
+                                        <input multiple type="file"
+                                        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                        name="chooseFile" id="chooseFile" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-info btn-sm"><span><i class="fa fa-upload"></i></span> Import</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="exportMGIData()">
+                                    <span><i class="fa fa-cloud-download"></i></span> Export
+                                </button>
+                                <span style="cursor: pointer;" onclick="download_login_start('MG Implementation_MIS Form.xlsx')" class="btn btn-success btn-sm"><i class="fa fa-file-text" aria-hidden="true"></i> Download MG Implementation excel template</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+	</section>
+</div>
+
+<script>
+
+
+    function exportMGIData(){
+        var selectedType = $('#import_type').val();
+        let a= document.createElement('a');
+        a.target= '_blank';
+        a.href= '/export_mgimplementation?type='+selectedType;
+        a.click();
+    }
+
+    function filterTable(trigger) {   
+                 
+        const table = document.getElementById('mgi_table');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        
+        var selectedRCU = document.querySelector('#filterRCU').value; // Get the selected RCU value
+        var searchDIP = document.querySelector('#filterDIPName').value.toLowerCase(); // Get the search input value and convert to lowercase
+        var searchName = document.querySelector('#filterName').value.toLowerCase(); // Get the search input value and convert to lowercase
+
+        if ( trigger === 'rcu' ) {
+            if ( selectedRCU === 'All' ) {
+                $('#filterPCU').children('option').show(); // Show all PCU options if 'All' is selected
+            } else {
+                $('#filterPCU').children('option[data-rcu="'+selectedRCU+'"]').show(); // Show PCU options for the selected RCU
+                $('#filterPCU').children('option[data-rcu!="'+selectedRCU+'"]').hide(); // Hide PCU options for other RCUs
+                $('#filterPCU').children('option[value="All"]').show(); // Show PCU options for the selected RCU
+                $('#filterPCU').val('All'); // Reset PCU filter to 'All'
+            }
+        }
+
+        var selectedPCU = document.querySelector('#filterPCU').value; // Get the selected PCU value
+        var selectedCommodity = document.querySelector('#filterCommodity').value; // Get the selected Commodity value
+
+        for (let i = 0; i < rows.length; i++) {
+            const cellRCU = rows[i].getElementsByTagName('td')[1];
+            const cellPCU = rows[i].getElementsByTagName('td')[2];
+            const cellComm = rows[i].getElementsByTagName('td')[3];
+
+            if (cellComm && cellRCU && cellPCU) {
+                const cellTextComm = cellComm.textContent || cellComm.innerText;
+                const cellTextRCU = cellRCU.textContent || cellRCU.innerText;
+                const cellTextPCU = cellPCU.textContent || cellPCU.innerText;
+
+                let showRow = true;
+
+                // Commodity filter
+                if (selectedCommodity !== 'All' &&
+                    cellTextComm.trim().toLowerCase() !== selectedCommodity.toLowerCase()) {
+                    showRow = false;
+                }
+
+                // RCU filter
+                if (showRow && selectedRCU !== 'All' &&
+                    cellTextRCU.trim().toLowerCase().indexOf(selectedRCU.toLowerCase()) === -1) {
+                    showRow = false;
+                }
+
+                // PCU filter
+                if (showRow && selectedPCU !== 'All' &&
+                    cellTextPCU.trim().toLowerCase() !== selectedPCU.toLowerCase()) {
+                    showRow = false;
+                }
+
+                // DIP filter
+                if (showRow && searchDIP) {
+                    const cellNameDIP = rows[i].getElementsByTagName('td')[4];
+                    const cellTextNameDIP = cellNameDIP.textContent || cellNameDIP.innerText;
+                    if (cellTextNameDIP.trim().toLowerCase().indexOf(searchDIP.toLowerCase()) === -1) {
+                        showRow = false;
+                    }
+                }
+
+                // Name filter (independent of DIP)
+                if (showRow && searchName) {
+                    const cellName = rows[i].getElementsByTagName('td')[5];
+                    const cellTextName = cellName.textContent || cellName.innerText;
+                    if (cellTextName.trim().toLowerCase().indexOf(searchName.toLowerCase()) === -1) {
+                        showRow = false;
+                    }
+                }
+
+                rows[i].style.display = showRow ? '' : 'none';
+            }
+        }
+
+
+        // resetTableStripe(); // Reset the table to reapply striping and clear filters
+    }
+
+    function download_login_start(fff){
+        let a= document.createElement('a');
+        a.target= '_blank';
+        a.href= '/login/download_file/'+fff;
+        a.click();
+    }
+
+    function loadData() {
+        var selectedType = $('#mgi_data_type').val();
+        if ( selectedType === 'fo' ) {
+            $('.mgi_table_name').html('FO Name');
+        } else if ( selectedType === 'shf' ) {
+            $('.mgi_table_name').html('Farmer Name');
+        }
+        $.ajax({
+            url: '/mgimplementation_data',
+            method: 'GET',
+            data: { type : selectedType },
+            success: function(response) {
+                console.log('Data fetched successfully');
+                console.log(response);
+                var data = response.data;
+                var userData = response.user_detail;
+                var tableBody = '';
+                // var counter = 1;
+                data.forEach(function(item) {
+                    tableBody += '<tr style="font-size:12px;">';
+                    tableBody += '<td>' + item.MGI_ID + '</td>';
+                    tableBody += '<td>' + item.ImpUnits_RCU + '</td>';
+                    tableBody += '<td>' + item.ImpUnits_PCU + '</td>';
+                    tableBody += '<td>' + item.DIP_Commodity + '</td>';
+                    tableBody += '<td>' + item.DIP_Name + '</td>';
+                    tableBody += '<td>' + item.Name + '</td>';
+                        
+                    if ( item.MGI_Type=='fo' ){
+                        if ( item.UploadedBy==userData.id ){
+                            tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=fo&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a> <a href="/mis-v4/core-mg-implementation-form?form=fo&action=edit&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a> <button class="btn btn-xs btn-outline-danger mgi_delete_item" data-type="fo" data-id="'+item.MGI_ID+'"><i class="fa fa-trash"></i></button></td>';
+                        }else {
+                            tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=fo&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a></td>';
+                        }
+                    }else{
+                        if ( item.UploadedBy==userData.id ){
+                            tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=shf&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a> <a href="/mis-v4/core-mg-implementation-form?form=shf&action=edit&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a> <button class="btn btn-xs btn-outline-danger mgi_delete_item" data-type="shf" data-id="'+item.MGI_ID+'"><i class="fa fa-trash"></i></button></td>';
+                        }else {
+                            tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=shf&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a></td>';
+                        }
+                    }
+
+                    tableBody += '</tr>';
+                });
+                $('#mgi_table tbody').html(tableBody);
+                $('#loadDataBtn').children('i').removeClass('fa-spin');
+            },
+            error: function(error) {
+                $('#loadDataBtn').children('i').removeClass('fa-spin');
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        
+        loadData();
+
+        $('#loadDataBtn').on('click', function() {
+            $(this).children('i').addClass('fa-spin');
+            setTimeout(function(){
+                loadData();
+            }, 1000);
+        });
+
+
+        $(document).on('click','.mgi_delete_item',function(){
+            var type = $(this).attr('data-type');
+            var id = $(this).attr('data-id');
+            
+            if ( id==null || id.length==0 ){
+                Swal.fire({
+                    title: "Empty!",
+                    text: "No Record Identifier Found.",
+                    icon: "error"
+                });
+                return;
+            }  
+            
+            $.ajax({
+                url: '/mgimplementation/delete',
+                method: 'POST',
+                data: { type : type, id : id },
+                success: function(response) {
+                    // if ( response.success ){
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: response.message,
+                            icon: "success"
+                        });
+                        $('#loadDataBtn').trigger('click');
+                    // }else{
+                    //     Swal.fire({
+                    //         title: "Server Error!",
+                    //         text: response.message,
+                    //         icon: "error"
+                    //     });
+                    // }
+                },
+                error: function(error) {
+                    $('#loadDataBtn').children('i').removeClass('fa-spin');
+                    console.error('Error fetching data:', error);
+                }
+            });
+        });
+        
+    });
+</script>

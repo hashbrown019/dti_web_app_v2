@@ -1,0 +1,21 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+<div class="container text-center" style="margin-top: 100px; margin-bottom: 100px;">
+    <h1 class="display-1 fw-bold text-wp-primary">400</h1>
+    <h3 class="fw-bold text-wp-secondary">Bad Request</h3>
+    <p class="text-muted">The server could not understand the request due to invalid syntax.</p>    
+</div>
+{% endblock %}
+
+{% block customScript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+    });
+</script>
+{% endblock %}

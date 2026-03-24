@@ -1,0 +1,284 @@
+{% extends 'templates/main.html' %}
+
+{% block content %}
+
+{% include 'home/slider.html' %}
+{% include 'home/introduction.html' %}
+
+{% endblock %}
+
+{% block customScript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+        $('.map_ch').on('click', function(){
+            var area_name = $(this).attr('id');
+            var region = $(this).attr('data-region');
+            var data = AREAS['region_'+region];
+            var color = AREAS_COLORS['region_'+region];
+
+            $('.wp_area_loading').removeClass('d-none'); 
+            $('.wp_area_dashboard_info').addClass('d-none');
+
+            setTimeout(function(){
+                $('.wp_area_dashboard_info').removeClass('d-none');
+                $('.wp_region').html(data['name']);
+                $('.wp_region').css('background-color', color );
+                $('.wp_region_value').css('color', color );
+
+                $('.wp_region_projected_shf_value').html(data['projected']['SHF_value']);
+                $('.wp_region_projected_shf_percent').html(data['projected']['SHF_percent'] + '%');
+                $('.wp_region_projected_fo_value').html(data['projected']['FO_value']);
+                $('.wp_region_projected_fo_percent').html(data['projected']['FO_percent'] + '%');
+                $('.wp_region_projected_msme_value').html(data['projected']['MSME_value']);
+                $('.wp_region_projected_msme_percent').html(data['projected']['MSME_percent'] + '%');
+
+                $('.wp_region_actual_shf_value').html(data['actual']['SHF_value']);
+                $('.wp_region_actual_shf_percent').html(data['actual']['SHF_percent'] + '%');
+                $('.wp_region_actual_fo_value').html(data['actual']['FO_value']);
+                $('.wp_region_actual_fo_percent').html(data['actual']['FO_percent'] + '%');
+                $('.wp_region_actual_msme_value').html(data['actual']['MSME_value']);
+                $('.wp_region_actual_msme_percent').html(data['actual']['MSME_percent'] + '%');
+                $('.wp_area_loading').addClass('d-none');   
+            },1000);
+            
+            $('.viewMoreDashboard').attr('data-region',region);
+            $('.wp_overall_link').css('display','block');
+
+        });
+
+        var AREAS = {
+            'overall' : { 
+                'name' : 'Overall',
+                'projected' : {
+                    'SHF_value' : '83,599',
+                    'SHF_percent' : '103',
+                    'FO_value' : '822',
+                    'FO_percent' : '274',
+                    'MSME_value' : '722',
+                    'MSME_percent' : '69',
+                },
+                'actual' :  {
+                    'SHF_value' : '68,118',
+                    'SHF_percent' : '85',
+                    'FO_value' : '769',
+                    'FO_percent' : '94',
+                    'MSME_value' : '926',
+                    'MSME_percent' : '128',
+                },
+            }, 
+            'region_8' : { 
+                'name' : 'Region 8',
+                'projected' : {
+                    'SHF_value' : '8,589',
+                    'SHF_percent' : '9',
+                    'FO_value' : '158',
+                    'FO_percent' : '17.8',
+                    'MSME_value' : '128',
+                    'MSME_percent' : '17.5',
+                },
+                'actual' :  {
+                    'SHF_value' : '5,056',
+                    'SHF_percent' : '7.7',
+                    'FO_value' : '141',
+                    'FO_percent' : '18.8',
+                    'MSME_value' : '79',
+                    'MSME_percent' : '8.5',
+                },
+            },
+            'region_9' : { 
+                'name' : 'Region 9',
+                'projected' : {
+                    'SHF_value' : '12,803',
+                    'SHF_percent' : '13',
+                    'FO_value' : '112',
+                    'FO_percent' : '12.6',
+                    'MSME_value' : '66',
+                    'MSME_percent' : '9',
+                },
+                'actual' :  {
+                    'SHF_value' : '5,373',
+                    'SHF_percent' : '8.2',
+                    'FO_value' : '32',
+                    'FO_percent' : '4.3',
+                    'MSME_value' : '121',
+                    'MSME_percent' : '13.1',
+                },
+            },
+            'region_10' : { 
+                'name' : 'Region 10',
+                'projected' : {
+                    'SHF_value' : '23,417',
+                    'SHF_percent' : '25',
+                    'FO_value' : '191',
+                    'FO_percent' : '21.5',
+                    'MSME_value' : '150',
+                    'MSME_percent' : '20.5',
+                },
+                'actual' :  {
+                    'SHF_value' : '21,386',
+                    'SHF_percent' : '32.8',
+                    'FO_value' : '183',
+                    'FO_percent' : '24.4',
+                    'MSME_value' : '150',
+                    'MSME_percent' : '16.2',
+                },
+            },
+            'region_11' : { 
+                'name' : 'Region 11',
+                'projected' : {
+                    'SHF_value' : '22,016',
+                    'SHF_percent' : '23',
+                    'FO_value' : '132',
+                    'FO_percent' : '14.9',
+                    'MSME_value' : '72',
+                    'MSME_percent' : '9.8',
+                },
+                'actual' :  {
+                    'SHF_value' : '9,434',
+                    'SHF_percent' : '14.5',
+                    'FO_value' : '114',
+                    'FO_percent' : '15.2',
+                    'MSME_value' : '243',
+                    'MSME_percent' : '26.2',
+                },
+            },
+            'region_12' : { 
+                'name' : 'Region 12',
+                'projected' : {
+                    'SHF_value' : '15,554',
+                    'SHF_percent' : '16',
+                    'FO_value' : '127',
+                    'FO_percent' : '14.3',
+                    'MSME_value' : '156',
+                    'MSME_percent' : '21.3',
+                },
+                'actual' :  {
+                    'SHF_value' : '15,554',
+                    'SHF_percent' : '23.9',
+                    'FO_value' : '127',
+                    'FO_percent' : '16.9',
+                    'MSME_value' : '211',
+                    'MSME_percent' : '22.8',
+                },
+            },
+            'region_13' : { 
+                'name' : 'Region 13',
+                'projected' : {
+                    'SHF_value' : '10,473',
+                    'SHF_percent' : '11',
+                    'FO_value' : '135',
+                    'FO_percent' : '15.2',
+                    'MSME_value' : '131',
+                    'MSME_percent' : '17.9',
+                },
+                'actual' :  {
+                    'SHF_value' : '7,338',
+                    'SHF_percent' : '11.3',
+                    'FO_value' : '144',
+                    'FO_percent' : '19.2',
+                    'MSME_value' : '118',
+                    'MSME_percent' : '12.7',
+                },
+            },
+            'region_barmm' : { 
+                'name' : 'BARMM',
+                'projected' : {
+                    'SHF_value' : '2,122',
+                    'SHF_percent' : '2',
+                    'FO_value' : '30',
+                    'FO_percent' : '3.4',
+                    'MSME_value' : '29',
+                    'MSME_percent' : '3.9',
+                },
+                'actual' :  {
+                    'SHF_value' : '1,023',
+                    'SHF_percent' : '1.6',
+                    'FO_value' : '9',
+                    'FO_percent' : '1.2',
+                    'MSME_value' : '4',
+                    'MSME_percent' : '0.4',
+                },
+            },
+        };
+
+        var AREAS_COLORS = {
+            'region_8' : '#50A6A7',
+            'region_9' : '#477E83',
+            'region_10' : '#E7A943',
+            'region_11' : '#1B434D',
+            'region_12' : '#B3D26E',
+            'region_13' : '#839F4D',
+            'region_barmm' : '#ED712E'
+        };
+
+        $('.r8').hover( function() { $('.r8').css('fill', '#33b4b5'); $('.r8').css('stroke', '#33b4b5'); }, function() { $('.r8').css('fill', '#50A6A7'); $('.r8').css('stroke', '#50A6A7'); } );
+        $('.r9').hover( function() { $('.r9').css('fill', '#28585c'); $('.r9').css('stroke', '#28585c'); }, function() { $('.r9').css('fill', '#477E83'); $('.r9').css('stroke', '#477E83'); } );
+        $('.r10').hover( function() { $('.r10').css('fill', '#e89917'); $('.r10').css('stroke', '#e89917'); }, function() { $('.r10').css('fill', '#E7A943'); $('.r10').css('stroke', '#E7A943'); } );
+        $('.r11').hover( function() { $('.r11').css('fill', '#0f343d'); $('.r11').css('stroke', '#0f343d'); }, function() { $('.r11').css('fill', '#1B434D'); $('.r11').css('stroke', '#1B434D'); } );
+        $('.r12').hover( function() { $('.r12').css('fill', '#99bf45'); $('.r12').css('stroke', '#99bf45'); }, function() { $('.r12').css('fill', '#B3D26E'); $('.r12').css('stroke', '#B3D26E'); } );
+        $('.r13').hover( function() { $('.r13').css('fill', '#617a31'); $('.r13').css('stroke', '#617a31'); }, function() { $('.r13').css('fill', '#839F4D'); $('.r13').css('stroke', '#839F4D'); } );
+        $('.barmm').hover( function() { $('.barmm').css('fill', '#bd551c'); $('.barmm').css('stroke', '#bd551c'); }, function() { $('.barmm').css('fill', '#E08553'); $('.barmm').css('stroke', '#E08553'); } );
+
+        $('.wp_overall_link').on('click', function(e){
+            
+            var data = AREAS['overall'];
+            $('.wp_area_loading').removeClass('d-none'); 
+            $('.wp_area_dashboard_info').addClass('d-none');
+
+            setTimeout(function(){
+                $('.wp_area_dashboard_info').removeClass('d-none');
+                $('.wp_region').html('OVERALL');
+                $('.wp_region').css('background-color', '#024450');
+                $('.wp_region_value').css('color', '#024450');
+
+                $('.wp_region_projected_shf_value').html(data['projected']['SHF_value']);
+                $('.wp_region_projected_shf_percent').html(data['projected']['SHF_percent'] + '%');
+                $('.wp_region_projected_fo_value').html(data['projected']['FO_value']);
+                $('.wp_region_projected_fo_percent').html(data['projected']['FO_percent'] + '%');
+                $('.wp_region_projected_msme_value').html(data['projected']['MSME_value']);
+                $('.wp_region_projected_msme_percent').html(data['projected']['MSME_percent'] + '%');
+
+                $('.wp_region_actual_shf_value').html(data['actual']['SHF_value']);
+                $('.wp_region_actual_shf_percent').html(data['actual']['SHF_percent'] + '%');
+                $('.wp_region_actual_fo_value').html(data['actual']['FO_value']);
+                $('.wp_region_actual_fo_percent').html(data['actual']['FO_percent'] + '%');
+                $('.wp_region_actual_msme_value').html(data['actual']['MSME_value']);
+                $('.wp_region_actual_msme_percent').html(data['actual']['MSME_percent'] + '%');
+                $('.wp_area_loading').addClass('d-none');   
+            },1000);
+
+            $('.viewMoreDashboard').attr('data-region','all');
+            $('.wp_overall_link').css('display','none');
+            e.preventDefault();
+        });
+
+        $('.wp_overall_link').click();
+
+        // $('.viewMoreDashboard').on('click',function(){
+        //     var region = $(this).attr('data-region');
+        //     window.location.href = '/webrep_v2/dashboard';
+        // });  
+
+        window.onSubscribeSubmit = function(token) {
+       
+            var email = $('#subcriber_email').val();
+            if(!email){
+                Swal.fire({
+                    title: "Invalid Email",
+                    text: "Please enter your email address.",
+                    icon: "warning" // e.g., 'success', 'error', 'info'
+                });
+                return;
+            }
+            
+            document.getElementById('subscribe_form').submit();
+        };
+
+    }); 
+</script>
+{% endblock %}

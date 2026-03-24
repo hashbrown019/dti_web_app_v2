@@ -1,0 +1,136 @@
+{% extends 'templates/main.html' %}
+
+{% block content %}
+<div class="story_banner" style="margin-top: 200px;">
+    <h1 class="wp_font_roboto_regular">Stories</h1>
+    <img src="{{ url_for('static', filename='webrepstatic_v2/img/rapidimage/stories.jpg') }}" class="img-fluid" >
+</div>
+<div class="container container-sm mt-5 mb-5">
+    <div class="categories">
+        <div class="float-end btn-group " role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-gear"></i> 
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <li><a class="dropdown-item" href="/webrep_v2/articles"><i class="fa fa-file-text"></i> Article's List</a></li>
+            <li><a class="dropdown-item" href="/webrep_v2/stories/create"><i class="fa fa-plus"></i> Create New Article</a></li>
+            </ul>
+        </div>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="/webrep_v2/stories" class="text-decoration-none {% if not selected_category %}text-wp-primary fw-bold{% else %}text-muted{% endif %}">All</a></li>
+            {% for category in categories %}
+                <li class="list-inline-item">|</li>
+                <li class="list-inline-item">
+                    <a href="/webrep_v2/stories/category/{{ category }}" class="text-decoration-none {% if selected_category == category %}text-wp-primary fw-bold{% else %}text-muted{% endif %}">{{ category }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="row">
+        {% for article in stories_latest %}
+        <div class="col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch">
+            <div class="card mb-4 shadow-sm wp_article_card" style="border: none;">
+                <img class="card-img-top" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" style="height: 150px;;">
+                <div class="card-body">
+                    <div class="row muted font-12 mb-2">
+                        <div class="col-6">
+                            <small class=""><i class="fa fa-calendar"></i> {{ article.date.strftime('%B %d, %Y') }}</small>
+                        </div>
+                        <div class="col-6 text-end">
+                            <small class="">{{ article.posttype | upper }}</small>
+                        </div>
+                    </div>
+                    <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none"><h5 class="card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold">{{ article.postheader }}</h5></a>
+                    <p class="card-text text-muted font-12">{{ article.postContent[0:200]~"..." if article.postContent|length > 200 else article.postContent }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br><br>
+    <div class="row">
+        <div class="col-12 col-md-9">
+            <h5 class="wp_font_roboto_regular text-wp-primary mb-4 fw-bold">Read more stories from the project</h5>  
+            <ul class="list-unstyled mb-5">
+                {% if not stories %}
+                    <p class="text-muted"><i class="fa fa-exclamation-triangle"></i> No stories found.</p>
+                {% endif %}
+                {% for article in stories %}
+                <li class="mb-3">
+                    <div class="row">
+                        <div class="col-12 col-md-3" >
+                            <img class="img-fluid" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" 
+                            style="width: 100%;       
+                                height: 120px;      
+                                object-fit: cover;  
+                                display: block; ">
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none"><h5 class="card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold">{{ article.postheader }}</h5></a>
+                            <small class=""><i class="fa fa-calendar"></i> {{ article.date.strftime('%B %d, %Y') }}</small> | 
+                            <small class="">{{ article.posttype | upper }}</small>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>  
+            <div class="mb-5">
+                {% if pages > 1 %}
+                <a href="/webrep_v2/stories" class="float-end text-decoration-none text-wp-primary bold " >See all</a>
+                {% endif %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination ">
+                        <!-- Previous button -->
+                        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="/webrep_v2/stories?str={{ query }}&page={{ page-1 }}"><i class="fa fa-angle-double-left"></i></a>
+                        </li>
+                        <!-- First page -->
+                        {% if page > 3 %}
+                        <li class="page-item">
+                            <a class="page-link font-10" href="/webrep_v2/stories?str={{ query }}&page=1">1</a>
+                        </li>
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
+                        {% endif %}
+                        <!-- Neighboring pages -->
+                        {% for p in range(start_page, end_page+1) %}
+                        <li class="page-item {% if p == page %}active{% endif %}">
+                            <a class="page-link font-10" href="/webrep_v2/stories?str={{ query }}&page={{ p }}">{{ p }}</a>
+                        </li>
+                        {% endfor %}
+                        <!-- Last page -->
+                        {% if page < pages-2 %}
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
+                        <li class="page-item">
+                            <a class="page-link font-10" href="/webrep_v2/stories?str={{ query }}&page={{ pages }}">{{ pages }}</a>
+                        </li>
+                        {% endif %}
+                        <!-- Next button -->
+                        <li class="page-item {% if page == pages or pages <= 1 %}disabled{% endif %}">
+                        <a class="page-link" href="/webrep_v2/stories?str={{ query }}&page={{ page+1 }}"><i class="fa fa-angle-double-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>   
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="wp_sidebar">
+                <form method="GET" id="search_form" action="/webrep_v2/stories" class=" mx-auto">
+                    {% include 'home/search_panel.html' %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+    });
+</script>
+{% endblock %}

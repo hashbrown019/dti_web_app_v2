@@ -14,7 +14,8 @@ from datetime import datetime, timedelta
 
 from views.login import login
 from views.home  import home
-from views.webrep  import webrep
+# from views.webrep  import webrep
+from views.webrep_v2  import webrep_v2
 from views.feature_0  import feature_0
 from views.feature_0  import feature_0_sub
 from views.psalm  import bp_app as psalm
@@ -53,7 +54,8 @@ app.register_blueprint(home.app);
 app.register_blueprint(api.app);
 app.register_blueprint(feature_0.app);
 app.register_blueprint(feature_0_sub.app);
-app.register_blueprint(webrep.app);
+# app.register_blueprint(webrep.app);
+app.register_blueprint(webrep_v2.app);
 app.register_blueprint(psalm.app);
 app.register_blueprint(doofen.app);
 app.register_blueprint(fund_tracker.app);

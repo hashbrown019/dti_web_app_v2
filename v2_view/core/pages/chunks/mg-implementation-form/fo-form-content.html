@@ -1,0 +1,1037 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    .form-control,
+    .form-select {
+        border: 1px solid #979797;
+    }
+    #accordionMGIFO .accordion-button {
+        background: #b6b6b6;
+        border-bottom: 1px solid #646464;
+    }
+    .border-bot {
+        border-bottom: 1px solid #B6B6B6;
+        padding-bottom: 10px;
+    }
+    .witness-nav>.nav-item>.nav-link {
+        color: #2C2C2C;
+    }
+    .witness-nav>.nav-item>.active {
+        border-bottom: 4px solid #7CA23F;
+        font-weight: bold;
+        color: #004450;
+    }
+    #accordionMGIFO .accordion-button:not(.collapsed) {
+        color: #fff!important;
+        font-weight: bold;
+        background-color: #004450!important;
+    }
+    input:disabled,
+    select:disabled {
+        background-color: #DBDBDB!important;
+    }
+</style>
+<div class="col-lg-9">
+	<section class="section profile" style="background-color: #dbdbdb; padding: 20px;">
+        <form id="foForm" method="POST" action="/mgimplementation_fo_form/submit" enctype="multipart/form-data">
+        <input type="number" class="d-none" name="id" value="{{ URL_ARGS['id'] if 'id' in URL_ARGS else '' }}">
+        <input type="hidden" name="action" value="{{ URL_ARGS['action'] if 'action' in URL_ARGS else '' }}" >
+        <h4>
+            MG Implementation - FO - Form 
+            {% if URL_ARGS['action']=='addnew' or URL_ARGS['action']=='edit' %}
+                <button type="submit" class="float-end btn btn-success"><i class="fa fa-save"></i></button>
+            {% endif %}
+            <a href="/mis-v4/core-mg-implementation" class="float-end btn btn-danger me-2"><i class="fa fa-mail-reply"></i></a> 
+        </h4>
+        <hr>
+        <div class="accordion" id="accordionMGIFO">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Implementing Units
+                </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionMGIFO">
+                    <div class="accordion-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="ImpUnits_RCU" class="form-label">Implementing Region</label>
+                                    <select class="form-select" id="ImpUnits_RCU" name="ImpUnits_RCU" onchange="selectRCU()">
+                                        <option value="">Select Region</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="BARMM">BARMM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="ImpUnits_PCU" class="form-label">Implementing Province</label>
+                                    <select class="form-select" id="ImpUnits_PCU" name="ImpUnits_PCU" >
+                                        <option value="">Select Province</option>
+                                        <option value="northern samar" data-rcu="8">Northern Samar</option>
+                                        <option value="leyte" data-rcu="8">Leyte</option>
+                                        <option value="southern leyte" data-rcu="8">Southern Leyte</option>
+                                        <option value="zamboanga del norte" data-rcu="9">Zamboanga del Norte</option>
+                                        <option value="zamboanga sibugay" data-rcu="9">Zamboanga Sibugay</option>
+                                        <option value="zamboanga del sur" data-rcu="9">Zamboanga del Sur</option>
+                                        <option value="misamis oriental" data-rcu="10">Misamis Oriental</option>
+                                        <option value="bukidnon" data-rcu="10">Bukidnon</option>
+                                        <option value="lanao del norte" data-rcu="10">Lanao del Norte</option>
+                                        <option value="davao de oro" data-rcu="11">Davao de Oro</option>
+                                        <option value="davao oriental" data-rcu="11">Davao Oriental</option>
+                                        <option value="davao del norte" data-rcu="11">Davao del Norte</option>
+                                        <option value="davao del sur" data-rcu="11">Davao del Sur</option>
+                                        <option value="davao occidental" data-rcu="11">Davao Occidental</option>
+                                        <option value="north cotabato" data-rcu="12">North Cotabato</option>
+                                        <option value="sultan kudarat" data-rcu="12">Sultan Kudarat</option>
+                                        <option value="sarangani" data-rcu="12">Sarangani</option>
+                                        <option value="agusan del norte" data-rcu="13">Agusan del Norte</option>
+                                        <option value="agusan del sur" data-rcu="13">Agusan del Sur</option>
+                                        <option value="surigao del sur" data-rcu="13">Surigao del Sur</option>
+                                        <option value="maguindanao" data-rcu="BARMM">Maguindanao</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="mb-3">
+                                    <label for="DIP_Name" class="form-label">DIP</label>
+                                    <select class="form-select" id="DIP_Name" name="DIP_Name" onchange="selectDIP()">
+                                        <option value="">Select DIP</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="DIP_Commodity" class="form-label">Commodity</label>
+                                    <select class="form-select" id="DIP_Commodity" name="DIP_Commodity" >
+                                        <option value="">Select Commodity</option>
+                                        <option value="cacao">Cacao</option>
+                                        <option value="coffee">Coffee</option>
+                                        <option value="coconut">Coconut</option>
+                                        <option value="pfn">Processed Fruits & Nuts</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    FO - Basic Information
+                </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="FOInfo_FOName" class="form-label">Name of Farmer Organization</label>
+                                <input type="text" class="form-control" id="FOInfo_FOName" name="FOInfo_FOName" >
+                            </div>
+                        </div>
+                        <h6 class="mt-4 border-bot">Farmer Organization Address</h6>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Address_Region" class="form-label">Region</label>
+                                <select class="form-select" id="FOInfo_Address_Region" name="FOInfo_Address_Region" onchange="selectFOInfo_RCU()">
+                                    <option value="">Select Region</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="BARMM">BARMM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Address_Province" class="form-label">Province</label>
+                                <select class="form-select" id="FOInfo_Address_Province" name="FOInfo_Address_Province" onchange="selectFOInfo_PCU()">
+                                    <option value="">Select Province</option>
+                                    <option value="northern samar" data-rcu="8">Northern Samar</option>
+                                    <option value="leyte" data-rcu="8">Leyte</option>
+                                    <option value="southern leyte" data-rcu="8">Southern Leyte</option>
+                                    <option value="zamboanga del norte" data-rcu="9">Zamboanga del Norte</option>
+                                    <option value="zamboanga sibugay" data-rcu="9">Zamboanga Sibugay</option>
+                                    <option value="zamboanga del sur" data-rcu="9">Zamboanga del Sur</option>
+                                    <option value="misamis oriental" data-rcu="10">Misamis Oriental</option>
+                                    <option value="bukidnon" data-rcu="10">Bukidnon</option>
+                                    <option value="lanao del norte" data-rcu="10">Lanao del Norte</option>
+                                    <option value="davao de oro" data-rcu="11">Davao de Oro</option>
+                                    <option value="davao oriental" data-rcu="11">Davao Oriental</option>
+                                    <option value="davao del norte" data-rcu="11">Davao del Norte</option>
+                                    <option value="davao del sur" data-rcu="11">Davao del Sur</option>
+                                    <option value="davao occidental" data-rcu="11">Davao Occidental</option>
+                                    <option value="north cotabato" data-rcu="12">North Cotabato</option>
+                                    <option value="sultan kudarat" data-rcu="12">Sultan Kudarat</option>
+                                    <option value="sarangani" data-rcu="12">Sarangani</option>
+                                    <option value="agusan del norte" data-rcu="13">Agusan del Norte</option>
+                                    <option value="agusan del sur" data-rcu="13">Agusan del Sur</option>
+                                    <option value="surigao del sur" data-rcu="13">Surigao del Sur</option>
+                                    <option value="maguindanao" data-rcu="BARMM">Maguindanao</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Address_Municipality" class="form-label">Municipality</label>
+                                <select class="form-select" id="FOInfo_Address_Municipality" name="FOInfo_Address_Municipality" onchange="selectFOInfo_Municipality()">
+                                    <option value="">Select Municipality</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Address_Brgy" class="form-label">Barangay</label>
+                                <select class="form-select" id="FOInfo_Address_Brgy" name="FOInfo_Address_Brgy" >
+                                    <option value="">Select Barangay</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3">
+                                <label for="FOInfo_Address_Street" class="form-label">Street/Purok/Sitio</label>
+                                <input type="text" class="form-control" id="FOInfo_Address_Street" name="FOInfo_Address_Street" >
+                            </div>
+                        </div>
+                        <h6 class="mt-4 border-bot">Head/Chairperson of Farmer Organization</h6>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Head_Fname" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="FOInfo_Head_Fname" name="FOInfo_Head_Fname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Head_Mname" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="FOInfo_Head_Mname" name="FOInfo_Head_Mname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Head_Lname" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="FOInfo_Head_Lname" name="FOInfo_Head_Lname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Head_Extname" class="form-label">Ext. Name</label>
+                                <input type="text" class="form-control" id="FOInfo_Head_Extname" name="FOInfo_Head_Extname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Head_Sex" class="form-label">Sex</label>
+                                <select class="form-select" id="FOInfo_Head_Sex" name="FOInfo_Head_Sex" >
+                                    <option value="">Select Sex</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FOInfo_Head_Sector" class="form-label">Sector</label>
+                                <select class="form-select" id="FOInfo_Head_Sector" name="FOInfo_Head_Sector" >
+                                    <option value="">Select Sector</option>
+                                    <option value="PWD">PWD</option>
+                                    <option value="Youth">Youth</option>
+                                    <option value="IP">IP</option>
+                                    <option value="SC">Senior Citizen</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Acknowledgement of Farm Expansion Assistance
+                </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_TargetArea" class="form-label">Target area for Expansion in hectares</label>
+                                <input type="text" class="form-control number" id="AcknowOfFarmExp_TargetArea" name="AcknowOfFarmExp_TargetArea" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_ItemName" class="form-label">Name/Particulars of items/seedlings received</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmExp_ItemName" name="AcknowOfFarmExp_ItemName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_QtyReceived" class="form-label">Qty of<br>items received</label>
+                                <input type="number" class="form-control" id="AcknowOfFarmExp_QtyReceived" name="AcknowOfFarmExp_QtyReceived" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_DateReceived" class="form-label">Date<br>received</label>
+                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_DateReceived" name="AcknowOfFarmExp_DateReceived" >
+                            </div>
+                        </div>
+                        <h6 class="mt-4 border-bot">Farmer Representative</h6>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_FarmerRep_Fname" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Fname" name="AcknowOfFarmExp_FarmerRep_Fname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_FarmerRep_Mname" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Mname" name="AcknowOfFarmExp_FarmerRep_Mname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_FarmerRep_Lname" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Lname" name="AcknowOfFarmExp_FarmerRep_Lname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_FarmerRep_Extname" class="form-label">Ext. Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Extname" name="AcknowOfFarmExp_FarmerRep_Extname" >
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmExp_FarmerRep_Designation" class="form-label">Designation</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Designation" name="AcknowOfFarmExp_FarmerRep_Designation" >
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs witness-nav" id="witness-nav" role="tablist">
+                                <li class="nav-item">
+                                    <button class="nav-link active" id="witness1-tab"  data-bs-toggle="tab" data-bs-target="#witness1" type="button" role="tab" aria-controls="witness1" aria-selected="true">Witness 1</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" id="witness2-tab"  data-bs-toggle="tab" data-bs-target="#witness2" type="button" role="tab" aria-controls="witness2" aria-selected="true">Witness 2</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" id="witness1raw-tab"  data-bs-toggle="tab" data-bs-target="#witness1raw" type="button" role="tab" aria-controls="witness1raw" aria-selected="true">Witness 1 - Raw</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" id="witness2raw-tab"  data-bs-toggle="tab" data-bs-target="#witness2raw" type="button" role="tab" aria-controls="witness2raw" aria-selected="true">Witness 2 - Raw</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="witness-nav-content">
+                                <div class="tab-pane fade show active" id="witness1" role="tabpanel" aria-labelledby="witness1-tab">
+                                    <div class="row">
+                                        <div class="col-12"><h6 class="mt-4 border-bot">Name of Witness 1</h6></div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness1_ValidatorName" class="form-label">Full name of validator</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness1_ValidatorName" name="AcknowOfFarmExp_Witness1_ValidatorName" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness1_ValidationDate" class="form-label">Date validation</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness1_ValidationDate" name="AcknowOfFarmExp_Witness1_ValidationDate" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness1_Designation" class="form-label">Designation</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness1_Designation" name="AcknowOfFarmExp_Witness1_Designation" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness1_DateWitnessed" class="form-label">Date witnessed</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness1_DateWitnessed" name="AcknowOfFarmExp_Witness1_DateWitnessed" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show " id="witness2" role="tabpanel" aria-labelledby="witness2-tab">
+                                    <div class="row">
+                                        <div class="col-12"><h6 class="mt-4 border-bot">Name of Witness 2/Validation Details</h6></div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness2_ValidatorName" class="form-label">Full name of validator</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness2_ValidatorName" name="AcknowOfFarmExp_Witness2_ValidatorName" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness2_ValidationDate" class="form-label">Date validation</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness2_ValidationDate" name="AcknowOfFarmExp_Witness2_ValidationDate" >
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness2_Remarks" class="form-label">Remarks/Challenges</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness2_Remarks" name="AcknowOfFarmExp_Witness2_Remarks" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show " id="witness1raw" role="tabpanel" aria-labelledby="witness1raw-tab">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h6 class="mt-4 border-bot">Name of Witness 1 - Raw</h6>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness1Raw_ValidatorName" class="form-label">Full name of validator</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness1Raw_ValidatorName" name="AcknowOfFarmExp_Witness1Raw_ValidatorName" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness1Raw_ValidationDate" class="form-label">Date validation</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness1Raw_ValidationDate" name="AcknowOfFarmExp_Witness1Raw_ValidationDate" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness1Raw_Designation" class="form-label">Designation</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness1Raw_Designation" name="AcknowOfFarmExp_Witness1Raw_Designation" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness1Raw_DateWitnessed" class="form-label">Date witnessed</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness1Raw_DateWitnessed" name="AcknowOfFarmExp_Witness1Raw_DateWitnessed" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show " id="witness2raw" role="tabpanel" aria-labelledby="witness2raw-tab">
+                                    <div class="row">
+                                        <div class="col-12"><h6 class="mt-4 border-bot">Name of Witness 2/Validation Details - Raw</h6></div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness2Raw_ValidatorName" class="form-label">Full name of validator</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness2Raw_ValidatorName" name="AcknowOfFarmExp_Witness2Raw_ValidatorName" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness2Raw_ValidationDate" class="form-label">Date validation</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness2Raw_ValidationDate" name="AcknowOfFarmExp_Witness2Raw_ValidationDate" >
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmExp_Witness2Raw_Remarks" class="form-label">Remarks/Challenges</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness2Raw_Remarks" name="AcknowOfFarmExp_Witness2Raw_Remarks" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Acknowledgement of Farm Intensification Assistance
+                </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_TargetArea" class="form-label">Target area for Intensification in hec.</label>
+                                <input type="text" class="form-control number" id="AcknowOfFarmInten_TargetArea" name="AcknowOfFarmInten_TargetArea" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_ItemName" class="form-label">Name/Particulars of items/seedlings received</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmInten_ItemName" name="AcknowOfFarmInten_ItemName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_QtyReceived" class="form-label">Qty of<br>items received</label>
+                                <input type="number" class="form-control" id="AcknowOfFarmInten_QtyReceived" name="AcknowOfFarmInten_QtyReceived" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_DateReceived" class="form-label">Date<br>received</label>
+                                <input type="text" class="form-control datemasked" id="AcknowOfFarmInten_DateReceived" name="AcknowOfFarmInten_DateReceived" >
+                            </div>
+                        </div>
+                        <h6 class="mt-4 border-bot">Farmer Representative</h6>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_FarmerRep_Fname" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Fname" name="AcknowOfFarmInten_FarmerRep_Fname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_FarmerRep_Mname" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Mname" name="AcknowOfFarmInten_FarmerRep_Mname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_FarmerRep_Lname" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Lname" name="AcknowOfFarmInten_FarmerRep_Lname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_FarmerRep_Extname" class="form-label">Ext. Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Extname" name="AcknowOfFarmInten_FarmerRep_Extname" >
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmInten_FarmerRep_Designation" class="form-label">Designation</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Designation" name="AcknowOfFarmInten_FarmerRep_Designation" >
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs witness-nav" id="witness-nav-intens" role="tablist">
+                                <li class="nav-item">
+                                    <button class="nav-link active" id="witness1inten-tab"  data-bs-toggle="tab" data-bs-target="#witness1inten" type="button" role="tab" aria-controls="witness1" aria-selected="true">Witness 1</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" id="witness2inten-tab"  data-bs-toggle="tab" data-bs-target="#witness2inten" type="button" role="tab" aria-controls="witness2" aria-selected="true">Witness 2</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="witness-nav-content">
+                                <div class="tab-pane fade show active" id="witness1inten" role="tabpanel" aria-labelledby="witness1inten-tab">
+                                    <div class="row">
+                                        <div class="col-12"><h6 class="mt-4 border-bot">Name of Witness 1</h6></div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmInten_Withness1_ValidatorName" class="form-label">Full name of validator</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmInten_Withness1_ValidatorName" name="AcknowOfFarmInten_Withness1_ValidatorName" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmInten_Withness1_ValidationDate" class="form-label">Date validation</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmInten_Withness1_ValidationDate" name="AcknowOfFarmInten_Withness1_ValidationDate" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmInten_Withness1_Designation" class="form-label">Designation</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmInten_Withness1_Designation" name="AcknowOfFarmInten_Withness1_Designation" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmInten_Withness1_DateWitnessed" class="form-label">Date witnessed</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmInten_Withness1_DateWitnessed" name="AcknowOfFarmInten_Withness1_DateWitnessed" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show " id="witness2inten" role="tabpanel" aria-labelledby="witness2inten-tab">
+                                    <div class="row">
+                                        <div class="col-12"><h6 class="mt-4 border-bot">Name of Witness 2/Validation Details</h6></div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmInten_Withness2_ValidatorName" class="form-label">Full name of validator</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmInten_Withness2_ValidatorName" name="AcknowOfFarmInten_Withness2_ValidatorName" >
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmInten_Withness2_ValidationDate" class="form-label">Date validation</label>
+                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmInten_Withness2_ValidationDate" name="AcknowOfFarmInten_Withness2_ValidationDate" >
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label for="AcknowOfFarmInten_Withness2_Remarks" class="form-label">Remarks/Challenges</label>
+                                                <input type="text" class="form-control" id="AcknowOfFarmInten_Withness2_Remarks" name="AcknowOfFarmInten_Withness2_Remarks" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Acknowledgement of Farm Rehabilitation Assistance
+                </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_TargetArea" class="form-label">Target area for Rehabilitation in hectares</label>
+                                <input type="text" class="form-control number" id="AcknowOfFarmRehab_TargetArea" name="AcknowOfFarmRehab_TargetArea" >
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="mt-4 border-bot">Quantity of Farm Rehabilitation Tools Received</h6>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw" class="form-label">High Pruner Saw</label>
+                                <input type="number" class="form-control" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw" class="form-label">Mini Chainsaw</label>
+                                <input type="number" class="form-control" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer" class="form-label">Knapsack Sprayer</label>
+                                <input type="number" class="form-control" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_DateReceived" class="form-label">Date Received</label>
+                                <input type="text" class="form-control datemasked" id="AcknowOfFarmRehab_DateReceived" name="AcknowOfFarmRehab_DateReceived" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h6 class="mt-4 border-bot">Farmer Representative</h6>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_FarmerRep_Fname" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Fname" name="AcknowOfFarmRehab_FarmerRep_Fname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_FarmerRep_Mname" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Mname" name="AcknowOfFarmRehab_FarmerRep_Mname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_FarmerRep_Lname" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Lname" name="AcknowOfFarmRehab_FarmerRep_Lname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_FarmerRep_Extname" class="form-label">Ext. Name</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Extname" name="AcknowOfFarmRehab_FarmerRep_Extname" >
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_FarmerRep_Designation" class="form-label">Designation</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Designation" name="AcknowOfFarmRehab_FarmerRep_Designation" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h6 class="mt-4 border-bot">Validation Details</h6>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_ValidatorName" class="form-label">Full name of validator</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmRehab_ValidatorName" name="AcknowOfFarmRehab_ValidatorName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_ValidationDate" class="form-label">Date validation</label>
+                                <input type="text" class="form-control datemasked" id="AcknowOfFarmRehab_ValidationDate" name="AcknowOfFarmRehab_ValidationDate" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_Remarks" class="form-label">Remarks/Challenges and other Observable Adopted</label>
+                                <input type="text" class="form-control" id="AcknowOfFarmRehab_Remarks" name="AcknowOfFarmRehab_Remarks" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                    Acknowledgement of Productive Investments
+                </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_TypeOfProdInv" class="form-label">Specific/Type of Productive Investments</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_TypeOfProdInv" name="AcknowOfProd_TypeOfProdInv" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_QtyItemReceived" class="form-label">Qty of Items Received</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_QtyItemReceived" name="AcknowOfProd_QtyItemReceived" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_DateReceived" class="form-label">Date Received</label>
+                                <input type="text" class="form-control datemasked" id="AcknowOfProd_DateReceived" name="AcknowOfProd_DateReceived" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h6 class="mt-4 border-bot">Farmer Representative</h6>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_FarmerRep_Fname" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Fname" name="AcknowOfProd_FarmerRep_Fname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_FarmerRep_Mname" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Mname" name="AcknowOfProd_FarmerRep_Mname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_FarmerRep_Lname" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Lname" name="AcknowOfProd_FarmerRep_Lname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_FarmerRep_Extname" class="form-label">Ext. Name</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Extname" name="AcknowOfProd_FarmerRep_Extname" >
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_FarmerRep_Designation" class="form-label">Designation</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Designation" name="AcknowOfProd_FarmerRep_Designation" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h6 class="mt-4 border-bot">Validation Details</h6>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_ValidatorName" class="form-label">Full name of validator</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_ValidatorName" name="AcknowOfProd_ValidatorName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_ValidationDate" class="form-label">Date validation</label>
+                                <input type="text" class="form-control datemasked" id="AcknowOfProd_ValidationDate" name="AcknowOfProd_ValidationDate" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AcknowOfProd_Remarks" class="form-label">Remarks/Challenges/Notable Results</label>
+                                <input type="text" class="form-control" id="AcknowOfProd_Remarks" name="AcknowOfProd_Remarks" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </section>
+</div>
+
+<script>
+
+    function loadFOFormData(){
+        var form = '{{ request.args.get("form") }}';
+        var action = '{{ request.args.get("action") }}';
+        var id = '{{ request.args.get("id") }}';
+
+        $.ajax({
+            url: '/mgimplementation_form_data?form='+form+'&action='+action+'&id='+id,
+            method: 'GET',
+            success: function(response) {
+                // console.log(response);
+                var html = '<option value=""></option>';
+                for(var i=0; i<response.dip.length; i++){
+                    html += '<option value="'+response['dip'][i]['form_1_name_dip']+'" data-commodity="'+response['dip'][i]['form_1_commodity']+'">'+response['dip'][i]['form_1_name_dip']+'</option>';
+                    // var fieldName = response[i].field_name;
+                    // var fieldValue = response[i].field_value;
+                    // $('#'+fieldName).val(fieldValue);
+                }
+                $('#DIP_Name').html(html);
+
+                console.log(response.data);
+
+                // Form Data Here....
+                if ( action=='edit' || action=='view' ){
+                  
+                    if ( response.data.length==0 ){
+                        Swal.fire({
+                            title: "Empty!",
+                            text: "No Record Identifier Found.",
+                            icon: "error"
+                        });
+                        setTimeout(function(){
+                            window.location.href = "/mis-v4/core-mg-implementation";
+                        },500);
+                    }
+
+                    setTimeout(function(){
+                        var data = response.data[0];
+                       
+                        for (let key in data) {
+                            
+                            if (data.hasOwnProperty(key)) {
+                                var address = ["ImpUnits_PCU","FOInfo_Address_Province","FOInfo_Address_Municipality","FOInfo_Address_Brgy"];
+                                if (!address.includes(key)){
+                                    $('#'+key).val(data[key]);
+                                }
+
+                                if( action=='view' ){
+                                    $('#'+key).prop('disabled',true);
+                                }
+                            }
+                        }
+
+                        selectRCU();
+                        $('#ImpUnits_PCU').val(data['ImpUnits_PCU'].toLowerCase());
+                        
+                        selectFOInfo_RCU();
+                        $('#FOInfo_Address_Province').val(data['FOInfo_Address_Province'].toLowerCase());
+                        selectFOInfo_PCU();
+                        $('#FOInfo_Address_Municipality').val(data['FOInfo_Address_Municipality'].toUpperCase());
+                        selectFOInfo_Municipality();
+                        $('#FOInfo_Address_Brgy').val(data['FOInfo_Address_Brgy'].toUpperCase());
+
+                        var AcknowOfFarmExp_DateReceived = '';
+                        var AcknowOfFarmExp_Witness1_ValidationDate = '';
+                        var AcknowOfFarmExp_Witness1_DateWitnessed = '';
+                        var AcknowOfFarmExp_Witness2_ValidationDate = '';
+                        var AcknowOfFarmExp_Witness1Raw_ValidationDate = '';
+                        var AcknowOfFarmExp_Witness1Raw_DateWitnessed = '';
+                        var AcknowOfFarmExp_Witness2Raw_ValidationDate = '';
+                        var AcknowOfFarmInten_DateReceived = '';
+                        var AcknowOfFarmInten_Withness1_ValidationDate = '';
+                        var AcknowOfFarmInten_Withness1_DateWitnessed = '';
+                        var AcknowOfFarmInten_Withness2_ValidationDate = '';
+                        var AcknowOfFarmRehab_DateReceived = '';
+                        var AcknowOfFarmRehab_ValidationDate = '';
+                        var AcknowOfProd_DateReceived = '';
+                        var AcknowOfProd_ValidationDate = '';
+
+                        if (data['AcknowOfFarmExp_DateReceived']!=null){ 
+                            AcknowOfFarmExp_DateReceived = new Date(data['AcknowOfFarmExp_DateReceived']);
+                            AcknowOfFarmExp_DateReceived = AcknowOfFarmExp_DateReceived.toISOString().split('T')[0];
+                        } 
+                        if (data['AcknowOfFarmExp_Witness1_ValidationDate']!=null){
+                            AcknowOfFarmExp_Witness1_ValidationDate = new Date(data['AcknowOfFarmExp_Witness1_ValidationDate']);
+                            AcknowOfFarmExp_Witness1_ValidationDate = AcknowOfFarmExp_Witness1_ValidationDate.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmExp_Witness1_DateWitnessed']!=null){
+                            AcknowOfFarmExp_Witness1_DateWitnessed = new Date(data['AcknowOfFarmExp_Witness1_DateWitnessed']);
+                            AcknowOfFarmExp_Witness1_DateWitnessed = AcknowOfFarmExp_Witness1_DateWitnessed.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmExp_Witness2_ValidationDate']!=null){
+                            AcknowOfFarmExp_Witness2_ValidationDate = new Date(data['AcknowOfFarmExp_Witness2_ValidationDate']);
+                            AcknowOfFarmExp_Witness2_ValidationDate = AcknowOfFarmExp_Witness2_ValidationDate.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmExp_Witness1Raw_ValidationDate']!=null){
+                            AcknowOfFarmExp_Witness1Raw_ValidationDate = new Date(data['AcknowOfFarmExp_Witness1Raw_ValidationDate']);
+                            AcknowOfFarmExp_Witness1Raw_ValidationDate = AcknowOfFarmExp_Witness1Raw_ValidationDate.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmExp_Witness1Raw_DateWitnessed']!=null){
+                            AcknowOfFarmExp_Witness1Raw_DateWitnessed = new Date(data['AcknowOfFarmExp_Witness1Raw_DateWitnessed']);
+                            AcknowOfFarmExp_Witness1Raw_DateWitnessed = AcknowOfFarmExp_Witness1Raw_DateWitnessed.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmExp_Witness2Raw_ValidationDate']!=null){
+                            AcknowOfFarmExp_Witness2Raw_ValidationDate = new Date(data['AcknowOfFarmExp_Witness2Raw_ValidationDate']);
+                            AcknowOfFarmExp_Witness2Raw_ValidationDate = AcknowOfFarmExp_Witness2Raw_ValidationDate.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmInten_DateReceived']!=null){
+                            AcknowOfFarmInten_DateReceived = new Date(data['AcknowOfFarmInten_DateReceived']);
+                            AcknowOfFarmInten_DateReceived = AcknowOfFarmInten_DateReceived.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmInten_Withness1_ValidationDate']!=null){
+                            AcknowOfFarmInten_Withness1_ValidationDate = new Date(data['AcknowOfFarmInten_Withness1_ValidationDate']);
+                            AcknowOfFarmInten_Withness1_ValidationDate = AcknowOfFarmInten_Withness1_ValidationDate.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmInten_Withness1_DateWitnessed']!=null){
+                            var AcknowOfFarmInten_Withness1_DateWitnessed = new Date(data['AcknowOfFarmInten_Withness1_DateWitnessed']);
+                            AcknowOfFarmInten_Withness1_DateWitnessed = AcknowOfFarmInten_Withness1_DateWitnessed.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmInten_Withness2_ValidationDate']!=null){
+                            AcknowOfFarmInten_Withness2_ValidationDate = new Date(data['AcknowOfFarmInten_Withness2_ValidationDate']);
+                            AcknowOfFarmInten_Withness2_ValidationDate = AcknowOfFarmInten_Withness2_ValidationDate.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmRehab_DateReceived']!=null){
+                            AcknowOfFarmRehab_DateReceived = new Date(data['AcknowOfFarmRehab_DateReceived']);
+                            AcknowOfFarmRehab_DateReceived = AcknowOfFarmRehab_DateReceived.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmRehab_ValidationDate']!=null){
+                            AcknowOfFarmRehab_ValidationDate = new Date(data['AcknowOfFarmRehab_ValidationDate']);
+                            AcknowOfFarmRehab_ValidationDate = AcknowOfFarmRehab_ValidationDate.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfProd_DateReceived']!=null){
+                            AcknowOfProd_DateReceived = new Date(data['AcknowOfProd_DateReceived']);
+                            AcknowOfProd_DateReceived = AcknowOfProd_DateReceived.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfProd_ValidationDate']!=null){
+                            AcknowOfProd_ValidationDate = new Date(data['AcknowOfProd_ValidationDate']);
+                            AcknowOfProd_ValidationDate = AcknowOfProd_ValidationDate.toISOString().split('T')[0];
+                        }
+
+                        $('#AcknowOfFarmExp_DateReceived').val(AcknowOfFarmExp_DateReceived);
+                        $('#AcknowOfFarmExp_Witness1_ValidationDate').val(AcknowOfFarmExp_Witness1_ValidationDate);
+                        $('#AcknowOfFarmExp_Witness1_DateWitnessed').val(AcknowOfFarmExp_Witness1_DateWitnessed);
+                        $('#AcknowOfFarmExp_Witness2_ValidationDate').val(AcknowOfFarmExp_Witness2_ValidationDate);
+                        $('#AcknowOfFarmExp_Witness1Raw_ValidationDate').val(AcknowOfFarmExp_Witness1Raw_ValidationDate);
+                        $('#AcknowOfFarmExp_Witness1Raw_DateWitnessed').val(AcknowOfFarmExp_Witness1Raw_DateWitnessed);
+                        $('#AcknowOfFarmExp_Witness2Raw_ValidationDate').val(AcknowOfFarmExp_Witness2Raw_ValidationDate);
+                        $('#AcknowOfFarmInten_DateReceived').val(AcknowOfFarmInten_DateReceived);
+                        $('#AcknowOfFarmInten_Withness1_ValidationDate').val(AcknowOfFarmInten_Withness1_ValidationDate);
+                        $('#AcknowOfFarmInten_Withness1_DateWitnessed').val(AcknowOfFarmInten_Withness1_DateWitnessed);
+                        $('#AcknowOfFarmInten_Withness2_ValidationDate').val(AcknowOfFarmInten_Withness2_ValidationDate);
+                        $('#AcknowOfFarmRehab_DateReceived').val(AcknowOfFarmRehab_DateReceived);
+                        $('#AcknowOfFarmRehab_ValidationDate').val(AcknowOfFarmRehab_ValidationDate);
+                        $('#AcknowOfProd_DateReceived').val(AcknowOfProd_DateReceived);
+                        $('#AcknowOfProd_ValidationDate').val(AcknowOfProd_ValidationDate);
+
+                    },1000);
+                }
+            },
+
+            error: function(error) {
+                console.error('Error fetching form data:', error);
+            }
+        });
+    }
+
+
+    function selectDIP(){
+        var selectedOption = $('#DIP_Name option:selected');
+        var commodity = selectedOption.data('commodity').toLowerCase();
+        $('#DIP_Commodity').val(commodity);
+    }
+
+    function selectRCU(){
+        var selectedRegion = $('#ImpUnits_RCU option:selected').val();
+        if(selectedRegion == ''){
+            $('#ImpUnits_PCU>option').show();
+            $('#ImpUnits_PCU').val('');
+            return;
+        }
+
+        $('#ImpUnits_PCU>option').hide();
+        $('#ImpUnits_PCU>option[data-rcu="'+selectedRegion+'"]').show();
+        $('#ImpUnits_PCU').val('');
+    }
+
+    function selectFOInfo_RCU(){
+        var selectedRegion = $('#FOInfo_Address_Region option:selected').val();
+        if(selectedRegion == ''){
+            $('#FOInfo_Address_Province>option').show();
+            $('#FOInfo_Address_Province').val('');
+            return;
+        }
+
+        $('#FOInfo_Address_Province>option').hide();
+        $('#FOInfo_Address_Province>option[data-rcu="'+selectedRegion+'"]').show();
+        $('#FOInfo_Address_Province').val('');
+        $('#FOInfo_Address_Municipality').html('');
+        $('#FOInfo_Address_Municipality').val('');
+        $('#FOInfo_Address_Brgy').html('');
+        $('#FOInfo_Address_Brgy').val('');
+    }
+    
+    function selectFOInfo_PCU(){
+        var selectedProvince = $('#FOInfo_Address_Province option:selected').val().toUpperCase();
+        var selectedRegion = $('#FOInfo_Address_Province option:selected').attr('data-rcu');
+
+        if(selectedProvince == ''){
+            $('#FOInfo_Address_Municipality').html('');
+            $('#FOInfo_Address_Municipality').val('');
+            $('#FOInfo_Address_Brgy').html('');
+            $('#FOInfo_Address_Brgy').val('');
+            return;
+        }
+        // console.log(selectedRegion);
+        // console.log(ALL_LOCATION[selectedRegion]['province_list'][selectedProvince]['municipality_list']);
+
+        var municipalities = ALL_LOCATION_v2[selectedRegion]['province_list'][selectedProvince]['municipality_list'];
+        var html = '<option value=""></option>';
+        Object.entries(municipalities).forEach(([key, value]) => {
+            html += '<option value="'+key+'" data-pcu="'+selectedProvince+'">'+key+'</option>';
+        });
+        $('#FOInfo_Address_Municipality').html(html);
+        $('#FOInfo_Address_Municipality').val('');
+
+    }
+
+    function selectFOInfo_Municipality(){
+        var selectedMunicipality = $('#FOInfo_Address_Municipality option:selected').val().toUpperCase();
+        var selectedProvince = $('#FOInfo_Address_Province option:selected').val().toUpperCase();
+        var selectedRegion = $('#FOInfo_Address_Province option:selected').attr('data-rcu');
+
+        if(selectedMunicipality == ''){
+            $('#FOInfo_Address_Brgy').html('');
+            $('#FOInfo_Address_Brgy').val('');
+            return;
+        }
+
+        var barangays = ALL_LOCATION_v2[selectedRegion]['province_list'][selectedProvince]['municipality_list'][selectedMunicipality]['barangay_list'];
+        var html = '<option value=""></option>';
+        Object.entries(barangays).forEach(([key, value]) => {
+            html += '<option value="'+value+'" data-municipality="'+selectedMunicipality+'">'+value+'</option>';
+        });
+        $('#FOInfo_Address_Brgy').html(html);
+        $('#FOInfo_Address_Brgy').val('');
+    }
+
+    $(document).ready(function(){
+        
+        loadFOFormData();
+
+        console.log(ALL_LOCATION);
+
+    });
+</script>
