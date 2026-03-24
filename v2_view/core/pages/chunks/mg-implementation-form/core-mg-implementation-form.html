@@ -1,0 +1,42 @@
+<!-- THE USE OF THIS SUB MODULE IS ONLY FOR OLDER SYSTEM THAT USES THE OLD MIS ENGINE
+USE THIS WITH CAUTION -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+<!-- <script src="{{ url_for('static',filename='js/Variables.js') }}"></script> -->
+<style>
+	.form-check-input[type=checkbox] {
+		border: 1px solid #B6B6B6;
+	}
+	.bold {
+		font-weight: bold;
+	}
+	.form-check-input:checked {
+		background-color: #0d6efd!important;
+	}
+</style>
+<div class="pagetitle">
+	<h1 id="e_h">DIP/MG Implementation</h1>
+	<nav>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+			<li class="breadcrumb-item"><a href="index.html">DIP/MG Implementation</a></li>
+			<li class="breadcrumb-item active" id="e_p">Form</li>
+		</ol>
+	</nav>
+</div>
+{% if URL_ARGS['form']== 'fo' %}
+{% include '/chunks/mg-implementation-form/fo-form-content.html'%}
+{% elif URL_ARGS['form']== 'shf' %}
+{% include '/chunks/mg-implementation-form/shf-form-content.html'%}
+{% endif %}
+<!-- End Left side columns -->
+
+<!-- Right side columns -->
+{% include '/parts/__sub_sidepanel.html'%}
+<!-- End Right side columns -->
+<script>
+	
+	$(document).ready(function(){
+		$('.datemasked').mask('0000-00-00', {placeholder: "YYYY-MM-DD"});
+		$('.number').mask('000,000,000,000,000.00', {reverse: true});
+	});	
+</script>

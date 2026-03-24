@@ -10,9 +10,12 @@ from modules.Req_Brorn_util import file_from_request
 # from PIL import Image
 from io import BytesIO
 import base64
+import json
 
 from datetime import date, datetime
 from modules.Req_Brorn_util import file_from_request
+
+from v2_view.core._dashboard import _main as dboard_main
 
 # from docx2pdf import convert
 # pip install docx2pdf
@@ -22,6 +25,8 @@ db.err_page = 0
 
 app = Blueprint("webrep",__name__,template_folder='pages')
 # app = Blueprint("webrep",__name__,url_prefix='/webrep',template_folder='pages')
+
+# app.register_blueprint(_dashboard.app)
 
 class _main:
 	def is_on_session(): return ('USER_DATA' in session)
@@ -49,9 +54,13 @@ class _main:
 	@app.route("/hi_there",methods=["POST","GET"])
 	def hi_there():
 		if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
+		# dashboard_data =  json.loads(dboard_main.system_page())
+		# dashboard_data =  dboard_main.system_page()
 		return render_template(
 			"home/home.html",
-			page_data=_main.get_post()
+			page_data=_main.get_post(),
+			is_session =_main.is_on_session(),
+			dashboard_data=_main.analyticUpdates()
 		)
  
 	@app.route("/rapid/<_>",methods=["POST","GET"])
@@ -543,3 +552,128 @@ class _main:
 		pass;
 	#sample EDIT
 
+	def analyticUpdates():
+    	
+		# ======================================================================================================
+        # SMALL HOLDER FARMERS
+    	# ======================================================================================================
+		SHF_Total = db.select("SELECT COUNT(*) AS total FROM excel_import_form_a")
+		SHF_Total_Male = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_basic_Info_@_Sex`='Male'")
+		SHF_Total_Female = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_basic_Info_@_Sex`='Female'")
+		SHF_Total_IP = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_basic_Info_@_sectoral_data`='IP'")
+		SHF_Total_Youth = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_basic_Info_@_sectoral_data`='Youth'")
+		SHF_Total_PWD = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_basic_Info_@_sectoral_data`='PWD'")
+		SHF_Total_SC = db.select("SELECT COUNT(*) AS total FROM excel_import_form_a WHERE `frmer_prof_@_basic_Info_@_sectoral_data`='SC'")
+
+		SHF_byRegion_8 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM excel_import_form_a)) * 100 AS percTotal FROM excel_import_form_a WHERE `frmer_prof_@_frmer_addr_@_region` IN('8','xiii','region8','region 8')")
+		SHF_byRegion_9 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM excel_import_form_a)) * 100 AS percTotal FROM excel_import_form_a WHERE `frmer_prof_@_frmer_addr_@_region` IN('9','ix','region9','region 9')")
+		SHF_byRegion_10 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM excel_import_form_a)) * 100 AS percTotal FROM excel_import_form_a WHERE `frmer_prof_@_frmer_addr_@_region` IN('10','x','region10','region 10')")
+		SHF_byRegion_11 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM excel_import_form_a)) * 100 AS percTotal FROM excel_import_form_a WHERE `frmer_prof_@_frmer_addr_@_region` IN('11','xi','region11','region 11')")
+		SHF_byRegion_12 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM excel_import_form_a)) * 100 AS percTotal FROM excel_import_form_a WHERE `frmer_prof_@_frmer_addr_@_region` IN('12','xii','region12','region 12')")
+		SHF_byRegion_13 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM excel_import_form_a)) * 100 AS percTotal FROM excel_import_form_a WHERE `frmer_prof_@_frmer_addr_@_region` IN('13','xiii','region13','region 13')")
+		SHF_byRegion_barmm = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM excel_import_form_a)) * 100 AS percTotal FROM excel_import_form_a WHERE `frmer_prof_@_frmer_addr_@_region` IN('BARMM')")
+        
+		SHF_allRegion = [float(SHF_byRegion_8[0]['percTotal']),float(SHF_byRegion_9[0]['percTotal']),float(SHF_byRegion_10[0]['percTotal']),float(SHF_byRegion_11[0]['percTotal']),float(SHF_byRegion_12[0]['percTotal']),float(SHF_byRegion_13[0]['percTotal']),float(SHF_byRegion_barmm[0]['percTotal'])]
+
+		SHF_byComm_cacao = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%Cacao%'")
+		SHF_byComm_coconut = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%Coconut%' OR `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%Copra%'")
+		SHF_byComm_coffee = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%Coffee%'")
+		SHF_byComm_pfn = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%Banana%' OR `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%Banana Cardava%' OR `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%BananaCardava%' OR `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%Cardava%' OR `frmer_prof_@_Farming_Basic_Info_@_primary_crop` LIKE '%Calamansi%'")
+		SHF_byComm_untagged = db.select("SELECT COUNT(*) AS total  FROM excel_import_form_a WHERE `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Cacao%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Coconut%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Copra%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Coffee%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Banana%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Banana Cardava%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%BananaCardava%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Cardava%' AND `frmer_prof_@_Farming_Basic_Info_@_primary_crop` NOT LIKE '%Calamansi%'")
+
+		SHF_byComm_data = [SHF_byComm_cacao[0]['total'],SHF_byComm_coconut[0]['total'],SHF_byComm_coffee[0]['total'],SHF_byComm_pfn[0]['total'],SHF_byComm_untagged[0]['total']]
+		
+		SHF_total_HH_head_male = db.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` = 'Male' WHERE dl.db_table='dcf_capacity_building'")
+		SHF_total_HH_head_female = db.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` = 'Female' WHERE dl.db_table='dcf_capacity_building'")
+		SHF_total_HH_head_untagged = db.select("SELECT COUNT(*) AS total FROM __data_link_1 dl INNER JOIN excel_import_form_a eia ON eia.id = dl.link_to_id AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` != 'Male' AND eia.`frmer_prof_@_hh_Head_Info_@_head_hh_sex` != 'Female' WHERE dl.db_table='dcf_capacity_building'")
+		
+		SHF_total_HH_head_data = [SHF_total_HH_head_male[0]['total'],SHF_total_HH_head_female[0]['total'],SHF_total_HH_head_untagged[0]['total']];
+
+
+		# ======================================================================================================
+        # FARMER ORGANIZATION
+    	# ======================================================================================================
+		FO_Total = db.select("SELECT COUNT(*) AS total FROM form_b")
+		FO_Total_Coop = db.select("SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization='Cooperative'")
+		FO_Total_Assoc = db.select("SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization='Association'")
+		FO_Total_Others = db.select("SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization='Others'")
+		FO_Total_Members = db.select("SELECT SUM(organizational_total_overall) AS total FROM form_b")
+		FO_Total_Male = db.select("SELECT SUM(organizational_total_male) AS total FROM form_b ")
+		FO_Total_Female = db.select("SELECT SUM(organizational_total_female) AS total FROM form_b ")
+
+		FO_byRegion_8 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('RCU8','RCU 8')")
+		FO_byRegion_9 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('RCU9','RCU 9')")
+		FO_byRegion_10 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('RCU10','RCU 10')")
+		FO_byRegion_11 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('RCU11','RCU 11')")
+		FO_byRegion_12 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('RCU12','RCU 12')")
+		FO_byRegion_13 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('RCU13','RCU 13')")
+		FO_byRegion_barmm = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('BARMM')")
+        
+		FO_allRegion = [float(FO_byRegion_8[0]['percTotal']),float(FO_byRegion_9[0]['percTotal']),float(FO_byRegion_10[0]['percTotal']),float(FO_byRegion_11[0]['percTotal']),float(FO_byRegion_12[0]['percTotal']),float(FO_byRegion_13[0]['percTotal']),float(FO_byRegion_barmm[0]['percTotal'])]
+		FO_byOrgType = [FO_Total_Assoc[0]['total'],FO_Total_Coop[0]['total'],FO_Total_Others[0]['total']]
+        
+		FO_byComm_cacao = db.select("SELECT COUNT(*) AS total  FROM form_b WHERE `organizational_commodity` LIKE '%Cacao%'")
+		FO_byComm_coconut = db.select("SELECT COUNT(*) AS total  FROM form_b WHERE `organizational_commodity` LIKE '%Coconut%' OR `organizational_commodity` LIKE '%Copra%'")
+		FO_byComm_coffee = db.select("SELECT COUNT(*) AS total  FROM form_b WHERE `organizational_commodity` LIKE '%Coffee%'")
+		FO_byComm_pfn = db.select("SELECT COUNT(*) AS total  FROM form_b WHERE `organizational_commodity` LIKE '%Banana%' OR `organizational_commodity` LIKE '%Banana Cardava%' OR `organizational_commodity` LIKE '%BananaCardava%' OR `organizational_commodity` LIKE '%Cardava%' OR `organizational_commodity` LIKE '%Calamansi%'")
+		FO_byComm_untagged = db.select("SELECT COUNT(*) AS total  FROM form_b WHERE `organizational_commodity` NOT LIKE '%Cacao%' AND `organizational_commodity` NOT LIKE '%Coconut%' AND `organizational_commodity` NOT LIKE '%Copra%' AND `organizational_commodity` NOT LIKE '%Coffee%' AND `organizational_commodity` NOT LIKE '%Banana%' AND `organizational_commodity` NOT LIKE '%Banana Cardava%' AND `organizational_commodity` NOT LIKE '%BananaCardava%' AND `organizational_commodity` NOT LIKE '%Cardava%' AND `organizational_commodity` NOT LIKE '%Calamansi%'")
+
+		FO_byComm_data = [FO_byComm_cacao[0]['total'],FO_byComm_coconut[0]['total'],FO_byComm_coffee[0]['total'],FO_byComm_pfn[0]['total'],FO_byComm_untagged[0]['total']]
+
+		# ======================================================================================================
+        # MICRO, SMALL, MEDIUM ENTERPRISES
+    	# ======================================================================================================
+		MSME_Total = db.select("SELECT COUNT(*) AS total FROM form_c")[0]['total']
+
+		MSME_byRegion_8 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_c)) * 100 AS percTotal FROM form_c fc INNER JOIN users u ON u.id=fc.upload_by AND u.rcu IN('RCU8','RCU 8')")
+		MSME_byRegion_9 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_c)) * 100 AS percTotal FROM form_c fc INNER JOIN users u ON u.id=fc.upload_by AND u.rcu IN('RCU9','RCU 9')")
+		MSME_byRegion_10 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_c)) * 100 AS percTotal FROM form_c fc INNER JOIN users u ON u.id=fc.upload_by AND u.rcu IN('RCU10','RCU 10')")
+		MSME_byRegion_11 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_c)) * 100 AS percTotal FROM form_c fc INNER JOIN users u ON u.id=fc.upload_by AND u.rcu IN('RCU11','RCU 11')")
+		MSME_byRegion_12 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_c)) * 100 AS percTotal FROM form_c fc INNER JOIN users u ON u.id=fc.upload_by AND u.rcu IN('RCU12','RCU 12')")
+		MSME_byRegion_13 = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_c)) * 100 AS percTotal FROM form_c fc INNER JOIN users u ON u.id=fc.upload_by AND u.rcu IN('RCU13','RCU 13')")
+		MSME_byRegion_barmm = db.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_c)) * 100 AS percTotal FROM form_c fc INNER JOIN users u ON u.id=fc.upload_by AND u.rcu IN('BARMM')")
+
+		MSME_allRegion = [float(MSME_byRegion_8[0]['percTotal']),float(MSME_byRegion_9[0]['percTotal']),float(MSME_byRegion_10[0]['percTotal']),float(MSME_byRegion_11[0]['percTotal']),float(MSME_byRegion_12[0]['percTotal']),float(MSME_byRegion_13[0]['percTotal']),float(MSME_byRegion_barmm[0]['percTotal'])]
+        
+		MSME_byComm_cacao = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `industry_cluster` LIKE '%Cacao%'")
+		MSME_byComm_coconut = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `industry_cluster` LIKE '%Coconut%' OR `industry_cluster` LIKE '%Copra%'")
+		MSME_byComm_coffee = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `industry_cluster` LIKE '%Coffee%'")
+		MSME_byComm_pfn = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `industry_cluster` LIKE '%Banana%' OR `industry_cluster` LIKE '%Banana Cardava%' OR `industry_cluster` LIKE '%BananaCardava%' OR `industry_cluster` LIKE '%Cardava%' OR `industry_cluster` LIKE '%Calamansi%'")
+		MSME_byComm_untagged = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `industry_cluster` NOT LIKE '%Cacao%' AND `industry_cluster` NOT LIKE '%Coconut%' AND `industry_cluster` NOT LIKE '%Copra%' AND `industry_cluster` NOT LIKE '%Coffee%' AND `industry_cluster` NOT LIKE '%Banana%' AND `industry_cluster` NOT LIKE '%Banana Cardava%' AND `industry_cluster` NOT LIKE '%BananaCardava%' AND `industry_cluster` NOT LIKE '%Cardava%' AND `industry_cluster` NOT LIKE '%Calamansi%'")
+		MSME_byComm_data = [MSME_byComm_cacao[0]['total'],MSME_byComm_coconut[0]['total'],MSME_byComm_coffee[0]['total'],MSME_byComm_pfn[0]['total'],MSME_byComm_untagged[0]['total']]
+
+		MSME_byType_micro = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `type_enterprise` IN ('Micro','Micro (3M below)')")
+		MSME_byType_small = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `type_enterprise` IN ('Small','Small (3-15M)')")
+		MSME_byType_medium = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `type_enterprise` IN ('Medium','Medium (15.1M-100M)')")
+		MSME_byType_large = db.select("SELECT COUNT(*) AS total  FROM form_c WHERE `type_enterprise` IN ('Large','Large (Above 100M)')")
+		MSME_byType_data = [MSME_byType_micro[0]['total'],MSME_byType_small[0]['total'],MSME_byType_medium[0]['total'],MSME_byType_large[0]['total']]
+	
+		background_colors = ["#629DDD","#A4BF7F","#A48BC1","#E2918F","#F4D470","#E8AA78","#A5D7D8","#7173A9","#77838E"]
+        
+		data = {
+                "SHF_Total" : SHF_Total[0]["total"],
+                "SHF_Total_Male" : SHF_Total_Male[0]["total"],
+                "SHF_Total_Female" : SHF_Total_Female[0]["total"],
+                "SHF_Total_IP" : SHF_Total_IP[0]["total"],
+                "SHF_Total_PWD" : SHF_Total_PWD[0]["total"],
+                "SHF_Total_Youth" : SHF_Total_Youth[0]["total"],
+                "SHF_Total_SC" : SHF_Total_SC[0]["total"],
+				"SHF_byRegion" : SHF_allRegion,
+				"SHF_byComm" : SHF_byComm_data,
+				"SHF_byHHHead" : SHF_total_HH_head_data,
+				"FO_Total" : FO_Total[0]["total"],
+                "FO_Total_Coop" : FO_Total_Coop[0]["total"],
+                "FO_Total_Assoc" : FO_Total_Assoc[0]["total"],
+                "FO_Total_Members" : FO_Total_Members[0]["total"],
+                "FO_Total_Male" : FO_Total_Male[0]["total"],
+                "FO_Total_Female" : FO_Total_Female[0]["total"],
+				"FO_byRegion" : FO_allRegion,
+				"FO_byOrgType" : FO_byOrgType,
+				"FO_byComm" : FO_byComm_data,
+				"MSME_Total" : MSME_Total,
+				"MSME_byRegion" : MSME_allRegion,
+				"MSME_byComm" : MSME_byComm_data,
+				"MSME_byType" : MSME_byType_data,
+			}
+		
+		return data

@@ -1,0 +1,95 @@
+<section class="wr_slider">
+    <div id="wr_carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for slide in sliders_data %}
+            <button type="button"
+                    data-bs-target="#wr_carousel"
+                    data-bs-slide-to="{{ loop.index0 }}"
+                    class="{% if loop.first %}active{% endif %}"
+                    {% if loop.first %}aria-current="true"{% endif %}
+                    aria-label="Slide {{ loop.index }}">
+            </button>
+            {% endfor %}
+        </div>
+        <div class="search_form_container">
+            <form method="GET" id="search_form" action="/webrep_v2/search" class="w-75 mx-auto">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="search_str" name="str" placeholder="Search..." required>
+                    <!-- <button class="btn wr_secondary_btn " type="submit"  id="button-subscribe"><i class="fa fa-bell"></i> SUBSCRIBE</button> -->
+                    <button class="btn wr_secondary_btn " type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="{{ url_for('static', filename='webrepstatic_v2/img/rapidimage/AOS-2025.jpg') }}" alt="First slide">
+                <div class="carousel-caption  text-light text-start w-25 " style="margin-bottom: 120px;">
+                    <h5 class="carousel-caption-title wp_text_shadow mb-4">2025 Annual Outcome Survey (AOS)</h5>
+                    <p class="wp_text_shadow no-mob-display lh-sm">IN PHOTOS: Enumerators from the 21 provinces of the seven (7) regions where the RAPID Growth Project is implemented are now set to conduct the 2025 Annual Outcome Survey (AOS) following the successful Orientation last March 9-11, 2026 in Davao City...</p>
+                    <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="https://www.facebook.com/photo/?fbid=122252778248250386&set=pcb.122252778692250386" class="btn btn_icon wr_primary_btn text-light">READ MORE <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                        <div class="col-6 text-end">
+                            <small class="muted">EVENT</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item ">
+                <img class="d-block w-100" src="{{ url_for('static', filename='webrepstatic_v2/img/rapidimage/MARAGUSAN-NEWROAD.jpg') }}" alt="Second slide">
+                <div class="carousel-caption text-light text-start w-25 " style="margin-bottom: 120px;">
+                    <h5 class="carousel-caption-title wp_text_shadow mb-4">MARAGUSAN - NEW ROAD</h5>
+                    <p class="wp_text_shadow no-mob-display lh-sm">𝐍𝐞𝐰 𝐑𝐨𝐚𝐝 𝐁𝐫𝐢𝐧𝐠𝐬 𝐒𝐚𝐟𝐞𝐫, 𝐅𝐚𝐬𝐭𝐞𝐫 𝐌𝐚𝐫𝐤𝐞𝐭 𝐀𝐜𝐜𝐞𝐬𝐬 𝐭𝐨 𝐇𝐢𝐠𝐡𝐥𝐚𝐧𝐝 𝐅𝐚𝐫𝐦𝐞𝐫𝐬 𝐢𝐧 𝐌𝐚𝐫𝐚𝐠𝐮𝐬𝐚𝐧 <br>Last March 6, 2026, the DTI RAPID Growth Project has completed and turned over the new farm-to-market road in the challenging, sloping terrain of Maragusan, Davao de Oro—providing highland farmers with safer and more reliable access to their hubs and markets.</p>
+                    <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="https://www.facebook.com/photo/?fbid=122251827632250386&set=pcb.122251831886250386" class="btn btn_icon wr_primary_btn text-light">READ MORE <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                        <div class="col-6 text-end">
+                            <small class="muted">EVENT</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% for slide in sliders_data[2:] %}
+                <!-- {% if loop.first %} -->
+                    <!-- <div class="carousel-item active"> -->
+                <!-- {% else %} -->
+                
+                <!-- {% endif %} -->
+                <div class="carousel-item">
+                    {% set f_format = slide['file_name'].split(".")[slide['file_name'].split(".")|length-1] %}
+                    {% if f_format|string in ['jpeg','JPEG','jpg','JPG','gif','GIF','png','PNG'] %}
+                        <img class="d-block w-100" src="/webrep_v2/article/get_img/{{slide['file_name']}}" alt="First slide">
+                    {% else %}
+                        <video muted class="img_class vid_class rounded-1 article-img-content  px-1 pt-1 pb-1 rounded-3" src="/webrep_v2/article/get_img/{{slide['file_name']}}">
+                        </video>
+                    {% endif %}
+                    <div class="carousel-caption  text-light text-start w-25 " style="margin-bottom: 120px;">
+                        <h5 class="carousel-caption-title wp_text_shadow mb-4">{{ slide['postheader'] }}</h5>
+                        <p class="wp_text_shadow no-mob-display lh-sm">{{ slide['postContent'][0:200]~"..." if slide['postContent']|length > 200 else slide['postContent'] }}</p>
+                        <br>
+                        <div class="row">
+                            <div class="col-6">
+                                <a href="/webrep_v2/article/{{ slide['id'] }}" class="btn btn_icon wr_primary_btn text-light">READ MORE <i class="fa fa-angle-double-right"></i></a>
+                            </div>
+                            <div class="col-6 text-end">
+                                <small class="muted">{{ slide.posttype | upper }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button style="width: 5%!important; " class="carousel-control-prev text-dark" type="button" data-bs-target="#wr_carousel" data-bs-slide="prev">
+            <span style="color: #7CA03F!important;" class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button style="width: 5%!important; " class="carousel-control-next text-dark" type="button" data-bs-target="#wr_carousel" data-bs-slide="next">
+            <span style="color: #7CA03F!important;" class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>

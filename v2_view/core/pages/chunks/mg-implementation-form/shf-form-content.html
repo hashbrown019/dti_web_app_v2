@@ -1,0 +1,1142 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    .form-control,
+    .form-select {
+        border: 1px solid #979797;
+    }
+    #accordionMGIFO .accordion-button {
+        background: #b6b6b6;
+        border-bottom: 1px solid #646464;
+    }
+    .border-bot {
+        border-bottom: 1px solid #B6B6B6;
+        padding-bottom: 10px;
+    }
+    .witness-nav>.nav-item>.nav-link {
+        color: #2C2C2C;
+    }
+    .witness-nav>.nav-item>.active {
+        border-bottom: 4px solid #7CA23F;
+        font-weight: bold;
+        color: #004450;
+    }
+    #accordionMGIFO .accordion-button:not(.collapsed) {
+        color: #fff!important;
+        font-weight: bold;
+        background-color: #004450!important;
+    }
+    input:disabled,
+    select:disabled {
+        background-color: #DBDBDB!important;
+    }
+</style>
+<div class="col-lg-9">
+	<section class="section profile" style="background-color: #dbdbdb; padding: 20px;">
+        <form id="foForm" method="POST" action="/mgimplementation_shf_form/submit" enctype="multipart/form-data">
+        <input type="number" class="d-none" name="id" value="{{ URL_ARGS['id'] if 'id' in URL_ARGS else '' }}">
+        <input type="hidden" name="action" value="{{ URL_ARGS['action'] if 'action' in URL_ARGS else '' }}" >
+        <h4>
+            MG Implementation - SHF - Form
+            {% if URL_ARGS['action']=='addnew' or URL_ARGS['action']=='edit' %}
+                <button type="submit" class="float-end btn btn-success"><i class="fa fa-save"></i></button> 
+            {% endif %}
+            <a href="/mis-v4/core-mg-implementation" class="float-end btn btn-danger me-2"><i class="fa fa-mail-reply"></i></a> 
+        </h4>
+        <hr>
+        <div class="accordion" id="accordionMGIFO">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Implementing Units
+                </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionMGIFO">
+                    <div class="accordion-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="ImpUnits_RCU" class="form-label">Implementing Region</label>
+                                    <select class="form-select" id="ImpUnits_RCU" name="ImpUnits_RCU" onchange="selectRCU()">
+                                        <option value="">Select Region</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="BARMM">BARMM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="ImpUnits_PCU" class="form-label">Implementing Province</label>
+                                    <select class="form-select" id="ImpUnits_PCU" name="ImpUnits_PCU" >
+                                        <option value="">Select Province</option>
+                                        <option value="northern samar" data-rcu="8">Northern Samar</option>
+                                        <option value="leyte" data-rcu="8">Leyte</option>
+                                        <option value="southern leyte" data-rcu="8">Southern Leyte</option>
+                                        <option value="zamboanga del norte" data-rcu="9">Zamboanga del Norte</option>
+                                        <option value="zamboanga sibugay" data-rcu="9">Zamboanga Sibugay</option>
+                                        <option value="zamboanga del sur" data-rcu="9">Zamboanga del Sur</option>
+                                        <option value="misamis oriental" data-rcu="10">Misamis Oriental</option>
+                                        <option value="bukidnon" data-rcu="10">Bukidnon</option>
+                                        <option value="lanao del norte" data-rcu="10">Lanao del Norte</option>
+                                        <option value="davao de oro" data-rcu="11">Davao de Oro</option>
+                                        <option value="davao oriental" data-rcu="11">Davao Oriental</option>
+                                        <option value="davao del norte" data-rcu="11">Davao del Norte</option>
+                                        <option value="davao del sur" data-rcu="11">Davao del Sur</option>
+                                        <option value="davao occidental" data-rcu="11">Davao Occidental</option>
+                                        <option value="north cotabato" data-rcu="12">North Cotabato</option>
+                                        <option value="sultan kudarat" data-rcu="12">Sultan Kudarat</option>
+                                        <option value="sarangani" data-rcu="12">Sarangani</option>
+                                        <option value="agusan del norte" data-rcu="13">Agusan del Norte</option>
+                                        <option value="agusan del sur" data-rcu="13">Agusan del Sur</option>
+                                        <option value="surigao del sur" data-rcu="13">Surigao del Sur</option>
+                                        <option value="maguindanao" data-rcu="BARMM">Maguindanao</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="mb-3">
+                                    <label for="DIP_Name" class="form-label">DIP</label>
+                                    <select class="form-select" id="DIP_Name" name="DIP_Name" onchange="selectDIP()">
+                                        <option value="">Select DIP</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="DIP_Commodity" class="form-label">Commodity</label>
+                                    <select class="form-select" id="DIP_Commodity" name="DIP_Commodity" >
+                                        <option value="">Select Commodity</option>
+                                        <option value="cacao">Cacao</option>
+                                        <option value="coffee">Coffee</option>
+                                        <option value="coconut">Coconut</option>
+                                        <option value="pfn">Processed Fruits & Nuts</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Farmer Basic Information
+                </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="MembershipToCOOP" class="form-label">Membership to Association/Organization/COOP</label>
+                                <select class="form-select" id="MembershipToCOOP" name="MembershipToCOOP" ></select>
+                            </div>
+                        </div>
+                        <h6 class="mt-4 border-bot">Name of Farmer</h6>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_Fname" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="FarmerInfo_Fname" name="FarmerInfo_Fname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_Mname" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="FarmerInfo_Mname" name="FarmerInfo_Mname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_Lname" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="FarmerInfo_Lname" name="FarmerInfo_Lname" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_ExtName" class="form-label">Ext. Name</label>
+                                <input type="text" class="form-control" id="FarmerInfo_ExtName" name="FarmerInfo_ExtName" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_DOB" class="form-label">Birth Date</label>
+                                <input type="text" class="form-control datemasked" id="FarmerInfo_DOB" name="FarmerInfo_DOB" >
+                            </div>
+                        </div> 
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_Sex" class="form-label">Sex</label>
+                                <select class="form-select" id="FarmerInfo_Sex" name="FarmerInfo_Sex" >
+                                    <option value="">Select Sex</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <dv class="col-12"><h6 class="mt-4 border-bot">Sector</h6></dv>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="FarmerInfo_Sector_isPWD" id="FarmerInfo_Sector_isPWD">
+                                <label class="form-check-label" for="FarmerInfo_Sector_isPWD">
+                                    PWD
+                                </label>
+                            </div>  
+                        </div>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="FarmerInfo_Sector_isYouth" id="FarmerInfo_Sector_isYouth">
+                                <label class="form-check-label" for="FarmerInfo_Sector_isYouth">
+                                    Youth
+                                </label>
+                            </div>  
+                        </div>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="FarmerInfo_Sector_isIP" id="FarmerInfo_Sector_isIP">
+                                <label class="form-check-label" for="FarmerInfo_Sector_isIP">
+                                    IP
+                                </label>
+                            </div>  
+                        </div>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="FarmerInfo_Sector_isSC" id="FarmerInfo_Sector_isSC">
+                                <label class="form-check-label" for="FarmerInfo_Sector_isSC">
+                                    Senior Citizen
+                                </label>
+                            </div>  
+                        </div>
+                        <h6 class="mt-4 border-bot">Farmer Address</h6>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_address_Region" class="form-label">Region</label>
+                                <select class="form-select" id="FarmerInfo_address_Region" name="FarmerInfo_address_Region" onchange="selectFOInfo_RCU()">
+                                    <option value="">Select Region</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="BARMM">BARMM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_address_Province" class="form-label">Province</label>
+                                <select class="form-select" id="FarmerInfo_address_Province" name="FarmerInfo_address_Province" onchange="selectFOInfo_PCU()">
+                                    <option value="">Select Province</option>
+                                    <option value="northern samar" data-rcu="8">Northern Samar</option>
+                                    <option value="leyte" data-rcu="8">Leyte</option>
+                                    <option value="southern leyte" data-rcu="8">Southern Leyte</option>
+                                    <option value="zamboanga del norte" data-rcu="9">Zamboanga del Norte</option>
+                                    <option value="zamboanga sibugay" data-rcu="9">Zamboanga Sibugay</option>
+                                    <option value="zamboanga del sur" data-rcu="9">Zamboanga del Sur</option>
+                                    <option value="misamis oriental" data-rcu="10">Misamis Oriental</option>
+                                    <option value="bukidnon" data-rcu="10">Bukidnon</option>
+                                    <option value="lanao del norte" data-rcu="10">Lanao del Norte</option>
+                                    <option value="davao de oro" data-rcu="11">Davao de Oro</option>
+                                    <option value="davao oriental" data-rcu="11">Davao Oriental</option>
+                                    <option value="davao del norte" data-rcu="11">Davao del Norte</option>
+                                    <option value="davao del sur" data-rcu="11">Davao del Sur</option>
+                                    <option value="davao occidental" data-rcu="11">Davao Occidental</option>
+                                    <option value="north cotabato" data-rcu="12">North Cotabato</option>
+                                    <option value="sultan kudarat" data-rcu="12">Sultan Kudarat</option>
+                                    <option value="sarangani" data-rcu="12">Sarangani</option>
+                                    <option value="agusan del norte" data-rcu="13">Agusan del Norte</option>
+                                    <option value="agusan del sur" data-rcu="13">Agusan del Sur</option>
+                                    <option value="surigao del sur" data-rcu="13">Surigao del Sur</option>
+                                    <option value="maguindanao" data-rcu="BARMM">Maguindanao</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_address_municipality" class="form-label">Municipality</label>
+                                <select class="form-select" id="FarmerInfo_address_municipality" name="FarmerInfo_address_municipality" onchange="selectFOInfo_Municipality()">
+                                    <option value="">Select Municipality</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_address_brgy" class="form-label">Barangay</label>
+                                <select class="form-select" id="FarmerInfo_address_brgy" name="FarmerInfo_address_brgy" >
+                                    <option value="">Select Barangay</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_address_street" class="form-label">Street/Purok/Sitio</label>
+                                <input type="text" class="form-control" id="FarmerInfo_address_street" name="FarmerInfo_address_street" >
+                            </div>
+                        </div>
+                        <h6 class="mt-4 border-bot">Farm Location/Coordinates</h6>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_farmLoc_long" class="form-label">Longitude</label>
+                                <input type="text" class="form-control" id="FarmerInfo_farmLoc_long" name="FarmerInfo_farmLoc_long" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="FarmerInfo_farmLoc_lat" class="form-label">Latitude</label>
+                                <input type="text" class="form-control" id="FarmerInfo_farmLoc_lat" name="FarmerInfo_farmLoc_lat" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Acknowledgement of Farm Expansion Assistance
+                </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="Acknowledgement_NotPartOfMG" id="Acknowledgement_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="Acknowledgement_NotPartOfMG">
+                                    Farm Expansion is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="Acknowledgement_TargetArea" class="form-label">Target area for Expansion in hectares</label>
+                                <input type="text" class="form-control number Acknowledgement_item" id="Acknowledgement_TargetArea" name="Acknowledgement_TargetArea" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="Acknowledgement_Name" class="form-label">Name/Particulars of items/seedlings received</label>
+                                <input type="text" class="form-control Acknowledgement_item" id="Acknowledgement_Name" name="Acknowledgement_Name" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="Acknowledgement_Qty" class="form-label">Qty of<br>items received</label>
+                                <input type="number" class="form-control Acknowledgement_item" id="Acknowledgement_Qty" name="Acknowledgement_Qty" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="Acknowledgement_DateReceived" class="form-label">Date<br>received</label>
+                                <input type="text" class="form-control datemasked Acknowledgement_item" id="Acknowledgement_DateReceived" name="Acknowledgement_DateReceived" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"><h6 class="mt-4 border-bot">Validation Details</h6></div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="Acknowledgement_ValidatorName" class="form-label">Name of validator</label>
+                                <input type="text" class="form-control Acknowledgement_item" id="Acknowledgement_ValidatorName" name="Acknowledgement_ValidatorName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="Acknowledgement_DateValidation" class="form-label">Date validation</label>
+                                <input type="text" class="form-control datemasked Acknowledgement_item" id="Acknowledgement_DateValidation" name="Acknowledgement_DateValidation" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="Acknowledgement_Remarks" class="form-label">Remarks/Challenges</label>
+                                <input type="text" class="form-control Acknowledgement_item" id="Acknowledgement_Remarks" name="Acknowledgement_Remarks" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                    Planted Area for Expansion
+                </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledbEight" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="PlantedArea_GAP_NotPartOfMG" id="PlantedArea_GAP_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="PlantedArea_GAP_NotPartOfMG">
+                                    Farm Expansion is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="PlantedArea_GAP_PlantingTimeline" class="form-label">Planting<br>Timeline/Range</label>
+                                <input type="text" class="form-control PlantedArea_GAP_item" id="PlantedArea_GAP_PlantingTimeline" name="PlantedArea_GAP_PlantingTimeline" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="PlantedArea_GAP_TotalAreaPlanted" class="form-label">Total Area Planted<br> (in hectares)</label>
+                                <input type="text" class="form-control PlantedArea_GAP_item" id="PlantedArea_GAP_TotalAreaPlanted" name="PlantedArea_GAP_TotalAreaPlanted" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="PlantedArea_GAP_NoOfSeedlingsPlanted" class="form-label">No. of Seedlings Planted</label>
+                                <input type="number" class="form-control PlantedArea_GAP_item" id="PlantedArea_GAP_NoOfSeedlingsPlanted" name="PlantedArea_GAP_NoOfSeedlingsPlanted" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="PlantedArea_GAP_NoOfSeedlingsNotPlanted" class="form-label">No. of Seedlings Not Planted</label>
+                                <input type="number" class="form-control PlantedArea_GAP_item" id="PlantedArea_GAP_NoOfSeedlingsNotPlanted" name="PlantedArea_GAP_NoOfSeedlingsNotPlanted" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="PlantedArea_GAP_MortalityRate" class="form-label">Mortality Rate</label>
+                                <input type="number" class="form-control PlantedArea_GAP_item" id="PlantedArea_GAP_MortalityRate" name="PlantedArea_GAP_MortalityRate" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h6 class="mt-4 border-bot bold">Good Agriculture Practices<br>PLANTING AND CROP ESTABLISHMENT</h6>
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_PACE_isPlantingDistance" id="PlantedArea_GAP_PACE_isPlantingDistance">
+                                <label class="form-check-label" for="PlantedArea_GAP_PACE_isPlantingDistance">
+                                    Planting Distance <small>(3m by 3m between hills and rows)</small>
+                                </label>
+                            </div>  
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_PACE_isDiggingHoles" id="PlantedArea_GAP_PACE_isDiggingHoles">
+                                <label class="form-check-label" for="PlantedArea_GAP_PACE_isDiggingHoles">
+                                    Digging holes  <small>(40cm in diameter and 40cm in depth)</small>
+                                </label>
+                            </div>  
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_PACE_isSeparateTopSoil" id="PlantedArea_GAP_PACE_isSeparateTopSoil">
+                                <label class="form-check-label" for="PlantedArea_GAP_PACE_isSeparateTopSoil">
+                                    Separate top soil from the subsoil as the former is more fertile than the latter.
+                                </label>
+                            </div>  
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_PACE_isRemovingPlasticBag" id="PlantedArea_GAP_PACE_isRemovingPlasticBag">
+                                <label class="form-check-label" for="PlantedArea_GAP_PACE_isRemovingPlasticBag">
+                                    Removing plastic bag before placing the seedling in the hole.
+                                </label>
+                            </div>  
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_PACE_isApplyingMulching" id="PlantedArea_GAP_PACE_isApplyingMulching">
+                                <label class="form-check-label" for="PlantedArea_GAP_PACE_isApplyingMulching">
+                                    Applying mulching around the plant base.
+                                </label>
+                            </div>  
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_PACE_isShadingEstablishment" id="PlantedArea_GAP_PACE_isShadingEstablishment">
+                                <label class="form-check-label" for="PlantedArea_GAP_PACE_isShadingEstablishment">
+                                    Shading Establishment and Maintenance
+                                </label>
+                            </div>  
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="PlantedArea_SOI" class="form-label">Source of Inputs for Farm Management</label>
+                                <select class="form-select PlantedArea_GAP_item" id="PlantedArea_SOI" name="PlantedArea_SOI" >
+                                    <option value=""></option>
+                                    <option value="own">Own</option>
+                                    <option value="gov">Government Agency</option>
+                                    <option value="loan">Loan</option>
+                                    <option value="others">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3 d-none">
+                                <label for="PlantedArea_SOI_others" class="form-label">Others</label>
+                                <input type="text" class="form-control PlantedArea_GAP_item" id="PlantedArea_SOI_others" name="PlantedArea_SOI_others" >
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <h6 class="mt-4 border-bot bold">Good Agriculture Practices<br>SOIL AND NUTRIENT MANAGEMENT</h6>
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_SANM_isBasal" id="PlantedArea_GAP_SANM_isBasal">
+                                <label class="form-check-label" for="PlantedArea_GAP_SANM_isBasal">
+                                    Basal Fertilizer Application
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_SANM_isFoliar" id="PlantedArea_GAP_SANM_isFoliar">
+                                <label class="form-check-label" for="PlantedArea_GAP_SANM_isFoliar">
+                                    Foliar Fertilizer Application
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_SANM_isPesticide" id="PlantedArea_GAP_SANM_isPesticide">
+                                <label class="form-check-label" for="PlantedArea_GAP_SANM_isPesticide">
+                                    Pesticide / Insecticide Application
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input PlantedArea_GAP_item" type="checkbox" value="1" name="PlantedArea_GAP_SANM_isPlantBased" id="PlantedArea_GAP_SANM_isPlantBased">
+                                <label class="form-check-label" for="PlantedArea_GAP_SANM_isPlantBased">
+                                    Plant based-fertilizer / fruit juices Application
+                                </label>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="row">
+                        <div class="col-12"><h6 class="mt-4 border-bot bold">Validation Details</h6></div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="PlantedArea_ValidatorName" class="form-label">Name of validator</label>
+                                <input type="text" class="form-control PlantedArea_GAP_item" id="PlantedArea_ValidatorName" name="PlantedArea_ValidatorName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="PlantedArea_DateValidation" class="form-label">Date validation</label>
+                                <input type="text" class="form-control datemasked PlantedArea_GAP_item" id="PlantedArea_DateValidation" name="PlantedArea_DateValidation" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="PlantedArea_ValidationRemarks" class="form-label">Remarks/Challenges</label>
+                                <input type="text" class="form-control PlantedArea_GAP_item" id="PlantedArea_ValidationRemarks" name="PlantedArea_ValidationRemarks" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Acknowledgement of Farm Intensification Assistance
+                </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="AcknowOfFarmIntensification_NotPartOfMG" id="AcknowOfFarmIntensification_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="AcknowOfFarmIntensification_NotPartOfMG">
+                                    Farm Intensification is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmIntensification_TargetArea" class="form-label">Target area for Intensification in hec.</label>
+                                <input type="text" class="form-control number AcknowOfFarmIntensification_item" id="AcknowOfFarmIntensification_TargetArea" name="AcknowOfFarmIntensification_TargetArea" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmIntensification_Name" class="form-label">Name/Particulars of items/seedlings received</label>
+                                <input type="text" class="form-control AcknowOfFarmIntensification_item" id="AcknowOfFarmIntensification_Name" name="AcknowOfFarmIntensification_Name" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmIntensification_Qty" class="form-label">Qty of<br>items received</label>
+                                <input type="number" class="form-control AcknowOfFarmIntensification_item" id="AcknowOfFarmIntensification_Qty" name="AcknowOfFarmIntensification_Qty" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmIntensification_DateReceived" class="form-label">Date<br>received</label>
+                                <input type="text" class="form-control datemasked AcknowOfFarmIntensification_item" id="AcknowOfFarmIntensification_DateReceived" name="AcknowOfFarmIntensification_DateReceived" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"><h6 class="mt-4 border-bot bold">Validation Details</h6></div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmIntensification_ValidatorName" class="form-label">Name of validator</label>
+                                <input type="text" class="form-control AcknowOfFarmIntensification_item" id="AcknowOfFarmIntensification_ValidatorName" name="AcknowOfFarmIntensification_ValidatorName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmIntensification_DateValidation" class="form-label">Date validation</label>
+                                <input type="text" class="form-control datemasked AcknowOfFarmIntensification_item" id="AcknowOfFarmIntensification_DateValidation" name="AcknowOfFarmIntensification_DateValidation" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmIntensification_ValidationRemarks" class="form-label">Remarks/Challenges</label>
+                                <input type="text" class="form-control AcknowOfFarmIntensification_item" id="AcknowOfFarmIntensification_ValidationRemarks" name="AcknowOfFarmIntensification_ValidationRemarks" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                    Planted Area for Intensification
+                </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledbEight" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="PlantedAreaForIntens_NotPartOfMG" id="PlantedAreaForIntens_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="PlantedAreaForIntens_NotPartOfMG">
+                                    Farm Intensification is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="PlantedAreaForIntens_PlantingTimeline" class="form-label">Planting<br>Timeline/Range</label>
+                                <input type="text" class="form-control PlantedAreaForIntens_item" id="PlantedAreaForIntens_PlantingTimeline" name="PlantedAreaForIntens_PlantingTimeline" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="PlantedAreaForIntens_TotalAreaPlanted" class="form-label">Total Area Planted<br> (in hectares)</label>
+                                <input type="text" class="form-control PlantedAreaForIntens_item" id="PlantedAreaForIntens_TotalAreaPlanted" name="PlantedAreaForIntens_TotalAreaPlanted" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="PlantedAreaForIntens_NoOfSeedlingsPlanted" class="form-label">No. of <br>Seedlings Planted</label>
+                                <input type="number" class="form-control PlantedAreaForIntens_item" id="PlantedAreaForIntens_NoOfSeedlingsPlanted" name="PlantedAreaForIntens_NoOfSeedlingsPlanted" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="PlantedAreaForIntens_NoOfSeedlingsNotPlanted" class="form-label">No. of Seedlings Not Planted</label>
+                                <input type="number" class="form-control PlantedAreaForIntens_item" id="PlantedAreaForIntens_NoOfSeedlingsNotPlanted" name="PlantedAreaForIntens_NoOfSeedlingsNotPlanted" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="PlantedAreaForIntens_PlantingDistance" class="form-label">Planting Distance (in meters)</label>
+                                <input type="text" class="form-control PlantedAreaForIntens_item" id="PlantedAreaForIntens_PlantingDistance" name="PlantedAreaForIntens_PlantingDistance" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="PlantedAreaForIntens_HoleDepth" class="form-label">Hole Depth and Circumference (in cm)</label>
+                                <input type="text" class="form-control PlantedAreaForIntens_item" id="PlantedAreaForIntens_HoleDepth" name="PlantedAreaForIntens_HoleDepth" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="PlantedAreaForIntens_MortalityRate" class="form-label">Mortality <br>Rate</label>
+                                <input type="number" class="form-control PlantedAreaForIntens_item" id="PlantedAreaForIntens_MortalityRate" name="PlantedAreaForIntens_MortalityRate" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSeven">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                    Acknowledgement of Farm Rehabilitation Assistance
+                </button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="AcknowOfFarmRehab_NotPartOfMG" id="AcknowOfFarmRehab_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="AcknowOfFarmRehab_NotPartOfMG">
+                                    Farm Rehabilitation is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_TargetArea" class="form-label">Target area for Rehabilitation in hectares</label>
+                                <input type="text" class="form-control number AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_TargetArea" name="AcknowOfFarmRehab_TargetArea" >
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="mt-4 border-bot bold">Quantity of Farm Rehabilitation Tools Received</h6>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningShear" class="form-label">Pruning Shear</label>
+                                <input type="number" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningShear" name="AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningShear" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningSaw" class="form-label">Pruning Saw</label>
+                                <input type="number" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningSaw" name="AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningSaw" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_QtyRehabToolsReceived_BuddingKnife" class="form-label">Budding Knife</label>
+                                <input type="number" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_QtyRehabToolsReceived_BuddingKnife" name="AcknowOfFarmRehab_QtyRehabToolsReceived_BuddingKnife" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_QtyRehabToolsReceived_GraftingTape" class="form-label">Grafting Tape</label>
+                                <input type="number" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_QtyRehabToolsReceived_GraftingTape" name="AcknowOfFarmRehab_QtyRehabToolsReceived_GraftingTape" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_QtyRehabToolsReceived_Others" class="form-label">Others</label>
+                                <input type="number" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_QtyRehabToolsReceived_Others" name="AcknowOfFarmRehab_QtyRehabToolsReceived_Others" >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_DateReceived" class="form-label">Date Received</label>
+                                <input type="text" class="form-control datemasked AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_DateReceived" name="AcknowOfFarmRehab_DateReceived" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h6 class="mt-4 border-bot bold">Validation Details</h6>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_ValidatorName" class="form-label">Full name of <br>validator</label>
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_ValidatorName" name="AcknowOfFarmRehab_ValidatorName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_DateValidation" class="form-label">Date <br>validation</label>
+                                <input type="text" class="form-control datemasked AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_DateValidation" name="AcknowOfFarmRehab_DateValidation" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AcknowOfFarmRehab_ValidationRemarks" class="form-label">Remarks/Challenges and other <br>Observable Adopted Technologies</label>
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_ValidationRemarks" name="AcknowOfFarmRehab_ValidationRemarks" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEight">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                    Access to Productive Investments
+                </button>
+                </h2>
+                <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionMGIFO">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="AccessToProdInvestment_NotPartOfMG" id="AccessToProdInvestment_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="AccessToProdInvestment_NotPartOfMG">
+                                    Productive Investment is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AccessToProdInvestment_TypeOfProdInvestments" class="form-label">Specific/Type of Productive Investments Accessed/Used by farmer</label>
+                                <input type="text" class="form-control AccessToProdInvestment_item" id="AccessToProdInvestment_TypeOfProdInvestments" name="AccessToProdInvestment_TypeOfProdInvestments" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h6 class="mt-4 border-bot">Validation Details</h6>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AccessToProdInvestment_ValidatorName" class="form-label">Full name of validator</label>
+                                <input type="text" class="form-control AccessToProdInvestment_item" id="AccessToProdInvestment_ValidatorName" name="AccessToProdInvestment_ValidatorName" >
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="AccessToProdInvestment_DateValidation" class="form-label">Date validation</label>
+                                <input type="text" class="form-control datemasked AccessToProdInvestment_item" id="AccessToProdInvestment_DateValidation" name="AccessToProdInvestment_DateValidation" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AccessToProdInvestment_ValidationRemarks" class="form-label">Remarks/Challenges/Notable Results</label>
+                                <input type="text" class="form-control AccessToProdInvestment_item" id="AccessToProdInvestment_ValidationRemarks" name="AccessToProdInvestment_ValidationRemarks" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </section>
+</div>
+
+<script>
+
+    function loadFOFormData(){
+        var form = '{{ request.args.get("form") }}';
+        var action = '{{ request.args.get("action") }}';
+        var id = '{{ request.args.get("id") }}';
+
+        $.ajax({
+            url: '/mgimplementation_form_data?form='+form+'&action='+action+'&id='+id,
+            method: 'GET',
+            success: function(response) {
+                console.log(response);
+                var html = '<option value=""></option>';
+                for(var i=0; i<response.dip.length; i++){
+                    html += '<option value="'+response['dip'][i]['form_1_name_dip']+'" data-commodity="'+response['dip'][i]['form_1_commodity']+'">'+response['dip'][i]['form_1_name_dip']+'</option>';
+                    // var fieldName = response[i].field_name;
+                    // var fieldValue = response[i].field_value;
+                    // $('#'+fieldName).val(fieldValue);
+                }
+                $('#DIP_Name').html(html);
+
+                var html_pfb = '<option value=""></option>';
+                for(var i=0; i<response.pfb.length; i++){
+                    html_pfb += '<option value="'+response['pfb'][i]['organization_registered_name']+'" >'+response['pfb'][i]['organization_registered_name']+'</option>';
+                    // var fieldName = response[i].field_name;
+                    // var fieldValue = response[i].field_value;
+                    // $('#'+fieldName).val(fieldValue);
+                }
+                $('#MembershipToCOOP').html(html_pfb);
+                
+                console.log(response.data);
+
+                // Form Data Here....
+                if ( action=='edit' || action=='view' ){
+                  
+                    if ( response.data.length==0 ){
+                        Swal.fire({
+                            title: "Empty!",
+                            text: "No Record Identifier Found.",
+                            icon: "error"
+                        });
+                        setTimeout(function(){
+                            window.location.href = "/mis-v4/core-mg-implementation";
+                        },500);
+                    }
+
+                    setTimeout(function(){
+                        var data = response.data[0];
+                       
+                        for (let key in data) {
+                            
+                            if (data.hasOwnProperty(key)) {
+                                var address = ["ImpUnits_PCU","FOInfo_Address_Province","FOInfo_Address_Municipality","FOInfo_Address_Brgy"];
+                                var sector = ['FarmerInfo_Sector_isPWD','FarmerInfo_Sector_isYouth','FarmerInfo_Sector_isIP','FarmerInfo_Sector_isSC'];
+                                if (!address.includes(key)){ // Load Data - Except Address Fields
+                                    $('#'+key).val(data[key]);
+                                }
+                                if (sector.includes(key)){ // Farmer Sector
+                                    if ( data[key]==1 ){ 
+                                        $('#'+key).prop('checked',true);
+                                    }
+                                }
+                                if (key=='FarmerInfo_Sex'){ // Farmer - Sex
+                                    $('#FarmerInfo_Sex').val(data[key].toLowerCase());
+                                }
+
+                                if( action=='view' ){
+                                    $('#'+key).prop('disabled',true);
+                                }
+                            }
+                        }
+
+
+                        // Load Address Fields (Region/Province/Municipality/Brgy)
+                        selectRCU();
+                        $('#ImpUnits_PCU').val(data['ImpUnits_PCU'].toLowerCase());
+                        selectFOInfo_RCU();
+                        $('#FarmerInfo_address_Province').val(data['FarmerInfo_address_Province'].toLowerCase());
+                        if (data['FarmerInfo_address_Province']!=null && data['FarmerInfo_address_Province']!='' && data['FarmerInfo_address_Province']!='None'){
+                            selectFOInfo_PCU();
+                            $('#FarmerInfo_address_municipality').val(data['FarmerInfo_address_municipality'].toUpperCase());
+                        }
+                        if (data['FarmerInfo_address_municipality']!=null && data['FarmerInfo_address_municipality']!='' && data['FarmerInfo_address_municipality']!='None'){
+                            selectFOInfo_Municipality();
+                            $('#FarmerInfo_address_brgy').val(data['FarmerInfo_address_brgy'].toUpperCase());
+                        }
+
+                        // Load Date Fields (e.g. DOB)
+                        var FarmerInfo_DOB = '';
+                        var Acknowledgement_DateValidation = '';
+                        var PlantedArea_DateValidation = '';
+                        var AcknowOfFarmIntensification_DateReceived = '';
+                        var AcknowOfFarmIntensification_DateValidation = '';
+                        var AcknowOfFarmRehab_DateValidation = '';
+                        var AccessToProdInvestment_DateValidation = '';
+
+                        if (data['FarmerInfo_DOB']!=null){ 
+                            FarmerInfo_DOB = new Date(data['FarmerInfo_DOB']);
+                            FarmerInfo_DOB = FarmerInfo_DOB.toISOString().split('T')[0];
+                        } 
+                        if (data['Acknowledgement_DateValidation']!=null){ 
+                            Acknowledgement_DateValidation = new Date(data['Acknowledgement_DateValidation']);
+                            Acknowledgement_DateValidation = Acknowledgement_DateValidation.toISOString().split('T')[0];
+                        } 
+                        if (data['PlantedArea_DateValidation']!=null){ 
+                            PlantedArea_DateValidation = new Date(data['PlantedArea_DateValidation']);
+                            PlantedArea_DateValidation = PlantedArea_DateValidation.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmIntensification_DateReceived']!=null){ 
+                            AcknowOfFarmIntensification_DateReceived = new Date(data['AcknowOfFarmIntensification_DateReceived']);
+                            AcknowOfFarmIntensification_DateReceived = AcknowOfFarmIntensification_DateReceived.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmIntensification_DateValidation']!=null){ 
+                            AcknowOfFarmIntensification_DateValidation = new Date(data['AcknowOfFarmIntensification_DateValidation']);
+                            AcknowOfFarmIntensification_DateValidation = AcknowOfFarmIntensification_DateValidation.toISOString().split('T')[0];
+                        }
+                        if (data['AcknowOfFarmRehab_DateValidation']!=null){ 
+                            AcknowOfFarmRehab_DateValidation = new Date(data['AcknowOfFarmRehab_DateValidation']);
+                            AcknowOfFarmRehab_DateValidation = AcknowOfFarmRehab_DateValidation.toISOString().split('T')[0];
+                        }
+                        if (data['AccessToProdInvestment_DateValidation']!=null){ 
+                            AccessToProdInvestment_DateValidation = new Date(data['AccessToProdInvestment_DateValidation']);
+                            AccessToProdInvestment_DateValidation = AccessToProdInvestment_DateValidation.toISOString().split('T')[0];
+                        }
+
+                        $('#FarmerInfo_DOB').val(FarmerInfo_DOB);
+                        $('#Acknowledgement_DateValidation').val(Acknowledgement_DateValidation);
+                        $('#PlantedArea_DateValidation').val(PlantedArea_DateValidation);
+                        $('#AcknowOfFarmIntensification_DateReceived').val(AcknowOfFarmIntensification_DateReceived);
+                        $('#AcknowOfFarmIntensification_DateValidation').val(AcknowOfFarmIntensification_DateValidation);
+                        $('#AcknowOfFarmRehab_DateValidation').val(AcknowOfFarmRehab_DateValidation);
+                        $('#AccessToProdInvestment_DateValidation').val(AccessToProdInvestment_DateValidation);
+                        
+
+                        // Load & Trigger Checkbox for NOT PART OF MG
+                        if ( data['Acknowledgement_NotPartOfMG']==1 ){ 
+                            $('#Acknowledgement_NotPartOfMG').prop('checked', true);
+                            $('#Acknowledgement_NotPartOfMG').trigger('change');
+                        }
+                        if ( data['PlantedArea_GAP_NotPartOfMG']==1 ){ 
+                            $('#PlantedArea_GAP_NotPartOfMG').prop('checked', true);
+                            $('#PlantedArea_GAP_NotPartOfMG').trigger('change');
+                        }
+                        if ( data['AcknowOfFarmIntensification_NotPartOfMG']==1 ){ 
+                            $('#AcknowOfFarmIntensification_NotPartOfMG').prop('checked', true);
+                            $('#AcknowOfFarmIntensification_NotPartOfMG').trigger('change');
+                        }
+                        if ( data['PlantedAreaForIntens_NotPartOfMG']==1 ){ 
+                            $('#PlantedAreaForIntens_NotPartOfMG').prop('checked', true);
+                            $('#PlantedAreaForIntens_NotPartOfMG').trigger('change');
+                        }
+                        if ( data['AcknowOfFarmRehab_NotPartOfMG']==1 ){ 
+                            $('#AcknowOfFarmRehab_NotPartOfMG').prop('checked', true);
+                            $('#AcknowOfFarmRehab_NotPartOfMG').trigger('change');
+                        }
+                        if ( data['AccessToProdInvestment_NotPartOfMG']==1 ){ 
+                            $('#AccessToProdInvestment_NotPartOfMG').prop('checked', true);
+                            $('#AccessToProdInvestment_NotPartOfMG').trigger('change');
+                        }
+                        
+                    },1000);
+                }
+            },
+
+            error: function(error) {
+                console.error('Error fetching form data:', error);
+            }
+        });
+    }
+
+
+    function selectDIP(){
+        var selectedOption = $('#DIP_Name option:selected');
+        var commodity = selectedOption.data('commodity').toLowerCase();
+        $('#DIP_Commodity').val(commodity);
+    }
+
+    function selectRCU(){
+        var selectedRegion = $('#ImpUnits_RCU option:selected').val();
+        if(selectedRegion == ''){
+            $('#ImpUnits_PCU>option').show();
+            $('#ImpUnits_PCU').val('');
+            return;
+        }
+
+        $('#ImpUnits_PCU>option').hide();
+        $('#ImpUnits_PCU>option[data-rcu="'+selectedRegion+'"]').show();
+        $('#ImpUnits_PCU').val('');
+    }
+
+    function selectFOInfo_RCU(){
+        var selectedRegion = $('#FarmerInfo_address_Region option:selected').val();
+        if(selectedRegion == ''){
+            $('#FarmerInfo_address_Province>option').show();
+            $('#FarmerInfo_address_Province').val('');
+            return;
+        }
+
+        $('#FarmerInfo_address_Province>option').hide();
+        $('#FarmerInfo_address_Province>option[data-rcu="'+selectedRegion+'"]').show();
+        $('#FarmerInfo_address_Province').val('');
+        $('#FarmerInfo_address_municipality').html('');
+        $('#FarmerInfo_address_municipality').val('');
+        $('#FarmerInfo_address_brgy').html('');
+        $('#FarmerInfo_address_brgy').val('');
+    }
+    
+    function selectFOInfo_PCU(){
+        var selectedProvince = $('#FarmerInfo_address_Province option:selected').val().toUpperCase();
+        var selectedRegion = $('#FarmerInfo_address_Province option:selected').attr('data-rcu');
+
+        if(selectedProvince == ''){
+            $('#FarmerInfo_address_municipality').html('');
+            $('#FarmerInfo_address_municipality').val('');
+            $('#FarmerInfo_address_brgy').html('');
+            $('#FarmerInfo_address_brgy').val('');
+            return;
+        }
+        // console.log(selectedRegion);
+        // console.log(ALL_LOCATION[selectedRegion]['province_list'][selectedProvince]['municipality_list']);
+
+        var municipalities = ALL_LOCATION_v2[selectedRegion]['province_list'][selectedProvince]['municipality_list'];
+        var html = '<option value=""></option>';
+        Object.entries(municipalities).forEach(([key, value]) => {
+            html += '<option value="'+key+'" data-pcu="'+selectedProvince+'">'+key+'</option>';
+        });
+        $('#FarmerInfo_address_municipality').html(html);
+        $('#FarmerInfo_address_municipality').val('');
+
+    }
+
+    function selectFOInfo_Municipality(){
+        var selectedMunicipality = $('#FarmerInfo_address_municipality option:selected').val().toUpperCase();
+        var selectedProvince = $('#FarmerInfo_address_Province option:selected').val().toUpperCase();
+        var selectedRegion = $('#FarmerInfo_address_Province option:selected').attr('data-rcu');
+        // alert(selectedMunicipality);
+        // console.log('Region : '+selectedRegion+" | Province : "+selectedProvince+" | Municipality : "+selectedMunicipality);
+        if(selectedMunicipality == ''){
+            $('#FarmerInfo_address_brgy').html('');
+            $('#FarmerInfo_address_brgy').val('');
+            return;
+        }
+
+        var barangays = ALL_LOCATION_v2[selectedRegion]['province_list'][selectedProvince]['municipality_list'][selectedMunicipality]['barangay_list'];
+        var html = '<option value=""></option>';
+        // console.log(' ------------ barangays ------------ ');
+        // console.log(barangays);
+
+        Object.entries(barangays).forEach(([key, value]) => {
+            html += '<option value="'+value+'" data-municipality="'+selectedMunicipality+'">'+value+'</option>';
+        });
+        $('#FarmerInfo_address_brgy').html(html);
+        $('#FarmerInfo_address_brgy').val('');
+    }
+
+    $(document).ready(function(){
+        
+        loadFOFormData();
+
+        console.log(ALL_LOCATION);
+
+        $('#Acknowledgement_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.Acknowledgement_item').prop('disabled', true);
+                $('.Acknowledgement_item').val('');
+                $('.Acknowledgement_item').val('NA');
+            }else{
+                $('.Acknowledgement_item').prop('disabled', false);
+                $('.Acknowledgement_item').val('');
+            }
+        });
+
+        $('#PlantedArea_GAP_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.PlantedArea_GAP_item').prop('disabled', true);
+                $('.PlantedArea_GAP_item').val('');
+                $('.PlantedArea_GAP_item').val('NA');
+            }else{
+                $('.PlantedArea_GAP_item').prop('disabled', false);
+                $('.PlantedArea_GAP_item').val('');
+            }
+        });
+
+        $('#AcknowOfFarmIntensification_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.AcknowOfFarmIntensification_item').prop('disabled', true);
+                $('.AcknowOfFarmIntensification_item').val('');
+                $('.AcknowOfFarmIntensification_item').val('NA');
+            }else{
+                $('.AcknowOfFarmIntensification_item').prop('disabled', false);
+                $('.AcknowOfFarmIntensification_item').val('');
+            }
+        });
+        
+        $('#PlantedAreaForIntens_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.PlantedAreaForIntens_item').prop('disabled', true);
+                $('.PlantedAreaForIntens_item').val('');
+                $('.PlantedAreaForIntens_item').val('NA');
+            }else{
+                $('.PlantedAreaForIntens_item').prop('disabled', false);
+                $('.PlantedAreaForIntens_item').val('');
+            }
+        });
+        
+        $('#AcknowOfFarmRehab_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.AcknowOfFarmRehab_item').prop('disabled', true);
+                $('.AcknowOfFarmRehab_item').val('');
+                $('.AcknowOfFarmRehab_item').val('NA');
+            }else{
+                $('.AcknowOfFarmRehab_item').prop('disabled', false);
+                $('.AcknowOfFarmRehab_item').val('');
+            }
+        });
+        
+        $('#AccessToProdInvestment_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.AccessToProdInvestment_item').prop('disabled', true);
+                $('.AccessToProdInvestment_item').val('');
+                $('.AccessToProdInvestment_item').val('NA');
+            }else{
+                $('.AccessToProdInvestment_item').prop('disabled', false);
+                $('.AccessToProdInvestment_item').val('');
+            }
+        });
+        
+    });
+</script>

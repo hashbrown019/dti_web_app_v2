@@ -1,0 +1,71 @@
+{% extends 'templates/main.html' %}
+
+{% block customStyle %}
+    <style>
+        body {
+            background-color: #F8F8FA!important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5" style="margin-top: 150px!important;">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="wp_article_content_section p-4 mb-4 bg-white rounded-3 shadow-sm">
+                <div class="wp_article_header mb-4">
+                    <a href="#" onclick="window.history.back()" class="text-wp-primary"><i class="fa-solid fa-arrow-left-long"></i></a>
+                    <div class="float-end btn-group " role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-gear"></i> 
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li><a class="dropdown-item" href="#"><i class="fa fa-pencil"></i> Edit</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Remove</a></li>
+                        </ul>
+                    </div>
+                    <hr>
+                </div>
+                <h2 class="wp_font_roboto_regular text-wp-primary">{{ article.postheader | urldecode_lines | safe }}</h2>
+                <small class="text-muted font-11"><i>{{ article.postdescription | urldecode_lines | safe }}</small></i><br><br>
+                <small class="text-muted">
+                    <i class="text-uppercase badge bg-success mb-2">{{ article.posttype | urldecode_lines | safe }}</i> | 
+                    <i class="fa fa-calendar"></i> {{ article.datePosted }} | 
+                    <i class="fa fa-user"></i> {{ article.postAuthor | urldecode_lines | safe }} ({{ article.postRcu | urldecode_lines | safe }})</small>
+                <br>
+                <br>
+                <img class="img-fluid w-100 mb-3" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image">
+                <p class="text-muted"><small>{{ article.postcaption | urldecode_lines | safe }}</small></p>
+                <hr>
+                <p class="wp_font_roboto_regular text-justify font-12">{{ article.postContent | urldecode_lines | safe }}</p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="wp_article_sidebar_section p-4 mb-4 bg-white rounded-3 shadow-sm">
+                <h4 class="mb-4">Related Articles</h4>
+                <ul class="list-unstyled">
+                    {% for related in related_articles %}
+                    <li class="mb-4 ">
+                        <a href="/webrep_v2/article/{{ related.id }}" class="text-decoration-none">
+                            <h5 class="font-14 text-wp-secondary mb-2">{{ related.postheader }}</h5>
+                            <p class="mb-0 text-muted">{{ related.datePosted }} | {{ related.postAuthor }}</p>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block customScript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+    });
+</script>
+{% endblock %}

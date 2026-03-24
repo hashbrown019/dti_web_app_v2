@@ -1,0 +1,450 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+<div id="search_result">
+<div class="container mt-5 mb-5" style="margin-top: 170px!important;">
+    <div class="row">
+        <!-- <div class="col-12 col-md-3">
+            <div class="searchPanel">
+                <form method="GET" id="search_form" action="/webrep_v2/search" class=" mx-auto">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." value="{{ query }}" style="border: 1px solid #DEE2E6 !important;" aria-describedby="basic-addon2">
+                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+                    </div>
+                    <p><b><i class="fa fa-filter"></i> Filter:</b></p>
+                    <ul class="list-unstyled font-14">
+                        <li>
+                            <small><b>COMMODITIES</b></small>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="commodities_cacao" name="commodities">
+                                <label class="form-check-label" for="commodities_cacao">
+                                    Cacao
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="commodities_coffee" name="commodities">
+                                <label class="form-check-label" for="commodities_coffee">
+                                    Coffee
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="commodities_coconut" name="commodities">
+                                <label class="form-check-label" for="commodities_coconut">
+                                    Coconut
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="commodities_processed_fruits_nuts" name="commodities">
+                                <label class="form-check-label" for="commodities_processed_fruits_nuts">
+                                    Processed Fruits & Nuts
+                                </label>
+                            </div>
+                        </li>
+                            <br>
+                        <li>
+                            <small><b>REGION</b></small>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="region_8" name="region">
+                                        <label class="form-check-label" for="region_8">
+                                            Region VIII
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="region_9" name="region">
+                                        <label class="form-check-label" for="region_9">
+                                            Region IX
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="region_10" name="region">
+                                        <label class="form-check-label" for="region_10">
+                                            Region X
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="region_11" name="region">
+                                        <label class="form-check-label" for="region_11">
+                                            Region XI
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="region_12" name="region">
+                                        <label class="form-check-label" for="region_12">
+                                            Region XII
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="region_13" name="region">
+                                        <label class="form-check-label" for="region_13">
+                                            Region XIII
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="region_barmm" name="region">
+                                        <label class="form-check-label" for="region_barmm">
+                                            BARMM
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <br>
+                        <li>
+                            <small><b>YEAR</b></small>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="year_2026" name="year">
+                                        <label class="form-check-label" for="year_2026">
+                                            2026
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="year_2025" name="year">
+                                        <label class="form-check-label" for="year_2025">
+                                            2025
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="year_2024" name="year">
+                                        <label class="form-check-label" for="year_2024">
+                                            2024
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="year_2023" name="year">
+                                        <label class="form-check-label" for="year_2023">
+                                            2023
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="year_2022" name="year">
+                                        <label class="form-check-label" for="year_2022">
+                                            2022
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="year_2021" name="year">
+                                        <label class="form-check-label" for="year_2021">
+                                            2021
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="year_2020" name="year">
+                                        <label class="form-check-label" for="year_2020">
+                                            2020
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="year_2019" name="year">
+                                        <label class="form-check-label" for="year_2019">
+                                            2019
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <hr>
+                    <button class="w-100 btn wr_primary_btn"><i class="fa fa-filter"></i>Apply Filters</button>
+                </form>
+            </div>
+        </div> -->
+        <div class="col-12">
+            <div class="row">
+                <div class="col-md-8 col-12">
+                    <h2><i class="fa fa-search"></i> Results</h2>
+                </div>
+                <div class="col-md-4 col-12">
+                    <form method="GET" id="search_form" action="/webrep_v2/search" class=" mx-auto mb-0">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" name="str" placeholder="Search..." aria-label="Search..." value="{{ query }}" style="border: 1px solid #DEE2E6 !important;" aria-describedby="basic-addon2">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr><br>
+            <div class="row wr_search_results">
+            {% for result in results %}
+                <div class="col-md-3 col-6 d-flex align-items-stretch">
+                    <div class="card mb-3 w-100">
+                        <div class="card-body">
+                            <img src="/webrep_v2/article/get_img/{{ result.file_name }}" alt="Image" class="img-fluid mb-3" style="height: 120px; width: 100%;">
+                            <div class="row muted font-12 mb-2">
+                                <div class="col-6">
+                                    <small class=""><i class="fa fa-calendar"></i> {{ result.date.strftime('%B %d, %Y') }}</small>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <small class="">{{ result.posttype | upper }}</small>
+                                </div>
+                            </div>
+                            <a href="/webrep_v2/article/{{ result.id }}" class="text-decoration-none"><h5 class="card-title font-14 text-wp-secondary ">{{ result.postheader }}</h5></a>
+                        </div>
+                    </div>  
+                </div>
+            {% endfor %}
+            </div>
+            <br><hr>
+            <nav aria-label="Page navigation " class="d-none">
+                <ul class="pagination justify-content-center">
+
+                    <!-- Previous button -->
+                    <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                    <a class="page-link" href="/webrep_v2/search?str={{ query }}&page={{ page-1 }}"><i class="fa fa-angle-double-left"></i></a>
+                    </li>
+
+                    <!-- First page -->
+                    {% if page > 3 %}
+                    <li class="page-item">
+                        <a class="page-link font-10" href="/webrep_v2/search?str={{ query }}&page=1">1</a>
+                    </li>
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                    {% endif %}
+
+                    <!-- Neighboring pages -->
+                    {% for p in range(start_page, end_page+1) %}
+                    <li class="page-item {% if p == page %}active{% endif %}">
+                        <a class="page-link font-10" href="/webrep_v2/search?str={{ query }}&page={{ p }}">{{ p }}</a>
+                    </li>
+                    {% endfor %}
+
+
+                    <!-- Last page -->
+                    {% if page < pages-2 %}
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                    <li class="page-item">
+                        <a class="page-link font-10" href="/webrep_v2/search?str={{ query }}&page={{ pages }}">{{ pages }}</a>
+                    </li>
+                    {% endif %}
+
+                    <!-- Next button -->
+                    <li class="page-item {% if page == pages %}disabled{% endif %}">
+                    <a class="page-link" href="/webrep_v2/search?str={{ query }}&page={{ page+1 }}"><i class="fa fa-angle-double-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>  
+</div>
+</div>
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+    var search_data = [
+        { 
+            "title" : "About the Project",
+            "description" : "The RAPID Growth Project works to expand economic opportunities in rural areas by strengthening agro-enterprises, improving market access, and supporting farmers, cooperatives, and microenterprises through inclusive and sustainable value chains.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare"
+        },
+        { 
+            "title" : "Our Goals",
+            "description" : "The project aims to reduce rural poverty by increasing the incomes of small farmers, women, youth, and men through inclusive value chain development and stronger partnerships between producers and agri-based enterprises.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare"
+        },
+        { 
+            "title" : "Our Objectives",
+            "description" : "The RAPID Growth Project creates enabling conditions for the sustained growth of smallholder farmers and agri-based MSMEs by strengthening key agricultural value chains in cacao, coconut, coffee, and processed fruits and nuts across Eastern Visayas and Mindanao.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare"
+        },
+        { 
+            "title" : "Beneficiaries",
+            "description" : "The RAPID Growth Project supports smallholder farmers, farmer organizations, agri-based MSMEs, and special sectors such as women, youth, and Indigenous Peoples (IPs). The project works to strengthen their participation in agricultural value chains and expand their opportunities for sustainable income and enterprise growth.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#beneficiaries"
+        },
+        { 
+            "title" : "Implementing Partners",
+            "description" : "RAPID Growth works closely with national government agencies, local government units, private sector partners, and development organizations to deliver programs and services that strengthen agricultural value chains and support rural enterprise development.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#partners"
+        },
+        { 
+            "title" : "Project Components 1 - Direct Assistance to Enterprises",
+            "description" : "Direct Enterprise Support strengthens the capabilities and competitiveness of farmers, farmer organizations, and agri-based enterprises through targeted business development services. It delivers technical and business support, enhances the organizational and operational capacities of farmer organizations and MSMEs, and supports strategic farm-to-market infrastructure that improves market access and reduces logistics costs.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#components"
+        },
+        { 
+            "title" : "Project Components 2 - Institutional Strengthening",
+            "description" : "Institutional Strengthening enhances the capacity of national, regional, and local partners to effectively coordinate and support agricultural value chain development. It strengthens governance mechanisms and promotes commercial partnerships among key stakeholders to improve collaboration, market integration, and sustainable value chain upgrading.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#components"
+        },
+        { 
+            "title" : "Project Components 3 - Technical Assistance to Financial Service Providers",
+            "description" : "Technical Assistance to Financial Service Providers strengthens the capacity of financial institutions to deliver inclusive and demand-driven financial services to farming households, farmer organizations, and agri-based MSMEs. It supports the development of appropriate financial products, strengthens linkages between value chain actors and formal financial systems, and promotes greater access to financing for rural enterprises and communities.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#components"
+        },
+        { 
+            "title" : "Project Components 4 - Innovative Financing",
+            "description" : "The Innovation/Investment Fund supports strategic investments that strengthen agriculture-based MSMEs and value chain development. It provides financing for innovative and high-impact initiatives that improve market competitiveness, strengthen linkages with smallholder farmers, and generate sustainable economic opportunities in rural areas.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#components"
+        },
+        { 
+            "title" : "Project Components 5 - Project Management",
+            "description" : "Project Management ensures effective coordination, implementation, and oversight of the RAPID Growth Project. It supports monitoring and evaluation, knowledge management, and performance tracking to promote learning, accountability, and efficient project delivery.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#components"
+        },
+        { 
+            "title" : "Where we work",
+            "description" : "RCU 8, RCU 9, RCU 10, RCU 11, RCU 12, RCU 13, BARMM, REGION 8, REGION 9, REGION 10, REGION 11, REGION 12, REGION 13, Easter Visayas, Zamboanga Peninsula, Northern Mindanao, Caraga Region, Davao Region, SOCCSKSARGEN ",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#wherewework"
+        },
+        { 
+            "title" : "Transparency & Good Governance - Project Overview",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#transparency"
+        },
+        { 
+            "title" : "Transparency & Good Governance - Budget Allocation",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#transparency"
+        },
+        { 
+            "title" : "Transparency & Good Governance - Procurement",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#transparency"
+        },
+        { 
+            "title" : "Transparency & Good Governance - Grievance",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#transparency"
+        },
+        { 
+            "title" : "Transparency & Good Governance - Directory",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#transparency"
+        },
+        { 
+            "title" : "Transparency & Good Governance - Brand Kit",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/whoweare#transparency"
+        },
+        { 
+            "title" : "Development Model",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/what_we_do#model"
+        },
+        { 
+            "title" : "Methodologies - Hub-and-Spoke Model",
+            "description" : "The RAPID Growth Project adopts a Hub-and-Spoke Model to strengthen coordination and efficiency across agricultural value chains. By linking smallholder farmers and producer groups (spokes) to established enterprises and market actors (hubs), the model facilitates aggregation, improves market access, and enables the delivery of targeted support services, financing, and infrastructure. This helps create a more connected, competitive, and inclusive rural enterprise system.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/what_we_do#methodologies"
+        },
+        { 
+            "title" : "Methodologies - Market-driven Approach",
+            "description" : "The project adopts a market-driven approach by aligning its interventions with existing demand and market opportunities within selected value chains. By strengthening linkages between producers, enterprises, and buyers, the project ensures that production, investments, and support services respond to real market needs. This enhances competitiveness, reduces risks, and improves income opportunities for farmers and agri-based enterprises.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/what_we_do#methodologies"
+        },
+        { 
+            "title" : "RAPID Growth Network",
+            "description" : "Explore the RAPID Growth Network of farmers, enterprises, partners, and infrastructure initiatives working together to strengthen agricultural value chains. From enterprise support to farm-to-market connectivity, this network drives inclusive growth across project areas.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/what_we_do#network"
+        },
+        { 
+            "title" : "Value Chain Development",
+            "description" : "The RAPID Growth Project strengthens agricultural value chains by connecting farmers, enterprises, service providers, and financial institutions across key commodities. Explore the project’s network of beneficiaries and partners supporting enterprise development, market access, and inclusive growth.",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/what_we_do#network"
+        },
+        { 
+            "title" : "Rural Infrastructure",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/what_we_do#network"
+        },
+        { 
+            "title" : "Tools - Details Investment Plan Guide",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/knowledge_and_data#tools"
+        },
+        { 
+            "title" : "Tools - Enterprise Diagnostic Tools",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/knowledge_and_data#tools"
+        },
+        { 
+            "title" : "Tools - Matching Grant Guidelines",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/webrep_v2/knowledge_and_data#tools"
+        },
+        { 
+            "title" : "Knowledge & Data - MIS Login",
+            "description" : "",
+            "category" : "PAGE - SECTION",
+            "link"  : "/login_v2023?ver=dti_rapidgrowth_mis_2023"
+        }
+    ];
+
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const search = urlParams.get('str');
+
+        var html = '';
+        $.each(search_data, function(index, item) {
+        // Check if any property contains the string
+            if (
+                item.title.toLowerCase().indexOf(search.toLowerCase()) !== -1 ||
+                item.description.toLowerCase().indexOf(search.toLowerCase()) !== -1  
+            ) {
+                html += '<div class="col-3 d-flex align-items-stretch">';
+                html +=     '<div class="card mb-3 w-100">';
+                html +=         '<div class="card-body">';
+                html +=             '<img src="/webrep_v2/article/get_img/test" alt="Image" class="img-fluid mb-3" style="height: 120px; width: 100%;">';
+                html +=             '<div class="row muted font-12 mb-2">';
+                html +=                 '<div class="col-6"><i class="fa fa-calendar"></i> N/A';
+                html +=                 '</div>';
+                html +=                 '<div class="col-6 text-end">';
+                html +=                     '<small class="">'+item.category+'</small>';
+                html +=                 '</div>';
+                html +=             '</div>';
+                html +=             '<a href="'+item.link+'" class="text-decoration-none"><h5 class="card-title font-14 text-wp-secondary ">'+item.title+'</h5></a>';
+                html +=         '</div>';
+                html +=     '</div>';  
+                html += '</div>';
+            }
+           
+        });
+
+        $('.wr_search_results').append(html);
+
+        if ($(".wr_search_results").html().trim() === "") {
+            $('.wr_search_results').append('<p class="text-center">No result match your search criteria.</p>');
+        } 
+
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,294 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+<div class="aboutSection bg-wp-secondary-light" id="about" style="padding-top: 170px;">
+    <div class="aboutContainer container" >
+        <div class="row mt-5 mb-5" >
+            <!-- <div class="col-12 ms-3"><h2 class="pt-5">About the Project</h2></div> -->
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-wp-primary mb-3">About the Project</h4>
+                        <p class="text-muted text-wp-primary font-14 text-justify">The RAPID Growth Project works to expand economic opportunities in rural areas by strengthening agro-enterprises, improving market access, and supporting farmers, cooperatives, and microenterprises through inclusive and sustainable value chains.</p>  
+                        <button class="aboutBlobViewBtn btn-wp-icon mt-2" data-about-section="abouttheproject">
+                            <span class="circle" aria-hidden="true"> 
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-wp-primary">Our Goals</h4>
+                        <p class="text-muted text-wp-primary font-14">The project aims to reduce rural poverty by increasing the incomes of small farmers, women, youth, and men through inclusive value chain development and stronger partnerships between producers and agri-based enterprises.</p>  
+                        <button class="aboutBlobViewBtn btn-wp-icon mt-2" data-about-section="ourgoals">
+                            <span class="circle" aria-hidden="true"> 
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card ">
+                    <div class="card-body">
+                        <h4 class="text-wp-primary">Our Objectives</h4>
+                        <p class="text-muted text-wp-primary font-14">The RAPID Growth Project creates enabling conditions for the sustained growth of smallholder farmers and agri-based MSMEs by strengthening key agricultural value chains in cacao, coconut, coffee, and processed fruits and nuts across Eastern Visayas and Mindanao.</p>  
+                        <button class="aboutBlobViewBtn btn-wp-icon mt-2" data-about-section="ourobjectives">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'about/beneficiaries.html' %}
+{% include 'about/implementingpartners.html' %}
+{% include 'about/projectcomponent.html' %}
+{% include 'about/wherewework.html' %}
+{% include 'about/transparency.html' %}
+<!-- {% include 'about/methodologies.html' %} -->
+<!-- {% include 'about/commodities.html' %} -->
+
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+    
+
+    $(document).ready(function(){
+        var components = {
+            'com1': {
+                'title': 'Direct Assistance to Enterprises',
+                'component' : 'COMPONENT 1',
+                'detail' : 'Direct Enterprise Support strengthens the capabilities and competitiveness of farmers, farmer organizations, and agri-based enterprises through targeted business development services. It delivers technical and business support, enhances the organizational and operational capacities of farmer organizations and MSMEs, and supports strategic farm-to-market infrastructure that improves market access and reduces logistics costs.',
+                'link'  : 'webrep_v2/dashboard?component=1'
+            },
+            'com2': {
+                'title': 'Institutional Strengthening',
+                'component' : 'COMPONENT 2',
+                'detail' : 'Institutional Strengthening enhances the capacity of national, regional, and local partners to effectively coordinate and support agricultural value chain development. It strengthens governance mechanisms and promotes commercial partnerships among key stakeholders to improve collaboration, market integration, and sustainable value chain upgrading.',
+                'link'  : 'webrep_v2/dashboard?component=2'
+            },
+            'com3': {
+                'title': 'Technical Assistance to Financial Service Providers',
+                'component' : 'COMPONENT 3',
+                'detail' : 'Technical Assistance to Financial Service Providers strengthens the capacity of financial institutions to deliver inclusive and demand-driven financial services to farming households, farmer organizations, and agri-based MSMEs. It supports the development of appropriate financial products, strengthens linkages between value chain actors and formal financial systems, and promotes greater access to financing for rural enterprises and communities.',
+                'link'  : 'webrep_v2/dashboard?component=3'
+            },
+            'com4': {
+                'title': 'Innovative Financing',
+                'component' : 'COMPONENT 4',
+                'detail' : 'The Innovation/Investment Fund supports strategic investments that strengthen agriculture-based MSMEs and value chain development. It provides financing for innovative and high-impact initiatives that improve market competitiveness, strengthen linkages with smallholder farmers, and generate sustainable economic opportunities in rural areas.',
+                'link'  : 'webrep_v2/dashboard?component=4'
+            },
+            'com5': {
+                'title': 'Project Management',
+                'component' : 'COMPONENT 5',
+                'detail' : 'Project Management ensures effective coordination, implementation, and oversight of the RAPID Growth Project. It supports monitoring and evaluation, knowledge management, and performance tracking to promote learning, accountability, and efficient project delivery.',
+                'link'  : 'webrep_v2/dashboard?component=5'
+            },
+        };
+
+        // var about = {
+        //     'whatwedo': {
+        //         'title': 'What We Do',
+        //         'image': '{{ url_for("static", filename="webrepstatic_v2/img/rapidimage/MAIGO-TUBOD-9.jpg") }}',
+        //         'description': `
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //         `
+        //     },
+        //     'ourgoals': {
+        //         'title': 'Our Goals',
+        //         'image': '{{ url_for("static", filename="webrepstatic_v2/img/rapidimage/RCU 9 (08).jpg") }}',
+        //         'description': `
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //         `
+        //     },
+        //     'scope': {
+        //         'title': 'Scope',
+        //         'image': '{{ url_for("static", filename="webrepstatic_v2/img/rapidimage/RCU 9 (05).jpg") }}',
+        //         'description': `
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //         `
+        //     },
+        //     'equipfarmers': {
+        //         'title': 'How we equip farmers',
+        //         'image': '{{ url_for("static", filename="webrepstatic_v2/img/rapidimage/MAIGO-TUBOD.jpg") }}',
+        //         'description': `
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //         `
+        //     },
+        //     'empowermsme': {
+        //         'title': 'How we empower micro, small, and medium enterprises',
+        //         'image': '{{ url_for("static", filename="webrepstatic_v2/img/rapidimage/4_SLCBPA_BrgyRizal_Sogod.jpg") }}',
+        //         'description': `
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //         `
+        //     },
+        //     'strengthenvaluechains': {
+        //         'title': 'How we strengthen value chains',
+        //         'image': '{{ url_for("static", filename="webrepstatic_v2/img/rapidimage/6_CIDOFSFA_BrgyCervantes_Catarman_RCU8.jpg") }}',
+        //         'description': `
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //             <p class="text-muted">Lorim ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        //         `
+        //     }
+        // } 
+
+        $('.map_ch').on('click', function(){
+            var area_name = $(this).attr('id');
+            var region = $(this).attr('data-region');
+            // var data = AREAS['region_'+region];
+            // var color = AREAS_COLORS['region_'+region];
+
+            $('.wp_area_loading').removeClass('d-none'); 
+            $('.wherewework_data_item').addClass('d-none');
+
+            setTimeout(function(){
+                $('.wherewework_data_item[data-rcu="'+region+'"]').removeClass('d-none');
+                $('.wp_area_loading').addClass('d-none');   
+            },1000);
+            
+
+        });
+        
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+        $(document).on('click','.closeBlob', function(){
+            Swal.close();
+        });
+
+        $('.aboutBlobViewBtn').on('click', function(){ 
+
+            var section = $(this).data('about-section');
+
+            $.get("/webrep_v2/getBlobContent/"+section, function(data) {
+                console.log(data);
+                console.log("im here......");
+                Swal.fire({
+                    title: '',
+                    // icon: "info",
+                    customClass : {
+                        popup : 'swalPopUpContainer'
+                    },
+                    html: data,
+                    position: 'top-end',
+                    showClass: {
+                        popup: `
+                            animate__animated
+                            animate__fadeInRight
+                            animate__faster
+                        `,
+                    },
+                    hideClass: {
+                        popup: `
+                            animate__animated
+                            animate__fadeOutRight
+                            animate__faster
+                            `,
+                    },
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    cancelButtonText: `
+                        <i class="fa fa-close"></i> Close
+                    `
+                });  
+                
+            });
+        });
+
+        // $('.aboutBlobViewBtn').on('click', function(){
+        //     var section = $(this).data('about-section');
+        //     var content = about[section];
+        //     var title = content.title;
+        //     var image = content.image;
+        //     var description = content.description;
+        //     Swal.fire({
+        //         title: title,
+        //         // icon: "info",
+        //         customClass : {
+        //             popup : 'swalPopUpContainer'
+        //         },
+        //         html: `
+        //             <img src="` + image + `" class="img-fluid mb-3" alt="` + title + `">
+        //             ` + description + `
+        //         `,
+        //         position: 'top-end',
+        //         showClass: {
+        //             popup: `
+        //                 animate__animated
+        //                 animate__fadeInRight
+        //                 animate__faster
+        //             `,
+        //         },
+        //         hideClass: {
+        //             popup: `
+        //                 animate__animated
+        //                 animate__fadeOutRight
+        //                 animate__faster
+        //                 `,
+        //         },
+        //         showCloseButton: true,
+        //         showCancelButton: false,
+        //         showConfirmButton: false,
+        //         cancelButtonText: `
+        //             <i class="fa fa-close"></i> Close
+        //         `
+        //     });  
+        // });
+
+        $('.componentList_Item').click( function(e) {
+            $('.componentList>li').removeClass('active');
+            $(this).parent('li').addClass('active');
+
+            var component = $(this).data('component');
+            var componentData = components[component];
+
+            $('.componentPreview_no').html(componentData['component']);
+            $('.componentPreview_title').html(componentData['title']);
+            $('.componentPreview_detail').html(componentData['detail']);
+            $('.componentPreview_link').attr('href',componentData['link']);
+
+            e.preventDefault();
+        });
+
+        var AREAS_COLORS = {
+            'region_8' : '#50A6A7',
+            'region_9' : '#477E83',
+            'region_10' : '#E7A943',
+            'region_11' : '#1B434D',
+            'region_12' : '#B3D26E',
+            'region_13' : '#839F4D',
+            'region_barmm' : '#ED712E'
+        };
+
+        $('.r8').hover( function() { $('.r8').css('fill', '#33b4b5'); $('.r8').css('stroke', '#33b4b5'); }, function() { $('.r8').css('fill', '#50A6A7'); $('.r8').css('stroke', '#50A6A7'); } );
+        $('.r9').hover( function() { $('.r9').css('fill', '#28585c'); $('.r9').css('stroke', '#28585c'); }, function() { $('.r9').css('fill', '#477E83'); $('.r9').css('stroke', '#477E83'); } );
+        $('.r10').hover( function() { $('.r10').css('fill', '#e89917'); $('.r10').css('stroke', '#e89917'); }, function() { $('.r10').css('fill', '#E7A943'); $('.r10').css('stroke', '#E7A943'); } );
+        $('.r11').hover( function() { $('.r11').css('fill', '#0f343d'); $('.r11').css('stroke', '#0f343d'); }, function() { $('.r11').css('fill', '#1B434D'); $('.r11').css('stroke', '#1B434D'); } );
+        $('.r12').hover( function() { $('.r12').css('fill', '#99bf45'); $('.r12').css('stroke', '#99bf45'); }, function() { $('.r12').css('fill', '#B3D26E'); $('.r12').css('stroke', '#B3D26E'); } );
+        $('.r13').hover( function() { $('.r13').css('fill', '#617a31'); $('.r13').css('stroke', '#617a31'); }, function() { $('.r13').css('fill', '#839F4D'); $('.r13').css('stroke', '#839F4D'); } );
+        $('.barmm').hover( function() { $('.barmm').css('fill', '#bd551c'); $('.barmm').css('stroke', '#bd551c'); }, function() { $('.barmm').css('fill', '#E08553'); $('.barmm').css('stroke', '#E08553'); } );
+
+    });
+</script>
+{% endblock %}

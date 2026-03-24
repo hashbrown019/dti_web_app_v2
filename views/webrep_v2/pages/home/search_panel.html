@@ -1,0 +1,164 @@
+<div class="searchPanel">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." value="{{ query }}" style="border: 1px solid #DEE2E6 !important;" aria-describedby="basic-addon2">
+        <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+    </div>
+    <p><b><i class="fa fa-filter"></i> Filter:</b></p>
+    <ul class="list-unstyled font-14">
+        <li>
+            <small><b>COMMODITIES</b></small>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="cacao" id="commodities_cacao" name="commodities" {% if commodities_selected and "cacao" in commodities_selected %}checked{% endif %}>
+                <label class="form-check-label" for="commodities_cacao">
+                    Cacao
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="coffee" id="commodities_coffee" name="commodities" {% if commodities_selected and "coffee" in commodities_selected %}checked{% endif %}>
+                <label class="form-check-label" for="commodities_coffee">
+                    Coffee
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="coconut" id="commodities_coconut" name="commodities" {% if commodities_selected and "coconut" in commodities_selected %}checked{% endif %}>
+                <label class="form-check-label" for="commodities_coconut">
+                    Coconut
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="processed fruits & nuts" id="commodities_processed_fruits_nuts" name="commodities" {% if commodities_selected and "processed fruits & nuts" in commodities_selected %}checked{% endif %}>
+                <label class="form-check-label" for="commodities_processed_fruits_nuts">
+                    Processed Fruits & Nuts
+                </label>
+            </div>
+        </li>
+            <br>
+        <li>
+            <small><b>REGION</b></small>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="rcu xiii" id="region_8" name="region" {% if region_selected and "rcu xiii" in region_selected %}checked{% endif %}>
+                        <label class="form-check-label" for="region_8">
+                            Region VIII
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="rcu ix" id="region_9" name="region" {% if region_selected and "rcu ix" in region_selected %}checked{% endif %}>
+                        <label class="form-check-label" for="region_9">
+                            Region IX
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="rcu x" id="region_10" name="region" {% if region_selected and "rcu x" in region_selected %}checked{% endif %}>
+                        <label class="form-check-label" for="region_10">
+                            Region X
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="rcu xi" id="region_11" name="region" {% if region_selected and "rcu xi" in region_selected %}checked{% endif %}>
+                        <label class="form-check-label" for="region_11">
+                            Region XI
+                        </label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="rcu xii" id="region_12" name="region" {% if region_selected and "rcu xii" in region_selected %}checked{% endif %}>
+                        <label class="form-check-label" for="region_12">
+                            Region XII
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="rcu xiii" id="region_13" name="region" {% if region_selected and "rcu xiii" in region_selected %}checked{% endif %}>
+                        <label class="form-check-label" for="region_13">
+                            Region XIII
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="barmm" id="region_barmm" name="region" {% if region_selected and "barmm" in region_selected %}checked{% endif %}>
+                        <label class="form-check-label" for="region_barmm">
+                            BARMM
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <br>
+        <li>
+            <small><b>YEAR</b></small>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2026" id="year_2026" name="year">
+                        <label class="form-check-label" for="year_2026">
+                            2026
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2025" id="year_2025" name="year">
+                        <label class="form-check-label" for="year_2025">
+                            2025
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2024" id="year_2024" name="year">
+                        <label class="form-check-label" for="year_2024">
+                            2024
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2023" id="year_2023" name="year">
+                        <label class="form-check-label" for="year_2023">
+                            2023
+                        </label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2022" id="year_2022" name="year">
+                        <label class="form-check-label" for="year_2022">
+                            2022
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2021" id="year_2021" name="year">
+                        <label class="form-check-label" for="year_2021">
+                            2021
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2020" id="year_2020" name="year">
+                        <label class="form-check-label" for="year_2020">
+                            2020
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2019" id="year_2019" name="year">
+                        <label class="form-check-label" for="year_2019">
+                            2019
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <br>
+        <li>
+            <small><b>FORMAT</b></small>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="article" id="format_article" name="format">
+                <label class="form-check-label" for="format_article">
+                    Article
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="video" id="format_video" name="format">
+                <label class="form-check-label" for="format_video">
+                    Video
+                </label>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <button class="w-100 btn wr_primary_btn"><i class="fa fa-filter"></i>Apply Filters</button>
+</div>

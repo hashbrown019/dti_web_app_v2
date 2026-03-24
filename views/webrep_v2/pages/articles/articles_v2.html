@@ -1,0 +1,216 @@
+{% extends 'templates/main.html' %}
+
+{% block content %}
+<div id="stories">
+<div class="container container-sm mt-5 pt-5 mb-5" style="padding-top: 170px!important;">
+    <h1 class="inter-regular text-wp-primary">Stories</h1>
+    <div class="storyFilter mt-5 mb-5">
+        <div class="row">
+            <div class="col-6 col-md">
+                <div class="input-group rounded-pill mb-3">
+                    <input type="text" class="form-control applyfilter applyfilter_search" placeholder="Search" aria-label="Search..." value="{{ search_str }}"  style="border: 1px solid #DEE2E6 !important;" aria-describedby="basic-addon2">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="col-6 col-md">
+                <div class="input-group rounded-pill mb-3">
+                    <select class="form-select applyfilter applyfilter_category" >
+                        <option value="" {% if category_selected and "" in category_selected %}selected{% endif %}>Category</option>
+                        <option value="Stories from the field" {% if category_selected and "Stories from the field" in category_selected %}selected{% endif %}>Stories from the field</option>
+                        <option value="MSME stories" {% if category_selected and "MSME stories" in category_selected %}selected{% endif %}>MSME stories</option>
+                        <option value="GESI/SECAP stories" {% if category_selected and "GESI/SECAP stories" in category_selected %}selected{% endif %}>GESI/SECAP stories</option>
+                        <option value="Stories from project implementation" {% if category_selected and "Stories from project implementation" in category_selected %}selected{% endif %}>Stories from project implementation</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4 col-md">
+                <div class="input-group rounded-pill mb-3">
+                    <select class="form-select applyfilter applyfilter_commodities" >
+                        <option value="" {% if commodity_selected and "all" in commodity_selected %}selected{% endif %}>Commodities</option>
+                        <option value="Cacao" {% if commodity_selected and "Cacao" in commodity_selected %}selected{% endif %}>Cacao</option>
+                        <option value="Coffee" {% if commodity_selected and "Coffee" in commodity_selected %}selected{% endif %}>Coffee</option>
+                        <option value="Coconut" {% if commodity_selected and "Coconut" in commodity_selected %}selected{% endif %}>Coconut</option>
+                        <option value="Processed Fruits & Nuts" {% if commodity_selected and "Processed Fruits & Nuts" in commodity_selected %}selected{% endif %}>Processed Fruits & Nuts</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4 col-md">
+                <div class="input-group rounded-pill mb-3">
+                    <select class="form-select applyfilter applyfilter_region" >
+                        <option value="" {% if region_selected and "all" in region_selected %}selected{% endif %}>Region</option>
+                        <option value="npco" {% if region_selected and "npco" in region_selected %}selected{% endif %}>NPCO</option>
+                        <option value="rcu viii" {% if region_selected and "rcu viii" in region_selected %}selected{% endif %}>RCU VIII</option>
+                        <option value="rcu ix" {% if region_selected and "rcu ix" in region_selected %}selected{% endif %}>RCU IX</option>
+                        <option value="rcu x" {% if region_selected and "rcu x" in region_selected %}selected{% endif %}>RCU X</option>
+                        <option value="rcu xi" {% if region_selected and "rcu xi" in region_selected %}selected{% endif %}>RCU XI</option>
+                        <option value="rcu xii" {% if region_selected and "rcu xii" in region_selected %}selected{% endif %}>RCU XII</option>
+                        <option value="rcu xiii" {% if region_selected and "rcu xiii" in region_selected %}selected{% endif %}>RCU XIII</option>
+                        <option value="barmm" {% if region_selected and "barmm" in region_selected %}selected{% endif %}>BARMM</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4 col-md">
+                <div class="input-group rounded-pill mb-3">
+                    <select class="form-select applyfilter applyfilter_year" >
+                        <option value="" disabled selected>Year</option>
+                        <option value="" {% if year_selected and "all" in year_selected %}selected{% endif %}>All</option>
+                        <option value="2019" {% if year_selected and "2019" in year_selected %}selected{% endif %}>2019</option>
+                        <option value="2020" {% if year_selected and "2020" in year_selected %}selected{% endif %}>2020</option>
+                        <option value="2021" {% if year_selected and "2021" in year_selected %}selected{% endif %}>2021</option>
+                        <option value="2022" {% if year_selected and "2022" in year_selected %}selected{% endif %}>2022</option>
+                        <option value="2023" {% if year_selected and "2023" in year_selected %}selected{% endif %}>2023</option>
+                        <option value="2024" {% if year_selected and "2024" in year_selected %}selected{% endif %}>2024</option>
+                        <option value="2025" {% if year_selected and "2025" in year_selected %}selected{% endif %}>2025</option>
+                        <option value="2026" {% if year_selected and "2026" in year_selected %}selected{% endif %}>2026</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h5 class="text-wp-primary inter-regular">Spotlight</h5>
+    <div class="row mt-4">
+        {% for article in stories_latest %}
+        <div class="col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch">
+            <div class="card mb-4 shadow-sm wp_article_card" style="border: none;">
+                <img class="card-img-top" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" style="height: 150px;;">
+                <div class="card-body">
+                    <div class="row muted font-12 mb-2">
+                        <div class="col-6">
+                            <small class=""><i class="fa fa-calendar"></i> {{ article.datePosted.strftime('%B %d, %Y') }}</small>
+                        </div>
+                        <div class="col-6 text-end">
+                            <small class="">{{ article.posttype | upper }}</small>
+                        </div>
+                    </div>
+                    <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none"><h5 class="card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold">{{ article.postheader }}</h5></a>
+                    <p class="card-text text-muted font-12">{{ article.postContent[0:200]~"..." if article.postContent|length > 200 else article.postContent }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+    <div class="categories">
+        <div class="float-end btn-group " role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-gear"></i> 
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <li><a class="dropdown-item" href="/webrep_v2/articles"><i class="fa fa-file-text"></i> Article's List</a></li>
+            <li><a class="dropdown-item" href="/webrep_v2/stories/create"><i class="fa fa-plus"></i> Create New Article</a></li>
+            </ul>
+        </div>
+        <!-- <ul class="list-inline text-wp-primary storiesCategory">
+            <li class="list-inline-item active"><a href="/webrep_v2/stories" class="text-decoration-none {% if not selected_category %}text-wp-primary fw-bold{% else %}text-muted{% endif %}">All</a></li>
+            <li class="list-inline-item">Stories from the field</li>
+            <li class="list-inline-item">MSME stories</li>
+            <li class="list-inline-item">GESI/SECAP stories</li>
+            <li class="list-inline-item">Stories from project implementation</li>
+            {% for category in categories %}
+                <li class="list-inline-item">|</li>
+                <li class="list-inline-item">
+                    <a href="/webrep_v2/stories/category/{{ category }}" class="text-decoration-none {% if selected_category == category %}text-wp-primary fw-bold{% else %}text-muted{% endif %}">{{ category }}</a>
+                </li>
+            {% endfor %}
+        </ul> -->
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <h5 class="wp_font_roboto_regular text-wp-primary mb-4 fw-bold">Other stories</h5>  
+            <div class="row">
+                {% if not stories %}
+                    <div class="col-12">
+                        <p class="text-muted"><i class="fa fa-exclamation-triangle"></i> No stories found.</p>
+                    </div>
+                {% endif %}
+                {% for article in stories %}
+                    <div class="col-6 mb-3">
+                        <div class="row">
+                            <div class="col-12 col-md-3" >
+                                <img class="img-fluid" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" 
+                                style="width: 100%;       
+                                    height: 120px;      
+                                    object-fit: cover;  
+                                    display: block; ">
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none"><h5 class="card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold">{{ article.postheader }}</h5></a>
+                                <small class=""><i class="fa fa-calendar"></i> {{ article.date.strftime('%B %d, %Y') }}</small> | 
+                                <small class="">{{ article.posttype | upper }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="mb-5 text-center">
+                {% if pages > 1 %}
+                <!-- <a href="/webrep_v2/stories" class="float-end text-decoration-none text-wp-primary bold " >See all</a> -->
+                {% endif %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination ">
+                        <!-- Previous button -->
+                        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="/webrep_v2/stories?str={{ query }}&page={{ page-1 }}"><i class="fa fa-angle-double-left"></i></a>
+                        </li>
+                        <!-- First page -->
+                        {% if page > 3 %}
+                        <li class="page-item">
+                            <a class="page-link font-10" href="/webrep_v2/stories?str={{ query }}&page=1">1</a>
+                        </li>
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
+                        {% endif %}
+                        <!-- Neighboring pages -->
+                        {% for p in range(start_page, end_page+1) %}
+                        <li class="page-item {% if p == page %}active{% endif %}">
+                            <a class="page-link font-10" href="/webrep_v2/stories?str={{ query }}&page={{ p }}">{{ p }}</a>
+                        </li>
+                        {% endfor %}
+                        <!-- Last page -->
+                        {% if page < pages-2 %}
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
+                        <li class="page-item">
+                            <a class="page-link font-10" href="/webrep_v2/stories?str={{ query }}&page={{ pages }}">{{ pages }}</a>
+                        </li>
+                        {% endif %}
+                        <!-- Next button -->
+                        <li class="page-item {% if page == pages or pages <= 1 %}disabled{% endif %}">
+                        <a class="page-link" href="/webrep_v2/stories?str={{ query }}&page={{ page+1 }}"><i class="fa fa-angle-double-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>   
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+        $('.applyfilter').on('change',function(){
+            var search  = $('.applyfilter_search').val();
+            var category  = ( $('.applyfilter_category').val()===null ? "" : $('.applyfilter_category').val() );
+            var commodity  = ( $('.applyfilter_commodities').val()===null ? "" : $('.applyfilter_commodities').val() );
+            var region  = ( $('.applyfilter_region').val()===null ? "" : $('.applyfilter_region').val() );
+            var year    = ( $('.applyfilter_year').val()===null ? "" : $('.applyfilter_year').val() );
+
+            // console.log('search'+search);
+            // console.log('category'+category);
+            // console.log('commodity'+commodity);
+            // console.log('region'+region);
+            // console.log('year'+year);
+
+            window.location.href = "/webrep_v2/stories?search="+search+"&category="+category+"&commodity="+commodity+"&region="+region+"&year="+year;
+
+        });
+
+    });
+</script>
+{% endblock %}

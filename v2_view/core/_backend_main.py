@@ -17,11 +17,8 @@ from captcha.image import ImageCaptcha
 import io, random, string
 
 from v2_view.core import _dashboard
-<<<<<<< Updated upstream
-=======
 from v2_view.core import _mg_implementation
 from views.dcfv2.dashboard.display_dataform import displayform
->>>>>>> Stashed changes
 from views.dcfv2.dashboard.display_dataform import displayform2
 from views.fmi.bp_app import fmi_dashboard_data
 from views.fmi.bp_app import fmi_dashboard_data_chart
@@ -29,6 +26,7 @@ from views.fmi.bp_app import fmi_dashboard_data_chart
 app = Blueprint("form_a_v2",__name__,template_folder='pages')
 
 app.register_blueprint(_dashboard.app)
+app.register_blueprint(_mg_implementation.app)
 # app.register_blueprint(display_dataform.app)
 
 # rapid = mysql(c.LOCAL_HOST,c.LOCAL_USER,c.LOCAL_PASSWORD,c.LOCAL_DATABASE)
@@ -115,7 +113,7 @@ class _main:
 		if(task=='edit'): res = _backend_sub.user_pofile.edit_user_profile(request)
 		elif(task=='editpic'):res =  _backend_sub.user_pofile.edit_user_profilepic(request)
 		elif(task=='editpass'):res =  _backend_sub.user_pofile.edit_user_profilepass(request)
-		# return res
+		
 		# return redirect("/logout?urlvisit=/mis-v4/core-user-profile")
 		return redirect("/mis-v4/core-system-control")
 

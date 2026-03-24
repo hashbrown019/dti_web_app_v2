@@ -1,0 +1,167 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 200px;">
+    <h2 class="wp_font_roboto_regular text-wp-primary"><i class="fa fa-file-text "></i>Articles
+        <a href="/webrep_v2/article/create" class="float-end mt-2 btn wr_primary_btn btn-sm"><i class="fa fa-plus"></i> Add New</a>
+    </h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            <div class="card mb-4 shadow-sm wp_article_card" >
+                <form method="GET" action="/webrep_v2/articles">
+                <div class="card-body">
+                    <h5 class="mb-3 card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold"><i class="fa fa-filter"></i> Filter:</h5>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Type</span>
+                        <select class="form-select" id="posttype" name="posttype">
+							<option value="all" {% if posttype_selected == "all" %}selected{% endif %}>All</option>
+							<option value="news" {% if posttype_selected == "news" %}selected{% endif %}>News</option>
+							<option value="story" {% if posttype_selected == "story" %}selected{% endif %}>Story</option>
+							<option value="event" {% if posttype_selected == "event" %}selected{% endif %}>Event</option>
+						</select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Commodity</span>
+                        <select class="form-select" id="commodity" name="commodity">
+							<option value="all" {% if commodity_selected == "all" %}selected{% endif %}>All</option>
+							<option value="cacao" {% if commodity_selected == "cacao" %}selected{% endif %}>Cacao</option>
+							<option value="coffee" {% if commodity_selected == "coffee" %}selected{% endif %}>Coffee</option>
+							<option value="coconut" {% if commodity_selected == "coconut" %}selected{% endif %}>Coconut</option>
+							<option value="process fruit & nuts" {% if commodity_selected == "process fruit & nuts" %}selected{% endif %}>Process Fruit & Nuts</option>
+						</select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Region</span>
+                        <select class="form-select" id="region" name="region">
+							<option value="all" {% if region_selected == "all" %}selected{% endif %}>All</option>
+							<option value="npco" {% if region_selected == "npco" %}selected{% endif %}>NPCO</option>
+							<option value="rcu viii" {% if region_selected == "rcu viii" %}selected{% endif %}>RCU 8</option>
+							<option value="rcu ix" {% if region_selected == "rcu ix" %}selected{% endif %}>RCU 9</option>
+							<option value="rcu x" {% if region_selected == "rcu x" %}selected{% endif %}>RCU 10</option>
+							<option value="rcu xi" {% if region_selected == "rcu xi" %}selected{% endif %}>RCU 11</option>
+							<option value="rcu xii" {% if region_selected == "rcu xii" %}selected{% endif %}>RCU 12</option>
+							<option value="rcu xiii" {% if region_selected == "rcu xiii" %}selected{% endif %}>RCU 13</option>
+							<option value="barmm" {% if region_selected == "barmm" %}selected{% endif %}>BARMM</option>
+						</select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Status</span>
+                        <select class="form-select" id="status" name="status">
+							<option value="all" {% if status_selected == "all" %}selected{% endif %}>All</option>
+							<option value="pending" {% if status_selected == "pending" %}selected{% endif %}>Pending</option>
+							<option value="posted" {% if status_selected == "posted" %}selected{% endif %}>Posted</option>
+							<option value="revise" {% if status_selected == "revise" %}selected{% endif %}>Revise</option>
+						</select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Search</span>
+                        <input type="text" class="form-control" name="search" value="{{ search_query }}" placeholder="Search by title or content" aria-label="Search" aria-describedby="basic-addon1">
+                    </div>
+                    <button type="submit" class="btn wr_primary_btn w-100"><i class="fa fa-search"></i> Search</button>
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-9 col-12">   
+            <div class="row mb-3">
+                {% if articles|length > 0 %}
+                    {% for article in articles %}
+                        <div class="col-md-4 col-12">
+                            <div class="card mb-4 shadow-sm wp_article_card" >
+                                <div class="card-body">
+                                    <div class="row muted font-12 mb-2">
+                                        <div class="col-6">
+                                            <small class=""><i class="fa fa-calendar"></i> {{ article.date.strftime('%B %d, %Y') }} | {{ article.posttype | upper }}</small>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            {% if article.status == 'posted' %}
+                                                <span class="badge bg-success">{{ article.status | upper }}</span>
+                                            {% elif article.status == 'pending' %}
+                                                <span class="badge bg-warning text-dark">{{ article.status | upper }}</span>
+                                            {% elif article.status == 'revise' %}
+                                                <span class="badge bg-danger">{{ article.status | upper }}</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">{{ article.status | upper }}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <img class="card-img-top" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" style="height: 150px;;">
+                                    <h5 class="mt-3 mb-3 card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold">{{ article.postheader | urldecode_lines | safe }}</h5>
+                                    <hr>
+                                    <div class="text-end">
+                                        <!-- <a href="/webrep_v2/article/{{ article.id }}" class="btn btn-xs btn-outline-secondary" title="View Article"><i class="fa fa-eye"></i></a>
+                                        <a href="/webrep_v2/stories/create?article_id={{ article.id }}" class="btn btn-xs btn-outline-primary" title="Edit Article" ><i class="fa fa-pencil"></i></a>
+                                        <a href="/webrep_v2/articles/delete/{{ article.id }}" class="btn btn-xs btn-outline-danger" title="Delete Article" ><i class="fa fa-trash"></i></a> | 
+                                        <a href="/webrep_v2/articles/revise/{{ article.id }}" class="btn btn-xs btn-outline-warning" title="Revise Article" ><i class="fa fa-repeat"></i></a>
+                                        <a href="/webrep_v2/articles/confirm/{{ article.id }}" class="btn btn-xs btn-outline-success" title="Confirm & Post Article" ><i class="fa fa-check"></i></a> -->
+                                        
+                                        <a href="/webrep_v2/article/{{ article.id }}" class="btn btn-xs btn-outline-secondary" title="View Article"><i class="fa fa-eye"></i></a>
+                                        <button  class="btn btn-xs btn-outline-primary" title="Edit Article" onclick="article_actions('edit',{{ article.id }})"><i class="fa fa-pencil"></i></button>
+                                        <button  class="btn btn-xs btn-outline-danger" title="Delete Article" onclick="article_actions('delete',{{ article.id }})"><i class="fa fa-trash"></i></button> | 
+                                        <button  class="btn btn-xs btn-outline-warning" title="Revise Article" onclick="article_actions('revise',{{ article.id }})"><i class="fa fa-repeat"></i></button>
+                                        <button  class="btn btn-xs btn-outline-success" title="Confirm & Post Article" onclick="article_actions('confirm',{{ article.id }})"><i class="fa fa-check"></i></button>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                <div class="card mb-4 shadow-sm wp_article_card" >
+                    <div class="card-body">
+                        <h5 class="mb-3 card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold"><i class="fa fa-list"></i> Articles List:</h5>
+                        <p class="text-wp-secondary wp_font_roboto_regular">No articles found.</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+    function article_actions(args,id){
+        if(args=='delete'){delete_article(id)}
+        if(args=='confirm'){confirm_article(id)}
+        if(args=='revise'){revise_article(id)}
+        if(args=='edit'){edit_article(id)}
+    }
+
+    function delete_article(id){
+        $send({
+            action : "/webrep_v2/articles/delete/"+id,
+            func : function(r){ console.log(r); goto('/webrep_v2/articles')}
+        })
+    }
+
+    function confirm_article(id){
+        $send({
+            action : "/webrep_v2/articles/confirm/"+id,
+            func : function(r){goto('/webrep_v2/articles')}
+        })
+    }
+
+    function revise_article(id){
+        $send({
+            action : "/webrep_v2/articles/revise/"+id,
+            func : function(r){goto('/webrep_v2/articles')}
+        })
+    }
+
+    function edit_article(id){
+        goto("/rapid/articles/createPost.html?ids="+id)
+    }
+    
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+    });
+</script>
+{% endblock %}

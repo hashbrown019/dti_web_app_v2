@@ -1,0 +1,154 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+
+{% include 'what_we_do/development_model.html' %}
+{% include 'what_we_do/methodologies.html' %}
+{% include 'what_we_do/network.html' %}
+
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+
+    function resetTableStripe() {
+        const table = document.getElementById('networkTable');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const visibleRows = Array.from(tbody.querySelectorAll('tr'))
+                                .filter(r => r.style.display !== 'none');
+
+        // Remove any manual striping classes first
+        visibleRows.forEach(row => {
+            row.classList.remove('table-light');
+        });
+
+        // Reapply striping to visible rows only
+        // visibleRows.forEach((row, index) => {
+        //     if (index % 2 === 0) {
+        //         row.classList.add('table-light'); // mimic Bootstrap odd-row striping
+        //     }
+        // });
+    }
+
+    function filterTable(trigger) {        
+        const table = document.getElementById('networkTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        
+        var selectedRCU = document.querySelector('.networkFilter_rcu').value; // Get the selected RCU value
+        var searchValue = document.querySelector('.networkFilter_search').value.toLowerCase(); // Get the search input value and convert to lowercase
+
+        if ( trigger === 'rcu' ) {
+            if ( selectedRCU === 'All' ) {
+                $('.networkFilter_pcu').children('option').show(); // Show all PCU options if 'All' is selected
+            } else {
+                $('.networkFilter_pcu').children('option[data-rcu="'+selectedRCU+'"]').show(); // Show PCU options for the selected RCU
+                $('.networkFilter_pcu').children('option[data-rcu!="'+selectedRCU+'"]').hide(); // Hide PCU options for other RCUs
+                $('.networkFilter_pcu').children('option[value="All"]').show(); // Show PCU options for the selected RCU
+                $('.networkFilter_pcu').val('All'); // Reset PCU filter to 'All'
+            }
+        }
+
+        var selectedPCU = document.querySelector('.networkFilter_pcu').value; // Get the selected PCU value
+        var selectedCommodity = document.querySelector('.networkFilter_commodity').value; // Get the selected Commodity value
+
+        for (let i = 0; i < rows.length; i++) {
+            const cellComm = rows[i].getElementsByTagName('td')[1];
+            const cellRCU = rows[i].getElementsByTagName('td')[2];
+            const cellPCU = rows[i].getElementsByTagName('td')[3];
+            if (cellComm && cellRCU && cellPCU) {
+            const cellTextComm = cellComm.textContent || cellComm.innerText;
+            const cellTextRCU = cellRCU.textContent || cellRCU.innerText;
+            const cellTextPCU = cellPCU.textContent || cellPCU.innerText;
+            // Show all rows, or only those matching the status
+            if (selectedCommodity === 'All' || cellTextComm.trim().toLowerCase() === selectedCommodity.toLowerCase()) {
+                if (selectedRCU === 'All' || cellTextRCU.trim().toLowerCase() === selectedRCU.toLowerCase()) {
+                    if (selectedPCU === 'All' || cellTextPCU.trim().toLowerCase() === selectedPCU.toLowerCase()) {
+                        rows[i].style.display = '';
+                        if ( searchValue ) {
+                            const cellName = rows[i].getElementsByTagName('td')[0];
+                            const cellTextName = cellName.textContent || cellName.innerText;
+                            if (cellTextName.trim().toLowerCase().indexOf(searchValue) === -1) {
+                                rows[i].style.display = 'none';
+                            }
+                        }
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            } else {
+                rows[i].style.display = 'none';
+            }
+            }
+        }
+
+        // resetTableStripe(); // Reset the table to reapply striping and clear filters
+    }
+
+    function loadData(){
+        $('.fa-spinner').removeClass('d-none'); 
+        var stakeholderType = document.getElementById('typeofstakeholder').value;
+        
+        setTimeout(function(){
+            $.ajax({
+                url: '/webrep_v2/what_we_do/network/data',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ stakeholder_type: stakeholderType }),
+                success: function(response) {
+                    // Clear existing table data
+                    $('#networkTable tbody').empty();
+
+                    // Populate table with new data
+                    response.data.forEach(function(item) {
+                        var row = '<tr class="font-12">' +
+                            '<td><a href="#">' + item.name + '</a><br>' + 
+                                '<span class="text-muted font-10"><i class="text-wp-secondary fa fa-phone"></i>'+(item.contactno ? item.contactno : 'N/A')+'</span> |'+ 
+                                '<span class="text-muted font-10"><i class="text-wp-secondary fa fa-envelope"></i> '+ (item.email ? item.email : 'N/A')+'</span> | '+
+                                '<span class="text-muted font-10"><i class="text-wp-secondary fa fa-map-marker"></i> '+ (item.address ? item.address : 'N/A')+'</span>' +
+                            '</td>' +
+                            '<td>' + item.commodity + '</td>' +
+                            '<td>' + item.rcu + '</td>' +
+                            '<td>' + item.pcu + '</td>' +
+                            '</tr>';
+                        $('#networkTable tbody').append(row);
+                    });
+                    
+                    $('.fa-spinner').addClass('d-none'); 
+
+                    $('.networkFilter_commodity').val('All');
+                    $('.networkFilter_rcu').val('All');
+                    $('.networkFilter_pcu').val('All');
+                    $('.networkFilter_search').val('');
+
+                },
+                error: function(error) {
+                    console.error('Error loading data:', error);
+                    $('.fa-spinner').addClass('d-none'); 
+                }
+            });
+            
+        }, 500);
+        
+    }
+
+    $(document).ready(function(){
+
+        $('.devmodel').blowup({
+            'background' : '#fff',
+            'border'     : '8px solid #004450',
+            'width'      : 300,
+            'height'     : 300,
+            'scale'      : 2
+        });
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+
+    }); 
+</script>
+{% endblock %}
