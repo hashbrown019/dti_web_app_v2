@@ -17,7 +17,6 @@ from captcha.image import ImageCaptcha
 import io, random, string
 
 from v2_view.core import _dashboard
-from v2_view.core import _mg_implementation
 from views.dcfv2.dashboard.display_dataform import displayform
 from views.fmi.bp_app import fmi_dashboard_data
 from views.fmi.bp_app import fmi_dashboard_data_chart
@@ -63,7 +62,7 @@ class _main:
 			USER_DATA = session["USER_DATA"][0],
 			staff_list=dash_api.get_area_staff(),
 			databases=dash_api.get_databases(),
-			dashboard_data=displayform(),
+			dashboard_data=displayform2(),
 			fmi_data=fmi_dashboard_data(),
 			fmi_data_chart=fmi_dashboard_data_chart(),
 			security_group_ls=dash_api.get_security_group() if "core-system-control" in module else None ,

@@ -608,17 +608,39 @@ def displayform():
 
     dcf_form6actualbudget=db.select("SELECT SUM(form_6_rapid_actual_budget) AS total_actbug6 FROM dcf_product_development {};".format(position_data_filter()))
     dcf_form6male=db.select("SELECT SUM(form_6_male) AS total_male6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6male, dict) and dcf_form6male.get("response") == "error":
+        dcf_form6male = [{'total_male6': 0}]
     dcf_form6female=db.select("SELECT SUM(form_6_female) AS total_female6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6female, dict) and dcf_form6female.get("response") == "error":
+        dcf_form6female = [{'total_female6': 0}]
     dcf_form6pwd=db.select("SELECT SUM(form_6_pwd) AS total_pwd6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6pwd, dict) and dcf_form6pwd.get("response") == "error":
+        dcf_form6pwd = [{'total_pwd6': 0}]
     dcf_form6ip=db.select("SELECT SUM(form_6_ip) AS total_ip6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6ip, dict) and dcf_form6ip.get("response") == "error":
+        dcf_form6ip = [{'total_ip6': 0}]
     dcf_form6youth=db.select("SELECT SUM(form_6_youth) AS total_youth6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6youth, dict) and dcf_form6youth.get("response") == "error":
+        dcf_form6youth = [{'total_youth6': 0}]
     dcf_form6sc=db.select("SELECT SUM(form_6_sc) AS total_sc6 FROM dcf_product_development {};".format(position_data_filter()))
+    if isinstance(dcf_form6sc, dict) and dcf_form6sc.get("response") == "error":
+        dcf_form6sc = [{'total_sc6': 0}]
     dcf_form6act = db.select("""SELECT COUNT(form_6_type_of_activity) AS total_act6 FROM dcf_product_development {} AND form_6_type_of_activity IS NOT NULL AND TRIM(form_6_type_of_activity) <> ''""".format(position_data_filter()))
+    if isinstance(dcf_form6act, dict) and dcf_form6act.get("response") == "error":
+        dcf_form6act = [{'total_act6': 0}]
 
     dcf_form6_Cacao = db.select("""SELECT SUM(form_6_commodity LIKE '%Cacao%') AS total_cacao6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    if isinstance(dcf_form6_Cacao, dict) and dcf_form6_Cacao.get("response") == "error":
+        dcf_form6_Cacao = [{'total_cacao6': 0}]
     dcf_form6_Coffee = db.select(""" SELECT SUM(form_6_commodity LIKE '%Coffee%') AS total_coffee6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    if isinstance(dcf_form6_Coffee, dict) and dcf_form6_Coffee.get("response") == "error":
+        dcf_form6_Coffee = [{'total_coffee6': 0}]
     dcf_form6_Coconut = db.select(""" SELECT SUM(form_6_commodity LIKE '%Coconut%') AS total_coconut6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    if isinstance(dcf_form6_Coconut, dict) and dcf_form6_Coconut.get("response") == "error":
+        dcf_form6_Coconut = [{'total_coconut6': 0}]
     dcf_form6_PFN = db.select(""" SELECT SUM(form_6_commodity LIKE '%PFN%') AS total_pfn6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
+    if isinstance(dcf_form6_PFN, dict) and dcf_form6_PFN.get("response") == "error":
+        dcf_form6_PFN = [{'total_pfn6': 0}]
 
     # Product Development
     dcf_form6_prod = db.select("""
@@ -629,6 +651,8 @@ def displayform():
         AND form_6_type_of_activity IS NOT NULL 
         AND TRIM(form_6_type_of_activity) <> ''
     """.format(position_data_filter()))
+    if isinstance(dcf_form6_prod, dict) and dcf_form6_prod.get("response") == "error":
+        dcf_form6_prod = [{'total_prod6': 0}]
 
     # Training
     dcf_form6_training = db.select("""
@@ -639,6 +663,8 @@ def displayform():
         AND form_6_type_of_activity IS NOT NULL 
         AND TRIM(form_6_type_of_activity) <> ''
     """.format(position_data_filter()))
+    if isinstance(dcf_form6_training, dict) and dcf_form6_training.get("response") == "error":
+        dcf_form6_training = [{'total_training6': 0}]
 
     # Consultation
     dcf_form6_consultation = db.select("""
@@ -649,6 +675,8 @@ def displayform():
         AND form_6_type_of_activity IS NOT NULL 
         AND TRIM(form_6_type_of_activity) <> ''
     """.format(position_data_filter()))
+    if isinstance(dcf_form6_consultation, dict) and dcf_form6_consultation.get("response") == "error":
+        dcf_form6_consultation = [{'total_consultation6': 0}]
 
     # Orientation
     dcf_form6_orientation = db.select("""
@@ -659,6 +687,8 @@ def displayform():
         AND form_6_type_of_activity IS NOT NULL 
         AND TRIM(form_6_type_of_activity) <> ''
     """.format(position_data_filter()))
+    if isinstance(dcf_form6_orientation, dict) and dcf_form6_orientation.get("response") == "error":
+        dcf_form6_orientation = [{'total_orientation6': 0}]
 
     dcf_form2sextotal=db.select("SELECT SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form2FOmale=db.select("SELECT SUM(form_2_male) AS total_male2 FROM dcf_implementing_unit {}; ".format(position_data_filter()))
@@ -683,6 +713,9 @@ def displayform():
         {}
         GROUP BY ST_commodity
     """.format(position_data_filter()))
+
+    if isinstance(st_commodity_totals, dict) and st_commodity_totals.get("response") == "error":
+        st_commodity_totals = []
 
 
     dcf_form1msme=db.select("SELECT SUM(total_large_enterprise) as total_large_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
@@ -2200,6 +2233,2172 @@ def displayform():
     }
 
 
+def displayform2():
+    if(is_on_session()):
+        pass
+    else:
+        return redirect("/login?force_url=1")
+        
+    USER_INFO = session["USER_DATA"]
+    _filter = "WHERE 1 "
+    def _select(sql):
+        if '{}' in sql:
+            res = db.select(sql.format(_filter))
+        else:
+            res = db.select(sql)
+        if res is None:
+            return []
+        if isinstance(res, dict) and res.get("response") == "error":
+            return []
+        return res
+
+
+    form1_data_sep = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form1_data_oct = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form1_data_nov = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)")
+    form1_data_dec = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form1_data_jan = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form1_data_feb = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form1_data_mar = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form1_data_apr = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form1_data_may = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form1_data_june = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form1_data_july = _select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+    form1_thismonth=len(form1_data_july)
+    form1_lastmonth=len(form1_data_june)
+    form1_subperc= form1_thismonth - form1_lastmonth
+    try: form1_percentage= (form1_subperc / form1_lastmonth)
+    except Exception as e: form1_percentage = 0
+
+    form1_percentages = round(form1_percentage,2)
+
+    form1_data_sep=len(form1_data_sep)
+    form1_data_oct=len(form1_data_oct)
+    form1_data_nov=len(form1_data_nov)
+    form1_data_dec=len(form1_data_dec)
+    form1_data_jan=len(form1_data_jan)
+    form1_data_feb=len(form1_data_feb)
+    form1_data_mar=len(form1_data_mar)
+    form1_data_apr=len(form1_data_apr)
+    form1_data_may=len(form1_data_may)
+    form1_data_june=len(form1_data_june)
+    form1_data_july=len(form1_data_july)
+
+
+
+
+
+
+
+    form2_data_sep = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form2_data_oct = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form2_data_nov =_select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE -  INTERVAL 8 MONTH)")
+    form2_data_dec = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form2_data_jan = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form2_data_feb = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form2_data_mar = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form2_data_apr = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form2_data_may = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form2_data_june = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form2_data_july = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+    form2_thismonth=len(form2_data_july)
+    form2_lastmonth=len(form2_data_june)
+    form2_subperc= form2_thismonth - form2_lastmonth
+    try: form2_percentage= (form2_subperc / form2_lastmonth)
+    except Exception as e: form2_percentage = 0
+
+    form2_percentages = round(form2_percentage,2)
+
+    form2_data_sep=len(form2_data_sep)
+    form2_data_oct=len(form2_data_oct)
+    form2_data_nov=len(form2_data_nov)
+    form2_data_dec=len(form2_data_dec)
+    form2_data_jan=len(form2_data_jan)
+    form2_data_feb=len(form2_data_feb)
+    form2_data_mar=len(form2_data_mar)
+    form2_data_apr=len(form2_data_apr)
+    form2_data_may=len(form2_data_may)
+    form2_data_june=len(form2_data_june)
+    form2_data_july=len(form2_data_july)
+
+
+
+
+
+
+
+
+    form3_data_sep = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form3_data_oct = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form3_data_nov = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE -  INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE -INTERVAL 8 MONTH)")
+    form3_data_dec = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form3_data_jan = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form3_data_feb = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form3_data_mar = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form3_data_apr = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form3_data_may = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form3_data_june = _select("SELECT * FROM dcf_bdsp_reg {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form3_data_july = _select("SELECT * FROM dcf_bdsp_reg {}AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+    form3_thismonth=len(form3_data_july)
+    form3_lastmonth=len(form3_data_june)
+    form3_subperc= form3_thismonth - form3_lastmonth
+    try: form3_percentage= (form3_subperc / form3_lastmonth)
+    except Exception as e: form3_percentage = 0
+
+    form3_percentages = round(form3_percentage,2)
+
+    form3_data_sep=len(form3_data_sep)
+    form3_data_oct=len(form3_data_oct)
+    form3_data_nov=len(form3_data_nov)
+    form3_data_dec=len(form3_data_dec)
+    form3_data_jan=len(form3_data_jan)
+    form3_data_feb=len(form3_data_feb)
+    form3_data_mar=len(form3_data_mar)
+    form3_data_apr=len(form3_data_apr)
+    form3_data_may=len(form3_data_may)
+    form3_data_june=len(form3_data_june)
+    form3_data_july=len(form3_data_july)
+
+
+
+
+
+
+
+
+    form4_data_sep = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form4_data_oct = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form4_data_nov = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE -  INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE -INTERVAL 8 MONTH)")
+    form4_data_dec = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form4_data_jan = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form4_data_feb = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form4_data_mar = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form4_data_apr = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form4_data_may = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form4_data_june = _select("SELECT * FROM dcf_capacity_building {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form4_data_july = _select("SELECT * FROM dcf_bdsp_reg {}AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+
+    form4_thismonth=len(form4_data_july)
+    form4_lastmonth=len(form4_data_june)
+    form4_subperc= form4_thismonth - form4_lastmonth
+    try: form4_percentage= (form4_subperc / form4_lastmonth)
+    except Exception as e: form4_percentage = 0
+
+    form4_percentages = round(form4_percentage,2)
+
+    form4_data_sep=len(form4_data_sep)
+    form4_data_oct=len(form4_data_oct)
+    form4_data_nov=len(form4_data_nov)
+    form4_data_dec=len(form4_data_dec)
+    form4_data_jan=len(form4_data_jan)
+    form4_data_feb=len(form4_data_feb)
+    form4_data_mar=len(form4_data_mar)
+    form4_data_apr=len(form4_data_apr)
+    form4_data_may=len(form4_data_may)
+    form4_data_june=len(form4_data_june)
+    form4_data_july=len(form4_data_july)
+
+
+
+
+
+
+
+
+    form5_data_sep = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form5_data_oct = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form5_data_nov =_select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)")
+    form5_data_dec = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form5_data_jan = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form5_data_feb = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form5_data_mar = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form5_data_apr = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form5_data_may = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form5_data_june = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form5_data_july = _select("SELECT * FROM dcf_matching_grant {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+    form5_thismonth=len(form5_data_july)
+    form5_lastmonth=len(form5_data_june)
+    form5_subperc= form5_thismonth - form5_lastmonth
+    try: form5_percentage= (form5_subperc / form5_lastmonth)
+    except Exception as e: form5_percentage = 0
+
+    form5_percentages = round(form5_percentage,2)
+
+    form5_data_sep=len(form5_data_sep)
+    form5_data_oct=len(form5_data_oct)
+    form5_data_nov=len(form5_data_nov)
+    form5_data_dec=len(form5_data_dec)
+    form5_data_jan=len(form5_data_jan)
+    form5_data_feb=len(form5_data_feb)
+    form5_data_mar=len(form5_data_mar)
+    form5_data_apr=len(form5_data_apr)
+    form5_data_may=len(form5_data_may)
+    form5_data_june=len(form5_data_june)
+    form5_data_july=len(form5_data_july)
+
+
+
+
+    form6_data_sep = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form6_data_oct = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form6_data_nov =_select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)")
+    form6_data_dec = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form6_data_jan = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form6_data_feb = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form6_data_mar = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form6_data_apr = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form6_data_may = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form6_data_june = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form6_data_july = _select("SELECT * FROM dcf_product_development {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+    form6_thismonth=len(form6_data_july)
+    form6_lastmonth=len(form6_data_june)
+    form6_subperc= form6_thismonth - form6_lastmonth
+    try: form6_percentage= (form6_subperc / form6_lastmonth)
+    except Exception as e: form6_percentage = 0
+
+    form6_percentages = round(form6_percentage,2)
+
+    form6_data_sep=len(form6_data_sep)
+    form6_data_oct=len(form6_data_oct)
+    form6_data_nov=len(form6_data_nov)
+    form6_data_dec=len(form6_data_dec)
+    form6_data_jan=len(form6_data_jan)
+    form6_data_feb=len(form6_data_feb)
+    form6_data_mar=len(form6_data_mar)
+    form6_data_apr=len(form6_data_apr)
+    form6_data_may=len(form6_data_may)
+    form6_data_june=len(form6_data_june)
+    form6_data_july=len(form6_data_july)
+
+
+
+    form7_data_sep = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form7_data_oct = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form7_data_nov =_select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)")
+    form7_data_dec = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form7_data_jan = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form7_data_feb = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form7_data_mar = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form7_data_apr = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form7_data_may = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form7_data_june = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form7_data_july = _select("SELECT * FROM dcf_trade_promotion {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+    form7_thismonth=len(form7_data_july)
+    form7_lastmonth=len(form7_data_june)
+    form7_subperc= form7_thismonth - form7_lastmonth
+    try: form7_percentage= (form7_subperc / form7_lastmonth)
+    except Exception as e: form7_percentage = 0
+
+    form7_percentages = round(form7_percentage,2)
+
+    form7_data_sep=len(form7_data_sep)
+    form7_data_oct=len(form7_data_oct)
+    form7_data_nov=len(form7_data_nov)
+    form7_data_dec=len(form7_data_dec)
+    form7_data_jan=len(form7_data_jan)
+    form7_data_feb=len(form7_data_feb)
+    form7_data_mar=len(form7_data_mar)
+    form7_data_apr=len(form7_data_apr)
+    form7_data_may=len(form7_data_may)
+    form7_data_june=len(form7_data_june)
+    form7_data_july=len(form7_data_july)
+
+
+    form9_data_sep = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form9_data_oct = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form9_data_nov =_select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)")
+    form9_data_dec = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form9_data_jan = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form9_data_feb = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form9_data_mar = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form9_data_apr = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form9_data_may = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form9_data_june = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form9_data_july = _select("SELECT * FROM dcf_enablers_activity {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+    form9_thismonth=len(form9_data_july)
+    form9_lastmonth=len(form9_data_june)
+    form9_subperc= form9_thismonth - form9_lastmonth
+    try: form9_percentage= (form9_subperc / form9_lastmonth)
+    except Exception as e: form9_percentage = 0
+
+    form9_percentages = round(form9_percentage,2)
+
+    form9_data_sep=len(form9_data_sep)
+    form9_data_oct=len(form9_data_oct)
+    form9_data_nov=len(form9_data_nov)
+    form9_data_dec=len(form9_data_dec)
+    form9_data_jan=len(form9_data_jan)
+    form9_data_feb=len(form9_data_feb)
+    form9_data_mar=len(form9_data_mar)
+    form9_data_apr=len(form9_data_apr)
+    form9_data_may=len(form9_data_may)
+    form9_data_june=len(form9_data_june)
+    form9_data_july=len(form9_data_july)
+
+
+
+
+
+
+
+
+    form10_data_sep = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form10_data_oct = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form10_data_nov =_select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)")
+    form10_data_dec = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form10_data_jan = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form10_data_feb = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form10_data_mar = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form10_data_apr = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form10_data_may =  _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form10_data_june = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form10_data_july = _select("SELECT * FROM dcf_negosyo_center {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+    form10_thismonth=len(form10_data_july)
+    form10_lastmonth=len(form10_data_june)
+    form10_subperc= form10_thismonth - form10_lastmonth
+    try: form10_percentage= (form10_subperc / form10_lastmonth)
+    except Exception as e: form10_percentage = 0
+
+    form10_percentages = round(form10_percentage,2)
+
+    form10_data_sep=len(form10_data_sep)
+    form10_data_oct=len(form10_data_oct)
+    form10_data_nov=len(form10_data_nov)
+    form10_data_dec=len(form10_data_dec)
+    form10_data_jan=len(form10_data_jan)
+    form10_data_feb=len(form10_data_feb)
+    form10_data_mar=len(form10_data_mar)
+    form10_data_apr=len(form10_data_apr)
+    form10_data_may=len(form10_data_may)
+    form10_data_june=len(form10_data_june)
+    form10_data_july=len(form10_data_july)
+
+
+
+
+
+
+
+
+    form11_data_sep = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)")
+    form11_data_oct = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)")
+    form11_data_nov =_select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)")
+    form11_data_dec = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 7 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 7 MONTH)")
+    form11_data_jan = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 6 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 6 MONTH)")
+    form11_data_feb = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 5 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 5 MONTH)")
+    form11_data_mar = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 4 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 4 MONTH)")
+    form11_data_apr = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 3 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 3 MONTH)")
+    form11_data_may = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
+    form11_data_june = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
+    form11_data_july = _select("SELECT * FROM dcf_access_financing {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
+
+
+
+
+    form11_thismonth=len(form11_data_july)
+    form11_lastmonth=len(form11_data_june)
+    form11_subperc= form11_thismonth - form11_lastmonth
+    try: form11_percentage= (form11_subperc / form11_lastmonth)
+    except Exception as e: form11_percentage = 0
+
+    form11_percentages = round(form11_percentage,2)
+
+    form11_data_sep=len(form11_data_sep)
+    form11_data_oct=len(form11_data_oct)
+    form11_data_nov=len(form11_data_nov)
+    form11_data_dec=len(form11_data_dec)
+    form11_data_jan=len(form11_data_jan)
+    form11_data_feb=len(form11_data_feb)
+    form11_data_mar=len(form11_data_mar)
+    form11_data_apr=len(form11_data_apr)
+    form11_data_may=len(form11_data_may)
+    form11_data_june=len(form11_data_june)
+    form11_data_july=len(form11_data_july)
+
+
+
+
+
+
+
+
+    form1_datatable=_select("SELECT * FROM dcf_prep_review_aprv_status {} ORDER BY `id` DESC;")
+    form2_datatable=_select("SELECT * FROM dcf_implementing_unit {} ORDER BY `id` DESC;")
+    form3_datatable=_select("SELECT * FROM dcf_bdsp_reg {} ORDER BY `id` DESC;")
+    form4_datatable=_select("SELECT * FROM dcf_capacity_building {} ORDER BY `id` DESC;")
+    form5_datatable=_select("SELECT * FROM dcf_matching_grant {} ORDER BY `id` DESC;")
+    form6_datatable=_select("SELECT * FROM dcf_product_development {} ORDER BY `id` DESC;")
+    form7_datatable=_select("SELECT * FROM dcf_trade_promotion {} ORDER BY `id` DESC;")
+    form8_datatable=_select("SELECT * FROM form8 {} ORDER BY `id` DESC;")
+    form9_datatable=_select("SELECT * FROM dcf_enablers_activity {} ORDER BY `id` DESC;") 
+    form10_datatable=_select("SELECT * FROM dcf_negosyo_center {} ORDER BY `id` DESC;")
+    form11_datatable=_select("SELECT * FROM dcf_access_financing {} ORDER BY `id` DESC;")
+    form1_datatabledip =_select("SELECT id,form_1_rcus,form_1_name_dip FROM dcf_prep_review_aprv_status")
+
+    form2status_nonrenewal=_select("SELECT form_2_remarks_status AS totalnonrenewal FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Non-renewal';")
+    dcf_form2nonrenewal=len(form2status_nonrenewal)
+    form2status_cancelled=_select("SELECT form_2_remarks_status AS totalcancelled FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Cancelled';")
+    dcf_form2cancelled=len(form2status_cancelled)
+    form2status_og=_select("SELECT form_2_remarks_status AS totalog FROM dcf_implementing_unit {} AND form_2_remarks_status = 'On-going';")
+    dcf_form2og=len(form2status_og)
+    totalstatus = dcf_form2cancelled+dcf_form2nonrenewal+dcf_form2og
+
+
+
+    dcf_form1male=_select("SELECT SUM(form_1_totalmale) AS total_male FROM dcf_prep_review_aprv_status {}; ")
+    dcf_form1maleyouth=_select("SELECT SUM(form_1_maleyouth) AS total_maleyouth FROM dcf_prep_review_aprv_status {}; ")
+    dcf_form1maleip=_select("SELECT SUM(form_1_maleip) AS total_maleip FROM dcf_prep_review_aprv_status {}; ")
+    dcf_form1malepwd=_select("SELECT SUM(form_1_malepwd) AS total_malepwd FROM dcf_prep_review_aprv_status {}; ")
+
+    dcf_form1sextotal=_select("SELECT SUM(form_1_total_farmerbene) AS total_sex FROM dcf_prep_review_aprv_status {}; ")
+    dcf_form3sextotal=_select("SELECT COUNT(CASE WHEN form_3_sex = 'male' OR form_3_sex = 'female' THEN 1 END) AS total_sex3 FROM dcf_bdsp_reg {}; ")
+    dcf_form4sextotal=_select("SELECT  SUM(cbb_total_number_per_gender_male + cbb_total_number_per_gender_female)AS total_sex4 FROM dcf_capacity_building {}; ")
+
+    dcf_form1sextotalappr=_select("SELECT SUM(form_1_total_farmerbene) AS total_sexappr FROM dcf_prep_review_aprv_status {} AND `form_1_date_of_ifad_no_inssuance` !='' ; ")
+
+
+
+    dcf_form1female=_select("SELECT SUM(form_1_totalfemale) AS total_female FROM dcf_prep_review_aprv_status {}; ")
+    dcf_form1femaleyouth=_select("SELECT SUM(form_1_femaleyouth) AS total_femaleyouth FROM dcf_prep_review_aprv_status {}; ")
+    dcf_form1femaleip=_select("SELECT SUM(form_1_femaleip) AS total_femaleip FROM dcf_prep_review_aprv_status {}; ")
+    dcf_form1femalepwd=_select("SELECT SUM(form_1_femalepwd) AS total_femalepwd FROM dcf_prep_review_aprv_status {}; ")
+
+    form3_agri =_select("SELECT COUNT(id) AS total_agri FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Agri-technical%'; ")
+    form3_entrep =_select("SELECT COUNT(id) AS total_entrep FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Entrepreneurial%'; ")
+    form3_extserv =_select("SELECT COUNT(id) AS total_extserv FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Extension Service%'; ")
+    form3_org =_select("SELECT COUNT(id) AS total_org FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Organizational%'; ")
+
+    form3red=_select("SELECT COUNT(form_3_philgeps_registered) AS totalred FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'RED';")
+    form3plat=_select("SELECT COUNT(form_3_philgeps_registered) AS totalplat FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'PLATINUM';")
+    form3unreg=_select("SELECT COUNT(form_3_philgeps_registered) AS totalunreg FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'UNREGISTERED';")
+
+    form3orgfirm=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalorgfirm FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm';")
+    form3indiv=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalindiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual';")
+
+    form2status_cancelled=_select("SELECT form_2_remarks_status AS totalcancelled FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Cancelled';")
+    dcf_form2cancelled=len(form2status_cancelled)
+    form2status_og=_select("SELECT form_2_remarks_status AS totalog FROM dcf_implementing_unit {} AND form_2_remarks_status = 'On-going';")
+    dcf_form2og=len(form2status_og)
+
+    form4beforedip=_select("SELECT COUNT(cbb_dip_approved_alignment) AS totalbeforedip FROM dcf_capacity_building {} AND cbb_dip_approved_alignment = 'Conducted after DIP approval';")
+    form4afterdip=_select("SELECT COUNT(cbb_dip_approved_alignment) AS totalafterdip FROM dcf_capacity_building {} AND cbb_dip_approved_alignment = 'Conducted before DIP approval';")
+
+
+    dcf_form5male=_select("SELECT SUM(mgit_total_number_fo_gender_male) AS totalmale5 FROM dcf_matching_grant {}; ")
+    dcf_form5female=_select("SELECT SUM(mgit_total_number_fo_gender_female) AS totalfemale5 FROM dcf_matching_grant {}; ")
+    dcf_form5female=len(dcf_form5female)
+
+    dcf_form5pwd=_select("SELECT SUM(mgit_total_number_fo_sectoral_pwd) AS totalpwd5 FROM dcf_matching_grant {}; ")
+    dcf_form5youth=_select("SELECT SUM(mgit_total_number_fo_sectoral_youth) AS totalyouth5 FROM dcf_matching_grant {}; ")
+    dcf_form5youth=len(dcf_form5youth)
+    dcf_form5ip=_select("SELECT SUM(mgit_total_number_fo_sectoral_IP) AS totalip5 FROM dcf_matching_grant {}; ")
+    dcf_form5sc=_select("SELECT SUM(mgit_total_number_fo_sectoral_SC) AS totalsc5 FROM dcf_matching_grant {}; ")
+
+    dcf_form5FOMSME=_select("SELECT COUNT(mgit_msme_recipient) AS totalFOMSME5 FROM dcf_matching_grant {}; ")
+
+    dcf_form5_FOExpansion = _select("""
+        SELECT SUM((LENGTH(mgit_type_of_investment) - LENGTH(REPLACE(mgit_type_of_investment, 'Expansion', ''))) / LENGTH('Expansion')) AS FO_Expansion
+        FROM dcf_matching_grant {};
+    """)
+
+    dcf_form5_FOProductive = _select("""
+        SELECT SUM((LENGTH(mgit_type_of_investment) - LENGTH(REPLACE(mgit_type_of_investment, 'Productive investments', ''))) / LENGTH('Productive investments')) AS FO_Productive
+        FROM dcf_matching_grant {};
+    """)
+
+    dcf_form5_FORehab = _select("""
+        SELECT SUM((LENGTH(mgit_type_of_investment) - LENGTH(REPLACE(mgit_type_of_investment, 'Rehabilitation', ''))) / LENGTH('Rehabilitation')) AS FO_Rehabilitation
+        FROM dcf_matching_grant {};
+    """)
+
+
+
+    selectdcf_form3male=_select("SELECT form_3_sex AS total_male3 FROM dcf_bdsp_reg {} AND form_3_sex = 'male';")
+    selectdcf_form3female=_select("SELECT form_3_sex AS total_female3 FROM dcf_bdsp_reg {} AND form_3_sex = 'female';")
+    dcf_form3male=len(selectdcf_form3male)
+    dcf_form3female=len(selectdcf_form3female)
+
+    dcf_form4female=_select("SELECT SUM(cbb_female_total) AS total_female4 FROM dcf_capacity_building {};")
+    dcf_form4male=_select("SELECT SUM(cbb_male_total) AS total_male4 FROM dcf_capacity_building {};")
+
+    dcf_form4maleip=_select("SELECT SUM(cbb_male_ip) AS total_male4ip FROM dcf_capacity_building {};")
+    dcf_form4maleyouth=_select("SELECT SUM(cbb_male_youth) AS total_male4youth FROM dcf_capacity_building {};")
+    dcf_form4malepwd=_select("SELECT SUM(cbb_male_pwd) AS total_male4pwd FROM dcf_capacity_building {};")
+    dcf_form4malesc=_select("SELECT SUM(cbb_male_sc) AS total_male4sc FROM dcf_capacity_building {};")
+
+    dcf_form4femaleip=_select("SELECT SUM(cbb_female_ip) AS total_female4ip FROM dcf_capacity_building {};")
+    dcf_form4femaleyouth=_select("SELECT SUM(cbb_female_youth) AS total_female4youth FROM dcf_capacity_building {};")
+    dcf_form4femalepwd=_select("SELECT SUM(cbb_female_pwd) AS total_female4pwd FROM dcf_capacity_building {};")
+    dcf_form4femalesc=_select("SELECT SUM(cbb_female_sc) AS total_female4sc FROM dcf_capacity_building {};")
+
+    dcf_form7msme=_select("SELECT COUNT(form_7_beneficiary) AS totalmsme7 FROM dcf_trade_promotion {} AND form_7_beneficiary = 'MSME';")
+    dcf_form7fo=_select("SELECT COUNT(form_7_beneficiary) AS totalfo7 FROM dcf_trade_promotion {} AND form_7_beneficiary = 'FO';")
+    dcf_form7farmer=_select("SELECT COUNT(form_7_beneficiary) AS totalfarmer7 FROM dcf_trade_promotion {} AND form_7_beneficiary = 'Farmer';")
+
+    dcf_form7male=_select("SELECT COUNT(form_7_sex) AS totalmale7 FROM dcf_trade_promotion {} AND form_7_sex = 'Male';")
+    dcf_form7female=_select("SELECT COUNT(form_7_sex) AS totalfemale7 FROM dcf_trade_promotion {} AND form_7_sex = 'Female';")
+
+    dcf_form7pwd=_select("SELECT COUNT(form_7_sector) AS totalpwd7 FROM dcf_trade_promotion {} AND form_7_sector = 'PWD';")
+    dcf_form7youth=_select("SELECT COUNT(form_7_sector) AS totalyouth7 FROM dcf_trade_promotion {} AND form_7_sector = 'Youth';")
+    dcf_form7ip=_select("SELECT COUNT(form_7_sector) AS totalip7 FROM dcf_trade_promotion {} AND form_7_sector = 'IP';")
+    dcf_form7sc=_select("SELECT COUNT(form_7_sector) AS totalsc7 FROM dcf_trade_promotion {} AND form_7_sector = 'SC';")
+    dcf_form7abled=_select("SELECT COUNT(form_7_sector) AS totalabled7 FROM dcf_trade_promotion {} AND form_7_sector = 'Abled';")
+
+    dcf_form7cashsales=_select("SELECT SUM(form_7_cash_sales) AS total_cash7 FROM dcf_trade_promotion {};")
+    dcf_form7bookedsales=_select("SELECT SUM(form_7_booked_sales) AS total_booked7 FROM dcf_trade_promotion {};")
+    dcf_form7undernego=_select("SELECT SUM(form_7_under_negotiations) AS total_undernego FROM dcf_trade_promotion {};")
+    dcf_form7total=_select("SELECT SUM(form_7_total_autosum) AS total_ovrlltotal FROM dcf_trade_promotion {};")
+
+    dcf_form9capb=_select("SELECT COUNT(form_9_type_of_training) AS totalcapbuild9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Capbuild';")
+    dcf_form9meetings=_select("SELECT COUNT(form_9_type_of_training) AS totalmeetings9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Meetings';")
+    dcf_form9policy=_select("SELECT COUNT(form_9_type_of_training) AS totalpolicy9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Policy issuances';")
+    dcf_form9budg=_select("SELECT SUM(form_9_rapid_actual_budget) as totalact9 FROM dcf_enablers_activity {};")
+    dcf_form9other = _select("""
+        SELECT COUNT(form_9_othertypetraining) AS totalother9
+        FROM dcf_enablers_activity
+        {}
+        AND form_9_othertypetraining IS NOT NULL
+        AND TRIM(form_9_othertypetraining) <> ''
+    """)
+
+
+    dcf_form10female=_select("SELECT SUM(form_10_sex_female) AS total_female10 FROM dcf_negosyo_center {};")
+    dcf_form10male=_select("SELECT SUM(form_10_sex_male) AS total_male10 FROM dcf_negosyo_center {};")
+    dcf_form10nc=_select("SELECT COUNT(form_10_name_of_nc) AS total_nc10 FROM dcf_negosyo_center {} AND form_10_name_of_nc IS NOT NULL AND TRIM(form_10_name_of_nc) <> '';")
+
+
+    dcf_form11ip = _select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_ip, 0) + COALESCE(form_11_fo_ip, 0)) AS total_ip11 FROM dcf_access_financing {};""")
+    dcf_form11youth = _select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_youth, 0) + COALESCE(form_11_fo_youth, 0)) AS total_youth11 FROM dcf_access_financing {};""")
+    dcf_form11pwd = _select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_pwd, 0) + COALESCE(form_11_fo_pwd, 0)) AS total_pwd11 FROM dcf_access_financing {};""")
+    dcf_form11sc = _select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_sc, 0) + COALESCE(form_11_fo_sc, 0)) AS total_sc11 FROM dcf_access_financing {};""")
+    dcf_form11female = _select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_female, 0) + COALESCE(form_11_fo_female, 0)) AS total_female11 FROM dcf_access_financing {};""")
+    dcf_form11male = _select("""SELECT SUM(COALESCE(form_11_farmer_beneficiaries_male, 0) + COALESCE(form_11_fo_male, 0)) AS total_male11 FROM dcf_access_financing {};""")
+
+    dcf_form6actualbudget=_select("SELECT SUM(form_6_rapid_actual_budget) AS total_actbug6 FROM dcf_product_development {};")
+    dcf_form6actualbudget=_select("SELECT SUM(form_6_rapid_actual_budget) AS total_actbug6 FROM dcf_product_development {};")
+    dcf_form6male=_select("SELECT SUM(form_6_male) AS total_male6 FROM dcf_product_development {};")
+    dcf_form6female=_select("SELECT SUM(form_6_female) AS total_female6 FROM dcf_product_development {};")
+    dcf_form6pwd=_select("SELECT SUM(form_6_pwd) AS total_pwd6 FROM dcf_product_development {};")
+    dcf_form6ip=_select("SELECT SUM(form_6_ip) AS total_ip6 FROM dcf_product_development {};")
+    dcf_form6youth=_select("SELECT SUM(form_6_youth) AS total_youth6 FROM dcf_product_development {};")
+    dcf_form6sc=_select("SELECT SUM(form_6_sc) AS total_sc6 FROM dcf_product_development {};")
+    dcf_form6act = _select("""SELECT COUNT(form_6_type_of_activity) AS total_act6 FROM dcf_product_development {} AND form_6_type_of_activity IS NOT NULL AND TRIM(form_6_type_of_activity) <> ''""")
+
+    dcf_form6_Cacao = _select("""SELECT SUM(form_6_commodity LIKE '%Cacao%') AS total_cacao6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """)
+    dcf_form6_Coffee = _select(""" SELECT SUM(form_6_commodity LIKE '%Coffee%') AS total_coffee6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """)
+    dcf_form6_Coconut = _select(""" SELECT SUM(form_6_commodity LIKE '%Coconut%') AS total_coconut6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """)
+    dcf_form6_PFN = _select(""" SELECT SUM(form_6_commodity LIKE '%PFN%') AS total_pfn6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """)
+
+    # Product Development
+    dcf_form6_prod = _select("""
+        SELECT COUNT(*) AS total_prod6 
+        FROM dcf_product_development 
+        {} 
+        AND form_6_type_of_activity LIKE '%Product Development%'
+        AND form_6_type_of_activity IS NOT NULL 
+        AND TRIM(form_6_type_of_activity) <> ''
+    """)
+    if isinstance(dcf_form6_prod, dict) and dcf_form6_prod.get("response") == "error":
+        dcf_form6_prod = [{'total_prod6': 0}]
+
+    # Training
+    dcf_form6_training = _select("""
+        SELECT COUNT(*) AS total_training6 
+        FROM dcf_product_development 
+        {} 
+        AND form_6_type_of_activity LIKE '%Training%'
+        AND form_6_type_of_activity IS NOT NULL 
+        AND TRIM(form_6_type_of_activity) <> ''
+    """)
+    if isinstance(dcf_form6_training, dict) and dcf_form6_training.get("response") == "error":
+        dcf_form6_training = [{'total_training6': 0}]
+
+    # Consultation
+    dcf_form6_consultation = _select("""
+        SELECT COUNT(*) AS total_consultation6 
+        FROM dcf_product_development 
+        {} 
+        AND form_6_type_of_activity LIKE '%Consultation%'
+        AND form_6_type_of_activity IS NOT NULL 
+        AND TRIM(form_6_type_of_activity) <> ''
+    """)
+    if isinstance(dcf_form6_consultation, dict) and dcf_form6_consultation.get("response") == "error":
+        dcf_form6_consultation = [{'total_consultation6': 0}]
+
+    # Orientation
+    dcf_form6_orientation = _select("""
+        SELECT COUNT(*) AS total_orientation6 
+        FROM dcf_product_development 
+        {} 
+        AND form_6_type_of_activity LIKE '%Orientation%'
+        AND form_6_type_of_activity IS NOT NULL 
+        AND TRIM(form_6_type_of_activity) <> ''
+    """)
+    if isinstance(dcf_form6_orientation, dict) and dcf_form6_orientation.get("response") == "error":
+        dcf_form6_orientation = [{'total_orientation6': 0}]
+
+    dcf_form2sextotal=_select("SELECT SUM(form_2_male + form_2_female)AS total_sex2 FROM dcf_implementing_unit {}; ")
+    dcf_form2FOmale=_select("SELECT SUM(form_2_male) AS total_male2 FROM dcf_implementing_unit {}; ")
+    dcf_form2FOfemale=_select("SELECT SUM(form_2_female) AS total_female2 FROM dcf_implementing_unit {}; ")
+    dcf_form2FOpwd=_select("SELECT SUM(form_2_pwde) AS total_pwd FROM dcf_implementing_unit {}; ")
+    dcf_form2FOyouth=_select("SELECT SUM( form_2_youth) AS total_youth FROM dcf_implementing_unit {}; ")
+    dcf_form2FOip=_select("SELECT SUM(form_2_ip) AS total_ip FROM dcf_implementing_unit {}; ")
+    dcf_form2FOsc=_select("SELECT SUM(form_2_sc) AS total_sc FROM dcf_implementing_unit {}; ")
+    
+    st_sales = _select("SELECT SUM(ST_ave_price * ST_vol_supplied) AS total_sales FROM sales_tracker {};")
+    st_vol = _select("SELECT SUM(ST_vol_supplied) AS total_vol FROM sales_tracker {};")
+    st_transaction = _select("SELECT SUM(ST_total_transaction) AS total_transaction FROM sales_tracker {};")
+    st_commodity = _select("SELECT COUNT(*) AS total_commodity FROM sales_tracker {}")
+
+    st_commodity_totals = _select("""
+        SELECT 
+            ST_commodity,
+            SUM(ST_ave_price * ST_vol_supplied) AS total_sales,
+            SUM(ST_vol_supplied) AS total_vol,
+            SUM(ST_total_transaction) AS total_transaction
+        FROM sales_tracker
+        {}
+        GROUP BY ST_commodity
+    """)
+
+    if isinstance(st_commodity_totals, dict) and st_commodity_totals.get("response") == "error":
+        st_commodity_totals = []
+
+
+    dcf_form1msme=_select("SELECT SUM(total_large_enterprise) as total_large_entep FROM dcf_prep_review_aprv_status {};")
+    dcf_form1msme2=_select("SELECT SUM(total_medium_enterprise) as total_medium_entep FROM dcf_prep_review_aprv_status {};")
+    dcf_form1msme3=_select("SELECT SUM(total_small_enterprise ) as total_small_entep FROM dcf_prep_review_aprv_status {};")
+    dcf_form1msme4=_select("SELECT SUM(total_micro_enterprise ) as total_micro_entep FROM dcf_prep_review_aprv_status {};")
+    
+
+    selectapprovedform1=_select("SELECT form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance != '' AND form_1_date_of_npco_cursory != '' OR ' ' ")
+    # print(selectapprovedform1)
+    rcu8approvedform1 = len(selectapprovedform1)
+
+
+
+    # selectpipelineform1=_select("SELECT form_1_for_development,form_1_finalized_approved,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_finalized_approved != '' AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
+    # print(selectpipelineform1)
+    # pipelineform1 = len(selectpipelineform1)
+
+    # selectongoingform1=_select("SELECT form_1_for_development,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_for_development != '' OR ' ' ".format(position_data_filter()))
+    # print(selectongoingform1)
+    # ongoingform1 = len(selectongoingform1)
+
+    # dips_list=_select('''
+    #     SELECT 
+    #         form_1_for_development, #PIPELINE # ONGOING
+    #         form_1_finalized_approved, #PIPELINE
+    #         form_1_date_of_ifad_no_inssuance, #APPROVE
+    #         form_1_date_of_npco_cursory,  #APPROVE
+    #         form_1_rcus,
+    #         form_1_commodity
+    #     FROMdcf_prep_review_aprv_status {} ;'''.format(position_data_filter()))
+
+######################FORM11#################################################
+
+    # dips_list11 = form11_datatable
+    # over_all_commodity_count11 = {}
+    # for index in range(len(dips_list11)):
+    #     DIP11 = dips_list11[index]
+    #     _comm_rule11 = ["cacao","coconut","coffee","pfn"]
+    #     _com11 = DIP11['form_11_industry_cluster']
+    #     if(_com11.lower() not in _comm_rule11):
+    #         _com11 = "Others"
+    #     if(_com11 not in over_all_commodity_count11):
+    #         over_all_commodity_count11[_com11 ] = 0
+    #     over_all_commodity_count11[_com11 ] += 1
+
+
+
+####################FORM10##################################################
+
+    dips_list10 = form10_datatable
+    over_all_commodity_count10 = {}
+    for index in range(len(dips_list10)):
+        DIP10 = dips_list10[index]
+        _comm_rule10 = ["cacao","coconut","coffee","pfn"]
+        _com10 = DIP10['form_10_commodity']
+        if(_com10.lower() not in _comm_rule10):
+            _com10 = "Others"
+        if(_com10 not in over_all_commodity_count10):
+            over_all_commodity_count10[_com10 ] = 0
+        over_all_commodity_count10[_com10 ] += 1
+
+
+
+
+
+###################FORM7####################################################
+
+    dips_list7 = form7_datatable
+    over_all_commodity_count7 = {}
+    for index in range(len(dips_list7)):
+        DIP7 = dips_list7[index]
+        _comm_rule7 = ["cacao","coconut","coffee","pfn"]
+        _com7 = DIP7['form_7_commodity']
+        if(_com7.lower() not in _comm_rule7):
+            _com7 = "Others"
+        if(_com7 not in over_all_commodity_count7):
+            over_all_commodity_count7[_com7 ] = 0
+        over_all_commodity_count7[_com7 ] += 1
+
+
+
+
+
+
+###################FORM5####################################################
+
+    dips_list5 = form5_datatable
+    over_all_commodity_count5 = {}
+    for index in range(len(dips_list5)):
+        DIP5 = dips_list5[index]
+        _comm_rule5 = ["cacao","coconut","coffee","pfn"]
+        _com5 = DIP5['mgit_commodity']
+        if(_com5.lower() not in _comm_rule5):
+            _com5 = "Others"
+        if(_com5 not in over_all_commodity_count5):
+            over_all_commodity_count5[_com5 ] = 0
+        over_all_commodity_count5[_com5 ] += 1
+
+
+
+
+
+###########################FORM4##################################################
+    dips_list4 = form4_datatable
+    over_all_commodity_count4 = {}
+    for index in range(len(dips_list4)):
+        DIP4 = dips_list4[index]
+        _comm_rule4 = ["cacao","coconut","coffee","pfn"]
+        _com4 = DIP4['cbb_commodity']
+        if(_com4.lower() not in _comm_rule4):
+            _com4 = "Others"
+        if(_com4 not in over_all_commodity_count4):
+            over_all_commodity_count4[_com4 ] = 0
+        over_all_commodity_count4[_com4 ] += 1
+
+
+
+
+
+##################################FORM3#########################################
+
+ 
+    dips_list3 = form3_datatable
+    typebdsp = {}
+    for index in range(len(dips_list3)):
+        DIP3 = dips_list3[index]
+        _comm_rule3 = ["individual","organization/firm"]
+        _com3 = DIP3['form_3_types_of_bdsp']
+        if(_com3.lower() not in _comm_rule3):
+            _com3 = "Untagged"
+        if(_com3 not in typebdsp):
+            typebdsp[_com3 ] = 0
+        typebdsp[_com3 ] += 1
+
+##################################FORM2#########################################
+    dips_list2 = form2_datatable
+    over_all_commodity_count2 = {}
+    for index in range(len(dips_list2)):
+        DIP2 = dips_list2[index]
+        _comm_rule2 = ["cacao","coconut","coffee","pfn"]
+        _com2 = DIP2['form_2_commodity']
+        if(_com2.lower() not in _comm_rule2):
+            _com2 = "Others"
+        if(_com2 not in over_all_commodity_count2):
+            over_all_commodity_count2[_com2 ] = 0
+        over_all_commodity_count2[_com2 ] += 1
+
+######################FORM1########################################
+    dips_list = form1_datatable
+    dips_listdcf1 = form1_datatabledip
+    
+    dip_status_group_per_region={}
+    over_all = {"over_all_total":0,"approve":0,"ongoing":0,"pipeline":0,"not_started":0,}
+    commodities_per_status_per_region= {}
+    over_all_commodity_count = {}
+
+    for index in range(len(dips_list)):
+        DIP = dips_list[index]
+        if(DIP['form_1_rcus'] not in dip_status_group_per_region):
+            dip_status_group_per_region[DIP['form_1_rcus']] = {'max':0, "total":0,"approve":0, "pipeline":0, "ongoing":0, "not_started":0 }
+            commodities_per_status_per_region[DIP['form_1_rcus']] = {"total":{},"approve":{}, "pipeline":{}, "ongoing":{}, "not_started":{} }
+            # dip_status_group_per_region[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
+        else:pass
+
+        # COMMODITY COUNT PER REGION total
+        if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["total"]):
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] = 0
+
+        # FOR OVER ALL COMMODITY COUNT
+        _comm_rule = ["cacao","coconut","coffee","pfn"]
+        _com = DIP['form_1_commodity']
+        if(_com.lower() not in _comm_rule):
+            _com = "Others"
+        if(_com not in over_all_commodity_count):
+            over_all_commodity_count[_com ] = 0
+        over_all_commodity_count[_com ] += 1
+
+        if(DIP["form_1_date_of_ifad_no_inssuance"] != ""):
+            dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
+            over_all["over_all_total"] +=1
+            dip_status_group_per_region[DIP['form_1_rcus']]["approve"]+= 1
+            over_all["approve"] += 1
+            
+            if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["approve"]):
+                commodities_per_status_per_region[DIP['form_1_rcus']]["approve"][DIP['form_1_commodity']] = 0
+            commodities_per_status_per_region[DIP['form_1_rcus']]["approve"][DIP['form_1_commodity']] += 1
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
+            # dip_status_group_per_region[DIP['form_1_rcus']]["approve"].append(DIP)
+
+        elif( DIP["form_1_finalized_approved"] != "" or DIP["form_1_date_of_parallel_review"] != "" or DIP["form_1_date_of_submission"] != "" or DIP["form_1_date_of_rtwg"] != "" or DIP["form_1_date_of_npco_cursory"] != ""):
+            dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
+            over_all["over_all_total"] +=1
+            dip_status_group_per_region[DIP['form_1_rcus']]["pipeline"]+= 1
+            over_all["pipeline"] += 1
+            
+            if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["pipeline"]):
+                commodities_per_status_per_region[DIP['form_1_rcus']]["pipeline"][DIP['form_1_commodity']] = 0
+            commodities_per_status_per_region[DIP['form_1_rcus']]["pipeline"][DIP['form_1_commodity']] += 1
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
+            # dip_status_group_per_region[DIP['form_1_rcus']]["pipeline"].append(DIP)
+
+        elif(DIP["form_1_for_development"] != ""):
+            dip_status_group_per_region[DIP['form_1_rcus']]["total"]+= 1
+            over_all["over_all_total"] +=1
+            dip_status_group_per_region[DIP['form_1_rcus']]["ongoing"]+= 1
+            over_all["ongoing"] += 1
+            
+            if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["ongoing"]):
+                commodities_per_status_per_region[DIP['form_1_rcus']]["ongoing"][DIP['form_1_commodity']] = 0
+            commodities_per_status_per_region[DIP['form_1_rcus']]["ongoing"][DIP['form_1_commodity']] += 1
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
+            # dip_status_group_per_region[DIP['form_1_rcus']]["ongoing"].append(DIP)
+
+        else:
+            dip_status_group_per_region[DIP['form_1_rcus']]["total"] += 1
+            over_all["over_all_total"] +=1
+            dip_status_group_per_region[DIP['form_1_rcus']]["not_started"]+= 1
+            over_all["not_started"] += 1
+            
+            if(DIP['form_1_commodity'] not in commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"]):
+                commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"][DIP['form_1_commodity']] = 0
+            commodities_per_status_per_region[DIP['form_1_rcus']]["not_started"][DIP['form_1_commodity']] += 1
+            commodities_per_status_per_region[DIP['form_1_rcus']]["total"][DIP['form_1_commodity']] += 1
+            # dip_status_group_per_region[DIP['form_1_rcus']]["not_started"].append(DIP)
+        # dip_status_group_per_region[DIP['form_1_rcus']].append(DIP)
+    alltotal = 0
+
+    for xxx in dip_status_group_per_region:
+        alltotal += dip_status_group_per_region[xxx]['total']
+    # print(alltotal)
+    # dip_status_group_per_region["_over_all"] = over_all
+    total_untagged = 0
+    dip_sex_group_per_region = {}
+    for index in range(len(dips_list)):
+        DIP = dips_list[index]
+        if(DIP['form_1_rcus'] not in dip_sex_group_per_region):
+            dip_sex_group_per_region[DIP['form_1_rcus']] = {'total_bene':0, 'male':{ "youth":0,"ip":0,"pwd":0,"total":0}, "female":{ "youth":0,"ip":0,"pwd":0,"total":0},"all_total":{'untagged':0, "total_youth":0,"total_ip":0,"total_pwd":0,"total_sex":0}}
+            # dip_sex_group_per_region[DIP['form_1_rcus']] = {"total":0,"approve":[], "pipeline":[], "ongoing":[], "not_started":[] }
+        else:pass
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['youth'] += DIP['form_1_maleyouth']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['ip'] += DIP['form_1_maleip']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['pwd'] += DIP['form_1_malepwd']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['male']['total'] += DIP['form_1_totalmale']
+
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['youth'] += DIP['form_1_femaleyouth']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['ip'] += DIP['form_1_femaleip']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['pwd'] += DIP['form_1_femalepwd']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['female']['total'] += DIP['form_1_totalfemale']
+
+        dip_sex_group_per_region[DIP['form_1_rcus']]['all_total']['total_youth'] += DIP['form_1_maleyouth'] + DIP['form_1_femaleyouth']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['all_total']['total_ip'] += DIP['form_1_maleip'] + DIP['form_1_femaleip']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['all_total']['total_pwd'] += DIP['form_1_malepwd'] + DIP['form_1_femalepwd']
+        dip_sex_group_per_region[DIP['form_1_rcus']]['all_total']['total_sex'] += DIP['form_1_totalmale'] + DIP['form_1_totalfemale']
+
+        try:
+            dip_sex_group_per_region[DIP['form_1_rcus']]['total_bene'] += float(DIP['form_1_total_farmerbene'])
+            dip_sex_group_per_region[DIP['form_1_rcus']]['all_total']['untagged'] += float(DIP['form_1_total_farmerbene'])- (DIP['form_1_totalmale'] + DIP['form_1_totalfemale'])
+            total_untagged += float(DIP['form_1_total_farmerbene'])- (DIP['form_1_totalmale'] + DIP['form_1_totalfemale'])
+        except Exception as e:
+            # raise e
+            pass
+        # if(DIP['form_1_total_farmerbene'].isnumeric()):
+        #     dip_sex_group_per_region[DIP['form_1_rcus']]['total_bene'] += int(DIP['form_1_total_farmerbene'])
+
+
+
+
+  
+#######################################################################################################################
+###NEW DATA FROM INTERNS###############################################################################################
+#######################################################################################################################
+
+    dcf7_TFP=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfp7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Provincial';")
+    dcf7_TFR=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfr7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Regional';")
+    dcf7_TFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfn7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - National';")
+    dcf7_TFI=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfi7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - International';")
+    dcf7_TSMPR=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tsmpr7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Mission Province and Region';")
+    dcf7_TSMN=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tsmn7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Mission National';")
+    dcf7_TSMI=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tsmi7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Mission International';")
+    dcf7_BMPR=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS bmpr7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching Povince and Region';")
+    dcf7_BMN=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS bmn7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching National';")
+    dcf7_BMI=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS bmi7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching International';")
+
+    dcf10_FO=_select("SELECT COUNT(form_10_type_of_beneficiary) AS FO10 FROM dcf_negosyo_center  {} AND form_10_type_of_beneficiary LIKE '%FO%' OR `form_10_type_of_beneficiary` LIKE '%farmer Organization%';")
+    dcf10_MSME=_select("SELECT COUNT(form_10_type_of_beneficiary) AS msme10 FROM dcf_negosyo_center  {} AND form_10_type_of_beneficiary LIKE '%MSME%';")
+    dcf_form10_male=_select("SELECT SUM(form_10_sex_male) as totalmale10 FROM dcf_negosyo_center {} AND form_10_type_of_beneficiary NOT LIKE '%FO%' AND `form_10_type_of_beneficiary` NOT LIKE '%farmer Organization%' AND `form_10_type_of_beneficiary` NOT LIKE '%MSME%';")
+    dcf_form10_female=_select("SELECT SUM(form_10_sex_female) as totalfemale10 FROM dcf_negosyo_center {} AND form_10_type_of_beneficiary NOT LIKE '%FO%' AND `form_10_type_of_beneficiary` NOT LIKE '%farmer Organization%' AND `form_10_type_of_beneficiary` NOT LIKE '%MSME%';")
+
+    dcf4_TOT=_select("SELECT COUNT(cbb_types_of_training) AS tot4 FROM dcf_capacity_building {} AND cbb_types_of_training LIKE '%MSME-%' OR cbb_types_of_training LIKE '%FO-%' OR cbb_types_of_training LIKE '%Individual Farmer-%';")
+
+    dcf10_NOT=_select("SELECT COUNT(form_10_type_of_beneficiary) AS NOT10 FROM dcf_negosyo_center {} AND form_10_type_of_beneficiary NOT LIKE '%FO%' AND `form_10_type_of_beneficiary` NOT LIKE '%farmer Organization%' AND `form_10_type_of_beneficiary` NOT LIKE '%MSME%';")
+
+    dcf7_TA=_select("SELECT SUM(form_7_total_autosum) AS ta7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion LIKE '%trade fair%';")
+    
+
+    dcf7_TFPCOFFEE=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfpcoffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Provincial' AND `form_7_commodity`='coffee';")
+    dcf7_TFPCACAO=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfpcacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Provincial' AND `form_7_commodity`='cacao';")
+    dcf7_TFPCOCONUT=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfpcoconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Provincial' AND `form_7_commodity`='coconut';")
+    dcf7_TFPPFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfppfn7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Provincial' AND `form_7_commodity`='pfn';")
+
+################################################################
+
+    dcf7_TFRCOFFEE=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfrcoffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Regional' AND `form_7_commodity`='coffee';")
+    dcf7_TFRCACAO=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfrcacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Regional' AND `form_7_commodity`='cacao';")
+    dcf7_TFRCOCONUT=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfrcoconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Regional' AND `form_7_commodity`='coconut';")
+    dcf7_TFRPFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) AS tfrpfn7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - Regional' AND `form_7_commodity`='pfn';")
+
+################################################################
+
+    dcf7_tfn_coffee=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tfn_coffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - National' AND `form_7_commodity` = 'coffee';")
+    dcf7_tfn_coconut=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tfn_coconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - National' AND `form_7_commodity` = 'coconut';")
+    dcf7_tfn_cacao=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tfn_cacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - National' AND `form_7_commodity` = 'cacao';")
+    dcf7_tfn_PFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tfn_PFN7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - National' AND `form_7_commodity` = 'PFN';")
+
+#################################################################
+
+    dcf7_tfi_coffee=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tfi_coffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - International' AND `form_7_commodity` = 'coffee';")
+    dcf7_tfi_coconut=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tfi_coconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - International' AND `form_7_commodity` = 'coconut';")
+    dcf7_tfi_cacao=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tfi_cacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - International' AND `form_7_commodity` = 'cacao';")
+    dcf7_tfi_PFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tfi_PFN7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade Fair - International' AND `form_7_commodity` = 'PFN';")
+
+#################################################################
+
+    dcf7_tmpr_coffee=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmpr_coffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions Province and Region' AND `form_7_commodity` = 'coffee';")
+    dcf7_tmpr_cacao=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmpr_cacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions Province and Region' AND `form_7_commodity` = 'cacao';")
+    dcf7_tmpr_coconut=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmpr_coconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions Province and Region' AND `form_7_commodity` = 'coconut';")
+    dcf7_tmpr_PFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmpr_PFN7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions Province and Region' AND `form_7_commodity` = 'PFN';")
+
+#################################################################
+
+    dcf7_tmn_coffee=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmn_coffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions National' AND `form_7_commodity` = 'coffee';")
+    dcf7_tmn_coconut=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmn_coconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions National' AND `form_7_commodity` = 'coconut';")
+    dcf7_tmn_cacao=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmn_cacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions National' AND `form_7_commodity` = 'cacao';")
+    dcf7_tmn_PFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmn_PFN7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions National' AND `form_7_commodity` = 'PFN';")
+
+#################################################################
+
+    dcf7_tmi_coffee=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmi_coffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions International' AND `form_7_commodity` = 'coffee';")
+    dcf7_tmi_coconut=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmi_coconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions International' AND `form_7_commodity` = 'coconut';")
+    dcf7_tmi_cacao=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmi_cacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions International' AND `form_7_commodity` = 'cacao';")
+    dcf7_tmi_PFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) as tmi_PFN7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Trade/Selling Missions International' AND `form_7_commodity` = 'PFN';")
+
+#################################################################
+
+    dcf7_bmpr_coffee=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmpr_coffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching Province and Region' AND `form_7_commodity` = 'coffee';")
+    dcf7_bmpr_coconut=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmpr_coconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching Province and Region' AND `form_7_commodity` = 'coconut';")
+    dcf7_bmpr_cacao=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmpr_cacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching Province and Region' AND `form_7_commodity` = 'cacao';")
+    dcf7_bmpr_PFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmpr_PFN7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching Province and Region' AND `form_7_commodity` = 'PFN';")
+################################################################_
+    dcf7_bmn_coffee=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmn_coffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching National' AND `form_7_commodity` = 'coffee';")
+    dcf7_bmn_coconut=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmn_coconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching National' AND `form_7_commodity` = 'coconut';")
+    dcf7_bmn_cacao=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmn_cacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching National' AND `form_7_commodity` = 'cacao';")
+    dcf7_bmn_PFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmn_PFN7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching National' AND `form_7_commodity` = 'PFN';")
+#################################################################
+
+    dcf7_bmi_coffee=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmi_coffee7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching International' AND `form_7_commodity` = 'coffee';")
+    dcf7_bmi_coconut=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmi_coconut7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching International' AND `form_7_commodity` = 'coconut';")
+    dcf7_bmi_cacao=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmi_cacao7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching International' AND `form_7_commodity` = 'cacao';")
+    dcf7_bmi_PFN=_select("SELECT COUNT(form_7_type_of_trade_promotion) as bmi_PFN7 FROM dcf_trade_promotion {} AND form_7_type_of_trade_promotion = 'Business Matching International' AND `form_7_commodity` = 'PFN';")
+
+####FORM 3########################################################
+    dcf3_region8_entrep=_select("SELECT COUNT(form_3_choices) as dcf3_entrep8 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Vlll - Eastern Visayas' AND `form_3_choices` LIKE '%Entrepreneurial%';")
+    dcf3_region8_agri=_select("SELECT COUNT(form_3_choices) as dcf3_agri8 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Vlll - Eastern Visayas' AND `form_3_choices` LIKE '%Agri-technical%';")
+    dcf3_region8_es=_select("SELECT COUNT(form_3_choices) as dcf3_es8 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Vlll - Eastern Visayas' AND `form_3_choices` LIKE '%Extension Service%';")
+    dcf3_region8_org=_select("SELECT COUNT(form_3_choices) as dcf3_org8 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Vlll - Eastern Visayas' AND `form_3_choices` LIKE '%Organizational%';")
+
+    dcf3_region9_entrep=_select("SELECT COUNT(form_3_choices) as dcf3_entrep9 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region lX - Zamboanga Peninsula' AND `form_3_choices` LIKE '%Entrepreneurial%';")
+    dcf3_region9_agri=_select("SELECT COUNT(form_3_choices) as dcf3_agri9 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region lX - Zamboanga Peninsula' AND `form_3_choices` LIKE '%Agri-technical%';")
+    dcf3_region9_es=_select("SELECT COUNT(form_3_choices) as dcf3_es9 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region lX - Zamboanga Peninsula' AND `form_3_choices` LIKE '%Extension Service%';")
+    dcf3_region9_org=_select("SELECT COUNT(form_3_choices) as dcf3_org9 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region lX - Zamboanga Peninsula' AND `form_3_choices` LIKE '%Organizational%';")
+
+    dcf3_region10_entrep=_select("SELECT COUNT(form_3_choices) as dcf3_entrep10 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region X - Northern Mindanao' AND `form_3_choices` LIKE '%Entrepreneurial%';")
+    dcf3_region10_agri=_select("SELECT COUNT(form_3_choices) as dcf3_agri10 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region X - Northern Mindanao' AND `form_3_choices` LIKE '%Agri-technical%';")
+    dcf3_region10_es=_select("SELECT COUNT(form_3_choices) as dcf3_es10 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region X - Northern Mindanao' AND `form_3_choices` LIKE '%Extension Service%';")
+    dcf3_region10_org=_select("SELECT COUNT(form_3_choices) as dcf3_org10 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region X - Northern Mindanao' AND `form_3_choices` LIKE '%Organizational%';")
+
+    dcf3_region11_entrep=_select("SELECT COUNT(form_3_choices) as dcf3_entrep11 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xl - Davao Region' AND `form_3_choices` LIKE '%Entrepreneurial%';")
+    dcf3_region11_agri=_select("SELECT COUNT(form_3_choices) as dcf3_agri11 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xl - Davao Region' AND `form_3_choices` LIKE '%Agri-technical%';")
+    dcf3_region11_es=_select("SELECT COUNT(form_3_choices) as dcf3_es11 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xl - Davao Region' AND `form_3_choices` LIKE '%Extension Service%';")
+    dcf3_region11_org=_select("SELECT COUNT(form_3_choices) as dcf3_org11 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xl - Davao Region' AND `form_3_choices` LIKE '%Organizational%';")
+
+    dcf3_region12_entrep=_select("SELECT COUNT(form_3_choices) as dcf3_entrep12 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xll - SOCCSKSARGEN' AND `form_3_choices` LIKE '%Entrepreneurial%';")
+    dcf3_region12_agri=_select("SELECT COUNT(form_3_choices) as dcf3_agri12 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xll - SOCCSKSARGEN' AND `form_3_choices` LIKE '%Agri-technical%';")
+    dcf3_region12_es=_select("SELECT COUNT(form_3_choices) as dcf3_es12 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xll - SOCCSKSARGEN' AND `form_3_choices` LIKE '%Extension Service%';")
+    dcf3_region12_org=_select("SELECT COUNT(form_3_choices) as dcf3_org12 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xll - SOCCSKSARGEN' AND `form_3_choices` LIKE '%Organizational%';")
+
+    dcf3_region13_entrep=_select("SELECT COUNT(form_3_choices) as dcf3_entrep13 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xlll - Caraga' AND `form_3_choices` LIKE '%Entrepreneurial%';")
+    dcf3_region13_agri=_select("SELECT COUNT(form_3_choices) as dcf3_agri13 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xlll - Caraga' AND `form_3_choices` LIKE '%Agri-Technical%';")
+    dcf3_region13_es=_select("SELECT COUNT(form_3_choices) as dcf3_es13 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xlll - Caraga' AND `form_3_choices` LIKE '%Extension Service%';")
+    dcf3_region13_org=_select("SELECT COUNT(form_3_choices) as dcf3_org13 FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'Region Xlll - Caraga' AND `form_3_choices` LIKE '%Organizational%';")
+
+    dcf3_regionB_entrep=_select("SELECT COUNT(form_3_choices) as dcf3_entrepB FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'BARMM - Bangsamoro Autonomous Region in Muslim Mindanao' AND `form_3_choices` LIKE '%Entrepreneurial%';")
+    dcf3_regionB_agri=_select("SELECT COUNT(form_3_choices) as dcf3_agriB FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'BARMM - Bangsamoro Autonomous Region in Muslim Mindanao' AND `form_3_choices` LIKE '%Agri-technical%';")
+    dcf3_regionB_es=_select("SELECT COUNT(form_3_choices) as dcf3_esB FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'BARMM - Bangsamoro Autonomous Region in Muslim Mindanao' AND `form_3_choices` LIKE '%Extension Service%';")
+    dcf3_regionB_org=_select("SELECT COUNT(form_3_choices) as dcf3_orgB FROM dcf_bdsp_reg {} AND form_3_preferred_region = 'BARMM - Bangsamoro Autonomous Region in Muslim Mindanao' AND `form_3_choices` LIKE '%Organizational%';")
+
+    dcf3_total_entrep=_select("SELECT COUNT(form_3_choices) as dcf3_entrepT FROM dcf_bdsp_reg {} AND `form_3_choices` LIKE '%Entrepreneurial%' AND form_3_preferred_region !='' OR ' ' ;")
+    dcf3_total_agri=_select("SELECT COUNT(form_3_choices) as dcf3_agriT FROM dcf_bdsp_reg {} AND `form_3_choices` LIKE '%Agri-technical%' AND form_3_preferred_region !='' OR ' ' ;")
+    dcf3_total_es=_select("SELECT COUNT(form_3_choices) as dcf3_esT FROM dcf_bdsp_reg {} AND `form_3_choices` LIKE '%Extension Service%' AND form_3_preferred_region !='' OR ' ' ;")
+    dcf3_total_org=_select("SELECT COUNT(form_3_choices) as dcf3_orgT FROM dcf_bdsp_reg {} AND `form_3_choices` LIKE '%Organizational%' AND form_3_preferred_region !='' OR ' ' ;")
+
+    dcf_form1maleip_appr=_select("SELECT SUM(form_1_maleip) AS total_maleip_appr FROM dcf_prep_review_aprv_status {}AND `form_1_date_of_ifad_no_inssuance` !='' ;")
+    dcf_form1femaleip_appr=_select("SELECT SUM(form_1_femaleip) AS total_femaleip_appr FROM dcf_prep_review_aprv_status {}AND `form_1_date_of_ifad_no_inssuance` !='' ;")
+
+    dcf_form1maleyouth_appr=_select("SELECT SUM(form_1_maleyouth) AS total_maleyouth_appr FROM dcf_prep_review_aprv_status {}AND `form_1_date_of_ifad_no_inssuance` !='' ;")
+    dcf_form1femaleyouth_appr=_select("SELECT SUM(form_1_femaleyouth) AS total_femaleyouth_appr FROM dcf_prep_review_aprv_status {}AND `form_1_date_of_ifad_no_inssuance` !='' ;")
+
+    dcf_form1male_appr=_select("SELECT SUM(form_1_totalmale) AS total_male_appr FROM dcf_prep_review_aprv_status {}AND `form_1_date_of_ifad_no_inssuance` !='' ;")
+    dcf_form1female_appr=_select("SELECT SUM(form_1_totalfemale) AS total_female_appr FROM dcf_prep_review_aprv_status {}AND `form_1_date_of_ifad_no_inssuance` !='' ;" )
+
+
+    #NEW DATA APRIL30 (FRANZ)
+    dcf1_COFFEE_8=_select("SELECT COUNT(`form_1_commodity`) AS coffee_8_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee' AND `form_1_rcus`='8';")
+    dcf1_CACAO_8=_select("SELECT COUNT(`form_1_commodity`) AS cacao_8_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao' AND `form_1_rcus`='8';")
+    dcf1_COCONUT_8=_select("SELECT COUNT(`form_1_commodity`) AS coconut_8_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut' AND `form_1_rcus`='8';")
+    dcf1_PFN_8=_select("SELECT COUNT(`form_1_commodity`) AS pfn_8_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn' AND `form_1_rcus`='8';")
+
+    dcf1_COFFEE_9=_select("SELECT COUNT(`form_1_commodity`) AS coffee_9_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee' AND `form_1_rcus`='9';")
+    dcf1_CACAO_9=_select("SELECT COUNT(`form_1_commodity`) AS cacao_9_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao' AND `form_1_rcus`='9';")
+    dcf1_COCONUT_9=_select("SELECT COUNT(`form_1_commodity`) AS coconut_9_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut' AND `form_1_rcus`='9';")
+    dcf1_PFN_9=_select("SELECT COUNT(`form_1_commodity`) AS pfn_9_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn' AND `form_1_rcus`='9';")
+    
+    dcf1_COFFEE_10=_select("SELECT COUNT(`form_1_commodity`) AS coffee_10_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee' AND `form_1_rcus`='10';")
+    dcf1_CACAO_10=_select("SELECT COUNT(`form_1_commodity`) AS cacao_10_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao' AND `form_1_rcus`='10';")
+    dcf1_COCONUT_10=_select("SELECT COUNT(`form_1_commodity`) AS coconut_10_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut' AND `form_1_rcus`='10';")
+    dcf1_PFN_10=_select("SELECT COUNT(`form_1_commodity`) AS pfn_10_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn' AND `form_1_rcus`='10';")
+    
+    dcf1_COFFEE_11=_select("SELECT COUNT(`form_1_commodity`) AS coffee_11_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee' AND `form_1_rcus`='11';")
+    dcf1_CACAO_11=_select("SELECT COUNT(`form_1_commodity`) AS cacao_11_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao' AND `form_1_rcus`='11';")
+    dcf1_COCONUT_11=_select("SELECT COUNT(`form_1_commodity`) AS coconut_11_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut' AND `form_1_rcus`='11';")
+    dcf1_PFN_11=_select("SELECT COUNT(`form_1_commodity`) AS pfn_11_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn' AND `form_1_rcus`='11';")
+
+    dcf1_COFFEE_12=_select("SELECT COUNT(`form_1_commodity`) AS coffee_12_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee' AND `form_1_rcus`='12';")
+    dcf1_CACAO_12=_select("SELECT COUNT(`form_1_commodity`) AS cacao_12_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao' AND `form_1_rcus`='12';")
+    dcf1_COCONUT_12=_select("SELECT COUNT(`form_1_commodity`) AS coconut_12_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut' AND `form_1_rcus`='12';")
+    dcf1_PFN_12=_select("SELECT COUNT(`form_1_commodity`) AS pfn_12_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn' AND `form_1_rcus`='12';")
+
+    dcf1_COFFEE_13=_select("SELECT COUNT(`form_1_commodity`) AS coffee_13_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee' AND `form_1_rcus`='13';")
+    dcf1_CACAO_13=_select("SELECT COUNT(`form_1_commodity`) AS cacao_13_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao' AND `form_1_rcus`='13';")
+    dcf1_COCONUT_13=_select("SELECT COUNT(`form_1_commodity`) AS coconut_13_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut' AND `form_1_rcus`='13';")
+    dcf1_PFN_13=_select("SELECT COUNT(`form_1_commodity`) AS pfn_13_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn' AND `form_1_rcus`='13';")
+
+    dcf1_COFFEE_BARMM=_select("SELECT COUNT(`form_1_commodity`) AS coffee_BARMM_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee' AND `form_1_rcus`='BARMM';")
+    dcf1_CACAO_BARMM=_select("SELECT COUNT(`form_1_commodity`) AS cacao_BARMM_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao' AND `form_1_rcus`='BARMM';")
+    dcf1_COCONUT_BARMM=_select("SELECT COUNT(`form_1_commodity`) AS coconut_BARMM_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut' AND `form_1_rcus`='BARMM';")
+    dcf1_PFN_BARMM=_select("SELECT COUNT(`form_1_commodity`) AS pfn_BARMM_1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn' AND `form_1_rcus`='BARMM';")
+
+    #NEW DATA MAY2 (ANDY)
+    dcf_form2_rcu8=_select("SELECT COUNT(form_2_rcus) AS form2_rcu8 FROM dcf_implementing_unit {} AND `form_2_rcus` LIKE '%8%' ;")
+    dcf_form2_rcu9=_select("SELECT COUNT(form_2_rcus) AS form2_rcu9 FROM dcf_implementing_unit {} AND `form_2_rcus` LIKE '%9%' ;")
+    dcf_form2_rcu10=_select("SELECT COUNT(form_2_rcus) AS form2_rcu10 FROM dcf_implementing_unit {} AND `form_2_rcus` LIKE '%10%' ;")
+    dcf_form2_rcu11=_select("SELECT COUNT(form_2_rcus) AS form2_rcu11 FROM dcf_implementing_unit {} AND `form_2_rcus` LIKE '%11%' ;")
+    dcf_form2_rcu12=_select("SELECT COUNT(form_2_rcus) AS form2_rcu12 FROM dcf_implementing_unit {} AND `form_2_rcus` LIKE '%12%' ;")
+    dcf_form2_rcu13=_select("SELECT COUNT(form_2_rcus) AS form2_rcu13 FROM dcf_implementing_unit {} AND `form_2_rcus` LIKE '%13%' ;")
+    dcf_form2_rcuBARMM=_select("SELECT COUNT(form_2_rcus) AS form2_rcuBARMM FROM dcf_implementing_unit {} AND `form_2_rcus` LIKE '%BARMM%' ;")
+
+    dcf_form2_rcu8_nom=_select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu8_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%8%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='' ;")
+    dcf_form2_rcu9_nom=_select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu9_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%9%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';")
+    dcf_form2_rcu10_nom=_select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu10_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%10%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';")
+    dcf_form2_rcu11_nom=_select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu11_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%11%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';")
+    dcf_form2_rcu12_nom=_select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu12_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%12%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';")
+    dcf_form2_rcu13_nom=_select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcu13_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%13%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';")
+    dcf_form2_rcuBARMM_nom=_select("SELECT COUNT(DISTINCT form_2_name_owner_manager) AS form2_rcuBARMM_nom FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%BARMM%' AND `form_2_name_owner_manager` != '' AND form_2_partner_fo_engaged ='';")
+    #NEW DATA MAY3(FRANZ)
+    dcf1_COFFEE_FO=_select("SELECT SUM(form_1_totalcooperatives + form_1_totalassociations) AS coffee_fo FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';")
+    dcf1_CACAO_FO=_select("SELECT SUM(form_1_totalcooperatives + form_1_totalassociations) AS cacao_fo FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';")
+    dcf1_COCONUT_FO=_select("SELECT SUM(form_1_totalcooperatives + form_1_totalassociations) AS coconut_fo FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';")
+    dcf1_PFN_FO=_select("SELECT SUM(form_1_totalcooperatives + form_1_totalassociations) AS pfn_fo FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';")
+
+    #NEW DATA MAY6(ANDY)
+    dcf_form2_rcu8_fo=_select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu8_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%8%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;")
+    dcf_form2_rcu9_fo=_select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu9_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%9%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;")
+    dcf_form2_rcu10_fo=_select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu10_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%10%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;")
+    dcf_form2_rcu11_fo=_select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu11_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%11%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;")
+    dcf_form2_rcu12_fo=_select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu12_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%12%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;")
+    dcf_form2_rcu13_fo=_select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcu13_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%13%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;")
+    dcf_form2_rcuBARMM_fo=_select("SELECT COUNT(DISTINCT form_2_partner_fo_engaged) AS form2_rcuBARMM_fo FROM dcf_implementing_unit {} AND form_2_rcus LIKE '%BARMM%' AND `form_2_partner_fo_engaged` !='' AND `form_2_name_owner_manager` = '' ;")
+
+    dcf_form2_nom_cacao=_select("SELECT COUNT(form_2_partner_fo_engaged) AS form2nom_cacao FROM dcf_implementing_unit {} AND form_2_commodity LIKE '%Cacao%' AND form_2_name_owner_manager ='' AND form_2_partner_fo_engaged !=''; ")
+    dcf_form2_nom_coffee=_select("SELECT COUNT(form_2_partner_fo_engaged) AS form2nom_coffee FROM dcf_implementing_unit {} AND form_2_commodity LIKE '%Coffee%' AND form_2_name_owner_manager ='' AND form_2_partner_fo_engaged !=''; ")
+    dcf_form2_nom_coconut=_select("SELECT COUNT(form_2_partner_fo_engaged) AS form2nom_coconut FROM dcf_implementing_unit {} AND form_2_commodity LIKE '%Coconut%' AND form_2_name_owner_manager ='' AND form_2_partner_fo_engaged !=''; ")
+    dcf_form2_nom_PFN=_select("SELECT COUNT(form_2_partner_fo_engaged) AS form2nom_PFN FROM dcf_implementing_unit {} AND form_2_commodity LIKE '%PFN%' AND form_2_name_owner_manager ='' AND form_2_partner_fo_engaged !=''; ")
+
+    #NEW DATA MAY 6(FRANZ)
+    dcf2_CPAs=_select("SELECT COUNT(`form_2_date_renewed`) AS cpas_2 FROM dcf_implementing_unit {} AND form_2_date_renewed !='';")
+
+    dcf2_COFFEE=_select("SELECT COUNT(`form_2_name_owner_manager` ) AS coffee_2 FROM dcf_implementing_unit {} AND `form_2_commodity` ='coffee' AND form_2_partner_fo_engaged ='' AND form_2_name_owner_manager !='';")
+    dcf2_CACAO=_select("SELECT COUNT(`form_2_name_owner_manager` ) AS cacao_2 FROM dcf_implementing_unit {} AND `form_2_commodity` ='cacao' AND form_2_partner_fo_engaged ='' AND form_2_name_owner_manager !='';")
+    dcf2_COCONUT=_select("SELECT COUNT(`form_2_name_owner_manager` ) AS coconut_2 FROM dcf_implementing_unit {} AND `form_2_commodity` ='coconut' AND form_2_partner_fo_engaged ='' AND form_2_name_owner_manager !='';")
+    dcf2_PFN=_select("SELECT COUNT(`form_2_name_owner_manager` ) AS pfn_2 FROM dcf_implementing_unit {} AND `form_2_commodity` ='pfn' AND form_2_partner_fo_engaged ='' AND form_2_name_owner_manager !='';")
+
+    #NEW DATA MAY 9(FRANZ)
+    dcf2_CPAs_FOs=_select("SELECT COUNT(DISTINCT `form_2_name_owner_manager`) AS cpasfos_2 FROM dcf_implementing_unit {} AND `form_2_partner_fo_engaged` !='';")
+    dcf2_FOs_CPAs=_select("SELECT COUNT(DISTINCT `form_2_partner_fo_engaged`) AS foscpas_2 FROM dcf_implementing_unit {} AND `form_2_name_owner_manager` !='';")
+    dcf2_FO_MEMBERS=_select("SELECT SUM(`form_2_total_number_fo`) AS fomember_2 FROM dcf_implementing_unit;")
+    
+    dcf2_RCU8_FO=_select("SELECT SUM(`form_2_total_number_fo`) AS rcu8_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='8';")
+    dcf2_RCU9_FO=_select("SELECT SUM(`form_2_total_number_fo`) AS rcu9_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='9';")
+    dcf2_RCU10_FO=_select("SELECT SUM(`form_2_total_number_fo`) AS rcu10_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='10';")
+    dcf2_RCU11_FO=_select("SELECT SUM(`form_2_total_number_fo`) AS rcu11_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='11';")
+    dcf2_RCU12_FO=_select("SELECT SUM(`form_2_total_number_fo`) AS rcu12_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='12';")
+    dcf2_RCU13_FO=_select("SELECT SUM(`form_2_total_number_fo`) AS rcu13_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='13';")
+    dcf2_RCUBARMM_FO=_select("SELECT SUM(`form_2_total_number_fo`) AS rcubarmm_fo2 FROM dcf_implementing_unit {} AND `form_2_rcus`='barmm';")
+    ######################################################################################################################
+    dcf3_RCU8_ORG=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu8_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region Vlll - Eastern Visayas';")
+    dcf3_RCU9_ORG=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu9_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region IX - Zamboanga Peninsula';")
+    dcf3_RCU10_ORG=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu10_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region X - Northern Mindanao';")
+    dcf3_RCU11_ORG=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu11_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region Xl - Davao Region';")
+    dcf3_RCU12_ORG=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu12_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region Xll - SOCCSKSARGEN';")
+    dcf3_RCU13_ORG=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu13_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Region Xlll - Caraga';")
+    dcf3_BARMM_ORG=_select("SELECT COUNT(form_3_types_of_bdsp) AS barmm_org FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm' AND `form_3_preferred_region` = 'Barmm - Bangsamoro Autonomous Region in Muslim Mindanao';")
+
+    dcf3_RCU8_INDIV=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu8_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region Vlll - Eastern Visayas';")
+    dcf3_RCU9_INDIV=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu9_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region IX - Zamboanga Peninsula';")
+    dcf3_RCU10_INDIV=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu10_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region X - Northern Mindanao';")
+    dcf3_RCU11_INDIV=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu11_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region Xl - Davao Region';")
+    dcf3_RCU12_INDIV=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu12_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region Xll - SOCCSKSARGEN';")
+    dcf3_RCU13_INDIV=_select("SELECT COUNT(form_3_types_of_bdsp) AS rcu13_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Region Xlll - Caraga';")
+    dcf3_BARMM_INDIV=_select("SELECT COUNT(form_3_types_of_bdsp) AS barmm_indiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual' AND `form_3_preferred_region` = 'Barmm - Bangsamoro Autonomous Region in Muslim Mindanao';")
+
+    #NEW DATA MAY(10 FRANZ)
+    dcf_MALEIP_CACAO_APPR=_select("SELECT SUM(form_1_maleip) AS maleip_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';")
+    dcf_MALEYOUTH_CACAO_APPR=_select("SELECT SUM(form_1_maleyouth) AS maleyouth_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';")
+    dcf_TOTALMALE_CACAO_APPR=_select("SELECT SUM(form_1_totalmale) AS totalmale_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';")
+
+    dcf_FEMALEIP_CACAO_APPR=_select("SELECT SUM(form_1_femaleip) AS femaleip_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';")
+    dcf_FEMALEYOUTH_CACAO_APPR=_select("SELECT SUM(form_1_femaleyouth) AS femaleyouth_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';")
+    dcf_TOTALFEMALE_CACAO_APPR=_select("SELECT SUM(form_1_totalfemale) AS totalfemale_cacao1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='cacao';")
+
+    dcf_MALEIP_COFFEE_APPR=_select("SELECT SUM(form_1_maleip) AS maleip_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';")
+    dcf_MALEYOUTH_COFFEE_APPR=_select("SELECT SUM(form_1_maleyouth) AS maleyouth_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';")
+    dcf_TOTALMALE_COFFEE_APPR=_select("SELECT SUM(form_1_totalmale) AS totalmale_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';")
+
+    dcf_FEMALEIP_COFFEE_APPR=_select("SELECT SUM(form_1_femaleip) AS femaleip_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';")
+    dcf_FEMALEYOUTH_COFFEE_APPR=_select("SELECT SUM(form_1_femaleyouth) AS femaleyouth_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';")
+    dcf_TOTALFEMALE_COFFEE_APPR=_select("SELECT SUM(form_1_totalfemale) AS totalfemale_coffee1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coffee';")
+
+    dcf_MALEIP_COCONUT_APPR=_select("SELECT SUM(form_1_maleip) AS maleip_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';")
+    dcf_MALEYOUTH_COCONUT_APPR=_select("SELECT SUM(form_1_maleyouth) AS maleyouth_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';")
+    dcf_TOTALMALE_COCONUT_APPR=_select("SELECT SUM(form_1_totalmale) AS totalmale_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';")
+
+    dcf_FEMALEIP_COCONUT_APPR=_select("SELECT SUM(form_1_femaleip) AS femaleip_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';")
+    dcf_FEMALEYOUTH_COCONUT_APPR=_select("SELECT SUM(form_1_femaleyouth) AS femaleyouth_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';")
+    dcf_TOTALFEMALE_COCONUT_APPR=_select("SELECT SUM(form_1_totalfemale) AS totalfemale_coconut1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='coconut';")
+
+    dcf_MALEIP_PFN_APPR=_select("SELECT SUM(form_1_maleip) AS maleip_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';")
+    dcf_MALEYOUTH_PFN_APPR=_select("SELECT SUM(form_1_maleyouth) AS maleyouth_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';")
+    dcf_TOTALMALE_PFN_APPR=_select("SELECT SUM(form_1_totalmale) AS totalmale_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';")
+
+    dcf_FEMALEIP_PFN_APPR=_select("SELECT SUM(form_1_femaleip) AS femaleip_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';")
+    dcf_FEMALEYOUTH_PFN_APPR=_select("SELECT SUM(form_1_femaleyouth) AS femaleyouth_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';")
+    dcf_TOTALFEMALE_PFN_APPR=_select("SELECT SUM(form_1_totalfemale) AS totalfemale_pfn1 FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance !='' AND `form_1_commodity`='pfn';")
+
+##############################################################################################################
+
+    dcf1_TSHF_8_APPR=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_TSHF_9_APPR=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_TSHF_10_APPR=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_TSHF_11_APPR=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_TSHF_12_APPR=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_TSHF_13_APPR=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_TSHF_BARMM_APPR=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';")
+    
+    dcf1_TSHF_8_ONGOING=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';")
+    dcf1_TSHF_9_ONGOING=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='' ;")
+    dcf1_TSHF_10_ONGOING=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';")
+    dcf1_TSHF_11_ONGOING=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';")
+    dcf1_TSHF_12_ONGOING=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='' ;")
+    dcf1_TSHF_13_ONGOING=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='' ;")
+    dcf1_TSHF_BARMM_ONGOING=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';")
+    
+    dcf1_TSHF_8_PIPELINE=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);")
+    dcf1_TSHF_9_PIPELINE=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);")
+    dcf1_TSHF_10_PIPELINE=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);")
+    dcf1_TSHF_11_PIPELINE=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);")
+    dcf1_TSHF_12_PIPELINE=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);")
+    dcf1_TSHF_13_PIPELINE=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);")
+    dcf1_TSHF_BARMM_PIPELINE=_select("SELECT COALESCE(SUM(`form_1_totalmale` + `form_1_totalfemale`), 0) AS tshf_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development ='' AND ('form_1_finalized_approved' IS NOT NULL OR 'form_1_date_of_parallel_review' IS NOT NULL OR 'form_1_date_of_submission' IS NOT NULL OR 'form_1_date_of_rtwg' IS NOT NULL OR 'form_1_date_of_npco_cursory' IS NOT NULL);")
+    
+###################################################################### 
+
+    dcf1_MALE_8_APPR=_select("SELECT SUM(`form_1_totalmale`) AS male_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_MALE_9_APPR=_select("SELECT SUM(`form_1_totalmale`) AS male_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_MALE_10_APPR=_select("SELECT SUM(`form_1_totalmale`) AS male_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_MALE_11_APPR=_select("SELECT SUM(`form_1_totalmale`) AS male_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_MALE_12_APPR=_select("SELECT SUM(`form_1_totalmale`) AS male_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_MALE_13_APPR=_select("SELECT SUM(`form_1_totalmale`) AS male_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_MALE_BARMM_APPR=_select("SELECT SUM(`form_1_totalmale`) AS male_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';")
+
+    dcf1_MALE_8_ONGOING=_select("SELECT SUM(`form_1_totalmale`) AS male_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';")
+    dcf1_MALE_9_ONGOING=_select("SELECT SUM(`form_1_totalmale`) AS male_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='';")
+    dcf1_MALE_10_ONGOING=_select("SELECT SUM(`form_1_totalmale`) AS male_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';")
+    dcf1_MALE_11_ONGOING=_select("SELECT SUM(`form_1_totalmale`) AS male_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';")
+    dcf1_MALE_12_ONGOING=_select("SELECT SUM(`form_1_totalmale`) AS male_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='';")
+    dcf1_MALE_13_ONGOING=_select("SELECT SUM(`form_1_totalmale`) AS male_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='';")
+    dcf1_MALE_BARMM_ONGOING=_select("SELECT SUM(`form_1_totalmale`) AS male_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';")
+    
+    dcf1_MALE_8_PIPELINE=_select("SELECT SUM(`form_1_totalmale`) AS male_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_MALE_9_PIPELINE=_select("SELECT SUM(`form_1_totalmale`) AS male_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_MALE_10_PIPELINE=_select("SELECT SUM(`form_1_totalmale`) AS male_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_MALE_11_PIPELINE=_select("SELECT SUM(`form_1_totalmale`) AS male_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_MALE_12_PIPELINE=_select("SELECT SUM(`form_1_totalmale`) AS male_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_MALE_13_PIPELINE=_select("SELECT SUM(`form_1_totalmale`) AS male_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_MALE_BARMM_PIPELINE=_select("SELECT SUM(`form_1_totalmale`) AS male_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+
+########################################################################
+
+    dcf1_FEMALE_8_APPR=_select("SELECT SUM(`form_1_totalfemale`) AS female_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_FEMALE_9_APPR=_select("SELECT SUM(`form_1_totalfemale`) AS female_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_FEMALE_10_APPR=_select("SELECT SUM(`form_1_totalfemale`) AS female_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_FEMALE_11_APPR=_select("SELECT SUM(`form_1_totalfemale`) AS female_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_FEMALE_12_APPR=_select("SELECT SUM(`form_1_totalfemale`) AS female_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_FEMALE_13_APPR=_select("SELECT SUM(`form_1_totalfemale`) AS female_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_FEMALE_BARMM_APPR=_select("SELECT SUM(`form_1_totalfemale`) AS female_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';")
+
+    dcf1_FEMALE_8_ONGOING=_select("SELECT SUM(`form_1_totalfemale`) AS female_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';")
+    dcf1_FEMALE_9_ONGOING=_select("SELECT SUM(`form_1_totalfemale`) AS female_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='';")
+    dcf1_FEMALE_10_ONGOING=_select("SELECT SUM(`form_1_totalfemale`) AS female_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';")
+    dcf1_FEMALE_11_ONGOING=_select("SELECT SUM(`form_1_totalfemale`) AS female_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';")
+    dcf1_FEMALE_12_ONGOING=_select("SELECT SUM(`form_1_totalfemale`) AS female_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='';")
+    dcf1_FEMALE_13_ONGOING=_select("SELECT SUM(`form_1_totalfemale`) AS female_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='';")
+    dcf1_FEMALE_BARMM_ONGOING=_select("SELECT SUM(`form_1_totalfemale`) AS female_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';")
+    
+    dcf1_FEMALE_8_PIPELINE=_select("SELECT SUM(`form_1_totalfemale`) AS female_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_FEMALE_9_PIPELINE=_select("SELECT SUM(`form_1_totalfemale`) AS female_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_FEMALE_10_PIPELINE=_select("SELECT SUM(`form_1_totalfemale`) AS female_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_FEMALE_11_PIPELINE=_select("SELECT SUM(`form_1_totalfemale`) AS female_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_FEMALE_12_PIPELINE=_select("SELECT SUM(`form_1_totalfemale`) AS female_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_FEMALE_13_PIPELINE=_select("SELECT SUM(`form_1_totalfemale`) AS female_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_FEMALE_BARMM_PIPELINE=_select("SELECT SUM(`form_1_totalfemale`) AS female_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+
+##########################################################################
+
+    dcf1_YOUTH_8_APPR=_select("SELECT SUM(`form_1_totalyouth`) AS youth_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_YOUTH_9_APPR=_select("SELECT SUM(`form_1_totalyouth`) AS youth_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_YOUTH_10_APPR=_select("SELECT SUM(`form_1_totalyouth`) AS youth_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_YOUTH_11_APPR=_select("SELECT SUM(`form_1_totalyouth`) AS youth_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_YOUTH_12_APPR=_select("SELECT SUM(`form_1_totalyouth`) AS youth_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_YOUTH_13_APPR=_select("SELECT SUM(`form_1_totalyouth`) AS youth_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_YOUTH_BARMM_APPR=_select("SELECT SUM(`form_1_totalyouth`) AS youth_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';")
+
+    dcf1_YOUTH_8_ONGOING=_select("SELECT SUM(`form_1_totalyouth`) AS youth_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';")
+    dcf1_YOUTH_9_ONGOING=_select("SELECT SUM(`form_1_totalyouth`) AS youth_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='';")
+    dcf1_YOUTH_10_ONGOING=_select("SELECT SUM(`form_1_totalyouth`) AS youth_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';")
+    dcf1_YOUTH_11_ONGOING=_select("SELECT SUM(`form_1_totalyouth`) AS youth_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';")
+    dcf1_YOUTH_12_ONGOING=_select("SELECT SUM(`form_1_totalyouth`) AS youth_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='';")
+    dcf1_YOUTH_13_ONGOING=_select("SELECT SUM(`form_1_totalyouth`) AS youth_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='';")
+    dcf1_YOUTH_BARMM_ONGOING=_select("SELECT SUM(`form_1_totalyouth`) AS youth_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';")
+    
+    dcf1_YOUTH_8_PIPELINE=_select("SELECT SUM(`form_1_totalyouth`) AS youth_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_YOUTH_9_PIPELINE=_select("SELECT SUM(`form_1_totalyouth`) AS youth_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_YOUTH_10_PIPELINE=_select("SELECT SUM(`form_1_totalyouth`) AS youth_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_YOUTH_11_PIPELINE=_select("SELECT SUM(`form_1_totalyouth`) AS youth_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_YOUTH_12_PIPELINE=_select("SELECT SUM(`form_1_totalyouth`) AS youth_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_YOUTH_13_PIPELINE=_select("SELECT SUM(`form_1_totalyouth`) AS youth_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_YOUTH_BARMM_PIPELINE=_select("SELECT SUM(`form_1_totalyouth`) AS youth_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+
+###########################################################################
+
+    dcf1_IP_8_APPR=_select("SELECT SUM(`form_1_totalip`) AS ip_8_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_IP_9_APPR=_select("SELECT SUM(`form_1_totalip`) AS ip_9_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_IP_10_APPR=_select("SELECT SUM(`form_1_totalip`) AS ip_10_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_IP_11_APPR=_select("SELECT SUM(`form_1_totalip`) AS ip_11_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_IP_12_APPR=_select("SELECT SUM(`form_1_totalip`) AS ip_12_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_IP_13_APPR=_select("SELECT SUM(`form_1_totalip`) AS ip_13_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_date_of_ifad_no_inssuance !='';")
+    dcf1_IP_BARMM_APPR=_select("SELECT SUM(`form_1_totalip`) AS ip_barmm_appr1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_date_of_ifad_no_inssuance !='';")
+
+    dcf1_IP_8_ONGOING=_select("SELECT SUM(`form_1_totalip`) AS ip_8_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND form_1_for_development !='';")
+    dcf1_IP_9_ONGOING=_select("SELECT SUM(`form_1_totalip`) AS ip_9_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND form_1_for_development !='';")
+    dcf1_IP_10_ONGOING=_select("SELECT SUM(`form_1_totalip`) AS ip_10_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND form_1_for_development !='';")
+    dcf1_IP_11_ONGOING=_select("SELECT SUM(`form_1_totalip`) AS ip_11_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND form_1_for_development !='';")
+    dcf1_IP_12_ONGOING=_select("SELECT SUM(`form_1_totalip`) AS ip_12_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND form_1_for_development !='';")
+    dcf1_IP_13_ONGOING=_select("SELECT SUM(`form_1_totalip`) AS ip_13_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND form_1_for_development !='';")
+    dcf1_IP_BARMM_ONGOING=_select("SELECT SUM(`form_1_totalip`) AS ip_barmm_ongoing1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND form_1_for_development !='';")
+    
+    dcf1_IP_8_PIPELINE=_select("SELECT SUM(`form_1_totalip`) AS ip_8_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='8' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_IP_9_PIPELINE=_select("SELECT SUM(`form_1_totalip`) AS ip_9_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='9' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_IP_10_PIPELINE=_select("SELECT SUM(`form_1_totalip`) AS ip_10_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='10' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_IP_11_PIPELINE=_select("SELECT SUM(`form_1_totalip`) AS ip_11_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='11' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_IP_12_PIPELINE=_select("SELECT SUM(`form_1_totalip`) AS ip_12_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='12' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_IP_13_PIPELINE=_select("SELECT SUM(`form_1_totalip`) AS ip_13_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='13' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+    dcf1_IP_BARMM_PIPELINE=_select("SELECT SUM(`form_1_totalip`) AS ip_barmm_pipeline1 FROM `dcf_prep_review_aprv_status` {} AND `form_1_rcus`='BARMM' AND 'form_1_finalized_approved' !='' OR 'form_1_date_of_parallel_review' !='' OR 'form_1_date_of_submission' !='' OR 'form_1_date_of_rtwg' !='' OR 'form_1_date_of_npco_cursory' !='';")
+
+
+    dcf4_GESIFO=_select("SELECT COUNT(cbb_types_of_training) AS gesifo FROM `dcf_capacity_building` {} AND `cbb_types_of_training`='FO-GESI';")
+    dcf4_GESImsme=_select("SELECT COUNT(cbb_types_of_training) AS gesimsme FROM `dcf_capacity_building` {} AND `cbb_types_of_training`='MSME-GESI';")
+    dcf4_GESIif=_select("SELECT COUNT(cbb_types_of_training) AS gesiif FROM `dcf_capacity_building` {} AND `cbb_types_of_training`='Individual Farmer-GESI';")
+
+
+
+    dcf1_IP_apprfm=_select("SELECT SUM(form_1_maleip + form_1_femaleip) AS total_IP_appr FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coconut';")
+    dcf1_youth_apprfm=_select("SELECT SUM(form_1_maleyouth + form_1_femaleyouth) AS total_youth_appr FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coconut';")
+
+    dcf1_IP_apprfmcoffee=_select("SELECT SUM(form_1_maleip + form_1_femaleip) AS total_IP_apprcoffee FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coffee';")
+    dcf1_youth_apprfmcoffee=_select("SELECT SUM(form_1_maleyouth + form_1_femaleyouth) AS total_youth_apprcoffee FROM dcf_prep_review_aprv_status  {} AND form_1_date_of_ifad_no_inssuance !='' AND form_1_commodity='coffee';")
+
+    dcf4_FOOEC=_select("SELECT COUNT(cbb_types_of_training) AS FOOEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Organization Entrepreneurial Competency';")
+    dcf4_FOGOV=_select("SELECT COUNT(cbb_types_of_training) AS FOGOV FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Governance';")
+    dcf4_FOOM=_select("SELECT COUNT(cbb_types_of_training) AS FOOM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Organizational Management';")
+    dcf4_FOOP=_select("SELECT COUNT(cbb_types_of_training) AS FOOP FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Operations';")
+    dcf4_FOTPD=_select("SELECT COUNT(cbb_types_of_training) AS FOTPD FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Technology and Product Development';")
+    dcf4_FOIMM=_select("SELECT COUNT(cbb_types_of_training) AS FOIMM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Institutional Marketing Management';")
+    dcf4_FOHRM=_select("SELECT COUNT(cbb_types_of_training) AS FOHRM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Human Resource Management';")
+    dcf4_FOFM=_select("SELECT COUNT(cbb_types_of_training) AS FOFM FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Financial Management';")
+    dcf4_FONLB=_select("SELECT COUNT(cbb_types_of_training) AS FONLB FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Networking and Linkage-Building (External Relation; Business Membership Organization)';")
+    dcf4_FOGESI=_select("SELECT COUNT(cbb_types_of_training) AS FOGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-GESI';")
+    dcf4_FOSEC=_select("SELECT COUNT(cbb_types_of_training) AS FOSEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Social Environment & Climate';")
+    dcf4_FOMNR=_select("SELECT COUNT(cbb_types_of_training) AS FOMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Managing Natural Resources';")
+
+    dcf4_MSMEEC=_select("SELECT COUNT(cbb_types_of_training) AS MSMEEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Entrepreneurial Competency';")
+    dcf4_MSMEOP=_select("SELECT COUNT(cbb_types_of_training) AS MSMEOP FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Operations';")
+    dcf4_MSMEM=_select("SELECT COUNT(cbb_types_of_training) AS MSMEM FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Management';")
+    dcf4_MSMETPD=_select("SELECT COUNT(cbb_types_of_training) AS MSMETPD FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Technology and Product Development';")
+    dcf4_MSMEMM=_select("SELECT COUNT(cbb_types_of_training) AS MSMEMM FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Marketing Management';")
+    dcf4_MSMEHRM=_select("SELECT COUNT(cbb_types_of_training) AS MSMEHRM FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Human Resource Management';")
+    dcf4_MSMEFM=_select("SELECT COUNT(cbb_types_of_training) AS MSMEFM FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Financial Management';")
+    dcf4_MSMENLB=_select("SELECT COUNT(cbb_types_of_training) AS MSMENLB FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)';")
+    dcf4_MSMEGESI=_select("SELECT COUNT(cbb_types_of_training) AS MSMEGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-GESI';")
+    dcf4_MSMESEC=_select("SELECT COUNT(cbb_types_of_training) AS MSMESEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Social Environment & Climate';")
+    dcf4_MSMEMNR=_select("SELECT COUNT(cbb_types_of_training) AS MSMEMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Managing Natural Resources';")
+
+    dcf4_IFMNR=_select("SELECT COUNT(cbb_types_of_training) AS IFMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Managing Natural Resources';")
+    dcf4_IFMF=_select("SELECT COUNT(cbb_types_of_training) AS IFMF FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Managing Finances';")
+    dcf4_IFM=_select("SELECT COUNT(cbb_types_of_training) AS IFM FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Marketing';")
+    dcf4_IFI=_select("SELECT COUNT(cbb_types_of_training) AS IFI FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Innovation';")
+    dcf4_IFT=_select("SELECT COUNT(cbb_types_of_training) AS IFT FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Teamwork';")
+    dcf4_IFGESI=_select("SELECT COUNT(cbb_types_of_training) AS IFGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-GESI';")
+    dcf4_IFSEC=_select("SELECT COUNT(cbb_types_of_training) AS IFSEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Social Environment & Climate';")
+    
+    DIPnames=_select("SELECT  FROM dcf_prep_review_aprv_status ;")
+
+    dcf_form11_fsls=_select("SELECT COUNT(farmer_show_loan_section) AS farmer_loan FROM dcf_access_financing {} AND farmer_show_loan_section = 'Yes';")
+    dcf_form11_fsss=_select("SELECT COUNT(farmer_show_savings_section) AS farmer_savings FROM dcf_access_financing {} AND farmer_show_savings_section = 'Yes';")
+    dcf_form11_fsis=_select("SELECT COUNT(farmer_show_insurance_section) AS farmer_insurance FROM dcf_access_financing {} AND farmer_show_insurance_section = 'Yes';")
+    dcf_form11_fscs=_select("SELECT COUNT(farmer_show_creditguarantee_section) AS farmer_credit FROM dcf_access_financing {} AND farmer_show_creditguarantee_section = 'Yes';")
+    dcf_form11_fspups=_select("SELECT COUNT(farmer_show_paidupcapital_section) AS farmer_paidup FROM dcf_access_financing {} AND farmer_show_paidupcapital_section = 'Yes';")
+    dcf_form11_fsiks=_select("SELECT COUNT(farmer_show_inkind_section) AS farmer_inkind FROM dcf_access_financing {} AND farmer_show_inkind_section = 'Yes';")
+    dcf_form11_fscgs=_select("SELECT COUNT(farmer_show_cashgrant_section) AS farmer_cashgrant FROM dcf_access_financing {} AND farmer_show_cashgrant_section = 'Yes';")
+    dcf_fomr11_fscfws=_select("SELECT COUNT(farmer_show_cashforwork_section) AS farmer_cashforwork FROM dcf_access_financing {} AND farmer_show_cashforwork_section = 'Yes';")
+    dcf_form11_fsms=_select("SELECT COUNT(farmer_show_mortuary_section) AS farmer_mortuary FROM dcf_access_financing {} AND farmer_show_mortuary_section = 'Yes';")
+    dcf_form11_fsds=_select("SELECT COUNT(farmer_show_digital_section) AS farmer_digital FROM dcf_access_financing {} AND farmer_show_digital_section = 'Yes';")
+    dcf_form11_fsrs=_select("SELECT COUNT(farmer_show_rapid_section) AS farmer_rapid FROM dcf_access_financing {} AND farmer_show_rapid_section = 'Yes';")
+    dcf_form11_fs_total = _select("""
+        SELECT COUNT(DISTINCT id) AS total_farmers_with_fs
+        FROM dcf_access_financing
+        {}
+        AND (
+            farmer_show_loan_section = 'Yes' OR
+            farmer_show_savings_section = 'Yes' OR
+            farmer_show_insurance_section = 'Yes' OR
+            farmer_show_creditguarantee_section = 'Yes' OR
+            farmer_show_paidupcapital_section = 'Yes' OR
+            farmer_show_inkind_section = 'Yes' OR
+            farmer_show_cashgrant_section = 'Yes' OR
+            farmer_show_cashforwork_section = 'Yes' OR
+            farmer_show_mortuary_section = 'Yes' OR
+            farmer_show_digital_section = 'Yes' OR
+            farmer_show_rapid_section = 'Yes'
+        );
+    """)
+
+    dcf_form11_fosls=_select("SELECT COUNT(fo_show_loan_section) AS fo_loan FROM dcf_access_financing {} AND fo_show_loan_section = 'Yes';")
+    dcf_form11_foes=_select("SELECT COUNT(fo_show_equity_section) AS fo_paidup FROM dcf_access_financing {} AND fo_show_equity_section = 'Yes';")
+    dcf_form11_foss=_select("SELECT COUNT(fo_show_savings_section) AS fo_savings FROM dcf_access_financing {} AND fo_show_savings_section = 'Yes';")
+    dcf_form11_fosis=_select("SELECT COUNT(fo_show_insurance_section) AS fo_insurance FROM dcf_access_financing {} AND fo_show_insurance_section = 'Yes';")
+    dcf_form11_foscs=_select("SELECT COUNT(fo_show_creditguarantee_section) AS fo_credit FROM dcf_access_financing {} AND fo_show_creditguarantee_section = 'Yes';")
+    dcf_form11_fosiks=_select("SELECT COUNT(fo_show_inkind_section) AS fo_inkind FROM dcf_access_financing {} AND fo_show_inkind_section = 'Yes';")
+    dcf_form11_foscgs=_select("SELECT COUNT(fo_show_cashgrant_section) AS fo_cashgrant FROM dcf_access_financing {} AND fo_show_cashgrant_section = 'Yes';")
+    dcf_form11_fosds=_select("SELECT COUNT(fo_show_digital_section) AS fo_digital FROM dcf_access_financing {} AND fo_show_digital_section = 'Yes';")
+    dcf_form11_fosrs=_select("SELECT COUNT(fo_show_rapid_section) AS fo_rapid FROM dcf_access_financing {} AND fo_show_rapid_section = 'Yes';")
+
+    dcf_form11_fo_total = _select("""
+        SELECT COUNT(DISTINCT id) AS total_fos_with_fs
+        FROM dcf_access_financing
+        {}
+        AND (
+            fo_show_loan_section = 'Yes' OR
+            fo_show_equity_section = 'Yes' OR
+            fo_show_savings_section = 'Yes' OR
+            fo_show_insurance_section = 'Yes' OR
+            fo_show_creditguarantee_section = 'Yes' OR
+            fo_show_inkind_section = 'Yes' OR
+            fo_show_cashgrant_section = 'Yes' OR
+            fo_show_digital_section = 'Yes' OR
+            fo_show_rapid_section = 'Yes'
+        );
+    """)
+
+
+    return {
+        'dcf_form11_fsls': dcf_form11_fsls,
+        'dcf_form11_fsss': dcf_form11_fsss,
+        'dcf_form11_fsis': dcf_form11_fsis,
+        'dcf_form11_fscs': dcf_form11_fscs,
+        'dcf_form11_fspups': dcf_form11_fspups,
+        'dcf_form11_fsiks': dcf_form11_fsiks,
+        'dcf_form11_fscgs': dcf_form11_fscgs,
+        'dcf_fomr11_fscfws': dcf_fomr11_fscfws,
+        'dcf_form11_fsms': dcf_form11_fsms,
+        'dcf_form11_fsds': dcf_form11_fsds,
+        'dcf_form11_fsrs': dcf_form11_fsrs,
+        'dcf_form11_fs_total': dcf_form11_fs_total,
+
+        'dcf_form11_fosls': dcf_form11_fosls,
+        'dcf_form11_foes': dcf_form11_foes,
+        'dcf_form11_foss': dcf_form11_foss,
+        'dcf_form11_fosis': dcf_form11_fosis,
+        'dcf_form11_foscs': dcf_form11_foscs,
+        'dcf_form11_fosiks': dcf_form11_fosiks,
+        'dcf_form11_foscgs': dcf_form11_foscgs,
+        'dcf_form11_fosds': dcf_form11_fosds,
+        'dcf_form11_fosrs': dcf_form11_fosrs,
+        'dcf_form11_fo_total': dcf_form11_fo_total,
+
+        'dcf_form5FOMSME' : dcf_form5FOMSME,
+        'dcf_form5_FOExpansion': dcf_form5_FOExpansion,
+        'dcf_form5_FOProductive': dcf_form5_FOProductive,
+        'dcf_form5_FORehab': dcf_form5_FORehab,
+        'dcf_form6male': dcf_form6male,
+        'dcf_form6female': dcf_form6female,
+        'dcf_form6pwd': dcf_form6pwd,
+        'dcf_form6ip': dcf_form6ip,
+        'dcf_form6youth': dcf_form6youth,
+        'dcf_form6sc': dcf_form6sc,
+        'dcf_form6act': dcf_form6act,
+
+        'dcf_form6_Cacao': dcf_form6_Cacao,
+        'dcf_form6_Coffee': dcf_form6_Coffee,
+        'dcf_form6_Coconut': dcf_form6_Coconut,
+        'dcf_form6_PFN': dcf_form6_PFN,
+
+        'dcf_form6_prod': dcf_form6_prod,
+        'dcf_form6_training': dcf_form6_training,
+        'dcf_form6_consultation': dcf_form6_consultation,
+        'dcf_form6_orientation' : dcf_form6_orientation,
+
+        'dcf_form9other': dcf_form9other,
+
+        'dcf_form10nc': dcf_form10nc,
+
+        'st_commodity_totals': st_commodity_totals,
+
+        'DIPnames' : DIPnames,
+        'dcf4_FOOEC':dcf4_FOOEC,
+        'dcf4_FOGOV':dcf4_FOGOV,
+        'dcf4_FOOM':dcf4_FOOM,
+        'dcf4_FOOP':dcf4_FOOP,
+        'dcf4_FOTPD':dcf4_FOTPD,
+        'dcf4_FOIMM':dcf4_FOIMM,
+        'dcf4_FOHRM':dcf4_FOHRM,
+        'dcf4_FOFM':dcf4_FOFM,
+        'dcf4_FONLB':dcf4_FONLB,
+        'dcf4_FOGESI':dcf4_FOGESI,
+        'dcf4_FOSEC':dcf4_FOSEC,
+        'dcf4_FOMNR':dcf4_FOMNR,
+
+        'dcf4_MSMEEC':dcf4_MSMEEC,
+        'dcf4_MSMEOP':dcf4_MSMEOP,
+        'dcf4_MSMEM':dcf4_MSMEM,
+        'dcf4_MSMETPD':dcf4_MSMETPD,
+        'dcf4_MSMEMM':dcf4_MSMEMM,
+        'dcf4_MSMEHRM':dcf4_MSMEHRM,
+        'dcf4_MSMEFM':dcf4_MSMEFM,
+        'dcf4_MSMENLB':dcf4_MSMENLB,
+        'dcf4_MSMEGESI':dcf4_MSMEGESI,
+        'dcf4_MSMESEC':dcf4_MSMESEC,
+        'dcf4_MSMEMNR':dcf4_MSMEMNR,
+
+        'dcf4_IFMNR':dcf4_IFMNR,
+        'dcf4_IFMF':dcf4_IFMF,
+        'dcf4_IFM':dcf4_IFM,
+        'dcf4_IFI':dcf4_IFI,
+        'dcf4_IFT':dcf4_IFT,
+        'dcf4_IFGESI':dcf4_IFGESI,
+        'dcf4_IFSEC':dcf4_IFSEC,
+
+
+        'dcf4_GESIFO':dcf4_GESIFO,
+        'dcf1_IP_apprfmcoffee':dcf1_IP_apprfmcoffee,
+        'dcf1_youth_apprfmcoffee':dcf1_youth_apprfmcoffee,
+        'dcf_form1sextotalappr':dcf_form1sextotalappr,
+        'dcf4_GESImsme':dcf4_GESImsme,
+        'dcf4_GESIif':dcf4_GESIif,
+        'dcf1_IP_apprfm':dcf1_IP_apprfm,
+        'dcf1_youth_apprfm':dcf1_youth_apprfm,
+        'dcf1_IP_8_APPR':dcf1_IP_8_APPR,
+        'dcf1_IP_9_APPR':dcf1_IP_9_APPR,
+        'dcf1_IP_10_APPR':dcf1_IP_10_APPR,
+        'dcf1_IP_11_APPR':dcf1_IP_11_APPR,
+        'dcf1_IP_12_APPR':dcf1_IP_12_APPR,
+        'dcf1_IP_13_APPR':dcf1_IP_13_APPR,
+        'dcf1_IP_BARMM_APPR':dcf1_IP_BARMM_APPR,
+
+        'dcf1_IP_8_ONGOING':dcf1_IP_8_ONGOING,
+        'dcf1_IP_9_ONGOING':dcf1_IP_9_ONGOING,
+        'dcf1_IP_10_ONGOING':dcf1_IP_10_ONGOING,
+        'dcf1_IP_11_ONGOING':dcf1_IP_11_ONGOING,
+        'dcf1_IP_12_ONGOING':dcf1_IP_12_ONGOING,
+        'dcf1_IP_13_ONGOING':dcf1_IP_13_ONGOING,
+        'dcf1_IP_BARMM_ONGOING':dcf1_IP_BARMM_ONGOING,
+
+        'dcf1_IP_8_PIPELINE':dcf1_IP_8_PIPELINE,
+        'dcf1_IP_9_PIPELINE':dcf1_IP_9_PIPELINE,
+        'dcf1_IP_10_PIPELINE':dcf1_IP_10_PIPELINE,
+        'dcf1_IP_11_PIPELINE':dcf1_IP_11_PIPELINE,
+        'dcf1_IP_12_PIPELINE':dcf1_IP_12_PIPELINE,
+        'dcf1_IP_13_PIPELINE':dcf1_IP_13_PIPELINE,
+        'dcf1_IP_BARMM_PIPELINE':dcf1_IP_BARMM_PIPELINE,
+        'dcf1_YOUTH_8_APPR':dcf1_YOUTH_8_APPR,
+        'dcf1_YOUTH_9_APPR':dcf1_YOUTH_9_APPR,
+        'dcf1_YOUTH_10_APPR':dcf1_YOUTH_10_APPR,
+        'dcf1_YOUTH_11_APPR':dcf1_YOUTH_11_APPR,
+        'dcf1_YOUTH_12_APPR':dcf1_YOUTH_12_APPR,
+        'dcf1_YOUTH_13_APPR':dcf1_YOUTH_13_APPR,
+        'dcf1_YOUTH_BARMM_APPR':dcf1_YOUTH_BARMM_APPR,
+
+        'dcf1_YOUTH_8_ONGOING':dcf1_YOUTH_8_ONGOING,
+        'dcf1_YOUTH_9_ONGOING':dcf1_YOUTH_9_ONGOING,
+        'dcf1_YOUTH_10_ONGOING':dcf1_YOUTH_10_ONGOING,
+        'dcf1_YOUTH_11_ONGOING':dcf1_YOUTH_11_ONGOING,
+        'dcf1_YOUTH_12_ONGOING':dcf1_YOUTH_12_ONGOING,
+        'dcf1_YOUTH_13_ONGOING':dcf1_YOUTH_13_ONGOING,
+        'dcf1_YOUTH_BARMM_ONGOING':dcf1_YOUTH_BARMM_ONGOING,
+
+        'dcf1_YOUTH_8_PIPELINE':dcf1_YOUTH_8_PIPELINE,
+        'dcf1_YOUTH_9_PIPELINE':dcf1_YOUTH_9_PIPELINE,
+        'dcf1_YOUTH_10_PIPELINE':dcf1_YOUTH_10_PIPELINE,
+        'dcf1_YOUTH_11_PIPELINE':dcf1_YOUTH_11_PIPELINE,
+        'dcf1_YOUTH_12_PIPELINE':dcf1_YOUTH_12_PIPELINE,
+        'dcf1_YOUTH_13_PIPELINE':dcf1_YOUTH_13_PIPELINE,
+        'dcf1_YOUTH_BARMM_PIPELINE':dcf1_YOUTH_BARMM_PIPELINE,
+        'dcf1_FEMALE_8_APPR':dcf1_FEMALE_8_APPR,
+        'dcf1_FEMALE_9_APPR':dcf1_FEMALE_9_APPR,
+        'dcf1_FEMALE_10_APPR':dcf1_FEMALE_10_APPR,
+        'dcf1_FEMALE_11_APPR':dcf1_FEMALE_11_APPR,
+        'dcf1_FEMALE_12_APPR':dcf1_FEMALE_12_APPR,
+        'dcf1_FEMALE_13_APPR':dcf1_FEMALE_13_APPR,
+        'dcf1_FEMALE_BARMM_APPR':dcf1_FEMALE_BARMM_APPR,
+
+        'dcf1_FEMALE_8_ONGOING':dcf1_FEMALE_8_ONGOING,
+        'dcf1_FEMALE_9_ONGOING':dcf1_FEMALE_9_ONGOING,
+        'dcf1_FEMALE_10_ONGOING':dcf1_FEMALE_10_ONGOING,
+        'dcf1_FEMALE_11_ONGOING':dcf1_FEMALE_11_ONGOING,
+        'dcf1_FEMALE_12_ONGOING':dcf1_FEMALE_12_ONGOING,
+        'dcf1_FEMALE_13_ONGOING':dcf1_FEMALE_13_ONGOING,
+        'dcf1_FEMALE_BARMM_ONGOING':dcf1_FEMALE_BARMM_ONGOING,
+
+        'dcf1_FEMALE_8_PIPELINE':dcf1_FEMALE_8_PIPELINE,
+        'dcf1_FEMALE_9_PIPELINE':dcf1_FEMALE_9_PIPELINE,
+        'dcf1_FEMALE_10_PIPELINE':dcf1_FEMALE_10_PIPELINE,
+        'dcf1_FEMALE_11_PIPELINE':dcf1_FEMALE_11_PIPELINE,
+        'dcf1_FEMALE_12_PIPELINE':dcf1_FEMALE_12_PIPELINE,
+        'dcf1_FEMALE_13_PIPELINE':dcf1_FEMALE_13_PIPELINE,
+        'dcf1_FEMALE_BARMM_PIPELINE':dcf1_FEMALE_BARMM_PIPELINE,
+        'dcf1_MALE_8_APPR':dcf1_MALE_8_APPR,
+        'dcf1_MALE_9_APPR':dcf1_MALE_9_APPR,
+        'dcf1_MALE_10_APPR':dcf1_MALE_10_APPR,
+        'dcf1_MALE_11_APPR':dcf1_MALE_11_APPR,
+        'dcf1_MALE_12_APPR':dcf1_MALE_12_APPR,
+        'dcf1_MALE_13_APPR':dcf1_MALE_13_APPR,
+        'dcf1_MALE_BARMM_APPR':dcf1_MALE_BARMM_APPR,
+
+        'dcf1_MALE_8_ONGOING':dcf1_MALE_8_ONGOING,
+        'dcf1_MALE_9_ONGOING':dcf1_MALE_9_ONGOING,
+        'dcf1_MALE_10_ONGOING':dcf1_MALE_10_ONGOING,
+        'dcf1_MALE_11_ONGOING':dcf1_MALE_11_ONGOING,
+        'dcf1_MALE_12_ONGOING':dcf1_MALE_12_ONGOING,
+        'dcf1_MALE_13_ONGOING':dcf1_MALE_13_ONGOING,
+        'dcf1_MALE_BARMM_ONGOING':dcf1_MALE_BARMM_ONGOING,
+
+        'dcf1_MALE_8_PIPELINE':dcf1_MALE_8_PIPELINE,
+        'dcf1_MALE_9_PIPELINE':dcf1_MALE_9_PIPELINE,
+        'dcf1_MALE_10_PIPELINE':dcf1_MALE_10_PIPELINE,
+        'dcf1_MALE_11_PIPELINE':dcf1_MALE_11_PIPELINE,
+        'dcf1_MALE_12_PIPELINE':dcf1_MALE_12_PIPELINE,
+        'dcf1_MALE_13_PIPELINE':dcf1_MALE_13_PIPELINE,
+        'dcf1_MALE_BARMM_PIPELINE':dcf1_MALE_BARMM_PIPELINE,
+        'dcf1_TSHF_8_APPR':dcf1_TSHF_8_APPR,
+        'dcf1_TSHF_9_APPR':dcf1_TSHF_9_APPR,
+        'dcf1_TSHF_10_APPR':dcf1_TSHF_10_APPR,
+        'dcf1_TSHF_11_APPR':dcf1_TSHF_11_APPR,
+        'dcf1_TSHF_12_APPR':dcf1_TSHF_12_APPR,
+        'dcf1_TSHF_13_APPR':dcf1_TSHF_13_APPR,
+        'dcf1_TSHF_BARMM_APPR':dcf1_TSHF_BARMM_APPR,
+
+        'dcf1_TSHF_8_ONGOING':dcf1_TSHF_8_ONGOING,
+        'dcf1_TSHF_9_ONGOING':dcf1_TSHF_9_ONGOING,
+        'dcf1_TSHF_10_ONGOING':dcf1_TSHF_10_ONGOING,
+        'dcf1_TSHF_11_ONGOING':dcf1_TSHF_11_ONGOING,
+        'dcf1_TSHF_12_ONGOING':dcf1_TSHF_12_ONGOING,
+        'dcf1_TSHF_13_ONGOING':dcf1_TSHF_13_ONGOING,
+        'dcf1_TSHF_BARMM_ONGOING':dcf1_TSHF_BARMM_ONGOING,
+
+        'dcf1_TSHF_8_PIPELINE':dcf1_TSHF_8_PIPELINE,
+        'dcf1_TSHF_9_PIPELINE':dcf1_TSHF_9_PIPELINE,
+        'dcf1_TSHF_10_PIPELINE':dcf1_TSHF_10_PIPELINE,
+        'dcf1_TSHF_11_PIPELINE':dcf1_TSHF_11_PIPELINE,
+        'dcf1_TSHF_12_PIPELINE':dcf1_TSHF_12_PIPELINE,
+        'dcf1_TSHF_13_PIPELINE':dcf1_TSHF_13_PIPELINE,
+        'dcf1_TSHF_BARMM_PIPELINE':dcf1_TSHF_BARMM_PIPELINE,
+        #NEW DATA MAY(10 FRANZ)
+        'dcf_MALEIP_CACAO_ APPR':dcf_MALEIP_CACAO_APPR,
+        'dcf_MALEYOUTH_CACAO_APPR':dcf_MALEYOUTH_CACAO_APPR,
+        'dcf_TOTALMALE_CACAO_APPR':dcf_TOTALMALE_CACAO_APPR,
+        'dcf_FEMALEIP_CACAO_APPR':dcf_FEMALEIP_CACAO_APPR,
+        'dcf_FEMALEYOUTH_CACAO_APPR':dcf_FEMALEYOUTH_CACAO_APPR,
+        'dcf_TOTALFEMALE_CACAO_APPR':dcf_TOTALFEMALE_CACAO_APPR,
+        
+        'dcf_MALEIP_COFFEE_APPR':dcf_MALEIP_COFFEE_APPR,
+        'dcf_MALEYOUTH_COFFEE_APPR':dcf_MALEYOUTH_COFFEE_APPR,
+        'dcf_TOTALMALE_COFFEE_APPR':dcf_TOTALMALE_COFFEE_APPR,
+        'dcf_FEMALEIP_COFFEE_APPR':dcf_FEMALEIP_COFFEE_APPR,
+        'dcf_FEMALEYOUTH_COFFEE_APPR':dcf_FEMALEYOUTH_COFFEE_APPR,
+        'dcf_TOTALFEMALE_COFFEE_APPR':dcf_TOTALFEMALE_COFFEE_APPR,
+
+        'dcf_MALEIP_COCONUT_APPR':dcf_MALEIP_COCONUT_APPR,
+        'dcf_MALEYOUTH_COCONUT_APPR':dcf_MALEYOUTH_COCONUT_APPR,
+        'dcf_TOTALMALE_COCONUT_APPR':dcf_TOTALMALE_COCONUT_APPR,
+        'dcf_FEMALEIP_COCONUT_APPR':dcf_FEMALEIP_COCONUT_APPR,
+        'dcf_FEMALEYOUTH_COCONUT_APPR':dcf_FEMALEYOUTH_COCONUT_APPR,
+        'dcf_TOTALFEMALE_COCONUT_APPR':dcf_TOTALFEMALE_COCONUT_APPR,
+
+        'dcf_MALEIP_PFN_APPR':dcf_MALEIP_PFN_APPR,
+        'dcf_MALEYOUTH_PFN_APPR':dcf_MALEYOUTH_PFN_APPR,
+        'dcf_TOTALMALE_PFN_APPR':dcf_TOTALMALE_PFN_APPR,
+        'dcf_FEMALEIP_PFN_APPR':dcf_FEMALEIP_PFN_APPR,
+        'dcf_FEMALEYOUTH_PFN_APPR':dcf_FEMALEYOUTH_PFN_APPR,
+        'dcf_TOTALFEMALE_PFN_APPR':dcf_TOTALFEMALE_PFN_APPR,
+
+        #NEW DATA MAY 9(FRANZ)
+        'dcf3_RCU8_ORG':dcf3_RCU8_ORG,
+        'dcf3_RCU9_ORG':dcf3_RCU9_ORG,
+        'dcf3_RCU10_ORG':dcf3_RCU10_ORG,
+        'dcf3_RCU11_ORG':dcf3_RCU11_ORG,
+        'dcf3_RCU12_ORG':dcf3_RCU12_ORG,
+        'dcf3_RCU13_ORG':dcf3_RCU13_ORG,
+        'dcf3_BARMM_ORG':dcf3_BARMM_ORG,
+
+        'dcf3_RCU8_INDIV':dcf3_RCU8_INDIV,
+        'dcf3_RCU9_INDIV':dcf3_RCU9_INDIV,
+        'dcf3_RCU10_INDIV':dcf3_RCU10_INDIV,
+        'dcf3_RCU11_INDIV':dcf3_RCU11_INDIV,
+        'dcf3_RCU12_INDIV':dcf3_RCU12_INDIV,
+        'dcf3_RCU13_INDIV':dcf3_RCU13_INDIV,
+        'dcf3_BARMM_INDIV':dcf3_BARMM_INDIV,
+    #############################################
+        'dcf2_CPAs_FOs':dcf2_CPAs_FOs,
+        'dcf2_FOs_CPAs':dcf2_FOs_CPAs,
+        'dcf2_FO_MEMBERS':dcf2_FO_MEMBERS,
+
+        'dcf2_RCU8_FO':dcf2_RCU8_FO,
+        'dcf2_RCU9_FO':dcf2_RCU9_FO,
+        'dcf2_RCU10_FO':dcf2_RCU10_FO,
+        'dcf2_RCU11_FO':dcf2_RCU11_FO,
+        'dcf2_RCU12_FO':dcf2_RCU12_FO,
+        'dcf2_RCU13_FO':dcf2_RCU13_FO,
+        'dcf2_RCUBARMM_FO':dcf2_RCUBARMM_FO,
+
+        #NEW DATA MAY 6(FRANZ)
+        'dcf2_CPAs':dcf2_CPAs,
+
+        'dcf2_COFFEE':dcf2_COFFEE,
+        'dcf2_CACAO':dcf2_CACAO,
+        'dcf2_COCONUT':dcf2_COCONUT,
+        'dcf2_PFN':dcf2_PFN,
+
+        #NEW DATA MAY6(ANDY)
+        'dcf_form2_rcu8_fo' :dcf_form2_rcu8_fo,
+        'dcf_form2_rcu9_fo' :dcf_form2_rcu9_fo,
+        'dcf_form2_rcu10_fo' :dcf_form2_rcu10_fo,
+        'dcf_form2_rcu11_fo' :dcf_form2_rcu11_fo,
+        'dcf_form2_rcu12_fo' :dcf_form2_rcu12_fo,
+        'dcf_form2_rcu13_fo' :dcf_form2_rcu13_fo,
+        'dcf_form2_rcuBARMM_fo' :dcf_form2_rcuBARMM_fo,
+
+        'dcf_form2_nom_cacao' :dcf_form2_nom_cacao,
+        'dcf_form2_nom_coffee' :dcf_form2_nom_coffee,
+        'dcf_form2_nom_coconut' :dcf_form2_nom_coconut,
+        'dcf_form2_nom_PFN' :dcf_form2_nom_PFN,
+
+        #NEW DATA MAY3(FRANZ)
+        'dcf1_COFFEE_FO':dcf1_COFFEE_FO,
+        'dcf1_CACAO_FO':dcf1_CACAO_FO,
+        'dcf1_COCONUT_FO':dcf1_COCONUT_FO,
+        'dcf1_PFN_FO':dcf1_PFN_FO,
+
+        #NEW DATA MAY2 (ANDY)
+        'dcf_form2_rcu8' :dcf_form2_rcu8,
+        'dcf_form2_rcu9' :dcf_form2_rcu9,
+        'dcf_form2_rcu10' :dcf_form2_rcu10,
+        'dcf_form2_rcu11' :dcf_form2_rcu11,
+        'dcf_form2_rcu12' :dcf_form2_rcu12,
+        'dcf_form2_rcu13' :dcf_form2_rcu13,
+        'dcf_form2_rcuBARMM' :dcf_form2_rcuBARMM,
+
+        'dcf_form2_rcu8_nom' :dcf_form2_rcu8_nom,
+        'dcf_form2_rcu9_nom' :dcf_form2_rcu9_nom,
+        'dcf_form2_rcu10_nom' :dcf_form2_rcu10_nom,
+        'dcf_form2_rcu11_nom' :dcf_form2_rcu11_nom,
+        'dcf_form2_rcu12_nom' :dcf_form2_rcu12_nom,
+        'dcf_form2_rcu13_nom' :dcf_form2_rcu13_nom,
+        'dcf_form2_rcuBARMM_nom' :dcf_form2_rcuBARMM_nom,
+
+        #NEW DATA APRIL30
+        'dcf1_COFFEE_8':dcf1_COFFEE_8,
+        'dcf1_CACAO_8':dcf1_CACAO_8,
+        'dcf1_COCONUT_8':dcf1_COCONUT_8,
+        'dcf1_PFN_8':dcf1_PFN_8,
+
+        'dcf1_COFFEE_9':dcf1_COFFEE_9,
+        'dcf1_CACAO_9':dcf1_CACAO_9,
+        'dcf1_COCONUT_9':dcf1_COCONUT_9,
+        'dcf1_PFN_9':dcf1_PFN_9,
+
+        'dcf1_COFFEE_10':dcf1_COFFEE_10,
+        'dcf1_CACAO_10':dcf1_CACAO_10,
+        'dcf1_COCONUT_10':dcf1_COCONUT_10,
+        'dcf1_PFN_10':dcf1_PFN_10,
+
+        'dcf1_COFFEE_11':dcf1_COFFEE_11,
+        'dcf1_CACAO_11':dcf1_CACAO_11,
+        'dcf1_COCONUT_11':dcf1_COCONUT_11,
+        'dcf1_PFN_11':dcf1_PFN_11,
+
+        'dcf1_COFFEE_12':dcf1_COFFEE_12,
+        'dcf1_CACAO_12':dcf1_CACAO_12,
+        'dcf1_COCONUT_12':dcf1_COCONUT_12,
+        'dcf1_PFN_12':dcf1_PFN_12,
+
+        'dcf1_COFFEE_13':dcf1_COFFEE_13,
+        'dcf1_CACAO_13':dcf1_CACAO_13,
+        'dcf1_COCONUT_13':dcf1_COCONUT_13,
+        'dcf1_PFN_13':dcf1_PFN_13,
+
+        'dcf1_COFFEE_BARMM':dcf1_COFFEE_BARMM,
+        'dcf1_CACAO_BARMM':dcf1_CACAO_BARMM,
+        'dcf1_COCONUT_BARMM':dcf1_COCONUT_BARMM,
+        'dcf1_PFN_BARMM':dcf1_PFN_BARMM,
+        #END OF DATA APRIL30
+
+        'dcf_form1maleip_appr' :dcf_form1maleip_appr,
+        'dcf_form1femaleip_appr' :dcf_form1femaleip_appr,
+        'dcf_form1maleyouth_appr' :dcf_form1maleyouth_appr,
+        'dcf_form1femaleyouth_appr' :dcf_form1femaleyouth_appr,
+        'dcf_form1male_appr' :dcf_form1male_appr,
+        'dcf_form1female_appr' :dcf_form1female_appr,
+
+        'dcf3_total_entrep': dcf3_total_entrep,
+        'dcf3_total_agri': dcf3_total_agri,
+        'dcf3_total_es': dcf3_total_es,
+        'dcf3_total_org': dcf3_total_org,
+        'dcf3_region8_entrep' :dcf3_region8_entrep,
+        'dcf3_region8_agri' :dcf3_region8_agri,
+        'dcf3_region8_es' :dcf3_region8_es,
+        'dcf3_region8_org' :dcf3_region8_org,
+
+        'dcf3_region9_entrep' :dcf3_region9_entrep,
+        'dcf3_region9_agri' :dcf3_region9_agri,
+        'dcf3_region9_es' :dcf3_region9_es,
+        'dcf3_region9_org' :dcf3_region9_org,
+
+        'dcf3_region10_entrep' :dcf3_region10_entrep,
+        'dcf3_region10_agri' :dcf3_region10_agri,
+        'dcf3_region10_es' :dcf3_region10_es,
+        'dcf3_region10_org' :dcf3_region10_org,
+
+        'dcf3_region11_entrep' :dcf3_region11_entrep,
+        'dcf3_region11_agri' :dcf3_region11_agri,
+        'dcf3_region11_es' :dcf3_region11_es,
+        'dcf3_region11_org' :dcf3_region11_org,
+
+        'dcf3_region12_entrep' :dcf3_region12_entrep,
+        'dcf3_region12_agri' :dcf3_region12_agri,
+        'dcf3_region12_es' :dcf3_region12_es,
+        'dcf3_region12_org' :dcf3_region12_org,
+
+        'dcf3_region13_entrep' :dcf3_region13_entrep,
+        'dcf3_region13_agri' :dcf3_region13_agri,
+        'dcf3_region13_es' :dcf3_region13_es,
+        'dcf3_region13_org' :dcf3_region13_org,
+
+        'dcf3_regionB_entrep' :dcf3_regionB_entrep,
+        'dcf3_regionB_agri' :dcf3_regionB_agri,
+        'dcf3_regionB_es' :dcf3_regionB_es,
+        'dcf3_regionB_org' :dcf3_regionB_org,
+
+        'dcf4_TOT':dcf4_TOT,
+        'dcf7_TFPCOFFEE':dcf7_TFPCOFFEE,
+        'dcf7_TFPCACAO':dcf7_TFPCACAO,
+        'dcf7_TFPCOCONUT':dcf7_TFPCOCONUT,
+        'dcf7_TFPPFN':dcf7_TFPPFN,
+        'dcf7_TFRCOFFEE':dcf7_TFRCOFFEE,
+        'dcf7_TFRCACAO':dcf7_TFRCACAO,
+        'dcf7_TFRCOCONUT':dcf7_TFRCOCONUT,       
+        'dcf7_TFRPFN':dcf7_TFRPFN,
+        'dcf7_tfn_coffee':dcf7_tfn_coffee,
+        'dcf7_tfn_coconut':dcf7_tfn_coconut,
+        'dcf7_tfn_cacao':dcf7_tfn_cacao,
+        'dcf7_tfn_PFN':dcf7_tfn_PFN,
+        'dcf7_tfi_coffee':dcf7_tfi_coffee,
+        'dcf7_tfi_coconut':dcf7_tfi_coconut,
+        'dcf7_tfi_cacao':dcf7_tfi_cacao,
+        'dcf7_tfi_PFN':dcf7_tfi_PFN,
+        'dcf7_tmpr_coffee':dcf7_tmpr_coffee,
+        'dcf7_tmpr_cacao':dcf7_tmpr_cacao,
+        'dcf7_tmpr_coconut':dcf7_tmpr_coconut,
+        'dcf7_tmpr_PFN':dcf7_tmpr_PFN,
+        'dcf7_tmn_coffee':dcf7_tmn_coffee,
+        'dcf7_tmn_coconut':dcf7_tmn_coconut,
+        'dcf7_tmn_cacao':dcf7_tmn_cacao,
+        'dcf7_tmn_PFN':dcf7_tmn_PFN,
+        'dcf7_tmi_coffee':dcf7_tmi_coffee,
+        'dcf7_tmi_coconut':dcf7_tmi_coconut,
+        'dcf7_tmi_cacao':dcf7_tmi_cacao,
+        'dcf7_tmi_PFN':dcf7_tmi_PFN,
+        'dcf7_bmpr_coffee':dcf7_bmpr_coffee,
+        'dcf7_bmpr_coconut':dcf7_bmpr_coconut,
+        'dcf7_bmpr_cacao':dcf7_bmpr_cacao,
+        'dcf7_bmpr_PFN':dcf7_bmpr_PFN,
+        'dcf7_bmn_coffee':dcf7_bmn_coffee,
+        'dcf7_bmn_coconut':dcf7_bmn_coconut,
+        'dcf7_bmn_cacao':dcf7_bmn_cacao,
+        'dcf7_bmn_PFN':dcf7_bmn_PFN,
+        'dcf7_bmi_coffee':dcf7_bmi_coffee,
+        'dcf7_bmi_coconut':dcf7_bmi_coconut,
+        'dcf7_bmi_cacao':dcf7_bmi_cacao,
+        'dcf7_bmi_PFN':dcf7_bmi_PFN,
+        'dcf7_TA':dcf7_TA,
+        'dcf7_TFP':dcf7_TFP,
+        'dcf7_TFR':dcf7_TFR,
+        'dcf7_TFN':dcf7_TFN,
+        'dcf7_TFI':dcf7_TFI,
+        'dcf7_TSMPR':dcf7_TSMPR,
+        'dcf7_TSMN':dcf7_TSMN,
+        'dcf7_TSMI':dcf7_TSMI,
+        'dcf7_BMPR':dcf7_BMPR,
+        'dcf7_BMN':dcf7_BMN,
+        'dcf7_BMI':dcf7_BMI,
+        'dcf10_FO':dcf10_FO,
+        'dcf10_MSME':dcf10_MSME,
+        'dcf10_NOT':dcf10_NOT,
+        'dcf_form10_male':dcf_form10_male,
+        'dcf_form10_female':dcf_form10_female,
+
+######## RAPID CODE ####################################################################################################
+        'form1_datatable':  form1_datatable,
+        'form2_datatable':  form2_datatable,
+        'form3_datatable':  form3_datatable,
+        'form4_datatable':  form4_datatable,
+        'form5_datatable':  form5_datatable,
+        'form6_datatable':  form6_datatable,
+        'form7_datatable':  form7_datatable,
+        'form8_datatable':  form8_datatable,
+        'form9_datatable':  form9_datatable,
+        'form10_datatable':  form10_datatable,
+        'form11_datatable':  form11_datatable,
+        'dcf_form1male':  dcf_form1male,
+        'dcf_form1maleyouth': dcf_form1maleyouth,
+        'dcf_form1maleip':dcf_form1maleip,
+        'dcf_form1malepwd':dcf_form1malepwd,
+        'dcf_form1sextotal':dcf_form1sextotal,
+        'dcf_form2sextotal':dcf_form2sextotal,
+        'dcf_form3sextotal':dcf_form3sextotal,
+        'dcf_form4sextotal':dcf_form4sextotal,
+        'dcf_form1female':  dcf_form1female,
+        'dcf_form1femaleyouth': dcf_form1femaleyouth,
+        'dcf_form1femaleip':dcf_form1femaleip,
+        'dcf_form1femalepwd':dcf_form1femalepwd,
+        'dcf_form2FOmale':  dcf_form2FOmale,
+        'dcf_form2FOpwd':  dcf_form2FOpwd,
+        'dcf_form2FOyouth':  dcf_form2FOyouth,
+        'dcf_form2FOip':  dcf_form2FOip,
+        'dcf_form2FOsc':  dcf_form2FOsc,
+        'st_sales' : st_sales,
+        'st_vol' : st_vol,
+        'st_transaction' : st_transaction,
+        'st_commodity' : st_commodity,
+        'dcf_form2FOfemale':  dcf_form2FOfemale,
+        'dcf_form3male':  dcf_form3male,
+        'dcf_form3female':  dcf_form3female,
+        'dcf_form4male':  dcf_form4male,
+        'dcf_form4female':  dcf_form4female,
+        'dips_list':  dip_status_group_per_region,
+        'dcf_form2nonrenewal': dcf_form2nonrenewal,
+        'dcf_form2cancelled': dcf_form2cancelled,
+        'dcf_form2og': dcf_form2og,
+        'totalstatus': totalstatus,
+        'over_all_dips_list':  over_all,
+        'total_dip_nat':alltotal,
+        'dip_sex_group_per_region' : dip_sex_group_per_region,
+        "commodities_per_status_per_region" : commodities_per_status_per_region,
+        'dcf_form1msme':dcf_form1msme,
+        'dcf_form1msme2':dcf_form1msme2,
+        'dcf_form1msme3':dcf_form1msme3,
+        'dcf_form1msme4':dcf_form1msme4,
+        'total_untagged' : total_untagged,
+        'over_all_commodity_count':over_all_commodity_count,
+        'over_all_commodity_count2':over_all_commodity_count2,
+        'over_all_commodity_count4':over_all_commodity_count4,
+        'over_all_commodity_count5':over_all_commodity_count5,
+        'over_all_commodity_count7':over_all_commodity_count7,
+        'over_all_commodity_count10':over_all_commodity_count10,
+        #'over_all_commodity_count11':over_all_commodity_count11,
+        'typebdsp':typebdsp,
+        'form1_data_sep':form1_data_sep,
+        'form1_data_oct':form1_data_oct,
+        'form1_data_nov':form1_data_nov,
+        'form1_data_dec':form1_data_dec,
+        'form1_data_jan':form1_data_jan,
+        'form1_percentages':form1_percentages,
+        'form1_thismonth':form1_thismonth,
+        'form1_lastmonth':form1_lastmonth,
+        'form1_subperc':form1_subperc,
+        'form2_data_sep':form2_data_sep,
+        'form2_data_oct':form2_data_oct,
+        'form2_data_nov':form2_data_nov,
+        'form2_data_dec':form2_data_dec,
+        'form2_data_jan':form2_data_jan,
+        'form2_percentages':form2_percentages,
+        'form2_thismonth':form2_thismonth,
+        'form2_lastmonth':form2_lastmonth,
+        'form2_subperc':form2_subperc,
+        'form3_data_sep':form3_data_sep,
+        'form3_data_oct':form3_data_oct,
+        'form3_data_nov':form3_data_nov,
+        'form3_data_dec':form3_data_dec,
+        'form3_data_jan':form3_data_jan,
+        'form3_percentages':form3_percentages,
+        'form3_thismonth':form3_thismonth,
+        'form3_lastmonth':form3_lastmonth,
+        'form3_subperc':form3_subperc,
+        'form4_data_sep':form4_data_sep,
+        'form4_data_oct':form4_data_oct,
+        'form4_data_nov':form4_data_nov,
+        'form4_data_dec':form4_data_dec,
+        'form4_data_jan':form4_data_jan,
+        'form4_percentages':form4_percentages,
+        'form4_thismonth':form4_thismonth,
+        'form4_lastmonth':form4_lastmonth,
+        'form4_subperc':form4_subperc,
+        'form5_data_sep':form5_data_sep,
+        'form5_data_oct':form5_data_oct,
+        'form5_data_nov':form5_data_nov,
+        'form5_data_dec':form5_data_dec,
+        'form5_data_jan':form5_data_jan,
+        'form5_percentages':form5_percentages,
+        'form5_thismonth':form5_thismonth,
+        'form5_lastmonth':form5_lastmonth,
+        'form5_subperc':form5_subperc,
+        'form6_data_sep':form6_data_sep,
+        'form6_data_oct':form6_data_oct,
+        'form6_data_nov':form6_data_nov,
+        'form6_data_dec':form6_data_dec,
+        'form6_data_jan':form6_data_jan,
+        'form6_percentages':form6_percentages,
+        'form6_thismonth':form6_thismonth,
+        'form6_lastmonth':form6_lastmonth,
+        'form6_subperc':form6_subperc,
+        'form7_data_sep':form7_data_sep,
+        'form7_data_oct':form7_data_oct,
+        'form7_data_nov':form7_data_nov,
+        'form7_data_dec':form7_data_dec,
+        'form7_data_jan':form7_data_jan,
+        'form7_percentages':form7_percentages,
+        'form7_thismonth':form7_thismonth,
+        'form7_lastmonth':form7_lastmonth,
+        'form7_subperc':form7_subperc,
+        'form9_data_sep':form9_data_sep,
+        'form9_data_oct':form9_data_oct,
+        'form9_data_nov':form9_data_nov,
+        'form9_data_dec':form9_data_dec,
+        'form9_data_jan':form9_data_jan,
+        'form9_percentages':form9_percentages,
+        'form9_thismonth':form9_thismonth,
+        'form9_lastmonth':form9_lastmonth,
+        'form9_subperc':form9_subperc,
+        'form10_data_sep':form10_data_sep,
+        'form10_data_oct':form10_data_oct,
+        'form10_data_nov':form10_data_nov,
+        'form10_data_dec':form10_data_dec,
+        'form10_data_jan':form10_data_jan,
+        'form10_percentages':form10_percentages,
+        'form10_thismonth':form10_thismonth,
+        'form10_lastmonth':form10_lastmonth,
+        'form10_subperc':form10_subperc,
+        'form11_data_sep':form11_data_sep,
+        'form11_data_oct':form11_data_oct,
+        'form11_data_nov':form11_data_nov,
+        'form11_data_dec':form11_data_dec,
+        'form11_data_jan':form11_data_jan,
+        'form11_percentages':form11_percentages,
+        'form11_thismonth':form11_thismonth,
+        'form11_lastmonth':form11_lastmonth,
+        'form3_agri':form3_agri,
+        'form3_entrep':form3_entrep,
+        'form3_extserv':form3_extserv,
+        'form3_org':form3_org,
+        'form3red':form3red,
+        'form3plat':form3plat,
+        'form3unreg':form3unreg,
+        'form3orgfirm':form3orgfirm,
+        'form3indiv':form3indiv,
+        'form4beforedip':form4beforedip,
+        'form4afterdip':form4afterdip,
+        'dcf_form5male':dcf_form5male,
+        'dcf_form5female':dcf_form5female,
+        'dcf_form5pwd':dcf_form5pwd,
+        'dcf_form5youth':dcf_form5youth,
+        'dcf_form5ip':dcf_form5ip,
+        'dcf_form5sc':dcf_form5sc,
+        'dcf_form4maleip':dcf_form4maleip,
+        'dcf_form4maleyouth':dcf_form4maleyouth,
+        'dcf_form4malepwd':dcf_form4malepwd,
+        'dcf_form4malesc':dcf_form4malesc,
+        'dcf_form4femaleip':dcf_form4femaleip,
+        'dcf_form4femaleyouth':dcf_form4femaleyouth,
+        'dcf_form4femalepwd':dcf_form4femalepwd,
+        'dcf_form4femalesc':dcf_form4femalesc,
+        'dcf_form7msme':dcf_form7msme,
+        'dcf_form7fo':dcf_form7fo,
+        'dcf_form10female':dcf_form10female,
+        'dcf_form10male':dcf_form10male,
+        'dcf_form7farmer':dcf_form7farmer,
+        'dcf_form7female':dcf_form7female,
+        'dcf_form7male':dcf_form7male,
+        'dcf_form7pwd':dcf_form7pwd,
+        'dcf_form7youth':dcf_form7youth,
+        'dcf_form7ip':dcf_form7ip,
+        'dcf_form7sc':dcf_form7sc,
+        'dcf_form7abled':dcf_form7abled,
+        'dcf_form7cashsales':dcf_form7cashsales,
+        'dcf_form7bookedsales':dcf_form7bookedsales,
+        'dcf_form7undernego':dcf_form7undernego,
+        'dcf_form7total':dcf_form7total,
+        'form1_data_feb':form1_data_feb,
+        'form2_data_feb':form2_data_feb,
+        'form3_data_feb':form3_data_feb,
+        'form4_data_feb':form4_data_feb,
+        'form5_data_feb':form5_data_feb,
+        'form6_data_feb':form6_data_feb,
+        'form7_data_feb':form7_data_feb,
+        'form9_data_feb':form9_data_feb,
+        'form10_data_feb':form10_data_feb,
+        'form11_data_feb':form11_data_feb,
+        'dcf_form9capb':dcf_form9capb,
+        'dcf_form9meetings':dcf_form9meetings,
+        'dcf_form9policy':dcf_form9policy,
+        'dcf_form9budg':dcf_form9budg,
+        'dcf_form11ip':dcf_form11ip,
+        'dcf_form11youth':dcf_form11youth,
+        'dcf_form11pwd':dcf_form11pwd,
+        'dcf_form11sc':dcf_form11sc,
+        'dcf_form11female':dcf_form11female,
+        'dcf_form11male':dcf_form11male,
+        'dcf_form6actualbudget':dcf_form6actualbudget,
+        'form1_data_mar':form1_data_mar,
+        'form2_data_mar':form2_data_mar,
+        'form3_data_mar':form3_data_mar,
+        'form4_data_mar':form4_data_mar,
+        'form5_data_mar':form5_data_mar,
+        'form6_data_mar':form6_data_mar,
+        'form7_data_mar':form7_data_mar,
+        'form9_data_mar':form9_data_mar,
+        'form10_data_mar':form10_data_mar,
+        'form11_data_mar':form11_data_mar,
+        'form1_data_apr':form1_data_apr,
+        'form2_data_apr':form2_data_apr,
+        'form3_data_apr':form3_data_apr,
+        'form4_data_apr':form4_data_apr,
+        'form5_data_apr':form5_data_apr,
+        'form6_data_apr':form6_data_apr,
+        'form7_data_apr':form7_data_apr,
+        'form9_data_apr':form9_data_apr,
+        'form10_data_apr':form10_data_apr,
+        'form11_data_apr':form11_data_apr,
+        'form1_data_may':form1_data_may,
+        'form2_data_may':form2_data_may,
+        'form3_data_may':form3_data_may,
+        'form4_data_may':form4_data_may,
+        'form5_data_may':form5_data_may,
+        'form6_data_may':form6_data_may,
+        'form7_data_may':form7_data_may,
+        'form9_data_may':form9_data_may,
+        'form10_data_may':form10_data_may,
+        'form11_data_may':form11_data_may,
+        'form1_data_june':form1_data_june,
+        'form2_data_june':form2_data_june,
+        'form3_data_june':form3_data_june,
+        'form4_data_june':form4_data_june,
+        'form5_data_june':form5_data_june,
+        'form6_data_june':form6_data_june,
+        'form7_data_june':form7_data_june,
+        'form9_data_june':form9_data_june,
+        'form10_data_june':form10_data_june,
+        'form11_data_june':form11_data_june,
+        'form1_data_july':form1_data_july,
+        'form2_data_july':form2_data_july,
+        'form3_data_july':form3_data_july,
+        'form4_data_july':form4_data_july,
+        'form5_data_july':form5_data_july,
+        'form6_data_july':form6_data_july,
+        'form7_data_july':form7_data_july,
+        'form9_data_july':form9_data_july,
+        'form10_data_july':form10_data_july,
+        'form11_data_july':form11_data_july,
+        'dips_listdcf1':dips_listdcf1,
+        'form1_datatabledip': form1_datatabledip,
+    }
 
 def position_data_filter():
     _filter = "WHERE 1 "

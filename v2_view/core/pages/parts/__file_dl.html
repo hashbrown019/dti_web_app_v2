@@ -78,31 +78,32 @@
 		$onload(function(){
 			$send({
 				action: "/mis-v4/file/download_db_pfa/{{db}}?rcu={{rcu}}",
-				method : POST,
-				func : function(res){
-					var dic_jsjon = JSON.parse(res)
-
-					var json = dic_jsjon
-					var fields = Object.keys(json[0])
-					var replacer = function(key, value) { return value === null ? '' : value } 
-					var csv = json.map(function(row){
-						return fields.map(function(fieldName){
-							return JSON.stringify(row[fieldName], replacer)
-						}).join(',')
-					})
-					csv.unshift(fields.join(',')) // add header column
-					csv = csv.join('\r\n');
-					// console.log(csv)
-
-					var element = document.createElement('a');
-					element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
-					element.setAttribute('download', "{{db}}_{{rcu}}.csv");
-					element.style.display = 'none';
-					document.body.appendChild(element);
-					element.click();
-					document.body.removeChild(element);
-
-					$ID("status_dl").innerHTML = "File has been Loaded"
+				method: POST,
+				func: function(res){
+					const json = JSON.parse(res);
+					const fields = Object.keys(json[0]);
+					
+					// Build CSV in single pass
+					let csv = fields.join(',') + '\r\n';
+					for(let i = 0; i < json.length; i++){
+						const row = json[i];
+						for(let j = 0; j < fields.length; j++){
+							const val = row[fields[j]];
+							csv += (val === null || val === undefined ? '' : JSON.stringify(val));
+							if(j < fields.length - 1) csv += ',';
+						}
+						csv += '\r\n';
+					}
+					
+					// Download directly
+					const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+					const link = document.createElement('a');
+					link.href = URL.createObjectURL(blob);
+					link.download = "{{db}}_{{rcu}}.csv";
+					link.click();
+					URL.revokeObjectURL(link.href);
+					
+					$ID("status_dl").innerHTML = "File has been Loaded";
 				}
 			})
 		})

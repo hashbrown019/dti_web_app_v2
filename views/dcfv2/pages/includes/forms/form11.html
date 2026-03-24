@@ -241,18 +241,12 @@
               <input type="text" class="FORM11_FIELD form-control" id="form_11_farmer_location" name="farmer_location" required>
             </div>
           </div>
-          <!-- Beneficiaries / Sex / Sector Row -->
           <div class="row g-3 mt-1">
-            <!-- Name of Beneficiaries -->
             <div class="col-md-4">
               <label for="farmer_beneficiaries_name" class="form-label">Name of Beneficiaries:</label>
-              <input
-                type="text"
-                id="form_11_farmer_beneficiaries_name"
-                name="form_11_beneficiary_name"
-                class="FORM11_FIELD form-control"
-                placeholder=""
-                required />
+              <select class="FORM11_FIELD form-select" id="form_11_farmer_beneficiaries_name" name="form_11_beneficiary_name" required>
+                <option value="">Choose your option</option>
+              </select>
             </div>
             <!-- Sex -->
             <div class="col-md-4">
@@ -262,7 +256,7 @@
                     Farmer Gender
                   </label>
                   <select id="form_11_farmer_gender" name="form_11_farmer_gender" class="FORM11_FIELD form-select" required>
-                    <option value="" selected disabled> Select Gender </option>
+                    <option value="">Choose your option</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
@@ -1160,7 +1154,7 @@
       });
     }
 
-    // FO/MSMEs form toggle functionality (form 2) ✅ fixed IDs
+    // FO/MSMEs form toggle functionality (form 2) âœ… fixed IDs
     const foSectionMap = {
       fo_show_loan_section: "fo_loan_section",
       fo_show_equity_section: "fo_equity_section",
@@ -1268,11 +1262,19 @@ function populateDipNames(selectElementId) {
         .catch(error => console.error('Error fetching DIP names:', error));
 }
 
-// ✅ On page load, populate both dropdowns with all DIPs
+// âœ… On page load, populate both dropdowns with all DIPs
 populateDipNames('form_11_farmer_dip_name');
 populateDipNames('form_11_fo_dip_name');
 
-// ✅ Function to handle filtering per region
+// when load_data finishes, the record values have been written; then fill beneficiary select
+___SAM_FUNC_KAMOWN.push(function(res){
+    const enterpriseValue = res.form_11_farmer_name_of_enterprise || '';
+    const beneficiaryValue = res.form_11_farmer_beneficiaries_name || '';
+    const enterpriseType = res.form_11_farmer_type_of_enterprise || '';
+    populateFarmerBeneficiariesByCoop(enterpriseValue, beneficiaryValue, enterpriseType);
+});
+
+// âœ… Function to handle filtering per region
 function setupDipFilter(regionSelectId, dipSelectId) {
     const regionSelect = document.getElementById(regionSelectId);
     const dipSelect = document.getElementById(dipSelectId);
@@ -1312,7 +1314,7 @@ function setupDipFilter(regionSelectId, dipSelectId) {
     });
 }
 
-// ✅ Apply filtering to both forms
+// âœ… Apply filtering to both forms
 setupDipFilter('form_11_farmer_region', 'form_11_farmer_dip_name');
 setupDipFilter('form_11_fo_msme_regional', 'form_11_fo_dip_name');
 </script>
@@ -1320,7 +1322,7 @@ setupDipFilter('form_11_fo_msme_regional', 'form_11_fo_dip_name');
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-  // ✅ Region to PCU mapping
+  // âœ… Region to PCU mapping
   const regionPCUMap = {
     '8': ['Northern Samar', 'Leyte', 'Southern Leyte'],
     '9': ['Zamboanga del Norte', 'Zamboanga Sibugay', 'Zamboanga del Sur'],
@@ -1331,7 +1333,7 @@ document.addEventListener('DOMContentLoaded', function () {
     'BARMM': ['Maguindanao']
   };
 
-  // ✅ Function to set up dependent dropdown
+  // âœ… Function to set up dependent dropdown
   function setupRegionPCUFilter(regionId, pcuId) {
     const regionSelect = document.getElementById(regionId);
     const pcuSelect = document.getElementById(pcuId);
@@ -1359,7 +1361,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ✅ Apply function to both forms
+  // âœ… Apply function to both forms
   setupRegionPCUFilter('form_11_farmer_region', 'form_11_farmer_pcu');
   setupRegionPCUFilter('form_11_fo_msme_regional', 'form_11_fo_msme_pcu');
 });
@@ -1450,18 +1452,186 @@ function calculateFoTotalLoanAmount() {
       .catch(error => console.error('Error fetching recipient names:', error));
   }
 
+  function resolveBeneficiaryType(selectElement, typeSelectId) {
+      if (!selectElement) return "";
+      const selectedOption = selectElement.options[selectElement.selectedIndex];
+      if (selectedOption && selectedOption.textContent) {
+          const label = selectedOption.textContent.trim().toUpperCase();
+          if (label.startsWith("MSME:")) return "MSME";
+          if (label.startsWith("FO:")) return "FO";
+      }
+      const typeSelect = document.getElementById(typeSelectId);
+      if (typeSelect && typeSelect.value) {
+          return typeSelect.value;
+      }
+      return "";
+  }
+
+  function autofillProvince(selectId, inputId, typeSelectId) {
+      const selectElement = document.getElementById(selectId);
+      const provinceInput = document.getElementById(inputId);
+      if (!selectElement || !provinceInput) return;
+
+      const name = selectElement.value;
+      if (!name) {
+          provinceInput.value = "";
+          return;
+      }
+
+      const type = resolveBeneficiaryType(selectElement, typeSelectId);
+      fetch(`/api/get_beneficiary_province?type=${encodeURIComponent(type)}&name=${encodeURIComponent(name)}`)
+          .then(response => {
+              if (!response.ok) {
+                  return response.text().then(text => { throw new Error(text) });
+              }
+          return response.json();
+      })
+      .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+              provinceInput.value = data[0].province || "";
+          } else {
+              provinceInput.value = "";
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching beneficiary province:', error);
+          provinceInput.value = "";
+      });
+  }
+
+  function normalizeGender(raw) {
+      if (!raw) return "";
+      const val = String(raw).trim().toLowerCase();
+      if (!val) return "";
+      if (val.startsWith("m")) return "Male";
+      if (val.startsWith("f")) return "Female";
+      return "";
+  }
+
+  function applyGenderFromBeneficiary() {
+      const beneficiarySelect = document.getElementById('form_11_farmer_beneficiaries_name');
+      const genderSelect = document.getElementById('form_11_farmer_gender');
+      if (!beneficiarySelect || !genderSelect) return;
+
+      const option = beneficiarySelect.options[beneficiarySelect.selectedIndex];
+      if (!option) return;
+
+      const gender = normalizeGender(option.dataset.gender || "");
+      if (!gender) {
+          genderSelect.value = "";
+          genderSelect.dispatchEvent(new Event('change'));
+          return;
+      }
+
+      genderSelect.value = gender;
+      genderSelect.dispatchEvent(new Event('change'));
+  }
+
+  function populateFarmerBeneficiariesByCoop(coopName, existingValue, enterpriseType) {
+      const selectElement = document.getElementById('form_11_farmer_beneficiaries_name');
+      if (!selectElement) return Promise.resolve();
+
+      selectElement.innerHTML = '<option value="">Choose your option</option>';
+
+      const trimmedName = (coopName || '').trim();
+      if (!trimmedName) {
+          if (existingValue) {
+              selectElement.value = existingValue;
+          }
+          return Promise.resolve();
+      }
+
+      const normalizedType = (enterpriseType || '').trim().toUpperCase();
+      let endpoint = `/api/get_pfa_by_coop?coop_name=${encodeURIComponent(trimmedName)}`;
+      if (normalizedType === 'MSME' || normalizedType === 'MSMES') {
+          endpoint = `/api/get_msme_respondents?business_name=${encodeURIComponent(trimmedName)}`;
+      }
+
+      return fetch(endpoint)
+          .then(response => {
+              if (!response.ok) {
+                  return response.text().then(text => { throw new Error(text) });
+              }
+              return response.json();
+          })
+          .then(data => {
+              if (!Array.isArray(data)) return;
+              data.forEach(item => {
+                  const fullName = (item.full_name || item.name_of_respondent || '').trim();
+                  if (!fullName) return;
+                  const gender = normalizeGender(item.gender || item.respondents_gender || '');
+                  const option = document.createElement('option');
+                  option.value = fullName;
+                  option.textContent = fullName;
+                  if (gender) {
+                      option.dataset.gender = gender;
+                  }
+                  selectElement.appendChild(option);
+              });
+              if (existingValue) {
+                  selectElement.value = existingValue;
+              }
+              applyGenderFromBeneficiary();
+          })
+          .catch(error => {
+              console.error('Error fetching beneficiary names:', error);
+          });
+  }
+
   // --- Setup for farmer form ---
-  populateRecipientNames('form_11_farmer_name_of_enterprise');
+  populateRecipientNames('form_11_farmer_name_of_enterprise').then(() => {
+      autofillProvince('form_11_farmer_name_of_enterprise', 'form_11_farmer_location', 'form_11_farmer_type_of_enterprise');
+      const enterpriseValue = document.getElementById('form_11_farmer_name_of_enterprise')?.value || '';
+      const beneficiaryValue = document.getElementById('form_11_farmer_beneficiaries_name')?.value || '';
+      const enterpriseType = document.getElementById('form_11_farmer_type_of_enterprise')?.value || '';
+      populateFarmerBeneficiariesByCoop(enterpriseValue, beneficiaryValue, enterpriseType);
+  });
+  const farmerBeneficiarySelect = document.getElementById('form_11_farmer_name_of_enterprise');
+  if (farmerBeneficiarySelect) {
+      farmerBeneficiarySelect.addEventListener('change', function() {
+          autofillProvince('form_11_farmer_name_of_enterprise', 'form_11_farmer_location', 'form_11_farmer_type_of_enterprise');
+          const enterpriseType = document.getElementById('form_11_farmer_type_of_enterprise')?.value || '';
+          populateFarmerBeneficiariesByCoop(this.value, null, enterpriseType);
+      });
+  }
+  const farmerBeneficiaryNameSelect = document.getElementById('form_11_farmer_beneficiaries_name');
+  if (farmerBeneficiaryNameSelect) {
+      farmerBeneficiaryNameSelect.addEventListener('change', function() {
+          applyGenderFromBeneficiary();
+      });
+  }
   document.getElementById('form_11_farmer_type_of_enterprise').addEventListener('change', function() {
       const type = this.value;
-      populateRecipientNames('form_11_farmer_name_of_enterprise', null, type);
+      const locationInput = document.getElementById('form_11_farmer_location');
+      if (locationInput) {
+          locationInput.value = "";
+      }
+      populateRecipientNames('form_11_farmer_name_of_enterprise', null, type).then(() => {
+          autofillProvince('form_11_farmer_name_of_enterprise', 'form_11_farmer_location', 'form_11_farmer_type_of_enterprise');
+          const enterpriseValue = document.getElementById('form_11_farmer_name_of_enterprise')?.value || '';
+          populateFarmerBeneficiariesByCoop(enterpriseValue, null, type);
+      });
   });
 
   // --- Setup for FO form ---
-  populateRecipientNames('form_11_fo_name_of_beneficiary');
+  populateRecipientNames('form_11_fo_name_of_beneficiary').then(() => {
+      autofillProvince('form_11_fo_name_of_beneficiary', 'form_11_fo_msme_province', 'form_11_fo_type_of_enterprise');
+  });
+  const foBeneficiarySelect = document.getElementById('form_11_fo_name_of_beneficiary');
+  if (foBeneficiarySelect) {
+      foBeneficiarySelect.addEventListener('change', function() {
+          autofillProvince('form_11_fo_name_of_beneficiary', 'form_11_fo_msme_province', 'form_11_fo_type_of_enterprise');
+      });
+  }
   document.getElementById('form_11_fo_type_of_enterprise').addEventListener('change', function() {
       const type = this.value;
-      populateRecipientNames('form_11_fo_name_of_beneficiary', null, type);
+      const provinceInput = document.getElementById('form_11_fo_msme_province');
+      if (provinceInput) {
+          provinceInput.value = "";
+      }
+      populateRecipientNames('form_11_fo_name_of_beneficiary', null, type).then(() => {
+          autofillProvince('form_11_fo_name_of_beneficiary', 'form_11_fo_msme_province', 'form_11_fo_type_of_enterprise');
+      });
   });
 </script>
 
@@ -1469,6 +1639,7 @@ function calculateFoTotalLoanAmount() {
     $onload(function () {
 		var record_id = URL_ARGS["id"]
 		var table = URL_ARGS["table"]
+		// load record normally; beneficiary list will be built by post-load hook below
 		load_data(record_id, table, "FORM11_FIELD")
 		get_participants_data(record_id, table, "FORM11_FIELD")
 		// submit_form('CLASSNAME_FOR_FIELDS','TABLE_NAME','URL_DASH',)

@@ -91,7 +91,7 @@ $(document).ready(function() {
 		const partcounterFMI = parseInt($('#fmi_part_counter').val()) || 0;
 		const projcostMG = parseInt($('#form_1_y').val()) || 0;
 		const projcostCB = parseInt($('#form_1_ac').val()) || 0;
-		const projcostSCM = parseInt($('#form_1_ad').val()) || 0;
+		const projcostSCM = parseInt($('#form_1_supply_chain_manager').val()) || 0;
 		const projcostFMI = parseInt($('#form_1_fmi').val()) || 0;
 		const cbbmaleyouth = parseInt($('#cbb_male_youth').val()) || 0;
 		const cbb_male_pwd = parseInt($('#cbb_male_pwd').val()) || 0;
@@ -175,7 +175,7 @@ $(document).ready(function() {
 
     }
 
-    $('#total_large_enterprise, #total_medium_enterprise, #total_small_enterprise, #total_micro_enterprise,#form_1_totalmale, #form_1_totalfemale,#form_1_maleyouth, #form_1_femaleyouth,#form_1_maleip, #form_1_femaleip,#form_1_malepwd, #form_1_femalepwd,#form_1_totalcooperatives,#form_1_totalassociations,#form_1_hect_rehab,#form_1_hect_exp,#form_1_partners_counterpart,#form_1_total_matching_grant,#partner_counterpart_MG,#partner_counterpart_CB,#partner_counterpart_SCM,#partner_counterpart_FMI,#form_1_y,#form_1_ac,#form_1_ad,#form1_total_fmi,#cbb_male_youth,#cbb_male_pwd,#cbb_male_sc,#cbb_male_ip,#cbb_female_youth,#cbb_female_pwd,#cbb_female_sc,#cbb_female_ip,#form_1_total_capbuild_counterpart,#supply_chain_manager_counterpart,#form_1_fmi,#fmi_part_counter').on('input', calculateTotaltable);
+    $('#total_large_enterprise, #total_medium_enterprise, #total_small_enterprise, #total_micro_enterprise,#form_1_totalmale, #form_1_totalfemale,#form_1_maleyouth, #form_1_femaleyouth,#form_1_maleip, #form_1_femaleip,#form_1_malepwd, #form_1_femalepwd,#form_1_totalcooperatives,#form_1_totalassociations,#form_1_hect_rehab,#form_1_hect_exp,#form_1_partners_counterpart,#form_1_total_matching_grant,#partner_counterpart_MG,#partner_counterpart_CB,#partner_counterpart_SCM,#partner_counterpart_FMI,#form_1_y,#form_1_ac,#form_1_ad,#form1_total_fmi,#cbb_male_youth,#cbb_male_pwd,#cbb_male_sc,#cbb_male_ip,#cbb_female_youth,#cbb_female_pwd,#cbb_female_sc,#cbb_female_ip,#form_1_total_capbuild_counterpart,#supply_chain_manager_counterpart,#form_1_supply_chain_manager,#form_1_fmi,#fmi_part_counter').on('input', calculateTotaltable);
 
     calculateTotaltable();
 
@@ -215,16 +215,18 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Event listener for form_1_supply_chain_manager
-document.addEventListener('DOMContentLoaded', function () {
   var supplyChainManagerInput = document.getElementById('form_1_supply_chain_manager');
-
   if (supplyChainManagerInput) {
     supplyChainManagerInput.addEventListener('input', function () {
       var supplyChainManagerValue = this.value;
-      document.querySelector('.form1_sup').value = supplyChainManagerValue;
+      var supplyChainManagerTotal = document.querySelector('.form1_sup');
+      if (supplyChainManagerTotal) {
+        supplyChainManagerTotal.value = supplyChainManagerValue;
+        supplyChainManagerTotal.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      calculateTotaltable();
     });
   }
-});
   // Function for updating total matching grant
   function updateTotalMatchingGrant() {
     const aaValue = parseFloat(this.closest('tr').querySelector('.form-1-aa').value) || 0;
