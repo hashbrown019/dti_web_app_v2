@@ -17,6 +17,11 @@ from captcha.image import ImageCaptcha
 import io, random, string
 
 from v2_view.core import _dashboard
+<<<<<<< Updated upstream
+=======
+from v2_view.core import _mg_implementation
+from views.dcfv2.dashboard.display_dataform import displayform
+>>>>>>> Stashed changes
 from views.dcfv2.dashboard.display_dataform import displayform2
 from views.fmi.bp_app import fmi_dashboard_data
 from views.fmi.bp_app import fmi_dashboard_data_chart
