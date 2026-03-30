@@ -665,7 +665,12 @@ class _main:
                     f = files[file]
                     global UPLOAD_NAME
                     UPLOAD_NAME = str(uploader) + "#" + str(today) + "#" + secure_filename(f.filename)
-                    f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_mgi/queued/", UPLOAD_NAME))
+
+                    save_dir = os.path.join(c.RECORDS, "objects", "spreadsheets_mgi", "queued")
+                    os.makedirs(save_dir, exist_ok=True)
+                    f.save(os.path.join(save_dir, UPLOAD_NAME))
+
+                    # f.save(os.path.join(c.RECORDS + "/objects/spreadsheets_mgi/queued/", UPLOAD_NAME))
                     _main.excel_upload_open_mgi(os.path.join(c.RECORDS + "/objects/spreadsheets_mgi/queued/", UPLOAD_NAME), impType)
             except IndexError:
                 # flash("I am here!", "error")

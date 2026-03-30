@@ -235,6 +235,7 @@ class _main:
         articles = db.select("SELECT * FROM webrep_articles_v2 WHERE status='posted' AND removed=0 ORDER BY id DESC LIMIT 6")
         data = []
         for article in articles:
+            # print(type(article), article)
             article['postheader'] = urllib.parse.unquote(article['postheader'])
             article['postContent'] = urllib.parse.unquote(article['postContent'])
             article['postAuthor'] = urllib.parse.unquote(article['postAuthor'])
