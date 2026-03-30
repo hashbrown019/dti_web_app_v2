@@ -215,23 +215,33 @@
 						}
 						if (x_ins[index].type == "checkbox") {
 							try{
-								if (res[x_ins[index].id] === "true") {
-									x_ins[index].click()
+								const raw = res[x_ins[index].id]
+								const normalized = (raw ?? "").toString().trim().toLowerCase()
+								const shouldCheck = (raw === true) || (normalized === "true") || (normalized === "yes") || (normalized === "1")
+								if (shouldCheck !== x_ins[index].checked) {
+									x_ins[index].checked = shouldCheck
+									x_ins[index].dispatchEvent(new Event('change', { bubbles: true }))
 								}
 							}catch(err){
 								warnprintln(x_ins[index].id + " ||| " + err)
 							}
 						} else if (x_ins[index].type == "select-one" || x_ins[index].type == "select-multiple") {
 							try{
+								const rawValue = (res[x_ins[index].id] ?? "").toString()
+								const splitValues = rawValue.split(",").map(val => val.trim()).filter(val => val.length)
 								if(CHOICES_SELECT[x_ins[index].id] != undefined){
-									// alert("kamown")
-									var _val = res[x_ins[index].id].split(",")
-									CHOICES_SELECT[x_ins[index].id].setValue(_val);
-									x_ins[index].value = res[x_ins[index].id]
-
+									CHOICES_SELECT[x_ins[index].id].setValue(splitValues);
+									x_ins[index].value = rawValue
 								}else{
-									// println(x_ins[index].classList)
-									x_ins[index].value = res[x_ins[index].id]
+									if (x_ins[index].type == "select-multiple") {
+										const selectedSet = new Set(splitValues)
+										for (let optIndex = 0; optIndex < x_ins[index].options.length; optIndex++) {
+											const opt = x_ins[index].options[optIndex]
+											opt.selected = selectedSet.has(opt.value)
+										}
+									} else {
+										x_ins[index].value = rawValue
+									}
 								}
 							}catch(err){
 								warnprintln(x_ins[index].id + " ||| " + err)
@@ -338,7 +348,13 @@ function submit_form(class_name,table, url){
 	var x_ins = $CLASS(class_name);var form_data = {}
 	for (let index = 0; index < x_ins.length; index++) {
 		var VAL = ""
-		if(x_ins[index].classList.contains("choices__input")){
+		if (x_ins[index].tagName === "SELECT" && x_ins[index].multiple) {
+			const selectedValues = Array.from(x_ins[index].selectedOptions)
+				.map(option => option.value)
+				.filter(value => value !== "");
+			VAL = selectedValues.join(", ");
+		}
+		else if(x_ins[index].classList.contains("choices__input")){
 			var temp = x_ins[index]
 			var element = []
 			for (let xxx = 0; xxx < temp.length; xxx++) {

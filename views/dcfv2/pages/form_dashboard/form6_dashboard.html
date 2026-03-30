@@ -10,7 +10,7 @@
 <title>Form 6 Dashboard</title>
 
 <!-- top tiles -->
-<div class="row" style="display: inline-block;" >
+<div class="row">
 
   	<div class="top_tiles">
 		<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
@@ -74,7 +74,43 @@
 				<p>Total # of FO members by sectoral group.</p>
 
 				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats" style="border-radius: 15px;">
+				<div class="count _money_tag">{{ dcf_form6_prod_dev[0]['total_prod_dev6'] }}</div>
+				<h3>Products Developed</h3>
+				<p>Total # of Product Development.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats" style="border-radius: 15px;">
+				<div class="count _money_tag">{{ dcf_form6_prod_improve[0]['total_prod_improve6'] }}</div>
+				<h3>Products Improved</h3>
+				<p>Total # of Product Enhancement.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats" style="border-radius: 15px;">
+				<div class="count _money_tag">{{ dcf_form6_system_dev[0]['total_system_dev6'] }}</div>
+				<h3>Systems Developed</h3>
+				<p>Total # of Product Systems Development.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats" style="border-radius: 15px;">
+				<div class="count _money_tag">{{ dcf_form6_system_intro[0]['total_system_intro6'] }}</div>
+				<h3>Systems Introduced</h3>
+				<p>Total # of Product Systems Introduction.</p>
+				</div>
 			</div> 
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats" style="border-radius: 15px;">
+				<div class="count _money_tag">{{ dcf_form6_product_certified[0]['total_certified6'] }}</div>
+				<h3>Products Certified</h3>
+				<p>Total # of Products Certified.</p>
+				</div>
+			</div>
+			
 			</div> 
 
 </div>
@@ -106,15 +142,14 @@
 				<canvas id="mybarChart3"></canvas>
 			</div>
 			<div style="text-align: center;">
-				<p><i class="fa fa-square" style="color:#FDE7B3 "></i>Cacao: {{dcf_form6_Cacao[0]['total_cacao6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#FFC50F "></i> Coffee: {{dcf_form6_Coffee[0]['total_coffee6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#63A361 "></i> Coconut: {{dcf_form6_Coconut[0]['total_coconut6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#5B532C "></i> PFN: {{dcf_form6_PFN[0]['total_pfn6']}}</p>
+				<p><i class="fa fa-square" style="color:#00bfff "></i>Cacao: {{dcf_form6_Cacao[0]['total_cacao6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc "></i> Coffee: {{dcf_form6_Coffee[0]['total_coffee6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#007399 "></i> Coconut: {{dcf_form6_Coconut[0]['total_coconut6']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#004d66 "></i> PFN: {{dcf_form6_PFN[0]['total_pfn6']}}</p>
 			</div>
 		</div>
 	</div>
-
 	<div class="col-md-6 col-sm-6">
 		<div class="x_panel" style="border-radius: 15px;">
 			<div class="x_title">
-				<h2>Type of Activity <small>Pie Chart</small></h2>
+				<h2>Beneficiary Type <small>FO vs MSMEs (With Certifications Acquired)</small></h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>
@@ -131,11 +166,11 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<canvas id="mybarChartAct"></canvas>
+				<canvas id="form6BeneficiaryTypeChart"></canvas>
 			</div>
 			<div style="text-align: center;">
-			<p><i class="fa fa-square" style="color:#FF6384 "></i>Product Development: {{ dcf_form6_prod[0]['total_prod6'] }} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#36A2EB "></i> Training: {{ dcf_form6_training[0]['total_training6'] }} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#FFCE56 "></i> Consultation: {{ dcf_form6_consultation[0]['total_consultation6'] }} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#4BC0C0 "></i> Orientation: {{ dcf_form6_orientation[0]['total_orientation6'] }}</p>
-	  </div>
+				<p><i class="fa fa-square" style="color:#0099cc "></i> FO: {{ dcf_form6_beneficiary_fo }} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#007399 "></i> MSMEs: {{ dcf_form6_beneficiary_msme }}</p>
+			</div>
 		</div>
 	</div>
 	</div>
@@ -149,29 +184,13 @@
 					enabled: false
 				};
 
-				if ($("#mybarChartAct").length) e = document.getElementById("mybarChartAct"), new Chart(e, {
-						type: "pie",
-						data: {
-							labels: ["Product development", "Training", "Consultation","Orientation"],
-							datasets: [{
-							label: "Total",
-							backgroundColor:  ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
-							data: [{{ dcf_form6_prod[0]['total_prod6'] }},{{ dcf_form6_training[0]['total_training6'] }},{{ dcf_form6_consultation[0]['total_consultation6'] }},{{ dcf_form6_orientation[0]['total_orientation6'] }}]}]
-						},
-						options: {
-							scales: {
-								
-								}
-							}
-						});
-
 				if ($("#mybarChart3").length) e = document.getElementById("mybarChart3"), new Chart(e, {
 						type: "bar",
 						data: {
 							labels: ["Cacao", "Coffee", "Coconut", "PFN"],
 							datasets: [{
 							label: "Total",
-							backgroundColor:  ["#FDE7B3", "#FFC50F", "#63A361", "#5B532C"],
+							backgroundColor:  ["#00bfff", "#0099cc", "#007399", "#004d66"],
 							data: [{{dcf_form6_Cacao[0]['total_cacao6']}}, {{dcf_form6_Coffee[0]['total_coffee6']}}, {{dcf_form6_Coconut[0]['total_coconut6']}}, {{dcf_form6_PFN[0]['total_pfn6']}}]
 							},]
 						},
@@ -186,6 +205,47 @@
 							}
 						});
 
+				if ($("#form6BeneficiaryTypeChart").length) {
+					var beneficiaryLabels = ["FO", "MSMEs"];
+					var beneficiaryValues = [
+						parseInt('{{ dcf_form6_beneficiary_fo }}') || 0,
+						parseInt('{{ dcf_form6_beneficiary_msme }}') || 0
+					];
+					var beneficiaryColors = ["#0099cc", "#007399"];
+					var ctxBeneficiary = document.getElementById("form6BeneficiaryTypeChart");
+					new Chart(ctxBeneficiary, {
+						type: "bar",
+						data: {
+							labels: beneficiaryLabels,
+							datasets: [{
+								label: "Total",
+								backgroundColor: beneficiaryColors,
+								borderColor: beneficiaryColors,
+								borderWidth: 1,
+								data: beneficiaryValues
+							}]
+						},
+						options: {
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: true,
+										precision: 0
+									}
+								}]
+							},
+							tooltips: {
+								callbacks: {
+									label: function (tooltipItem, data) {
+										var label = data.labels[tooltipItem.index] || '';
+										var value = data.datasets[0].data[tooltipItem.index] || 0;
+										return label + ': ' + value;
+									}
+								}
+							}
+						}
+					});
+				}
 
 				// Bar chart
 				if ($('#mybarChart').length) {

@@ -13,9 +13,16 @@
 	<div class="row g-3"> <!-- g-3 adds spacing between columns -->
 		<div class="col-lg-4 col-md-4 col-sm-12">
 			<div class="tile-stats" style="border-radius: 15px;">
-			<div class="count _money_tag">{{dcf_form3}}</div>
+			<div class="count _money_tag">{{dcf_form3_bdsp}}</div>
 			<h3>Total BDSP</h3>
 			<p>Total # of BDSP</p>
+			</div>
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-12">
+			<div class="tile-stats" style="border-radius: 15px;">
+			<div class="count _money_tag">{{dcf_form3_fsp}}</div>
+			<h3>Total FSP</h3>
+			<p>Total # of FSP</p>
 			</div>
 		</div>
 		
@@ -28,10 +35,9 @@
  	<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
 		<div class="x_panel" style="border-radius: 15px;">
 			<div class="x_title">
-				<h2>Philgeps Registered <small>Pie Chart</small></h2>
+				<h2>Philgeps Registered by BDSP <small>Pie Chart</small></h2>
 				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -39,15 +45,18 @@
 							<a class="dropdown-item" href="#">Settings 2</a>
 						</div>
 					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a>
-					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 				</ul>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<canvas id="pieChart3"></canvas>
+				<canvas id="philgepsChart3"></canvas>
 				<div style="text-align: center;">
-					<p><i class="fa fa-square" style="color:#009999 "></i> Agri-technical: {{form3_agri[0]['total_agri']}}&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#83ffb7 "></i> Entrepreneurial: {{form3_entrep[0]['total_entrep']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-square" style="color:#669999 "></i> Extension Service: {{form3_extserv[0]['total_extserv']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-square" style="color:#007399 "></i> Organizational: {{form3_org[0]['total_org']}}
+					<p>
+						<i class="fa fa-square" style="color:#ff8080"></i> RED: {{form3red[0]['totalred']}} &nbsp;&nbsp;&nbsp;
+						<i class="fa fa-square" style="color:#E5E4E2"></i> PLATINUM: {{form3plat[0]['totalplat']}} &nbsp;&nbsp;&nbsp;
+						<i class="fa fa-square" style="color:#faef8d"></i> UNREGISTERED: {{form3unreg[0]['totalunreg']}}
+					</p>
 				</div>
 			</div>
 		</div>
@@ -76,9 +85,101 @@
 				<canvas id="mybarChart3"></canvas>
 			</div>
 			<div style="text-align: center;">
-				<p><i class="fa fa-square" style="color:#009999 "></i> Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#007399 "></i> Organizational/Firm: {{form3orgfirm[0]['totalorgfirm']}}</p>
+				<p>
+					<i class="fa fa-square" style="color:#99e6ff"></i> Individual: {{form3indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#66d9ff"></i> Organization/Firm: {{form3orgfirm[0]['totalorgfirm']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#33ccff"></i> GFI/GOCC/NGA: {{form3_gfi[0]['totalgfi']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#00bfff"></i> COOP/NGO: {{form3_coop[0]['totalcoop']}}
+				</p>
+				<p>
+					<i class="fa fa-square" style="color:#0099cc"></i> Private Financing Institution: {{form3_private[0]['totalprivate']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#007399"></i> LGU: {{form3_lgu[0]['totallugu']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#004d66"></i> Market: {{form3_market[0]['totalmarket']}}
+				</p>
 			</div>
 		</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+		<div class="x_panel" style="border-radius: 15px;">
+			<div class="x_title">
+				<h2>Type of Expertise / Services by FSP <small>Pie Chart</small></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a>
+							<a class="dropdown-item" href="#">Settings 2</a>
+						</div>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<canvas id="pieChart3"></canvas>
+				<div style="text-align: center;">
+					<p>
+						<i class="fa fa-square" style="color:#ccf5ff"></i> Agri-technical: {{form3_agri[0]['total_agri']}}&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-square" style="color:#99e6ff"></i> Entrepreneurial: {{form3_entrep[0]['total_entrep']}}&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-square" style="color:#66d9ff"></i> Extension Service: {{form3_extserv[0]['total_extserv']}} <br>
+						<i class="fa fa-square" style="color:#33ccff"></i> Organizational: {{form3_org[0]['total_org']}}
+					</p>
+					<p>
+						<i class="fa fa-square" style="color:#00bfff"></i> Loan/Cash Advance: {{form3_loan[0]['total_loan']}}&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-square" style="color:#0099cc"></i> Insurance: {{form3_insurance[0]['total_insurance']}}&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-square" style="color:#007399"></i> Credit Guarantee: {{form3_credit[0]['total_credit']}}&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-square" style="color:#004d66"></i> In Kind: {{form3_inkind[0]['total_inkind']}}
+					</p>
+					<p>
+						<i class="fa fa-square" style="color:#00334d"></i> Cash Grant: {{form3_cashgrant[0]['total_cashgrant']}}&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-square" style="color:#001a26"></i> Equity Financing (SBC): {{form3_equity[0]['total_equity']}}
+					</p>
+				</div>
+			</div>
+		</div>
+		</div>
+
+		<div class="col-md-6 col-sm-6" style="display: flex; flex-wrap: wrap;">
+		<div class="x_panel" style="border-radius: 15px;">
+			<div class="x_title">
+				<h2>Type of FSP <small>Bar Chart</small></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a>
+							<a class="dropdown-item" href="#">Settings 2</a>
+						</div>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<canvas id="mybarChart3Fsp"></canvas>
+			</div>
+			<div style="text-align: center;">
+				<p>
+					<i class="fa fa-square" style="color:#99e6ff"></i> Individual: {{form3_fsp_indiv[0]['totalindiv']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#66d9ff"></i> Organization/Firm: {{form3_fsp_orgfirm[0]['totalorgfirm']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#33ccff"></i> GFI/GOCC/NGA: {{form3_fsp_gfi[0]['totalgfi']}}
+				</p>
+				<p>
+					<i class="fa fa-square" style="color:#00bfff"></i> COOP/NGO: {{form3_fsp_coop[0]['totalcoop']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#0099cc"></i> Private Financing Institution: {{form3_fsp_private[0]['totalprivate']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#007399"></i> LGU: {{form3_fsp_lgu[0]['totallugu']}} &nbsp;&nbsp;&nbsp;
+					<i class="fa fa-square" style="color:#004d66"></i> Market: {{form3_fsp_market[0]['totalmarket']}}
+				</p>
+			</div>
+		</div>
+	</div>
 	</div>
 	
 		<script>						
@@ -153,11 +254,48 @@
 					if ($("#mybarChart3").length) e = document.getElementById("mybarChart3"), new Chart(e, {
 						type: "bar",
 						data: {
-							labels: ["Individual", "Organizational/Firm"],
+							labels: ["Individual", "Organization/Firm", "GFI/GOCC/NGA", "COOP/NGO", "Private Financing Institution", "LGU", "Market"],
 							datasets: [{
 							label: "Total",
-							backgroundColor:  ["#009999", "#007399"],
-							data: [{{form3indiv[0]['totalindiv']}}, {{form3orgfirm[0]['totalorgfirm']}}]
+							backgroundColor:  ["#99e6ff", "#66d9ff", "#33ccff", "#00bfff", "#0099cc", "#007399", "#004d66"],
+							data: [
+								{{form3indiv[0]['totalindiv']}},
+								{{form3orgfirm[0]['totalorgfirm']}},
+								{{form3_gfi[0]['totalgfi']}},
+								{{form3_coop[0]['totalcoop']}},
+								{{form3_private[0]['totalprivate']}},
+								{{form3_lgu[0]['totallugu']}},
+								{{form3_market[0]['totalmarket']}}
+							]
+							},]
+						},
+						options: {
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: !0
+										}
+									}]
+								}
+							}
+						});
+
+					if ($("#mybarChart3Fsp").length) e = document.getElementById("mybarChart3Fsp"), new Chart(e, {
+						type: "bar",
+						data: {
+							labels: ["Individual", "Organization/Firm", "GFI/GOCC/NGA", "COOP/NGO", "Private Financing Institution", "LGU", "Market"],
+							datasets: [{
+							label: "Total",
+							backgroundColor: ["#99e6ff", "#66d9ff", "#33ccff", "#00bfff", "#0099cc", "#007399", "#004d66"],
+							data: [
+								{{form3_fsp_indiv[0]['totalindiv']}},
+								{{form3_fsp_orgfirm[0]['totalorgfirm']}},
+								{{form3_fsp_gfi[0]['totalgfi']}},
+								{{form3_fsp_coop[0]['totalcoop']}},
+								{{form3_fsp_private[0]['totalprivate']}},
+								{{form3_fsp_lgu[0]['totallugu']}},
+								{{form3_fsp_market[0]['totalmarket']}}
+							]
 							},]
 						},
 						options: {
@@ -177,16 +315,28 @@
 								'Agri-technical: ' + {{form3_agri[0]['total_agri']}},
 								'Entrepreneurial: ' + {{form3_entrep[0]['total_entrep']}},
 								'Extension Service: ' + {{form3_extserv[0]['total_extserv']}},
-								'Organizational: ' + {{form3_org[0]['total_org']}}
+								'Organizational: ' + {{form3_org[0]['total_org']}},
+								'Loan/Cash Advance: ' + {{form3_loan[0]['total_loan']}},
+								'Insurance: ' + {{form3_insurance[0]['total_insurance']}},
+								'Credit Guarantee: ' + {{form3_credit[0]['total_credit']}},
+								'In Kind: ' + {{form3_inkind[0]['total_inkind']}},
+								'Cash Grant: ' + {{form3_cashgrant[0]['total_cashgrant']}},
+								'Equity Financing (SBC): ' + {{form3_equity[0]['total_equity']}}
 							];
 							var yValues2 = [
 								{{form3_agri[0]['total_agri']}},
 								{{form3_entrep[0]['total_entrep']}},
 								{{form3_extserv[0]['total_extserv']}},
-								{{form3_org[0]['total_org']}}
+								{{form3_org[0]['total_org']}},
+								{{form3_loan[0]['total_loan']}},
+								{{form3_insurance[0]['total_insurance']}},
+								{{form3_credit[0]['total_credit']}},
+								{{form3_inkind[0]['total_inkind']}},
+								{{form3_cashgrant[0]['total_cashgrant']}},
+								{{form3_equity[0]['total_equity']}}
 								// {{total_untagged}},
 								];
-									var barColors = ['#009999', '#83ffb7', '#007399', '#976699'];
+									var barColors = ["#ccf5ff","#99e6ff","#66d9ff","#33ccff","#00bfff","#0099cc","#007399","#004d66","#00334d","#001a26"];
 									var total = yValues2.reduce((a, b) => a + b, 0);
 									var percentageValues = yValues2.map((value) => ((value / total) * 100).toFixed(2));
 									var ctx = document.getElementById("pieChart3");
@@ -223,6 +373,55 @@
 										},
 									});
 								}
+
+						if ($('#philgepsChart3').length) {
+							var xValues3 = [
+								'RED: ' + {{form3red[0]['totalred']}},
+								'PLATINUM: ' + {{form3plat[0]['totalplat']}},
+								'UNREGISTERED: ' + {{form3unreg[0]['totalunreg']}}
+							];
+							var yValues3 = [
+								{{form3red[0]['totalred']}},
+								{{form3plat[0]['totalplat']}},
+								{{form3unreg[0]['totalunreg']}}
+							];
+							var barColors3 = ['#ff8080', '#E5E4E2', '#faef8d'];
+							var total3 = yValues3.reduce((a, b) => a + b, 0);
+							var percentageValues3 = yValues3.map((value) => total3 ? ((value / total3) * 100).toFixed(2) : 0);
+							var ctx3 = document.getElementById("philgepsChart3");
+							var data3 = {
+								datasets: [{
+									data: yValues3,
+									backgroundColor: barColors3,
+									label: 'My dataset'
+								}],
+								labels: xValues3
+							};
+							new Chart(ctx3, {
+								data: data3,
+								type: 'pie',
+								options: {
+									plugins: {
+										datalabels: {
+											color: 'white',
+											formatter: (value, context) => {
+												return percentageValues3[context.dataIndex] + '%';
+											}
+										}
+									},
+									tooltips: {
+										callbacks: {
+											label: function (tooltipItem, data) {
+												var label = data.labels[tooltipItem.index];
+												var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+												var percentage = percentageValues3[tooltipItem.index] + '%';
+												return `${label} (${percentage})`;
+											},
+										},
+									},
+								},
+							});
+						}
 							}
 
 							function scrollParentToframeCenter(){

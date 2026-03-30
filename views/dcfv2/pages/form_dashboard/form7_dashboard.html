@@ -21,7 +21,7 @@
   <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
     <div class="tile-stats" style="border-radius: 15px;">
       <div class="count _money_tag">{{dcf_form7msme[0]['totalmsme7']}}</div>
-      <h3>Total MSME</h3>
+      <h3>MSME Assisted</h3>
       <p>Total # of MSME.</p>
     </div>
   </div>
@@ -29,7 +29,7 @@
   <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
     <div class="tile-stats" style="border-radius: 15px;">
       <div class="count _money_tag">{{dcf_form7fo[0]['totalfo7']}}</div>
-      <h3>Total FO</h3>
+      <h3>FO Assisted</h3>
       <p>Total # of FO.</p>
     </div>
   </div>
@@ -37,8 +37,34 @@
   <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
     <div class="tile-stats" style="border-radius: 15px;">
       <div class="count _money_tag">{{dcf_form7farmer[0]['totalfarmer7']}}</div>
-      <h3>Total Farmer</h3>
+      <h3>Farmer Assisted</h3>
       <p>Total # of Farmer.</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+    <div class="tile-stats" style="border-radius: 15px;">
+      <div class="count _money_tag">{{ linked_msme }}</div>
+      <h3>Linked MSMEs</h3>
+      <p>Beneficiary + Buyer matched.</p>
+    </div>
+  </div>
+
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+    <div class="tile-stats" style="border-radius: 15px;">
+      <div class="count _money_tag">{{ linked_fo }}</div>
+      <h3>Linked FOs</h3>
+      <p>Beneficiary + Buyer matched.</p>
+    </div>
+  </div>
+
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+    <div class="tile-stats" style="border-radius: 15px;">
+      <div class="count _money_tag">{{dcf_form7total[0]['total_ovrlltotal']}}</div>
+      <h3>Total Sales</h3>
+      <p>Total SUM of Sales</p>
     </div>
   </div>
 </div>
@@ -68,7 +94,7 @@
 				<canvas id="mybarChart7"></canvas>
 			</div>
 			<div style="text-align: center;">
-				<p><i class="fa fa-square" style="color:#884dff "></i> Provincial: <span class="_money_tag">{{dcf7_TFP[0]['tfp7']}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ac7339 "></i> Regional: <span class="_money_tag">{{dcf7_TFR[0]['tfr7'] + dcf7_TSMPR[0]['tsmpr7'] + dcf7_BMPR[0]['bmpr7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#ffa31a "></i> National: <span class="_money_tag">{{dcf7_TFN[0]['tfn7'] + dcf7_TSMN[0]['tsmn7'] + dcf7_BMN[0]['bmn7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <i class="fa fa-square" style="color:#ff4d4d "></i> International: <span class="_money_tag">{{dcf7_TFI[0]['tfi7'] + dcf7_TSMI[0]['tsmi7'] + dcf7_BMI[0]['bmi7']}}</span></p>
+				<p><i class="fa fa-square" style="color:#00bfff "></i> Provincial: <span class="_money_tag">{{dcf7_TFP[0]['tfp7']}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#0099cc "></i> Regional: <span class="_money_tag">{{dcf7_TFR[0]['tfr7'] + dcf7_TSMPR[0]['tsmpr7'] + dcf7_BMPR[0]['bmpr7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-square" style="color:#007399 "></i> National: <span class="_money_tag">{{dcf7_TFN[0]['tfn7'] + dcf7_TSMN[0]['tsmn7'] + dcf7_BMN[0]['bmn7']}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <i class="fa fa-square" style="color:#004d66 "></i> International: <span class="_money_tag">{{dcf7_TFI[0]['tfi7'] + dcf7_TSMI[0]['tsmi7'] + dcf7_BMI[0]['bmi7']}}</span></p>
 			</div>
 		</div>
 	</div>
@@ -89,7 +115,7 @@
 				labels: ["Provincial", "Regional","National", "International"],
 				datasets: [{
 					label: "Total",
-					backgroundColor:  ["#884dff", "#ac7339", "#ffa31a", "#ff4d4d"],
+					backgroundColor:  ["#00bfff", "#0099cc", "#007399", "#004d66"],
 					data: [{{dcf7_TFP[0]['tfp7']}}, {{dcf7_TFR[0]['tfr7'] + dcf7_TSMPR[0]['tsmpr7'] + dcf7_BMPR[0]['bmpr7']}},{{dcf7_TFN[0]['tfn7'] + dcf7_TSMN[0]['tsmn7'] + dcf7_BMN[0]['bmn7']}}, {{dcf7_TFI[0]['tfi7'] + dcf7_TSMI[0]['tsmi7'] + dcf7_BMI[0]['bmi7']}} ]
 				},]
 			},

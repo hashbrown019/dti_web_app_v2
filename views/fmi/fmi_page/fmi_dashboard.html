@@ -3,359 +3,309 @@
 {% block title %} Dashboard {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/build/css/custom.css">
+<link rel="stylesheet" href="/static/psalm_static/dcf_static/datatables/datatables.min.css">
+{% endblock stylesheets %}
 
 {% block content %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
-    .card-dashboard {
-        padding: 0px 10px;
-        margin: 10px 5px;
-        box-shadow: 0px 0px 10px #F0BC74;
-        background-color: #f0bc74a6;
-        min-height: 120px;
+    .fmi-dcf-dashboard {
+        background: #f6f9ff;
+        padding: 20px;
     }
-    .card-dashboard:hover b {
-        color: #fff;
-        text-shadow: 2px 2px 5px #1F2937;
+    .x_panel {
+        background: #fff;
+        border-radius: 15px;
+        padding: 10px;
+        box-shadow: 0 0 15px 15px rgba(179, 179, 179, 0.1);
+        transition: all 0.3s ease;
     }
-    .card .count {
-        font-size: 2em;
-        font-weight: bold;
-        margin-top: 10px;
-        color: #1F2937;
-        text-shadow: 2px 2px 2px #F8BD7A;
+    .tile-stats {
+        background: #fff;
+        border-radius: 15px;
+        padding: 10px;
+        box-shadow: 0 0 15px 15px rgba(146, 146, 146, 0.1);
+        transition: all 0.3s ease;
     }
-    .card .count p {
-        margin-bottom: 0px;
+    .tile-stats:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .tile-stats .count p {
+        margin-bottom: 0;
         position: relative;
-        font-size: 0.45em;
+        font-size: 12px;
     }
-    .card .count p b {
+    .tile-stats .count p b {
         position: absolute;
-        right: 0px;
+        right: 0;
     }
-    .card h4 {
-        font-weight: bold; 
-        border-top: 1px solid #EEB15D; 
-        padding-top: 5px; 
-        margin-top: 5px; 
-        text-align: right;
+    .fmi-chart-wrap {
+        position: relative;
+        height: 420px;
     }
-    .card-dashboard h4 {
-        color: #c77e17;    
-        font-size: 16px!important;
+    @media (max-width: 1199.98px) {
+        .fmi-chart-wrap { height: 360px; }
     }
+    @media (max-width: 991.98px) {
+        .fmi-chart-wrap { height: 320px; }
+    }
+    @media (max-width: 767.98px) {
+        .fmi-chart-wrap { height: 280px; }
+    }
+    .fmi-chart-wrap canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    body{
+        background-color: #f6f9ff;
+    }
+
+    .mb-4 {
+    margin-bottom: 0 !important;
+}
 </style>
-<div class="row">
+<div class="container-fluid px-3 px-lg-4 py-3 fmi-dcf-dashboard">
+<div class="row top_tiles">
     <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag text-end"><b>{{FMR_data.FMR_total}}</b></div>
-                <h4>Total FMR Projects</h4>
-            </div>
+        <div class="tile-stats">
+            <div class="count _money_tag text-end"><b>{{FMR_data.FMR_total}}</b></div>
+            <h3 style="font-weight: bold;">NO. FMR PROJECTS</h3>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag rapid_fmr_completed">
-                    <p>No. of Completed : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_completed['total']) }}</b></p>
-                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_completed['total_km']) }}</b></p>
-                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_completed['total_appr_budget']) }}</b></p>
-                </div>
-            <h4>COMPLETED</h4>
+        <div class="tile-stats">
+            <div class="count _money_tag rapid_fmr_completed">
+                <p>No. of Completed : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_completed['total']) }}</b></p>
+                <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_completed['total_km']) }}</b></p>
+                <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_completed['total_appr_budget']) }}</b></p>
             </div>
+            <h3 style="font-weight: bold;">COMPLETED</h3>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag ">
-                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_ongoing['total']) }}</b></p>
-                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_ongoing['total_km']) }}</b></p>
-                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_ongoing['total_appr_budget']) }}</b></p>
-                </div>
-            <h4>ONGOING</h4>
+        <div class="tile-stats">
+            <div class="count _money_tag ">
+                <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_ongoing['total']) }}</b></p>
+                <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_ongoing['total_km']) }}</b></p>
+                <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_ongoing['total_appr_budget']) }}</b></p>
             </div>
+            <h3 style="font-weight: bold;">ONGOING</h3>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag ">
-                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no1['total']) }}</b></p>
-                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no1['total_km']) }}</b></p>
-                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no1['total_appr_budget']) }}</b></p>
-                </div>
-            <h4>FOR NO 1</h4>
+        <div class="tile-stats">
+            <div class="count _money_tag ">
+                <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no1['total']) }}</b></p>
+                <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no1['total_km']) }}</b></p>
+                <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no1['total_appr_budget']) }}</b></p>
             </div>
+            <h3 style="font-weight: bold;">FOR NO 1</h3>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag ">
-                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no2['total']) }}</b></p>
-                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no2['total_km']) }}</b></p>
-                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no2['total_appr_budget']) }}</b></p>
-                </div>
-            <h4>FOR NO 2</h4>
+        <div class="tile-stats">
+            <div class="count _money_tag ">
+                <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no2['total']) }}</b></p>
+                <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no2['total_km']) }}</b></p>
+                <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no2['total_appr_budget']) }}</b></p>
             </div>
+            <h3 style="font-weight: bold;">FOR NO 2</h3>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag ">
-                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no3['total']) }}</b></p>
-                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no3['total_km']) }}</b></p>
-                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no3['total_appr_budget']) }}</b></p>
-                </div>
-            <h4>FOR NO 3</h4>
+        <div class="tile-stats">
+            <div class="count _money_tag ">
+                <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_no3['total']) }}</b></p>
+                <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_no3['total_km']) }}</b></p>
+                <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_no3['total_appr_budget']) }}</b></p>
             </div>
+            <h3 style="font-weight: bold;">FOR NO 3</h3>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag ">
-                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_noa['total']) }}</b></p>
-                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_noa['total_km']) }}</b></p>
-                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_noa['total_appr_budget']) }}</b></p>
-                </div>
-            <h4>TOTAL ISSUANCE OF NOA</h4>
+        <div class="tile-stats">
+            <div class="count _money_tag ">
+                <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_noa['total']) }}</b></p>
+                <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_noa['total_km']) }}</b></p>
+                <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_noa['total_appr_budget']) }}</b></p>
             </div>
+            <h3 style="font-weight: bold; ">ISSUANCE OF NOA</h3>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag ">
-                    <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_pending['total']) }}</b></p>
-                    <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_pending['total_km']) }}</b></p>
-                    <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_pending['total_appr_budget']) }}</b></p>
-                </div>
-            <h4>PENDING</h4>
+        <div class="tile-stats">
+            <div class="count _money_tag ">
+                <p>No. of Ongoing : <b class="text-end">{{ "{:,.2f}".format(FMR_data.FMR_pending['total']) }}</b></p>
+                <p>No. of km : <b>{{ "{:,.2f}".format(FMR_data.FMR_pending['total_km']) }}</b></p>
+                <p>Amnt Approved : <b>{{ "P{:,.2f}".format(FMR_data.FMR_pending['total_appr_budget']) }}</b></p>
             </div>
+            <h3 style="font-weight: bold;">PENDING</h3>
         </div>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="card card-dashboard">
-            <div class="tile-stats" style="border-radius: 15px;">
-                <div class="count _money_tag text-end"><b>{{ "{:,.2f}".format(FMR_data.FMR_totalkm_completed_ongoing) }}</b></div>
-                <h4>KILOMETER COMPLETED BASE ON % ACCOMPLISHED</h4>
-            </div>
+    <div class="col-lg-6 col-md-3 col-sm-6">
+        <div class="tile-stats">
+            <div class="count _money_tag text-end"><b>{{ "{:,.2f}".format(FMR_data.FMR_totalkm_completed_ongoing) }}</b></div>
+            <h3 style="font-weight: bold;">KM. COMPLETED BASE ON % ACCOMPLISHED</h3>
         </div>
     </div>
     
 </div>
 <hr>
-<div class="row">
-    <div class="col-3">
-        <div class="card" style="box-shadow: 0px 0px 5px #F8BD7A;">
-			<div class="card-body">
-				<h6 class="card-title text-center">
-					<b># of Batch 1 / Status</b>
-				</h6>
-				<div class="container">
-                    <br>
-                    <canvas id="FMR_batch1_barchart" height="450"></canvas>
-                </div>
+<div class="row g-3">
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2># of Batch 1 / Status</h2>
+                <div class="clearfix"></div>
             </div>
-        </div>   
+            <div class="x_content fmi-chart-wrap">
+                <canvas id="FMR_batch1_barchart" height="450"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="col-3">
-        <div class="card" style="box-shadow: 0px 0px 5px #1f29367d;">
-			<div class="card-body">
-				<h6 class="card-title text-center">
-					<b># of Batch 2 / Status</b>
-				</h6>
-				<div class="container">
-                    <br>
-                    <canvas id="FMR_batch2_barchart" height="450"></canvas>
-                </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2># of Batch 2 / Status</h2>
+                <div class="clearfix"></div>
             </div>
-        </div>   
+            <div class="x_content fmi-chart-wrap">
+                <canvas id="FMR_batch2_barchart" height="450"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="col-3">
-        <div class="card" style="box-shadow: 0px 0px 5px #F8BD7A;">
-			<div class="card-body">
-				<h6 class="card-title text-center">
-					<b># of Batch 3 / Status</b>
-				</h6>
-				<div class="container">
-                    <br>
-                    <canvas id="FMR_batch3_barchart" height="450"></canvas>
-                </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2># of Batch 3 / Status</h2>
+                <div class="clearfix"></div>
             </div>
-        </div>   
+            <div class="x_content fmi-chart-wrap">
+                <canvas id="FMR_batch3_barchart" height="450"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="col-3">
-        <div class="card" style="box-shadow: 0px 0px 5px #1f29367d;">
-			<div class="card-body">
-				<h6 class="card-title text-center">
-					<b># of Batch 4 / Status</b>
-				</h6>
-				<div class="container">
-                    <br>
-                    <canvas id="FMR_batch4_barchart" height="450"></canvas>
-                </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2># of Batch 4 / Status</h2>
+                <div class="clearfix"></div>
             </div>
-        </div>   
+            <div class="x_content fmi-chart-wrap">
+                <canvas id="FMR_batch4_barchart" height="450"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 <hr>
-    <!-- <div class="py-4">
-        <div class="dropdown">
-            <button class="btn btn-gray-800 d-inline-flex align-items-center me-2" onclick="window.location.href='/fmi_form_a'">
-                <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                ADD PROJECT
-            </button>
+<div class="row">
+    <div class="col-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>KM per Region</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content fmi-chart-wrap">
+                <canvas id="FMR_region_km_barchart" height="450"></canvas>
+            </div>
         </div>
-    </div> -->
- 
-    <!-- <div class="row">
-        <div class="col-12 col-xl-8">
-            <div class="row">
-                <div class="col-12 mb-4">
-                    <div class="card border-2 shadow">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h2 class="fs-5 fw-bold mb-0">BARMM</h2>
-                                </div>
-                                <div class="col text-end">
-                                    <a href="#" class="btn btn-sm btn-primary">See all</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th class="border-bottom" scope="col">Project ID</th>
-                                    <th class="border-bottom" scope="col">Project Name</th>
-                                    <th class="border-bottom" scope="col">Project Cost</th>
-                                    <th class="border-bottom" scope="col">Target</th>
-                                    <th class="border-bottom" scope="col">Actual</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr style="cursor: pointer" onClick="document.location.href='/project_profile';">
-                                    <th class="text-gray-900" scope="row">
-                                        ID-12345
-                                    </th>
-                                    <td class="fw-bolder text-gray-500">
-                                        Datu Salibo, Maguindanao
-                                    </td>
-                                    <td class="fw-bolder text-gray-500">
-                                        10,000,000 php
-                                    </td>
-                                    <td class="fw-bolder text-gray-500">
-                                        <div class="d-flex">
-                                           
-                                            55%
-                                        </div>
-                                    </td>
-                                    <td class="fw-bolder text-gray-500">
-                                        <div class="d-flex">
-                                           
-                                            60%
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
+    </div>
+</div>
+<hr>
 
-                <!-- <div class="col-12 mb-4">
-                    <div class="card border-2 shadow">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h2 class="fs-5 fw-bold mb-0">RCU 8</h2>
-                                </div>
-                                <div class="col text-end">
-                                    <a href="#" class="btn btn-sm btn-primary">See all</a>
-                                </div>
-                            </div>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Data <small>Table</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th class="border-bottom" scope="col">Project ID</th>
-                                    <th class="border-bottom" scope="col">Project Name</th>
-                                    <th class="border-bottom" scope="col">Project Cost</th>
-                                    <th class="border-bottom" scope="col">Target</th>
-                                    <th class="border-bottom" scope="col">Actual</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr style="cursor: pointer" onClick="document.location.href='/project_profile';">
-                                    <th class="text-gray-900" scope="row">
-                                        ID-54321
-                                    </th>
-                                    <td class="fw-bolder text-gray-500">
-                                        Jaro, Leyte
-                                    </td>
-                                    <td class="fw-bolder text-gray-500">
-                                        10,000,000 php
-                                    </td>
-                                    <td class="fw-bolder text-gray-500">
-                                        <div class="d-flex">
-                                           
-                                            70%
-                                        </div>
-                                    </td>
-                                    <td class="fw-bolder text-gray-500">
-                                        <div class="d-flex">
-                                           
-                                            53%
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-        </div> -->
-        
-        <!-- <div class="col-12 col-xl-4">
-            <div class="col-12 px-0 mb-4">
-                <div class="card border-2 shadow">
-                    <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
-                        <div class="d-block">
-                            <div class="h6 fw-normal text-gray mb-2">Total Project</div>
-                            <h2 class="h3 fw-extrabold">2</h2>
-                            <div class="small mt-2">                               
-                                <span class="fas fa-angle-up text-success"></span>                                   
-                                <span class="text-success fw-bold">18.2%</span>
-                            </div>
-                        </div>
-                        <div class="d-block ms-auto">
-                            <div class="d-flex align-items-center text-end mb-2">
-                                <span class="dot rounded-circle bg-gray-800 me-2"></span>
-                                <span class="fw-normal small">July</span>
-                            </div>
-                            <div class="d-flex align-items-center text-end">
-                                <span class="dot rounded-circle bg-secondary me-2"></span>
-                                <span class="fw-normal small">August</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-2">
-                        <div class="ct-chart-ranking ct-golden-section ct-series-a"></div>
-                    </div>
-                </div>
+            <div class="x_content">
+                <p class="text-muted font-13 m-b-30">
+                    All entries from the FMI tracker are listed here.
+                </p>
+                <table id="fmi-datatable" class="table table-striped table-bordered table-hover">
+                        <thead style="background-color: #007399; color: white">
+                            <tr>
+                                <th>ID</th>
+                                <th>Batch</th>
+                                <th>DIP Name</th>
+                                <th>FMR Name</th>
+                                <th>Project Title</th>
+                                <th>Municipality/Province</th>
+                                <th>Region</th>
+                                <th>Length (km)</th>
+                                <th>Approved Budget</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fmi-datatable-body">
+                            {% for row in fmi_datatable %}
+                            <tr>
+                                <td>{{ row['id'] }}</td>
+                                <td>{{ row['form_8_profile_batch'] }}</td>
+                                <td>{{ row['form_8_profile_dipName'] }}</td>
+                                <td>{{ row['form_8_profile_name_of_fmr'] }}</td>
+                                <td>{{ row['form_8_profile_project_title'] }}</td>
+                                <td>{{ row['form_8_profile_municipality_province'] }}</td>
+                                <td>{{ row['form_8_profile_region'] }}</td>
+                                <td>{{ row['form_8_profile_length'] }}</td>
+                                <td>{{ row['form_8_profile_appvd_budget_cost'] }}</td>
+                                <td>{{ row['form_8_implementation_status'] }}</td>
+                                <td>
+                                    {% if row['upload_by']|string == user_data['id']|string %}
+                                        <a style="color: #33cccc;" href="/fmi_form_a?id={{ row['id'] }}&table=dcf_fmi&mode=view">
+                                            <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                                        </a>&nbsp;&nbsp;
+                                        <a style="color: #00e673;" href="/fmi_form_a?id={{ row['id'] }}&table=dcf_fmi&mode=edit">
+                                            <span><i class="fa fa-pencil-square-o"></i></span> Edit
+                                        </a>&nbsp;&nbsp;
+                                        <a style="color: #ff5c33;" onclick="showFmiDeleteConfirmation('{{ row['id'] }}'); return false;" href="/delete_record/dcf_fmi/{{ row['id'] }}">
+                                            <span><i class="fa fa-trash"></i></span> Delete
+                                        </a>
+                                    {% else %}
+                                        <a style="color: #33cccc;" href="/fmi_form_a?id={{ row['id'] }}&table=dcf_fmi&mode=view">
+                                            <span><i class="fa fa-eye" aria-hidden="true"></i></span> View
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td class="date-cell">
+                                    {{ row['date_created'] }}<br>
+                                    {% if row['date_modified'] %}
+                                        <i style="font-size: smaller;color: #00cc66;">
+                                            Updated:
+                                            {% if row['date_modified'] is string or row['date_modified'] is number %}
+                                                {{ row['date_modified'] }}
+                                            {% else %}
+                                                {{ row['date_modified'] | format_timestamp }}
+                                            {% endif %}
+                                        </i>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                </table>
             </div>
         </div>
-    </div> -->
+    </div>
+</div>
 
 <!-- dashboard here -->
  <style>
@@ -363,8 +313,7 @@
     padding: 8px 16px;
     border-radius: 4px;
     font-size: 14px;
-    background-color: #343a40;
-    border-color: #343a40;
+    background-color: #007399;
     display: flex;
     align-items: center;
   }
@@ -374,8 +323,7 @@
   }
 
   .export-btn:hover {
-    background-color: #212529;
-    border-color: #212529;
+    background-color: #0280aa;
   }
 
   .export-btn:focus {
@@ -386,96 +334,115 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        var chart_data_fmr  = JSON.parse('{{ FMR_data_chart | safe }}');
-        
-        ctx_FMR_batch1 = document.getElementById('FMR_batch1_barchart').getContext('2d');
-        ctx_FMR_batch2 = document.getElementById('FMR_batch2_barchart').getContext('2d');
-        ctx_FMR_batch3 = document.getElementById('FMR_batch3_barchart').getContext('2d');
-        ctx_FMR_batch4 = document.getElementById('FMR_batch4_barchart').getContext('2d');
-        
-        var chartFMR_B1 = new Chart(ctx_FMR_batch1, {
-            type: 'bar',
-            data: {
-                labels: chart_data_fmr.FMR_Batch1_data.labels ,
-                datasets: [{
-                    label: "# of Batch 1",
-                    data: chart_data_fmr.FMR_Batch1_data.data,
-                    backgroundColor: chart_data_fmr.FMR_Batch1_data.background_colors,
-                    borderColor: '#1F2937',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+        var chart_data_fmr  = {{ FMR_data_chart | safe }};
+
+        const buildChartOptions = () => ({
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 0 },
+            responsiveAnimationDuration: 0,
+            hover: { animationDuration: 0 },
+            transitions: { active: { animation: { duration: 0 } } },
+            scales: {
+                y: { beginAtZero: true }
             }
         });
 
-        var chartFMR_B2 = new Chart(ctx_FMR_batch2, {
-            type: 'bar',
-            data: {
-                labels: chart_data_fmr.FMR_Batch2_data.labels ,
-                datasets: [{
-                    label: "# of Batch 2",
-                    data: chart_data_fmr.FMR_Batch2_data.data,
-                    backgroundColor: chart_data_fmr.FMR_Batch2_data.background_colors,
-                    borderColor: '#1F2937',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+        const getCtx = (id) => {
+            const el = document.getElementById(id);
+            return el ? el.getContext('2d') : null;
+        };
 
-        var chartFMR_B3 = new Chart(ctx_FMR_batch3, {
-            type: 'bar',
-            data: {
-                labels: chart_data_fmr.FMR_Batch3_data.labels ,
-                datasets: [{
-                    label: "# of Batch 2",
-                    data: chart_data_fmr.FMR_Batch3_data.data,
-                    backgroundColor: chart_data_fmr.FMR_Batch3_data.background_colors,
-                    borderColor: '#1F2937',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+        ctx_FMR_batch1 = getCtx('FMR_batch1_barchart');
+        ctx_FMR_batch2 = getCtx('FMR_batch2_barchart');
+        ctx_FMR_batch3 = getCtx('FMR_batch3_barchart');
+        ctx_FMR_batch4 = getCtx('FMR_batch4_barchart');
+        ctx_FMR_region_km = getCtx('FMR_region_km_barchart');
 
-        var chartFMR_B4 = new Chart(ctx_FMR_batch4, {
-            type: 'bar',
-            data: {
-                labels: chart_data_fmr.FMR_Batch4_data.labels ,
-                datasets: [{
-                    label: "# of Batch 2",
-                    data: chart_data_fmr.FMR_Batch4_data.data,
-                    backgroundColor: chart_data_fmr.FMR_Batch4_data.background_colors,
-                    borderColor: '#1F2937',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+        if (ctx_FMR_batch1 && chart_data_fmr.FMR_Batch1_data) {
+            new Chart(ctx_FMR_batch1, {
+                type: 'bar',
+                data: {
+                    labels: chart_data_fmr.FMR_Batch1_data.labels ,
+                    datasets: [{
+                        label: "# of Batch 1",
+                        data: chart_data_fmr.FMR_Batch1_data.data,
+                        backgroundColor: chart_data_fmr.FMR_Batch1_data.background_colors,
+                        borderColor: '#1F2937',
+                        borderWidth: 1
+                    }]
+                },
+                options: buildChartOptions()
+            });
+        }
+
+        if (ctx_FMR_batch2 && chart_data_fmr.FMR_Batch2_data) {
+            new Chart(ctx_FMR_batch2, {
+                type: 'bar',
+                data: {
+                    labels: chart_data_fmr.FMR_Batch2_data.labels ,
+                    datasets: [{
+                        label: "# of Batch 2",
+                        data: chart_data_fmr.FMR_Batch2_data.data,
+                        backgroundColor: chart_data_fmr.FMR_Batch2_data.background_colors,
+                        borderColor: '#1F2937',
+                        borderWidth: 1
+                    }]
+                },
+                options: buildChartOptions()
+            });
+        }
+
+        if (ctx_FMR_batch3 && chart_data_fmr.FMR_Batch3_data) {
+            new Chart(ctx_FMR_batch3, {
+                type: 'bar',
+                data: {
+                    labels: chart_data_fmr.FMR_Batch3_data.labels ,
+                    datasets: [{
+                        label: "# of Batch 2",
+                        data: chart_data_fmr.FMR_Batch3_data.data,
+                        backgroundColor: chart_data_fmr.FMR_Batch3_data.background_colors,
+                        borderColor: '#1F2937',
+                        borderWidth: 1
+                    }]
+                },
+                options: buildChartOptions()
+            });
+        }
+
+        if (ctx_FMR_batch4 && chart_data_fmr.FMR_Batch4_data) {
+            new Chart(ctx_FMR_batch4, {
+                type: 'bar',
+                data: {
+                    labels: chart_data_fmr.FMR_Batch4_data.labels ,
+                    datasets: [{
+                        label: "# of Batch 2",
+                        data: chart_data_fmr.FMR_Batch4_data.data,
+                        backgroundColor: chart_data_fmr.FMR_Batch4_data.background_colors,
+                        borderColor: '#1F2937',
+                        borderWidth: 1
+                    }]
+                },
+                options: buildChartOptions()
+            });
+        }
+
+        if (ctx_FMR_region_km && chart_data_fmr.FMR_Region_km_data) {
+            new Chart(ctx_FMR_region_km, {
+                type: 'bar',
+                data: {
+                    labels: chart_data_fmr.FMR_Region_km_data.labels,
+                    datasets: [{
+                        label: "Total KM",
+                        data: chart_data_fmr.FMR_Region_km_data.data,
+                        backgroundColor: chart_data_fmr.FMR_Region_km_data.background_colors,
+                        borderColor: '#1F2937',
+                        borderWidth: 1
+                    }]
+                },
+                options: buildChartOptions()
+            });
+        }
     });
 </script>
 
@@ -484,28 +451,24 @@
 		window.location.href = '/export_form8';
 	}
 </script>
-<div class="card border-2 shadow mb-4">
-  <div class="card-header d-flex align-items-center justify-content-between">
-    <h2 class="card-title mb-0">
-      FORM 8 FMI Tracker
-      <small class="text-muted" style="font-size: 15px;">SPREADSHEET MANAGEMENT</small>
-    </h2>
-    <div class="card-toolbar">
-      <ul class="nav navbar-right panel_toolbox">
-        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Settings 1</a>
-            <a class="dropdown-item" href="#">Settings 2</a>
-          </div>
-        </li>
-        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-      </ul>
-    </div>
+<div class="x_panel tile">
+  <div class="x_title">
+    <h2 style="font-weight: bold; color:#73879C;">FORM 8 FMI Tracker <small>SPREADSHEET MANAGEMENT</small></h2>
+    <ul class="nav navbar-right panel_toolbox">
+      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Settings 1</a>
+          <a class="dropdown-item" href="#">Settings 2</a>
+        </div>
+      </li>
+      <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
   </div>
 
-  <div class="card-body">
+  <div class="x_content">
     <!-- EXPORT -->
     <form id="form8ExportForm" action="/dcf" method="POST" enctype="multipart/form-data">
         <div class="form-group">
@@ -550,6 +513,26 @@
 </script>
 
 <script>
+  function showFmiDeleteConfirmation(id) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel",
+      reverseButtons: true,
+      position: "center"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `/delete_record/dcf_fmi/${id}`;
+      }
+    });
+    return false;
+  }
+</script>
+
+<script>
   document.addEventListener("DOMContentLoaded", function () {
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -566,4 +549,31 @@
     {% endwith %}
   });
 </script>
+
+<script src="/static/psalm_static/dcf_static/datatables/datatables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    if (!$.fn.DataTable) {
+      return;
+    }
+    $("#fmi-datatable").DataTable({
+      scrollX: true,
+      scrollCollapse: true,
+      autoWidth: false,
+      pageLength: 10,
+      lengthChange: true,
+      searching: true,
+      ordering: true,
+      info: true,
+      paging: true,
+      language: {
+        emptyTable: "No entries found."
+      }
+    });
+  });
+</script>
+
 {% endblock javascripts %}
+
+
+

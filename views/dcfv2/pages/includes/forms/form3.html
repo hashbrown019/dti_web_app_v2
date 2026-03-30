@@ -23,28 +23,41 @@
 			</style>
 			
 			<!---row1--->
-			<div class="x-col l4 x-container x-padding">
+			<div class="x-col l3 x-container x-padding">
+				<label class="">Classification:</label>
+				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_classification" name="form_3_classification"><br>
+					<option selected value="">Choose Classification</option>
+					<option>FSP</option>
+					<option>BDSP</option>
+				</select>
+			</div>
+			<div class="x-col l3 x-container x-padding">
 				<input class="FORM3_FIELD x-input" type="hidden"  id="id">
-				<label class="">Types of BDSP:</label>
+				<label class="">Types of BDSP/FSP:</label>
 				<select class="FORM3_FIELD withother  x-border x-select x-border" id="form_3_types_of_bdsp" name="form_3_types_of_bdsp"
 					required><br>
 					<option value="" selected>Choose your option</option>
-					<option value="Organization/Firm">Organization/Firm</option>
-					<option value="Individual">Individual</option>
+					<optgroup label="BDSP">
+						<option value="Organization/Firm">Organization/Firm</option>
+						<option value="Individual">Individual</option>
+					</optgroup>
+					<optgroup label="FSP">
+						<option value="GFI/GOCC/NGA">GFI/GOCC/NGA</option>
+						<option value="COOP/NGO">COOP/NGO</option>
+						<option value="Private Financing Institution">Private Financing Institution</option>
+						<option value="LGU">LGU</option>
+						<option value="Market">Market</option>
+					</optgroup>
 				</select>
 				<input type="text" class="FORM3_FIELD hidden-textbox3 x-input x-border" name="form_3_orgfirm"
                     id="form_3_orgfirm" show-base="form_3_types_of_bdsp" show-trigger="Organization/Firm" placeholder="Full Name of Organization/Firm (based on official business registration)">
 			</div>
-			<div class="x-col l5 x-container x-padding">
+			<div class="x-col l3 x-container x-padding">
 				<label><span style="color: #007399;" class="tool" data-tip="Provide Full name. (example: Juan C. Dela Cruz)" tabindex="1"><i class="fa fa-info-circle"></i></span>   Contact Person:</label>
 				<input class="FORM3_FIELD  x-input x-border" id="form_3_contact_person" name="form_3_contact_person" type="text"
 					placeholder="">
 			</div>
-			<!-- <div class="x-col l3 x-container ">
-				<label>Training Number</label>
-				<input class="FORM3_FIELD  x-input x-border" id="form_3_training_number" name="form_3_training_number" type="text" placeholder="">
-			</div> -->
-			<div class="x-col l2 x-container x-padding">
+			<div class="x-col l3 x-container x-padding">
 				<label class="">Sex:</label>
 				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_sex" name="form_3_sex"><br>
 					<option selected value="">Choose Sex</option>
@@ -57,17 +70,17 @@
 
 		<!---row2--->
 		<div class="x-row x-container x-padding">
-			<div class="x-col l4 x-container x-padding">
+			<div class="x-col l6 x-container x-padding">
 				<label><span style="color: #007399;" class="tool" data-tip="Provide complete Business Address. (Format: Building, Street, Barangay, City/Municipality, Province)" tabindex="1"><i class="fa fa-info-circle"></i></span>  Office/Main Address:</label>
 				<input class="FORM3_FIELD  x-input x-border" id="form_3_office_addr" name="form_3_office_addr" type="text"placeholder="">
 			</div>
 
-			<div class="x-col l3 x-container x-padding">
+			<div class="x-col l6 x-container x-padding">
 				<label><span style="color: #007399;" class="tool" data-tip="Provide valid Email Address" tabindex="1"><i class="fa fa-info-circle"></i></span>  Email Address:</label>
 				<input class="FORM3_FIELD x-input x-border x-padding" id="form_3_email" name="form_3_email">
 			</div>
 
-			<div class="x-col l5 x-container x-padding">
+			<div class="x-col l12 x-container x-padding">
 				<label class=""><span style="color: #007399;" class="tool" data-tip="Provide brief description" tabindex="1"><i class="fa fa-info-circle"></i></span>  Brief Description of Company, Institution and/or Consultant Background:</label>
 				<textarea class="FORM3_FIELD comment x-border x-input" id="form_3_breif_description" name="form_3_breif_description"
 					placeholder="Write here" type="text"></textarea>
@@ -78,23 +91,34 @@
 		<!---region--->
 		<div class="x-row x-container x-padding">
 
-			<div class="x-col l2 x-container x-padding">
+			<div class="x-col l6 x-container x-padding">
 				<label for="phone">Tel/Cellphone number:</label><br>
 				<input class="FORM3_FIELD x-border x-input " id="phone" name="phone">
 			</div>
 
-			<div class="x-col l3 x-container x-padding">
-				<label class="">Field of Expertise:</label>
+			<div class="x-col l6 x-container x-padding">
+				<label class="">Type of Expertise / Services:</label>
 					<select class="FORM3_FIELD" id="form_3_choices" name="form_3_choices[]"
 						placeholder="Select upto 4 tags" multiple>
-						<option value="Entrepreneurial">Entrepreneurial</option>
-						<option value="Agri-technical">Agri-technical</option>
-						<option value="Organizational">Organizational</option>
-						<option value="Extension Service">Extension Service</option>
+						<optgroup label="BDSP">
+							<option value="Entrepreneurial">Entrepreneurial</option>
+							<option value="Agri-technical">Agri-technical</option>
+							<option value="Organizational">Organizational</option>
+							<option value="Extension Service">Extension Service</option>
+							<option value="Extension Service">Extension Service</option>
+						</optgroup>
+						<optgroup label="FSP">
+							<option value="Loan/Cash Advance">Loan/Cash Advance</option>
+							<option value="Insurance">Insurance</option>
+							<option value="Credit Guarantee">Credit Guarantee</option>
+							<option value="In Kind">In Kind</option>
+							<option value="Cash Grant">Cash Grant</option>
+							<option value="Equity Financing (SBC)">Equity Financing (SBC)</option>
+						</optgroup>
 					</select>
 			</div>
 
-			<div class="x-col l3 x-container x-padding">
+			<div class="x-col l6 x-container x-padding">
 				<label class="">Preferred Region to work in for RAPID:</label>
 					<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_preferred_region" name="form_3_preferred_region"
 						required><br>
@@ -112,7 +136,7 @@
 			<!---province--->
 
 
-			<div class="x-col l4 x-container x-padding">
+			<div class="x-col l6 x-container x-padding">
 				<label class="">Preferred Province to work in for RAPID:</label>
 				<select class="FORM3_FIELD" id="form_3_preferred_province" name="form_3_preferred_province[]" placeholder="Choose Province" multiple>
 					<option>Northern Samar</option>
@@ -209,7 +233,7 @@
 
 
 		<div class="x-row x-container x-padding">
-			<div class="x-col l2 x-container x-padding">
+			<div class="x-col l4 x-container x-padding">
 				<label class="">Prior RAPID Engagements? </label>
 				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_prior_rapid_engagements"
 					name="form_3_prior_rapid_engagements"><br>
@@ -222,12 +246,42 @@
 				<label>Date Registered:</label>
 				<input class="FORM3_FIELD  x-input x-border" id="form_3_date_registered" name="form_3_date_registered" type="date" placeholder="">
 			</div> -->
-			<div class="x-col l3 x-container x-padding">
+			<div class="x-col l4 x-container x-padding">
 				<label><span style="color: #007399;" class="tool" data-tip="Provide name of RCU/PCU. (example: For Region: RCU 8 , For Province: PCU leyte)" tabindex="1"><i class="fa fa-info-circle"></i></span> RAPID Implementing Unit:</label>
-				<input class="FORM3_FIELD  x-input x-border" id="form_3_rapid_implementing_unit"
+				<select class="FORM3_FIELD  x-input x-border" id="form_3_rapid_implementing_unit"
 					name="form_3_rapid_implementing_unit" type="text" placeholder="">
+					<option value="">Choose your option</option>
+                    <option value="RCU 8">Region Vlll - Eastern Visayas</option>
+                    <option value="RCU 9">Region lX - Zamboanga Peninsula</option>
+                    <option value="RCU 10">Region X - Northern Mindanao</option>
+                    <option value="RCU 11">Region Xl - Davao Region</option>
+                    <option value="RCU 12">Region Xll - SOCCSKSARGEN</option>
+                    <option value="RCU 13">Region Xlll - Caraga</option>
+                    <option value="BARMM">BARMM</option>
+                    <option value="PCU Northern Samar">Northern Samar</option>
+                    <option value="PCU Leyte">Leyte</option>
+                    <option value="PCU Southern Leyte">Southern Leyte</option>
+                    <option value="PCU Zamboanga del Norte">Zamboanga del Norte</option>
+                    <option value="PCU Zamboanga Sibugay">Zamboanga Sibugay</option>
+                    <option value="PCU Zamboanga del Sur">Zamboanga del Sur</option>
+                    <option value="PCU Misamis Oriental">Misamis Oriental</option>
+                    <option value="PCU Bukidnon">Bukidnon</option>
+                    <option value="PCU Lanao del Norte">Lanao del Norte</option>
+                    <option value="PCU Davao de Oro">Davao de Oro</option>
+                    <option value="PCU Davao Oriental">Davao Oriental</option>
+                    <option value="PCU Davao del Norte">Davao del Norte</option>
+                    <option value="PCU Davao del Sur">Davao del Sur</option>
+                    <option value="PCU Davao Occidental">Davao Occidental</option>
+                    <option value="PCU North Cotabato">North Cotabato</option>
+                    <option value="PCU Sultan Kudarat">Sultan Kudarat</option>
+                    <option value="PCU Sarangani">Sarangani</option>
+                    <option value="PCU Agusan del Norte">Agusan del Norte</option>
+                    <option value="PCU Agusan del Sur">Agusan del Sur</option>
+                    <option value="PCU Surigao del Sur">Surigao del Sur</option>
+                    <option value="PCU Maguindanao">Maguindanao</option>
+				</select>
 			</div>
-			<div class="x-col l3 x-container x-padding">
+			<div class="x-col l4 x-container x-padding">
 				<label class="">Type/Nature of Engagements:</label>
 				<select class="FORM3_FIELD" id="form_3_nature_engagements" name="form_3_nature_engagements[]"
 					placeholder="Select upto 5 tags" multiple>
@@ -268,7 +322,7 @@
 		</div>
 
 		<div class="x-row x-container x-padding">
-			<div class="x-col l3 x-container x-padding">
+			<div class="x-col l4 x-container x-padding">
 				<label class="">Willing to conduct on-line lecture/training/seminar?</label>
 				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_lecture_training_seminar"
 					name="form_3_lecture_training_seminar" required><br>
@@ -277,7 +331,7 @@
 					<option>NO</option>
 				</select>
 			</div>
-			<div class="x-col l3 x-container x-padding">
+			<div class="x-col l4 x-container x-padding">
 				<label class="">Willing to develop modular video training materials?</label>
 				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_training_materials"
 					name="form_3_training_materials" required><br>
@@ -297,7 +351,7 @@
 			</div>
 		</div>
 		<div class="x-row x-container x-padding">
-			<div class="x-col l3 x-container x-padding">
+			<div class="x-col l4 x-container x-padding">
 				<label class="">Willing to be a mentor/coach on demand basis?</label>
 				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_demand_basis" name="form_3_demand_basis"
 					required><br>
@@ -316,7 +370,7 @@
 				</select>
 			</div>
 
-			<div class="x-col l3 x-container x-padding">
+			<div class="x-col l4 x-container x-padding">
 				<label class="">Philgeps Registered</label>
 				<select class="FORM3_FIELD  x-border x-select x-border" id="form_3_philgeps_registered"
 					name="form_3_philgeps_registered"><br>

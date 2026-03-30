@@ -522,6 +522,55 @@ def filter_dashboard():
         st_commodity_stats[comm]["vol"] += int(row["total_vol"] or 0)
         st_commodity_stats[comm]["transaction"] += int(row["total_transaction"] or 0)
 
+    try:
+        agr_row = db.select(f"""
+            SELECT
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Signed CPAs%' THEN 1 ELSE 0 END) AS signed_cpas,
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Purchase orders%' THEN 1 ELSE 0 END) AS purchase_orders,
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Letter of Intent to buy%' THEN 1 ELSE 0 END) AS loi,
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Letter of commitment to supply%' THEN 1 ELSE 0 END) AS loc,
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Official receipt of transaction%' THEN 1 ELSE 0 END) AS ort,
+                SUM(CASE WHEN (form_2_types_of_agreements IS NOT NULL
+                    AND TRIM(form_2_types_of_agreements) <> ''
+                    AND form_2_types_of_agreements NOT LIKE '%Signed CPAs%'
+                    AND form_2_types_of_agreements NOT LIKE '%Purchase orders%'
+                    AND form_2_types_of_agreements NOT LIKE '%Letter of Intent to buy%'
+                    AND form_2_types_of_agreements NOT LIKE '%Letter of commitment to supply%'
+                    AND form_2_types_of_agreements NOT LIKE '%Official receipt of transaction%'
+                )
+            THEN 1 ELSE 0 END) AS others
+            FROM dcf_implementing_unit
+            {region_filter_dcf}
+        """)
+        if agr_row and len(agr_row) > 0:
+            r = agr_row[0]
+            form2_agreement_types_count = {
+                'Signed CPAs': int(r.get('signed_cpas') or 0),
+                'Purchase orders': int(r.get('purchase_orders') or 0),
+                'Letter of Intent to buy': int(r.get('loi') or 0),
+                'Letter of commitment to supply': int(r.get('loc') or 0),
+                'Official receipt of transaction': int(r.get('ort') or 0),
+                'Others': int(r.get('others') or 0)
+            }
+        else:
+            form2_agreement_types_count = {
+                'Signed CPAs': 0,
+                'Purchase orders': 0,
+                'Letter of Intent to buy': 0,
+                'Letter of commitment to supply': 0,
+                'Official receipt of transaction': 0,
+                'Others': 0
+            }
+    except Exception:
+        form2_agreement_types_count = {
+            'Signed CPAs': 0,
+            'Purchase orders': 0,
+            'Letter of Intent to buy': 0,
+            'Letter of commitment to supply': 0,
+            'Official receipt of transaction': 0,
+            'Others': 0
+        }
+
     return jsonify({
         'total_entries': total_entries or 0,
         'total_members': total_sex2 or 0,
@@ -539,6 +588,7 @@ def filter_dashboard():
         'commodity_data': over_all_commodity_count2,  # for doughnut
         'sales_commodity_data': sales_commodity_data,
 		'st_commodity_stats': st_commodity_stats,
+        'form2_agreement_types_count': form2_agreement_types_count,
         'status_data': {
             'cancelled': cancelled_count or 0,
             'ongoing': ongoing_count or 0,
@@ -562,13 +612,118 @@ def form4_dashboard():
 	count = displayCount.display__()
 	return render_template("form_dashboard/form4_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
 
+@app.route('/api/filter_form4_by_category', methods=['GET'])
+@c.login_auth_web()
+def filter_form4_by_category():
+	try:
+		# Get multiple category parameters
+		categories = request.args.getlist('category')
+		
+		if not categories:
+			return jsonify({"error": "Category parameter is required"}), 400
+		
+		# Build WHERE clause with multiple categories (OR logic)
+		where_conditions = ' OR '.join([f"cbb_types_of_training = '{cat}'" for cat in categories])
+		
+		# Query filtered records for the specified training categories
+		query = f"""
+			SELECT 
+				COUNT(*) as total_entries,
+				SUM(CAST(cbb_male_total AS UNSIGNED)) as total_male,
+				SUM(CAST(cbb_female_total AS UNSIGNED)) as total_female,
+				SUM(CAST(cbb_male_ip AS UNSIGNED)) as total_male_ip,
+				SUM(CAST(cbb_female_ip AS UNSIGNED)) as total_female_ip,
+				SUM(CAST(cbb_male_youth AS UNSIGNED)) as total_male_youth,
+				SUM(CAST(cbb_female_youth AS UNSIGNED)) as total_female_youth,
+				SUM(CAST(cbb_male_pwd AS UNSIGNED)) as total_male_pwd,
+				SUM(CAST(cbb_female_pwd AS UNSIGNED)) as total_female_pwd,
+				SUM(CAST(cbb_male_sc AS UNSIGNED)) as total_male_sc,
+				SUM(CAST(cbb_female_sc AS UNSIGNED)) as total_female_sc
+			FROM dcf_capacity_building 
+			WHERE {where_conditions}
+		"""
+		
+		result = db.select(query)
+		
+		if not result or result is None:
+			return jsonify({
+				"total_entries": 0,
+				"total_male": 0,
+				"total_female": 0,
+				"total_ip": 0,
+				"total_youth": 0,
+				"total_pwd": 0,
+				"total_sc": 0
+			}), 200
+		
+		row = result[0]
+		total_male_ip = (row.get('total_male_ip') or 0) + (row.get('total_female_ip') or 0)
+		total_youth = (row.get('total_male_youth') or 0) + (row.get('total_female_youth') or 0)
+		total_pwd = (row.get('total_male_pwd') or 0) + (row.get('total_female_pwd') or 0)
+		total_sc = (row.get('total_male_sc') or 0) + (row.get('total_female_sc') or 0)
+		
+		return jsonify({
+			"total_entries": row.get('total_entries') or 0,
+			"total_male": row.get('total_male') or 0,
+			"total_female": row.get('total_female') or 0,
+			"total_ip": total_male_ip,
+			"total_youth": total_youth,
+			"total_pwd": total_pwd,
+			"total_sc": total_sc,
+			"male_ip": row.get('total_male_ip') or 0,
+			"female_ip": row.get('total_female_ip') or 0,
+			"male_youth": row.get('total_male_youth') or 0,
+			"female_youth": row.get('total_female_youth') or 0,
+			"male_pwd": row.get('total_male_pwd') or 0,
+			"female_pwd": row.get('total_female_pwd') or 0,
+			"male_sc": row.get('total_male_sc') or 0,
+			"female_sc": row.get('total_female_sc') or 0
+		}), 200
+		
+	except Exception as e:
+		print(f"Error filtering form4 data: {e}")
+		return jsonify({"error": str(e)}), 500
+
 @app.route('/form5_dashboard')
 @c.login_auth_web()
 def form5_dashboard():
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	form_disp = display_dataform.displayform()
 	count = displayCount.display__()
-	return render_template("form_dashboard/form5_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
+	form5_rows = form_disp.get("form5_datatable") or []
+	target_totals = {"area": 0.0, "fo": 0.0, "members": 0.0}
+	rehab_totals = {"area": 0.0, "fo": 0.0, "members": 0.0}
+
+	def _to_float(value):
+		try:
+			return float(value or 0)
+		except Exception:
+			return 0.0
+
+	for row in form5_rows:
+		if isinstance(row, dict):
+			target_totals["area"] += _to_float(row.get('mgit_target_total_amount_of_has', 0))
+			target_totals["fo"] += _to_float(row.get('mgit_total_num_target_of_fo_expansion', 0))
+			target_totals["members"] += _to_float(row.get('mgit_total_num_target_members_expansion', 0))
+			rehab_totals["area"] += _to_float(row.get('mgit_target_total_amount_of_has_for_rehabilitation', 0))
+			rehab_totals["fo"] += _to_float(row.get('mgit_total_num_target_of_fo_rehab', 0))
+			rehab_totals["members"] += _to_float(row.get('mgit_total_num_target_members_rehab', 0))
+		elif isinstance(row, (list, tuple)) and len(row) >= 6:
+			target_totals["area"] += _to_float(row[0])
+			target_totals["fo"] += _to_float(row[1])
+			target_totals["members"] += _to_float(row[2])
+			rehab_totals["area"] += _to_float(row[3])
+			rehab_totals["fo"] += _to_float(row[4])
+			rehab_totals["members"] += _to_float(row[5])
+
+	return render_template(
+		"form_dashboard/form5_dashboard.html",
+		user_data=session["USER_DATA"][0],
+		target_totals=target_totals,
+		rehab_totals=rehab_totals,
+		**count,
+		**form_disp
+	)
 
 @app.route('/form6_dashboard')
 @c.login_auth_web()
@@ -1205,8 +1360,9 @@ def dcfexport_data():
 			def form3export():
 				if request.method == "POST":
 					query= db.select('''SELECT dcf_bdsp_reg.id,
-					dcf_bdsp_reg.form_3_orgfirm,
+					dcf_bdsp_reg.form_3_classification,
 					dcf_bdsp_reg.form_3_types_of_bdsp,
+					dcf_bdsp_reg.form_3_orgfirm,
 					dcf_bdsp_reg.form_3_contact_person,
 					dcf_bdsp_reg.form_3_sex,
 					dcf_bdsp_reg.form_3_office_addr,
@@ -1240,7 +1396,7 @@ def dcfexport_data():
 					df = df.astype(str)
 					writer = pd.ExcelWriter(c.RECORDS+'/objects/_temp_/dcf_form3_exported_file.xlsx') 
 					df.to_excel(writer, sheet_name='dcf_form3_exported_file', index=False)
-					new_column_names = 'ID, Name of BDSP,Types of BDSP, Contact Person, Sex, Office/Main Address, Email Address, Brief Description of Company Institution and/or Consultant Background, Tel/Cellphone number,Field of Expertise, Preferred Region to work in for RAPID, Preferred Province to work in for RAPID, Name, Education, Expertise, Prior RAPID Engagements?, RAPID Implementing Unit, Type/Nature of Engagements, Suppliers Evaluation (Refer to ISO/Procurement ratings),	Other engagement outside RAPID, Willing to conduct on-line lecture/training/seminar?, Willing to develop modular video training materials?, Willing to join other providers as organize pool of service providers?, Willing to be a mentor/coach on demand basis?, Willing to be part of long-term engagement for extension service facilitation?, Philgeps Registered,Date Created, Date Modified, Uploaded by'
+					new_column_names = 'ID, Classification, Types of BDSP,Name of BDSP, Contact Person, Sex, Office/Main Address, Email Address, Brief Description of Company Institution and/or Consultant Background, Tel/Cellphone number,Field of Expertise, Preferred Region to work in for RAPID, Preferred Province to work in for RAPID, Name, Education, Expertise, Prior RAPID Engagements?, RAPID Implementing Unit, Type/Nature of Engagements, Suppliers Evaluation (Refer to ISO/Procurement ratings),	Other engagement outside RAPID, Willing to conduct on-line lecture/training/seminar?, Willing to develop modular video training materials?, Willing to join other providers as organize pool of service providers?, Willing to be a mentor/coach on demand basis?, Willing to be part of long-term engagement for extension service facilitation?, Philgeps Registered,Date Created, Date Modified, Uploaded by'
 					new_column_names_list = new_column_names.split(',')
 					df.columns = new_column_names_list
 
@@ -1803,7 +1959,8 @@ FORM_NAME={
 	'dcf_access_financing' : 'form11_',
 	'form_c' : 'formc',
 	'form_b' : 'formb',
-	'excel_import_form_a' :	'forma'
+	'excel_import_form_a' :	'forma',
+	'dcf_fmi' : 'fmi_'
 }
 
 _FORM_NAME={
@@ -1817,10 +1974,11 @@ _FORM_NAME={
 	 'form8_':'form8',
 	 'form9_':'dcf_enablers_activity',
 	 'form10_':'dcf_negosyo_center',
-	 'form11_':'dcf_access_financing',
-	 'formc':'form_c',
-	 'formb':'form_b',
-	 'forma':'excel_import_form_a'
+	'form11_':'dcf_access_financing',
+	'formc':'form_c',
+	'formb':'form_b',
+	'forma':'excel_import_form_a',
+	'fmi_':'dcf_fmi'
 	 }
 # if __name__ == "__main__":
 #     app.run(debug=True)
@@ -2005,7 +2163,7 @@ def export_form3():
     query = '''
         SELECT 
             dcf_bdsp_reg.id, dcf_bdsp_reg.upload_by, users.name AS uploader_name,
-            dcf_bdsp_reg.form_3_orgfirm, dcf_bdsp_reg.form_3_types_of_bdsp,
+            dcf_bdsp_reg.form_3_classification, dcf_bdsp_reg.form_3_types_of_bdsp,dcf_bdsp_reg.form_3_orgfirm, 
             dcf_bdsp_reg.form_3_contact_person, dcf_bdsp_reg.form_3_sex,
             dcf_bdsp_reg.form_3_office_addr, dcf_bdsp_reg.form_3_email,
             dcf_bdsp_reg.form_3_breif_description, dcf_bdsp_reg.phone,
@@ -2025,7 +2183,7 @@ def export_form3():
     df = pd.DataFrame(data)
 
     headers = [
-        'ID', 'Uploaded By', 'Uploader Name', 'Name of BDSP', 'Types of BDSP', 
+        'ID', 'Uploaded By', 'Uploader Name','Classification', 'Types of BDSP', 'Name of BDSP',  
         'Contact Person', 'Sex', 'Office/Main Address', 'Email Address', 
         'Brief Description of Company', 'Tel/Cellphone number', 'Field of Expertise',
         'Preferred Region to work in for RAPID', 'Preferred Province to work in for RAPID',

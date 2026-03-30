@@ -81,6 +81,7 @@
                 if (!dipName || dipName === "Choose your option") {
                     // Reset commodity select
                     commoditySelect.value = "";
+                    commoditySelect.dispatchEvent(new Event('change', { bubbles: true }));
                 } else {
                     fetch(`/api/get_dip_commodity?dip_name=${encodeURIComponent(dipName)}`)
                         .then(response => response.json())
@@ -90,10 +91,12 @@
                             } else {
                                 commoditySelect.value = "";
                             }
+                            commoditySelect.dispatchEvent(new Event('change', { bubbles: true }));
                         })
                         .catch(error => {
                             console.error('Error fetching commodity:', error);
                             commoditySelect.value = "";
+                            commoditySelect.dispatchEvent(new Event('change', { bubbles: true }));
                         });
                 }
             });
@@ -136,6 +139,7 @@
             </select>
             <select type="text" class="FORM5_FIELD hidden-textbox x-select x-border" name="mgit_commodity_others"
                 id="mgit_commodity_others" show-base="mgit_commodity" show-trigger="PFN">
+                <option value="">Choose your option</option>
                 <option>Calamansi</option>
                 <option>Banana</option>
             </select>
@@ -263,6 +267,7 @@
                         const commoditySelect = document.getElementById('mgit_commodity');
                         if (!dipName) {
                             commoditySelect.value = "";
+                            commoditySelect.dispatchEvent(new Event('change', { bubbles: true }));
                             return;
                         }
 
@@ -270,10 +275,12 @@
                             .then(r => r.ok ? r.json() : {})
                             .then(data => {
                                 commoditySelect.value = data.form_1_commodity || "";
+                                commoditySelect.dispatchEvent(new Event('change', { bubbles: true }));
                             })
                             .catch(err => {
                                 console.error('Error getting commodity:', err);
                                 commoditySelect.value = "";
+                                commoditySelect.dispatchEvent(new Event('change', { bubbles: true }));
                             });
                     });
 
@@ -729,16 +736,21 @@
 
                 <tr>
                     <!--sectorG--->
-                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_num_target_of_fo_rehab" type="number"
-                            name="mgit_total_num_target_of_fo_rehab"></td>
-                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_num_target_members_rehab" type="number"
-                            name="mgit_total_num_target_members_rehab"></td>
-                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_mooe" type="number"
-                            name="mgit_total_amount_of_mooe"></td>
-                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_release" type="number"
-                            name="mgit_total_amount_of_release"></td>
-                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_date_released" type="date"
-                            name="mgit_date_released"></td>
+                    <td>
+                        <input class="FORM5_FIELD  x-input x-border" id="mgit_total_num_target_of_fo_rehab" type="number" name="mgit_total_num_target_of_fo_rehab">
+                    </td>
+                    <td>
+                        <input class="FORM5_FIELD  x-input x-border" id="mgit_total_num_target_members_rehab" type="number" name="mgit_total_num_target_members_rehab">
+                    </td>
+                    <td>
+                        <input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_mooe" type="number" name="mgit_total_amount_of_mooe">
+                    </td>
+                    <td>
+                        <input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_release" type="number" name="mgit_total_amount_of_release">
+                    </td>
+                    <td>
+                        <input class="FORM5_FIELD  x-input x-border" id="mgit_date_released" type="date" name="mgit_date_released">
+                    </td>
                 </tr>
             </table>
 
@@ -761,10 +773,12 @@
                     <td>
                         <input readonly class="FORM5_FIELD x-input x-border" id="mgit_remaining_balance_rehab" type="number" name="mgit_remaining_balance_rehab">
                     </td>
-                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_members_received_rehab" type="number"
-                            name="mgit_total_amount_of_members_received_rehab"></td>
-                    <td><input class="FORM5_FIELD  x-input x-border" id="mgit_target_total_amount_of_has_for_rehabilitation" type="number"
-                            name="mgit_target_total_amount_of_has_for_rehabilitation"></td>
+                    <td>
+                        <input class="FORM5_FIELD  x-input x-border" id="mgit_total_amount_of_members_received_rehab" type="number" name="mgit_total_amount_of_members_received_rehab">
+                    </td>
+                    <td>
+                        <input class="FORM5_FIELD  x-input x-border" id="mgit_target_total_amount_of_has_for_rehabilitation" type="number" name="mgit_target_total_amount_of_has_for_rehabilitation">
+                    </td>
                 </tr>
             </table>
             <script>

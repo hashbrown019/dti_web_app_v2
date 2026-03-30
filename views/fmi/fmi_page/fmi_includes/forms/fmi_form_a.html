@@ -6,179 +6,495 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+	<div class="x-container x-card " style="margin-top: 20px; margin-bottom: 20px; background-color: #1F2937;">
+            <div class="card" style="margin-bottom: 25px; margin-top: 15px;">
+                <div class="card-header align-items-center text-center bg-gray-800 text-white">
+                    <h2 class="card-title mb-0">Form 8 FMI Tracker</h2>
+                </div>
+                <div class="card-body">
+                    <form id="fmi-manual-form">
+                        <input type="hidden" id="id" name="id" value="" class="FMI_FIELD">
+                        <h6 class="text-uppercase text-muted">Project Profile</h6>
+                        <div class="row g-3">
+                            <div class="col-md-2">
+                                <label class="form-label" for="form_8_profile_batch">Batch</label>
+                                <select class="form-select FMI_FIELD" id="form_8_profile_batch" name="form_8_profile_batch">
+                                    <option value="">Select</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label" for="form_8_profile_dipName">DIP Name</label>
+                                <select class="form-control FMI_FIELD" id="form_8_profile_dipName" name="form_8_profile_dipName">
+                                    <option value="">Choose your option</option>
+                                </select>
+                            </div>
+                            <script>
+                              function populateDipNames() {
+                                return fetch('/api/get_dip_names')
+                                  .then(response => {
+                                    if (!response.ok) {
+                                      return response.text().then(text => { throw new Error(text) });
+                                    }
+                                    return response.json();
+                                  })
+                                  .then(data => {
+                                    const selectElement = document.getElementById('form_8_profile_dipName');
+                                    selectElement.innerHTML = '<option value="">Choose your option</option>';
+                                    data.forEach(item => {
+                                      const option = document.createElement('option');
+                                      option.value = item.form_1_name_dip;
+                                      option.textContent = item.form_1_name_dip;
+                                      selectElement.appendChild(option);
+                                    });
+                                  })
+                                  .catch(error => console.error('Error fetching DIP names:', error));
+                              }
+                              populateDipNames().then(() => {
+                                var record_id = URL_ARGS["id"];
+                                var table = URL_ARGS["table"];
+                                load_data(record_id, table, "FMI_FIELD");
+                                get_participants_data(record_id, table, "FMI_FIELD");
+                              });
+                            </script>
+                            <div class="col-md-5">
+                                <label class="form-label" for="form_8_profile_name_of_fmr">FMR Name</label>
+                                <input class="form-control FMI_FIELD" id="form_8_profile_name_of_fmr" name="form_8_profile_name_of_fmr" type="text">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="form_8_profile_project_title">Project Title</label>
+                                <input class="form-control FMI_FIELD" id="form_8_profile_project_title" name="form_8_profile_project_title" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_profile_municipality_province">Municipality/Province</label>
+                                <input class="form-control FMI_FIELD" id="form_8_profile_municipality_province" name="form_8_profile_municipality_province" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_profile_region">Region</label>
+                                <select class="form-control FMI_FIELD" id="form_8_profile_region" name="form_8_profile_region" type="text">
+                                  <option value="">Choose option</option>
+                                  <option value="8">Region 8</option>
+                                  <option value="9">Region 9</option>
+                                  <option value="10">Region 10</option>
+                                  <option value="11">Region 11</option>
+                                  <option value="12">Region 12</option>
+                                  <option value="13">Region 13</option>
+                                  <option value="BARMM">BARMM</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="form_8_profile_length">Length (km)</label>
+                                <input class="form-control FMI_FIELD" id="form_8_profile_length" name="form_8_profile_length" type="text">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="form_8_profile_commodity">Commodity</label>
+                                <select class="form-control FMI_FIELD" id="form_8_profile_commodity" name="form_8_profile_commodity" type="text">
+                                  <option value="">Choose option</option>
+                                  <option value="Coconut">Coconut</option>
+                                  <option value="Coffee">Coffee</option>
+                                  <option value="Cacao">Cacao</option>
+                                  <option value="PFN">PFN</option>
+                                </select> 
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_profile_appvd_budget_cost">Approved Budget Cost (km)</label>
+                                <input class="form-control FMI_FIELD" id="form_8_profile_appvd_budget_cost" name="form_8_profile_appvd_budget_cost" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_profile_relative_weight">Relative Weight</label>
+                                <input class="form-control FMI_FIELD" id="form_8_profile_relative_weight" name="form_8_profile_relative_weight" type="text">
+                            </div>
+                        </div>
 
-	<div class="x-col l1 ">
-		&nbsp;
-	</div>
+                        <hr class="my-4">
 
-	<div class=" x-col l10 x-container x-card " style="margin-top: 20px; margin-bottom: 20px; background-color: #1F2937;">
+                        <h6 class="text-uppercase text-muted">Procurement</h6>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_procurement_itb_posting">ITB Posting Date</label>
+                                <input class="form-control FMI_FIELD" id="form_8_procurement_itb_posting" name="form_8_procurement_itb_posting" type="date">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_procurement_openingBids">Opening of Bids</label>
+                                <input class="form-control FMI_FIELD" id="form_8_procurement_openingBids" name="form_8_procurement_openingBids" type="date">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_procurement_NOAdate">NOA Date</label>
+                                <input class="form-control FMI_FIELD" id="form_8_procurement_NOAdate" name="form_8_procurement_NOAdate" type="date">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_procurement_NTPdate">NTP Date</label>
+                                <input class="form-control FMI_FIELD" id="form_8_procurement_NTPdate" name="form_8_procurement_NTPdate" type="date">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_procurement_contractorName">Contractor Name</label>
+                                <input class="form-control FMI_FIELD" id="form_8_procurement_contractorName" name="form_8_procurement_contractorName" type="text">
+                            </div>
+                        </div>
 
+                        <hr class="my-4">
 
+                        <h6 class="text-uppercase text-muted">Implementation</h6>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_implementation_ifadLP">IFAD LP</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_ifadLP" name="form_8_implementation_ifadLP" type="text">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_implementation_LGUcounterpart">LGU Counterpart</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_LGUcounterpart" name="form_8_implementation_LGUcounterpart" type="text">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_implementation_totalOrigCC">Total Original CC</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_totalOrigCC" name="form_8_implementation_totalOrigCC" type="text">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_implementation_totalRevisedCC">Total Revised CC</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_totalRevisedCC" name="form_8_implementation_totalRevisedCC" type="text">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_implementation_revisionReason">Revision Reason</label>
+                                <textarea class="form-control FMI_FIELD" id="form_8_implementation_revisionReason" name="form_8_implementation_revisionReason" rows="2"></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_implementation_dateStarted">Date Started</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_dateStarted" name="form_8_implementation_dateStarted" type="date">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_implementation_original">Original</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_original" name="form_8_implementation_original" type="text">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_implementation_revised">Revised</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_revised" name="form_8_implementation_revised" type="text">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_implementation_extensionReason">Extension Reason</label>
+                                <textarea class="form-control FMI_FIELD" id="form_8_implementation_extensionReason" name="form_8_implementation_extensionReason" rows="2"></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="form_8_implementation_status">Status</label>
+                                <select class="form-select FMI_FIELD" id="form_8_implementation_status" name="form_8_implementation_status">
+                                    <option value="">Select</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="On-going">On-going</option>
+                                    <option value="For NO 1">For NO 1</option>
+                                    <option value="For NO 2">For NO 2</option>
+                                    <option value="For NO 3">For NO 3</option>
+                                    <option value="Issuance of NOA">Issuance of NOA</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                                <div>Status (km)</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_actualAccomplishment">Actual Accomplishment</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_actualAccomplishment" name="form_8_implementation_actualAccomplishment" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_slippage">Slippage</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_slippage" name="form_8_implementation_slippage" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_relativeWeight">Relative Weight</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_relativeWeight" name="form_8_implementation_relativeWeight" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_actualLength">Actual Length</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_actualLength" name="form_8_implementation_actualLength" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_target">Target</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_target" name="form_8_implementation_target" type="date">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_revised_target">Revised Target</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_revised_target" name="form_8_implementation_revised_target" type="date">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_actual">Actual</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_actual" name="form_8_implementation_actual" type="date">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_turnoverDate">Turnover Date</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_turnoverDate" name="form_8_implementation_turnoverDate" type="date">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_implementation_acceptanceDate">Acceptance Date</label>
+                                <input class="form-control FMI_FIELD" id="form_8_implementation_acceptanceDate" name="form_8_implementation_acceptanceDate" type="date">
+                            </div>
+                        </div>
 
-		<div class=" x-container x-padding">
-			<center><h2 class=" x-container x-white x-padding rounded" style="margin-top: 20px; margin-bottom: 25px;">Form A - General Information</h2></center>
-            
+                        <hr class="my-4">
 
-			<!--status	--->
-			<div class="x-container x-card x-light-grey" style="margin-bottom: 25px; margin-top: 5px;">
-				<div class="row-rounded">
-					<div class="x-col-75">
-						<div class="x-container">
-							<form>
-								<div class="row">
-									<div class="col-50"><br>
-										<label for="form_a_filled_date"><i class="fa fa-calendar"></i> Filled Date(dd-mm-yyyy)</label>
-										<input class="btn2" type="date" id="form_a_filled_date">
-										<label for="form_a_region">Region</label>
-										<input type="text" id="form_a_region"  placeholder="">
-										<label for="form_a_project_name">Project Name</label>
-										<input type="text" id="form_a_project_name"  placeholder="">
-										<label for="form_a_province">Province</label>
-										<input type="text" id="form_a_province"  placeholder="">
-										
-									</div>
+                        <h6 class="text-uppercase text-muted">Remarks</h6>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <textarea class="form-control FMI_FIELD" id="form_8_remarks" name="form_8_remarks" rows="3"></textarea>
+                            </div>
+                        </div>
 
-									<div class="col-50">
-										<label for="form_a_municipality" style="margin-top: 22px;">Municipality</label>
-										<input type="text" id="form_a_municipality"  placeholder="">
-										<label for="form_a_barangay">Barangay</label>
-										<input type="text" id="form_a_barangay"  placeholder="">
-										<label for="form_a_value_chain">VALUE CHAIN</label>
-										<input type="text" id="form_a_value_chain"  placeholder="">
-										<label for="form_a_vc_fo"># of VC Farmer Organizations</label>
-										<input type="text" id="form_a_vc_fo"  placeholder="">
-									</div>
+                        <hr class="my-4">
 
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="x-container x-card x-light-grey" style="margin-bottom: 25px; margin-top: 5px;">
-				<div class="row-rounded">
-					<div class="x-col-75">
-						<div class="x-container">
-							<form action="/action_page.php">
-								<div class="row">
+                        <h6 class="text-uppercase text-muted">Financial</h6>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_financial_fiananceAccomplishment">Finance Accomplishment</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_fiananceAccomplishment" name="form_8_financial_fiananceAccomplishment" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_financial_subAllotment">Sub-Allotment</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_subAllotment" name="form_8_financial_subAllotment" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_financial_issuedDate">Issued Date</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_issuedDate" name="form_8_financial_issuedDate" type="date">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_financial_amount">Amount</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_amount" name="form_8_financial_amount" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_financial_difference">Difference</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_difference" name="form_8_financial_difference" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="form_8_financial_balance">Balance</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_balance" name="form_8_financial_balance" type="text">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_financial_issuedDatefirstTranche">Issued Date (1st Tranche)</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_issuedDatefirstTranche" name="form_8_financial_issuedDatefirstTranche" type="date">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_financial_amountfirstTranche">Amount (1st Tranche)</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_amountfirstTranche" name="form_8_financial_amountfirstTranche" type="text">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_financial_issuedDatesecondTranche">Issued Date (2nd Tranche)</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_issuedDatesecondTranche" name="form_8_financial_issuedDatesecondTranche" type="date">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_financial_amountsecondTranche">Amount (2nd Tranche)</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_amountsecondTranche" name="form_8_financial_amountsecondTranche" type="text">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_financial_issuedDatethirdTranche">Issued Date (3rd Tranche)</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_issuedDatethirdTranche" name="form_8_financial_issuedDatethirdTranche" type="date">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="form_8_financial_amountthirdTranche">Amount (3rd Tranche)</label>
+                                <input class="form-control FMI_FIELD" id="form_8_financial_amountthirdTranche" name="form_8_financial_amountthirdTranche" type="text">
+                            </div>
+                        </div>
 
-									<div class="col-50"><br>
-										<label for="form_a_first_vc_fos">First - VC Farmer Organizations Served(Text)</label>
-										<input type="text" id="form_a_first_vc_fos" placeholder="">
-
-										<label for="form_a_first_vc_no_fm">First VC's - No. of Famer-Members</label>
-										<input type="text" id="form_a_first_vc_no_fm" placeholder="">
-
-										<label for="form_a_first_vc_pa">First VC's - Production Area (in has)(Number)</label>
-										<input type="text" id="form_a_first_vc_pa" placeholder="">
-
-										<label for="form_a_first_vc_pfs">First VC's - Production Facilities Served(Long Text)</label>
-										<input type="text" id="form_a_first_vc_pfs" placeholder="">
-									</div>
-
-									<div class="col-50"><br>
-										<label for="form_a_second_vc_fos">Second- VC Farmer Organizations Served(Text)</label>
-										<input type="text" id="form_a_second_vc_fos"  placeholder="">
-
-										<label for="form_a_second_vc_no_fm">Second VC's - No. of Famer-Members</label>
-										<input type="text" id="form_a_second_vc_no_fm"  placeholder="">
-
-										<label for="form_a_pa">Second VC's - Production Area (in has)(Number)</label>
-										<input type="text" id="form_a_pa"  placeholder="">
-
-										<label for="form_a_pfs">Second VC's - Production Facilities ServedSS(Long Text)</label>
-										<input type="text" id="form_a_pfs"  placeholder="">
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="x-container x-card x-light-grey" style="margin-bottom: 25px; margin-top: 5px;">		
-				<div class="row-rounded">
-					<div class="x-col-75">
-						<div class="x-container">
-							<form action="/action_page.php">
-								<div class="row">
-
-									<div class="col-50"><br>
-										<label for="form_a_third_vc_fos">Third - VC Farmer Organizations Served(Text)</label>
-										<input type="text" id="form_a_third_vc_fos">
-										<label for="form_a_third_vc_no_fm">Third VC's - No. of Famer-Members</label>
-										<input type="text" id="form_a_third_vc_no_fm" >
-										<label for="form_a_third_vc_pa">Third VC's - Production Area (in has)(Number)</label>
-										<input type="text" id="form_a_third_vc_pa"  placeholder="">
-										<label for="form_a_third_vc_pfs">Third VC's - Production Facilities ServedSS(Long Text)</label>
-										<input type="text" id="form_a_third_vc_pfs"  placeholder="">
-									</div>
-
-									<div class="col-50"><br>
-										<label for="form_a_fourth_vc_fos">Fourth - VC Farmer Organizations Served(Text)</label>
-										<input type="text" id="form_a_fourth_vc_fos">
-										<label for="form_a_fourth_vc_no_fm">Fourth VC's - No. of Famer-Members</label>
-										<input type="text" id="form_a_fourth_vc_no_fm" >
-										<label for="form_a_pa">Fourth VC's - Production Area (in has)(Number)</label>
-										<input type="text" id="form_a_pa"  placeholder="">
-										<label for="form_a_pfs">Fourth VC's - Production Facilities ServedSS(Long Text)</label>
-										<input type="text" id="form_a_pfs"  placeholder="">
-									</div>
-
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="x-container x-card x-light-grey" style="margin-bottom: 25px; margin-top: 5px;">		
-				<div class="row-rounded">
-					<div class="x-col-75">
-						<div class="x-container">
-							<form action="/action_page.php">
-								<div class="row">
-
-									<div class="col-50"><br>
-										<label for="form_a_fifth_vc_fos">Fifth - VC Farmer Organizations Served(Text)</label>
-										<input type="text" id="form_a_fifth_vc_fos">
-										<label for="form_a_fifth_vc_no_fm">Fifth VC's - No. of Famer-Members</label>
-										<input type="text" id="form_a_fifth_vc_no_fm" >
-										<label for="form_a_fifth_vc_pa">Fifth VC's - Production Area (in has)(Number)</label>
-										<input type="text" id="form_a_fifth_vc_pa"  placeholder="">
-										<label for="form_a_fifth_vc_pfs">Fifth VC's - Production Facilities ServedSS(Long Text)</label>
-										<input type="text" id="form_a_fifth_vc_pfs"  placeholder="">
-									</div>
-
-									<div class="col-50"><br>
-										<label for="form_a_length_of_fmi">Length of FMI Project in km</label>
-										<input type="text" id="form_a_length_of_fmi">
-										<label for="form_a_how_much_is_loan">How much is LOAN?</label>
-										<input type="text" id="form_a_how_much_is_loan"  placeholder=" (in PhP Million)">
-										<label for="form_a_how_much_is_lgu_equity">How much is LGU EQUITY?</label>
-										<input type="text" id="form_a_how_much_is_lgu_equity"  placeholder=" (in PhP Million)(Number)">
-										<label for="form_a_project_cost">Project Cost</label>
-										<input type="text" id="form_a_project_cost"  placeholder="(in PhP Million)(Number)">
-										<label for="form_a_filled_form_id">Filled-form Id</label>
-										<input type="text" id="form_a_filled_form_id"  placeholder="">
-									</div>
-
-								</div>
-								
-								<input style="margin-bottom: 10px;" type="submit" value="SUBMIT" class="btns">
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
+                        <div class="mt-4 d-flex flex-wrap gap-2">
+                            <button type="submit" class="btn btn-primary">Save Record</button>
+                            <button type="reset" class="btn btn-outline-secondary">Clear</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 		</div>
 	</div>
 
-
-
-
     {% endblock content %}
+    {% block javascripts %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("fmi-manual-form");
+        if (!form) {
+          return;
+        }
 
+        form.addEventListener("reset", function () {
+          form.classList.remove("was-validated");
+        });
 
-    {% block javascripts %}{% endblock javascripts %}
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (form.dataset.viewMode === "true") {
+            return;
+          }
+          const formData = new FormData(form);
+
+          try {
+            const response = await fetch("/set_data/dcf_fmi", {
+              method: "POST",
+              body: formData
+            });
+            const data = await response.json();
+            const ok = (data && data.id && data.id.response === "done") || data.status === "success";
+
+            if (ok) {
+              if (window.Swal) {
+                Swal.fire({
+                  title: "Saved!",
+                  text: "FMI record has been added.",
+                  icon: "success",
+                  position: "center"
+                }).then(() => {
+                  window.location.replace("/fmi_dashboard");
+                });
+              } else {
+                window.location.replace("/fmi_dashboard");
+              }
+            } else {
+              const message = data && data.msg ? data.msg : "Unable to save record.";
+              if (window.Swal) {
+                Swal.fire({
+                  title: "Error",
+                  text: message,
+                  icon: "error",
+                  position: "center"
+                });
+              }
+            }
+          } catch (error) {
+            if (window.Swal) {
+              Swal.fire({
+                title: "Error",
+                text: "Something went wrong while saving the record.",
+                icon: "error",
+                position: "center"
+              });
+            }
+          }
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("fmi-manual-form");
+        if (!form) {
+          return;
+        }
+
+        let isViewMode = false;
+        const params = new URLSearchParams(window.location.search);
+        const recordId = params.get("id");
+        const table = params.get("table") || "dcf_fmi";
+        const mode = (params.get("mode") || "").toLowerCase();
+
+        const excelSerialToDateString = (serial) => {
+          if (serial === null || serial === undefined || Number.isNaN(serial)) {
+            return "";
+          }
+          const base = Date.UTC(1899, 11, 30);
+          const millis = base + Math.round(serial * 86400000);
+          const date = new Date(millis);
+          if (Number.isNaN(date.getTime())) {
+            return "";
+          }
+          return date.toISOString().slice(0, 10);
+        };
+
+        const normalizeDateValue = (value) => {
+          if (value === null || value === undefined) {
+            return "";
+          }
+          if (typeof value === "number") {
+            return excelSerialToDateString(value);
+          }
+          const str = String(value).trim();
+          if (!str) {
+            return "";
+          }
+          const numeric = Number(str);
+          if (!Number.isNaN(numeric) && str.match(/^\d+(\.\d+)?$/)) {
+            return excelSerialToDateString(numeric);
+          }
+          if (str.length >= 10 && str[4] === "-" && str[7] === "-") {
+            return str.slice(0, 10);
+          }
+          return str;
+        };
+
+        const normalizeSelectValue = (value) => {
+          if (value === null || value === undefined) {
+            return "";
+          }
+          if (typeof value === "number") {
+            return String(parseInt(value, 10));
+          }
+          const str = String(value).trim();
+          if (str.match(/^\d+(\.0+)?$/)) {
+            return String(parseInt(str, 10));
+          }
+          return str;
+        };
+
+        const setFieldValue = (field, value) => {
+          if (!field) {
+            return;
+          }
+          const isDate = field.type === "date";
+          if (isDate) {
+            field.value = normalizeDateValue(value);
+            return;
+          }
+          if (field.tagName && field.tagName.toLowerCase() === "select") {
+            field.value = normalizeSelectValue(value);
+            return;
+          }
+          field.value = value ?? "";
+        };
+
+        const toggleViewMode = (isView) => {
+          const inputs = form.querySelectorAll("input, select, textarea, button");
+          inputs.forEach((el) => {
+            if (el.type === "hidden") {
+              return;
+            }
+            if (el.tagName.toLowerCase() === "button") {
+              el.disabled = isView;
+              return;
+            }
+            el.disabled = isView;
+          });
+        };
+
+        if (!recordId) {
+          return;
+        }
+
+        fetch(`/get_data/${recordId}/${table}`)
+          .then((response) => response.json())
+          .then((rows) => {
+            const data = Array.isArray(rows) ? rows[0] : null;
+            if (!data) {
+              return;
+            }
+
+            const fields = form.querySelectorAll(".FMI_FIELD");
+            fields.forEach((field) => {
+              const key = field.id;
+              if (!key) {
+                return;
+              }
+              if (Object.prototype.hasOwnProperty.call(data, key)) {
+                setFieldValue(field, data[key]);
+              }
+            });
+
+            isViewMode = mode === "view";
+            form.dataset.viewMode = isViewMode ? "true" : "false";
+            toggleViewMode(isViewMode);
+          })
+          .catch(() => {
+            if (window.Swal) {
+              Swal.fire({
+                title: "Error",
+                text: "Unable to load the FMI record.",
+                icon: "error",
+                position: "center"
+              });
+            }
+          });
+      });
+    </script>
+    {% endblock javascripts %}

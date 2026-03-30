@@ -374,7 +374,6 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_birthday` as `bday`,
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,
-				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_birthday` as `farmer_birth_date`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,
 				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_region` as `addr_region`,
@@ -388,7 +387,7 @@ class _main:
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False) # DEPRICATED MOBILE DATA
 		RES = rapid_mysql.select(sql_excel,False)
-		#random.shuffle(RES)
+		random.shuffle(RES)
 		return RES
 
 
@@ -427,7 +426,6 @@ class _main:
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Middle_name` as `m_name`,
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Last_name` as `l_name`,
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,
-				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_birthday` as `bday`,
 				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,
 				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,
@@ -443,7 +441,7 @@ class _main:
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,True) + rapid_mysql.select(sql_excel,True) # DEPRICTED MOBILE DATA
 		RES = rapid_mysql.select(sql_excel,True)
-		#random.shuffle(RES)
+		random.shuffle(RES)
 		return RES
 
 	@app.route("/feature_0/dashboard_home_",methods=["POST","GET"])
@@ -794,6 +792,7 @@ class _main:
 
 			entry = {
 				"name": display_name,
+				"bday": datum[6],
 				"db_id": datum[0],
 				"inputed": datum[1],
 				"ref_code": datum[14],

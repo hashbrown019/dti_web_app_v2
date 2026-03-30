@@ -12,6 +12,8 @@
 
 <div style="margin-left: 3px;">
 
+
+
 <div class="row">
   <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
     <div class="tile-stats" style="border-radius: 15px;">
@@ -46,6 +48,79 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-md-12 col-sm-12" style="display: flex; flex-wrap: wrap;">
+    <div class="x_panel" style="border-radius: 15px;">
+      <div class="x_title">
+        <h2>Target Expansion Summary <small>Bar Chart</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Settings 1</a>
+              <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" style="height: 320px;">
+        <canvas id="form5TargetExpansionChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-sm-12" style="display: flex; flex-wrap: wrap;">
+		<div class="x_panel" style="border-radius: 15px;">
+		<div class="x_title">
+			<h2>Target Rehabilitation Summary <small>Bar Chart</small></h2>
+			<ul class="nav navbar-right panel_toolbox">
+			<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">Settings 1</a>
+				<a class="dropdown-item" href="#">Settings 2</a>
+				</div>
+			</li>
+			<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content" style="height: 320px;">
+			<canvas id="form5TargetRehabChart"></canvas>
+		</div>
+		</div>
+  	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-sm-12" style="display: flex; flex-wrap: wrap;">
+		<div class="x_panel" style="border-radius: 15px;">
+		<div class="x_title">
+			<h2>Productive Investment Availment <small>FO/MSME Bar Chart</small></h2>
+			<ul class="nav navbar-right panel_toolbox">
+			<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">Settings 1</a>
+				<a class="dropdown-item" href="#">Settings 2</a>
+				</div>
+			</li>
+			<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content" style="height: 320px;">
+			<canvas id="form5ProdInvChart"></canvas>
+		</div>
+		</div>
+	</div>
+</div>
+
 		<style>
 			td {
 				white-space:nowrap;
@@ -76,6 +151,154 @@
 				Chart.defaults.global.legend = {
 					enabled: false
 				};
+
+				if ($('#form5TargetExpansionChart').length) {
+					var targetTotals = {
+						area: parseFloat('{{ target_totals.area | round(2) }}') || 0,
+						fo: parseFloat('{{ target_totals.fo | int }}') || 0,
+						members: parseFloat('{{ target_totals.members | int }}') || 0
+					};
+					var targetLabels = [
+						'Target Total Area for Expansion (ha)',
+						'Total No. of Target FO (Expansion)',
+						'Total No. of Target Members (Expansion)'
+					];
+					var targetValues = [
+						targetTotals.area,
+						targetTotals.fo,
+						targetTotals.members
+					];
+					var targetColors = ['#99e6ff', '#33ccff', '#007399'];
+					var ctxTarget = document.getElementById("form5TargetExpansionChart");
+					var targetChart = new Chart(ctxTarget, {
+						type: 'bar',
+						data: {
+							labels: targetLabels,
+							datasets: [{
+								label: 'Totals',
+								backgroundColor: targetColors,
+								borderColor: targetColors,
+								borderWidth: 1,
+								data: targetValues
+							}]
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: true
+									}
+								}]
+							},
+							tooltips: {
+								callbacks: {
+									label: function (tooltipItem, data) {
+										var label = data.labels[tooltipItem.index] || '';
+										var value = data.datasets[0].data[tooltipItem.index];
+										return label + ': ' + value;
+									}
+								}
+							}
+						}
+					});
+				}
+				if ($('#form5TargetRehabChart').length) {
+					var rehabTotals = {
+						area: parseFloat('{{ rehab_totals.area | round(2) }}') || 0,
+						fo: parseFloat('{{ rehab_totals.fo | int }}') || 0,
+						members: parseFloat('{{ rehab_totals.members | int }}') || 0
+					};
+					var rehabLabels = [
+						'Target Total Area for Rehabilitation (ha)',
+						'Total No. of Target FO (Rehab)',
+						'Total No. of Target Members (Rehab)'
+					];
+					var rehabValues = [
+						rehabTotals.area,
+						rehabTotals.fo,
+						rehabTotals.members
+					];
+					var rehabColors = ['#99e6ff', '#33ccff', '#007399'];
+					var ctxRehab = document.getElementById("form5TargetRehabChart");
+					var rehabChart = new Chart(ctxRehab, {
+						type: 'bar',
+						data: {
+							labels: rehabLabels,
+							datasets: [{
+								label: 'Totals',
+								backgroundColor: rehabColors,
+								borderColor: rehabColors,
+								borderWidth: 1,
+								data: rehabValues
+							}]
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: true
+									}
+								}]
+							},
+							tooltips: {
+								callbacks: {
+									label: function (tooltipItem, data) {
+										var label = data.labels[tooltipItem.index] || '';
+										var value = data.datasets[0].data[tooltipItem.index];
+										return label + ': ' + value;
+									}
+								}
+							}
+						}
+					});
+				}
+				if ($('#form5ProdInvChart').length) {
+					var prodInvLabels = ['FO', 'MSME'];
+					var prodInvValues = [
+						parseInt('{{ dcf_form5_prod_inv_fo[0]["total_fo_prod_inv"] | int }}') || 0,
+						parseInt('{{ dcf_form5_prod_inv_msme[0]["total_msme_prod_inv"] | int }}') || 0
+					];
+					var prodInvColors = ['#33ccff', '#007399'];
+					var ctxProdInv = document.getElementById("form5ProdInvChart");
+					new Chart(ctxProdInv, {
+						type: 'bar',
+						data: {
+							labels: prodInvLabels,
+							datasets: [{
+								label: 'Productive Investments',
+								backgroundColor: prodInvColors,
+								borderColor: prodInvColors,
+								borderWidth: 1,
+								data: prodInvValues
+							}]
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: true,
+										precision: 0
+									}
+								}]
+							},
+							tooltips: {
+								callbacks: {
+									label: function (tooltipItem, data) {
+										var label = data.labels[tooltipItem.index] || '';
+										var value = data.datasets[0].data[tooltipItem.index] || 0;
+										return label + ': ' + value;
+									}
+								}
+							}
+						}
+					});
+				}
 
 				// Bar chart
 				if ($('#mybarChart').length) {

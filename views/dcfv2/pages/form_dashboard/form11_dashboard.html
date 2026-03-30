@@ -12,7 +12,7 @@
   <div class="col-lg-4 col-md-3 col-sm-6">
     <div class="tile-stats" style="border-radius: 15px;">
       <div class="count _money_tag">{{ dcf_form11_fs_total[0]['total_farmers_with_fs'] }}</div>
-      <h3>Farmer</h3>
+      <h3>SHF</h3>
       <p>Total # of Farmer Access the Financial Services.</p>
     </div>
   </div>
@@ -69,7 +69,7 @@
 <div class="col-md-12 col-sm-12">
   <div class="x_panel" style="border-radius: 15px;">
     <div class="x_title">
-      <h2>Type of Financial Services Access by Farmer</h2>
+      <h2>Type of Financial Services Access by SHFs</h2>
       <ul class="nav navbar-right panel_toolbox">
         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
         <li class="dropdown">
@@ -95,47 +95,47 @@
           <table class="table table-bordered table-striped table-hover" style="margin-bottom: 0;">
             <tbody>
               <tr>
-                <td><i class="fa fa-square" style="color:#009999"></i> Loans / Cash Advance</td>
+                <td><i class="fa fa-square" style="color:#ccf5ff"></i> Loans / Cash Advance</td>
                 <td>{{ dcf_form11_fsls[0]['farmer_loan'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#007399"></i> Savings and Investments</td>
+                <td><i class="fa fa-square" style="color:#99e6ff"></i> Savings and Investments</td>
                 <td>{{ dcf_form11_fsss[0]['farmer_savings'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#3366cc"></i> Insurance</td>
+                <td><i class="fa fa-square" style="color:#66d9ff"></i> Insurance</td>
                 <td>{{ dcf_form11_fsis[0]['farmer_insurance'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#33cccc"></i> Credit Guarantee</td>
+                <td><i class="fa fa-square" style="color:#33ccff"></i> Credit Guarantee</td>
                 <td>{{ dcf_form11_fscs[0]['farmer_credit'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#339966"></i> Paid-Up Capital</td>
+                <td><i class="fa fa-square" style="color:#00bfff"></i> Paid-Up Capital</td>
                 <td>{{ dcf_form11_fspups[0]['farmer_paidup'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#993366"></i> In-Kind Grants</td>
+                <td><i class="fa fa-square" style="color:#0099cc"></i> In-Kind Grants</td>
                 <td>{{ dcf_form11_fsiks[0]['farmer_inkind'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#cc6600"></i> Cash Grants</td>
+                <td><i class="fa fa-square" style="color:#007399"></i> Cash Grants</td>
                 <td>{{ dcf_form11_fscgs[0]['farmer_cashgrant'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#999900"></i> Cash for Work</td>
+                <td><i class="fa fa-square" style="color:#004d66"></i> Cash for Work</td>
                 <td>{{ dcf_fomr11_fscfws[0]['farmer_cashforwork'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#6666cc"></i> Mortuary Insurance/Assistance</td>
+                <td><i class="fa fa-square" style="color:#00394d"></i> Mortuary Insurance/Assistance</td>
                 <td>{{ dcf_form11_fsms[0]['farmer_mortuary'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#cc6699"></i> Digital Platforms</td>
+                <td><i class="fa fa-square" style="color:#002633"></i> Digital Platforms</td>
                 <td>{{ dcf_form11_fsds[0]['farmer_digital'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#66cc66"></i> RAPID Support</td>
+                <td><i class="fa fa-square" style="color:#001a22"></i> RAPID Support</td>
                 <td>{{ dcf_form11_fsrs[0]['farmer_rapid'] }}</td>
               </tr>
             </tbody>
@@ -145,6 +145,51 @@
     </div>
   </div>
 </div>
+  <div class="col-md-6 col-sm-12">
+    <div class="x_panel" style="border-radius: 15px;">
+      <div class="x_title">
+        <h2>SHFs/Farmer Count per Region</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Settings 1</a>
+              <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" style="height: 360px;">
+        <canvas id="shfRegionChart" style="width: 100%; height: 100%;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-12">
+    <div class="x_panel" style="border-radius: 15px;">
+      <div class="x_title">
+        <h2>SHFs/Farmer Count per Commodity</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Settings 1</a>
+              <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" style="height: 360px;">
+        <canvas id="shfCommodityChart" style="width: 100%; height: 100%;"></canvas>
+      </div>
+    </div>
+  </div>
 
 <div class="col-md-12 col-sm-12">
   <div class="x_panel" style="border-radius: 15px;">
@@ -174,39 +219,39 @@
           <table class="table table-bordered table-striped table-hover" style="margin-bottom: 0;">
             <tbody>
               <tr>
-                <td><i class="fa fa-square" style="color:#009999"></i> Loans / Cash Advance</td>
+                <td><i class="fa fa-square" style="color:#ccf5ff"></i> Loans / Cash Advance</td>
                 <td>{{ dcf_form11_fosls[0]['fo_loan'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#339966"></i> Equity</td>
+                <td><i class="fa fa-square" style="color:#99e6ff"></i> Equity</td>
                 <td>{{ dcf_form11_foes[0]['fo_paidup'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#007399"></i> Savings and Investments</td>
+                <td><i class="fa fa-square" style="color:#66d9ff"></i> Savings and Investments</td>
                 <td>{{ dcf_form11_foss[0]['fo_savings'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#3366cc"></i> Insurance</td>
+                <td><i class="fa fa-square" style="color:#33ccff"></i> Insurance</td>
                 <td>{{ dcf_form11_fosis[0]['fo_insurance'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#33cccc"></i> Credit Guarantee</td>
+                <td><i class="fa fa-square" style="color:#00bfff"></i> Credit Guarantee</td>
                 <td>{{ dcf_form11_foscs[0]['fo_credit'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#993366"></i> In-Kind Grants</td>
+                <td><i class="fa fa-square" style="color:#0099cc"></i> In-Kind Grants</td>
                 <td>{{ dcf_form11_fosiks[0]['fo_inkind'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#cc6600"></i> Cash Grants</td>
+                <td><i class="fa fa-square" style="color:#007399"></i> Cash Grants</td>
                 <td>{{ dcf_form11_foscgs[0]['fo_cashgrant'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#cc6699"></i> Digital Platforms</td>
+                <td><i class="fa fa-square" style="color:#004d66"></i> Digital Platforms</td>
                 <td>{{ dcf_form11_fosds[0]['fo_digital'] }}</td>
               </tr>
               <tr>
-                <td><i class="fa fa-square" style="color:#66cc66"></i> RAPID Support</td>
+                <td><i class="fa fa-square" style="color:#00394d"></i> RAPID Support</td>
                 <td>{{ dcf_form11_fosrs[0]['fo_rapid'] }}</td>
               </tr>
             </tbody>
@@ -217,10 +262,70 @@
   </div>
 </div>
 
+  <div class="col-md-6 col-sm-12">
+    <div class="x_panel" style="border-radius: 15px;">
+      <div class="x_title">
+        <h2>FO/MSME Count per Region</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Settings 1</a>
+              <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" style="height: 360px;">
+        <canvas id="foMsmeRegionChart" style="width: 100%; height: 100%;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-12">
+    <div class="x_panel" style="border-radius: 15px;">
+      <div class="x_title">
+        <h2>FO/MSME Count per Commodity</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Settings 1</a>
+              <a class="dropdown-item" href="#">Settings 2</a>
+            </div>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" style="height: 360px;">
+        <canvas id="foMsmeCommodityChart" style="width: 100%; height: 100%;"></canvas>
+      </div>
+    </div>
+  </div>
+
 <script>
   function init_charts() {
     if (typeof (Chart) === 'undefined') { return; }
     Chart.defaults.global.legend = { enabled: false };
+
+    var foMsmeRegionData = {{ fo_msme_region_chart | tojson }};
+    var foMsmeCommodityData = {{ fo_msme_commodity_chart | tojson }};
+    var shfRegionData = {{ shf_region_chart | tojson }};
+    var shfCommodityData = {{ shf_commodity_chart | tojson }};
+
+    var baseColors = ["#ccf5ff", "#99e6ff", "#66d9ff", "#33ccff", "#00bfff", "#0099cc", "#007399", "#004d66", "#00394d", "#002633", "#001a22"];
+    var makeColors = function(count) {
+      var colors = [];
+      for (var i = 0; i < count; i++) {
+        colors.push(baseColors[i % baseColors.length]);
+      }
+      return colors;
+    };
 
     if ($("#mybarChartFFS").length) {
       var e = document.getElementById("mybarChartFFS");
@@ -230,7 +335,7 @@
           labels: ["Loans/Cash Advance", "Savings & Investments", "Insurance", "Credit Guarantee", "Paid-Up Capital", "In-Kind Grants", "Cash Grants", "Cash for Work", "Mortuary Insurance/Assistance", "Digital Platforms", "RAPID Support"],
           datasets: [{
             label:"Total",
-            backgroundColor: ["#009999", "#007399", "#3366cc", "#33cccc", "#339966", "#993366", "#cc6600", "#999900", "#6666cc", "#cc6699", "#66cc66"],
+            backgroundColor: ["#ccf5ff", "#99e6ff", "#66d9ff", "#33ccff", "#00bfff", "#0099cc", "#007399", "#004d66", "#00394d", "#002633", "#001a22"],
             data: [{{ dcf_form11_fsls[0]['farmer_loan'] }}, {{ dcf_form11_fsss[0]['farmer_savings'] }}, {{ dcf_form11_fsis[0]['farmer_insurance'] }}, {{ dcf_form11_fscs[0]['farmer_credit'] }}, {{ dcf_form11_fspups[0]['farmer_paidup'] }}, {{ dcf_form11_fsiks[0]['farmer_inkind'] }}, {{ dcf_form11_fscgs[0]['farmer_cashgrant'] }}, {{ dcf_fomr11_fscfws[0]['farmer_cashforwork'] }}, {{ dcf_form11_fsms[0]['farmer_mortuary'] }}, {{ dcf_form11_fsds[0]['farmer_digital'] }}, {{ dcf_form11_fsrs[0]['farmer_rapid'] }}]
           }]
         },
@@ -253,7 +358,7 @@
           labels: ["Loans/Cash Advance", "Equity", "Savings and Investments", "Insurance", "Credit Guarantee", "In-Kind Grants", "Cash Grants", "Digital Platforms", "RAPID Support"],
           datasets: [{
             label:"Total",
-            backgroundColor: ["#009999", "#007399", "#3366cc", "#33cccc", "#339966", "#993366", "#cc6600", "#999900", "#6666cc", "#cc6699", "#66cc66"],
+            backgroundColor: ["#ccf5ff", "#99e6ff", "#66d9ff", "#33ccff", "#00bfff", "#0099cc", "#007399", "#004d66", "#00394d", "#002633", "#001a22"],
             data: [{{ dcf_form11_fosls[0]['fo_loan'] }}, {{ dcf_form11_foes[0]['fo_paidup'] }}, {{ dcf_form11_foss[0]['fo_savings'] }}, {{ dcf_form11_fosis[0]['fo_insurance'] }}, {{ dcf_form11_foscs[0]['fo_credit'] }}, {{ dcf_form11_fosiks[0]['fo_inkind'] }}, {{ dcf_form11_foscgs[0]['fo_cashgrant'] }}, {{ dcf_form11_fosds[0]['fo_digital'] }}, {{ dcf_form11_fosrs[0]['fo_rapid'] }}]
           }]
         },
@@ -264,6 +369,92 @@
               ticks: { beginAtZero: true }
             }]
           }
+        }
+      });
+    }
+
+    if ($("#foMsmeRegionChart").length && foMsmeRegionData.labels.length) {
+      var e = document.getElementById("foMsmeRegionChart");
+      new Chart(e, {
+        type: "horizontalBar",
+        data: {
+          labels: foMsmeRegionData.labels,
+          datasets: [{
+            label: "FO/MSME Count",
+            backgroundColor: makeColors(foMsmeRegionData.labels.length),
+            data: foMsmeRegionData.data
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          legend: { display: false },
+          scales: {
+            xAxes: [{
+              ticks: { beginAtZero: true }
+            }]
+          }
+        }
+      });
+    }
+
+    if ($("#foMsmeCommodityChart").length && foMsmeCommodityData.labels.length) {
+      var e = document.getElementById("foMsmeCommodityChart");
+      new Chart(e, {
+        type: "pie",
+        data: {
+          labels: foMsmeCommodityData.labels,
+          datasets: [{
+            label: "FO/MSME Count",
+            data: foMsmeCommodityData.data,
+            backgroundColor: makeColors(foMsmeCommodityData.labels.length)
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          legend: { display: false },
+        }
+      });
+    }
+
+    if ($("#shfRegionChart").length && shfRegionData.labels.length) {
+      var e = document.getElementById("shfRegionChart");
+      new Chart(e, {
+        type: "horizontalBar",
+        data: {
+          labels: shfRegionData.labels,
+          datasets: [{
+            label: "SHFs/Farmer Count",
+            backgroundColor: makeColors(shfRegionData.labels.length),
+            data: shfRegionData.data
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          legend: { display: false },
+          scales: {
+            xAxes: [{
+              ticks: { beginAtZero: true }
+            }]
+          }
+        }
+      });
+    }
+
+    if ($("#shfCommodityChart").length && shfCommodityData.labels.length) {
+      var e = document.getElementById("shfCommodityChart");
+      new Chart(e, {
+        type: "pie",
+        data: {
+          labels: shfCommodityData.labels,
+          datasets: [{
+            label: "SHFs/Farmer Count",
+            data: shfCommodityData.data,
+            backgroundColor: makeColors(shfCommodityData.labels.length)
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          legend: { display: false },
         }
       });
     }
@@ -486,6 +677,9 @@ function download_login_start(fff) {
       })
       .then(data => {
         const selectElement = document.getElementById(selectElementId);
+        if (!selectElement) {
+          return;
+        }
         selectElement.innerHTML = '<option value="">Choose your option</option>';
         data.forEach(item => {
           const option = document.createElement('option');

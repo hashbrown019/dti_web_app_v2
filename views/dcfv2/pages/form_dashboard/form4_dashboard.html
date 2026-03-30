@@ -12,7 +12,7 @@
   <!-- top tiles -->
   <div class="row g-3">
   <!-- Total Entries -->
-  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6" data-tile="total_entries">
     <div class="tile-stats" style="border-radius: 15px;">
       <div class="count _money_tag">{{ dcf_form4 }}</div>
       <h3>Total Entries</h3>
@@ -21,7 +21,7 @@
   </div>
 
   <!-- Total Male -->
-  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6" data-tile="total_male">
     <div class="tile-stats" style="border-radius: 15px;">
       <div class="count _money_tag">{{ dcf_form4male[0]['total_male4'] }}</div>
       <h3>Total Male</h3>
@@ -30,7 +30,7 @@
   </div>
 
   <!-- Total Female -->
-  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6" data-tile="total_female">
     <div class="tile-stats" style="border-radius: 15px;">
       <div class="count _money_tag">{{ dcf_form4female[0]['total_female4'] }}</div>
       <h3>Total Female</h3>
@@ -39,7 +39,7 @@
   </div>
 
   <!-- Total IP -->
-  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6" data-tile="total_ip">
     <div class="tile-stats">
       <div class="count _money_tag" style="border-radius: 15px;">
         {{ dcf_form4maleip[0]['total_male4ip'] + dcf_form4femaleip[0]['total_female4ip'] }}
@@ -53,7 +53,7 @@
   </div>
 
   <!-- Total Youth -->
-  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6" data-tile="total_youth">
     <div class="tile-stats">
       <div class="count _money_tag" style="border-radius: 15px;">
         {{ dcf_form4maleyouth[0]['total_male4youth'] + dcf_form4femaleyouth[0]['total_female4youth'] }}
@@ -67,7 +67,7 @@
   </div>
 
   <!-- Total PWD -->
-  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6" data-tile="total_pwd">
     <div class="tile-stats">
       <div class="count _money_tag" style="border-radius: 15px;">
         {{ dcf_form4malepwd[0]['total_male4pwd'] + dcf_form4femalepwd[0]['total_female4pwd'] }}
@@ -81,7 +81,7 @@
   </div>
 
   <!-- Total SC -->
-  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6" data-tile="total_sc">
     <div class="tile-stats">
       <div class="count _money_tag" style="border-radius: 15px;">
         {{ dcf_form4malesc[0]['total_male4sc'] + dcf_form4femalesc[0]['total_female4sc'] }}
@@ -119,13 +119,12 @@
 </div>
 <!-- /top tiles -->
 
-
 	<div class="row">
 {% if user_data['job'] == "Super Admin" %}
     <div class="col-md-12 col-sm-12  ">
         <div class="x_panel" style="border-radius: 15px;">
             <div class="x_title">
-                <h2>Training<small><b>Farmer Organization</b></small> </h2>
+                <h2>Farmer Organization<small><b>Training</b></small> </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       	<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       	<li class="dropdown">
@@ -141,10 +140,10 @@
             </div>
             <div class="x_content">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<canvas id="myDoughnutChart"></canvas>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<table class="tile_info" id="fo_table">
 						<!-- DYNAMIC LABELS FOR FO -->
 					</table>
@@ -157,7 +156,7 @@
 	<div class="col-md-12 col-sm-12  ">
         <div class="x_panel" style="border-radius: 15px;">
             <div class="x_title">
-                <h2>Training<small><b>MSMEs</b></small> </h2>
+                <h2>MSMEs<small><b>Training</b></small> </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       	<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       	<li class="dropdown">
@@ -173,10 +172,10 @@
             </div>
             <div class="x_content">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<canvas id="myDoughnutChart2"></canvas>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<table class="tile_info" id="msme_table">
 						<!-- DYNAMIC LABELS FOR MSME -->
 					</table>
@@ -189,7 +188,7 @@
 	<div class="col-md-12 col-sm-12  ">
         <div class="x_panel" style="border-radius: 15px;">
             <div class="x_title">
-                <h2>Training<small><b>INDIVIDUAL</b></small> </h2>
+                <h2>FO & MSME Overall<small><b>Training</b></small> </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       	<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       	<li class="dropdown">
@@ -205,10 +204,42 @@
             </div>
             <div class="x_content">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-8">
+					<canvas id="myPieChartCombined"></canvas>
+				</div>
+				<div class="col-md-4">
+					<table class="tile_info" id="combined_table">
+						<!-- DYNAMIC LABELS FOR COMBINED FO + MSME -->
+					</table>
+				</div>
+			</div>
+		</div>
+        </div>
+    </div>
+
+	<div class="col-md-12 col-sm-12  ">
+        <div class="x_panel" style="border-radius: 15px;">
+            <div class="x_title">
+                <h2>Individual<small><b>Training</b></small> </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      	<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                      	<li class="dropdown">
+                        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            		<a class="dropdown-item" href="#">Settings 1</a>
+                            		<a class="dropdown-item" href="#">Settings 2</a>
+                          		</div>
+                      	</li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+			<div class="row">
+				<div class="col-md-8">
 					<canvas id="myDoughnutChart3"></canvas>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<table class="tile_info" id="indv_table">
 						<!-- DYNAMIC LABELS FOR INDIVIDUAL MSME -->
 					</table>
@@ -220,6 +251,259 @@
 	{% endif %}
 
 		<script>
+			// Global state to track active filters - now supports multiple selections
+			let activeFilters = []; // Array of {category, type, displayName}
+			
+			// Global chart references for highlighting chart bars
+			let chartFO = null;
+			let chartMSME = null;
+			let chartIndividual = null;
+			let originalColorsFO = [];
+			let originalColorsMSME = [];
+			let originalColorsIndividual = [];
+			// Store chart labels for onClick handlers
+			let chartFOActualLabels = [];
+			let chartFODisplayLabels = [];
+			let chartMSMEActualLabels = [];
+			let chartMSMEDisplayLabels = [];
+			let chartIndividualActualLabels = [];
+			let chartIndividualDisplayLabels = [];
+
+			// Store original dashboard data on page load
+			let originalDashboardData = {
+				total_entries: null,
+				total_male: null,
+				total_female: null,
+				total_ip: null,
+				male_ip: null,
+				female_ip: null,
+				total_youth: null,
+				male_youth: null,
+				female_youth: null,
+				total_pwd: null,
+				male_pwd: null,
+				female_pwd: null,
+				total_sc: null,
+				male_sc: null,
+				female_sc: null
+			};
+
+			// Capture original data when page loads
+			function captureOriginalData() {
+				originalDashboardData.total_entries = document.querySelector('[data-tile="total_entries"] .count').textContent.trim();
+				originalDashboardData.total_male = document.querySelector('[data-tile="total_male"] .count').textContent.trim();
+				originalDashboardData.total_female = document.querySelector('[data-tile="total_female"] .count').textContent.trim();
+				
+				// Parse IP data
+				const ipText = document.querySelector('[data-tile="total_ip"] p').textContent.trim();
+				const ipMatch = ipText.match(/Male:\s*(\d+)\s*\|\s*Female:\s*(\d+)/);
+				if (ipMatch) {
+					originalDashboardData.male_ip = ipMatch[1];
+					originalDashboardData.female_ip = ipMatch[2];
+					originalDashboardData.total_ip = (parseInt(ipMatch[1]) + parseInt(ipMatch[2])).toString();
+				}
+				
+				// Parse Youth data
+				const youthText = document.querySelector('[data-tile="total_youth"] p').textContent.trim();
+				const youthMatch = youthText.match(/Male:\s*(\d+)\s*\|\s*Female:\s*(\d+)/);
+				if (youthMatch) {
+					originalDashboardData.male_youth = youthMatch[1];
+					originalDashboardData.female_youth = youthMatch[2];
+					originalDashboardData.total_youth = (parseInt(youthMatch[1]) + parseInt(youthMatch[2])).toString();
+				}
+				
+				// Parse PWD data
+				const pwdText = document.querySelector('[data-tile="total_pwd"] p').textContent.trim();
+				const pwdMatch = pwdText.match(/Male:\s*(\d+)\s*\|\s*Female:\s*(\d+)/);
+				if (pwdMatch) {
+					originalDashboardData.male_pwd = pwdMatch[1];
+					originalDashboardData.female_pwd = pwdMatch[2];
+					originalDashboardData.total_pwd = (parseInt(pwdMatch[1]) + parseInt(pwdMatch[2])).toString();
+				}
+				
+				// Parse SC data
+				const scText = document.querySelector('[data-tile="total_sc"] p').textContent.trim();
+				const scMatch = scText.match(/Male:\s*(\d+)\s*\|\s*Female:\s*(\d+)/);
+				if (scMatch) {
+					originalDashboardData.male_sc = scMatch[1];
+					originalDashboardData.female_sc = scMatch[2];
+					originalDashboardData.total_sc = (parseInt(scMatch[1]) + parseInt(scMatch[2])).toString();
+				}
+			}
+
+			// Mapping of display names to actual training category values
+			const trainingCategoryMap = {
+				'FO-Organization Entrepreneurial Competency': 'FO-Organization Entrepreneurial Competency',
+				'FO-Governance': 'FO-Governance',
+				'FO-Organizational Management': 'FO-Organizational Management',
+				'FO-Operations': 'FO-Operations',
+				'FO-Technology and Product Development': 'FO-Technology and Product Development',
+				'FO-Institutional Marketing Management': 'FO-Institutional Marketing Management',
+				'FO-Human Resource Management': 'FO-Human Resource Management',
+				'FO-Financial Management': 'FO-Financial Management',
+				'FO-Networking and Linkage-Building (External Relation; Business Membership Organization)': 'FO-Networking and Linkage-Building (External Relation; Business Membership Organization)',
+				'FO-GESI': 'FO-GESI',
+				'FO-Social Environment & Climate': 'FO-Social Environment & Climate',
+				'FO-Managing Natural Resources': 'FO-Managing Natural Resources',
+				'FO-Financing Forum': 'FO-Financing Forum',
+				'MSME-Entrepreneurial Competency': 'MSME-Entrepreneurial Competency',
+				'MSME-Operations': 'MSME-Operations',
+				'MSME-Management': 'MSME-Management',
+				'MSME-Technology and Product Development': 'MSME-Technology and Product Development',
+				'MSME-Marketing Management': 'MSME-Marketing Management',
+				'MSME-Human Resource Management': 'MSME-Human Resource Management',
+				'MSME-Financial Management': 'MSME-Financial Management',
+				'MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)': 'MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)',
+				'MSME-GESI': 'MSME-GESI',
+				'MSME-Social Environment & Climate': 'MSME-Social Environment & Climate',
+				'MSME-Managing Natural Resources': 'MSME-Managing Natural Resources',
+				'MSME-Financing Forum': 'MSME-Financing Forum',
+				'Individual Farmer-Managing Natural Resources': 'Individual Farmer-Managing Natural Resources',
+				'Individual Farmer-Managing Finances': 'Individual Farmer-Managing Finances',
+				'Individual Farmer-Marketing': 'Individual Farmer-Marketing',
+				'Individual Farmer-Innovation': 'Individual Farmer-Innovation',
+				'Individual Farmer-Teamwork': 'Individual Farmer-Teamwork',
+				'Individual Farmer-GESI': 'Individual Farmer-GESI',
+				'Individual Farmer-Social Environment & Climate': 'Individual Farmer-Social Environment & Climate'
+			};
+
+			function updateDashboardTiles(filterData) {
+				// Update tile values with filtered data
+				document.querySelector('[data-tile="total_entries"] .count').textContent = filterData.total_entries || 0;
+				document.querySelector('[data-tile="total_male"] .count').textContent = filterData.total_male || 0;
+				document.querySelector('[data-tile="total_female"] .count').textContent = filterData.total_female || 0;
+				
+				// Update IP tile
+				const ipTotal = (filterData.total_ip || 0);
+				const ipMaleText = filterData.male_ip || 0;
+				const ipFemaleText = filterData.female_ip || 0;
+				document.querySelector('[data-tile="total_ip"] .count').textContent = ipTotal;
+				document.querySelector('[data-tile="total_ip"] p').innerHTML = `
+					Male: ${ipMaleText} |
+					Female: ${ipFemaleText}
+				`;
+				
+				// Update Youth tile
+				const youthTotal = (filterData.total_youth || 0);
+				const youthMaleText = filterData.male_youth || 0;
+				const youthFemaleText = filterData.female_youth || 0;
+				document.querySelector('[data-tile="total_youth"] .count').textContent = youthTotal;
+				document.querySelector('[data-tile="total_youth"] p').innerHTML = `
+					Male: ${youthMaleText} |
+					Female: ${youthFemaleText}
+				`;
+				
+				// Update PWD tile
+				const pwdTotal = (filterData.total_pwd || 0);
+				const pwdMaleText = filterData.male_pwd || 0;
+				const pwdFemaleText = filterData.female_pwd || 0;
+				document.querySelector('[data-tile="total_pwd"] .count').textContent = pwdTotal;
+				document.querySelector('[data-tile="total_pwd"] p').innerHTML = `
+					Male: ${pwdMaleText} |
+					Female: ${pwdFemaleText}
+				`;
+				
+				// Update SC tile
+				const scTotal = (filterData.total_sc || 0);
+				const scMaleText = filterData.male_sc || 0;
+				const scFemaleText = filterData.female_sc || 0;
+				document.querySelector('[data-tile="total_sc"] .count').textContent = scTotal;
+				document.querySelector('[data-tile="total_sc"] p').innerHTML = `
+					Male: ${scMaleText} |
+					Female: ${scFemaleText}
+				`;
+			}
+
+			function resetDashboardTiles() {
+				// Reset to original values WITHOUT reloading page
+				activeFilters = []; // Clear all filters
+				updateDashboardTiles(originalDashboardData);
+				// Clear highlighting
+				document.querySelectorAll('#fo_table tr, #msme_table tr, #indv_table tr').forEach(row => {
+					row.style.backgroundColor = '';
+					row.style.fontWeight = 'normal';
+				});
+			}
+
+			function applyChartFilter(category, categoryDisplayName, type) {
+				// Check if this category is already selected - if so, remove it
+				const existingIndex = activeFilters.findIndex(f => f.category === category);
+				
+				if (existingIndex !== -1) {
+					// Remove this filter
+					activeFilters.splice(existingIndex, 1);
+				} else {
+					// Add this filter
+					activeFilters.push({
+						category: category,
+						type: type,
+						displayName: categoryDisplayName
+					});
+				}
+				
+				// If no filters selected, reset to original
+				if (activeFilters.length === 0) {
+					resetDashboardTiles();
+					return;
+				}
+				
+				// Build query string with multiple categories (using OR logic)
+				const categories = activeFilters.map(f => encodeURIComponent(f.category)).join('&category=');
+				
+				// Fetch filtered data from API with multiple categories
+				fetch(`/api/filter_form4_by_category?category=${categories}`)
+					.then(response => response.json())
+					.then(data => {
+						updateDashboardTiles(data);
+						// Highlight all selected categories
+						highlightSelectedCategories();
+					})
+					.catch(error => {
+						console.error('Error filtering data:', error);
+						alert('Error loading filtered data');
+					});
+			}
+
+			function highlightSelectedCategories() {
+				// Clear all previous row highlights first
+				document.querySelectorAll('#fo_table tr, #msme_table tr, #indv_table tr').forEach(row => {
+					row.style.backgroundColor = '';
+					row.style.fontWeight = 'normal';
+				});
+				
+				// Highlight all selected categories in tables only
+				activeFilters.forEach(filter => {
+					const categoryName = filter.displayName;
+					const type = filter.type;
+					
+					if (type === 'FO') {
+						const rows = document.querySelectorAll('#fo_table tr');
+						rows.forEach(row => {
+							if (row.textContent.includes(categoryName)) {
+								row.style.backgroundColor = '#fff3cd';
+								row.style.fontWeight = 'bold';
+							}
+						});
+					} else if (type === 'MSME') {
+						const rows = document.querySelectorAll('#msme_table tr');
+						rows.forEach(row => {
+							if (row.textContent.includes(categoryName)) {
+								row.style.backgroundColor = '#fff3cd';
+								row.style.fontWeight = 'bold';
+							}
+						});
+					} else if (type === 'Individual') {
+						const rows = document.querySelectorAll('#indv_table tr');
+						rows.forEach(row => {
+							if (row.textContent.includes(categoryName)) {
+								row.style.backgroundColor = '#fff3cd';
+								row.style.fontWeight = 'bold';
+							}
+						});
+					}
+				});
+			}
+
 			function init_charts() {
 				console.log('run_charts  typeof [' + typeof (Chart) + ']');
 				if (typeof (Chart) === 'undefined') { return; }
@@ -230,7 +514,7 @@
 
 				// Doughnut chart FO
 			if ($('#myDoughnutChart').length) {
-				const labels = [
+				const displayLabels = [
 					"Entrepreneurial Competency",
 					"Governance",
 					"Management",
@@ -242,7 +526,24 @@
 					"Networking and Linkage-Building",
 					"GESI",
 					"Social Environment & Climate",
-					"Managing Natural Resources"
+					"Managing Natural Resources",
+					"Financing Forum"
+				];
+
+				const actualLabels = [
+					"FO-Organization Entrepreneurial Competency",
+					"FO-Governance",
+					"FO-Organizational Management",
+					"FO-Operations",
+					"FO-Technology and Product Development",
+					"FO-Institutional Marketing Management",
+					"FO-Human Resource Management",
+					"FO-Financial Management",
+					"FO-Networking and Linkage-Building (External Relation; Business Membership Organization)",
+					"FO-GESI",
+					"FO-Social Environment & Climate",
+					"FO-Managing Natural Resources",
+					"FO-Financing Forum"
 				];
 
 				const dataValues = [
@@ -257,19 +558,24 @@
 					{{ dcf4_FONLB[0]['FONLB'] }},
 					{{ dcf4_FOGESI[0]['FOGESI'] }},
 					{{ dcf4_FOSEC[0]['FOSEC'] }},
-					{{ dcf4_FOMNR[0]['FOMNR'] }}
+					{{ dcf4_FOMNR[0]['FOMNR'] }},
+					{{ dcf4_FOFF[0]['FOFF'] }}
 				];
 
 				const colors = [
 					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF',
-					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF'
+					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF',
+					'#FF0000'
 				];
 
 				const ctx = document.getElementById("myDoughnutChart");
-				const myDoughnutChart = new Chart(ctx, {
-					type: 'doughnut',
+				originalColorsFO = colors.slice(); // Store original colors
+				chartFOActualLabels = actualLabels.slice(); // Store for onClick handler
+				chartFODisplayLabels = displayLabels.slice(); // Store for onClick handler
+				chartFO = new Chart(ctx, {
+					type: 'bar',
 					data: {
-						labels: labels,
+						labels: displayLabels,
 						datasets: [{
 							label: 'Total',
 							data: dataValues,
@@ -289,22 +595,37 @@
 
 
 				const table = document.getElementById("fo_table");
-				labels.forEach((label, i) => {
+				displayLabels.forEach((label, i) => {
 					const value = dataValues[i];
 					const color = colors[i];
+					const actualLabel = actualLabels[i];
 					const row = document.createElement("tr");
+					row.style.cursor = 'pointer';
+					row.setAttribute('data-category', actualLabel);
 					row.innerHTML = `
 						<td>
 							<p><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
 						</td>
 					`;
+					row.addEventListener('click', function() {
+						applyChartFilter(actualLabel, label, 'FO');
+					});
+					row.addEventListener('mouseover', function() {
+						row.style.backgroundColor = '#f0f0f0';
+					});
+					row.addEventListener('mouseout', function() {
+						const isSelected = activeFilters.some(f => f.category === actualLabel);
+						if (!isSelected) {
+							row.style.backgroundColor = '';
+						}
+					});
 					table.appendChild(row);
 				});
 			}
 
 			// Doughnut chart MSME
 			if ($('#myDoughnutChart2').length) {
-				const labels = [
+				const displayLabels = [
 					"Entrepreneurial Competency",
 					"Operations",
 					"Management",
@@ -315,7 +636,23 @@
 					"Networking and Linkage-Building",
 					"GESI",
 					"Social Environment & Climate",
-					"Managing Natural Resources"
+					"Managing Natural Resources",
+					"Financing Forum"
+				];
+
+				const actualLabels = [
+					"MSME-Entrepreneurial Competency",
+					"MSME-Operations",
+					"MSME-Management",
+					"MSME-Technology and Product Development",
+					"MSME-Marketing Management",
+					"MSME-Human Resource Management",
+					"MSME-Financial Management",
+					"MSME-Networking and Linkage-Building (External Relation; Business Membership Organization)",
+					"MSME-GESI",
+					"MSME-Social Environment & Climate",
+					"MSME-Managing Natural Resources",
+					"MSME-Financing Forum"
 				];
 
 				const dataValues = [
@@ -329,19 +666,24 @@
 					{{ dcf4_MSMENLB[0]['MSMENLB'] }},
 					{{ dcf4_MSMEGESI[0]['MSMEGESI'] }},
 					{{ dcf4_MSMESEC[0]['MSMESEC'] }},
-					{{ dcf4_MSMEMNR[0]['MSMEMNR'] }}
+					{{ dcf4_MSMEMNR[0]['MSMEMNR'] }},
+					{{ dcf4_MSMEFF[0]['MSMEFF'] }}
 				];
 
 				const colors = [
 					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF',
-					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF'
+					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF',
+					'#FF0000'
 				];
 
 				const ctx = document.getElementById("myDoughnutChart2");
-				const myDoughnutChart2 = new Chart(ctx, {
-					type: 'doughnut',
+				originalColorsMSME = colors.slice(); // Store original colors
+				chartMSMEActualLabels = actualLabels.slice(); // Store for onClick handler
+				chartMSMEDisplayLabels = displayLabels.slice(); // Store for onClick handler
+				chartMSME = new Chart(ctx, {
+					type: 'bar',
 					data: {
-						labels: labels,
+						labels: displayLabels,
 						datasets: [{
 							label: 'Total',
 							data: dataValues,
@@ -361,29 +703,156 @@
 
 
 				const table = document.getElementById("msme_table");
-				labels.forEach((label, i) => {
+				displayLabels.forEach((label, i) => {
 					const value = dataValues[i];
 					const color = colors[i];
+					const actualLabel = actualLabels[i];
 					const row = document.createElement("tr");
+					row.style.cursor = 'pointer';
+					row.setAttribute('data-category', actualLabel);
 					row.innerHTML = `
 						<td>
 							<p><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
 						</td>
 					`;
+					row.addEventListener('click', function() {
+						applyChartFilter(actualLabel, label, 'MSME');
+					});
+					row.addEventListener('mouseover', function() {
+						row.style.backgroundColor = '#f0f0f0';
+					});
+					row.addEventListener('mouseout', function() {
+						const isSelected = activeFilters.some(f => f.category === actualLabel);
+						if (!isSelected) {
+							row.style.backgroundColor = '';
+						}
+					});
 					table.appendChild(row);
 				});
 			}
+			// Pie chart - Combined FO + MSME
+			if ($('#myPieChartCombined').length) {
+				const labels = [
+					"Entrepreneurial Competency",
+					"Operations",
+					"Governance",
+					"Management",
+					"Technology and Product Development",
+					"Marketing Management",
+					"Institutional Marketing Management",
+					"Human Resource Management",
+					"Financial Management",
+					"Networking and Linkage-Building",
+					"GESI",
+					"Social Environment & Climate",
+					"Managing Natural Resources",
+					"Financing Forum"
+				];
 
+				// FO data values
+				const foValues = [
+					{{ dcf4_FOOEC[0]['FOOEC'] }},
+					{{ dcf4_FOOP[0]['FOOP'] }},
+					{{ dcf4_FOGOV[0]['FOGOV'] }},
+					{{ dcf4_FOOM[0]['FOOM'] }},
+					{{ dcf4_FOTPD[0]['FOTPD'] }},
+					0,
+					{{ dcf4_FOIMM[0]['FOIMM'] }},
+					{{ dcf4_FOHRM[0]['FOHRM'] }},
+					{{ dcf4_FOFM[0]['FOFM'] }},
+					{{ dcf4_FONLB[0]['FONLB'] }},
+					{{ dcf4_FOGESI[0]['FOGESI'] }},
+					{{ dcf4_FOSEC[0]['FOSEC'] }},
+					{{ dcf4_FOMNR[0]['FOMNR'] }},
+					{{ dcf4_FOFF[0]['FOFF'] }}
+				];
+
+				// MSME data values
+				const msmeValues = [
+					{{ dcf4_MSMEEC[0]['MSMEEC'] }},
+					{{ dcf4_MSMEOP[0]['MSMEOP'] }},
+					0,
+					{{ dcf4_MSMEM[0]['MSMEM'] }},
+					{{ dcf4_MSMETPD[0]['MSMETPD'] }},
+					{{ dcf4_MSMEMM[0]['MSMEMM'] }},
+					0,
+					{{ dcf4_MSMEHRM[0]['MSMEHRM'] }},
+					{{ dcf4_MSMEFM[0]['MSMEFM'] }},
+					{{ dcf4_MSMENLB[0]['MSMENLB'] }},
+					{{ dcf4_MSMEGESI[0]['MSMEGESI'] }},
+					{{ dcf4_MSMESEC[0]['MSMESEC'] }},
+					{{ dcf4_MSMEMNR[0]['MSMEMNR'] }},
+					{{ dcf4_MSMEFF[0]['MSMEFF'] }}
+				];
+
+				// Calculate combined values
+				const combinedValues = foValues.map((val, index) => val + msmeValues[index]);
+
+				const colors = [
+					'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F1C', '#9966FF',
+					'#00FF00', '#FFA07A', '#FC4F30', '#FF00FF', '#FFCC00', '#00FFFF',
+					'#FF0000', '#00AA00'
+				];
+
+				const ctx = document.getElementById("myPieChartCombined");
+				const myPieChartCombined = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: labels,
+						datasets: [{
+							label: 'Overall Total',
+							data: combinedValues,
+							backgroundColor: colors,
+							borderColor: colors,
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: { display: false }
+						}
+					}
+				});
+
+				const table = document.getElementById("combined_table");
+				labels.forEach((label, i) => {
+					const foValue = foValues[i];
+					const msmeValue = msmeValues[i];
+					const totalValue = combinedValues[i];
+					const color = colors[i];
+					const row = document.createElement("tr");
+					row.innerHTML = `
+						<td>
+							<p><i class="fa fa-square" style="color:${color}"></i> ${label}:
+								<small>Total: <b>${totalValue}</b></small>
+							</p>
+						</td>
+					`;
+					table.appendChild(row);
+				});
+			}
 			// Doughnut chart INDIVIDUAL
 			if ($('#myDoughnutChart3').length) {
-				const labels = [
-					"Farmer-Managing Natural Resources",
-					"Farmer-Managing Finances",
-					"Farmer-Marketing",
-					"Farmer-Innovation",
-					"Farmer-Teamwork",
-					"Farmer-GESI",
-					"Farmer-Social Environment & Climate"
+				const displayLabels = [
+					"Managing Natural Resources",
+					"Managing Finances",
+					"Marketing",
+					"Innovation",
+					"Teamwork",
+					"GESI",
+					"Social Environment & Climate"
+				];
+
+				const actualLabels = [
+					"Individual Farmer-Managing Natural Resources",
+					"Individual Farmer-Managing Finances",
+					"Individual Farmer-Marketing",
+					"Individual Farmer-Innovation",
+					"Individual Farmer-Teamwork",
+					"Individual Farmer-GESI",
+					"Individual Farmer-Social Environment & Climate"
 				];
 
 				const dataValues = [
@@ -401,10 +870,13 @@
 				];
 
 				const ctx = document.getElementById("myDoughnutChart3");
-				const myDoughnutChart3 = new Chart(ctx, {
-					type: 'doughnut',
+				originalColorsIndividual = colors.slice(); // Store original colors
+				chartIndividualActualLabels = actualLabels.slice(); // Store for onClick handler
+				chartIndividualDisplayLabels = displayLabels.slice(); // Store for onClick handler
+				chartIndividual = new Chart(ctx, {
+					type: 'bar',
 					data: {
-						labels: labels,
+						labels: displayLabels,
 						datasets: [{
 							label: 'Total',
 							data: dataValues,
@@ -424,15 +896,30 @@
 
 
 				const table = document.getElementById("indv_table");
-				labels.forEach((label, i) => {
+				displayLabels.forEach((label, i) => {
 					const value = dataValues[i];
 					const color = colors[i];
+					const actualLabel = actualLabels[i];
 					const row = document.createElement("tr");
+					row.style.cursor = 'pointer';
+					row.setAttribute('data-category', actualLabel);
 					row.innerHTML = `
 						<td>
 							<p><i class="fa fa-square" style="color:${color}"></i> ${label}: <b>${value}</b></p>
 						</td>
 					`;
+					row.addEventListener('click', function() {
+						applyChartFilter(actualLabel, label, 'Individual');
+					});
+					row.addEventListener('mouseover', function() {
+						row.style.backgroundColor = '#f0f0f0';
+					});
+					row.addEventListener('mouseout', function() {
+						const isSelected = activeFilters.some(f => f.category === actualLabel);
+						if (!isSelected) {
+							row.style.backgroundColor = '';
+						}
+					});
 					table.appendChild(row);
 				});
 			}
@@ -590,6 +1077,9 @@
 					},
 				});
 			}
+			
+			// Capture original dashboard data after all charts are initialized
+			captureOriginalData();
 		}
 
 		function scrollParentToIframeCenter(){

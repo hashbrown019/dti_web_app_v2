@@ -99,6 +99,172 @@
       transform: translateY(-6px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
+
+    .x_panel,
+    .tile-stats,
+    .x_content,
+    .card-box,
+    .table-responsive {
+      max-width: 100%;
+    }
+
+    .x_content {
+      overflow-x: visible;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .table-responsive {
+      display: block !important;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .x-table-responsive-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 10px;
+    }
+
+    .x-table-responsive-wrap > table {
+      margin-bottom: 0;
+    }
+
+    .x-container .x-table,
+    .x_panel table,
+    .card-box table {
+      width: 100%;
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+
+    #form_3_breif_description,
+    #form_11_fo_registration_type,
+    #others_specify {
+      max-width: 100%;
+    }
+
+    .x-table td input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+    .x-table td select,
+    .x-table td textarea {
+      min-width: 120px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .x-table-responsive-wrap td input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+    .x-table-responsive-wrap td select,
+    .x-table-responsive-wrap td textarea {
+      min-width: 120px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .comment,
+    textarea.comment,
+    textarea[id*="comment"],
+    textarea[name*="comment"],
+    input[id*="comment"],
+    input[name*="comment"] {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-wrap: anywhere;
+    }
+
+    .x_panel .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .x_panel .form-row > .col,
+    .x_panel .form-row > [class*="col-"] {
+      min-width: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .x_panel .x_content,
+    .x_panel .x_content * {
+      max-width: 100%;
+    }
+
+    .x_panel .x_content p,
+    .x_panel .x_content label,
+    .x_panel .x_content span,
+    .x_panel .x_content td {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (max-width: 992px) {
+      html, body {
+        padding: 10px;
+      }
+
+      .x_content {
+        overflow-x: auto;
+      }
+
+      .top_tiles {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .top_tiles > [class*="col-"] {
+        width: 100%;
+      }
+
+      .x-container .x-table,
+      .x_content > table,
+      .table-responsive > table {
+        min-width: 680px;
+      }
+
+      .x-container .x-table th,
+      .x-container .x-table td,
+      .x_content > table th,
+      .x_content > table td {
+        white-space: nowrap;
+      }
+
+      .x_panel .x_content .btn,
+      .x_panel .x_content .badge,
+      .x_panel .x_content .file-upload {
+        max-width: 100%;
+      }
+
+      .x_panel .x_content .btn {
+        white-space: normal;
+      }
+
+      .registration-type-container {
+        flex-wrap: wrap;
+      }
+
+      #form_11_fo_registration_type,
+      #others_specify {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+
+      #canvasDoughnut,
+      #myChart,
+      #myChart2 {
+        width: 100% !important;
+        height: auto !important;
+      }
+    }
 </style>
 
 <script type="text/javascript">
@@ -195,5 +361,17 @@
       
   //   }
   // }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const tables = document.querySelectorAll("table");
+    tables.forEach(function (table) {
+      if (!table.querySelector("input, select, textarea")) return;
+      if (table.closest(".table-responsive, .x-table-responsive-wrap, .dataTables_wrapper")) return;
+      const wrapper = document.createElement("div");
+      wrapper.className = "x-table-responsive-wrap";
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
+  });
 </script>
 </html>

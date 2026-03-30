@@ -52,7 +52,8 @@
   font-size: 12px;
 }
 .file-upload .file-select{
-  display:block;
+  display:flex;
+  align-items:center;
   border: 2px solid #dce4ec;
   color: #34495e;
   cursor:pointer;
@@ -67,13 +68,22 @@
   background:#dce4ec;
   padding:0 10px;
   display:inline-block;
+  flex: 0 0 auto;
   height:40px;
   line-height:40px;
 }
 .file-upload .file-select .file-select-name{
   line-height:40px;
-  display:inline-block;
+  display:block;
+  flex: 1 1 auto;
+  min-width: 0;
   padding:0 10px;
+  max-width:100%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color:#1f2d3d !important;
+  background-color:#ffffff;
 }
 .file-upload .file-select:hover{
   border-color:#34495e;

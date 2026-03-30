@@ -30,6 +30,8 @@ def display():
     dcf_form5=len(select_countform5)
     dcf_form4=len(select_countform4)
     dcf_form3=len(select_countform3)
+    dcf_form3_bdsp = db.select("SELECT COUNT(*) AS total_bdsp FROM dcf_bdsp_reg WHERE UPPER(TRIM(form_3_classification)) = 'BDSP'")[0]['total_bdsp']
+    dcf_form3_fsp = db.select("SELECT COUNT(*) AS total_fsp FROM dcf_bdsp_reg WHERE UPPER(TRIM(form_3_classification)) = 'FSP'")[0]['total_fsp']
     dcf_form2=len(select_countform2)
     dcf_form1=len(select_countform1)
     dcf_form6=len(select_countform6)
@@ -42,6 +44,8 @@ def display():
         'dcf_form1': dcf_form1,
         'dcf_form2': dcf_form2,
         'dcf_form3': dcf_form3,
+        'dcf_form3_bdsp': dcf_form3_bdsp or 0,
+        'dcf_form3_fsp': dcf_form3_fsp or 0,
         'dcf_form4': dcf_form4,
         'dcf_form5': dcf_form5,
         'dcf_form6': dcf_form6,
@@ -73,6 +77,8 @@ def display__():
     dcf_form5=len(select_countform5)
     dcf_form4=len(select_countform4)
     dcf_form3=len(select_countform3)
+    dcf_form3_bdsp = db.select("SELECT COUNT(*) AS total_bdsp FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP'".format(position_data_filter()))[0]['total_bdsp']
+    dcf_form3_fsp = db.select("SELECT COUNT(*) AS total_fsp FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP'".format(position_data_filter()))[0]['total_fsp']
     dcf_form2=len(select_countform2)
     dcf_form1=len(select_countform1)
     dcf_form6=len(select_countform6)
@@ -85,6 +91,8 @@ def display__():
         'dcf_form1': dcf_form1,
         'dcf_form2': dcf_form2,
         'dcf_form3': dcf_form3,
+        'dcf_form3_bdsp': dcf_form3_bdsp or 0,
+        'dcf_form3_fsp': dcf_form3_fsp or 0,
         'dcf_form4': dcf_form4,
         'dcf_form5': dcf_form5,
         'dcf_form6': dcf_form6,

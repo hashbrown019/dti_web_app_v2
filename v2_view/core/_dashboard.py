@@ -13,6 +13,15 @@ app = Blueprint("_dashboard",__name__,template_folder='templates')
 rapid_sql = mysql(*c.DB_CRED)
 api_key = "dtirapid@2025!"
 
+def _normalize_none_to_zero(value):
+    if isinstance(value, dict):
+        return {k: _normalize_none_to_zero(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_normalize_none_to_zero(item) for item in value]
+    if value is None:
+        return 0
+    return value
+
 class _main:
     def __init__(self, arg):
         
@@ -60,9 +69,9 @@ class _main:
         FO_Total_Coop = rapid_sql.select("SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization='Cooperative'")
         FO_Total_Assoc = rapid_sql.select("SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization='Association'")
         FO_Total_Others = rapid_sql.select("SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization='Others'")
-        FO_Total_Members = rapid_sql.select("SELECT SUM(organizational_total_overall) AS total FROM form_b")
-        FO_Total_Male = rapid_sql.select("SELECT SUM(organizational_total_male) AS total FROM form_b ")
-        FO_Total_Female = rapid_sql.select("SELECT SUM(organizational_total_female) AS total FROM form_b ")
+        FO_Total_Members = rapid_sql.select("SELECT IFNULL(SUM(organizational_total_overall), 0) AS total FROM form_b")
+        FO_Total_Male = rapid_sql.select("SELECT IFNULL(SUM(organizational_total_male), 0) AS total FROM form_b ")
+        FO_Total_Female = rapid_sql.select("SELECT IFNULL(SUM(organizational_total_female), 0) AS total FROM form_b ")
 
         FO_byRegion_8 = rapid_sql.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('RCU8','RCU 8')")
         FO_byRegion_9 = rapid_sql.select("SELECT COUNT(*) AS regionCount, (COUNT(*) / (SELECT COUNT(*) FROM form_b)) * 100 AS percTotal FROM form_b fb INNER JOIN users u ON u.id=fb.uploaded_by AND u.rcu IN('RCU9','RCU 9')")
@@ -284,7 +293,7 @@ class _main:
             'FMI' : FMI_data
         }
 
-        return jsonify(data)
+        return jsonify(_normalize_none_to_zero(data))
     
     @app.route("/dashboard_analytic_shf", methods=["GET"])
     def dashboard_analytic_shf():

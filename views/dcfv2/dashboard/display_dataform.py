@@ -56,6 +56,153 @@ def displayform():
         
     USER_INFO = session["USER_DATA"]
 
+    def _normalize_metric_payload(payload):
+        def _normalize_value(value):
+            if isinstance(value, dict):
+                return {k: _normalize_value(v) for k, v in value.items()}
+            if isinstance(value, list):
+                return [_normalize_value(item) for item in value]
+            if value is None:
+                return 0
+            return value
+
+        normalized = {}
+        for key, value in payload.items():
+            if key.endswith('_datatable'):
+                normalized[key] = value
+            else:
+                normalized[key] = _normalize_value(value)
+        return normalized
+
+    # farmer organization (form_b) counts by organization type – used in charts
+    try:
+        fo_assoc = db.select(""" SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization LIKE '%Association%' """)[0]['total']
+    except Exception:
+        fo_assoc = 0
+    try:
+        fo_coop = db.select(""" SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization LIKE '%Cooperative%' """)[0]['total']
+    except Exception:
+        fo_coop = 0
+    try:
+        fo_others = db.select("SELECT COUNT(*) AS total FROM form_b WHERE types_of_organization='Others'")[0]['total']
+    except Exception:
+        fo_others = 0
+    fo_by_org_type = [fo_assoc, fo_coop, fo_others]
+
+    # form_b entries per region based on associated DIP
+    try:
+        formb_per_region_data = db.select("""
+            SELECT 
+                CASE
+                    WHEN fb.name_of_dip IS NULL OR TRIM(fb.name_of_dip) = '' THEN 'Untagged'
+                    ELSE COALESCE(dps.form_1_rcus_norm, 'Untagged')
+                END AS region,
+                COUNT(fb.id) AS count
+            FROM form_b fb
+            LEFT JOIN (
+                SELECT
+                    LOWER(TRIM(form_1_name_dip)) AS dip_key,
+                    MAX(
+                        CASE
+                            WHEN UPPER(TRIM(form_1_rcus)) IN ('8','08') THEN '8'
+                            WHEN UPPER(TRIM(form_1_rcus)) IN ('9','09') THEN '9'
+                            WHEN UPPER(TRIM(form_1_rcus)) = '10' THEN '10'
+                            WHEN UPPER(TRIM(form_1_rcus)) = '11' THEN '11'
+                            WHEN UPPER(TRIM(form_1_rcus)) = '12' THEN '12'
+                            WHEN UPPER(TRIM(form_1_rcus)) = '13' THEN '13'
+                            WHEN UPPER(TRIM(form_1_rcus)) = 'BARMM' THEN 'BARMM'
+                            ELSE NULL
+                        END
+                    ) AS form_1_rcus_norm
+                FROM dcf_prep_review_aprv_status
+                WHERE form_1_name_dip IS NOT NULL AND TRIM(form_1_name_dip) <> ''
+                GROUP BY LOWER(TRIM(form_1_name_dip))
+            ) dps
+                ON LOWER(TRIM(fb.name_of_dip)) = dps.dip_key
+            GROUP BY region
+            ORDER BY
+                CASE region
+                    WHEN '8' THEN 1
+                    WHEN '9' THEN 2
+                    WHEN '10' THEN 3
+                    WHEN '11' THEN 4
+                    WHEN '12' THEN 5
+                    WHEN '13' THEN 6
+                    WHEN 'BARMM' THEN 7
+                    WHEN 'Untagged' THEN 8
+                    ELSE 9
+                END,
+                region
+        """)
+        # create mapping from data rows so we can fill missing regions with zero and preserve desired order
+        counts_map = {row['region']: row['count'] for row in formb_per_region_data}
+        all_regions = ['8','9','10','11','12','13','BARMM','Untagged']
+        formb_region_labels = []
+        formb_region_counts = []
+        for region in all_regions:
+            formb_region_labels.append(region)
+            formb_region_counts.append(counts_map.get(region, 0))
+    except Exception as e:
+        formb_region_labels = []
+        formb_region_counts = []
+
+    # form_c entries per region based on associated DIP
+    try:
+        formc_per_region_data = db.select("""
+            SELECT 
+                CASE
+                    WHEN fc.dip_name IS NULL OR TRIM(fc.dip_name) = '' THEN 'Untagged'
+                    ELSE COALESCE(dps.form_1_rcus_norm, 'Untagged')
+                END AS region,
+                COUNT(fc.id) AS count
+            FROM form_c fc
+            LEFT JOIN (
+                SELECT
+                    LOWER(TRIM(form_1_name_dip)) AS dip_key,
+                    MAX(
+                        CASE
+                            WHEN UPPER(TRIM(form_1_rcus)) IN ('8','08') THEN '8'
+                            WHEN UPPER(TRIM(form_1_rcus)) IN ('9','09') THEN '9'
+                            WHEN UPPER(TRIM(form_1_rcus)) = '10' THEN '10'
+                            WHEN UPPER(TRIM(form_1_rcus)) = '11' THEN '11'
+                            WHEN UPPER(TRIM(form_1_rcus)) = '12' THEN '12'
+                            WHEN UPPER(TRIM(form_1_rcus)) = '13' THEN '13'
+                            WHEN UPPER(TRIM(form_1_rcus)) = 'BARMM' THEN 'BARMM'
+                            ELSE NULL
+                        END
+                    ) AS form_1_rcus_norm
+                FROM dcf_prep_review_aprv_status
+                WHERE form_1_name_dip IS NOT NULL AND TRIM(form_1_name_dip) <> ''
+                GROUP BY LOWER(TRIM(form_1_name_dip))
+            ) dps
+                ON LOWER(TRIM(fc.dip_name)) = dps.dip_key
+            GROUP BY region
+            ORDER BY
+                CASE region
+                    WHEN '8' THEN 1
+                    WHEN '9' THEN 2
+                    WHEN '10' THEN 3
+                    WHEN '11' THEN 4
+                    WHEN '12' THEN 5
+                    WHEN '13' THEN 6
+                    WHEN 'BARMM' THEN 7
+                    WHEN 'Untagged' THEN 8
+                    ELSE 9
+                END,
+                region
+        """.format(position_data_filter()))
+        # build map then iterate full region list for proper order
+        counts_map = {row['region']: row['count'] for row in formc_per_region_data}
+        all_regions = ['8','9','10','11','12','13','BARMM','Untagged']
+        msme_region_labels = []
+        msme_region_counts = []
+        for region in all_regions:
+            msme_region_labels.append(region)
+            msme_region_counts.append(counts_map.get(region, 0))
+    except Exception:
+        msme_region_labels = []
+        msme_region_counts = []
+
     form1_data_sep = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 10 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 10 MONTH)".format(position_data_filter()))
     form1_data_oct = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 9 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 9 MONTH)".format(position_data_filter()))
     form1_data_nov =db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 8 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 8 MONTH)".format(position_data_filter()))
@@ -68,7 +215,23 @@ def displayform():
     form1_data_june = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)".format(position_data_filter()))
     form1_data_july = db.select("SELECT * FROM dcf_prep_review_aprv_status {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)".format(position_data_filter()))
 
-
+    # form_b entries per region based on associated DIP
+    try:
+        formb_per_region_data = db.select("""
+            SELECT 
+                COALESCE(dps.form_1_rcus, 'Unknown') AS region,
+                COUNT(fb.id) AS count
+            FROM form_b fb
+            LEFT JOIN dcf_prep_review_aprv_status dps 
+                ON fb.name_of_dip = dps.form_1_name_dip
+            GROUP BY dps.form_1_rcus
+            ORDER BY dps.form_1_rcus
+        """)
+        formb_per_region = {}
+        for row in formb_per_region_data:
+            formb_per_region[row['region']] = row['count']
+    except Exception as e:
+        formb_per_region = {}
 
 
     form1_thismonth=len(form1_data_july)
@@ -130,10 +293,6 @@ def displayform():
     form2_data_may=len(form2_data_may)
     form2_data_june=len(form2_data_june)
     form2_data_july=len(form2_data_july)
-
-
-
-
 
 
 
@@ -461,11 +620,196 @@ def displayform():
     form5_datatable=db.select("SELECT * FROM dcf_matching_grant {} ORDER BY `id` DESC;".format(position_data_filter()))
     form6_datatable=db.select("SELECT * FROM dcf_product_development {} ORDER BY `id` DESC;".format(position_data_filter()))
     form7_datatable=db.select("SELECT * FROM dcf_trade_promotion {} ORDER BY `id` DESC;".format(position_data_filter()))
+    linked_msme = 0
+    linked_fo = 0
+    try:
+        def _normalize_name(value):
+            name = (value or '').strip()
+            if not name:
+                return ''
+            lowered = name.lower()
+            if lowered.startswith('msme:') or lowered.startswith('fo:'):
+                return name.split(':', 1)[1].strip()
+            if lowered.startswith('msme -') or lowered.startswith('fo -'):
+                return name.split('-', 1)[1].strip()
+            return name
+
+        msme_rows = db.select("""
+            SELECT DISTINCT reg_businessname
+            FROM form_c
+            WHERE reg_businessname IS NOT NULL
+            AND TRIM(reg_businessname) != ''
+        """)
+        fo_rows = db.select("""
+            SELECT DISTINCT organization_registered_name
+            FROM form_b
+            WHERE organization_registered_name IS NOT NULL
+            AND TRIM(organization_registered_name) != ''
+        """)
+
+        msme_set = {
+            _normalize_name(row.get('reg_businessname'))
+            for row in (msme_rows or [])
+            if isinstance(row, dict) and row.get('reg_businessname')
+        }
+        fo_set = {
+            _normalize_name(row.get('organization_registered_name'))
+            for row in (fo_rows or [])
+            if isinstance(row, dict) and row.get('organization_registered_name')
+        }
+
+        for row in form7_datatable or []:
+            if not isinstance(row, dict):
+                continue
+            
+            # Only count if buyer name exists
+            buyer_name = (row.get('form_7_name_of_buyer') or '').strip()
+            if not buyer_name:
+                continue
+            
+            beneficiary_raw = row.get('form_7_name_of_beneficiary') or ''
+            if not beneficiary_raw or not str(beneficiary_raw).strip():
+                continue
+            
+            # Split beneficiaries and count each match separately
+            beneficiaries = [
+                _normalize_name(part)
+                for part in str(beneficiary_raw).split(',')
+                if part and str(part).strip()
+            ]
+            
+            if not beneficiaries:
+                continue
+            
+            # Count each matched MSME separately
+            for name in beneficiaries:
+                if name in msme_set:
+                    linked_msme += 1
+            
+            # Count each matched FO separately
+            for name in beneficiaries:
+                if name in fo_set:
+                    linked_fo += 1
+                    
+    except Exception:
+        linked_msme = 0
+        linked_fo = 0
     form8_datatable=db.select("SELECT * FROM form8 {} ORDER BY `id` DESC;".format(position_data_filter()))
     form9_datatable=db.select("SELECT * FROM dcf_enablers_activity {} ORDER BY `id` DESC;".format(position_data_filter()))
     form10_datatable=db.select("SELECT * FROM dcf_negosyo_center {} ORDER BY `id` DESC;".format(position_data_filter()))
     form11_datatable=db.select("SELECT * FROM dcf_access_financing {} ORDER BY `id` DESC;".format(position_data_filter()))
     form1_datatabledip =db.select("SELECT id,form_1_rcus,form_1_name_dip FROM dcf_prep_review_aprv_status".format(position_data_filter()))
+
+    # Build DIP name list (used for FO/MSME by DIP tables)
+    dip_names = []
+    try:
+        dip_seen = set()
+        for row in form1_datatable:
+            dip_name = ""
+            if isinstance(row, dict):
+                dip_name = row.get('form_1_name_dip', '')
+            dip_name = (dip_name or '').strip()
+            if not dip_name:
+                continue
+            dip_key = dip_name.lower()
+            if dip_key in dip_seen:
+                continue
+            dip_seen.add(dip_key)
+            dip_names.append(dip_name)
+    except Exception:
+        dip_names = []
+
+    # Farmers Organization by DIP (form_b)
+    fo_by_region_dip_rows = []
+    try:
+        fo_rows = db.select("""
+            SELECT
+                name_of_dip AS dip_name,
+                SUM(CASE WHEN types_of_organization LIKE '%Cooperative%' THEN 1 ELSE 0 END) AS coop_count,
+                SUM(CASE WHEN types_of_organization LIKE '%Association%' THEN 1 ELSE 0 END) AS assoc_count
+            FROM form_b
+            WHERE name_of_dip IS NOT NULL AND TRIM(name_of_dip) <> ''
+            GROUP BY name_of_dip
+        """)
+        fo_counts = {}
+        for row in fo_rows:
+            if not isinstance(row, dict):
+                continue
+            dip_name = (row.get('dip_name') or '').strip()
+            if not dip_name:
+                continue
+            dip_key = dip_name.lower()
+            coop_count = int(row.get('coop_count') or 0)
+            assoc_count = int(row.get('assoc_count') or 0)
+            fo_counts[dip_key] = {
+                'coop': coop_count,
+                'assoc': assoc_count
+            }
+
+        for dip_name in dip_names:
+            dip_key = dip_name.lower()
+            counts = fo_counts.get(dip_key, {'coop': 0, 'assoc': 0})
+            fo_by_region_dip_rows.append({
+                'dip_name': dip_name,
+                'coop_count': counts['coop'],
+                'assoc_count': counts['assoc'],
+                'total_count': counts['coop'] + counts['assoc']
+            })
+    except Exception:
+        fo_by_region_dip_rows = []
+
+    # MSMEs by DIP (form_c) - count by enterprise size per DIP (no vc_stakeholders filter)
+    msme_by_dip_rows = []
+    try:
+        msme_rows = db.select("""
+            SELECT
+                dip_name AS dip_name,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'micro%' THEN 1 ELSE 0 END) AS micro_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'small%' THEN 1 ELSE 0 END) AS small_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'medium%' THEN 1 ELSE 0 END) AS medium_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'large%' THEN 1 ELSE 0 END) AS large_count,
+                SUM(
+                    CASE
+                        WHEN LOWER(TRIM(type_enterprise)) LIKE 'micro%'
+                          OR LOWER(TRIM(type_enterprise)) LIKE 'small%'
+                          OR LOWER(TRIM(type_enterprise)) LIKE 'medium%'
+                          OR LOWER(TRIM(type_enterprise)) LIKE 'large%'
+                        THEN 1 ELSE 0
+                    END
+                ) AS total_count
+            FROM form_c
+            WHERE dip_name IS NOT NULL AND TRIM(dip_name) <> ''
+            GROUP BY dip_name
+        """)
+        msme_counts = {}
+        for row in msme_rows:
+            if not isinstance(row, dict):
+                continue
+            dip_name = (row.get('dip_name') or '').strip()
+            if not dip_name:
+                continue
+            dip_key = dip_name.lower()
+            msme_counts[dip_key] = {
+                'micro': int(row.get('micro_count') or 0),
+                'small': int(row.get('small_count') or 0),
+                'medium': int(row.get('medium_count') or 0),
+                'large': int(row.get('large_count') or 0),
+                'total': int(row.get('total_count') or 0)
+            }
+
+        for dip_name in dip_names:
+            dip_key = dip_name.lower()
+            counts = msme_counts.get(dip_key, {'micro': 0, 'small': 0, 'medium': 0, 'large': 0, 'total': 0})
+            msme_by_dip_rows.append({
+                'dip_name': dip_name,
+                'micro_count': counts['micro'],
+                'small_count': counts['small'],
+                'medium_count': counts['medium'],
+                'large_count': counts['large'],
+                'total_count': counts['total']
+            })
+    except Exception:
+        msme_by_dip_rows = []
 
 
     form2status_nonrenewal=db.select("SELECT form_2_remarks_status AS totalnonrenewal FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Non-renewal';".format(position_data_filter()))
@@ -476,7 +820,39 @@ def displayform():
     dcf_form2og=len(form2status_og)
     totalstatus = dcf_form2cancelled+dcf_form2nonrenewal+dcf_form2og
 
-
+    try:
+        agr_row = db.select("""
+            SELECT
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Signed CPAs%' THEN 1 ELSE 0 END) AS signed_cpas,
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Purchase orders%' THEN 1 ELSE 0 END) AS purchase_orders,
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Letter of Intent to buy%' THEN 1 ELSE 0 END) AS loi,
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Letter of commitment to supply%' THEN 1 ELSE 0 END) AS loc,
+                SUM(CASE WHEN form_2_types_of_agreements LIKE '%Official receipt of transaction%' THEN 1 ELSE 0 END) AS ort,
+                SUM(CASE WHEN ( form_2_types_of_agreements IS NOT NULL
+                    AND TRIM(form_2_types_of_agreements) <> ''
+                    AND form_2_types_of_agreements NOT LIKE '%Signed CPAs%'
+                    AND form_2_types_of_agreements NOT LIKE '%Purchase orders%'
+                    AND form_2_types_of_agreements NOT LIKE '%Letter of Intent to buy%'
+                    AND form_2_types_of_agreements NOT LIKE '%Letter of commitment to supply%'
+                    AND form_2_types_of_agreements NOT LIKE '%Official receipt of transaction%'
+                ) 
+            THEN 1 ELSE 0 END) AS others
+            FROM dcf_implementing_unit
+            {}""".format(position_data_filter()))
+        if agr_row and len(agr_row) > 0:
+            r = agr_row[0]
+            form2_agreement_types_count = {
+                'Signed CPAs': int(r.get('signed_cpas') or 0),
+                'Purchase orders': int(r.get('purchase_orders') or 0),
+                'Letter of Intent to buy': int(r.get('loi') or 0),
+                'Letter of commitment to supply': int(r.get('loc') or 0),
+                'Official receipt of transaction': int(r.get('ort') or 0),
+                'Others': int(r.get('others') or 0)
+            }
+        else:
+            form2_agreement_types_count = {'Signed CPAs':0,'Purchase orders':0,'Letter of Intent to buy':0,'Letter of commitment to supply':0,'Official receipt of transaction':0,'Others':0}
+    except Exception:
+        form2_agreement_types_count = {'Signed CPAs':0,'Purchase orders':0,'Letter of Intent to buy':0,'Letter of commitment to supply':0,'Official receipt of transaction':0,'Others':0}
 
     dcf_form1male=db.select("SELECT SUM(form_1_totalmale) AS total_male FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1maleyouth=db.select("SELECT SUM(form_1_maleyouth) AS total_maleyouth FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
@@ -496,17 +872,35 @@ def displayform():
     dcf_form1femaleip=db.select("SELECT SUM(form_1_femaleip) AS total_femaleip FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
     dcf_form1femalepwd=db.select("SELECT SUM(form_1_femalepwd) AS total_femalepwd FROM dcf_prep_review_aprv_status {}; ".format(position_data_filter()))
 
-    form3_agri =db.select("SELECT COUNT(id) AS total_agri FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Agri-technical%'; ".format(position_data_filter()))
-    form3_entrep =db.select("SELECT COUNT(id) AS total_entrep FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Entrepreneurial%'; ".format(position_data_filter()))
-    form3_extserv =db.select("SELECT COUNT(id) AS total_extserv FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Extension Service%'; ".format(position_data_filter()))
-    form3_org =db.select("SELECT COUNT(id) AS total_org FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Organizational%'; ".format(position_data_filter()))
+    form3_agri =db.select("SELECT COUNT(id) AS total_agri FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Agri-technical%'; ".format(position_data_filter()))
+    form3_entrep =db.select("SELECT COUNT(id) AS total_entrep FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Entrepreneurial%'; ".format(position_data_filter()))
+    form3_extserv =db.select("SELECT COUNT(id) AS total_extserv FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Extension Service%'; ".format(position_data_filter()))
+    form3_org =db.select("SELECT COUNT(id) AS total_org FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Organizational%'; ".format(position_data_filter()))
+    form3_loan =db.select("SELECT COUNT(id) AS total_loan FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Loan/Cash Advance%'; ".format(position_data_filter()))
+    form3_insurance =db.select("SELECT COUNT(id) AS total_insurance FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Insurance%'; ".format(position_data_filter()))
+    form3_credit =db.select("SELECT COUNT(id) AS total_credit FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Credit Guarantee%'; ".format(position_data_filter()))
+    form3_inkind =db.select("SELECT COUNT(id) AS total_inkind FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%In Kind%'; ".format(position_data_filter()))
+    form3_cashgrant =db.select("SELECT COUNT(id) AS total_cashgrant FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Cash Grant%'; ".format(position_data_filter()))
+    form3_equity =db.select("SELECT COUNT(id) AS total_equity FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Equity Financing (SBC)%'; ".format(position_data_filter()))
 
-    form3red=db.select("SELECT COUNT(form_3_philgeps_registered) AS totalred FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'RED';".format(position_data_filter()))
-    form3plat=db.select("SELECT COUNT(form_3_philgeps_registered) AS totalplat FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'PLATINUM';".format(position_data_filter()))
-    form3unreg=db.select("SELECT COUNT(form_3_philgeps_registered) AS totalunreg FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'UNREGISTERED';".format(position_data_filter()))
+    form3red=db.select("SELECT COUNT(form_3_philgeps_registered) AS totalred FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_philgeps_registered = 'RED';".format(position_data_filter()))
+    form3plat=db.select("SELECT COUNT(form_3_philgeps_registered) AS totalplat FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_philgeps_registered = 'PLATINUM';".format(position_data_filter()))
+    form3unreg=db.select("SELECT COUNT(form_3_philgeps_registered) AS totalunreg FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_philgeps_registered = 'UNREGISTERED';".format(position_data_filter()))
 
-    form3orgfirm=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalorgfirm FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm';".format(position_data_filter()))
-    form3indiv=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalindiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual';".format(position_data_filter()))
+    form3orgfirm=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalorgfirm FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'Organization/Firm';".format(position_data_filter()))
+    form3indiv=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalindiv FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'Individual';".format(position_data_filter()))
+    form3_gfi=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalgfi FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'GFI/GOCC/NGA';".format(position_data_filter()))
+    form3_coop=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalcoop FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'COOP/NGO';".format(position_data_filter()))
+    form3_private=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalprivate FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'Private Financing Institution';".format(position_data_filter()))
+    form3_lgu=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totallugu FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'LGU';".format(position_data_filter()))
+    form3_market=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalmarket FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'Market';".format(position_data_filter()))
+    form3_fsp_gfi=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalgfi FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'GFI/GOCC/NGA';".format(position_data_filter()))
+    form3_fsp_coop=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalcoop FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'COOP/NGO';".format(position_data_filter()))
+    form3_fsp_private=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalprivate FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'Private Financing Institution';".format(position_data_filter()))
+    form3_fsp_lgu=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totallugu FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'LGU';".format(position_data_filter()))
+    form3_fsp_market=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalmarket FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'Market';".format(position_data_filter()))
+    form3_fsp_orgfirm=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalorgfirm FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'Organization/Firm';".format(position_data_filter()))
+    form3_fsp_indiv=db.select("SELECT COUNT(form_3_types_of_bdsp) AS totalindiv FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'Individual';".format(position_data_filter()))
 
     form2status_cancelled=db.select("SELECT form_2_remarks_status AS totalcancelled FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Cancelled';".format(position_data_filter()))
     dcf_form2cancelled=len(form2status_cancelled)
@@ -541,6 +935,30 @@ def displayform():
         SELECT SUM((LENGTH(mgit_type_of_investment) - LENGTH(REPLACE(mgit_type_of_investment, 'Rehabilitation', ''))) / LENGTH('Rehabilitation')) AS FO_Rehabilitation
         FROM dcf_matching_grant {};
     """.format(position_data_filter()))
+
+    dcf_form5_prod_inv_fo = db.select("""
+        SELECT COUNT(*) AS total_fo_prod_inv
+        FROM dcf_matching_grant
+        {}
+        AND mgit_type_of_investment LIKE '%Productive investments%'
+        AND mgit_msme_recipient IS NOT NULL
+        AND TRIM(mgit_msme_recipient) <> ''
+        AND UPPER(TRIM(mgit_type_of_beneficiary)) = 'FO';
+    """.format(position_data_filter()))
+    if isinstance(dcf_form5_prod_inv_fo, dict) and dcf_form5_prod_inv_fo.get("response") == "error":
+        dcf_form5_prod_inv_fo = [{'total_fo_prod_inv': 0}]
+
+    dcf_form5_prod_inv_msme = db.select("""
+        SELECT COUNT(*) AS total_msme_prod_inv
+        FROM dcf_matching_grant
+        {}
+        AND mgit_type_of_investment LIKE '%Productive investments%'
+        AND mgit_msme_recipient IS NOT NULL
+        AND TRIM(mgit_msme_recipient) <> ''
+        AND UPPER(TRIM(mgit_type_of_beneficiary)) = 'MSME';
+    """.format(position_data_filter()))
+    if isinstance(dcf_form5_prod_inv_msme, dict) and dcf_form5_prod_inv_msme.get("response") == "error":
+        dcf_form5_prod_inv_msme = [{'total_msme_prod_inv': 0}]
 
 
 
@@ -579,7 +997,7 @@ def displayform():
     dcf_form7cashsales=db.select("SELECT SUM(form_7_cash_sales) AS total_cash7 FROM dcf_trade_promotion {};".format(position_data_filter()))
     dcf_form7bookedsales=db.select("SELECT SUM(form_7_booked_sales) AS total_booked7 FROM dcf_trade_promotion {};".format(position_data_filter()))
     dcf_form7undernego=db.select("SELECT SUM(form_7_under_negotiations) AS total_undernego FROM dcf_trade_promotion {};".format(position_data_filter()))
-    dcf_form7total=db.select("SELECT SUM(form_7_total_autosum) AS total_ovrlltotal FROM dcf_trade_promotion {};".format(position_data_filter()))
+    dcf_form7total=db.select("SELECT COALESCE(SUM(form_7_total_autosum), 0) AS total_ovrlltotal FROM dcf_trade_promotion {};".format(position_data_filter()))
 
     dcf_form9capb=db.select("SELECT COUNT(form_9_type_of_training) AS totalcapbuild9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Capbuild';".format(position_data_filter()))
     dcf_form9meetings=db.select("SELECT COUNT(form_9_type_of_training) AS totalmeetings9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Meetings';".format(position_data_filter()))
@@ -629,6 +1047,60 @@ def displayform():
     if isinstance(dcf_form6act, dict) and dcf_form6act.get("response") == "error":
         dcf_form6act = [{'total_act6': 0}]
 
+    dcf_form6_prod_dev = db.select("""
+        SELECT COUNT(*) AS total_prod_dev6
+        FROM dcf_product_development
+        {}
+        AND form_6_type_of_activity IS NOT NULL
+        AND TRIM(form_6_type_of_activity) <> ''
+        AND LOWER(form_6_type_of_activity) LIKE '%product development%'
+    """.format(position_data_filter()))
+    if isinstance(dcf_form6_prod_dev, dict) and dcf_form6_prod_dev.get("response") == "error":
+        dcf_form6_prod_dev = [{'total_prod_dev6': 0}]
+
+    dcf_form6_prod_improve = db.select("""
+        SELECT COUNT(*) AS total_prod_improve6
+        FROM dcf_product_development
+        {}
+        AND form_6_type_of_activity IS NOT NULL
+        AND TRIM(form_6_type_of_activity) <> ''
+        AND LOWER(form_6_type_of_activity) LIKE '%product enhancement%'
+    """.format(position_data_filter()))
+    if isinstance(dcf_form6_prod_improve, dict) and dcf_form6_prod_improve.get("response") == "error":
+        dcf_form6_prod_improve = [{'total_prod_improve6': 0}]
+
+    dcf_form6_system_dev = db.select("""
+        SELECT COUNT(*) AS total_system_dev6
+        FROM dcf_product_development
+        {}
+        AND form_6_type_of_activity IS NOT NULL
+        AND TRIM(form_6_type_of_activity) <> ''
+        AND LOWER(form_6_type_of_activity) LIKE '%product systems development%'
+    """.format(position_data_filter()))
+    if isinstance(dcf_form6_system_dev, dict) and dcf_form6_system_dev.get("response") == "error":
+        dcf_form6_system_dev = [{'total_system_dev6': 0}]
+
+    dcf_form6_system_intro = db.select("""
+        SELECT COUNT(*) AS total_system_intro6
+        FROM dcf_product_development
+        {}
+        AND form_6_type_of_activity IS NOT NULL
+        AND TRIM(form_6_type_of_activity) <> ''
+        AND LOWER(form_6_type_of_activity) LIKE '%product systems introduction%'
+    """.format(position_data_filter()))
+    if isinstance(dcf_form6_system_intro, dict) and dcf_form6_system_intro.get("response") == "error":
+        dcf_form6_system_intro = [{'total_system_intro6': 0}]
+
+    dcf_form6_product_certified = db.select("""
+        SELECT COUNT(form_6_product_certified) AS total_certified6
+        FROM dcf_product_development
+        {}
+        AND form_6_product_certified IS NOT NULL
+        AND TRIM(form_6_product_certified) <> ''
+    """.format(position_data_filter()))
+    if isinstance(dcf_form6_product_certified, dict) and dcf_form6_product_certified.get("response") == "error":
+        dcf_form6_product_certified = [{'total_certified6': 0}]
+
     dcf_form6_Cacao = db.select("""SELECT SUM(form_6_commodity LIKE '%Cacao%') AS total_cacao6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
     if isinstance(dcf_form6_Cacao, dict) and dcf_form6_Cacao.get("response") == "error":
         dcf_form6_Cacao = [{'total_cacao6': 0}]
@@ -641,6 +1113,41 @@ def displayform():
     dcf_form6_PFN = db.select(""" SELECT SUM(form_6_commodity LIKE '%PFN%') AS total_pfn6 FROM dcf_product_development {} AND form_6_commodity IS NOT NULL AND TRIM(form_6_commodity) <> '' """.format(position_data_filter()))
     if isinstance(dcf_form6_PFN, dict) and dcf_form6_PFN.get("response") == "error":
         dcf_form6_PFN = [{'total_pfn6': 0}]
+
+    dcf_form6_beneficiary_types = db.select("""
+        SELECT form_6_type_of_beneficiary
+        FROM dcf_product_development
+        {}
+        AND form_6_type_of_beneficiary IS NOT NULL
+        AND TRIM(form_6_type_of_beneficiary) <> ''
+        AND (
+            (
+                form_6_certification2 IS NOT NULL
+                AND TRIM(form_6_certification2) <> ''
+                AND LOWER(TRIM(form_6_certification2)) NOT IN ('none', 'choose your option', 'other')
+            )
+            OR (
+                form6_otherss2 IS NOT NULL
+                AND TRIM(form6_otherss2) <> ''
+            )
+        )
+    """.format(position_data_filter()))
+    if isinstance(dcf_form6_beneficiary_types, dict) and dcf_form6_beneficiary_types.get("response") == "error":
+        dcf_form6_beneficiary_types = []
+
+    form6_beneficiary_fo = 0
+    form6_beneficiary_msme = 0
+    for row in dcf_form6_beneficiary_types:
+        raw_types = row.get("form_6_type_of_beneficiary") or ""
+        for token in raw_types.split(","):
+            normalized = token.strip().lower()
+            if not normalized or normalized in ("none", "select option"):
+                continue
+            if normalized == "fo":
+                form6_beneficiary_fo += 1
+                continue
+            if normalized.startswith("msme"):
+                form6_beneficiary_msme += 1
 
     # Product Development
     dcf_form6_prod = db.select("""
@@ -697,7 +1204,27 @@ def displayform():
     dcf_form2FOyouth=db.select("SELECT SUM( form_2_youth) AS total_youth FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form2FOip=db.select("SELECT SUM(form_2_ip) AS total_ip FROM dcf_implementing_unit {}; ".format(position_data_filter()))
     dcf_form2FOsc=db.select("SELECT SUM(form_2_sc) AS total_sc FROM dcf_implementing_unit {}; ".format(position_data_filter()))
-    
+
+    dcf_form2FOcpa = db.select("""
+        SELECT COUNT(*) AS total_with_agreement
+        FROM dcf_implementing_unit
+        {}
+        AND form_2_partner_fo_engaged IS NOT NULL
+        AND TRIM(form_2_partner_fo_engaged) <> ''
+        AND form_2_types_of_agreements IS NOT NULL
+        AND TRIM(form_2_types_of_agreements) <> ''
+    """.format(position_data_filter()))
+
+    dcf_form2AFcpa = db.select("""
+        SELECT COUNT(*) AS total_af_with_agreement
+        FROM dcf_implementing_unit
+        {}
+        AND form_2_businessname IS NOT NULL
+        AND TRIM(form_2_businessname) <> ''
+        AND form_2_types_of_agreements IS NOT NULL
+        AND TRIM(form_2_types_of_agreements) <> ''
+    """.format(position_data_filter()))
+
     st_sales = db.select("SELECT SUM(ST_ave_price * ST_vol_supplied) AS total_sales FROM sales_tracker {};".format(position_data_filter()))
     st_vol = db.select("SELECT SUM(ST_vol_supplied) AS total_vol FROM sales_tracker {};".format(position_data_filter()))
     st_transaction = db.select("SELECT SUM(ST_total_transaction) AS total_transaction FROM sales_tracker {};".format(position_data_filter()))
@@ -722,6 +1249,53 @@ def displayform():
     dcf_form1msme2=db.select("SELECT SUM(total_medium_enterprise) as total_medium_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
     dcf_form1msme3=db.select("SELECT SUM(total_small_enterprise ) as total_small_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
     dcf_form1msme4=db.select("SELECT SUM(total_micro_enterprise ) as total_micro_entep FROM dcf_prep_review_aprv_status {};".format(position_data_filter()))
+    try:
+        formc_enterprise_counts = db.select("""
+            SELECT
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'micro%' THEN 1 ELSE 0 END) AS micro_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'small%' THEN 1 ELSE 0 END) AS small_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'medium%' THEN 1 ELSE 0 END) AS medium_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'large%' THEN 1 ELSE 0 END) AS large_count
+            FROM form_c
+            {}
+        """.format(position_data_filter()))
+        formc_enterprise_micro_count = int(formc_enterprise_counts[0].get('micro_count') or 0)
+        formc_enterprise_small_count = int(formc_enterprise_counts[0].get('small_count') or 0)
+        formc_enterprise_medium_count = int(formc_enterprise_counts[0].get('medium_count') or 0)
+        formc_enterprise_large_count = int(formc_enterprise_counts[0].get('large_count') or 0)
+    except Exception:
+        formc_enterprise_micro_count = 0
+        formc_enterprise_small_count = 0
+        formc_enterprise_medium_count = 0
+        formc_enterprise_large_count = 0
+
+    msme_commodity_count = {"Cacao": 0, "Coconut": 0, "Coffee": 0, "PFN": 0, "Others": 0}
+    try:
+        formc_industry_rows = db.select(
+            "SELECT industry_cluster, vc_stakeholders FROM form_c {}".format(position_data_filter())
+        )
+        if isinstance(formc_industry_rows, dict) and formc_industry_rows.get("response") == "error":
+            formc_industry_rows = []
+    except Exception:
+        formc_industry_rows = []
+
+    for row in formc_industry_rows:
+        vc_val = (row.get("vc_stakeholders") or "").strip().lower()
+        if vc_val != "msme":
+            continue
+        cluster_val = (row.get("industry_cluster") or "").strip()
+        cluster_lower = cluster_val.lower()
+        if "cacao" in cluster_lower:
+            key = "Cacao"
+        elif "coconut" in cluster_lower:
+            key = "Coconut"
+        elif "coffee" in cluster_lower:
+            key = "Coffee"
+        elif "pfn" in cluster_lower:
+            key = "PFN"
+        else:
+            key = "Others"
+        msme_commodity_count[key] += 1
     
 
     selectapprovedform1=db.select("SELECT form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance != '' AND form_1_date_of_npco_cursory != '' OR ' ' ".format(position_data_filter()))
@@ -980,10 +1554,69 @@ def displayform():
             pass
         # if(DIP['form_1_total_farmerbene'].isnumeric()):
         #     dip_sex_group_per_region[DIP['form_1_rcus']]['total_bene'] += int(DIP['form_1_total_farmerbene'])
+    # grouping by DIP name (for new chart/table)
+    # grouping by DIP name (same structure as per region)
+    dip_sex_group_per_dip = {}
+    total_untagged_dip = 0
 
+    for index in range(len(dips_list)):
+        DIP = dips_list[index]
+        dip_name = DIP.get('form_1_name_dip') or 'Unknown'
 
+        if(dip_name not in dip_sex_group_per_dip):
+            dip_sex_group_per_dip[dip_name] = {
+                'total_bene': 0,
+                'male': {"youth": 0, "ip": 0, "pwd": 0, "total": 0},
+                'female': {"youth": 0, "ip": 0, "pwd": 0, "total": 0},
+                'all_total': {
+                    'untagged': 0,
+                    "total_youth": 0,
+                    "total_ip": 0,
+                    "total_pwd": 0,
+                    "total_sex": 0
+                }
+            }
+        else:
+            pass
 
+        # Male
+        dip_sex_group_per_dip[dip_name]['male']['youth'] += DIP['form_1_maleyouth']
+        dip_sex_group_per_dip[dip_name]['male']['ip'] += DIP['form_1_maleip']
+        dip_sex_group_per_dip[dip_name]['male']['pwd'] += DIP['form_1_malepwd']
+        dip_sex_group_per_dip[dip_name]['male']['total'] += DIP['form_1_totalmale']
 
+        # Female
+        dip_sex_group_per_dip[dip_name]['female']['youth'] += DIP['form_1_femaleyouth']
+        dip_sex_group_per_dip[dip_name]['female']['ip'] += DIP['form_1_femaleip']
+        dip_sex_group_per_dip[dip_name]['female']['pwd'] += DIP['form_1_femalepwd']
+        dip_sex_group_per_dip[dip_name]['female']['total'] += DIP['form_1_totalfemale']
+
+        # Combined totals
+        dip_sex_group_per_dip[dip_name]['all_total']['total_youth'] += (
+            DIP['form_1_maleyouth'] + DIP['form_1_femaleyouth']
+        )
+        dip_sex_group_per_dip[dip_name]['all_total']['total_ip'] += (
+            DIP['form_1_maleip'] + DIP['form_1_femaleip']
+        )
+        dip_sex_group_per_dip[dip_name]['all_total']['total_pwd'] += (
+            DIP['form_1_malepwd'] + DIP['form_1_femalepwd']
+        )
+        dip_sex_group_per_dip[dip_name]['all_total']['total_sex'] += (
+            DIP['form_1_totalmale'] + DIP['form_1_totalfemale']
+        )
+
+        try:
+            dip_sex_group_per_dip[dip_name]['total_bene'] += float(DIP['form_1_total_farmerbene'])
+            dip_sex_group_per_dip[dip_name]['all_total']['untagged'] += (
+                float(DIP['form_1_total_farmerbene']) -
+                (DIP['form_1_totalmale'] + DIP['form_1_totalfemale'])
+            )
+            total_untagged_dip += (
+                float(DIP['form_1_total_farmerbene']) -
+                (DIP['form_1_totalmale'] + DIP['form_1_totalfemale'])
+            )
+        except Exception as e:
+            pass
   
 #######################################################################################################################
 ###NEW DATA FROM INTERNS###############################################################################################
@@ -1430,6 +2063,8 @@ def displayform():
     dcf4_FOGESI=db.select("SELECT COUNT(cbb_types_of_training) AS FOGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-GESI';".format(position_data_filter()))
     dcf4_FOSEC=db.select("SELECT COUNT(cbb_types_of_training) AS FOSEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Social Environment & Climate';".format(position_data_filter()))
     dcf4_FOMNR=db.select("SELECT COUNT(cbb_types_of_training) AS FOMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Managing Natural Resources';".format(position_data_filter()))
+    dcf4_FOFF=db.select("SELECT COUNT(cbb_types_of_training) AS FOFF FROM dcf_capacity_building {} AND cbb_types_of_training = 'FO-Financing Forum';".format(position_data_filter()))
+
 
     dcf4_MSMEEC=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Entrepreneurial Competency';".format(position_data_filter()))
     dcf4_MSMEOP=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEOP FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Operations';".format(position_data_filter()))
@@ -1442,6 +2077,7 @@ def displayform():
     dcf4_MSMEGESI=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEGESI FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-GESI';".format(position_data_filter()))
     dcf4_MSMESEC=db.select("SELECT COUNT(cbb_types_of_training) AS MSMESEC FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Social Environment & Climate';".format(position_data_filter()))
     dcf4_MSMEMNR=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Managing Natural Resources';".format(position_data_filter()))
+    dcf4_MSMEFF=db.select("SELECT COUNT(cbb_types_of_training) AS MSMEFF FROM dcf_capacity_building {} AND cbb_types_of_training = 'MSME-Financing Forum';".format(position_data_filter()))
 
     dcf4_IFMNR=db.select("SELECT COUNT(cbb_types_of_training) AS IFMNR FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Managing Natural Resources';".format(position_data_filter()))
     dcf4_IFMF=db.select("SELECT COUNT(cbb_types_of_training) AS IFMF FROM dcf_capacity_building {} AND cbb_types_of_training = 'Individual Farmer-Managing Finances';".format(position_data_filter()))
@@ -1511,8 +2147,102 @@ def displayform():
         );
     """.format(position_data_filter()))
 
+    fo_filter = "{} AND form_11_fo_name_of_beneficiary IS NOT NULL AND TRIM(form_11_fo_name_of_beneficiary) <> '' AND (fo_show_loan_section = 'Yes' OR fo_show_equity_section = 'Yes' OR fo_show_savings_section = 'Yes' OR fo_show_insurance_section = 'Yes' OR fo_show_creditguarantee_section = 'Yes' OR fo_show_inkind_section = 'Yes' OR fo_show_cashgrant_section = 'Yes' OR fo_show_digital_section = 'Yes' OR fo_show_rapid_section = 'Yes')".format(position_data_filter())
+    fo_region_rows = db.select("""
+        SELECT
+            CASE
+                WHEN form_11_fo_msme_regional IS NULL OR TRIM(form_11_fo_msme_regional) = '' THEN 'Untagged'
+                WHEN UPPER(TRIM(form_11_fo_msme_regional)) IN ('BARMM','B.A.R.M.M') THEN 'BARMM'
+                WHEN form_11_fo_msme_regional LIKE '%13%' THEN '13'
+                WHEN form_11_fo_msme_regional LIKE '%12%' THEN '12'
+                WHEN form_11_fo_msme_regional LIKE '%11%' THEN '11'
+                WHEN form_11_fo_msme_regional LIKE '%10%' THEN '10'
+                WHEN form_11_fo_msme_regional LIKE '%9%' THEN '9'
+                WHEN form_11_fo_msme_regional LIKE '%8%' THEN '8'
+                ELSE 'Untagged'
+            END AS region,
+            COUNT(*) AS total
+        FROM dcf_access_financing
+        {}
+        GROUP BY region
+    """.format(fo_filter))
+    region_order = ['8','9','10','11','12','13','BARMM','Untagged']
+    region_map = {row['region']: row['total'] for row in fo_region_rows}
+    fo_msme_region_chart = {
+        'labels': region_order,
+        'data': [region_map.get(region, 0) for region in region_order]
+    }
 
-    return {
+    fo_commodity_rows = db.select("""
+        SELECT
+            CASE
+                WHEN LOWER(TRIM(form_11_fo_commodity)) LIKE '%coconut%' THEN 'Coconut'
+                WHEN LOWER(TRIM(form_11_fo_commodity)) LIKE '%coffee%' THEN 'Coffee'
+                WHEN LOWER(TRIM(form_11_fo_commodity)) LIKE '%cacao%' THEN 'Cacao'
+                WHEN LOWER(TRIM(form_11_fo_commodity)) LIKE '%pfn%' THEN 'PFN'
+                ELSE NULL
+            END AS commodity,
+            COUNT(*) AS total
+        FROM dcf_access_financing
+        {}
+        GROUP BY commodity
+    """.format(fo_filter))
+    commodity_order = ['Coconut','Coffee','Cacao','PFN']
+    commodity_map = {row['commodity']: row['total'] for row in fo_commodity_rows if row['commodity']}
+    fo_msme_commodity_chart = {
+        'labels': commodity_order,
+        'data': [commodity_map.get(comm, 0) for comm in commodity_order]
+    }
+
+    farmer_filter = "{} AND form_11_farmer_beneficiaries_name IS NOT NULL AND TRIM(form_11_farmer_beneficiaries_name) <> '' AND (farmer_show_loan_section = 'Yes' OR farmer_show_savings_section = 'Yes' OR farmer_show_insurance_section = 'Yes' OR farmer_show_creditguarantee_section = 'Yes' OR farmer_show_paidupcapital_section = 'Yes' OR farmer_show_inkind_section = 'Yes' OR farmer_show_cashgrant_section = 'Yes' OR farmer_show_cashforwork_section = 'Yes' OR farmer_show_mortuary_section = 'Yes' OR farmer_show_digital_section = 'Yes' OR farmer_show_rapid_section = 'Yes')".format(position_data_filter())
+    farmer_region_rows = db.select("""
+        SELECT
+            CASE
+                WHEN form_11_farmer_region IS NULL OR TRIM(form_11_farmer_region) = '' THEN 'Untagged'
+                WHEN UPPER(TRIM(form_11_farmer_region)) IN ('BARMM','B.A.R.M.M') THEN 'BARMM'
+                WHEN form_11_farmer_region LIKE '%13%' THEN '13'
+                WHEN form_11_farmer_region LIKE '%12%' THEN '12'
+                WHEN form_11_farmer_region LIKE '%11%' THEN '11'
+                WHEN form_11_farmer_region LIKE '%10%' THEN '10'
+                WHEN form_11_farmer_region LIKE '%9%' THEN '9'
+                WHEN form_11_farmer_region LIKE '%8%' THEN '8'
+                ELSE 'Untagged'
+            END AS region,
+            COUNT(*) AS total
+        FROM dcf_access_financing
+        {}
+        GROUP BY region
+    """.format(farmer_filter))
+    farmer_region_map = {row['region']: row['total'] for row in farmer_region_rows}
+    shf_region_chart = {
+        'labels': region_order,
+        'data': [farmer_region_map.get(region, 0) for region in region_order]
+    }
+
+    farmer_commodity_rows = db.select("""
+        SELECT
+            CASE
+                WHEN LOWER(TRIM(form_11_farmer_commodity)) LIKE '%coconut%' THEN 'Coconut'
+                WHEN LOWER(TRIM(form_11_farmer_commodity)) LIKE '%coffee%' THEN 'Coffee'
+                WHEN LOWER(TRIM(form_11_farmer_commodity)) LIKE '%cacao%' THEN 'Cacao'
+                WHEN LOWER(TRIM(form_11_farmer_commodity)) LIKE '%pfn%' THEN 'PFN'
+                ELSE NULL
+            END AS commodity,
+            COUNT(*) AS total
+        FROM dcf_access_financing
+        {}
+        GROUP BY commodity
+    """.format(farmer_filter))
+    farmer_commodity_map = {row['commodity']: row['total'] for row in farmer_commodity_rows if row['commodity']}
+    shf_commodity_chart = {
+        'labels': commodity_order,
+        'data': [farmer_commodity_map.get(comm, 0) for comm in commodity_order]
+    }
+
+
+    metrics_payload = {
+        'dcf_form2AFcpa' : dcf_form2AFcpa,
+        'dcf_form2FOcpa' : dcf_form2FOcpa,
         'dcf_form11_fsls': dcf_form11_fsls,
         'dcf_form11_fsss': dcf_form11_fsss,
         'dcf_form11_fsis': dcf_form11_fsis,
@@ -1536,11 +2266,17 @@ def displayform():
         'dcf_form11_fosds': dcf_form11_fosds,
         'dcf_form11_fosrs': dcf_form11_fosrs,
         'dcf_form11_fo_total': dcf_form11_fo_total,
+        'fo_msme_region_chart': fo_msme_region_chart,
+        'fo_msme_commodity_chart': fo_msme_commodity_chart,
+        'shf_region_chart': shf_region_chart,
+        'shf_commodity_chart': shf_commodity_chart,
 
         'dcf_form5FOMSME' : dcf_form5FOMSME,
         'dcf_form5_FOExpansion': dcf_form5_FOExpansion,
         'dcf_form5_FOProductive': dcf_form5_FOProductive,
         'dcf_form5_FORehab': dcf_form5_FORehab,
+        'dcf_form5_prod_inv_fo': dcf_form5_prod_inv_fo,
+        'dcf_form5_prod_inv_msme': dcf_form5_prod_inv_msme,
         'dcf_form6male': dcf_form6male,
         'dcf_form6female': dcf_form6female,
         'dcf_form6pwd': dcf_form6pwd,
@@ -1548,11 +2284,18 @@ def displayform():
         'dcf_form6youth': dcf_form6youth,
         'dcf_form6sc': dcf_form6sc,
         'dcf_form6act': dcf_form6act,
+        'dcf_form6_prod_dev': dcf_form6_prod_dev,
+        'dcf_form6_prod_improve': dcf_form6_prod_improve,
+        'dcf_form6_system_dev': dcf_form6_system_dev,
+        'dcf_form6_system_intro': dcf_form6_system_intro,
+        'dcf_form6_product_certified': dcf_form6_product_certified,
 
         'dcf_form6_Cacao': dcf_form6_Cacao,
         'dcf_form6_Coffee': dcf_form6_Coffee,
         'dcf_form6_Coconut': dcf_form6_Coconut,
         'dcf_form6_PFN': dcf_form6_PFN,
+        'dcf_form6_beneficiary_fo': form6_beneficiary_fo,
+        'dcf_form6_beneficiary_msme': form6_beneficiary_msme,
 
         'dcf_form6_prod': dcf_form6_prod,
         'dcf_form6_training': dcf_form6_training,
@@ -1578,6 +2321,7 @@ def displayform():
         'dcf4_FOGESI':dcf4_FOGESI,
         'dcf4_FOSEC':dcf4_FOSEC,
         'dcf4_FOMNR':dcf4_FOMNR,
+        'dcf4_FOFF':dcf4_FOFF,
 
         'dcf4_MSMEEC':dcf4_MSMEEC,
         'dcf4_MSMEOP':dcf4_MSMEOP,
@@ -1590,6 +2334,7 @@ def displayform():
         'dcf4_MSMEGESI':dcf4_MSMEGESI,
         'dcf4_MSMESEC':dcf4_MSMESEC,
         'dcf4_MSMEMNR':dcf4_MSMEMNR,
+        'dcf4_MSMEFF':dcf4_MSMEFF,
 
         'dcf4_IFMNR':dcf4_IFMNR,
         'dcf4_IFMF':dcf4_IFMF,
@@ -2013,13 +2758,33 @@ def displayform():
         'over_all_dips_list':  over_all,
         'total_dip_nat':alltotal,
         'dip_sex_group_per_region' : dip_sex_group_per_region,
+        'dip_sex_group_per_dip' : dip_sex_group_per_dip,
+        'total_untagged_dip' : total_untagged_dip,
+        'form2_agreement_types_count':form2_agreement_types_count,
         "commodities_per_status_per_region" : commodities_per_status_per_region,
         'dcf_form1msme':dcf_form1msme,
         'dcf_form1msme2':dcf_form1msme2,
         'dcf_form1msme3':dcf_form1msme3,
+        # farmer organization counts by type (for form_b table)
+        'fo_by_org_type': fo_by_org_type,
+        # form_b entries per region
+        'formb_region_labels': formb_region_labels,
+        'formb_region_counts': formb_region_counts,
+        # form_c entries per region
+        'msme_region_labels': msme_region_labels,
+        'msme_region_counts': msme_region_counts,
+        # farmer organization by DIP (form_b)
+        'fo_by_region_dip_rows': fo_by_region_dip_rows,
+        # MSMEs by DIP (form_c)
+        'msme_by_dip_rows': msme_by_dip_rows,
         'dcf_form1msme4':dcf_form1msme4,
+        'formc_enterprise_micro_count': formc_enterprise_micro_count,
+        'formc_enterprise_small_count': formc_enterprise_small_count,
+        'formc_enterprise_medium_count': formc_enterprise_medium_count,
+        'formc_enterprise_large_count': formc_enterprise_large_count,
         'total_untagged' : total_untagged,
         'over_all_commodity_count':over_all_commodity_count,
+        'msme_commodity_count': msme_commodity_count,
         'over_all_commodity_count2':over_all_commodity_count2,
         'over_all_commodity_count4':over_all_commodity_count4,
         'over_all_commodity_count5':over_all_commodity_count5,
@@ -2120,11 +2885,36 @@ def displayform():
         'form3_entrep':form3_entrep,
         'form3_extserv':form3_extserv,
         'form3_org':form3_org,
+        'form3_loan':form3_loan,
+        'form3_insurance':form3_insurance,
+        'form3_credit':form3_credit,
+        'form3_inkind':form3_inkind,
+        'form3_cashgrant':form3_cashgrant,
+        'form3_equity':form3_equity,
         'form3red':form3red,
         'form3plat':form3plat,
         'form3unreg':form3unreg,
         'form3orgfirm':form3orgfirm,
         'form3indiv':form3indiv,
+        'form3_gfi':form3_gfi,
+        'form3_coop':form3_coop,
+        'form3_private':form3_private,
+        'form3_lgu':form3_lgu,
+        'form3_market':form3_market,
+        'form3_fsp_gfi':form3_fsp_gfi,
+        'form3_fsp_coop':form3_fsp_coop,
+        'form3_fsp_private':form3_fsp_private,
+        'form3_fsp_lgu':form3_fsp_lgu,
+        'form3_fsp_market':form3_fsp_market,
+        'form3_fsp_orgfirm':form3_fsp_orgfirm,
+        'form3_fsp_indiv':form3_fsp_indiv,
+        'form3_fsp_orgfirm':form3_fsp_orgfirm,
+        'form3_fsp_indiv':form3_fsp_indiv,
+        'form3_fsp_gfi':form3_fsp_gfi,
+        'form3_fsp_coop':form3_fsp_coop,
+        'form3_fsp_private':form3_fsp_private,
+        'form3_fsp_lgu':form3_fsp_lgu,
+        'form3_fsp_market':form3_fsp_market,
         'form4beforedip':form4beforedip,
         'form4afterdip':form4afterdip,
         'dcf_form5male':dcf_form5male,
@@ -2143,6 +2933,8 @@ def displayform():
         'dcf_form4femalesc':dcf_form4femalesc,
         'dcf_form7msme':dcf_form7msme,
         'dcf_form7fo':dcf_form7fo,
+        'linked_msme': linked_msme,
+        'linked_fo': linked_fo,
         'dcf_form10female':dcf_form10female,
         'dcf_form10male':dcf_form10male,
         'dcf_form7farmer':dcf_form7farmer,
@@ -2232,6 +3024,8 @@ def displayform():
         'form1_datatabledip': form1_datatabledip,
     }
 
+    return _normalize_metric_payload(metrics_payload)
+
 
 def displayform2():
     if(is_on_session()):
@@ -2240,6 +3034,25 @@ def displayform2():
         return redirect("/login?force_url=1")
         
     USER_INFO = session["USER_DATA"]
+
+    def _normalize_metric_payload(payload):
+        def _normalize_value(value):
+            if isinstance(value, dict):
+                return {k: _normalize_value(v) for k, v in value.items()}
+            if isinstance(value, list):
+                return [_normalize_value(item) for item in value]
+            if value is None:
+                return 0
+            return value
+
+        normalized = {}
+        for key, value in payload.items():
+            if key.endswith('_datatable'):
+                normalized[key] = value
+            else:
+                normalized[key] = _normalize_value(value)
+        return normalized
+
     _filter = "WHERE 1 "
     def _select(sql):
         if '{}' in sql:
@@ -2304,8 +3117,6 @@ def displayform2():
     form2_data_may = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 2 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 2 MONTH)")
     form2_data_june = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(date_created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)")
     form2_data_july = _select("SELECT * FROM dcf_implementing_unit {} AND YEAR(date_created) = YEAR(CURRENT_DATE) AND MONTH(date_created) = MONTH(CURRENT_DATE)")
-
-
 
     form2_thismonth=len(form2_data_july)
     form2_lastmonth=len(form2_data_june)
@@ -2670,6 +3481,26 @@ def displayform2():
     dcf_form2og=len(form2status_og)
     totalstatus = dcf_form2cancelled+dcf_form2nonrenewal+dcf_form2og
 
+    # Count agreement types from dcf_implementing_unit
+    agreement_types_count = {
+        "Signed CPAs": 0,
+        "Purchase orders": 0,
+        "Letter of Intent to buy": 0,
+        "Letter of commitment to supply": 0,
+        "Official receipt of transaction": 0,
+        "Others": 0
+    }
+    for entry in form2_datatable:
+        agreement_type = entry.get('form_2_types_of_agreements', '').strip() if entry.get('form_2_types_of_agreements') else ''
+        if agreement_type in agreement_types_count:
+            agreement_types_count[agreement_type] += 1
+        else:
+            if agreement_type:  # If it has a value but not in predefined list
+                agreement_types_count["Others"] += 1
+    
+    # Remove categories with zero counts for cleaner display
+    form2_agreement_types_count = {k: v for k, v in agreement_types_count.items() if v > 0}
+
 
 
     dcf_form1male=_select("SELECT SUM(form_1_totalmale) AS total_male FROM dcf_prep_review_aprv_status {}; ")
@@ -2690,17 +3521,35 @@ def displayform2():
     dcf_form1femaleip=_select("SELECT SUM(form_1_femaleip) AS total_femaleip FROM dcf_prep_review_aprv_status {}; ")
     dcf_form1femalepwd=_select("SELECT SUM(form_1_femalepwd) AS total_femalepwd FROM dcf_prep_review_aprv_status {}; ")
 
-    form3_agri =_select("SELECT COUNT(id) AS total_agri FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Agri-technical%'; ")
-    form3_entrep =_select("SELECT COUNT(id) AS total_entrep FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Entrepreneurial%'; ")
-    form3_extserv =_select("SELECT COUNT(id) AS total_extserv FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Extension Service%'; ")
-    form3_org =_select("SELECT COUNT(id) AS total_org FROM dcf_bdsp_reg  {} AND form_3_choices LIKE '%Organizational%'; ")
+    form3_agri =_select("SELECT COUNT(id) AS total_agri FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Agri-technical%'; ")
+    form3_entrep =_select("SELECT COUNT(id) AS total_entrep FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Entrepreneurial%'; ")
+    form3_extserv =_select("SELECT COUNT(id) AS total_extserv FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Extension Service%'; ")
+    form3_org =_select("SELECT COUNT(id) AS total_org FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Organizational%'; ")
+    form3_loan =_select("SELECT COUNT(id) AS total_loan FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Loan/Cash Advance%'; ")
+    form3_insurance =_select("SELECT COUNT(id) AS total_insurance FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Insurance%'; ")
+    form3_credit =_select("SELECT COUNT(id) AS total_credit FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Credit Guarantee%'; ")
+    form3_inkind =_select("SELECT COUNT(id) AS total_inkind FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%In Kind%'; ")
+    form3_cashgrant =_select("SELECT COUNT(id) AS total_cashgrant FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Cash Grant%'; ")
+    form3_equity =_select("SELECT COUNT(id) AS total_equity FROM dcf_bdsp_reg  {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_choices LIKE '%Equity Financing (SBC)%'; ")
 
-    form3red=_select("SELECT COUNT(form_3_philgeps_registered) AS totalred FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'RED';")
-    form3plat=_select("SELECT COUNT(form_3_philgeps_registered) AS totalplat FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'PLATINUM';")
-    form3unreg=_select("SELECT COUNT(form_3_philgeps_registered) AS totalunreg FROM dcf_bdsp_reg {} AND form_3_philgeps_registered = 'UNREGISTERED';")
+    form3red=_select("SELECT COUNT(form_3_philgeps_registered) AS totalred FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_philgeps_registered = 'RED';")
+    form3plat=_select("SELECT COUNT(form_3_philgeps_registered) AS totalplat FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_philgeps_registered = 'PLATINUM';")
+    form3unreg=_select("SELECT COUNT(form_3_philgeps_registered) AS totalunreg FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_philgeps_registered = 'UNREGISTERED';")
 
-    form3orgfirm=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalorgfirm FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Organization/Firm';")
-    form3indiv=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalindiv FROM dcf_bdsp_reg {} AND form_3_types_of_bdsp = 'Individual';")
+    form3orgfirm=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalorgfirm FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'Organization/Firm';")
+    form3indiv=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalindiv FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'Individual';")
+    form3_gfi=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalgfi FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'GFI/GOCC/NGA';")
+    form3_coop=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalcoop FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'COOP/NGO';")
+    form3_private=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalprivate FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'Private Financing Institution';")
+    form3_lgu=_select("SELECT COUNT(form_3_types_of_bdsp) AS totallugu FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'LGU';")
+    form3_market=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalmarket FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'BDSP' AND form_3_types_of_bdsp = 'Market';")
+    form3_fsp_gfi=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalgfi FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'GFI/GOCC/NGA';")
+    form3_fsp_coop=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalcoop FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'COOP/NGO';")
+    form3_fsp_private=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalprivate FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'Private Financing Institution';")
+    form3_fsp_lgu=_select("SELECT COUNT(form_3_types_of_bdsp) AS totallugu FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'LGU';")
+    form3_fsp_market=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalmarket FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'Market';")
+    form3_fsp_orgfirm=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalorgfirm FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'Organization/Firm';")
+    form3_fsp_indiv=_select("SELECT COUNT(form_3_types_of_bdsp) AS totalindiv FROM dcf_bdsp_reg {} AND UPPER(TRIM(form_3_classification)) = 'FSP' AND form_3_types_of_bdsp = 'Individual';")
 
     form2status_cancelled=_select("SELECT form_2_remarks_status AS totalcancelled FROM dcf_implementing_unit {} AND form_2_remarks_status = 'Cancelled';")
     dcf_form2cancelled=len(form2status_cancelled)
@@ -2774,7 +3623,7 @@ def displayform2():
     dcf_form7cashsales=_select("SELECT SUM(form_7_cash_sales) AS total_cash7 FROM dcf_trade_promotion {};")
     dcf_form7bookedsales=_select("SELECT SUM(form_7_booked_sales) AS total_booked7 FROM dcf_trade_promotion {};")
     dcf_form7undernego=_select("SELECT SUM(form_7_under_negotiations) AS total_undernego FROM dcf_trade_promotion {};")
-    dcf_form7total=_select("SELECT SUM(form_7_total_autosum) AS total_ovrlltotal FROM dcf_trade_promotion {};")
+    dcf_form7total=_select("SELECT COALESCE(SUM(form_7_total_autosum), 0) AS total_ovrlltotal FROM dcf_trade_promotion {};")
 
     dcf_form9capb=_select("SELECT COUNT(form_9_type_of_training) AS totalcapbuild9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Capbuild';")
     dcf_form9meetings=_select("SELECT COUNT(form_9_type_of_training) AS totalmeetings9 FROM dcf_enablers_activity {} AND form_9_type_of_training = 'Meetings';")
@@ -2896,6 +3745,25 @@ def displayform2():
     dcf_form1msme2=_select("SELECT SUM(total_medium_enterprise) as total_medium_entep FROM dcf_prep_review_aprv_status {};")
     dcf_form1msme3=_select("SELECT SUM(total_small_enterprise ) as total_small_entep FROM dcf_prep_review_aprv_status {};")
     dcf_form1msme4=_select("SELECT SUM(total_micro_enterprise ) as total_micro_entep FROM dcf_prep_review_aprv_status {};")
+    try:
+        formc_enterprise_counts = _select("""
+            SELECT
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'micro%' THEN 1 ELSE 0 END) AS micro_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'small%' THEN 1 ELSE 0 END) AS small_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'medium%' THEN 1 ELSE 0 END) AS medium_count,
+                SUM(CASE WHEN LOWER(TRIM(type_enterprise)) LIKE 'large%' THEN 1 ELSE 0 END) AS large_count
+            FROM form_c
+            {}
+        """)
+        formc_enterprise_micro_count = int(formc_enterprise_counts[0].get('micro_count') or 0)
+        formc_enterprise_small_count = int(formc_enterprise_counts[0].get('small_count') or 0)
+        formc_enterprise_medium_count = int(formc_enterprise_counts[0].get('medium_count') or 0)
+        formc_enterprise_large_count = int(formc_enterprise_counts[0].get('large_count') or 0)
+    except Exception:
+        formc_enterprise_micro_count = 0
+        formc_enterprise_small_count = 0
+        formc_enterprise_medium_count = 0
+        formc_enterprise_large_count = 0
     
 
     selectapprovedform1=_select("SELECT form_1_date_of_npco_cursory,form_1_date_of_ifad_no_inssuance,form_1_rcus FROM dcf_prep_review_aprv_status {} AND form_1_date_of_ifad_no_inssuance != '' AND form_1_date_of_npco_cursory != '' OR ' ' ")
@@ -3154,7 +4022,67 @@ def displayform2():
             pass
         # if(DIP['form_1_total_farmerbene'].isnumeric()):
         #     dip_sex_group_per_region[DIP['form_1_rcus']]['total_bene'] += int(DIP['form_1_total_farmerbene'])
+    dip_sex_group_per_dip = {}
+    total_untagged_dip = 0
 
+    for index in range(len(dips_list)):
+        DIP = dips_list[index]
+        dip_name = DIP.get('form_1_name_dip') or 'Unknown'
+
+        if(dip_name not in dip_sex_group_per_dip):
+            dip_sex_group_per_dip[dip_name] = {
+                'total_bene': 0,
+                'male': {"youth": 0, "ip": 0, "pwd": 0, "total": 0},
+                'female': {"youth": 0, "ip": 0, "pwd": 0, "total": 0},
+                'all_total': {
+                    'untagged': 0,
+                    "total_youth": 0,
+                    "total_ip": 0,
+                    "total_pwd": 0,
+                    "total_sex": 0
+                }
+            }
+        else:
+            pass
+
+        # Male
+        dip_sex_group_per_dip[dip_name]['male']['youth'] += DIP['form_1_maleyouth']
+        dip_sex_group_per_dip[dip_name]['male']['ip'] += DIP['form_1_maleip']
+        dip_sex_group_per_dip[dip_name]['male']['pwd'] += DIP['form_1_malepwd']
+        dip_sex_group_per_dip[dip_name]['male']['total'] += DIP['form_1_totalmale']
+
+        # Female
+        dip_sex_group_per_dip[dip_name]['female']['youth'] += DIP['form_1_femaleyouth']
+        dip_sex_group_per_dip[dip_name]['female']['ip'] += DIP['form_1_femaleip']
+        dip_sex_group_per_dip[dip_name]['female']['pwd'] += DIP['form_1_femalepwd']
+        dip_sex_group_per_dip[dip_name]['female']['total'] += DIP['form_1_totalfemale']
+
+        # Combined totals
+        dip_sex_group_per_dip[dip_name]['all_total']['total_youth'] += (
+            DIP['form_1_maleyouth'] + DIP['form_1_femaleyouth']
+        )
+        dip_sex_group_per_dip[dip_name]['all_total']['total_ip'] += (
+            DIP['form_1_maleip'] + DIP['form_1_femaleip']
+        )
+        dip_sex_group_per_dip[dip_name]['all_total']['total_pwd'] += (
+            DIP['form_1_malepwd'] + DIP['form_1_femalepwd']
+        )
+        dip_sex_group_per_dip[dip_name]['all_total']['total_sex'] += (
+            DIP['form_1_totalmale'] + DIP['form_1_totalfemale']
+        )
+
+        try:
+            dip_sex_group_per_dip[dip_name]['total_bene'] += float(DIP['form_1_total_farmerbene'])
+            dip_sex_group_per_dip[dip_name]['all_total']['untagged'] += (
+                float(DIP['form_1_total_farmerbene']) -
+                (DIP['form_1_totalmale'] + DIP['form_1_totalfemale'])
+            )
+            total_untagged_dip += (
+                float(DIP['form_1_total_farmerbene']) -
+                (DIP['form_1_totalmale'] + DIP['form_1_totalfemale'])
+            )
+        except Exception as e:
+            pass
 
 
 
@@ -3679,8 +4607,80 @@ def displayform2():
         );
     """)
 
+    fo_region_rows = _select("""
+        SELECT
+            CASE
+                WHEN form_11_fo_msme_regional IS NULL OR TRIM(form_11_fo_msme_regional) = '' THEN 'Untagged'
+                WHEN UPPER(TRIM(form_11_fo_msme_regional)) IN ('BARMM','B.A.R.M.M') THEN 'BARMM'
+                WHEN form_11_fo_msme_regional LIKE '%13%' THEN '13'
+                WHEN form_11_fo_msme_regional LIKE '%12%' THEN '12'
+                WHEN form_11_fo_msme_regional LIKE '%11%' THEN '11'
+                WHEN form_11_fo_msme_regional LIKE '%10%' THEN '10'
+                WHEN form_11_fo_msme_regional LIKE '%9%' THEN '9'
+                WHEN form_11_fo_msme_regional LIKE '%8%' THEN '8'
+                ELSE 'Untagged'
+            END AS region,
+            COUNT(*) AS total
+        FROM dcf_access_financing
+        {}
+        AND form_11_fo_name_of_beneficiary IS NOT NULL
+        AND TRIM(form_11_fo_name_of_beneficiary) <> ''
+        AND (
+            fo_show_loan_section = 'Yes' OR
+            fo_show_equity_section = 'Yes' OR
+            fo_show_savings_section = 'Yes' OR
+            fo_show_insurance_section = 'Yes' OR
+            fo_show_creditguarantee_section = 'Yes' OR
+            fo_show_inkind_section = 'Yes' OR
+            fo_show_cashgrant_section = 'Yes' OR
+            fo_show_digital_section = 'Yes' OR
+            fo_show_rapid_section = 'Yes'
+        )
+        GROUP BY region
+    """)
+    region_order = ['8','9','10','11','12','13','BARMM','Untagged']
+    region_map = {row['region']: row['total'] for row in fo_region_rows}
+    fo_msme_region_chart = {
+        'labels': region_order,
+        'data': [region_map.get(region, 0) for region in region_order]
+    }
 
-    return {
+    fo_commodity_rows = _select("""
+        SELECT
+            CASE
+                WHEN LOWER(TRIM(form_11_fo_commodity)) LIKE '%coconut%' THEN 'Coconut'
+                WHEN LOWER(TRIM(form_11_fo_commodity)) LIKE '%coffee%' THEN 'Coffee'
+                WHEN LOWER(TRIM(form_11_fo_commodity)) LIKE '%cacao%' THEN 'Cacao'
+                WHEN LOWER(TRIM(form_11_fo_commodity)) LIKE '%pfn%' THEN 'PFN'
+                ELSE NULL
+            END AS commodity,
+            COUNT(*) AS total
+        FROM dcf_access_financing
+        {}
+        AND form_11_fo_name_of_beneficiary IS NOT NULL
+        AND TRIM(form_11_fo_name_of_beneficiary) <> ''
+        AND (
+            fo_show_loan_section = 'Yes' OR
+            fo_show_equity_section = 'Yes' OR
+            fo_show_savings_section = 'Yes' OR
+            fo_show_insurance_section = 'Yes' OR
+            fo_show_creditguarantee_section = 'Yes' OR
+            fo_show_inkind_section = 'Yes' OR
+            fo_show_cashgrant_section = 'Yes' OR
+            fo_show_digital_section = 'Yes' OR
+            fo_show_rapid_section = 'Yes'
+        )
+        GROUP BY commodity
+    """)
+    commodity_order = ['Coconut','Coffee','Cacao','PFN']
+    commodity_map = {row['commodity']: row['total'] for row in fo_commodity_rows if row['commodity']}
+    fo_msme_commodity_chart = {
+        'labels': commodity_order,
+        'data': [commodity_map.get(comm, 0) for comm in commodity_order]
+    }
+
+
+    metrics_payload = {
         'dcf_form11_fsls': dcf_form11_fsls,
         'dcf_form11_fsss': dcf_form11_fsss,
         'dcf_form11_fsis': dcf_form11_fsis,
@@ -3704,6 +4704,8 @@ def displayform2():
         'dcf_form11_fosds': dcf_form11_fosds,
         'dcf_form11_fosrs': dcf_form11_fosrs,
         'dcf_form11_fo_total': dcf_form11_fo_total,
+        'fo_msme_region_chart': fo_msme_region_chart,
+        'fo_msme_commodity_chart': fo_msme_commodity_chart,
 
         'dcf_form5FOMSME' : dcf_form5FOMSME,
         'dcf_form5_FOExpansion': dcf_form5_FOExpansion,
@@ -4177,7 +5179,10 @@ def displayform2():
         'dcf_form2nonrenewal': dcf_form2nonrenewal,
         'dcf_form2cancelled': dcf_form2cancelled,
         'dcf_form2og': dcf_form2og,
+        'form2_agreement_types_count': form2_agreement_types_count,
         'totalstatus': totalstatus,
+        'dip_sex_group_per_dip' : dip_sex_group_per_dip,
+        'total_untagged_dip' : total_untagged_dip,
         'over_all_dips_list':  over_all,
         'total_dip_nat':alltotal,
         'dip_sex_group_per_region' : dip_sex_group_per_region,
@@ -4186,6 +5191,10 @@ def displayform2():
         'dcf_form1msme2':dcf_form1msme2,
         'dcf_form1msme3':dcf_form1msme3,
         'dcf_form1msme4':dcf_form1msme4,
+        'formc_enterprise_micro_count': formc_enterprise_micro_count,
+        'formc_enterprise_small_count': formc_enterprise_small_count,
+        'formc_enterprise_medium_count': formc_enterprise_medium_count,
+        'formc_enterprise_large_count': formc_enterprise_large_count,
         'total_untagged' : total_untagged,
         'over_all_commodity_count':over_all_commodity_count,
         'over_all_commodity_count2':over_all_commodity_count2,
@@ -4288,11 +5297,22 @@ def displayform2():
         'form3_entrep':form3_entrep,
         'form3_extserv':form3_extserv,
         'form3_org':form3_org,
+        'form3_loan':form3_loan,
+        'form3_insurance':form3_insurance,
+        'form3_credit':form3_credit,
+        'form3_inkind':form3_inkind,
+        'form3_cashgrant':form3_cashgrant,
+        'form3_equity':form3_equity,
         'form3red':form3red,
         'form3plat':form3plat,
         'form3unreg':form3unreg,
         'form3orgfirm':form3orgfirm,
         'form3indiv':form3indiv,
+        'form3_gfi':form3_gfi,
+        'form3_coop':form3_coop,
+        'form3_private':form3_private,
+        'form3_lgu':form3_lgu,
+        'form3_market':form3_market,
         'form4beforedip':form4beforedip,
         'form4afterdip':form4afterdip,
         'dcf_form5male':dcf_form5male,
@@ -4399,6 +5419,8 @@ def displayform2():
         'dips_listdcf1':dips_listdcf1,
         'form1_datatabledip': form1_datatabledip,
     }
+
+    return _normalize_metric_payload(metrics_payload)
 
 def position_data_filter():
     _filter = "WHERE 1 "

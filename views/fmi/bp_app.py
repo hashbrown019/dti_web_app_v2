@@ -8,6 +8,15 @@ def is_on_session(): return ('USER_DATA' in session)
 
 rapid_sql = mysql(*c.DB_CRED)
 
+def _normalize_none_to_zero(value):
+    if isinstance(value, dict):
+        return {k: _normalize_none_to_zero(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_normalize_none_to_zero(item) for item in value]
+    if value is None:
+        return 0
+    return value
+
 @app.route('/fmi_dashboard')
 def fmi_dashboard():
     if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
@@ -77,6 +86,33 @@ def fmi_dashboard():
         'background_colors' : background_colors
     }
 
+    region_km_rows = rapid_sql.select("""
+        SELECT
+            CASE
+                WHEN UPPER(TRIM(form_8_profile_region)) IN ('BARMM','B.A.R.M.M') THEN 'BARMM'
+                WHEN form_8_profile_region LIKE '%13%' THEN '13'
+                WHEN form_8_profile_region LIKE '%12%' THEN '12'
+                WHEN form_8_profile_region LIKE '%11%' THEN '11'
+                WHEN form_8_profile_region LIKE '%10%' THEN '10'
+                WHEN form_8_profile_region LIKE '%9%' THEN '9'
+                WHEN form_8_profile_region LIKE '%8%' THEN '8'
+                ELSE NULL
+            END AS region,
+            IFNULL(SUM(form_8_profile_length), 0) AS total_km
+        FROM dcf_fmi
+        GROUP BY region
+        HAVING region IS NOT NULL
+        ORDER BY FIELD(region, '8','9','10','11','12','13','BARMM')
+    """)
+    region_km_labels = [row['region'] for row in region_km_rows]
+    region_km_data = [row['total_km'] for row in region_km_rows]
+    region_km_colors = [background_colors[i % len(background_colors)] for i in range(len(region_km_labels))]
+    FMR_Region_km_data = {
+        'data': region_km_data,
+        'labels': region_km_labels,
+        'background_colors': region_km_colors
+    }
+
     FMR_data = {
         'FMR_totalkm_completed_ongoing' : (FMR_completed['total_km']+FMR_ongoing['total_km']),
         'FMR_total': FMR_total,
@@ -93,9 +129,37 @@ def fmi_dashboard():
         'FMR_Batch1_data' : FMR_Batch1_data,
         'FMR_Batch2_data' : FMR_Batch2_data,
         'FMR_Batch3_data' : FMR_Batch3_data,
-        'FMR_Batch4_data' : FMR_Batch4_data
+        'FMR_Batch4_data' : FMR_Batch4_data,
+        'FMR_Region_km_data' : FMR_Region_km_data
     }
-    return render_template("fmi_dashboard.html",user_data=session["USER_DATA"][0], FMR_data=FMR_data,FMR_data_chart=json.dumps(FMR_data_chart))
+    fmi_datatable = rapid_sql.select("""
+        SELECT
+            id,
+            form_8_profile_batch,
+            form_8_profile_dipName,
+            form_8_profile_name_of_fmr,
+            form_8_profile_project_title,
+            form_8_profile_municipality_province,
+            form_8_profile_region,
+            form_8_profile_length,
+            form_8_profile_appvd_budget_cost,
+            form_8_implementation_status,
+            upload_by,
+            date_created,
+            date_modified
+        FROM dcf_fmi
+        ORDER BY date_created DESC
+    """)
+    FMR_data = _normalize_none_to_zero(FMR_data)
+    FMR_data_chart = _normalize_none_to_zero(FMR_data_chart)
+
+    return render_template(
+        "fmi_dashboard.html",
+        user_data=session["USER_DATA"][0],
+        FMR_data=FMR_data,
+        FMR_data_chart=json.dumps(FMR_data_chart),
+        fmi_datatable=fmi_datatable
+    )
 
 def fmi_dashboard_data():
     
@@ -120,7 +184,7 @@ def fmi_dashboard_data():
         'FMR_pending': FMR_pending,
         'FMR_noa': FMR_noa
     }
-    return FMR_data
+    return _normalize_none_to_zero(FMR_data)
     
 
 def fmi_dashboard_data_chart():
@@ -180,14 +244,42 @@ def fmi_dashboard_data_chart():
         'background_colors' : background_colors
     }
 
+    region_km_rows = rapid_sql.select("""
+        SELECT
+            CASE
+                WHEN UPPER(TRIM(form_8_profile_region)) IN ('BARMM','B.A.R.M.M') THEN 'BARMM'
+                WHEN form_8_profile_region LIKE '%13%' THEN '13'
+                WHEN form_8_profile_region LIKE '%12%' THEN '12'
+                WHEN form_8_profile_region LIKE '%11%' THEN '11'
+                WHEN form_8_profile_region LIKE '%10%' THEN '10'
+                WHEN form_8_profile_region LIKE '%9%' THEN '9'
+                WHEN form_8_profile_region LIKE '%8%' THEN '8'
+                ELSE NULL
+            END AS region,
+            IFNULL(SUM(form_8_profile_length), 0) AS total_km
+        FROM dcf_fmi
+        GROUP BY region
+        HAVING region IS NOT NULL
+        ORDER BY FIELD(region, '8','9','10','11','12','13','BARMM')
+    """)
+    region_km_labels = [row['region'] for row in region_km_rows]
+    region_km_data = [row['total_km'] for row in region_km_rows]
+    region_km_colors = [background_colors[i % len(background_colors)] for i in range(len(region_km_labels))]
+    FMR_Region_km_data = {
+        'data': region_km_data,
+        'labels': region_km_labels,
+        'background_colors': region_km_colors
+    }
+
     FMR_data_chart = {
         'FMR_Batch1_data' : FMR_Batch1_data,
         'FMR_Batch2_data' : FMR_Batch2_data,
         'FMR_Batch3_data' : FMR_Batch3_data,
-        'FMR_Batch4_data' : FMR_Batch4_data
+        'FMR_Batch4_data' : FMR_Batch4_data,
+        'FMR_Region_km_data' : FMR_Region_km_data
     }
 
-    return json.dumps(FMR_data_chart)
+    return json.dumps(_normalize_none_to_zero(FMR_data_chart))
 
 @app.route('/fmi_form_a')
 def fmi_form_a():

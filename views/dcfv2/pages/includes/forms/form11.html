@@ -122,6 +122,12 @@
     display: flex;
     gap: 15px;
     align-items: center;
+    flex-wrap: wrap;
+  }
+  .registration-type-container .form-select,
+  .registration-type-container .form-control {
+    flex: 1 1 220px;
+    min-width: 0;
   }
   .card-footer.bg-light {
     padding: 0.75rem 1rem;
@@ -814,14 +820,14 @@
                         <div class="col-12">
                           <label for="registration-type" class="form-label">Type of Registration:</label>
                           <div class="registration-type-container">
-                            <select class="FORM11_FIELD form-select" id="form_11_fo_registration_type" required style="width: 200px;">
+                            <select class="FORM11_FIELD form-select" id="form_11_fo_registration_type" required style="width: 100%; max-width: 200px;">
                               <option value="">Choose option</option>
                               <option value="CDA">CDA</option>
                               <option value="SEC">SEC</option>
                               <option value="DOLE">DOLE</option>
                               <option value="DOLE">DTI</option>
                             </select>
-                            <input type="text" class="FORM11_FIELD form-control ms-2" id="others_specify" placeholder="Specify (if others)" style="width: 265px;"> 
+                            <input type="text" class="FORM11_FIELD form-control ms-2" id="others_specify" placeholder="Specify (if others)" style="width: 100%; max-width: 265px;"> 
                           </div>
                         </div>
                         <!-- With Existing Lending for Members (below registration) -->

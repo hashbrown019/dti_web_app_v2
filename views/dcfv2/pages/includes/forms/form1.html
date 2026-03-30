@@ -10,7 +10,7 @@
 
 	<div class="col-md-12 col-sm-12 x-card  x-light-grey">
 		<center>
-			<h2 class=" text-white  x-padding" style="background-color: #007399;">FORM 1 - PREPARATION, PREVIEW AND APPROVAL STATUS</h2>
+			<h2 class=" text-white  x-padding" style="background-color: #007399;">FORM 1 - DIP PROFILE</h2>
 			<span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
 		</center>
 
@@ -51,15 +51,115 @@
 
 					<div class="x-col l4  x-padding">
 						<label><span style="color: #007399;" class="tool" data-tip="Full Name of Main Anchor Firm based on official business registration (ex. SC Global Coco Products Inc. ) Add comma and <space> for multiple entries (ex. SC Global Coco Products Inc., Nestle Philippines " tabindex="1"><i class="fa fa-info-circle"></i></span> Anchor Firm:</label>
-						<!-- <input class="FORM1_FIELD  x-input x-border" id="form_1_anchor_firm" type="text" name="form_1_anchor_firm"
-							placeholder=""> -->
-						<select class="FORM1_FIELD x-input x-select x-border" name="form_1_anchor_firm" id="form_1_anchor_firm">
-							<option value="">Choose your option</option>
-						</select>
+						<div id="form_1_anchor_firm_dropdown" class="dropdown-check-list x-input">
+							<span class="anchor">Choose your option</span>
+							<ul class="items" id="form_1_anchor_firm_items"></ul>
+						</div>
+						<input class="FORM1_FIELD" id="form_1_anchor_firm" name="form_1_anchor_firm" type="hidden">
 					</div>
 					
 					<script>
-						function populateMSMENames(existingAnchorFirmValue) {
+						let form1AnchorFirmPendingValue = null;
+
+						function parseAnchorFirmValues(valueString) {
+							if (!valueString) {
+								return [];
+							}
+							return valueString
+								.split(',')
+								.map(value => value.trim())
+								.filter(value => value.length > 0);
+						}
+
+						function getAnchorFirmDropdown() {
+							return document.getElementById('form_1_anchor_firm_dropdown');
+						}
+
+						function getAnchorFirmCheckboxes() {
+							const list = document.getElementById('form_1_anchor_firm_items');
+							return list ? list.querySelectorAll("input[type='checkbox']") : [];
+						}
+
+						function updateAnchorFirmDropdownText() {
+							const dropdown = getAnchorFirmDropdown();
+							const hiddenElement = document.getElementById('form_1_anchor_firm');
+							if (!dropdown || !hiddenElement) {
+								return;
+							}
+							const anchor = dropdown.querySelector('.anchor');
+							const selected = [];
+							getAnchorFirmCheckboxes().forEach(function (checkbox) {
+								if (checkbox.checked) {
+									selected.push(checkbox.value);
+								}
+							});
+							if (anchor) {
+								anchor.textContent = selected.length > 0 ? selected.join(", ") : "Choose your option";
+							}
+							hiddenElement.value = selected.join(", ");
+						}
+
+						function setAnchorFirmSelection(valueString) {
+							const values = parseAnchorFirmValues(valueString);
+							const valueSet = new Set(values);
+							getAnchorFirmCheckboxes().forEach(function (checkbox) {
+								checkbox.checked = valueSet.has(checkbox.value);
+							});
+							updateAnchorFirmDropdownText();
+						}
+
+						function bindAnchorFirmDropdown() {
+							const dropdown = getAnchorFirmDropdown();
+							if (!dropdown || dropdown.dataset.bound) {
+								return;
+							}
+							const anchor = dropdown.querySelector('.anchor');
+							if (anchor) {
+								anchor.addEventListener('click', function (event) {
+									dropdown.classList.toggle('visible');
+									event.stopPropagation();
+								});
+							}
+							document.addEventListener('click', function (event) {
+								if (!dropdown.contains(event.target)) {
+									dropdown.classList.remove('visible');
+								}
+							});
+							dropdown.dataset.bound = "true";
+						}
+
+						function renderAnchorFirmCheckboxes(data) {
+							const list = document.getElementById('form_1_anchor_firm_items');
+							if (!list) {
+								return;
+							}
+							list.innerHTML = '';
+
+							if (!data || data.length === 0) {
+								const emptyItem = document.createElement('li');
+								emptyItem.textContent = 'No options available';
+								list.appendChild(emptyItem);
+								return;
+							}
+
+							data.forEach(item => {
+								const li = document.createElement('li');
+								const label = document.createElement('label');
+								const checkbox = document.createElement('input');
+								checkbox.type = 'checkbox';
+								checkbox.value = item.reg_businessname;
+								label.appendChild(checkbox);
+								label.appendChild(document.createTextNode(" " + item.reg_businessname));
+								li.appendChild(label);
+								list.appendChild(li);
+							});
+
+							getAnchorFirmCheckboxes().forEach(function (checkbox) {
+								checkbox.addEventListener('change', updateAnchorFirmDropdownText);
+							});
+						}
+
+						function populateAnchorFirmNames() {
 							return fetch('/api/get_msme_names')
 								.then(response => {
 									if (!response.ok) {
@@ -68,29 +168,105 @@
 									return response.json();
 								})
 								.then(data => {
-									const selectElement = document.getElementById('form_1_anchor_firm');
-					
-									// Clear existing options to prevent duplication
-									selectElement.innerHTML = '<option value="">Choose your option</option>';
-				
-									data.forEach(item => {
-										const option = document.createElement('option');
-										option.value = item.reg_businessname;
-										option.textContent = item.reg_businessname;
-										selectElement.appendChild(option);
-									});
-
-									// If an existing value is provided, set it as selected
-									if (existingAnchorFirmValue) {
-										selectElement.value = existingAnchorFirmValue;
+									renderAnchorFirmCheckboxes(data);
+									bindAnchorFirmDropdown();
+									const hiddenElement = document.getElementById('form_1_anchor_firm');
+									const resolvedValue = form1AnchorFirmPendingValue
+										|| (hiddenElement ? hiddenElement.value : "");
+									if (resolvedValue) {
+										setAnchorFirmSelection(resolvedValue);
+										form1AnchorFirmPendingValue = null;
+									} else {
+										updateAnchorFirmDropdownText();
 									}
 								})
 								.catch(error => console.error('Error fetching MSME names:', error));
 						}
 
+						function scheduleAnchorFirmSelectionSync() {
+							let attempts = 0;
+							const maxAttempts = 8;
+							const intervalMs = 500;
+							const intervalId = setInterval(() => {
+								const hiddenElement = document.getElementById('form_1_anchor_firm');
+								if (hiddenElement && hiddenElement.value) {
+									setAnchorFirmSelection(hiddenElement.value);
+								}
+								attempts += 1;
+								if (attempts >= maxAttempts) {
+									clearInterval(intervalId);
+								}
+							}, intervalMs);
+						}
+
 						// Wait for the full page load before executing the script
-						populateMSMENames().then(() => {});
+						populateAnchorFirmNames().then(() => {
+							updateAnchorFirmDropdownText();
+							scheduleAnchorFirmSelectionSync();
+						});
+
+						document.addEventListener('DOMContentLoaded', function () {
+							bindAnchorFirmDropdown();
+							scheduleAnchorFirmSelectionSync();
+						});
 					</script>
+					<style>
+						.dropdown-check-list {
+							display: block;
+							position: relative;
+							width: 100%;
+							padding: 0;
+							border: none;
+							border-bottom: none;
+						}
+						.dropdown-check-list .anchor {
+							position: relative;
+							cursor: pointer;
+							display: block;
+							padding: 8px;
+							border: 1px solid #ccc;
+							background-color: white;
+							width: 100%;
+							min-height: 30px;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							overflow: hidden;
+						}
+						.dropdown-check-list .anchor:after {
+							position: absolute;
+							content: "";
+							border-left: 2px solid black;
+							border-top: 2px solid black;
+							padding: 5px;
+							right: 10px;
+							top: 50%;
+							transform: translateY(-50%) rotate(-135deg);
+						}
+						.dropdown-check-list .items {
+							display: none;
+							position: absolute;
+							background: white;
+							width: 100%;
+							border: 1px solid #ccc;
+							max-height: 200px;
+							overflow-y: auto;
+							z-index: 1000;
+							padding: 5px;
+						}
+						.dropdown-check-list .items li {
+							list-style: none;
+							padding: 5px;
+						}
+						.dropdown-check-list .items li strong {
+							display: block;
+							padding: 5px;
+							background-color: #f2f2f2;
+							font-weight: bold;
+						}
+						.dropdown-check-list.visible .items {
+							display: block;
+						}
+					</style>
 			
 				</div>
 
@@ -168,6 +344,7 @@
 							</select>
 						<select type="text" class="FORM1_FIELD hidden-textbox x-select x-border" name="form_1_commodity_others"
 							id="form_1_commodity_others" show-base="form_1_commodity" show-trigger="PFN">
+							<option value="">Choose your option</option>
 							<option>Calamansi</option>
                     		<option>Banana</option>
 						</select>

@@ -63,49 +63,52 @@
         });
     }
 
-    regionFilterDropdown.addEventListener('change', function () {
-        const selectedRegion = this.value;
-        filterDataTable(selectedRegion);
+	regionFilterDropdown.addEventListener('change', function () {
+		const selectedRegion = this.value;
+		filterDataTable(selectedRegion);
 
-        fetch(`/filter_dashboard?region=${selectedRegion}`)
-            .then(response => response.json())
-            .then(data => {
-                updateElement('totalEntries', data.total_entries);
-                updateElement('totalMembers', data.total_members);
-                updateElement('totalMale', data.total_male);
-                updateElement('totalFemale', data.total_female);
-                updateElement('totalPWD', data.total_pwd);
-                updateElement('totalYouth', data.total_youth);
-                updateElement('totalIP', data.total_ip);
-                updateElement('totalSC', data.total_sc);
-                updateElement('totalVol', data.total_vol);
-                updateElement('totalTransaction', data.total_transaction);
-                updateElement('totalSales', data.total_sales);
-                updateElement('totalCommodity', data.total_commodity);
+		fetch(`/filter_dashboard?region=${selectedRegion}`)
+			.then(response => response.json())
+			.then(data => {
+				updateElement('totalEntries', data.total_entries);
+				updateElement('totalMembers', data.total_members);
+				updateElement('totalMale', data.total_male);
+				updateElement('totalFemale', data.total_female);
+				updateElement('totalPWD', data.total_pwd);
+				updateElement('totalYouth', data.total_youth);
+				updateElement('totalIP', data.total_ip);
+				updateElement('totalSC', data.total_sc);
+				updateElement('totalVol', data.total_vol);
+				updateElement('totalTransaction', data.total_transaction);
+				updateElement('totalSales', data.total_sales);
+				updateElement('totalCommodity', data.total_commodity);
 
-                // Doughnut chart (do not touch)
-                const labels = Object.keys(data.commodity_data || {});
-                const values = Object.values(data.commodity_data || {});
-                init_chart_doughnut(labels, values);
+				// Doughnut chart
+				const labels = Object.keys(data.commodity_data || {});
+				const values = Object.values(data.commodity_data || {});
+				init_chart_doughnut(labels, values);
 
-                // Bar chart (use sales_commodity_data)
-                const barLabels = Object.keys(data.sales_commodity_data || {});
-                const barValues = Object.values(data.sales_commodity_data || {});
-                renderCommodityBarChart(barLabels, barValues);
+				// Bar chart
+				const barLabels = Object.keys(data.sales_commodity_data || {});
+				const barValues = Object.values(data.sales_commodity_data || {});
+				renderCommodityBarChart(barLabels, barValues);
 
-                // --- ADD THIS LINE ---
-                updateSalesCommodityTable(data.st_commodity_stats);
+				// Sales commodity table
+				updateSalesCommodityTable(data.st_commodity_stats);
 
-                updatePolarChart(
-                    data.status_data.cancelled,
-                    data.status_data.ongoing,
-                    data.status_data.nonrenewal
-                );
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    });
+				// Agreement types bar chart - ADD THIS LINE
+				initAgreementTypesBarChart(data.form2_agreement_types_count);
+
+				updatePolarChart(
+					data.status_data.cancelled,
+					data.status_data.ongoing,
+					data.status_data.nonrenewal
+				);
+			})
+			.catch(error => {
+				console.error('Error fetching data:', error);
+			});
+	});
 
     $(document).ready(function () {
         initializeDataTable();
@@ -116,6 +119,9 @@
                 const initialLabels = Object.keys(data.commodity_data || {});
                 const initialValues = Object.values(data.commodity_data || {});
                 init_chart_doughnut(initialLabels, initialValues);
+
+                // Agreement types bar chart
+                initAgreementTypesBarChart(data.form2_agreement_types_count);
 
                 // Bar chart (use sales_commodity_data)
                 const barLabels = Object.keys(data.sales_commodity_data || {});
@@ -138,7 +144,7 @@
 </script>
 <br/>
 
-	<div class="row" style="display: inline-block;" >
+	<div class="row">
 		<div class="top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
 				<div class="tile-stats" style="border-radius: 15px;">
@@ -194,6 +200,21 @@
 					<div class="count _money_tag" id="totalSC">{{ dcf_form2FOsc[0]['total_sc'] | int }}</div>
 					<h3>SC</h3>
 					<p>Total # of FO members by Sector.</p>
+				</div>
+			</div>
+
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats" style="border-radius: 15px;">
+					<div class="count _money_tag" id="totalFOcpa">{{ dcf_form2FOcpa[0]['total_with_agreement']}}</div>
+					<h3>FO with CPA</h3>
+					<p>Total # of FO with CPA.</p>
+				</div>
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+				<div class="tile-stats" style="border-radius: 15px;">
+					<div class="count _money_tag" id="totalAnchorFirms">{{ dcf_form2AFcpa[0]['total_af_with_agreement']}}</div>
+					<h3>AF with CPA</h3>
+					<p>Total # of Anchor Firms with CPA.</p>
 				</div>
 			</div>
 		</div>
@@ -259,11 +280,11 @@
 						</tr>
 						<tr>
 						<td style="width: 60%; text-align: center; vertical-align: middle;">
-							<canvas id="canvasDoughnut" style="width: 350px; height: 350px;"></canvas>
+							<canvas id="canvasDoughnut"></canvas>
 						</td>
 						<td style="vertical-align: top;">
 							<table class="tile_info" id="commodityLegend">
-							{% set square_colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"] %}
+							{% set square_colors = ["#ff8080","#00bfff","#0099cc","#007399","#004d66"] %}
 							{% for key in over_all_commodity_count2 %}
 							{% set color_index = loop.index0 % square_colors|length %}
 							<tr>
@@ -279,6 +300,31 @@
 						</td>
 						</tr>
 					</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 col-sm-6 " style="display: flex; flex-wrap: wrap;">
+				<div class="x_panel" style="border-radius: 15px;">
+					<div class="x_title">
+						<h2>Types of Agreements <small>Bar Chart</small></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">Settings 1</a>
+									<a class="dropdown-item" href="#">Settings 2</a>
+								</div>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content chart-tall" style="min-height: 300px;">
+						<canvas id="agreementTypesBarChart" style="min-height: 300px;"></canvas>
 					</div>
 				</div>
 			</div>
@@ -341,7 +387,7 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12">
 						<p>Sales per Commodity per Product Type</p>
-						<canvas id="commodityBarChart"></canvas>
+						<canvas id="commodityBarChart" ></canvas>
 					</div>
 				</div>
 			</div>
@@ -367,11 +413,11 @@
 										label: 'Commodity Count',
 										data: values,
 										backgroundColor: [
-											'#f39c12', // Coconut
-											'#2ecc71', // Cacao
-											'#3498db', // Coffee
-											'#9b59b6', // PFN
-											'#95a5a6'  // Others
+											"#33ccff",
+											"#00bfff",
+											"#0099cc",
+											"#007399",
+											"#004d66"
 										],
 										borderWidth: 1
 									}]
@@ -404,7 +450,7 @@
 						let doughnutChart = null;
 						function init_chart_doughnut(labels, data) {
 							const ctx = document.getElementById('canvasDoughnut').getContext('2d');
-							const colors = ["#BDC3C7", "#5c5c3d", "#994d00", "#331a00", "#23a98c"];
+							const colors = ["#ff8080","#00bfff","#0099cc","#007399","#004d66"];
 							if (doughnutChart) {
 								doughnutChart.data.labels = labels;
 								doughnutChart.data.datasets[0].data = data;
@@ -453,6 +499,55 @@
 								`;
 							}
 						}
+
+						let agreementTypesChart = null;
+						function initAgreementTypesBarChart(agreementData) {
+							const resolvedData = agreementData ?? {{ form2_agreement_types_count | tojson }};
+							const labels = Object.keys(resolvedData || {});
+							const data = Object.values(resolvedData || {});
+							const colors = ["#33ccff","#00bfff","#0099cc","#ff8080","#007399","#004d66"];
+							
+							const ctx = document.getElementById('agreementTypesBarChart');
+							if (!ctx) return;
+							
+							const ctxContext = ctx.getContext('2d');
+							
+							if (agreementTypesChart) {
+								agreementTypesChart.destroy();
+							}
+							
+							agreementTypesChart = new Chart(ctxContext, {
+								type: 'bar',
+								data: {
+									labels: labels,
+									datasets: [{
+										label: 'Count: ',
+										data: data,
+										backgroundColor: colors.slice(0, labels.length),
+										borderWidth: 1
+									}]
+								},
+								options: {
+										responsive: true,
+										maintainAspectRatio: false,
+										layout: {
+											padding: {
+												top: 8,
+												right: 8,
+												bottom: 8,
+												left: 8
+											}
+										},
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }]
+                                        }
+                                    }
+								});
+							}
 
 						let polarChartInstance = null;
 						function updatePolarChart(cancelled, ongoing, nonrenewal) {
@@ -672,7 +767,7 @@
 
 																<br>
 
-																<a class="EMBED_OUTER_LINK" style="color: yellow; cursor: pointer;" alt="/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&id={{ row['id'] }}" class="add-sales-button" data-id="{{ row['id'] }}">
+																<a class="EMBED_OUTER_LINK" style="color: rgb(0, 110, 255); cursor: pointer;" alt="/mis-v4/core-tracker-sales?tbl=dcf_implementing_unit&id={{ row['id'] }}" class="add-sales-button" data-id="{{ row['id'] }}">
 																	<span><i class="fa fa-pencil-square-o"></i></span> Add Sales
 																</a>&nbsp;&nbsp;
 
@@ -689,7 +784,7 @@
 																	<span><i class="fa fa-eye" aria-hidden="true"></i></span> View
 																</a>&nbsp;&nbsp;
 																{% endif %}
-																<a class="EMBED_OUTER_LINK" style="color: #ede7e3; cursor: pointer;" alt="/mis-v4/core-file-manager?dbtbl=dcf_implementing_unit&r_id={{ row['id'] }}" class="mov-button" data-id="{{ row['id'] }}">
+																<a class="EMBED_OUTER_LINK" style="color: #a258f7; cursor: pointer;" alt="/mis-v4/core-file-manager?dbtbl=dcf_implementing_unit&r_id={{ row['id'] }}" class="mov-button" data-id="{{ row['id'] }}">
 																	<span><i class="fa fa-user-plus"></i></span> Mov
 																  </a>&nbsp;&nbsp;
 																<a class="EMBED_OUTER_LINK" style="color: #33cccc; cursor: pointer;" alt="/mis-v4/core-table-sales-tracker?tbl=dcf_implementing_unit&id={{ row['id'] }}" class="view-sales-button" data-id="{{ row['id'] }}">
