@@ -670,7 +670,8 @@ class _main:
             except IndexError:
                 # flash("I am here!", "error")
                 flash("Invalid file template!", "error")
-
+            except Exception as e:
+                flash(f"Upload failed: {str(e)}", "error")
         return redirect("/dcfspreadsheet")
 
     def safe_get(row, idx, default=None):

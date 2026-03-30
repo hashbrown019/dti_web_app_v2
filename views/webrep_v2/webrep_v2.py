@@ -717,6 +717,8 @@ class _main:
     @app.route("/webrep_v2/articles",methods=["POST","GET"])
     def articles():
         user_data = ''
+        isAdmin = True
+        
         if 'USER_DATA' in session:
                 user_data = session['USER_DATA'][0]
         else:
@@ -744,8 +746,9 @@ class _main:
             str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"
 
         if user_data['job']!="Super Admin":
-                str_query += f" AND USER_ID={user_data['id']}"
-        
+            str_query += f" AND USER_ID={user_data['id']}"
+            isAdmin = False
+            
         # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
         articles = db.select("SELECT * FROM webrep_articles_v2 WHERE removed=0 {} ORDER BY id DESC ".format(str_query))
         
@@ -760,6 +763,7 @@ class _main:
             region_selected = region,
             search_query = search,
             is_session =_main.is_on_session(),
+            isAdmin = isAdmin
         )
     
     @app.route("/webrep_v2/whoweare",methods=["POST","GET"])
