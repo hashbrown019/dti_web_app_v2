@@ -415,31 +415,36 @@
                 var userData = response.user_detail;
                 var tableBody = '';
                 // var counter = 1;
-                data.forEach(function(item) {
-                    tableBody += '<tr style="font-size:12px;">';
-                    tableBody += '<td>' + item.MGI_ID + '</td>';
-                    tableBody += '<td>' + item.ImpUnits_RCU + '</td>';
-                    tableBody += '<td>' + item.ImpUnits_PCU + '</td>';
-                    tableBody += '<td>' + item.DIP_Commodity + '</td>';
-                    tableBody += '<td>' + item.DIP_Name + '</td>';
-                    tableBody += '<td>' + item.Name + '</td>';
-                        
-                    if ( item.MGI_Type=='fo' ){
-                        if ( item.UploadedBy==userData.id ){
-                            tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=fo&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a> <a href="/mis-v4/core-mg-implementation-form?form=fo&action=edit&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a> <button class="btn btn-xs btn-outline-danger mgi_delete_item" data-type="fo" data-id="'+item.MGI_ID+'"><i class="fa fa-trash"></i></button></td>';
-                        }else {
-                            tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=fo&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a></td>';
+                if ( data.length === 0 ){
+                    tableBody = '<tr><td colspan="7" class="text-center">No data available</td></tr>';
+                }else{
+                    data.forEach(function(item) {
+                        tableBody += '<tr style="font-size:12px;">';
+                        tableBody += '<td>' + item.MGI_ID + '</td>';
+                        tableBody += '<td>' + item.ImpUnits_RCU + '</td>';
+                        tableBody += '<td>' + item.ImpUnits_PCU + '</td>';
+                        tableBody += '<td>' + item.DIP_Commodity + '</td>';
+                        tableBody += '<td>' + item.DIP_Name + '</td>';
+                        tableBody += '<td>' + item.Name + '</td>';
+                            
+                        if ( item.MGI_Type=='fo' ){
+                            if ( item.UploadedBy==userData.id ){
+                                tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=fo&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a> <a href="/mis-v4/core-mg-implementation-form?form=fo&action=edit&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a> <button class="btn btn-xs btn-outline-danger mgi_delete_item" data-type="fo" data-id="'+item.MGI_ID+'"><i class="fa fa-trash"></i></button></td>';
+                            }else {
+                                tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=fo&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a></td>';
+                            }
+                        }else{
+                            if ( item.UploadedBy==userData.id ){
+                                tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=shf&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a> <a href="/mis-v4/core-mg-implementation-form?form=shf&action=edit&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a> <button class="btn btn-xs btn-outline-danger mgi_delete_item" data-type="shf" data-id="'+item.MGI_ID+'"><i class="fa fa-trash"></i></button></td>';
+                            }else {
+                                tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=shf&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a></td>';
+                            }
                         }
-                    }else{
-                        if ( item.UploadedBy==userData.id ){
-                            tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=shf&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a> <a href="/mis-v4/core-mg-implementation-form?form=shf&action=edit&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a> <button class="btn btn-xs btn-outline-danger mgi_delete_item" data-type="shf" data-id="'+item.MGI_ID+'"><i class="fa fa-trash"></i></button></td>';
-                        }else {
-                            tableBody += '<td class="text-end"><a href="/mis-v4/core-mg-implementation-form?form=shf&action=view&id='+item.MGI_ID+'" class="btn btn-xs btn-outline-info"><i class="fa fa-eye"></i></a></td>';
-                        }
-                    }
 
-                    tableBody += '</tr>';
-                });
+                        tableBody += '</tr>';
+                    });
+                }
+                
                 $('#mgi_table tbody').html(tableBody);
                 $('#loadDataBtn').children('i').removeClass('fa-spin');
             },

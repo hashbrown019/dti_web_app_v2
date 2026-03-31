@@ -1,3 +1,5 @@
+from multiprocessing import connection
+
 from flask import Blueprint, abort, flash, render_template, render_template_string, request, session, redirect, jsonify, send_file, send_from_directory, Response
 from flask_session import Session
 from modules.Connections import mysql
@@ -499,6 +501,7 @@ class _main:
         dip_files = _main.get_tools_files('Detailed Investment Plan Guide')
         diagnostictools_files = _main.get_tools_files('Enterprise Diagnostic Tools')
         mg_files = _main.get_tools_files('Matching Grant Guidelines')
+        pim2025_files = _main.get_tools_files('Project Implementation Manual (2025)')
         
         return render_template(
             "knowledge_and_data/knowledge_and_data.html",
@@ -507,7 +510,8 @@ class _main:
             active_bar = "knowledge_and_data",
             dip_files = dip_files,
             diagnostictools_files = diagnostictools_files,
-            mg_files = mg_files
+            mg_files = mg_files,
+            pim2025_files = pim2025_files
         )
     
     @app.route("/webrep_v2/stories",methods=["POST","GET"])
@@ -785,6 +789,27 @@ class _main:
             # return "No User data! Please login first.", 400
             return redirect("/login?next=/webrep_v2/article/create")
 
+        id = request.args.get("ids")
+        if id:
+            article = db.select("SELECT * FROM webrep_articles_v2 WHERE id='{}'".format(id))
+            if article:
+                article = article[0]
+                if article['USER_ID'] != user_data['id'] and user_data['job']!="Super Admin":
+                    return "You don't have permission to edit this article.", 403
+                article['postheader'] = urllib.parse.unquote(article['postheader'])
+                article['postContent'] = urllib.parse.unquote(article['postContent'])
+                article['postAuthor'] = urllib.parse.unquote(article['postAuthor'])
+                article['postRcu'] = urllib.parse.unquote(article['postRcu'])
+                return render_template(
+                    "admin/create_article.html",
+                    user_data = session['USER_DATA'][0],
+                    active_bar = "stories",
+                    g_site_key = g_site_key,
+                    article = article
+                )
+            else:
+                return "Article not found.", 404
+            
         return render_template(
             "admin/create_article.html",
             user_data = session['USER_DATA'][0],
@@ -837,7 +862,7 @@ class _main:
 
         __f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
         data["file_name"] = __f["file_arr_str"]
-
+            
         is_exist = len(db.select("SELECT * FROM `webrep_articles_v2` WHERE `id` ='{}' ;".format(request.form['id'])))
         columns = []
         values = []
@@ -866,10 +891,28 @@ class _main:
             
         else:
             print(" >> Editing Articles")
-            for datum in data:
-                args += ",`{}`='{}'".format(datum,data[datum])
-            sql = "UPDATE `webrep_articles_v2` SET  {}, `status`='pending' WHERE `id`='{}';".format(args[1:],request.form['id'])
-            pass
+            
+            if data.get("file_name") == "":
+             del data["file_name"]
+
+            # Decode URL-encoded strings
+            for key, value in list(data.items()):
+                if isinstance(value, str):
+                    data[key] = urllib.parse.unquote(value)
+
+            # Build dynamic SET clause
+            set_clause = ", ".join([f"`{key}`=%s" for key in data.keys()])
+
+            # Construct SQL with placeholders
+            sql = f"UPDATE `webrep_articles_v2` SET {set_clause}, `status`='pending' WHERE `id`=%s"
+
+            # Values in the same order as keys, plus the id
+            values = list(data.values()) + [request.form['id']]
+
+            # # Execute safely
+            # cursor.execute(sql, values)
+            # connection.commit()
+
         
         last_row_id = db.do(sql,values)
         return jsonify({"last_row_id":last_row_id,"FILES":__f})

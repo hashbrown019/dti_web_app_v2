@@ -7,20 +7,23 @@
             <div class="col-12">
                 <ul class="nav nav-tabs tools-nav inter-regular" id="tools-nav" role="tablist">
                     <li class="nav-item">
-                        <button class="nav-link active" id="tab1-tab"  data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Detailed Investment Plan Guide</button>
+                        <button class="nav-link active text-start" id="tab1-tab"  data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Detailed Investment<br>Plan Guide</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" id="tab2-tab"  data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="true">Enterprise Diagnostic Tools</button>
+                        <button class="nav-link text-start" id="tab2-tab"  data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="true">Enterprise<br>Diagnostic Tools</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" id="tab3-tab"  data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="true">Matching Grant Guidelines</button>
+                        <button class="nav-link text-start" id="tab3-tab"  data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="true">Matching Grant<br>Guidelines</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link text-start" id="tab4-tab"  data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="true">Project Implementation<br>Manual (2025)</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="tools-nav-content">
                     <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                         <div class="row mt-5 inter-regular ">
                             {% for file_name in dip_files %}
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-4 col-12 mb-3">
                                 <div class="row">
                                     <div class="col-2 text-center">
                                         {% if file_name.endswith(('.pdf')) %}
@@ -38,7 +41,7 @@
                     <div class="tab-pane fade " id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                         <div class="row mt-5 inter-regular ">
                             {% for file_name in diagnostictools_files %}
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-4 col-12 mb-3">
                                 <div class="row mt-3">
                                     <div class="col-2 text-center">
                                         {% if file_name.endswith(('.pdf')) %}
@@ -58,7 +61,7 @@
                     <div class="tab-pane fade " id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
                         <div class="row mt-5 inter-regular ">
                             {% for file_name in mg_files %}
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-4 col-12 mb-3">
                                 <div class="row">
                                     <div class="col-2 text-center">
                                         {% if file_name.endswith(('.pdf')) %}
@@ -67,6 +70,24 @@
                                     </div>
                                     <div class="col-10">
                                         <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Matching Grant Guidelines/'+file_name) }}">{{ file_name }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                        <div class="row mt-5 inter-regular ">
+                            {% for file_name in pim2025_files %}
+                            <div class="col-md-4 col-12 mb-3">
+                                <div class="row">
+                                    <div class="col-2 text-center">
+                                        {% if file_name.endswith(('.pdf')) %}
+                                            <i class="fa fa-file-pdf text-danger font-24"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-10">
+                                        <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Project Implementation Manual (2025)/'+file_name) }}">{{ file_name }}</a>
                                     </div>
                                 </div>
                             </div>

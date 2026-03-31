@@ -36,9 +36,9 @@
 					<div class="col-12">
 						<label for="posttype" class="form-label small fw-bolder">Content</label>
 						<select class="article_form form-select" id="posttype" required>
-							<option>News</option>
-							<option>Story</option>
-							<option>Event</option>
+							<option value="News" {% if article and article['posttype'] == 'News' %}selected{% endif %}>News</option>
+							<option value="Story" {% if article and article['posttype'] == 'Story' %}selected{% endif %}>Story</option>
+							<option value="Event" {% if article and article['posttype'] == 'Event' %}selected{% endif %}>Event</option>
 						</select>
 						<div class="invalid-feedback">
 							Please select a Content.
@@ -47,11 +47,11 @@
 					<div class="col-12">
 						<label for="Unit" class="form-label small fw-bolder">Commodity</label>
 						<select class="article_form form-select" id="postCategory" required>
-							<option>All</option>
-							<option>Coffee</option>
-							<option>Cacao</option>
-							<option>Coconut</option>
-							<option>Processed Fruits & Nuts</option>
+							<option value="All">All</option>
+							<option value="Coffee" {% if article and article['postCategory'] == 'Coffee' %}selected{% endif %}>Coffee</option>
+							<option value="Cacao" {% if article and article['postCategory'] == 'Cacao' %}selected{% endif %}>Cacao</option>
+							<option value="Coconut" {% if article and article['postCategory'] == 'Coconut' %}selected{% endif %}>Coconut</option>
+							<option value="Processed Fruits & Nuts" {% if article and article['postCategory'] == 'Processed Fruits & Nuts' %}selected{% endif %}>Processed Fruits & Nuts</option>
 						</select>
 						<div class="invalid-feedback">
 							Please select a Category.
@@ -60,14 +60,14 @@
 					<div class="col-12">
 						<label for="Unit" class="form-label small fw-bolder">RCU's</label>
 						<select class="article_form form-select" id="postRcu" required>
-							<option>NPCO</option>
-							<option>RCU VIII</option>
-							<option>RCU IX</option>
-							<option>RCU X</option>
-							<option>RCU XI</option>
-							<option>RCU XII</option>
-							<option>RCU XIII</option>
-							<option>BARMM</option>
+							<option value="NPCO" {% if article and article['postRcu'] == 'NPCO' %}selected{% endif %}>NPCO</option>
+							<option value="RCU VIII" {% if article and article['postRcu'] == 'RCU VIII' %}selected{% endif %}>RCU VIII</option>
+							<option value="RCU IX" {% if article and article['postRcu'] == 'RCU IX' %}selected{% endif %}>RCU IX</option>
+							<option value="RCU X" {% if article and article['postRcu'] == 'RCU X' %}selected{% endif %}>RCU X</option>
+							<option value="RCU XI" {% if article and article['postRcu'] == 'RCU XI' %}selected{% endif %}>RCU XI</option>
+							<option value="RCU XII" {% if article and article['postRcu'] == 'RCU XII' %}selected{% endif %}>RCU XII</option>
+							<option value="RCU XIII" {% if article and article['postRcu'] == 'RCU XIII' %}selected{% endif %}>RCU XIII</option>
+							<option value="BARMM" {% if article and article['postRcu'] == 'BARMM' %}selected{% endif %}>BARMM</option>
 						</select>
 						<div class="invalid-feedback">
 							Please select a Category.
@@ -86,7 +86,7 @@
 							</div>
 						</div>
 					</div>
-					<div style="display:none">8
+					<div style="display:none">
 						<input class="article_form form-check-input" type="checkbox" id="sameName" value="" aria-label="sameName" checked>
 						<span class="small fw-lighter ">check if author & publisher has the same name?</span>
 					</div>
@@ -96,15 +96,15 @@
 				<form class="row g-3 needs-validation texttheme" id="form_for_createPost2">
 					<div class="col-md-12">
 						<label for="postheader" class="form-label small fw-bolder">Create heading title</label>
-						<input class="article_form form-control" id="postheader" rows="3"></input>
+						<input class="article_form form-control" id="postheader" rows="3" value="{{ article.postheader }}"></input>
 						<div class="invalid-feedback">
 							Please provide heading title.
 						</div>
 					</div>
 
 					<div class="col-md-12">
-						<label for="postdescription" class="form-label small fw-bolder">Content description</label>
-						<input class="article_form form-control" id="postdescription" rows="3"></input>
+						<label for="postdescription" class="form-label small fw-bolder" >Content description</label>
+						<input class="article_form form-control" id="postdescription" rows="3" value="{{ article.postdescription }}"></input>
 						<div class="invalid-feedback">
 							Please provide heading title.
 						</div>
@@ -112,7 +112,7 @@
 
 					<div class="col-12">
 						<label for="postContent" class="form-label small fw-bolder">Add text content</label>
-						<textarea class="article_form form-control" id="postContent" rows="3" style="height: 200px;"></textarea>
+						<textarea class="article_form form-control" id="postContent" rows="3" style="height: 200px;" >{{ article.postContent }}</textarea>
 						<div class="invalid-feedback">
 							Please provide a text content.
 						</div>
@@ -125,14 +125,14 @@
 					</div>
 					<div class="col-md-12">
 						<label for="postcaption" class="form-label small fw-bolder">Photo/video caption</label>
-						<input class="article_form form-control" id="postcaption" rows="3" placeholder="(e.g.,This is an example caption on this photo. Photo by Coco Martin.)"></input>
+						<input class="article_form form-control" id="postcaption" rows="3" placeholder="(e.g.,This is an example caption on this photo. Photo by Coco Martin.)" value="{{ article.postcaption }}"></input>
 						<div class="invalid-feedback">
 							Please provide an Authur name.
 						</div>
 					</div>
 					<div class="col-md-12">
 						<label for="posttags" class="form-label small fw-bolder">Tags:</label>
-						<input class="article_form form-control" id="posttags" rows="3" list="datalistOptions" placeholder="Coffee, Region XII, Coffee Event,"></input>
+						<input class="article_form form-control" id="posttags" rows="3" list="datalistOptions" placeholder="Coffee, Region XII, Coffee Event," value="{{ article.posttags }}"></input>
 						<datalist id="datalistOptions">
 							<option value="Stories from the fields">
 							<option value="MSME stories">
@@ -147,7 +147,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<label for="postdate" class="form-label small fw-bolder">Date:</label>
-								<input class="article_form form-control" id="datePosted" ></input>
+								<input class="article_form form-control" id="datePosted" type="date" value="{{ article.datePosted }}">
 								<div class="invalid-feedback">
 									Please provide a valid date.
 								</div>
@@ -165,7 +165,7 @@
 						</div>
 						
 					</div>
-					<input type="" id="id" class="article_form" style="display: none;">
+					<input type="" id="id" class="article_form" value="{{ article.id }}" style="display: none;">
 				</form>
 				<div class="mt-5">
 					
@@ -192,7 +192,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-				<button type="button" class="btn btn-primary" onclick="window.history.back()">Continue</button>
+				<a href="/webrep_v2/articles" type="button" class="btn btn-primary" >Continue</a>
 			</div>
 		</div>
 	</div>
