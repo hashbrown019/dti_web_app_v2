@@ -27,12 +27,12 @@ def get_databases():
 	return tbl
 
 
-def get_area_staff():
+def get_area_staff(limit=100, offset=0):
 	# return session["USER_DATA"]
 	if(session["USER_DATA"][0]["security_group"] in [1,19]):
-		return rapid_mysql.select("SELECT * FROM `users` ;")
+		return rapid_mysql.select("SELECT * FROM `users` LIMIT {} OFFSET {};".format(limit, offset))
 
-	return rapid_mysql.select("SELECT * FROM `users` WHERE `rcu`='{}' AND `status`='active' ;".format(session["USER_DATA"][0]['rcu']) )
+	return rapid_mysql.select("SELECT * FROM `users` WHERE `rcu`='{}' AND `status`='active' LIMIT {} OFFSET {};".format(session["USER_DATA"][0]['rcu'], limit, offset))
 
 def get_security_group():
 	return rapid_mysql.select("SELECT `_securitygroup`.*, `users`.`id` as 'by' , `users`.`name` FROM `_securitygroup` INNER JOIN `users` ON `_securitygroup`.`created_by`= `users`.`id` ;" )
@@ -90,7 +90,7 @@ def fmi_list(sesh):
 # ================================================
 # ================================================
 
-def folder_list(sesh):
+def folder_list(sesh, limit=100, offset=0):
 	return rapid_mysql.select('''
 		SELECT 
 			`users`.`id` as 'inputed_by_id',
@@ -100,9 +100,10 @@ def folder_list(sesh):
 			`file_manager_folders`.* 
 		FROM `file_manager_folders`
 		INNER JOIN `users` ON `file_manager_folders`.`created_by` = `users`.`id`
-	''')
+		LIMIT {} OFFSET {}
+	'''.format(limit, offset))
 
-def file_list(sesh):
+def file_list(sesh, limit=100, offset=0):
 	return rapid_mysql.select('''
 		SELECT
 			`users`.`id` as 'inputed_by_id',
@@ -112,7 +113,8 @@ def file_list(sesh):
 			`file_manager_files`.* 
 		FROM `file_manager_files` 
 		INNER JOIN `users` ON `file_manager_files`.`uploaded_by` = `users`.`id`
-	;''')
+		LIMIT {} OFFSET {}
+	;'''.format(limit, offset))
 
 # ================================================
 # ================================================

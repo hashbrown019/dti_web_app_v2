@@ -207,7 +207,7 @@ class _main:
 		session.clear()
 		if 'urlvisit' in request.args:
 			return redirect("/login_v2023?ver=dti_rapidgrowth_mis_2023&urlvisit="+request.args['urlvisit'])
-		return redirect("/webrep")
+		return redirect("/")
 		# return jsonify(session )
 
 	@app.route("/get_session")
