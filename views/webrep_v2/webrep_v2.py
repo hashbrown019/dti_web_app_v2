@@ -490,15 +490,20 @@ class _main:
         base_path = os.path.join('static', 'pdf', 'tools')
         directory_path = os.path.join(base_path, directory)
 
+        print(f"Checking directory: {directory_path}")
         if not os.path.exists(directory_path):
+            print("Directory does NOT exist!")
             return []
 
+        print("Directory exists, walking files...")
         for root, dirs, files in os.walk(directory_path):
             for file in files:
                 relative_path = os.path.relpath(os.path.join(root, file), base_path)
                 # Normalize to forward slashes for URLs
                 relative_path = relative_path.replace("\\", "/")
                 files_list.append(relative_path)
+
+        print(f"Files found: {files_list}")
         return files_list
 
     @app.route("/webrep_v2/knowledge_and_data",methods=["POST","GET"])
