@@ -754,8 +754,8 @@ class _main:
                 return redirect("/login?next=/webrep_v2/article/create")
             
             posttype = request.args.get("posttype", "all")
-            commodities = request.args.getlist("commodities", "all")
-            region = request.args.getlist("region", "all")
+            commodities = request.args.get("commodity", "all")
+            region = request.args.get("region", "all")
             status = request.args.get("status", "all")
             search = request.args.get("search", "").strip()
             
