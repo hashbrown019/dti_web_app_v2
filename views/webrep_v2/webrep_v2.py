@@ -487,11 +487,17 @@ class _main:
     
     def get_tools_files(directory=''):
         files_list = []
-        directory_path = 'static/pdf/tools/'+directory
+        base_path = os.path.join('static', 'pdf', 'tools')
+        directory_path = os.path.join(base_path, directory)
+
+        if not os.path.exists(directory_path):
+            return []
+
         for root, dirs, files in os.walk(directory_path):
             for file in files:
-                # Create a path relative to the static directory
-                relative_path = os.path.relpath(os.path.join(root, file), directory_path)
+                relative_path = os.path.relpath(os.path.join(root, file), base_path)
+                # Normalize to forward slashes for URLs
+                relative_path = relative_path.replace("\\", "/")
                 files_list.append(relative_path)
         return files_list
 
