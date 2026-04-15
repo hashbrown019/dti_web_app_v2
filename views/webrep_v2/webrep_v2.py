@@ -498,21 +498,28 @@ class _main:
     @app.route("/webrep_v2/knowledge_and_data",methods=["POST","GET"])
     def knowledge_and_data():
         
-        dip_files = _main.get_tools_files('Detailed Investment Plan Guide')
-        diagnostictools_files = _main.get_tools_files('Enterprise Diagnostic Tools')
-        mg_files = _main.get_tools_files('Matching Grant Guidelines')
-        pim2025_files = _main.get_tools_files('Project Implementation Manual (2025)')
-        
-        return render_template(
-            "knowledge_and_data/knowledge_and_data.html",
-            is_session =_main.is_on_session(),
-            g_site_key = g_site_key,
-            active_bar = "knowledge_and_data",
-            dip_files = dip_files,
-            diagnostictools_files = diagnostictools_files,
-            mg_files = mg_files,
-            pim2025_files = pim2025_files
-        )
+        try:
+            dip_files = _main.get_tools_files('Detailed Investment Plan Guide')
+            diagnostictools_files = _main.get_tools_files('Enterprise Diagnostic Tools')
+            mg_files = _main.get_tools_files('Matching Grant Guidelines')
+            pim2025_files = _main.get_tools_files('Project Implementation Manual 2025')
+            
+            return render_template(
+                "knowledge_and_data/knowledge_and_data.html",
+                is_session =_main.is_on_session(),
+                g_site_key = g_site_key,
+                active_bar = "knowledge_and_data",
+                dip_files = dip_files,
+                diagnostictools_files = diagnostictools_files,
+                mg_files = mg_files,
+                pim2025_files = pim2025_files
+            )
+        except Exception as e:
+            return render_template(
+                "error/error.html",
+                message = "An error occurred while loading the Knowledge and Data page.",
+                error = str(e)
+            )
     
     @app.route("/webrep_v2/stories",methods=["POST","GET"])
     def stories():
@@ -724,53 +731,62 @@ class _main:
         user_data = ''
         isAdmin = True
         
-        if 'USER_DATA' in session:
-                user_data = session['USER_DATA'][0]
-        else:
-            # return "No User data! Please login first.", 400
-            return redirect("/login?next=/webrep_v2/article/create")
-        
-        posttype = request.args.get("posttype", "all")
-        commodities = request.args.getlist("commodities", "all")
-        region = request.args.getlist("region", "all")
-        status = request.args.get("status", "all")
-        search = request.args.get("search", "").strip()
-        
-        str_query = ""
-        if posttype != "all":
-            str_query += f" AND posttype='{posttype}'"
-        if status != "all":
-            str_query += f" AND status='{status}'"
-        if commodities:
-            quoted = ",".join(f"'{c}'" for c in commodities)
-            str_query += f" AND postCategory IN ({quoted})"
-        if region:
-            quoted_rcu = ",".join(f"'{r}'" for r in region)
-            str_query += f" AND postRcu IN ({quoted_rcu})"
-        if search:
-            str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"
+        try:
 
-        if user_data['job']!="Super Admin":
-            str_query += f" AND USER_ID={user_data['id']}"
-            isAdmin = False
+            if 'USER_DATA' in session:
+                    user_data = session['USER_DATA'][0]
+            else:
+                # return "No User data! Please login first.", 400
+                return redirect("/login?next=/webrep_v2/article/create")
             
-        # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
-        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE removed=0 {} ORDER BY id DESC ".format(str_query))
+            posttype = request.args.get("posttype", "all")
+            commodities = request.args.getlist("commodities", "all")
+            region = request.args.getlist("region", "all")
+            status = request.args.get("status", "all")
+            search = request.args.get("search", "").strip()
+            
+            str_query = ""
+            if posttype != "all":
+                str_query += f" AND posttype='{posttype}'"
+            if status != "all":
+                str_query += f" AND status='{status}'"
+            if commodities:
+                quoted = ",".join(f"'{c}'" for c in commodities)
+                str_query += f" AND postCategory IN ({quoted})"
+            if region:
+                quoted_rcu = ",".join(f"'{r}'" for r in region)
+                str_query += f" AND postRcu IN ({quoted_rcu})"
+            if search:
+                str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"
+
+            if user_data['job']!="Super Admin":
+                str_query += f" AND USER_ID={user_data['id']}"
+                isAdmin = False
+                
+            # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
+            articles = db.select("SELECT * FROM webrep_articles_v2 WHERE removed=0 {} ORDER BY id DESC ".format(str_query))
+            
+            return render_template(
+                "admin/articles.html",
+                g_site_key = g_site_key,
+                active_bar = "stories",
+                articles = articles,
+                posttype_selected = posttype,
+                status_selected = status,
+                commodities_selected = commodities,
+                region_selected = region,
+                search_query = search,
+                is_session =_main.is_on_session(),
+                isAdmin = isAdmin
+            )
+        except Exception as e:
+            return render_template(
+                "error/error.html",
+                message="An unexpected error occurred while loading articles.",
+                error=str(e)
+            ), 500
+
         
-        return render_template(
-            "admin/articles.html",
-            g_site_key = g_site_key,
-            active_bar = "stories",
-            articles = articles,
-            posttype_selected = posttype,
-            status_selected = status,
-            commodities_selected = commodities,
-            region_selected = region,
-            search_query = search,
-            is_session =_main.is_on_session(),
-            isAdmin = isAdmin
-        )
-    
     @app.route("/webrep_v2/whoweare",methods=["POST","GET"])
     def about():
         return render_template(
@@ -815,6 +831,7 @@ class _main:
             user_data = session['USER_DATA'][0],
             active_bar = "stories",
             g_site_key = g_site_key,
+            article = None
         )
         
     # @app.route("/webrep_v2/upload_file_webrep",methods=["POST","GET"])

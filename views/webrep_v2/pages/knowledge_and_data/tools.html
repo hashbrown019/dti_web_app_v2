@@ -22,76 +22,100 @@
                 <div class="tab-content" id="tools-nav-content">
                     <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                         <div class="row mt-5 inter-regular ">
-                            {% for file_name in dip_files %}
-                            <div class="col-md-4 col-12 mb-3">
-                                <div class="row">
-                                    <div class="col-2 text-center">
-                                        {% if file_name.endswith(('.pdf')) %}
-                                            <i class="fa fa-file-pdf text-danger font-24"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-10">
-                                        <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Detailed Investment Plan Guide/'+file_name) }}">{{ file_name }}</a>
+                            {% if dip_files %}
+                                {% for file_name in dip_files %}
+                                <div class="col-md-4 col-12 mb-3">
+                                    <div class="row">
+                                        <div class="col-2 text-center">
+                                            {% if file_name.endswith(('.pdf')) %}
+                                                <i class="fa fa-file-pdf text-danger font-24"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-10">
+                                            <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Detailed Investment Plan Guide/'+file_name) }}">{{ file_name }}</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="col-12">
+                                    <p class="text-muted">No files available at the moment. Please check back later.</p>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="tab-pane fade " id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                         <div class="row mt-5 inter-regular ">
-                            {% for file_name in diagnostictools_files %}
-                            <div class="col-md-4 col-12 mb-3">
-                                <div class="row mt-3">
-                                    <div class="col-2 text-center">
-                                        {% if file_name.endswith(('.pdf')) %}
-                                            <i class="fa fa-file-pdf text-danger font-24"></i>
-                                        {% elif file_name.endswith(('.doc','.docx')) %}
-                                            <i class="fa fa-file-word text-primary font-24"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-10">
-                                        <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Enterprise Diagnostic Tools/'+file_name) }}">{{ file_name }}</a>
+                            {% if diagnostictools_files %}
+                                {% for file_name in diagnostictools_files %}
+                                <div class="col-md-4 col-12 mb-3">
+                                    <div class="row mt-3">
+                                        <div class="col-2 text-center">
+                                            {% if file_name.endswith(('.pdf')) %}
+                                                <i class="fa fa-file-pdf text-danger font-24"></i>
+                                            {% elif file_name.endswith(('.doc','.docx')) %}
+                                                <i class="fa fa-file-word text-primary font-24"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-10">
+                                            <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Enterprise Diagnostic Tools/'+file_name) }}">{{ file_name }}</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="col-12">
+                                    <p class="text-muted">No files available at the moment. Please check back later.</p>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="tab-pane fade " id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
                         <div class="row mt-5 inter-regular ">
-                            {% for file_name in mg_files %}
-                            <div class="col-md-4 col-12 mb-3">
-                                <div class="row">
-                                    <div class="col-2 text-center">
-                                        {% if file_name.endswith(('.pdf')) %}
-                                            <i class="fa fa-file-pdf text-danger font-24"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-10">
-                                        <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Matching Grant Guidelines/'+file_name) }}">{{ file_name }}</a>
+                            {% if mg_files %}
+                                {% for file_name in mg_files %}
+                                <div class="col-md-4 col-12 mb-3">
+                                    <div class="row">
+                                        <div class="col-2 text-center">
+                                            {% if file_name.endswith(('.pdf')) %}
+                                                <i class="fa fa-file-pdf text-danger font-24"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-10">
+                                            <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Matching Grant Guidelines/'+file_name) }}">{{ file_name }}</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="col-12">
+                                    <p class="text-muted">No files available at the moment. Please check back later.</p>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="tab-pane fade " id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
                         <div class="row mt-5 inter-regular ">
-                            {% for file_name in pim2025_files %}
-                            <div class="col-md-4 col-12 mb-3">
-                                <div class="row">
-                                    <div class="col-2 text-center">
-                                        {% if file_name.endswith(('.pdf')) %}
-                                            <i class="fa fa-file-pdf text-danger font-24"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-10">
-                                        <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Project Implementation Manual (2025)/'+file_name) }}">{{ file_name }}</a>
+                            {% if pim2025_files %}
+                                {% for file_name in pim2025_files %}
+                                <div class="col-md-4 col-12 mb-3">
+                                    <div class="row">
+                                        <div class="col-2 text-center">
+                                            {% if file_name.endswith(('.pdf')) %}
+                                                <i class="fa fa-file-pdf text-danger font-24"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-10">
+                                            <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/tools/Project Implementation Manual 2025/'+file_name) }}">{{ file_name }}</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="col-12">
+                                    <p class="text-muted">No files available at the moment. Please check back later.</p>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
