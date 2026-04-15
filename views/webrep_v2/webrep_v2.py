@@ -764,15 +764,19 @@ class _main:
                 str_query += f" AND posttype='{posttype}'"
             if status != "all":
                 str_query += f" AND status='{status}'"
-            if commodities:
-                quoted = ",".join(f"'{c}'" for c in commodities)
-                str_query += f" AND postCategory IN ({quoted})"
-            if region:
-                quoted_rcu = ",".join(f"'{r}'" for r in region)
-                str_query += f" AND postRcu IN ({quoted_rcu})"
+            if commodities != "all":
+                # quoted = ",".join(f"'{c}'" for c in commodities)
+                # str_query += f" AND postCategory IN ({quoted})"
+                str_query += f" AND postCategory = '{commodities}'"
+            if region != "all":
+                # quoted_rcu = ",".join(f"'{r}'" for r in region)
+                # str_query += f" AND postRcu IN ({quoted_rcu})"
+                str_query += f" AND postRcu='{region}'"
             if search:
                 str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"
 
+            
+            
             if user_data['job']!="Super Admin":
                 str_query += f" AND USER_ID={user_data['id']}"
                 isAdmin = False
