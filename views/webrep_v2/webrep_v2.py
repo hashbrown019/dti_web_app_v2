@@ -1,6 +1,6 @@
 from multiprocessing import connection
 
-from flask import Blueprint, abort, flash, render_template, render_template_string, request, session, redirect, jsonify, send_file, send_from_directory, Response
+from flask import Blueprint, abort, flash, render_template, render_template_string, request, session, redirect, jsonify, send_file, send_from_directory, Response, current_app
 from flask_session import Session
 from modules.Connections import mysql
 from modules.Req_Brorn_util import string_websafe as STRS
@@ -485,12 +485,15 @@ class _main:
         #     g_site_key = g_site_key,
         # )
     
+    
     def get_tools_files(directory=''):
         files_list = []
-        base_path = os.path.join('static', 'pdf', 'tools')
+        # Build absolute path from Flask's root
+        base_path = os.path.join(current_app.root_path, 'static', 'pdf', 'tools')
         directory_path = os.path.join(base_path, directory)
 
-        print(f"Checking directory: {directory_path}")
+        print(f"Checking directory: {directory_path}")  # Debug
+
         if not os.path.exists(directory_path):
             print("Directory does NOT exist!")
             return []
@@ -499,12 +502,12 @@ class _main:
         for root, dirs, files in os.walk(directory_path):
             for file in files:
                 relative_path = os.path.relpath(os.path.join(root, file), base_path)
-                # Normalize to forward slashes for URLs
-                relative_path = relative_path.replace("\\", "/")
+                relative_path = relative_path.replace("\\", "/")  # Normalize for URLs
                 files_list.append(relative_path)
 
         print(f"Files found: {files_list}")
         return files_list
+
 
     @app.route("/webrep_v2/knowledge_and_data",methods=["POST","GET"])
     def knowledge_and_data():
