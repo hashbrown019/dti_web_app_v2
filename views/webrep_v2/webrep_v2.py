@@ -505,18 +505,48 @@ class _main:
                 relative_path = relative_path.replace("\\", "/")  # Normalize for URLs
                 files_list.append(relative_path)
 
+        # Sort ascending (alphabetical)
+        files_list = sorted(files_list)
+    
         print(f"Files found: {files_list}")
         return files_list
 
+    def get_updates_files(directory=''):
+        files_list = []
+        # Build absolute path from Flask's root
+        base_path = os.path.join(current_app.root_path, 'static', 'pdf', 'updates_and_reports')
+        directory_path = os.path.join(base_path, directory)
+
+        print(f"Checking directory: {directory_path}")  # Debug
+
+        if not os.path.exists(directory_path):
+            print("Directory does NOT exist!")
+            return []
+
+        print("Directory exists, walking files...")
+        for root, dirs, files in os.walk(directory_path):
+            for file in files:
+                relative_path = os.path.relpath(os.path.join(root, file), base_path)
+                relative_path = relative_path.replace("\\", "/")  # Normalize for URLs
+                files_list.append(relative_path)
+        
+        # Sort ascending (alphabetical)
+        files_list = sorted(files_list)
+        
+        print(f"Files found: {files_list}")
+        return files_list
 
     @app.route("/webrep_v2/knowledge_and_data",methods=["POST","GET"])
     def knowledge_and_data():
         
         try:
+            updates_files = _main.get_updates_files('')
+            
             dip_files = _main.get_tools_files('Detailed Investment Plan Guide')
             diagnostictools_files = _main.get_tools_files('Enterprise Diagnostic Tools')
             mg_files = _main.get_tools_files('Matching Grant Guidelines')
             pim2025_files = _main.get_tools_files('Project Implementation Manual 2025')
+            vcdt_files = _main.get_tools_files('Value Chain Development Tools')
             
             return render_template(
                 "knowledge_and_data/knowledge_and_data.html",
@@ -526,7 +556,9 @@ class _main:
                 dip_files = dip_files,
                 diagnostictools_files = diagnostictools_files,
                 mg_files = mg_files,
-                pim2025_files = pim2025_files
+                pim2025_files = pim2025_files,
+                updates_files = updates_files,
+                vcdt_files = vcdt_files
             )
         except Exception as e:
             return render_template(

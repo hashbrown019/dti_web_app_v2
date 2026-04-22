@@ -1,0 +1,31 @@
+<section class="wr_project_dashboard sectionpad " id="updates_and_reports" style="padding-top: 200px!important; background: #DADADA;">
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <h2 class="inter-bold text-wp-primary">Project Updates & Reports</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% if updates_files %}
+                {% for file_name in updates_files %}
+                <div class="col-md-4 col-12 mb-3">
+                    <div class="row">
+                        <div class="col-2 text-center">
+                            {% if file_name.endswith(('.pdf')) %}
+                                <i class="fa fa-file-pdf text-danger font-24"></i>
+                            {% endif %}
+                        </div>
+                        <div class="col-10">
+                            <a class="text-wp-primary" href="{{ url_for('static', filename='pdf/updates_and_reports/' ~ file_name) }}" target="_blank">{{ file_name.split('/')[0] }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <p class="text-muted">No files available at the moment. Please check back later.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
