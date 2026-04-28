@@ -483,16 +483,22 @@ function download_excel(fff){
 		});
 	}
 
-	function popu__int_toData(res){
-		for (var i = 0; i < res.length; i++) {
-			if(parseInt(res[i][3]) != NaN ){
-				res[i][3] = TYPES_ORG[parseInt(res[i][3])]
-			}
-			if(parseInt(res[i][4]) != NaN ){
-				res[i][4] = REG_AGENCIES[parseInt(res[i][4])]
-			}
-		}
-		return res
+	function popu__int_toData(res) {
+		const mappings = [
+			{ index: 3, source: TYPES_ORG },
+			{ index: 4, source: REG_AGENCIES }
+		];
+
+		res.forEach(row => {
+			mappings.forEach(({ index, source }) => {
+				const value = parseInt(row[index]);
+				if (!isNaN(value) && source?.[value] !== undefined) {
+					row[index] = source[value];
+				}
+			});
+		});
+
+		return res;
 	}
 
 	function clear_form_field(){
