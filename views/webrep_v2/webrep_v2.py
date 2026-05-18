@@ -641,7 +641,7 @@ class _main:
         if search:
             str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"    
             
-        per_page = 6
+        per_page = 8
         offset = (page - 1) * per_page
 
         article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 ORDER BY id DESC LIMIT 3")
