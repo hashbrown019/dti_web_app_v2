@@ -1,0 +1,358 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+<div class="container" style="padding-top: 130px!important;">
+<!-- Back Arrow -->
+	<div class="container text-start mt-5">
+		<a class=" texttheme" onclick="window.history.back()">
+			<span><i class="fa-solid fa-arrow-left-long"></i></span>
+		</a>
+	</div>
+
+<!-- Title -->
+	<div class="container d-flex justify-content-between text-start mt-5">
+		<div class="container">
+			<h5 class="display-5 texttheme" >{{ 'Create Case Study' if not case_study else 'Edit Case Study' }}</h5>
+			<input type="text" id="id" class="article_form form-control" value="{{ case_study.id if case_study else '' }}" hidden style="border:0.1px">
+		</div>
+		<div id="submit_btn_handler" style="width: 360px;">
+			<button class="btn btn-outline-success btn-sm rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate" data-status="draft"  onclick="submit_article()">Save As Draft</button>
+			<button class="btn btn-success btn-sm rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate" data-status="for_approval" onclick="submit_article()">Save As For Approval</button>
+		</div>
+	</div>
+	<hr>
+
+<!-- Arcticle News -->
+	<div id="print_docx" class="container shadow-sm p-3 bg-body rounded mb-5">
+		<div class="container row">
+            <div class="col-md-4">
+                <div class="row">
+                    <h5 class="mt-4 mb-3 text-wp-primary"> <span class="text-wp-secondary ">Section 1 :</span> Basic Information</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_workingTitle" class="form-label small fw-bolder">Working Title</label>
+                        <input class="article_form form-control" id="basic_workingTitle" value="{{ ( case_study.basic_workingTitle if case_study else '' ) | urldecode_lines | safe }}" rows="3" placeholder=""></input>
+                        <div class="invalid-feedback">
+                            Please provide a Working Title.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_components" class="form-label small fw-bolder">Component/s</label>
+                        <input class="article_form form-control" id="basic_components" value="{{ ( case_study.basic_components if case_study else '' ) | urldecode_lines | safe }}" rows="3" placeholder=""></input>
+                        <div class="invalid-feedback">
+                            Please provide Component/s.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_author" class="form-label small fw-bolder">Author</label>
+                        <input class="article_form form-control" id="basic_author" value="{{ ( case_study.basic_author if case_study else '' ) | urldecode_lines | safe }}" rows="3" placeholder=""></input>
+                        <div class="invalid-feedback">
+                            Please provide an Author name.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_dateOfDocumentation" class="form-label small fw-bolder">Date of Documentation</label>
+                        <small class="text-muted float-end">YYYY-MM-DD</small>
+                        <input class="article_form form-control casestudy_dp" id="basic_dateOfDocumentation" type="text" value="{{ ( case_study.basic_dateOfDocumentation if case_study else '' ) | safe }}"  placeholder=""></input>
+                        <div class="invalid-feedback">
+                            Please provide the date of documentation.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_locationOfDocumentation" class="form-label small fw-bolder">Location of Documentation</label>
+                        <input class="article_form form-control" id="basic_locationOfDocumentation" value="{{ ( case_study.basic_locationOfDocumentation if case_study else '' ) | urldecode_lines | safe }}" rows="3" placeholder=""></input>
+                        <div class="invalid-feedback">
+                            Please provide the location of documentation.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+						<label for="rcu" class="form-label small fw-bolder">RCU</label>
+						<select class="border-dark article_form form-select" id="rcu" required>
+							<option value="NPCO" {% if user_data['rcu']=='NPCO' %}selected{% endif %}  {% if case_study and case_study['rcu'] | urldecode_lines  == 'NPCO' %}selected{% endif %}>NPCO</option>
+							<option value="RCU VIII" {% if user_data['rcu']=='RCU 8' %}selected{% endif %}  {% if case_study and case_study['rcu'] | urldecode_lines == 'RCU VIII' %}selected{% endif %}>RCU VIII</option>
+							<option value="RCU IX" {% if user_data['rcu']=='RCU 9' %}selected{% endif %}  {% if case_study and case_study['rcu'] | urldecode_lines == 'RCU IX' %}selected{% endif %}>RCU IX</option>
+							<option value="RCU X" {% if user_data['rcu']=='RCU 10' %}selected{% endif %}  {% if case_study and case_study['rcu'] | urldecode_lines == 'RCU X' %}selected{% endif %}>RCU X</option>
+							<option value="RCU XI" {% if user_data['rcu']=='RCU 11' %}selected{% endif %}  {% if case_study and case_study['rcu'] | urldecode_lines == 'RCU XI' %}selected{% endif %}>RCU XI</option>
+							<option value="RCU XII" {% if user_data['rcu']=='RCU 12' %}selected{% endif %}  {% if case_study and case_study['rcu'] | urldecode_lines == 'RCU XII' %}selected{% endif %}>RCU XII</option>
+							<option value="RCU XIII" {% if user_data['rcu']=='RCU 13' %}selected{% endif %}  {% if case_study and case_study['rcu'] | urldecode_lines == 'RCU XIII' %}selected{% endif %}>RCU XIII</option>
+							<option value="BARMM" {% if user_data['rcu']=='BARMM' %}selected{% endif %}  {% if case_study and case_study['rcu'] | urldecode_lines == 'BARMM' %}selected{% endif %}>BARMM</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Category.
+						</div>
+					</div>
+                    <div class="col-md-12">
+                        <label for="photo" class="form-label small fw-bolder">Photos</label><br>
+                        <input id="photo" type="file" class="article_form form-control" multiple style="height:50px" onchange="display_img(this)">
+                        <div class="invalid-feedback">
+                            Please provide Input.
+                        </div>
+                        <br>
+						<div id="imgs_holder" class="col-md-12 center " >
+						</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 2 :</span> The Subject </h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="subject_mainSubject" class="form-label small fw-bolder">Who is the main subject?</label>
+                        <small class="text-muted float-end">i.e., Individual, farmer organization, or MSME</small>
+                        <input class="article_form form-control" id="subject_mainSubject" value="{{ ( case_study.subject_mainSubject if case_study else '' ) | urldecode_lines | safe }}" rows="3" placeholder=""></input>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="subject_briefBackground" class="form-label small fw-bolder">What is a brief background on the subject?</label>
+                        <small class="text-muted float-end text-end">In 2-3 sentences: who they are, what they do,<br>their situation before RAPID</small>
+                        <textarea class="article_form form-control" id="subject_briefBackground" value="" rows="5" placeholder="">{{ ( case_study.subject_briefBackground if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="subject_whyThisSelected" class="form-label small fw-bolder">Why was this subject selected for the case study?</label>
+                        <small class="text-muted float-end text-end">e.g., best practices, significant change,<br>unique challenge</small>
+                        <textarea class="article_form form-control" id="subject_whyThisSelected" value="" rows="5" placeholder="">{{ ( case_study.subject_whyThisSelected if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 3 :</span> The Problem or Starting Point</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="problem_whatChallenges" class="form-label small fw-bolder">What challenge, gap, or need did the subject face before project involvement?</label>
+                        <textarea class="article_form form-control" id="problem_whatChallenges" value="" rows="5" placeholder="">{{ ( case_study.problem_whatChallenges if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="problem_whereThereAnyBarriers" class="form-label small fw-bolder">Were there any barriers that made this challenge harder to address?</label>
+                        <textarea class="article_form form-control" id="problem_whereThereAnyBarriers" value="" rows="5" placeholder="">{{ ( case_study.problem_whereThereAnyBarriers if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 4 :</span> The Intervention</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="intervention_specActivity" class="form-label small fw-bolder">What specific activity, support, or service did the project provide to the subject?</label>
+                        <textarea class="article_form form-control" id="intervention_specActivity" value="" rows="5" placeholder="">{{ ( case_study.intervention_specActivity if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="intervention_projectComponent" class="form-label small fw-bolder">Which project component or partner was involved?</label>
+                        <textarea class="article_form form-control" id="intervention_projectComponent" value="" rows="5" placeholder="">{{ ( case_study.intervention_projectComponent if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="intervention_whereHappen" class="form-label small fw-bolder">Approximately when did this intervention happen?</label>
+                        <small class="text-muted float-end">At least month and year or time period</small>
+                        <textarea class="article_form form-control" id="intervention_whereHappen" value="" rows="5" placeholder="">{{ ( case_study.intervention_whereHappen if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="intervention_subjectInvolved" class="form-label small fw-bolder">How was the subject involved in the process?</label>
+                        <textarea class="article_form form-control" id="intervention_subjectInvolved" value="" rows="5" placeholder="">{{ ( case_study.intervention_subjectInvolved if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 5 :</span> Results and Changes</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_changedAfterIntervention" class="form-label small fw-bolder">What changed for the subject after the intervention?</label>
+                        <small class="text-muted float-end">Please describe in concrete, observable terms</small>
+                        <textarea class="article_form form-control" id="result_changedAfterIntervention" value="" rows="5" placeholder="">{{ ( case_study.result_changedAfterIntervention if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_comparison" class="form-label small fw-bolder">If possible, give at least one number or comparison</label>
+                        <small class="text-muted float-end text-end">e.g., volume/income before vs. <br>after project intervention</small>
+                        <textarea class="article_form form-control" id="result_comparison" value="" rows="5" placeholder="">{{ ( case_study.result_comparison if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_positiveResult" class="form-label small fw-bolder">Were there any unintended positive results? If yes, please indicate.</label>
+                        <textarea class="article_form form-control" id="result_positiveResult" value="" rows="5" placeholder="">{{ ( case_study.result_positiveResult if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_secondaryBenefits" class="form-label small fw-bolder">Were there any unexpected or secondary benefits? If yes, please indicate.</label>
+                        <textarea class="article_form form-control" id="result_secondaryBenefits" value="" rows="5" placeholder="">{{ ( case_study.result_secondaryBenefits if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_describeTheChange" class="form-label small fw-bolder">In the subject’s own words, how do they describe the change?</label>
+                        <small class="text-muted float-end">A short quote. Can be paraphrased.</small>
+                        <textarea class="article_form form-control" id="result_describeTheChange" value="" rows="5" placeholder="">{{ ( case_study.result_describeTheChange if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_challengesThatRemain" class="form-label small fw-bolder">Are there any challenges that remain? If yes, please indicate.</label>
+                        <textarea class="article_form form-control" id="result_challengesThatRemain" value="" rows="5" placeholder="">{{ ( case_study.result_challengesThatRemain if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 6 :</span> Lessons and Takeaways</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_interventionWork" class="form-label small fw-bolder">What made the intervention work?</label>
+                        <small class="text-muted float-end">Please indicate the key success factors.</small>
+                        <textarea class="article_form form-control" id="lessons_interventionWork" value="" rows="5" placeholder="">{{ ( case_study.lessons_interventionWork if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_couldBeReplicated" class="form-label small fw-bolder">Is this approach something that could be replicated in other areas or with other beneficiaries?</label>
+                        <textarea class="article_form form-control" id="lessons_couldBeReplicated" value="" rows="5" placeholder="">{{ ( case_study.lessons_couldBeReplicated if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_doneDifferently" class="form-label small fw-bolder">Is there anything the project or unit could have done differently?</label>
+                        <textarea class="article_form form-control" id="lessons_doneDifferently" value="" rows="5" placeholder="">{{ ( case_study.lessons_doneDifferently if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_otherNotes" class="form-label small fw-bolder">Any other notes, context, or follow-up that should be captured?</label>
+                        <textarea class="article_form form-control" id="lessons_otherNotes" value="" rows="5" placeholder="">{{ ( case_study.lessons_otherNotes if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_recommendation" class="form-label small fw-bolder">Recommendations for the improvement of project implementation</label>
+                        <textarea class="article_form form-control" id="lessons_recommendation" value="" rows="5" placeholder="">{{ ( case_study.lessons_recommendation if case_study else '' ) | urldecode_lines | safe }}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+
+	<!-- Article Confirmation modal -->
+	<div class="modal " id="createPostConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">You're going there!</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body mb-3">
+					<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
+					Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
+					<hr>
+					<div>
+						<h5>Your Upload Process is</h5>
+						<span id="upload_process"></span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+					<a href="/webrep_v2/case_studies" type="button" class="btn btn-primary" >Continue</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block customScript %}
+	<script type="text/javascript">
+		function display_img(elem){
+			var __files = elem.files
+			for (var i = 0; i < __files.length; i++) {
+				// println(window.URL.createObjectURL(__files[i]))
+				const para = document.createElement("img");
+				para.style["max-width"] = "100%"
+				$ID("imgs_holder").appendChild(para)
+				para.src = window.URL.createObjectURL(__files[i])
+			}
+		}
+
+        function submit_article(){
+			println(" * Posting Article")
+            var status = event.target.getAttribute("data-status")
+			var data = {}; var from_field = $CLASS('article_form')
+			for (var i = 0; i < from_field.length; i++) {
+				if(from_field[i].type =="checkbox"){
+					data[from_field[i].id] = from_field[i].checked
+				}else{
+					data[from_field[i].id] = web_safe_encode(from_field[i].value)
+				}
+			}
+            data["status"] = status
+			println(data)
+			$send({
+				action : "/webrep_v2/upload_case_study",
+				method : POST,
+				data : $DATA(data).appendFileArr($ID("photo")),
+				// data : $DATA(data).appendFileArr($ID("file_name")),
+				func : function(res){
+					resp = JSON.parse(res)
+					println(resp)
+					// goto("/rapid/NewsAndStories/NewsAndStories.html")
+				},
+				err : function(res){alert(res)},
+				progress : function(e){
+					// var response_length = parseFloat(headerMap(e)['total'])
+					println(e)
+					var response_length = parseFloat(e.total)
+					var response_loaded = parseFloat(e.loaded)
+					var percent_  = (response_loaded / response_length) * 100;
+					var percent_rounded = Math.round(percent_ * 100) / 100
+					$ID("upload_process").innerHTML=(`
+						<span>
+							Processing  
+							<b>`+Math.round(percent_)+`%</b><br>
+							<span class="x-small" style="display:none;">
+								[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ] | 
+								<i>`+(response_length-response_loaded)+` bytes remaining</i>
+							</span>
+						</span>
+					`);
+				}
+			})
+		}
+
+        $(document).ready(function(){
+
+            setTimeout(function(){
+                $('.mis_loading').fadeOut('slow');
+            }, 1500);
+
+            const dateInputs = document.querySelectorAll('.casestudy_dp');
+            dateInputs.forEach(el => {
+                const datepicker = new Datepicker(el, {
+                    format: "yyyy-mm-dd",
+                    autohide: true,
+                    clearBtn: true
+                });
+            });
+            
+        });
+
+	</script>
+{% endblock %}

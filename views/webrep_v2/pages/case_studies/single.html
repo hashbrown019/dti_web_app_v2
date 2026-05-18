@@ -1,0 +1,271 @@
+{% extends 'templates/main.html' %}
+
+{% block customStyle %}
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #F8F8FA!important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 130px!important;">
+<!-- Back Arrow -->
+	<div class="container text-start mt-5">
+		<a class=" texttheme" onclick="window.history.back()">
+			<span><i class="fa-solid fa-arrow-left-long"></i></span>
+		</a>
+	</div>
+    <div class="container d-flex justify-content-between text-start mt-5">
+		<div class="container">
+			<h5 class="display-5 texttheme" >View Case Study</h5>
+			<input type="text" id="id" class="article_form form-control" value="{{ case_study.id if case_study else '' }}" hidden style="border:0.1px">
+		</div>
+		<div id="submit_btn_handler" style="">
+			<button class="btn btn-danger btn-sm rounded-5" onclick="downloadPDF()"><i class="fa fa-file-pdf"></i> Download</button>
+		</div>
+	</div>
+
+    <div id="print_docx" class="container shadow-sm p-3 bg-body rounded mb-5 mt-3" >
+        <div class="container row">
+            <div class="col-md-4 border-end">
+                <div class="row">
+                    <h5 class="mt-4 mb-3 text-wp-primary"> <span class="text-wp-secondary ">Section 1 :</span> Basic Information</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_workingTitle" class="form-label small fw-bolder">Working Title</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.basic_workingTitle if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide a Working Title.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_components" class="form-label small fw-bolder">Component/s</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.basic_components if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide Component/s.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_author" class="form-label small fw-bolder">Author</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.basic_author if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide an Author name.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_dateOfDocumentation" class="form-label small fw-bolder">Date of Documentation</label>
+                        <small class="text-muted float-end fst-italic font-12">YYYY-MM-DD</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.basic_dateOfDocumentation if case_study else '' ) | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the date of documentation.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="basic_locationOfDocumentation" class="form-label small fw-bolder">Location of Documentation</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.basic_locationOfDocumentation if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the location of documentation.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="rcu" class="form-label small fw-bolder">RCU</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.rcu if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please select a Category.
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="photo" class="form-label small fw-bolder">Photos</label><br>
+                        {% if case_study.photo %}
+                            <img src="/webrep_v2/article/get_img/{{ case_study.photo }}" class="img-fluid">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 2 :</span> The Subject </h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="subject_mainSubject" class="form-label small fw-bolder">Who is the main subject?</label>
+                        <small class="text-muted float-end fst-italic font-12">i.e., Individual, farmer organization, or MSME</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.subject_mainSubject if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="subject_briefBackground" class="form-label small fw-bolder">What is a brief background on the subject?</label>
+                        <small class="text-muted float-end text-end fst-italic font-12">In 2-3 sentences: who they are, what they do,<br>their situation before RAPID</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.subject_briefBackground if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="subject_whyThisSelected" class="form-label small fw-bolder">Why was this subject selected for the case study?</label>
+                        <small class="text-muted float-end text-end fst-italic font-12">e.g., best practices, significant change,<br>unique challenge</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.subject_whyThisSelected if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 3 :</span> The Problem or Starting Point</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="problem_whatChallenges" class="form-label small fw-bolder">What challenge, gap, or need did the subject face before project involvement?</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.problem_whatChallenges if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="problem_whereThereAnyBarriers" class="form-label small fw-bolder">Were there any barriers that made this challenge harder to address?</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.problem_whereThereAnyBarriers if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 4 :</span> The Intervention</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="intervention_specActivity" class="form-label small fw-bolder">What specific activity, support, or service did the project provide to the subject?</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.intervention_specActivity if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="intervention_projectComponent" class="form-label small fw-bolder">Which project component or partner was involved?</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.intervention_projectComponent if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="intervention_whereHappen" class="form-label small fw-bolder">Approximately when did this intervention happen?</label>
+                        <small class="text-muted float-end fst-italic font-12">At least month and year or time period</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.intervention_whereHappen if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="intervention_subjectInvolved" class="form-label small fw-bolder">How was the subject involved in the process?</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.intervention_subjectInvolved if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 5 :</span> Results and Changes</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_changedAfterIntervention" class="form-label small fw-bolder">What changed for the subject after the intervention?</label>
+                        <small class="text-muted float-end fst-italic font-12">Please describe in concrete, observable terms</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.result_changedAfterIntervention if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_comparison" class="form-label small fw-bolder">If possible, give at least one number or comparison</label>
+                        <small class="text-muted float-end text-end fst-italic font-12">e.g., volume/income before vs. <br>after project intervention</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.result_comparison if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_positiveResult" class="form-label small fw-bolder">Were there any unintended positive results? If yes, please indicate.</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.result_positiveResult if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_secondaryBenefits" class="form-label small fw-bolder">Were there any unexpected or secondary benefits? If yes, please indicate.</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.result_secondaryBenefits if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_describeTheChange" class="form-label small fw-bolder">In the subject’s own words, how do they describe the change?</label>
+                        <small class="text-muted float-end fst-italic font-12">A short quote. Can be paraphrased.</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.result_describeTheChange if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="result_challengesThatRemain" class="form-label small fw-bolder">Are there any challenges that remain? If yes, please indicate.</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.result_challengesThatRemain if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="mt-4 mb-3 text-wp-primary"><span class="text-wp-secondary ">Section 6 :</span> Lessons and Takeaways</h5>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_interventionWork" class="form-label small fw-bolder">What made the intervention work?</label>
+                        <small class="text-muted float-end fst-italic font-12">Please indicate the key success factors.</small>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.lessons_interventionWork if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_couldBeReplicated" class="form-label small fw-bolder">Is this approach something that could be replicated in other areas or with other beneficiaries?</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.lessons_couldBeReplicated if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_doneDifferently" class="form-label small fw-bolder">Is there anything the project or unit could have done differently?</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.lessons_doneDifferently if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_otherNotes" class="form-label small fw-bolder">Any other notes, context, or follow-up that should be captured?</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.lessons_otherNotes if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="lessons_recommendation" class="form-label small fw-bolder">Recommendations for the improvement of project implementation</label>
+                        <p class="text-muted font-14 texttheme">{{ ( case_study.lessons_recommendation if case_study else '' ) | urldecode_lines | safe }}</p>
+                        <div class="invalid-feedback">
+                            Please provide the main subject.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block customScript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script type="text/javascript">
+
+    function downloadPDF() {
+    const element = document.getElementById('print_docx'); // Your HTML element
+    html2pdf()
+        .from(element)
+        .save('document.pdf');
+    }
+
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 200px;">
+    <div class="article_dashboard">
+        <div class="row">
+            <div class="col">
+                <div class="wp_widget bg-primary p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ total }}</h3>
+                    <p class="m-0">Total Newsletters</p>
+                    <i class="fa fa-file-text"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wp_widget bg-secondary p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ drafted }}</h3>
+                    <p class="m-0">Total Draft</p>
+                    <i class="fa fa-hourglass-half"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wp_widget bg-success p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ published }}</h3>
+                    <p class="m-0">Total Published</p>
+                    <i class="fa fa-check-circle"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wp_widget bg-warning p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ total_subscribers }}</h3>
+                    <p class="m-0">Total Subscribers</p>
+                    <i class="fa fa-users"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <h2 class="wp_font_roboto_regular text-wp-primary">Newsletters
+        <a href="/webrep_v2/newsletters/create" class="float-end mt-2 btn wr_primary_btn btn-sm"><i class="fa fa-plus"></i> Compose Newsletter</a>
+    </h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-4 col-12">
+            <div class="subscriberContainer p-3 bg-wp-lightgray rounded-3 shadow-sm">
+                <h5 class="inter-regular">Subscribers</h5>
+                <ol class="custom-scroll-2" style="height: 300px; overflow-y: auto; ">
+                    {% if subscribers|length > 0 %}
+                        {% for subscriber in subscribers %}
+                            <li class="font-14 mb-1"> {{ subscriber.email }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">No subscribers found.</p>
+                    {% endif %}
+                </ol>
+            </div>
+        </div>
+        <div class="col-md-8 col-12 custom-scroll-2" style="height: 600px; overflow-y: auto; ">   
+            <div class="row mb-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if newsletters|length > 0 %}
+                            {% for newsletter in newsletters %}
+                                <tr>
+                                    <td>{{ newsletter.id }}</td>
+                                    <td>
+                                        <p class="m-1">{{ newsletter.subject | urldecode_lines | safe }}</p>
+                                        <small class="text-muted font-12">
+                                            <i class="fa fa-calendar text-wp-secondary"></i> {{ newsletter.formatted_createdDate }} | <i class="fa fa-user text-wp-secondary"></i> {{ newsletter.created_by | urldecode_lines | upper }}
+                                        </small>
+                                    </td>
+                                    <td style="width: 80px!important;">
+                                        {% if newsletter.status == 'published' %}
+                                            <span class="badge bg-success">{{ newsletter.status | upper }}</span>
+                                        {% elif newsletter.status == 'draft' %}
+                                            <span class="badge bg-secondary">{{ newsletter.status | upper }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="/webrep_v2/newsletters/create?ids={{ newsletter.id }}" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a>
+                                        <a href="/webrep_v2/newsletters/delete?ids={{ newsletter.id }}" class="btn btn-xs btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No newsletters found.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+    });
+</script>
+{% endblock %}

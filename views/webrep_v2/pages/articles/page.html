@@ -1,71 +1,113 @@
 {% extends 'templates/main.html' %}
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 {% block customStyle %}
     <style>
-        body {
+               body {
             background-color: #F8F8FA!important;
         }
     </style>
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5 mb-5" style="margin-top: 150px!important;">
-    <div class="row">
-        <div class="col-lg-8 col-md-12 col-sm-12">
-            <div class="wp_article_content_section p-4 mb-4 bg-white rounded-3 shadow-sm">
-                <div class="wp_article_header mb-4">
-                    <a href="#" onclick="window.history.back()" class="text-wp-primary"><i class="fa-solid fa-arrow-left-long"></i></a>
-                    <div class="float-end btn-group " role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-gear"></i> 
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <li><a class="dropdown-item" href="#"><i class="fa fa-pencil"></i> Edit</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Remove</a></li>
-                        </ul>
-                    </div>
-                    <hr>
-                </div>
-                <h2 class="wp_font_roboto_regular text-wp-primary">{{ article.postheader | urldecode_lines | safe }}</h2>
-                <small class="text-muted font-11"><i>{{ article.postdescription | urldecode_lines | safe }}</small></i><br><br>
-                <small class="text-muted">
-                    <i class="text-uppercase badge bg-success mb-2">{{ article.posttype | urldecode_lines | safe }}</i> | 
-                    <i class="fa fa-calendar"></i> {{ article.datePosted }} | 
-                    <i class="fa fa-user"></i> {{ article.postAuthor | urldecode_lines | safe }} ({{ article.postRcu | urldecode_lines | safe }})</small>
-                <br>
-                <br>
-                <img class="img-fluid w-100 mb-3" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image">
-                <p class="text-muted"><small>{{ article.postcaption | urldecode_lines | safe }}</small></p>
-                <hr>
-                <p class="wp_font_roboto_regular text-justify font-12">{{ article.postContent | urldecode_lines | safe }}</p>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-12 col-sm-12">
-            <div class="wp_article_sidebar_section p-4 mb-4 bg-white rounded-3 shadow-sm">
-                <h4 class="mb-4">Related Articles</h4>
-                <ul class="list-unstyled">
-                    {% for related in related_articles %}
-                    <li class="mb-4 ">
-                        <a href="/webrep_v2/article/{{ related.id }}" class="text-decoration-none">
-                            <h5 class="font-14 text-wp-secondary mb-2">{{ related.postheader }}</h5>
-                            <p class="mb-0 text-muted">{{ related.datePosted }} | {{ related.postAuthor }}</p>
+    <div class="articlePageContainer">
+        <div class="container-fluid" style="margin-top: 150px!important;">
+            <div>
+                <!-- Header & Article Title -->
+                <div class="row rowMarginOverride pt-lg-3">
+                    <div class="col-lg-1 d-lg-block spacing-col ps-3 ps-lg-5">
+                        <a href="#" onclick="window.history.back()" class="text-wp-primary">
+                            <div class="fa-solid fa-arrow-left-long"></div>
                         </a>
-                    </li>
-                    {% endfor %}
-                </ul>
+                    </div>
+                    <div id="PostInfo" class="col-lg-7 offset-lg-1 ps-5 pt-3 pb-0 p-lg-2 pb-lg-4">
+                        <div>
+                            <small class="text-uppercase badge rounded-pill bg-success fs-6 ">{{ article.posttype | urldecode_lines | safe }}</small>
+                        </div>
+                        <h3 class="fw-bold" style="font-family: Playfair-display;" id="articleHeader">{{ article.postheader | urldecode_lines | safe }}</h3>
+                        <div class="">
+                            <div>{{ (article.datePosted).strftime('%d %B, %Y') }}</div>
+                            <!-- post description for mobile view -->
+                            <div class="d-block d-lg-none mt-3">
+                                <p class="postDescription">{{ article.postdescription | urldecode_lines | safe }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Article Image and Caption -->
+                <div class="row g-lg-3 rowMarginOverride">
+                    <div class="col-lg-8">
+                        <div class="articleHero">
+                            <img class="articleHeroImg" style="object-position: left center;" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 d-flex flex-column justify-content-between">
+                        <div>
+                            <p class="postDescription d-lg-block d-none">{{ article.postdescription | urldecode_lines | safe }}</p>
+                        </div>
+                        <div>
+                            <p class="text-muted font-11 float-end float-lg-none">*{{ article.postcaption | urldecode_lines | safe }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Article Body -->
+                <div class="row mt-lg-5 g-0">
+                    <!-- spacing column -->
+                    <div class="col-lg-2 d-none d-lg-block spacing-col"></div>
+                    <div class="col-lg-6 p-5 ps-lg-0 pt-lg-0">
+                        <div class="ps-sm-4 ps-lg-0 pt-0">
+                            {{ article.postContent | replace('\n\n', '\n') | replace('\n', '\n\n') | urldecode_lines | safe }}
+                        </div>
+                        <br>
+                        <div class="ps-sm-4 ps-lg-0 pt-0 fw-bold">
+                            {{ article.postAuthor | urldecode_lines | safe }} • {{ article.postRcu | urldecode_lines | safe }}
+                        </div>
+                    </div>
+                    <!-- Sidebar -->
+                    <div class="col-lg-3 mt-5 mt-lg-0">
+                        <!-- Related Article Container -->
+                        <div>
+                            <h3 class="ms-0 ms-lg-4 text-center text-lg-start">Related Articles</h3>
+                            <!-- Card Creation -->
+                            {% for related in related_articles %}
+                                <!-- individual card -->
+                                <a href="/webrep_v2/article/{{ related.id }}" class="text-decoration-none">
+                                    <div class="my-3 mx-auto rounded border cardHover" style="width:90%!important; height:auto">
+                                        <div class="row g-0 px-3 py-2 align-items-center flex-nowrap related-article-row rowMarginOverride">
+                                            <div class="col-auto d-flex align-items-center justify-content-center">
+                                                <div class="overflow-hidden rounded" style="width:clamp(64px, 12vw, 90px); aspect-ratio: 1 / 1;">
+                                                    <img class="w-100 h-100" style="object-fit: cover; display: block;" src="/webrep_v2/article/get_img/{{ related.file_name }}" alt="Article Image">
+                                                </div>
+                                            </div>
+                                            <div class="col ps-3 related-article-text">
+                                                <div>
+                                                    <div class="text-uppercase badge rounded-pill bg-success relatedType">{{ related.posttype | urldecode_lines | safe }}</div>
+                                                </div>
+                                                <div>
+                                                    <h5 class="font-14 text-wp-secondary relatedArticleTitle">{{ related.postheader }}</h5>
+                                                </div>
+                                                <div class="relatedArticleInfo">
+                                                    <p class="mb-0 relatedArticleInfo">{{ (related.datePosted).strftime('%d %B, %Y') }} <br> {{ related.postAuthor }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block customScript %}
-<script type="text/javascript">
-    $(document).ready(function(){
-
-        setTimeout(function(){
-            $('.mis_loading').fadeOut('slow');
-        }, 1500);
-    });
-</script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('.mis_loading').fadeOut('slow');
+            }, 1500);
+        });
+    </script>
 {% endblock %}

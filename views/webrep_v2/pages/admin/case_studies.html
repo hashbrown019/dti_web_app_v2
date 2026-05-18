@@ -1,0 +1,196 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 200px;">
+    <div class="article_dashboard">
+        <div class="row">
+            <div class="col">
+                <div class="wp_widget bg-primary p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ total }}</h3>
+                    <p class="m-0">Total Case Studies</p>
+                    <i class="fa fa-file-text"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wp_widget bg-secondary p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ drafted }}</h3>
+                    <p class="m-0">Total Draft</p>
+                    <i class="fa fa-hourglass-half"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wp_widget bg-warning p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ for_approval }}</h3>
+                    <p class="m-0">Total For Approval</p>
+                    <i class="fa fa-gavel"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wp_widget bg-danger p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ for_revision }}</h3>
+                    <p class="m-0">Total For Revision</p>
+                    <i class="fa fa-pencil-square"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wp_widget bg-success p-3 pt-1 pb-1 text-white rounded-3 shadow-sm position-relative">
+                    <h3 class="m-0">{{ published }}</h3>
+                    <p class="m-0">Total Published</p>
+                    <i class="fa fa-check-circle"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <h2 class="wp_font_roboto_regular text-wp-primary">Case Studies
+        <a href="/webrep_v2/case_studies/create" class="float-end mt-2 btn wr_primary_btn btn-sm"><i class="fa fa-plus"></i> Create Case Study</a>
+    </h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            <div class="mb-4 wp_article_card" style="border-right: 1px solid #c8c8c8; padding-right: 20px;">
+                <form method="GET" action="/webrep_v2/case_studies">
+                <div class="">
+                    <h5 class="mb-3 card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold"><i class="fa fa-filter"></i> Filter:</h5>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Region</span>
+                        <select class="form-select" id="region" name="region">
+							<option value="all" {% if region_selected == "all" %}selected{% endif %}>All</option>
+							<option value="npco" {% if region_selected == "npco" %}selected{% endif %}>NPCO</option>
+							<option value="rcu viii" {% if region_selected == "rcu viii" %}selected{% endif %}>RCU 8</option>
+							<option value="rcu ix" {% if region_selected == "rcu ix" %}selected{% endif %}>RCU 9</option>
+							<option value="rcu x" {% if region_selected == "rcu x" %}selected{% endif %}>RCU 10</option>
+							<option value="rcu xi" {% if region_selected == "rcu xi" %}selected{% endif %}>RCU 11</option>
+							<option value="rcu xii" {% if region_selected == "rcu xii" %}selected{% endif %}>RCU 12</option>
+							<option value="rcu xiii" {% if region_selected == "rcu xiii" %}selected{% endif %}>RCU 13</option>
+							<option value="barmm" {% if region_selected == "barmm" %}selected{% endif %}>BARMM</option>
+						</select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Status</span>
+                        <select class="form-select" id="status" name="status">
+							<option value="all" {% if status_selected == "all" %}selected{% endif %}>All</option>
+							<option value="draft" {% if status_selected == "draft" %}selected{% endif %}>Draft</option>
+							<option value="for_approval" {% if status_selected == "for_approval" %}selected{% endif %}>For Approval</option>
+							<option value="for_revision" {% if status_selected == "for_revision" %}selected{% endif %}>For Revision</option>
+							<option value="published" {% if status_selected == "published" %}selected{% endif %}>Published</option>
+						</select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Search</span>
+                        <input style="border: 1px solid #dee2e6 !important;" type="text" class="form-control" name="search" value="{{ search_query }}" placeholder="Search by title or content" aria-label="Search" aria-describedby="basic-addon1">
+                    </div>
+                    <button type="submit" class="btn wr_primary_btn w-100"><i class="fa fa-search"></i> Search</button>
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-9 col-12 custom-scroll-2" style="height: 600px; overflow-y: auto; ">   
+            <div class="row mb-3">
+                {% if case_studies|length > 0 %}
+                    {% for case_study in case_studies %}
+                        <div class="col-md-4 col-12">
+                            <div class="card mb-4 shadow-sm wp_article_card p-0" >
+                                <div class="card-body p-0 pt-4 pb-3">
+                                    <div class="row muted font-12 mb-2 ms-1 me-1">
+                                        <div class="col-12">
+                                            {% if case_study.status == 'published' %}
+                                                <span class="badge bg-success  mb-1">{{ case_study.status | upper }}</span>
+                                            {% elif case_study.status == 'draft' %}
+                                                <span class="badge bg-secondary mb-1">{{ case_study.status | upper }}</span>
+                                            {% elif case_study.status == 'for_approval' %}
+                                                <span class="badge bg-primary  mb-1 text-light">{{ case_study.status | upper }}</span>
+                                            {% elif case_study.status == 'for_revision' %}
+                                                <span class="badge bg-danger mb-1">{{ case_study.status | upper }}</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary mb-1">{{ case_study.status | upper }}</span>
+                                            {% endif %} <br>
+                                            <small class=""><i class="fa fa-calendar text-wp-secondary"></i> {{ case_study.formatted_dateOfDocumentation }}</small><br>
+                                            <i class="fa fa-user text-wp-secondary"></i> {{ case_study.created_by | urldecode_lines | upper }} | {{ case_study.rcu | urldecode_lines | upper }}
+                                        </div>
+                                    </div>
+                                    <img class="card-img-top border-radius-0 border-bottom-1 border-top-1" src="/webrep_v2/article/get_img/{{ case_study.photo }}" alt="Case Study Image" style="height: 150px;;">
+                                    <h5 class="mt-3 mb-1 ms-2 me-2 card-title font-14 text-wp-secondary inter-regular text-wp-primary fw-bold">{{ case_study.basic_workingTitle | urldecode_lines | safe }}</h5>
+                                    <!-- <small>{{ ( case_study['subject_briefBackground'][0:200]~"..." if case_study['subject_briefBackground']|length > 200 else case_study['subject_briefBackground'] ) | urldecode_lines | safe }}</small> -->
+                                    <hr>
+                                    <div class="text-end me-2">
+                                        <!-- <a href="/webrep_v2/article/{{ case_study.id }}" class="btn btn-xs btn-outline-secondary" title="View Case Study"><i class="fa fa-eye"></i></a>
+                                        <a href="/webrep_v2/stories/create?article_id={{ case_study.id }}" class="btn btn-xs btn-outline-primary" title="Edit Case Study" ><i class="fa fa-pencil"></i></a>
+                                        <a href="/webrep_v2/case_studies/delete/{{ case_study.id }}" class="btn btn-xs btn-outline-danger" title="Delete Case Study" ><i class="fa fa-trash"></i></a> | 
+                                        <a href="/webrep_v2/articles/revise/{{ case_study.id }}" class="btn btn-xs btn-outline-warning" title="Revise Case Study" ><i class="fa fa-repeat"></i></a>
+                                        <a href="/webrep_v2/articles/confirm/{{ case_study.id }}" class="btn btn-xs btn-outline-success" title="Confirm & Post Case Study" ><i class="fa fa-check"></i></a> -->
+                                        
+                                        <a href="/webrep_v2/case_studies/{{ case_study.id }}" class="btn btn-xs btn-outline-secondary" title="View Case Study"><i class="fa fa-eye"></i></a>
+                                        {% if case_study.USER_ID|int==user_data['id']|int and case_study.status != 'published' %}
+                                        <button  class="btn btn-xs btn-outline-primary" title="Edit Case Study" onclick="casestudy_actions('edit',{{ case_study.id }})"><i class="fa fa-pencil"></i></button>
+                                        <button  class="btn btn-xs btn-outline-danger" title="Delete Case Study" onclick="casestudy_actions('delete',{{ case_study.id }})"><i class="fa fa-trash"></i></button> 
+                                        {% endif %}
+                                        {% if isAdmin %}
+                                         | 
+                                        <button {% if case_study.status == 'draft' or case_study.status == 'pending' or case_study.status == 'for_revision' %}disabled{% endif %}  class="btn btn-xs btn-outline-warning" title="Revise Case Study" onclick="casestudy_actions('revise',{{ case_study.id }})"><i class="fa fa-repeat"></i></button>
+                                        <button {% if case_study.status == 'published' or case_study.status == 'posted' or case_study.status == 'draft' or case_study.status == 'pending' or case_study.status == 'for_revision' %}disabled{% endif %} class="btn btn-xs btn-outline-success" title="Confirm & Post Case Study" onclick="casestudy_actions('confirm',{{ case_study.id }})"><i class="fa fa-check"></i></button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                <div class="card mb-4 shadow-sm wp_article_card" >
+                    <div class="card-body">
+                        <h5 class="mb-3 card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold"><i class="fa fa-list"></i> Case Studies List:</h5>
+                        <p class="text-wp-secondary wp_font_roboto_regular">No case studies found.</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+    function casestudy_actions(args,id){
+        if(args=='delete'){delete_casestudy(id)}
+        if(args=='confirm'){confirm_casestudy(id)}
+        if(args=='revise'){revise_casestudy(id)}
+        if(args=='edit'){edit_casestudy(id)}
+    }
+
+    function delete_casestudy(id){
+        $send({
+            action : "/webrep_v2/case_studies/delete/"+id,
+            func : function(r){ console.log(r); goto('/webrep_v2/case_studies')}
+        })
+    }
+
+    function confirm_casestudy(id){
+        $send({
+            action : "/webrep_v2/case_studies/confirm/"+id,
+            func : function(r){goto('/webrep_v2/case_studies')}
+        })
+    }
+
+    function revise_casestudy(id){
+        $send({
+            action : "/webrep_v2/case_studies/revise/"+id,
+            func : function(r){goto('/webrep_v2/case_studies')}
+        })
+    }
+
+    function edit_casestudy(id){
+        goto("/webrep_v2/case_studies/create?ids="+id)
+    }
+    
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+    });
+</script>
+{% endblock %}

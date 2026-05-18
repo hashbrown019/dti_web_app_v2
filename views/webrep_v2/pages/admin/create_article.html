@@ -1,6 +1,12 @@
 {% extends 'templates/basic.html' %}
 
+{% block customStyle %}
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
+
 <div class="" style="padding-top: 100px!important;">
 <!-- Back Arrow -->
 	<div class="container text-start mt-5">
@@ -17,7 +23,8 @@
 
 
 		<div class="">
-			<button class="btn btn-outline-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate"  onclick="submit_article()">Submit</a>
+			<button class="btn btn-outline-success rounded-5 me-2" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate"  data-status="draft" onclick="submit_article()">Save As Draft</a>
+			<button class="btn btn-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate"  data-status="for_approval" onclick="submit_article()">Save As For Approval</a>
 		</div>
 	</div>
 
@@ -45,7 +52,7 @@
 						</div>
 					</div>			
 					<div class="col-12">
-						<label for="Unit" class="form-label small fw-bolder">Commodity</label>
+						<label for="postCategory" class="form-label small fw-bolder">Commodity</label>
 						<select class="article_form form-select" id="postCategory" required>
 							<option value="All">All</option>
 							<option value="Coffee" {% if article and article['postCategory'] == 'Coffee' %}selected{% endif %}>Coffee</option>
@@ -58,16 +65,29 @@
 						</div>
 					</div>
 					<div class="col-12">
-						<label for="Unit" class="form-label small fw-bolder">RCU's</label>
+						<label for="postRcu" class="form-label small fw-bolder">RCU's</label>
 						<select class="article_form form-select" id="postRcu" required>
-							<option value="NPCO" {% if article and article['postRcu'] == 'NPCO' %}selected{% endif %}>NPCO</option>
-							<option value="RCU VIII" {% if article and article['postRcu'] == 'RCU VIII' %}selected{% endif %}>RCU VIII</option>
-							<option value="RCU IX" {% if article and article['postRcu'] == 'RCU IX' %}selected{% endif %}>RCU IX</option>
-							<option value="RCU X" {% if article and article['postRcu'] == 'RCU X' %}selected{% endif %}>RCU X</option>
-							<option value="RCU XI" {% if article and article['postRcu'] == 'RCU XI' %}selected{% endif %}>RCU XI</option>
-							<option value="RCU XII" {% if article and article['postRcu'] == 'RCU XII' %}selected{% endif %}>RCU XII</option>
-							<option value="RCU XIII" {% if article and article['postRcu'] == 'RCU XIII' %}selected{% endif %}>RCU XIII</option>
-							<option value="BARMM" {% if article and article['postRcu'] == 'BARMM' %}selected{% endif %}>BARMM</option>
+							<option value="NPCO" {% if user_data['rcu']=='NPCO' %}selected{% endif %}  {% if article and article['postRcu'] == 'NPCO' %}selected{% endif %}>NPCO</option>
+							<option value="RCU VIII" {% if user_data['rcu']=='RCU 8' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU VIII' %}selected{% endif %}>RCU VIII</option>
+							<option value="RCU IX" {% if user_data['rcu']=='RCU 9' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU IX' %}selected{% endif %}>RCU IX</option>
+							<option value="RCU X" {% if user_data['rcu']=='RCU 10' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU X' %}selected{% endif %}>RCU X</option>
+							<option value="RCU XI" {% if user_data['rcu']=='RCU 11' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU XI' %}selected{% endif %}>RCU XI</option>
+							<option value="RCU XII" {% if user_data['rcu']=='RCU 12' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU XII' %}selected{% endif %}>RCU XII</option>
+							<option value="RCU XIII" {% if user_data['rcu']=='RCU 13' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU XIII' %}selected{% endif %}>RCU XIII</option>
+							<option value="BARMM" {% if user_data['rcu']=='BARMM' %}selected{% endif %}  {% if article and article['postRcu'] == 'BARMM' %}selected{% endif %}>BARMM</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Category.
+						</div>
+					</div>		
+					<div class="col-12">
+						<label for="postClass" class="form-label small fw-bolder">Category</label>
+						<select class="article_form form-select" id="postClass" required>
+							<option value="All">All</option>
+							<option value="Field Stories" {% if article and article['postClass'] == 'Field Stories' %}selected{% endif %}>Field Stories</option>
+							<option value="MSME" {% if article and article['postClass'] == 'MSME' %}selected{% endif %}>MSME</option>
+							<option value="Project" {% if article and article['postClass'] == 'Project' %}selected{% endif %}>Project</option>
+							<option value="Youth" {% if article and article['postClass'] == 'Youth' %}selected{% endif %}>Youth</option>
 						</select>
 						<div class="invalid-feedback">
 							Please select a Category.
@@ -110,18 +130,67 @@
 						</div>
 					</div>
 
-					<div class="col-12">
+					<div class=""col-12">
+						<label for="postContent" class="form-label small fw-bolder">Add text content</label>
+						<div id="toolbar-container">
+							<!-- <span class="ql-formats">
+								<select class="ql-font"></select>
+								<select class="ql-size"></select>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-bold"></button>
+								<button class="ql-italic"></button>
+								<button class="ql-underline"></button>
+								<button class="ql-strike"></button>
+							</span>
+							<span class="ql-formats">
+								<select class="ql-color"></select>
+								<select class="ql-background"></select>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-script" value="sub"></button>
+								<button class="ql-script" value="super"></button>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-header" value="1"></button>
+								<button class="ql-header" value="2"></button>
+								<button class="ql-blockquote"></button>
+								<button class="ql-code-block"></button>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-list" value="ordered"></button>
+								<button class="ql-list" value="bullet"></button>
+								<button class="ql-indent" value="-1"></button>
+								<button class="ql-indent" value="+1"></button>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-direction" value="rtl"></button>
+								<select class="ql-align"></select>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-link"></button>
+								<button class="ql-image"></button>
+								<button class="ql-video"></button>
+								<button class="ql-formula"></button>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-clean"></button>
+							</span> -->
+						</div>
+						<div id="article_content" style="height: 400px;"></div>
+					</div>
+
+					<!-- <div class="col-12">
 						<label for="postContent" class="form-label small fw-bolder">Add text content</label>
 						<textarea class="article_form form-control" id="postContent" rows="3" style="height: 200px;" >{{ article.postContent }}</textarea>
 						<div class="invalid-feedback">
 							Please provide a text content.
 						</div>
-					</div>
+					</div> -->
 
 					<div class="col-12">
 						<label for="postContent" class="form-label small fw-bolder">Upload cover photo/video</label>
-						<input type="file" class="article_form form-control" name="file_name" id="file_name" accept="image/png, image/gif, image/jpeg, video/*" >
-
+						<input type="file" class=" form-control" name="file_name" id="file_name" accept="image/png, image/gif, image/jpeg, video/*" >
 					</div>
 					<div class="col-md-12">
 						<label for="postcaption" class="form-label small fw-bolder">Photo/video caption</label>
@@ -217,10 +286,61 @@
 
 
 {% block customScript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+
 <script type="text/javascript">
+	var quill;
+
+	function selectLocalImage() {
+		const input = document.createElement('input');
+		input.setAttribute('type', 'file');
+		input.setAttribute('accept', 'image/*');
+		input.click();
+
+		input.onchange = () => {
+			const file = input.files[0];
+			const formData = new FormData();
+			formData.append('image', file);
+
+			// 2. Upload file to Flask immediately
+			$.ajax({
+			url: '/webrep_v2/upload-image',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: (res) => {
+				// 3. Insert the URL into the editor instead of Base64
+				const range = quill.getSelection();
+				quill.insertEmbed(range.index, 'image', res.url);
+			}
+			});
+		};
+	}
+
+	
 
 	function submit_article(){
-		
+		// var contents = quill.getContents();
+		var status = event.target.getAttribute("data-status")
+		var formData = new FormData();
+		// var contents = quill.root.innerHTML;
+		formData.append('postContent', quill.root.innerHTML);
+		formData.append('status', status);
+
+		// Append the actual file object
+		const fileInput = document.getElementById("file_name");
+		if (fileInput.files.length > 0) {
+			formData.append("file_name", fileInput.files[0]);
+		}
+
 		var data = {}; var from_field = document.getElementsByClassName('article_form');
 		for (var i = 0; i < from_field.length; i++) {
 			if(from_field[i].type =="checkbox"){
@@ -229,11 +349,19 @@
 				data[from_field[i].id] = encodeURIComponent(from_field[i].value);
 			}
 		}
+		// data['postContent'] = encodeURIComponent(JSON.stringify(contents));
+
+		// Build FormData manually
+		for (const key in data) {
+			formData.append(key, data[key]);
+		}
 		
 		$send({
 			action : "/webrep_v2/upload_file_webrep",
 			method : POST,
-			data : $DATA(data).appendFileArr($ID("file_name")),
+			data : formData,
+			processData: false,   // prevent jQuery from serializing
+			contentType: false,   // let browser set multipart/form-data
 			func : function(res){
 				resp = JSON.parse(res)
 				println(resp)
@@ -241,7 +369,7 @@
 				console.log(res);
 				// goto("/rapid/NewsAndStories/NewsAndStories.html")
 			},
-			err : function(res){alert(res)},
+			err : function(res){ console.log(res)},
 			progress : function(e){
 				// var response_length = parseFloat(headerMap(e)['total'])
 				println(e)
@@ -261,6 +389,47 @@
 				`);
 			}
 		})
+		
+		// jQuery AJAX
+		// $.ajax({
+		// 	url: "/webrep_v2/upload_file_webrep",
+		// 	type: "POST",
+		// 	data: formData,
+		// 	processData: false,   // prevent jQuery from serializing
+		// 	contentType: false,   // let browser set multipart/form-data
+		// 	success: function(res) {
+		// 		try {
+		// 			const resp = JSON.parse(res);
+		// 			console.log("Upload success:", resp);
+		// 		} catch (err) {
+		// 			console.log("Raw response:", res);
+		// 		}
+		// 	},
+		// 	error: function(err) {
+		// 		console.error("Upload error:", err);
+		// 	},
+		// 	xhr: function() {
+		// 		var xhr = $.ajaxSettings.xhr();
+		// 		if (xhr.upload) {
+		// 			xhr.upload.addEventListener("progress", function(e) {
+		// 				if (e.lengthComputable) {
+		// 					var percent = (e.loaded / e.total) * 100;
+		// 					document.getElementById("upload_process").innerHTML = `
+		// 						<span>
+		// 							Gathering <b>${Math.round(percent)}%</b><br>
+		// 							<span class="x-small">
+		// 								[ ${(e.loaded/1000000).toFixed(1)} / ${(e.total/1000000).toFixed(1)} Mb ]<br>
+		// 								<i>${e.total - e.loaded} bytes remaining</i>
+		// 							</span>
+		// 						</span>
+		// 					`;
+		// 				}
+		// 			}, false);
+		// 		}
+		// 		return xhr;
+		// 	}
+		// });
+		
 	}
 	
 	$onload(function(){
@@ -288,6 +457,54 @@
 	
     $(document).ready(function(){
 
+		// quill = new Quill('#article_content', {
+		// 	modules: {
+		// 		syntax: true,
+		// 		toolbar: '#toolbar-container',
+		// 		handlers: {
+		// 			image: selectLocalImage
+		// 		}
+		// 	},
+		// 	placeholder: 'Compose an epic...',
+		// 	theme: 'snow',
+		// });
+
+		quill = new Quill('#article_content', {
+		theme: 'snow',
+		modules: {
+			toolbar: {
+			// 1. Define the buttons you want
+				container: [
+					['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+					['blockquote', 'code-block'],
+					[{ 'header': 1 }, { 'header': 2 }],               // custom button values
+					[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+					[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+					[{ 'indent': '-1'}, { 'indent': '+1' }],        // outdent/indent
+					[{ 'direction': 'rtl' }],                         // text direction
+					[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+					[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+					[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+					[{ 'font': [] }],
+					[{ 'align': [] }],
+					['link', 'image'] 
+				],
+				// 2. Define the custom handler for the 'image' button
+				handlers: {
+					'image': function() {
+					console.log("Handler triggered!"); // Test if this shows in console
+						selectLocalImage();
+					}
+				}
+			},
+			imageResize: {
+				displaySize: true // Show image dimensions while resizing
+			},
+		}
+		});
+
+		quill.clipboard.dangerouslyPasteHTML(0,{{ article.postContent|default("")|tojson|safe }});
+		
         setTimeout(function(){
             $('.mis_loading').fadeOut('slow');
         }, 1500);

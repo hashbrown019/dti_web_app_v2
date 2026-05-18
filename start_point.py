@@ -41,6 +41,10 @@ from controllers import Logs
 Logs.ACCESS_LOGS("_SYSTEM_"+__name__,"SYS_RESTART",{}, "TERMINAL","APACHE_RESTART")
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024  # 500 MB limit
+
+print("MAX_CONTENT_LENGTH:", app.config['MAX_CONTENT_LENGTH'])
+
 c.FLASK_APP = app
 
 app.config['JSON_SORT_KEYS'] = False

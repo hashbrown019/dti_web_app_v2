@@ -1,0 +1,306 @@
+{% extends 'templates/basic.html' %}
+
+{% block content %}
+<div class="" style="padding-top: 100px!important;">
+<!-- Back Arrow -->
+	<div class="container text-start mt-5">
+		<a class=" texttheme" href="#" onclick="window.history.back()">
+			<span><i class="fa-solid fa-arrow-left-long"></i></span>
+		</a>
+	</div>
+
+<!-- Title -->
+	<div class="container d-flex justify-content-between text-start mt-5">
+		<div class="">
+			<h5 class="display-5 texttheme" >Create article</h5>
+		</div>
+
+
+		<div class="">
+			<button class="btn btn-outline-success rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate"  onclick="submit_article()">Submit</a>
+		</div>
+	</div>
+
+<!-- Arcticle News -->
+	<div class="container shadow-sm p-3 bg-body rounded mb-5" style="background-color: #F8F8FA;">
+		<div class="container row">
+			<div class="col-4 border-end border-light">
+				<form class=" row g-3 needs-validation texttheme" id="form_for_createPost1" novalidate>
+					<div class="col-md-12">
+						<label for="postAuthor" class="form-label small fw-bolder">Author name</label>
+						<input class="article_form form-control" id="postAuthor" value="{{user_data['name']}}" rows="3" placeholder=""></input>
+						<div class="invalid-feedback">
+							Please provide an Authur name.
+						</div>
+					</div>
+					<div class="col-12">
+						<label for="posttype" class="form-label small fw-bolder">Content</label>
+						<select class="article_form form-select" id="posttype" required>
+							<option value="News" {% if article and article['posttype'] == 'News' %}selected{% endif %}>News</option>
+							<option value="Story" {% if article and article['posttype'] == 'Story' %}selected{% endif %}>Story</option>
+							<option value="Event" {% if article and article['posttype'] == 'Event' %}selected{% endif %}>Event</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Content.
+						</div>
+					</div>			
+					<div class="col-12">
+						<label for="Unit" class="form-label small fw-bolder">Commodity</label>
+						<select class="article_form form-select" id="postCategory" required>
+							<option value="All">All</option>
+							<option value="Coffee" {% if article and article['postCategory'] == 'Coffee' %}selected{% endif %}>Coffee</option>
+							<option value="Cacao" {% if article and article['postCategory'] == 'Cacao' %}selected{% endif %}>Cacao</option>
+							<option value="Coconut" {% if article and article['postCategory'] == 'Coconut' %}selected{% endif %}>Coconut</option>
+							<option value="Processed Fruits & Nuts" {% if article and article['postCategory'] == 'Processed Fruits & Nuts' %}selected{% endif %}>Processed Fruits & Nuts</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Category.
+						</div>
+					</div>
+					<div class="col-12">
+						<label for="Unit" class="form-label small fw-bolder">RCU's</label>
+						<select class="article_form form-select" id="postRcu" required>
+							<option value="NPCO" {% if user_data['rcu']=='NPCO' %}selected{% endif %}  {% if article and article['postRcu'] == 'NPCO' %}selected{% endif %}>NPCO</option>
+							<option value="RCU VIII" {% if user_data['rcu']=='RCU 8' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU VIII' %}selected{% endif %}>RCU VIII</option>
+							<option value="RCU IX" {% if user_data['rcu']=='RCU 9' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU IX' %}selected{% endif %}>RCU IX</option>
+							<option value="RCU X" {% if user_data['rcu']=='RCU 10' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU X' %}selected{% endif %}>RCU X</option>
+							<option value="RCU XI" {% if user_data['rcu']=='RCU 11' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU XI' %}selected{% endif %}>RCU XI</option>
+							<option value="RCU XII" {% if user_data['rcu']=='RCU 12' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU XII' %}selected{% endif %}>RCU XII</option>
+							<option value="RCU XIII" {% if user_data['rcu']=='RCU 13' %}selected{% endif %}  {% if article and article['postRcu'] == 'RCU XIII' %}selected{% endif %}>RCU XIII</option>
+							<option value="BARMM" {% if user_data['rcu']=='BARMM' %}selected{% endif %}  {% if article and article['postRcu'] == 'BARMM' %}selected{% endif %}>BARMM</option>
+						</select>
+						<div class="invalid-feedback">
+							Please select a Category.
+						</div>
+					</div>
+					<div class="col-12">
+						<div style="display:none">
+							<label for="postGA" class="form-label small fw-bolder">General Access</label>
+							<select class="article_form form-select" id="postGA" required>
+								<option>Only me</option>
+								<option selected>Public</option>
+								<option>Administrators</option>
+							</select>
+							<div class="invalid-feedback">
+								Please select a General Access.
+							</div>
+						</div>
+					</div>
+					<div style="display:none">
+						<input class="article_form form-check-input" type="checkbox" id="sameName" value="" aria-label="sameName" checked>
+						<span class="small fw-lighter ">check if author & publisher has the same name?</span>
+					</div>
+				</form>
+			</div>
+			<div class="col-8">
+				<form class="row g-3 needs-validation texttheme" id="form_for_createPost2">
+					<div class="col-md-12">
+						<label for="postheader" class="form-label small fw-bolder">Create heading title</label>
+						<input class="article_form form-control" id="postheader" rows="3" value="{{ article.postheader }}"></input>
+						<div class="invalid-feedback">
+							Please provide heading title.
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<label for="postdescription" class="form-label small fw-bolder" >Content description</label>
+						<input class="article_form form-control" id="postdescription" rows="3" value="{{ article.postdescription }}"></input>
+						<div class="invalid-feedback">
+							Please provide heading title.
+						</div>
+					</div>
+
+					<div class="col-12">
+						<label for="postContent" class="form-label small fw-bolder">Add text content</label>
+						<textarea class="article_form form-control" id="postContent" rows="3" style="height: 200px;" >{{ article.postContent }}</textarea>
+						<div class="invalid-feedback">
+							Please provide a text content.
+						</div>
+					</div>
+
+					<div class="col-12">
+						<label for="postContent" class="form-label small fw-bolder">Upload cover photo/video</label>
+						<input type="file" class="article_form form-control" name="file_name" id="file_name" accept="image/png, image/gif, image/jpeg, video/*" >
+
+					</div>
+					<div class="col-md-12">
+						<label for="postcaption" class="form-label small fw-bolder">Photo/video caption</label>
+						<input class="article_form form-control" id="postcaption" rows="3" placeholder="(e.g.,This is an example caption on this photo. Photo by Coco Martin.)" value="{{ article.postcaption }}"></input>
+						<div class="invalid-feedback">
+							Please provide an Authur name.
+						</div>
+					</div>
+					<div class="col-md-12">
+						<label for="posttags" class="form-label small fw-bolder">Tags:</label>
+						<input class="article_form form-control" id="posttags" rows="3" list="datalistOptions" placeholder="Coffee, Region XII, Coffee Event," value="{{ article.posttags }}"></input>
+						<datalist id="datalistOptions">
+							<!-- <option value="Stories from the fields">
+							<option value="MSME stories">
+							<option value="GESI/SECAP stories">
+							<option value="Stories from project implementation"> -->
+							<option value="Value chain governance">
+							<option value="Partnerships for the implementation of activities">
+							<option value="Empowerment through leadership and representation">
+							<option value="Implementation and evolution of business models">
+							<option value="Hub-and-Spoke Model">
+							<option value="Capacity building">
+							<option value="Innovation">
+							<option value="Product certification">
+							<option value="Productive Investments">
+							<option value="Implementation of Farm-to-Market Infrastructure">
+							<option value="Access to finance">
+							<option value="Gender Equality and Social Inclusion (GESI)">
+							<option value="Social, Environmental and Climate Assessment Procedures (SECAP)">
+							<option value="Finance">
+							<option value="Partnerships on FMR">
+							<option value="Beneficiary-centered stories">
+						</datalist> 
+						<div class="invalid-feedback">
+							Please provide an Authur name.
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-6">
+								<label for="postdate" class="form-label small fw-bolder">Date:</label>
+								<input class="article_form form-control" id="datePosted" type="date" value="{{ article.datePosted }}">
+								<div class="invalid-feedback">
+									Please provide a valid date.
+								</div>
+							</div>
+							<!-- <div class="col-md-6">
+								<label for="postformat" class="form-label small fw-bolder">Format:</label>
+								<select class="article_form form-select" id="postformat" >
+									<option value="article" selected>Article</option>
+									<option value="video">Video</option>
+								</select>
+								<div class="invalid-feedback">
+									Please provide a valid format.
+								</div>
+							</div> -->
+						</div>
+						
+					</div>
+					<input type="" id="id" class="article_form" value="{{ article.id }}" style="display: none;">
+				</form>
+				<div class="mt-5">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Article Confirmation modal -->
+<div class="modal " id="createPostConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">You're going there!</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body mb-3">
+				<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
+				Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
+				<hr>
+				<h3>Your Upload Process is</h3>
+				<h2 id="upload_process"></h2>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+				<a href="/webrep_v2/articles" type="button" class="btn btn-primary" >Continue</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block customScript %}
+<script type="text/javascript">
+
+	function submit_article(){
+		
+		var data = {}; var from_field = document.getElementsByClassName('article_form');
+		for (var i = 0; i < from_field.length; i++) {
+			if(from_field[i].type =="checkbox"){
+				data[from_field[i].id] = from_field[i].checked
+			}else{
+				data[from_field[i].id] = encodeURIComponent(from_field[i].value);
+			}
+		}
+		
+		$send({
+			action : "/webrep_v2/upload_file_webrep",
+			method : POST,
+			data : $DATA(data).appendFileArr($ID("file_name")),
+			func : function(res){
+				resp = JSON.parse(res)
+				println(resp)
+				console.log("im here.......");
+				console.log(res);
+				// goto("/rapid/NewsAndStories/NewsAndStories.html")
+			},
+			err : function(res){alert(res)},
+			progress : function(e){
+				// var response_length = parseFloat(headerMap(e)['total'])
+				println(e)
+				var response_length = parseFloat(e.total)
+				var response_loaded = parseFloat(e.loaded)
+				var percent_  = (response_loaded / response_length) * 100;
+				var percent_rounded = Math.round(percent_ * 100) / 100
+				$ID("upload_process").innerHTML=(`
+					<span>
+						Gathering 
+						<b>`+Math.round(percent_)+`%</b><br>
+						<span class="x-small">
+							[ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+							<i>`+(response_length-response_loaded)+` bytes remaining</i>
+						</span>
+					</span>
+				`);
+			}
+		})
+	}
+	
+	$onload(function(){
+		console.log($DATA({"id":URL_ARGS['ids']}));
+		console.log('test');
+		$send({
+			action : "/webrep/article/get_post_ind",
+			method : POST,
+			data : $DATA({"article_id":URL_ARGS['article_id']}).appendFileArr($ID('file_name')),
+			func : function(res){
+				var resp = JSON.parse(res)[0]
+				println(resp)
+				console.log(resp);
+				var data = {}; var from_field = $CLASS('article_form')
+				for (var i = 0; i < from_field.length; i++) {
+					var _ID = from_field[i].id
+					
+					try{
+						from_field[_ID].value = web_safe_decode(String(resp[_ID]))
+					}catch(e){}
+				}
+			}
+		})
+	})
+	
+    $(document).ready(function(){
+
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+
+		// Initialize datepicker for postdate input
+        const postdateInput = document.getElementById('datePosted');
+        if (postdateInput) {
+            const datepicker = new Datepicker(postdateInput, {
+                format: "yyyy-mm-dd",
+                autohide: true,
+                clearBtn: true
+            });
+        }
+    });
+</script>
+{% endblock %}

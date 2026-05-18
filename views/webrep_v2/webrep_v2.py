@@ -1,7 +1,10 @@
 from multiprocessing import connection
 
-from flask import Blueprint, abort, flash, render_template, render_template_string, request, session, redirect, jsonify, send_file, send_from_directory, Response, current_app
+from certifi.__main__ import args
+from flask import Blueprint, abort, flash, render_template, render_template_string, request, session, redirect, jsonify, send_file, send_from_directory, Response, current_app, url_for
 from flask_session import Session
+from rsa import key
+import modules
 from modules.Connections import mysql
 from modules.Req_Brorn_util import string_websafe as STRS
 import Configurations as c
@@ -16,9 +19,12 @@ import requests
 from io import BytesIO
 import base64
 import json
+import uuid
+
 
 from datetime import date, datetime
 from modules.Req_Brorn_util import file_from_request
+from v2_view.core._backend_sub import FILE_REQ
 from views.dcfv2.dashboard.display_dataform import displayform
 
 # from v2_view.core._dashboard import _main as dboard_main
@@ -29,8 +35,10 @@ from views.dcfv2.dashboard.display_dataform import displayform
 db = mysql(*c.DB_CRED)
 db.err_page = 0
 
+
 app = Blueprint("webrep_v2",__name__,template_folder='pages',static_folder='static')
 # app = Blueprint("webrep",__name__,url_prefix='/webrep',template_folder='pages')
+
 
 # app.register_blueprint(_dashboard.app)
 
@@ -144,21 +152,40 @@ class _main:
 
     @app.route("/webrep_v2/articles/confirm/<ids>",methods=["POST","GET"])
     def confirm_article(ids):
-        update_del = db.do("UPDATE `webrep_articles_v2` SET `status`='posted' WHERE `id`='{}';".format(ids))
+        update_del = db.do("UPDATE `webrep_articles_v2` SET `status`='published' WHERE `id`='{}';".format(ids))
         return {"db_info":update_del}
 
     @app.route("/webrep_v2/articles/revise/<ids>",methods=["POST","GET"])
     def revise_article(ids):
-        update_del = db.do("UPDATE `webrep_articles_v2` SET `status`='revise' WHERE `id`='{}';".format(ids))
+        update_del = db.do("UPDATE `webrep_articles_v2` SET `status`='for_revision' WHERE `id`='{}';".format(ids))
+        return {"db_info":update_del}
+    
+    @app.route("/webrep_v2/case_studies/delete/<ids>",methods=["POST","GET"])
+    def delete_casestudy(ids):
+        update_del = db.do("UPDATE `webrep_case_study_v2` SET `isDeleted`='1' WHERE `id`='{}';".format(ids))
+        print("deleting.....")
+        print(update_del)
+        return {"db_info":update_del}
+
+    @app.route("/webrep_v2/case_studies/confirm/<ids>",methods=["POST","GET"])
+    def confirm_casestudy(ids):
+        update_del = db.do("UPDATE `webrep_case_study_v2` SET `status`='published' WHERE `id`='{}';".format(ids))
+        return {"db_info":update_del}
+
+    @app.route("/webrep_v2/case_studies/revise/<ids>",methods=["POST","GET"])
+    def revise_casestudy(ids):
+        update_del = db.do("UPDATE `webrep_case_study_v2` SET `status`='for_revision' WHERE `id`='{}';".format(ids))
         return {"db_info":update_del}
     
     @app.route("/webrep/article/get_post_ind",methods=["POST","GET"])
     def get_post_ind():
         ids = request.form['article_id']
         return db.select("SELECT *, DATE_FORMAT(postDate, '%Y-%m-%d') AS postDate FROM webrep_articles_v2 WHERE id='{}' ORDER BY id DESC;".format(ids))
-
+    @app.route("/webrep_v2/article/get_img/", defaults={"img": None}, methods=["GET", "POST"])
     @app.route("/webrep_v2/article/get_img/<img>",methods=["POST","GET"])
     def get_img(img):
+        if img is None or img.strip() == "":
+            return send_file( "static/img/no_img.png")
         
         img = img.replace('C:fakepath', '').replace(" ","_").replace(")","").replace("(","")
         file_path = os.path.join(c.RECORDS, "objects", "webrep", img)
@@ -240,6 +267,7 @@ class _main:
             # print(type(article), article)
             article['postheader'] = urllib.parse.unquote(article['postheader'])
             article['postContent'] = urllib.parse.unquote(article['postContent'])
+            article['postdescription'] = urllib.parse.unquote(article['postdescription'])
             article['postAuthor'] = urllib.parse.unquote(article['postAuthor'])
             article['postRcu'] = urllib.parse.unquote(article['postRcu'])
             data.append(article)
@@ -540,6 +568,19 @@ class _main:
     def knowledge_and_data():
         
         try:
+            
+            region = request.args.get("region", "all")
+            search = request.args.get("search", "").strip()
+            
+            str_query = ""
+            if region != "all":
+                str_query += f" AND webrep_case_study_v2.rcu='{region}'"
+            if search:
+                str_query += f" AND (basic_workingTitle LIKE '%{search}%' OR subject_mainSubject LIKE '%{search}%')"
+
+            case_studies = db.select("SELECT webrep_case_study_v2.*,DATE_FORMAT(webrep_case_study_v2.basic_dateOfDocumentation, '%M %d, %Y') AS formatted_dateOfDocumentation,users.name AS created_by FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND (webrep_case_study_v2.status='published' OR webrep_case_study_v2.status='posted') {} ORDER BY id DESC ".format(str_query))
+            # case_studies = db.select("SELECT webrep_case_study_v2.*,DATE_FORMAT(webrep_case_study_v2.basic_dateOfDocumentation, '%M %d, %Y') AS formatted_dateOfDocumentation,users.name AS created_by FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0  {} ORDER BY id DESC ".format(str_query))
+            
             updates_files = _main.get_updates_files('')
             
             dip_files = _main.get_tools_files('Detailed Investment Plan Guide')
@@ -558,7 +599,8 @@ class _main:
                 mg_files = mg_files,
                 pim2025_files = pim2025_files,
                 updates_files = updates_files,
-                vcdt_files = vcdt_files
+                vcdt_files = vcdt_files,
+                case_studies = case_studies
             )
         except Exception as e:
             return render_template(
@@ -602,7 +644,7 @@ class _main:
         per_page = 6
         offset = (page - 1) * per_page
 
-        article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 ORDER BY id DESC LIMIT 4")
+        article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 ORDER BY id DESC LIMIT 3")
         latest_ids =  ",".join(f"{a['id']}" for a in article_latest)
         str_query += f" AND id NOT IN ({latest_ids})"
 
@@ -615,6 +657,7 @@ class _main:
         
         for latest in article_latest:
             latest['postheader'] = urllib.parse.unquote(latest['postheader'])
+            latest['postdescription'] = urllib.parse.unquote(latest['postdescription'])
             latest['postContent'] = urllib.parse.unquote(latest['postContent'])
             latest['postAuthor'] = urllib.parse.unquote(latest['postAuthor'])
             latest['postRcu'] = urllib.parse.unquote(latest['postRcu'])
@@ -622,6 +665,7 @@ class _main:
         
         for article in articles:
             article['postheader'] = urllib.parse.unquote(article['postheader'])
+            article['postdescription'] = urllib.parse.unquote(article['postdescription'])
             article['postContent'] = urllib.parse.unquote(article['postContent'])
             article['postAuthor'] = urllib.parse.unquote(article['postAuthor'])
             article['postRcu'] = urllib.parse.unquote(article['postRcu'])
@@ -792,10 +836,19 @@ class _main:
             search = request.args.get("search", "").strip()
             
             str_query = ""
+            rcu_filter = ""
+            
             if posttype != "all":
                 str_query += f" AND posttype='{posttype}'"
             if status != "all":
-                str_query += f" AND status='{status}'"
+                if status == "draft" or status == "pending":
+                    str_query += f" AND (status='draft' OR status='pending')"
+                elif status == "for_revision" or status == "revise":
+                    str_query += f" AND (status='for_revision' OR status='revise')"
+                elif status == "published" or status == "posted":
+                    str_query += f" AND (status='published' OR status='posted')"
+                else:
+                    str_query += f" AND status='{status}'"
             if commodities != "all":
                 # quoted = ",".join(f"'{c}'" for c in commodities)
                 # str_query += f" AND postCategory IN ({quoted})"
@@ -807,15 +860,44 @@ class _main:
             if search:
                 str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"
 
-            
-            
-            if user_data['job']!="Super Admin":
-                str_query += f" AND USER_ID={user_data['id']}"
+            user_rcu = ""
+            if user_data['rcu']=="RCU 8":
+                user_rcu = "RCU VIII"
+            elif user_data['rcu']=="RCU 9":
+                user_rcu = "RCU IX"
+            elif user_data['rcu']=="RCU 10":
+                user_rcu = "RCU X"
+            elif user_data['rcu']=="RCU 11":
+                user_rcu = "RCU XI"
+            elif user_data['rcu']=="RCU 12":
+                user_rcu = "RCU XII"
+            elif user_data['rcu']=="RCU 13":
+                user_rcu = "RCU XIII"
+            elif user_data['rcu']=="BARMM":
+                user_rcu = "BARMM"
+                
+            if user_data['job']!="Super Admin" and user_data['job']!="NPCO":
+                # str_query += f" AND USER_ID={user_data['id']}"
+                str_query += f" AND postRcu='{user_rcu}'"
+                rcu_filter += f" AND postRcu='{user_rcu}'"
                 isAdmin = False
                 
             # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
             articles = db.select("SELECT * FROM webrep_articles_v2 WHERE removed=0 {} ORDER BY id DESC ".format(str_query))
             
+            total = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE removed=0 {}".format(rcu_filter))[0]['total']
+            draft = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE removed=0 AND (status='draft' OR status='pending') {}".format(rcu_filter))[0]['total']
+            for_approval = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE removed=0 AND status='for_approval' {}".format(rcu_filter))[0]['total']
+            for_revision = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE removed=0 AND (status='for_revision' OR status='revise') {}".format(rcu_filter))[0]['total']
+            published = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE removed=0 AND (status='published' OR status='posted') {}".format(rcu_filter))[0]['total']
+
+            # total = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id  WHERE webrep_case_study_v2.isDeleted=0 {}".format(rcu_filter))[0]['total']
+            # drafted = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND webrep_case_study_v2.status='draft' {}".format(rcu_filter))[0]['total']
+            # published = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND webrep_case_study_v2.status='published' {}".format(rcu_filter))[0]['total']
+            # for_approval = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND webrep_case_study_v2.status='for_approval' {}".format(rcu_filter))[0]['total']
+            # for_revision = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND webrep_case_study_v2.status='for_revision' {}".format(rcu_filter))[0]['total']
+
+
             return render_template(
                 "admin/articles.html",
                 g_site_key = g_site_key,
@@ -827,7 +909,13 @@ class _main:
                 region_selected = region,
                 search_query = search,
                 is_session =_main.is_on_session(),
-                isAdmin = isAdmin
+                user_data = user_data,
+                isAdmin = isAdmin,
+                total = total,
+                draft = draft,
+                for_approval = for_approval,
+                for_revision = for_revision,
+                published = published
             )
         except Exception as e:
             return render_template(
@@ -836,7 +924,155 @@ class _main:
                 error=str(e)
             ), 500
 
+    @app.route("/webrep_v2/case_studies",methods=["POST","GET"])
+    def case_studies():
+        user_data = ''
+        isAdmin = True
         
+        try:
+
+            if 'USER_DATA' in session:
+                    user_data = session['USER_DATA'][0]
+            else:
+                # return "No User data! Please login first.", 400
+                return redirect("/login?next=/webrep_v2/case_studies/create")
+            
+            region = request.args.get("region", "all")
+            status = request.args.get("status", "all")
+            search = request.args.get("search", "").strip()
+            
+            str_query = ""
+            rcu_filter = ""
+            
+            if status != "all":
+                str_query += f" AND webrep_case_study_v2.status='{status}'"
+            if region != "all":
+                # quoted_rcu = ",".join(f"'{r}'" for r in region)
+                # str_query += f" AND postRcu IN ({quoted_rcu})"
+                str_query += f" AND webrep_case_study_v2.rcu='{region}'"
+            if search:
+                str_query += f" AND (basic_workingTitle LIKE '%{search}%' OR subject_mainSubject LIKE '%{search}%')"
+
+            user_rcu = ""
+            if user_data['rcu']=="RCU 8":
+                user_rcu = "RCU VIII"
+            elif user_data['rcu']=="RCU 9":
+                user_rcu = "RCU IX"
+            elif user_data['rcu']=="RCU 10":
+                user_rcu = "RCU X"
+            elif user_data['rcu']=="RCU 11":
+                user_rcu = "RCU XI"
+            elif user_data['rcu']=="RCU 12":
+                user_rcu = "RCU XII"
+            elif user_data['rcu']=="RCU 13":
+                user_rcu = "RCU XIII"
+            elif user_data['rcu']=="BARMM":
+                user_rcu = "BARMM"
+                
+            if user_data['job']!="Super Admin" and user_data['job']!="NPCO":
+                # str_query += f" AND USER_ID={user_data['id']}"
+                str_query += f" AND webrep_case_study_v2.rcu='{user_rcu}'"
+                rcu_filter += f" AND webrep_case_study_v2.rcu='{user_rcu}'"
+                isAdmin = False
+
+            
+            print(f"str_query = {str_query}")
+            
+            # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
+            case_studies = db.select("SELECT webrep_case_study_v2.*,DATE_FORMAT(webrep_case_study_v2.basic_dateOfDocumentation, '%M %d, %Y') AS formatted_dateOfDocumentation,users.rcu,users.name AS created_by FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 {} ORDER BY id DESC ".format(str_query))
+            
+            total = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id  WHERE webrep_case_study_v2.isDeleted=0 {}".format(rcu_filter))[0]['total']
+            drafted = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND webrep_case_study_v2.status='draft' {}".format(rcu_filter))[0]['total']
+            published = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND webrep_case_study_v2.status='published' {}".format(rcu_filter))[0]['total']
+            for_approval = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND webrep_case_study_v2.status='for_approval' {}".format(rcu_filter))[0]['total']
+            for_revision = db.select("SELECT COUNT(*) AS total FROM webrep_case_study_v2 LEFT JOIN users ON webrep_case_study_v2.USER_ID=users.id WHERE webrep_case_study_v2.isDeleted=0 AND webrep_case_study_v2.status='for_revision' {}".format(rcu_filter))[0]['total']
+
+            # case_studies = []
+            # total = 0
+            # drafted = 0
+            # published = 0
+            # for_approval = 0        
+            # for_revision = 0
+            
+            # print(f"case_studies : {case_studies}")
+            return render_template(
+                "admin/case_studies.html",
+                g_site_key = g_site_key,
+                active_bar = "knowledge_and_data",
+                case_studies = case_studies,
+                status_selected = status,
+                region_selected = region,
+                search_query = search,
+                is_session =_main.is_on_session(),
+                user_data = user_data,
+                isAdmin = isAdmin,
+                total = total,
+                drafted = drafted,
+                published = published,
+                for_approval = for_approval,
+                for_revision = for_revision,
+            )
+        except Exception as e:
+            return render_template(
+                "error/error.html",
+                message="An unexpected error occurred while loading articles.",
+                error=str(e)
+            ), 500
+
+    @app.route("/webrep_v2/newsletters",methods=["POST","GET"])
+    def newsletters():
+        user_data = ''
+        isAdmin = True
+        
+        try:
+
+            if 'USER_DATA' in session:
+                    user_data = session['USER_DATA'][0]
+            else:
+                # return "No User data! Please login first.", 400
+                return redirect("/login?next=/webrep_v2/newsletters/create")
+            
+            subscribers = db.select("SELECT * FROM webrep_subscribers ORDER BY subscriberID DESC")
+            
+            # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
+            newsletters = db.select("SELECT webrep_newsletters.*,DATE_FORMAT(webrep_newsletters.createdDate, '%M %d, %Y %h:%i %p') AS formatted_createdDate,DATE_FORMAT(webrep_newsletters.publishedDate, '%M %d, %Y %h:%i %p') AS formatted_publishedDate,users.name AS created_by FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id WHERE webrep_newsletters.isDeleted=0 {} ORDER BY id DESC ".format(''))
+            
+            total = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id  WHERE webrep_newsletters.isDeleted=0 {}".format(''))[0]['total']
+            drafted = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='draft' {}".format(''))[0]['total']
+            published = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='published' {}".format(''))[0]['total']
+            total_subscribers = db.select("SELECT COUNT(*) AS total FROM webrep_subscribers")[0]['total']
+            # for_approval = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.USER_ID=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='for_approval' {}".format(rcu_filter))[0]['total']
+            # for_revision = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.USER_ID=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='for_revision' {}".format(rcu_filter))[0]['total']
+
+            # newsletters = []
+            # total = 0
+            # drafted = 0
+            # published = 0
+            # for_approval = 0        
+            # for_revision = 0
+            
+            # print(f"Subscribers : {subscribers}")
+            return render_template(
+                "admin/newsletter.html",
+                g_site_key = g_site_key,
+                active_bar = "knowledge_and_data",
+                newsletters = newsletters,
+                subscribers = subscribers,
+                is_session =_main.is_on_session(),
+                user_data = user_data,
+                isAdmin = isAdmin,
+                total = total,
+                drafted = drafted,
+                published = published,
+                total_subscribers = total_subscribers
+            )
+        except Exception as e:
+            return render_template(
+                "error/error.html",
+                message="An unexpected error occurred while loading articles.",
+                error=str(e)
+            ), 500
+       
     @app.route("/webrep_v2/whoweare",methods=["POST","GET"])
     def about():
         return render_template(
@@ -860,7 +1096,8 @@ class _main:
             article = db.select("SELECT * FROM webrep_articles_v2 WHERE id='{}'".format(id))
             if article:
                 article = article[0]
-                if article['USER_ID'] != user_data['id'] and user_data['job']!="Super Admin":
+                if int(article['USER_ID']) != int(user_data['id']) and user_data['job']!="Super Admin":
+                    # return str(article['USER_ID'])+" | "+str(user_data['id'])+" | "+str(int(article['USER_ID']) != int(user_data['id'])) + " | "+ str(user_data['job']!="Super Admin")+" You don't have permission to edit this article.", 403
                     return "You don't have permission to edit this article.", 403
                 article['postheader'] = urllib.parse.unquote(article['postheader'])
                 article['postContent'] = urllib.parse.unquote(article['postContent'])
@@ -883,7 +1120,173 @@ class _main:
             g_site_key = g_site_key,
             article = None
         )
+    
+    @app.route("/webrep_v2/newsletters/create",methods=["POST","GET"])
+    def create_newsletter():
         
+        if 'USER_DATA' in session:
+                user_data = session['USER_DATA'][0]
+        else:
+            # return "No User data! Please login first.", 400
+            return redirect("/login?next=/webrep_v2/newsletters/create")
+
+        id = request.args.get("ids")
+        if id:
+            newsletter = db.select("SELECT * FROM webrep_newsletters WHERE id='{}'".format(id))
+            if newsletter:
+                newsletter = newsletter[0]
+                # if int(newsletter['USER_ID']) != int(user_data['id']) and user_data['job']!="Super Admin":
+                #     # return str(newsletter['USER_ID'])+" | "+str(user_data['id'])+" | "+str(int(newsletter['USER_ID']) != int(user_data['id'])) + " | "+ str(user_data['job']!="Super Admin")+" You don't have permission to edit this newsletter.", 403
+                #     return "You don't have permission to edit this newsletter.", 403
+                # newsletter['postheader'] = urllib.parse.unquote(newsletter['postheader'])
+                # newsletter['postContent'] = urllib.parse.unquote(newsletter['postContent'])
+                # newsletter['postAuthor'] = urllib.parse.unquote(newsletter['postAuthor'])
+                # newsletter['postRcu'] = urllib.parse.unquote(newsletter['postRcu'])
+                return render_template(
+                    "admin/create_newsletter.html",
+                    user_data = session['USER_DATA'][0],
+                    active_bar = "stories",
+                    g_site_key = g_site_key,
+                    newsletter = newsletter
+                )
+            else:
+                return "Newsletter not found.", 404
+            
+        return render_template(
+            "admin/create_newsletter.html",
+            user_data = session['USER_DATA'][0],
+            active_bar = "stories",
+            g_site_key = g_site_key,
+            newsletter = None
+        )
+    
+    @app.route("/webrep_v2/case_studies/<int:id>", methods=["POST","GET"])
+    def view_case_study(id):
+        casestudy = db.select("SELECT * FROM webrep_case_study_v2 WHERE id='{}'".format(id))
+        if casestudy:
+            casestudy = casestudy[0]
+            return render_template(
+                "case_studies/single.html",
+                user_data = session['USER_DATA'][0],
+                active_bar = "knowledge_and_data",
+                g_site_key = g_site_key,
+                case_study = casestudy
+            )
+        else:
+            return "Case study not found.", 404
+
+    @app.route("/webrep_v2/case_studies/create",methods=["POST","GET"])
+    def create_case_study():
+        
+        if 'USER_DATA' in session:
+                user_data = session['USER_DATA'][0]
+        else:
+            # return "No User data! Please login first.", 400
+            return redirect("/login?next=/webrep_v2/case_studies/create")
+
+        id = request.args.get("ids")
+        if id:
+            casestudy = db.select("SELECT * FROM webrep_case_study_v2 WHERE id='{}'".format(id))
+            if casestudy:
+                casestudy = casestudy[0]
+                if int(casestudy['USER_ID']) != int(user_data['id']) and user_data['job']!="Super Admin":
+                    # return str(casestudy['USER_ID'])+" | "+str(user_data['id'])+" | "+str(int(casestudy['USER_ID']) != int(user_data['id'])) + " | "+ str(user_data['job']!="Super Admin")+" You don't have permission to edit this case study.", 403
+                    return "You don't have permission to edit this case study.", 403
+                # casestudy['postheader'] = urllib.parse.unquote(casestudy['postheader'])
+                # casestudy['postContent'] = urllib.parse.unquote(casestudy['postContent'])
+                # casestudy['postAuthor'] = urllib.parse.unquote(casestudy['postAuthor'])
+                # casestudy['postRcu'] = urllib.parse.unquote(casestudy['postRcu'])
+                return render_template(
+                    "admin/create_case_study_v2.html",
+                    user_data = session['USER_DATA'][0],
+                    active_bar = "knowledge_and_data",
+                    g_site_key = g_site_key,
+                    case_study = casestudy
+                )
+            else:
+                return "Case study not found.", 404
+            
+        return render_template(
+            "admin/create_case_study_v2.html",
+            user_data = session['USER_DATA'][0],
+            active_bar = "knowledge_and_data",
+            g_site_key = g_site_key,
+            case_study = None
+        )
+    
+    @app.route("/webrep_v2/upload_case_study",methods=["POST","GET"])
+    def upload_case_study():
+        from datetime import date, datetime
+        from modules.Req_Brorn_util import file_from_request
+        data = dict(request.form)
+        key = [];val = [];args=""
+        data["USER_ID"] = session["USER_DATA"][0]['id']
+        
+        FILE_REQ = file_from_request(app)   
+        __f = FILE_REQ.save_file_from_request(request,"photo",c.RECORDS+"/objects/webrep/",False,True)
+        data["photo"] = __f["file_arr_str"]
+        
+        is_exist = len(db.select("SELECT * FROM `webrep_case_study_v2` WHERE `id` ='{}' ;".format(request.form['id'])))
+        if(is_exist==0):
+            print(" >> Adding Articles")
+            # for datum in data:
+			# 	# print(datum)
+            #     value = urllib.parse.unquote(data[datum]) if isinstance(data[datum], str) else data[datum]
+            #     key.append("`{}`".format(datum))
+            #     val.append("'{}'".format(value))
+            # sql = ('''INSERT INTO `webrep_case_study_v2` ({}) VALUES ({})'''.format(", ".join(key),", ".join(val)))
+            # # sql = ('''INSERT INTO `webrep_case_study_v2` ({},`status`) VALUES ({},'Submitted')'''.format(", ".join(key),", ".join(val)))
+            # last_row_id = db.do(sql)
+            # Collect keys and values
+            columns = []
+            values = []
+            for datum in data:
+                value = urllib.parse.unquote(data[datum]) if isinstance(data[datum], str) else data[datum]
+                columns.append(f"`{datum}`")
+                values.append(value)
+
+            # Add status column/value if needed
+            # columns.append("`status`")
+            # values.append("Submitted")
+
+            # Build placeholders
+            placeholders = ", ".join(["%s"] * len(values))
+
+            # Construct SQL
+            sql = f"INSERT INTO `webrep_case_study_v2` ({', '.join(columns)}) VALUES ({placeholders})"
+
+            # Execute safely
+            last_row_id = db.do(sql, values)
+        else:
+            print(" >> Editing Articles")
+            # for datum in data:
+            #     args += ",`{}`='{}'".format(datum,data[datum])
+            # sql = "UPDATE `webrep_case_study_v2` SET  {} WHERE `id`='{}';".format(args[1:],request.form['id'])
+            # pass
+            
+            if data.get("photo") == "":
+                 del data["photo"]
+
+            # Decode URL-encoded strings
+            for key, value in list(data.items()):
+                if isinstance(value, str):
+                    data[key] = urllib.parse.unquote(value)
+
+            # Build dynamic SET clause
+            set_clause = ", ".join([f"`{key}`=%s" for key in data.keys()])
+
+            # Construct SQL with placeholders
+            sql = f"UPDATE `webrep_case_study_v2` SET {set_clause} WHERE `id`=%s"
+
+            print(sql)
+            
+            # Values in the same order as keys, plus the id
+            values = list(data.values()) + [request.form['id']]
+            last_row_id = db.do(sql,values)
+        
+        return jsonify({"last_row_id":last_row_id})
+
+ 
     # @app.route("/webrep_v2/upload_file_webrep",methods=["POST","GET"])
     # def upload_file_webrep():
     #     print("  * Article Module")
@@ -917,6 +1320,24 @@ class _main:
     #     last_row_id = db.do(sql)
     #     return jsonify({"last_row_id":last_row_id,"FILES":__f})
     
+    
+    @app.route('/webrep_v2/upload-image', methods=['POST'])
+    def upload_image():
+        base_dir = c.RECORDS+"../static/webrepstatic_v2/img/embedded_images"
+        os.makedirs(base_dir, exist_ok=True)
+        
+        if 'image' not in request.files:
+            return jsonify({'error': 'No file'}), 400
+        
+        file = request.files['image']
+        if file:
+            filename = secure_filename(f"{uuid.uuid4().hex}_{file.filename}")
+            file.save(os.path.join(base_dir, filename))
+            
+            # Return the public URL to the image
+            img_url = url_for('static', filename=f'webrepstatic_v2/img/embedded_images/{filename}', _external=True)
+            return jsonify({'url': img_url})
+    
     @app.route("/webrep_v2/upload_file_webrep",methods=["POST","GET"])
     def upload_file_webrep():
         print("  * Article Module")
@@ -949,8 +1370,8 @@ class _main:
                 values.append(value)
 
             # Add status column/value
-            columns.append("`status`")
-            values.append("pending")
+            # columns.append("`status`")
+            # values.append("pending")
 
             # Build placeholders for parameterization
             placeholders = ", ".join(["%s"] * len(values))
@@ -971,7 +1392,8 @@ class _main:
             set_clause = ", ".join([f"`{key}`=%s" for key in data.keys()])
 
             # Construct SQL with placeholders
-            sql = f"UPDATE `webrep_articles_v2` SET {set_clause}, `status`='pending' WHERE `id`=%s"
+            # sql = f"UPDATE `webrep_articles_v2` SET {set_clause}, `status`='draft' WHERE `id`=%s"
+            sql = f"UPDATE `webrep_articles_v2` SET {set_clause} WHERE `id`=%s"
 
             # Values in the same order as keys, plus the id
             values = list(data.values()) + [request.form['id']]
@@ -983,3 +1405,92 @@ class _main:
         
         last_row_id = db.do(sql,values)
         return jsonify({"last_row_id":last_row_id,"FILES":__f})
+    
+    @app.route("/webrep_v2/upload_file_webrep_newsletter",methods=["POST","GET"])
+    def upload_file_webrep_newsletter():
+        print("  * Article Module")
+        from datetime import date, datetime
+        from modules.Req_Brorn_util import file_from_request
+        FILE_REQ = file_from_request(app)
+        data = dict(request.form)
+        key = [];val = [];args=""
+        data["createdDate"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        data["createdBy"] = session["USER_DATA"][0]['id']
+        # __f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
+        # data["file_name"] = __f["file_arr_str"]
+        
+        is_exist = len(db.select("SELECT * FROM `webrep_newsletters` WHERE `id` ='{}' ;".format(request.form['id'])))
+        columns = []
+        values = []
+        if(is_exist==0):
+            print(" >> Adding Newsletters")
+            columns = []
+            values = []
+
+            if ( data.get("status") == "published" ):
+                data["publishedDate"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                data["publishedBy"] = session["USER_DATA"][0]['id']
+
+                recipients = db.select("SELECT email FROM webrep_subscribers")
+                recipient_emails = [recipient['email'] for recipient in recipients]
+                
+                data['recipients'] = ",".join(recipient_emails)
+                data['totalRecipients'] = len(recipient_emails)
+            
+            
+            for datum in data:
+                columns.append(f"`{datum}`")
+                value = data[datum]
+
+                # Decode only if it's a string
+                if isinstance(value, str):
+                    value = urllib.parse.unquote(value)
+
+                values.append(value)
+
+            # Add status column/value
+            # columns.append("`status`")
+            # values.append("pending")
+
+            # Build placeholders for parameterization
+            placeholders = ", ".join(["%s"] * len(values))
+            sql = f"INSERT INTO `webrep_newsletters` ({', '.join(columns)}) VALUES ({placeholders})"
+            
+        else:
+            print(" >> Editing Newsletters")
+            
+            # if data.get("file_name") == "":
+            #  del data["file_name"]
+
+            if ( data.get("status") == "published" ):
+                data["publishedDate"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                data["publishedBy"] = session["USER_DATA"][0]['id']
+                
+                recipients = db.select("SELECT email FROM webrep_subscribers")
+                recipient_emails = [recipient['email'] for recipient in recipients]
+                
+                data['recipients'] = ",".join(recipient_emails)
+                data['totalRecipients'] = len(recipient_emails)
+                
+            # Decode URL-encoded strings
+            for key, value in list(data.items()):
+                if isinstance(value, str):
+                    data[key] = urllib.parse.unquote(value)
+
+            # Build dynamic SET clause
+            set_clause = ", ".join([f"`{key}`=%s" for key in data.keys()])
+
+            # Construct SQL with placeholders
+            # sql = f"UPDATE `webrep_articles_v2` SET {set_clause}, `status`='draft' WHERE `id`=%s"
+            sql = f"UPDATE `webrep_newsletters` SET {set_clause} WHERE `id`=%s"
+
+            # Values in the same order as keys, plus the id
+            values = list(data.values()) + [request.form['id']]
+
+            # # Execute safely
+            # cursor.execute(sql, values)
+            # connection.commit()
+
+        
+        last_row_id = db.do(sql,values)
+        return jsonify({"last_row_id":last_row_id})

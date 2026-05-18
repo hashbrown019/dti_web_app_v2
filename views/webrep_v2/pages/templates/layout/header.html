@@ -24,7 +24,7 @@
   </div>
 </section>
 <nav class="navbar p-0 navbar-expand-lg navbar-light bg-light" id="wp_navbar">
-  <div class="container pt-2 pb-2 bg-white">
+  <div class="container pt-2 pb-2 bg-light">
     <!-- <a class="navbar-brand" href="/webrep">
 		  <img src="../../static/webrepstatic_v2/img/RAPID.png"  height="60" class="" alt="home">
     </a> -->
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col-md-3 col-12 border-right">
                   <ul class="list-style-none">
-                    <li><a  class="dropdown-item" href="/webrep_v2/knowledge_and_data">Case Studies <i class="fa fa-angle-right"></i></a></li>
+                    <li><a  class="dropdown-item" href="/webrep_v2/knowledge_and_data#case_studies">Case Studies <i class="fa fa-angle-right"></i></a></li>
                   </ul>
                 </div>
                 <div class="col-md-3 col-12 border-right">
@@ -166,8 +166,10 @@
   <div class="container">
     <ul class="userOptionMenu">
       <li><a href="/webrep_v2/articles"><i class="fa fa-file-text"></i> Articles</a></li>
-      <li><a href="#"><i class="fa fa-folder-open"></i> Case Studies</a></li>
-      <li><a href="#"><i class="fa fa-upload"></i> Uploads</a></li>
+      <li><a href="/webrep_v2/case_studies"><i class="fa fa-folder-open"></i> Case Studies</a></li>
+      {% if isAdmin %}
+      <li><a href="/webrep_v2/newsletters"><span class="material-symbols-outlined font-12">newspaper</span> Newsletter</a></li>
+      {% endif %}
     </ul>
   </div>
 </section>

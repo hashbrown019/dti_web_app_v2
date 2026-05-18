@@ -3,6 +3,7 @@
 {% block content %}
 
 {% include 'knowledge_and_data/updates_and_reports.html' %}
+{% include 'knowledge_and_data/case_studies.html' %}
 {% include 'knowledge_and_data/tools.html' %}
 
 {% endblock %}
@@ -10,6 +11,33 @@
 
 {% block customScript %}
 <script type="text/javascript">
+
+    function applyCaseStudyFilter(){
+        var selectedRegion = $('#case_study_filter_rcu').val();
+        var searchQuery = $('#case_study_filter_search').val();
+        var anyVisible = false;
+        
+        $('.case_studies_container>.case_study_item').each(function(){
+            var itemRegion = $(this).data('rcu').toLowerCase();
+            var itemTitle = $(this).find('.card-title').text().toLowerCase();
+
+            var matchesRegion = selectedRegion === "" || itemRegion.includes(selectedRegion.toLowerCase());
+            var matchesSearch = searchQuery === "" || itemTitle.includes(searchQuery.toLowerCase());
+
+            if(matchesRegion && matchesSearch){
+                $(this).show();
+                anyVisible = true;
+            } else {
+                $(this).hide();
+            }
+        });
+        // Show or hide the empty label
+        if(anyVisible){
+            $('#no_case_study_label').hide();
+        } else {
+            $('#no_case_study_label').show();
+        }
+    }
 
     $(document).ready(function(){
 

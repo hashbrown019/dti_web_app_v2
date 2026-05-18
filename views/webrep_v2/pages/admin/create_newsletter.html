@@ -1,0 +1,218 @@
+{% extends 'templates/basic.html' %}
+
+{% block customStyle %}
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 130px!important;">
+<!-- Back Arrow -->
+	<div class="container text-start mt-5">
+		<a class=" texttheme" onclick="window.history.back()">
+			<span><i class="fa-solid fa-arrow-left-long"></i></span>
+		</a>
+	</div>
+
+<!-- Title -->
+	<div class="container d-flex justify-content-between text-start mt-5">
+		<div class="container">
+			<h5 class="display-5 texttheme" >{{ 'Compose Newsletter' if not newsletter else 'Edit Newsletter' }}</h5>
+			<input type="text" id="id" class="newsletter_form form-control" value="{{ newsletter.id if newsletter else '' }}" hidden style="border:0.1px">
+		</div>
+		<div id="submit_btn_handler" style="width: 360px;">
+			<button class="btn btn-outline-success btn-sm rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate" data-status="draft"  onclick="submit_newsletter()"><i class="fa fa-pencil"></i> Save As Draft</button>
+			<button class="btn btn-success btn-sm rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate" data-status="published" onclick="submit_newsletter()"><i class="fa fa-paper-plane"></i> Send</button>
+		</div>
+	</div>
+	<hr>
+
+<!-- Arcticle News -->
+	<div id="print_docx" class="container shadow-sm p-3 bg-body rounded mb-5">
+		<div class="container row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="subject_mainSubject" class="form-label small fw-bolder">Subject</label>
+                        <input class="newsletter_form form-control" id="subject" value="{{ ( newsletter.subject if newsletter else '' ) | urldecode_lines | safe }}" rows="3" placeholder=""></input>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="subject_mainSubject" class="form-label small fw-bolder">Content</label>
+                        <div id="newsletter_content" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+
+    <div class="modal " id="createPostConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">You're going there!</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body mb-3">
+					<img src="https://img.freepik.com/free-vector/flat-composition-with-male-postman-letters-envelopes-vector-illustration_1284-67249.jpg?w=1380&t=st=1675837891~exp=1675838491~hmac=50c5f5bbe7f981071aa34e4c72806517b53911568ff8c26e7ebf2003c6d1eaa8" style="height:390px; width: 450px;">
+					Your content needs to be reviewed by NPCO-assigned staff; <br>You will get a notification via email within a short period.
+					<hr>
+					<div>
+						<h5>Your Upload Process is</h5>
+						<span id="upload_process"></span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+					<a href="/webrep_v2/newsletters" type="button" class="btn btn-primary" >Continue</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block customScript %}
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+	<script type="text/javascript">
+
+        var quill;
+
+        function selectLocalImage() {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.click();
+
+            input.onchange = () => {
+                const file = input.files[0];
+                const formData = new FormData();
+                formData.append('image', file);
+
+                // 2. Upload file to Flask immediately
+                $.ajax({
+                url: '/webrep_v2/upload-image',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (res) => {
+                    // 3. Insert the URL into the editor instead of Base64
+                    const range = quill.getSelection();
+                    quill.insertEmbed(range.index, 'image', res.url);
+                }
+                });
+            };
+        }
+        
+
+        function submit_newsletter(){
+            var status = event.target.getAttribute("data-status")
+            var formData = new FormData();
+            // var contents = quill.root.innerHTML;
+            formData.append('content', quill.root.innerHTML);
+            formData.append('status', status);
+
+            // Append the actual file object
+            // const fileInput = document.getElementById("file_name");
+            // if (fileInput.files.length > 0) {
+            //     formData.append("file_name", fileInput.files[0]);
+            // }
+
+            var data = {}; var from_field = document.getElementsByClassName('newsletter_form');
+            for (var i = 0; i < from_field.length; i++) {
+                if(from_field[i].type =="checkbox"){
+                    data[from_field[i].id] = from_field[i].checked
+                }else{
+                    data[from_field[i].id] = encodeURIComponent(from_field[i].value);
+                }
+            }
+            // data['postContent'] = encodeURIComponent(JSON.stringify(contents));
+
+            // Build FormData manually
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+            
+            $send({
+                action : "/webrep_v2/upload_file_webrep_newsletter",
+                method : POST,
+                data : formData,
+                processData: false,   // prevent jQuery from serializing
+                contentType: false,   // let browser set multipart/form-data
+                func : function(res){
+                    resp = JSON.parse(res)
+                    println(resp)
+                    console.log("im here.......");
+                    console.log(res);
+                    // goto("/rapid/NewsAndStories/NewsAndStories.html")
+                },
+                err : function(res){ console.log(res)},
+                progress : function(e){
+                    // var response_length = parseFloat(headerMap(e)['total'])
+                    println(e)
+                    var response_length = parseFloat(e.total)
+                    var response_loaded = parseFloat(e.loaded)
+                    var percent_  = (response_loaded / response_length) * 100;
+                    var percent_rounded = Math.round(percent_ * 100) / 100
+                    $ID("upload_process").innerHTML=(`
+                        <span>
+                            Gathering 
+                            <b>`+Math.round(percent_)+`%</b><br>
+                            <span class="x-small">
+                                [ `+(response_loaded/1000000).toFixed(1)+" / "+(response_length/1000000).toFixed(1)+` Mb ]<br>
+                                <i>`+(response_length-response_loaded)+` bytes remaining</i>
+                            </span>
+                        </span>
+                    `);
+                }
+            })
+        }
+
+        $(document).ready(function(){
+
+            quill = new Quill('#newsletter_content', {
+                theme: 'snow',
+                modules: {
+                    toolbar: {
+                    // 1. Define the buttons you want
+                        container: [
+                            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                            ['blockquote', 'code-block'],
+                            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+                            [{ 'indent': '-1'}, { 'indent': '+1' }],        // outdent/indent
+                            [{ 'direction': 'rtl' }],                         // text direction
+                            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                            [{ 'font': [] }],
+                            [{ 'align': [] }],
+                            ['link', 'image'] 
+                        ],
+                        // 2. Define the custom handler for the 'image' button
+                        handlers: {
+                            'image': function() {
+                            console.log("Handler triggered!"); // Test if this shows in console
+                                selectLocalImage();
+                            }
+                        }
+                    },
+                    imageResize: {
+                        displaySize: true // Show image dimensions while resizing
+                    },
+                }
+                });
+
+                quill.clipboard.dangerouslyPasteHTML(0,{{ newsletter.content|default("")|tojson|safe }});
+                
+            setTimeout(function(){
+                $('.mis_loading').fadeOut('slow');
+            }, 1500);
+
+            
+        });
+
+	</script>
+{% endblock %}

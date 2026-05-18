@@ -1,0 +1,55 @@
+<section class="wr_project_dashboard sectionpad bg-wp-secondary-light" id="case_studies" style="padding-top: 140px!important;">
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <h2 class="inter-bold text-wp-primary">Case Studies</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="input-group rounded-pill mb-3">
+                    <select class="form-select field-rounded applyfilter applyfilter_region" id="case_study_filter_rcu" onchange="applyCaseStudyFilter()">
+                        <option value="" {% if region_selected and "all" in region_selected %}selected{% endif %}>Region</option>
+                        <option value="npco" {% if region_selected and "npco" in region_selected %}selected{% endif %}>NPCO</option>
+                        <option value="rcu viii" {% if region_selected and "rcu viii" in region_selected %}selected{% endif %}>RCU VIII</option>
+                        <option value="rcu ix" {% if region_selected and "rcu ix" in region_selected %}selected{% endif %}>RCU IX</option>
+                        <option value="rcu x" {% if region_selected and "rcu x" in region_selected %}selected{% endif %}>RCU X</option>
+                        <option value="rcu xi" {% if region_selected and "rcu xi" in region_selected %}selected{% endif %}>RCU XI</option>
+                        <option value="rcu xii" {% if region_selected and "rcu xii" in region_selected %}selected{% endif %}>RCU XII</option>
+                        <option value="rcu xiii" {% if region_selected and "rcu xiii" in region_selected %}selected{% endif %}>RCU XIII</option>
+                        <option value="barmm" {% if region_selected and "barmm" in region_selected %}selected{% endif %}>BARMM</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="input-group input-group-rounded rounded-pill mb-3">
+                    <input type="text" class="form-control applyfilter applyfilter_search" id="case_study_filter_search" placeholder="Search" aria-label="Search..." onchange="applyCaseStudyFilter()" style="border: 1px solid #DEE2E6 !important;" aria-describedby="basic-addon2">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row case_studies_container custom-scroll">
+            <div class="col-12 mb-4" id="no_case_study_label" style="display: none;">
+                <p class="text-muted text-center">No case studies found matching the selected filters.</p>
+            </div>
+            {% for case in case_studies %}
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-4 case_study_item" data-rcu="{{ case.rcu }}">
+                <a href="/webrep_v2/case_studies/{{ case.id }}" class="text-decoration-none">
+                    <div class="card shadow-sm case-study-card ps-0 pe-0">
+                        <p class="font-12 m-2">
+                        <small class="text-muted "><i class="fa fa-calendar text-wp-secondary"></i> {{ case.formatted_dateOfDocumentation }}</small>
+                        <small class="text-muted float-end text-wp-secondary"><b>{{ case.rcu | urldecode_lines | safe }}</b></small>
+                        </p>
+                        <img src="/webrep_v2/article/get_img/{{ case.photo }}" class="card-img-top" alt="Case Study Image">
+                        <small class="text-muted font-12 mt-2 ms-2"><span class="fa fa-pencil text-wp-secondary"></span> <i>{{ case.basic_author | urldecode_lines | safe }}</i></small>
+                        <div class="card-body ">
+                            <h6 class="card-title inter-regular text-wp-primary m-0">{{ case.basic_workingTitle | urldecode_lines | safe }}</h6>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
