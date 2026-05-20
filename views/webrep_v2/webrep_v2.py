@@ -876,7 +876,7 @@ class _main:
             elif user_data['rcu']=="BARMM":
                 user_rcu = "BARMM"
                 
-            if user_data['job']!="Super Admin" and user_data['job']!="NPCO":
+            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
                 # str_query += f" AND USER_ID={user_data['id']}"
                 str_query += f" AND postRcu='{user_rcu}'"
                 rcu_filter += f" AND postRcu='{user_rcu}'"
@@ -905,7 +905,7 @@ class _main:
                 articles = articles,
                 posttype_selected = posttype,
                 status_selected = status,
-                commodities_selected = commodities,
+                commodity_selected = commodities,
                 region_selected = region,
                 search_query = search,
                 is_session =_main.is_on_session(),
@@ -969,7 +969,7 @@ class _main:
             elif user_data['rcu']=="BARMM":
                 user_rcu = "BARMM"
                 
-            if user_data['job']!="Super Admin" and user_data['job']!="NPCO":
+            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
                 # str_query += f" AND USER_ID={user_data['id']}"
                 str_query += f" AND webrep_case_study_v2.rcu='{user_rcu}'"
                 rcu_filter += f" AND webrep_case_study_v2.rcu='{user_rcu}'"

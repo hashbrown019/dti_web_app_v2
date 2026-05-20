@@ -100,11 +100,11 @@
                                             {% elif case_study.status == 'draft' %}
                                                 <span class="badge bg-secondary mb-1">{{ case_study.status | upper }}</span>
                                             {% elif case_study.status == 'for_approval' %}
-                                                <span class="badge bg-primary  mb-1 text-light">{{ case_study.status | upper }}</span>
+                                                <span class="badge bg-warning  mb-1 ">{{ case_study.status | upper }}</span>
                                             {% elif case_study.status == 'for_revision' %}
                                                 <span class="badge bg-danger mb-1">{{ case_study.status | upper }}</span>
                                             {% else %}
-                                                <span class="badge bg-secondary mb-1">{{ case_study.status | upper }}</span>
+                                                <span class="badge bg-primary mb-1 text-light">{{ case_study.status | upper }}</span>
                                             {% endif %} <br>
                                             <small class=""><i class="fa fa-calendar text-wp-secondary"></i> {{ case_study.formatted_dateOfDocumentation }}</small><br>
                                             <i class="fa fa-user text-wp-secondary"></i> {{ case_study.created_by | urldecode_lines | upper }} | {{ case_study.rcu | urldecode_lines | upper }}
