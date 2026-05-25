@@ -2,7 +2,6 @@
 
 {% block customStyle %}
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -171,6 +170,32 @@
 
         $(document).ready(function(){
 
+            const Inline = Quill.import('blots/inline');
+            class ButtonLink extends Inline {
+                static create(value) {
+                    let node = super.create();
+                    node.setAttribute('href', value.url);
+                    node.setAttribute('target', '_blank');
+                    node.classList.add('btn'); // base class
+                    if (value.style) {
+                    node.classList.add(`btn-${value.style}`); // e.g. btn-danger
+                    }
+                    return node;
+                }
+
+                static formats(node) {
+                    return {
+                    url: node.getAttribute('href'),
+                    style: node.className.replace('btn ', '').replace('btn-', '')
+                    };
+                }
+            }
+
+            ButtonLink.blotName = 'button-link';
+            ButtonLink.tagName = 'a'; // still an <a> tag
+
+            Quill.register(ButtonLink);
+
             quill = new Quill('#newsletter_content', {
                 theme: 'snow',
                 modules: {
@@ -189,23 +214,32 @@
                             [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
                             [{ 'font': [] }],
                             [{ 'align': [] }],
-                            ['link', 'image'] 
+                            ['link', 'image', 'custom-link'] 
                         ],
                         // 2. Define the custom handler for the 'image' button
                         handlers: {
                             'image': function() {
-                            console.log("Handler triggered!"); // Test if this shows in console
+                                console.log("Handler triggered!"); // Test if this shows in console
                                 selectLocalImage();
+                            },
+                            'custom-link': function() {
+                                const range = this.quill.getSelection();
+                                if (range && range.length > 0) {
+                                    const url = prompt("Enter the URL:");
+                                    if (url) {
+                                        const style = prompt("Choose style: primary / secondary / warning / danger / success / info / rapid-lime / rapid-cyan" , "primary");
+                                        this.quill.format('button-link', { url, style });
+                                    }
+                                } else {
+                                alert("Please select some text first.");
+                                }
                             }
                         }
-                    },
-                    imageResize: {
-                        displaySize: true // Show image dimensions while resizing
-                    },
+                    }
                 }
-                });
+            });
 
-                quill.clipboard.dangerouslyPasteHTML(0,{{ newsletter.content|default("")|tojson|safe }});
+            quill.clipboard.dangerouslyPasteHTML(0,{{ newsletter.content|default("")|tojson|safe }});
                 
             setTimeout(function(){
                 $('.mis_loading').fadeOut('slow');

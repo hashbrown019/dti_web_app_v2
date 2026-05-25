@@ -72,6 +72,7 @@
 							<option value="process fruit & nuts" {% if commodity_selected == "process fruit & nuts" %}selected{% endif %}>Process Fruit & Nuts</option>
 						</select>
                     </div>
+                    {% if isAdmin %}
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Region</span>
                         <select class="form-select" id="region" name="region">
@@ -86,6 +87,7 @@
 							<option value="barmm" {% if region_selected == "barmm" %}selected{% endif %}>BARMM</option>
 						</select>
                     </div>
+                    {% endif %}
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Status</span>
                         <select class="form-select" id="status" name="status">
@@ -114,7 +116,7 @@
                                 <div class="card-body p-0 pt-4 pb-3">
                                     <div class="row muted font-12 mb-2 ms-1 me-1">
                                         <div class="col-6">
-                                            <small class=""><i class="fa fa-calendar text-wp-secondary"></i> {{ article.date.strftime('%B %d, %Y') }} <br> <i class="fa fa-file-text  text-wp-secondary"></i> <b class="text-wp-secondary">{{ article.posttype | upper }}</b></small>
+                                            <small class=""><i class="fa fa-calendar text-wp-secondary"></i> {{ article.datePosted.strftime('%b %d, %Y') }} </small>
                                         </div>
                                         <div class="col-6 text-end">
                                             {% if article.status == 'posted' or article.status == 'published' %}
@@ -126,6 +128,12 @@
                                             {% elif article.status == 'for_approval' %}
                                                 <span class="badge bg-warning">FOR APPROVAL</span>
                                             {% endif %}
+                                        </div>
+                                        <div class="col-12">
+                                            <small class="">
+                                                <i class="fa fa-user text-wp-secondary"></i> {{ article.postAuthor | urldecode_lines | safe }} <br>
+                                                <i class="fa fa-file-text  text-wp-secondary"></i> <b class="text-wp-secondary">{{ article.posttype | upper }}</b> 
+                                            </small>
                                         </div>
                                     </div>
                                     <img class="card-img-top border-radius-0 border-bottom-1 border-top-1" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" style="height: 150px;;">
