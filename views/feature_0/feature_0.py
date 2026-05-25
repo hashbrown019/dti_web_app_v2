@@ -316,12 +316,80 @@ class _main:
 	@app.route("/feature_0/filter_list_farmers",methods=["POST","GET"])
 	@c.login_auth_web()
 	def feature_0_filter_list_farmers():
+		filter_suffix = Filter.position_data_filter().strip()
+		if not filter_suffix:
+			filter_suffix = "WHERE 1=1"
+		elif not filter_suffix.lower().startswith("where"):
+			filter_suffix = "WHERE 1=1"
+		max_row = rapid_mysql.select(
+			"SELECT MAX(`id`) AS `max_id`, MAX(`date_modified`) AS `max_sync` FROM `excel_import_form_a` {}".format(filter_suffix),
+			True
+		)[0]
 		return jsonify({
 			"dash1":_main.feature_0_get_farmer_data_a1(),
+			"sync":{
+				"max_id": max_row.get("max_id") or 0,
+				"max_sync": max_row.get("max_sync") or ""
+			}
 			# "dash2":sub_main_module.dash_get_form_a1("all"),
 			# "dash3":_main.feature_0_get_farmer_data_a1_for_dash()
 			}
 		)
+
+	@app.route("/feature_0/filter_list_farmers_delta",methods=["POST","GET"])
+	@c.login_auth_web()
+	def feature_0_filter_list_farmers_delta():
+		last_id_raw = str(request.form.get("last_id", "0")).strip()
+		last_id = int(last_id_raw) if last_id_raw.isdigit() else 0
+
+		last_sync_raw = str(request.form.get("last_sync", "")).strip()
+		last_sync = re.sub(r"[^0-9:\- ]", "", last_sync_raw)
+
+		filter_suffix = Filter.position_data_filter().strip()
+		if not filter_suffix:
+			filter_suffix = "WHERE 1=1"
+		elif not filter_suffix.lower().startswith("where"):
+			filter_suffix = "WHERE 1=1"
+
+		delta_clause = " AND (`excel_import_form_a`.`id` > {})".format(last_id)
+		if last_sync != "":
+			delta_clause = " AND ((`excel_import_form_a`.`id` > {}) OR (`excel_import_form_a`.`date_modified` > '{}'))".format(last_id, last_sync)
+
+		sql_excel = '''
+			SELECT 
+				`excel_import_form_a`.`id` as 'db_id',
+				`users`.`name` as 'inputed_by',
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_First_name` as `f_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Middle_name` as `m_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Last_name` as `l_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_birthday` as `bday`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_region` as `addr_region`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
+				`excel_import_form_a`.`file_name` as 'reference'
+			FROM `excel_import_form_a`
+			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id`
+			{} {}
+			ORDER BY `excel_import_form_a`.`id` DESC;
+		'''.format(filter_suffix, delta_clause)
+
+		rows = rapid_mysql.select(sql_excel,False)
+
+		max_id_sql = "SELECT MAX(`id`) AS `max_id`, MAX(`date_modified`) AS `max_sync` FROM `excel_import_form_a` {}".format(filter_suffix)
+		max_row = rapid_mysql.select(max_id_sql,True)[0]
+
+		return jsonify({
+			"dash1": rows,
+			"sync": {
+				"max_id": max_row.get("max_id") or 0,
+				"max_sync": max_row.get("max_sync") or ""
+			}
+		})
 
 	@app.route("/feature_0/get_uploaded_excel", methods=["POST","GET"])
 	@c.login_auth_web()
@@ -384,11 +452,48 @@ class _main:
 				-- `frmer_prof_@_hh_Head_Info_@_is_head_og_household` as `farmer_head_of_house`,
 				-- `frmer_prof_@_basic_Info_@_civil_status` as `farmer_civil_status`
 			FROM `excel_import_form_a`
-			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {} ;'''.format(Filter.position_data_filter())
+			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {}
+			ORDER BY `excel_import_form_a`.`id` DESC;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False) # DEPRICATED MOBILE DATA
-		RES = rapid_mysql.select(sql_excel,False)
-		random.shuffle(RES)
-		return RES
+		return rapid_mysql.select(sql_excel,False)
+
+	@app.route("/feature_0/get_farmer_data_a1_row/<record_id>", methods=["POST","GET"])
+	@c.login_auth_web()
+	def feature_0_get_farmer_data_a1_row(record_id):
+		rec_id = str(record_id).strip()
+		if not rec_id.isdigit():
+			return jsonify([])
+		filter_suffix = Filter.position_data_filter().strip()
+		if filter_suffix:
+			if filter_suffix.lower().startswith("where"):
+				filter_suffix = "{} AND `excel_import_form_a`.`id` = {}".format(filter_suffix, rec_id)
+			else:
+				filter_suffix = "WHERE `excel_import_form_a`.`id` = {}".format(rec_id)
+		else:
+			filter_suffix = "WHERE `excel_import_form_a`.`id` = {}".format(rec_id)
+
+		sql_excel = '''
+			SELECT 
+				`excel_import_form_a`.`id` as 'db_id',
+				`users`.`name` as 'inputed_by',
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_First_name` as `f_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Middle_name` as `m_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Last_name` as `l_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Extension_name` as `ext_name`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_birthday` as `bday`,
+				`excel_import_form_a`.`frmer_prof_@_basic_Info_@_Sex` as `farmer_sex`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_primary_crop` as `farmer_primary_crop`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_Name_coop` as `farmer_fo_name_rapid`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_region` as `addr_region`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_province` as `addr_prov`,
+				`excel_import_form_a`.`frmer_prof_@_frmer_addr_@_city_municipality` as `addr_city`,
+				`excel_import_form_a`.`frmer_prof_@_Farming_Basic_Info_@_DIP_name` as `farmer_dip_ref`,
+				`excel_import_form_a`.`file_name` as 'reference'
+			FROM `excel_import_form_a`
+			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id`
+			{};
+		'''.format(filter_suffix)
+		return jsonify(rapid_mysql.select(sql_excel,False))
 
 
 	@app.route("/feature_0/get_farmer_data_a1_for_dash",methods=["POST","GET"])  ## FOR CREATING NEW DAsh charts
@@ -952,7 +1057,8 @@ class Filter:
 		val = ""
 		args = ""
 
-		if rec_id == "":  # INSERT
+		is_insert = (rec_id == "")
+		if is_insert:  # INSERT
 			for k, v in form_data.items():
 				col += ",`{}`".format(k)
 				val += ",'{}'".format(v.replace("'", "''"))
@@ -974,6 +1080,6 @@ class Filter:
 		else:
 			status = 'success'
 			msg = 'Data was added to the database'
-			last_row_id = result
+			last_row_id = result if is_insert else rec_id
 
 		return jsonify({"status": status, "msg": msg, "id": last_row_id})

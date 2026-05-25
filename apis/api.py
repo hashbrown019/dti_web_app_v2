@@ -211,100 +211,103 @@ class user_management:
 		data = {}
 		msg = "on process"
 		if(user_management.is_on_session()):
+			prof_a_e = len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a` WHERE `user_id` = '{}';".format(user_id)))
+			# prof_a = len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id)))
+
 			try:
 				data['profiling_a'] = {
-					'total' : len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a` LIMIT 1000;")) + len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles` LIMIT 1000;")),
-					'inputed': len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a` WHERE `user_id` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `user_id` FROM `excel_import_form_a`;")) + len(rapid_mysql.select("SELECT `USER_ID` FROM `form_a_farmer_profiles`;")),
+				'inputed':int(prof_a_e)
 				}
 			except:pass
 			try:
 				data['prof_b'] = {
-					'total' : len(rapid_mysql.select("SELECT `uploaded_by` FROM `form_b` LIMIT 1000;")),
-					'inputed': len(rapid_mysql.select("SELECT `uploaded_by` FROM `form_b` WHERE `uploaded_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `uploaded_by` FROM `form_b`;")),
+				'inputed': len(rapid_mysql.select("SELECT `uploaded_by` FROM `form_b` WHERE `uploaded_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['prof_c'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `form_c` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `form_c` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `form_c`;")),
+				'inputed' :len(rapid_mysql.select("SELECT `upload_by` FROM `form_c` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf11'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing` LIMIT 1000;")),
-					'inputed': len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing`;")),
+				'inputed':len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf3'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_bdsp_reg` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf4'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_capacity_building` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf9'] = {
-					"total" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity` LIMIT 1000;")),
-					"inputed" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				"total" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity`;")),
+				"inputed" : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_enablers_activity` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf2'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_implementing_unit` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf5'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_matching_grant` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf10'] ={ 
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_negosyo_center` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf1'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf6'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_product_development` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['dcf7'] = {
-					'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion` WHERE `upload_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `upload_by` FROM `dcf_trade_promotion` WHERE `upload_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['webrep_articles'] ={
-					'total' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_articles` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_articles` WHERE `USER_ID` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_articles`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_articles` WHERE `USER_ID` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['webrep_forum_comments'] = {
-					'total' : len(rapid_mysql.select("SELECT `comment_by` FROM `webrep_forum_comments` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `comment_by` FROM `webrep_forum_comments` WHERE `comment_by` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `comment_by` FROM `webrep_forum_comments`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `comment_by` FROM `webrep_forum_comments` WHERE `comment_by` = '{}';".format(user_id)))
 				}
 			except:pass
 			try:
 				data['webrep_uploads'] = {
-					'total' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_uploads` LIMIT 1000;")),
-					'inputed' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_uploads` WHERE `USER_ID` = %s LIMIT 1000;", [user_id]))
+				'total' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_uploads`;")),
+				'inputed' : len(rapid_mysql.select("SELECT `USER_ID` FROM `webrep_uploads` WHERE `USER_ID` = '{}';".format(user_id)))
 				}
 			except:pass
 			return data
@@ -313,7 +316,7 @@ class user_management:
 
 	@app.route("/api/user/rankings",methods=["POST","GET"]) # GE
 	def user_rankings_all():
-		ALL_USER = rapid_mysql.select("SELECT `id`, `name` , `rcu` FROM `users` WHERE `status`='active' LIMIT 500;")
+		ALL_USER = rapid_mysql.select("SELECT `id`, `name` , `rcu` FROM `users` WHERE `status`='active' ;")
 		data = {}
 		msg = "on process"
 		print("starting")
@@ -321,60 +324,26 @@ class user_management:
 			for user in ALL_USER:
 				user_id = user['id']
 				print(user['name'])
+				prof_a_e =rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `excel_import_form_a` WHERE `user_id` = '{}';".format(user_id))[0]['count']
+				# prof_a =rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_a_farmer_profiles` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
 				data[user['name'] ] = {}
 				total_input_all = 0
-				
-				try:
-					prof_a_count = rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `excel_import_form_a` WHERE `user_id` = %s;", [user_id])
-					total_input_all += int(prof_a_count[0]['cnt']) if prof_a_count else 0
-				except: pass
-				
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `form_b` WHERE `uploaded_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `form_c` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_access_financing` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_bdsp_reg` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_capacity_building` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_enablers_activity` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_implementing_unit` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_matching_grant` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_negosyo_center` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_product_development` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `dcf_trade_promotion` WHERE `upload_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `webrep_articles` WHERE `USER_ID` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `webrep_forum_comments` WHERE `comment_by` = %s;", [user_id])[0]['cnt']
-				except: pass
-				try:
-					total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as cnt FROM `webrep_uploads` WHERE `USER_ID` = %s;", [user_id])[0]['cnt']
-				except: pass
-				
+				total_input_all += int(prof_a_e)
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_b` WHERE `uploaded_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `form_c` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_access_financing` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_bdsp_reg` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_capacity_building` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_enablers_activity` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_implementing_unit` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_matching_grant` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_negosyo_center` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_prep_review_aprv_status` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_product_development` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `dcf_trade_promotion` WHERE `upload_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `webrep_articles` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `webrep_forum_comments` WHERE `comment_by` = '{}';".format(user_id))[0]['count']
+				total_input_all += rapid_mysql.select("SELECT COUNT(`id`) as 'count' FROM `webrep_uploads` WHERE `USER_ID` = '{}';".format(user_id))[0]['count']
 				data[user['name']]= total_input_all
 			return data
 		else:

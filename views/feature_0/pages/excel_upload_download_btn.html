@@ -6,12 +6,14 @@
 	<b class="x-text-grey">Import Spreadsheet</b> | <span class="x-text-blue fa fa-upload"></span>
 </span>
 &nbsp;&nbsp;&nbsp;
-<label for="download-template" style="font-weight:bold;color:#555;">Download | <span class="x-text-orange fa fa-download"></span></label>
-<select id="download-template" onchange="handleTemplateDownload(this.value)">
-  <option value="">Select template</option>
-  <option value="VC_FORM_A_v2.xls">Farmers Template</option>
-  <option value="VC_FORM_A_v2_Youth.xls">Youth Farmers Template</option>
-</select>
+<span class="download-template-wrap">
+	<label for="download-template"><b>Download</b> | <span class="x-text-orange fa fa-download"></span></label>
+	<select id="download-template" onchange="handleTemplateDownload(this.value)">
+	  <option value="">Select template</option>
+	  <option value="VC_FORM_A_v2.xls">Farmers Template</option>
+	  <option value="VC_FORM_A_v2_Youth.xls">Youth Farmers Template</option>
+	</select>
+</span>
 
 <script>
 	function handleTemplateDownload(fileName) {

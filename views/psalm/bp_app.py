@@ -210,22 +210,21 @@ def update_prof():
 		FILE_REQ = file_from_request(app)
 		__f = FILE_REQ._save_file_from_request(request,"file",c.RECORDS+"objects/userpics/",False,False)
 		print(__f)
-		sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
+		sql = "UPDATE users SET name = %s, email = %s, mobile = %s, address = %s, profilepic = %s WHERE id = %s"
 		# else:
 
 		# result=db.do(sql)
 
 		if(__f["status"]=="error"):
 			if(__f['msg']=="No File Found in Form"):
-				sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress, user_id)
-				result=db.do(sql)
+				sql = "UPDATE users SET name = %s, email = %s, mobile = %s, address = %s WHERE id = %s"
+				result=db.do(sql, [editfullname, editemail, editphone, editaddress, user_id])
 				flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
 
 			else:
 				flash(f"An error occured !", "error")
 		else:
-			sql = "UPDATE users set name = '{}', email = '{}', mobile = '{}', address = '{}', profilepic = '{}' WHERE id = '{}'".format(editfullname, editemail, editphone, editaddress,__f['file_arr_str'] , user_id)
-			result=db.do(sql)
+			result=db.do(sql, [editfullname, editemail, editphone, editaddress, __f['file_arr_str'], user_id])
 			flash("Profile updated successfully. You have been logged out. Please log in again.", "success")
 	return redirect("/logout")
 
@@ -516,11 +515,11 @@ def change_password():
 	current_password = request.form.get("currpass_user")
 	confirm_password = request.form.get("confpass_user")
 	user_id = session["USER_DATA"][0]['id']
-	sql = "SELECT password FROM users WHERE id = '{}'".format(user_id)
-	session_pass = db.select(sql)[0]['password']
+	sql = "SELECT password FROM users WHERE id = %s"
+	session_pass = db.select(sql, [user_id])[0]['password']
 	if current_password == session_pass:
-		update = "UPDATE users SET password = '{}' WHERE id = '{}'".format(confirm_password, user_id)
-		db.do(update)
+		update = "UPDATE users SET password = %s WHERE id = %s"
+		db.do(update, [confirm_password, user_id])
 		flash("Password changed successfully. You have been logged out. Please log in again with your new password.", "success")
 	else:
 		flash(f"Password Incorrect!", "error")
@@ -550,9 +549,9 @@ def spreadsheet():
 def delete(filename_):
 	if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
 	filename_ = filename_.replace("@@","#")
-	sql="DELETE FROM form_c WHERE filename = '{}'; ".format(filename_)
+	sql="DELETE FROM form_c WHERE filename = %s; "
 	print(sql)
-	delete=db.do(sql)
+	delete=db.do(sql, [filename_])
 	if(delete["response"]=="error"):
 			flash(f"An error occured !", "error") 
 			print(str(delete))
@@ -579,36 +578,36 @@ def download_file_(filename_):
 
 
 # =======================================
-
-def position_data_filter():
-	_filter = "WHERE 1 "
-	JOB = session["USER_DATA"][0]["job"].lower()
-
-	if(JOB in "admin" or JOB in "super admin" or session["USER_DATA"][0]['sg_info']['user_group']=="NATIONAL" or session["USER_DATA"][0]['sg_info']['user_group']=="ALL_OVERVIEW"):
-		session["USER_DATA"][0]["office"] = "NPCO"
+class Filter:
+	def position_data_filter():
 		_filter = "WHERE 1 "
-	else:
-		session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-		_filter = "WHERE  upload_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"]) 
-	return _filter
+		JOB = session["USER_DATA"][0]["job"].lower()
 
-def strct_dic(dict_):
-	new_dict_ = {};
-	for data in dict_:new_dict_[data['key']] = data['total']
-	return json.loads(json.dumps(new_dict_))
+		if(JOB in "admin" or JOB in "super admin" or session["USER_DATA"][0]['sg_info']['user_group']=="NATIONAL" or session["USER_DATA"][0]['sg_info']['user_group']=="ALL_OVERVIEW"):
+			session["USER_DATA"][0]["office"] = "NPCO"
+			_filter = "WHERE 1 "
+		else:
+			session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
+			_filter = "WHERE  upload_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"]) 
+		return _filter
 
-def strct_clean(dict_):
-	new_dict_ = {};
-	for data in dict_:new_dict_[data['key']] = data['total']
-	return Filter.clean(json.loads(json.dumps(new_dict_)))
+	def strct_dic(dict_):
+		new_dict_ = {};
+		for data in dict_:new_dict_[data['key']] = data['total']
+		return json.loads(json.dumps(new_dict_))
 
-def clean(dict_):
-	new_dict_ = {};
-	for key in dict_:
-		KEY = key.lower().replace(" ","").replace(".","").replace("/","").replace("\\","").replace("-","").replace("*","").replace(",","").replace("(","").replace(")","").replace("&","")
-		if(KEY not in new_dict_):
-			new_dict_[KEY] = 0
-		new_dict_[KEY] = new_dict_[KEY]+dict_[key]
-		
-	return json.loads(json.dumps(new_dict_))
+	def strct_clean(dict_):
+		new_dict_ = {};
+		for data in dict_:new_dict_[data['key']] = data['total']
+		return Filter.clean(json.loads(json.dumps(new_dict_)))
+
+	def clean(dict_):
+		new_dict_ = {};
+		for key in dict_:
+			KEY = key.lower().replace(" ","").replace(".","").replace("/","").replace("\\","").replace("-","").replace("*","").replace(",","").replace("(","").replace(")","").replace("&","")
+			if(KEY not in new_dict_):
+				new_dict_[KEY] = 0
+			new_dict_[KEY] = new_dict_[KEY]+dict_[key]
+			
+		return json.loads(json.dumps(new_dict_))
 

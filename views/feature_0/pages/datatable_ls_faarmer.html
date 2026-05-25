@@ -1,73 +1,83 @@
 <hr>
-<div style="margin-bottom:10px;">
-	<button class="x-btn x-green x-round" onclick="refresh_table_data()">
-	  <i class="fa fa-sync"></i> Refresh Table
-	</button>
-  </div>
-<table class="display" id="table_id" >
-	<thead class="x-rapid-teal-heavy">
-		<tr class="">
-			<td>
-				ID<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="0" />
-			</td>
-			<td>
-				Input By<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="1" />
-			</td>
-			<td>
-				Farmer's First Name<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="2" />
-			</td>
-			<td>
-				Farmer's Middle Name<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="3" />
-			</td>
-			<td>
-				Farmer's Last Name<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="4" />
-			</td>
-			<td>
-				Farmer's Ext Name<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="5" />
-			</td>
-			<td>
-				Bday<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="6" />
-			</td>
-			<td>
-				Farmer's Sex<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="7"/>
-			</td>
-			<td>
-				Primary Crop<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="8"/>
-			</td>
-			<td>
-				Farmer Org<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="9"/>
-			</td>
-			<td>
-				Region <br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="10" />
-			</td>
-			<td>
-				Province City/Municipality<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="11" />
-			</td>
-			<td>
-				City/Municipality<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="12" />
-			</td>
-			<td>
-				DIP Ref<br>
-				<input style="border:0px" type="text" placeholder="Search" data-index="13" />
-			</td>
-		</tr>
-	</thead>
-	<tbody id="list_farmers" style="">
-	</tbody>
-</table>
+<style>
+	#table_id_wrapper {
+		width: 100%;
+	}
+	#table_id_wrapper .dataTables_scrollBody {
+		overflow-y: auto !important;
+	}
+</style>
+<div class="x-white x-round-large" style="padding: 20px; margin-bottom: 12px; border: #e2eaf4 1px solid;">
+	<div style="margin-bottom:10px;">
+		<button class="x-btn x-green x-round" onclick="refresh_table_data()">
+		  <i class="fa fa-sync"></i> Refresh Table
+		</button>
+	</div>
+	<table class="display" id="table_id" >
+		<thead class="x-rapid-teal-heavy">
+			<tr class="">
+				<td>
+					ID<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="0" />
+				</td>
+				<td>
+					Input By<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="1" />
+				</td>
+				<td>
+					Farmer's First Name<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="2" />
+				</td>
+				<td>
+					Farmer's Middle Name<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="3" />
+				</td>
+				<td>
+					Farmer's Last Name<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="4" />
+				</td>
+				<td>
+					Farmer's Ext Name<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="5" />
+				</td>
+				<td>
+					Bday<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="6" />
+				</td>
+				<td>
+					Farmer's Sex<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="7"/>
+				</td>
+				<td>
+					Primary Crop<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="8"/>
+				</td>
+				<td>
+					Farmer Org<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="9"/>
+				</td>
+				<td>
+					Region <br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="10" />
+				</td>
+				<td>
+					Province City/Municipality<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="11" />
+				</td>
+				<td>
+					City/Municipality<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="12" />
+				</td>
+				<td>
+					DIP Ref<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="13" />
+				</td>
+			</tr>
+		</thead>
+		<tbody id="list_farmers">
+		</tbody>
+	</table>
+</div>
 <!-- ########################################### -->
 <!-- ########################################### -->
 <!-- ####TEMPORARY FOR NEW FORM################# -->
@@ -82,6 +92,9 @@
 <script type="text/javascript">
 	var init_counter = 0
 	let TABLE
+	let TABLE_SYNC_MAX_ID = 0
+	let TABLE_SYNC_MAX_TS = ""
+	let TABLE_FETCH_IN_PROGRESS = false
 
 	//TEMPORARY COMMENTED FOR DEVELOPMENT TO FAST LOAD DASH WITHOUT
 	//DATA FOR DATA TABLE
@@ -92,6 +105,11 @@
 	// $onload(dash_get_form_a1) // FOR ADV FILTER LOAD DASH
 
 	function showing_table_ls_farmer(){
+		if (TABLE_FETCH_IN_PROGRESS) {
+			println(" -- List fetch already in progress, skipping duplicate call")
+			return
+		}
+		TABLE_FETCH_IN_PROGRESS = true
 		println(" -- Getting List Farmers")
 		SPINNER_LOADER.show()
 		$send({
@@ -101,7 +119,12 @@
 			// a_sync : false,
 			func : function (rest){
 				println(" -- Getting List Farmers Done")
-				res = JSON.parse(rest)['dash1']
+				const parsed = JSON.parse(rest)
+				res = parsed['dash1']
+				if (parsed.sync) {
+					TABLE_SYNC_MAX_ID = Number(parsed.sync.max_id || 0)
+					TABLE_SYNC_MAX_TS = String(parsed.sync.max_sync || "")
+				}
 				// res2 = JSON.parse(rest)['dash2']
 				// res3 = JSON.parse(rest)['dash3']
 				create_table(res)
@@ -109,11 +132,16 @@
 				// create_graphs(res3) // FOR ADVANCE FILTER NUMBER INIT
 				// window.setTimeout(dash_get_form_a1,1000)
 				SPINNER_LOADER.hide()
+				TABLE_FETCH_IN_PROGRESS = false
 				$ID("show_list_btn").style.display = "none"
 				$ID("list_containers").style.display = "block"
 				// window.setInterval(get_notif_unseen,10000)
 			},
-			err : function(res){println(res)},
+			err : function(res){
+				TABLE_FETCH_IN_PROGRESS = false
+				SPINNER_LOADER.hide()
+				println(res)
+			},
 			progress : function(e){
 				// var response_length = parseFloat(headerMap(e)['total'])
 				var response_length = parseFloat(e.total)
@@ -185,10 +213,22 @@
 
 	function create_table (data_){
 		println(" -- Creating Data Table")
+		const normalizedData = data_.map(function(row){
+			const normalizedRow = row.slice();
+			normalizedRow[6] = formatBirthdayValue(normalizedRow[6]);
+			return normalizedRow;
+		});
+		if (TABLE) {
+			TABLE.clear();
+			TABLE.rows.add(normalizedData);
+			TABLE.columns.adjust().draw(false);
+			return;
+		}
+
 		TABLE = new DataTable('#table_id', {
 			// "scrollY":'60vh',
 			"scrollX":true,
-			"data" : data_,
+			"data" : normalizedData,
 			"scrollCollapse": true,
 			"autoWidth": true,
 			"columnDefs": [
@@ -240,30 +280,105 @@
 		$ID('table_id_wrapper').style.width = '100%'
 
 	}
+
+	function remove_table_row_by_id(recordId){
+		if (!TABLE) return;
+		const idStr = String(recordId);
+		TABLE.rows().every(function () {
+			const row = this.data();
+			if (String(row[0]) === idStr) {
+				this.remove();
+			}
+		});
+		TABLE.draw(false);
+	}
+
+	function upsert_table_row(rowData){
+		if (!rowData || !rowData.length) return;
+		const idStr = String(rowData[0]);
+		if (!TABLE) {
+			create_table([rowData]);
+			return;
+		}
+
+		let updated = false;
+		TABLE.rows().every(function () {
+			const row = this.data();
+			if (String(row[0]) === idStr) {
+				this.data(rowData);
+				updated = true;
+			}
+		});
+
+		if (!updated) {
+			TABLE.row.add(rowData);
+		}
+		TABLE.draw(false);
+	}
+
+	function sync_single_farmer_row(recordId){
+		if (!recordId) return;
+		$send({
+			action : "/feature_0/get_farmer_data_a1_row/" + recordId,
+			method : POST,
+			err_dialog: true,
+			func : function (rest){
+				const rows = JSON.parse(rest) || [];
+				if (!rows.length) {
+					// Row is not available in current scope/filters; remove local copy if present.
+					remove_table_row_by_id(recordId);
+					return;
+				}
+				const normalizedRow = rows[0].slice();
+				normalizedRow[6] = formatBirthdayValue(normalizedRow[6]);
+				upsert_table_row(normalizedRow);
+			}
+		});
+	}
+
+	window.addEventListener("pfa-record-deleted", function (event) {
+		const recordId = event?.detail?.id;
+		if (!recordId) return;
+		remove_table_row_by_id(recordId);
+	});
+
+	window.addEventListener("pfa-record-saved", function (event) {
+		const recordId = event?.detail?.id;
+		if (!recordId) return;
+		sync_single_farmer_row(recordId);
+	});
+
 	function show_t(){
 		// showing_table_ls_farmer()
 	}
 
 	function refresh_table_data() {
-		println("Refreshing farmer list...");
+		println("Refreshing farmer list (changes only)...");
 		SPINNER_LOADER.show();
 
 		$send({
-			action : "/feature_0/filter_list_farmers",
+			action : "/feature_0/filter_list_farmers_delta",
 			method : POST,
+			data: $DATA({
+				last_id: TABLE_SYNC_MAX_ID,
+				last_sync: TABLE_SYNC_MAX_TS
+			}),
 			err_dialog:true,
 			func : function (rest){
-				println("Refreshed farmer list.");
-				let res = JSON.parse(rest)['dash1'];
+				const parsed = JSON.parse(rest);
+				let res = parsed['dash1'] || [];
+				println("Refreshed changed farmer rows: " + res.length);
 
-				// If table already exists, destroy it first
-				if (TABLE) {
-					TABLE.destroy();
-					$('#table_id tbody').empty(); // clear old rows
+				for (let i = 0; i < res.length; i++) {
+					const normalizedRow = res[i].slice();
+					normalizedRow[6] = formatBirthdayValue(normalizedRow[6]);
+					upsert_table_row(normalizedRow);
 				}
 
-				// Rebuild table with fresh data
-				create_table(res);
+				if (parsed.sync) {
+					TABLE_SYNC_MAX_ID = Number(parsed.sync.max_id || TABLE_SYNC_MAX_ID || 0);
+					TABLE_SYNC_MAX_TS = String(parsed.sync.max_sync || TABLE_SYNC_MAX_TS || "");
+				}
 
 				SPINNER_LOADER.hide();
 			},

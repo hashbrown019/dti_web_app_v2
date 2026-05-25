@@ -1,123 +1,141 @@
-<div class=" x-main">
+<div class="x-main pfa-page-shell">
+	<style>
+		.pfa-page-shell {
+			background: linear-gradient(180deg, #f6f9ff 0%, #f9fbff 100%);
+			padding-bottom: 18px;
+		}
+		.pfa-content-wrap {
+			max-width: 1400px;
+			margin: 0 auto;
+		}
+		.pfa-helper-card {
+			background: #ffffff;
+			border: 1px solid #e2eaf4;
+			border-radius: 14px;
+			padding: 14px 18px;
+			color: #4a5a6b;
+			line-height: 1.45;
+			box-shadow: 0 4px 16px rgba(22, 41, 72, 0.05);
+		}
+		.pfa-showlist-btn {
+			max-width: 760px;
+			width: 100%;
+			background: linear-gradient(145deg, #ffffff 0%, #eef6ff 100%);
+			border: 1px solid #d4e1f2;
+			box-shadow: 0 16px 35px rgba(31, 55, 88, 0.12);
+			padding: 18px 20px;
+			transition: transform .18s ease, box-shadow .18s ease;
+		}
+		.pfa-showlist-btn:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 20px 38px rgba(31, 55, 88, 0.16);
+		}
+		.pfa-showlist-btn h1 {
+			margin-top: 6px;
+			margin-bottom: 8px;
+			font-size: 29px;
+			color: #1c344f;
+			letter-spacing: .2px;
+		}
+		.pfa-enum-card {
+			background: #ffffff;
+			border: 1px solid #e2eaf4;
+			border-radius: 14px;
+			padding: 14px;
+			box-shadow: 0 4px 16px rgba(22, 41, 72, 0.05);
+		}
+		.pfa-action-wrap {
+			margin-top: 10px;
+			background: #ffffff;
+			border: 1px solid #e2eaf4;
+			border-radius: 12px;
+			padding: 10px 12px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			align-items: center;
+			box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+			width: 100%;
+			box-sizing: border-box;
+		}
+		.pfa-action-wrap > span,
+		.pfa-action-wrap > label {
+			cursor: pointer;
+			padding: 8px 12px;
+			border-radius: 8px;
+			border: 1px solid #dbe5f2;
+			background: #f8fbff;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+		.pfa-action-wrap > span:hover,
+		.pfa-action-wrap > label:hover {
+			background: #eef5ff;
+		}
+		.pfa-action-wrap .download-template-wrap {
+			display: inline-flex;
+			align-items: center;
+			border-radius: 8px;
+			border: 1px solid #dbe5f2;
+			background: #f8fbff;
+		}
+		.pfa-action-wrap .download-template-wrap label,
+		.pfa-action-wrap .download-template-wrap select {
+			height: 38px;
+			border-radius: 0;
+			margin: 0;
+			border: none;
+			background: transparent;
+			padding: 0 10px;
+			display: inline-flex;
+			align-items: center;
+		}
+		.pfa-action-wrap .download-template-wrap label {
+			padding-left: 12px;
+			padding-right: 10px;
+			border-right: 1px solid #dbe5f2;
+			border-top-left-radius: 8px;
+			border-bottom-left-radius: 8px;
+		}
+		.pfa-action-wrap .download-template-wrap select {
+			border-top-right-radius: 8px;
+			border-bottom-right-radius: 8px;
+			background: #ffffff;
+			border: 1px solid #d4dfef;
+			padding: 7px 10px;
+			min-width: 180px;
+		}
+	</style>
+	<div class="pfa-content-wrap">
 	<header class="x-container" style="padding-top:22px">
 		<span class="x-text-teal x-xxlarge"><b>Profile List</b></span><br>
-		{% include 'excel_upload_download_btn.html' %}
-	</header>
-	<!-- <div class="x-container">
-		<div class="x-row">
-			<h2>Advance Filter</h2>
-			<div class="x-col l2 x-container x-round">
-				<div class="x-container x-card x-padding">
-					<b>Commodity</b>
-					<select class="x-input x-select" onchange="put_COMMODITY(this.value)">
-						<option value="all" disabled selected>Select Option</option>
-						{% for comdty_name in dash_data_['ls_arr']['primary_crop']['main']%}
-							<option value="{{comdty_name[0]}}">{{comdty_name[0]}}</option>
-						{% endfor %}
-					</select>
-					<br>
-					<div id="COMMODITY_selected">
-					</div>
-				</div>
-			</div>
-			<div class="x-col l2 x-container x-round">
-				<div class="x-container x-card x-padding">
-					<b>Farmers Org</b>
-					<select class="x-input x-select" onchange="put_FO(this.value)">
-						<option value="all" disabled selected>Select Option</option>
-						<optgroup label="Mobile Inputs">
-
-							{% for comdty_name in dash_data_['ls_arr']['fo']['mobile']%}
-								<option value="{{comdty_name}}">{{comdty_name}}</option>
-							{% endfor %}
-						</optgroup>
-						<optgroup label="Excel Inputs">
-							{% for comdty_name in dash_data_['ls_arr']['fo']['excel']%}
-								<option value="{{comdty_name}}">{{comdty_name}}</option>
-							{% endfor %}
-						</optgroup>
-					</select>
-					<br>
-					<div id="FO_selected">
-					</div>
-				</div>
-			</div>
-			<div class="x-col l2 x-container x-round">
-				<div class="x-container x-card x-padding">
-					<b>DIP's</b>
-					<select class="x-input x-select" onchange="put_DIP(this.value)">
-						<option value="all" disabled selected>Select Option</option>
-						<optgroup label="Mobile Inputs">
-
-							{% for comdty_name in dash_data_['ls_arr']['dip']['mobile']%}
-								<option value="{{comdty_name}}">{{comdty_name}}</option>
-							{% endfor %}
-						</optgroup>
-						<optgroup label="Excel Inputs">
-							{% for comdty_name in dash_data_['ls_arr']['dip']['excel']%}
-								<option value="{{comdty_name}}">{{comdty_name}}</option>
-							{% endfor %}
-						</optgroup>
-					</select>
-					<br>
-					<div id="DIP_selected">
-					</div>
-				</div>
-			</div>
-			<div class="x-col l2 x-container x-round">
-				<div class="x-container x-card x-padding">
-					<b>Sex</b>
-					<select class="x-input x-select" onchange="put_SEX(this.value)">
-						<option value="all" disabled selected>Select Option</option>
-						<optgroup label="Mobile Inputs">
-
-							{% for sex in dash_data_['sex']['mobile']%}
-								<option value="{{sex}}">{{sex}}</option>
-							{% endfor %}
-						</optgroup>
-						<optgroup label="Excel Inputs">
-							{% for sex in dash_data_['sex']['excel']%}
-								<option value="{{sex}}">{{sex}}</option>
-							{% endfor %}
-						</optgroup>
-					</select>
-					<br>
-					<div id="SEX_selected">
-					</div>
-				</div>
-			</div>
-			<div class="x-col l2 x-container x-round">
-				<div class="x-container x-center x-card x-padding">
-					<b>Action</b>
-
-					<button class="x-btn x-block x-round x-green" onclick="filter_all()">
-						Filter <span class="fa fa-filter"></span>
-					</button>
-				</div>
-			</div>
+		<div class="pfa-action-wrap">
+			{% include 'excel_upload_download_btn.html' %}
 		</div>
-		<br>	</div> -->
+	</header>
 	<div class="x-container x-padding">
-		<br>
-		List of encoded farmer profiles, click on of the rows to show full details of the farmers. In some cases, you'll need
-		a higher permission, authority or request access key to view, update or delete a records on the system
+		<div class="pfa-helper-card">
+			List of encoded farmer profiles. Click a row to view full farmer details.
+			Some records may require higher permission or access approval to view, update, or delete.
+		</div>
 	</div>
 	<div id="show_list_btn" class="x-container x-padding x-center">
-		<button class="x-btn x-card x-round-xxlarge x-hover-teal" onclick="showing_table_ls_farmer()">
+		<button class="x-btn x-card x-round-xxlarge x-hover-teal pfa-showlist-btn" onclick="showing_table_ls_farmer()">
 			<h1>Click here to display farmer lists</h1>
 			<span class="x-text-grey">
-				To improve user experience and to save data. lists are hidden.<br>
-				You can click this to display the profiles encoded
+				Profiles are hidden by default to improve performance.<br>
+				Loading may take a few seconds depending on data size.
 			</span><br>
 			<span class="x-jumbo fa fa-eye"></span>
 		</button>
 	</div>
-	<div id="list_containers" class="x-row x-container x-padding" style="display:none">
-		<div class="x-container">
+	<div id="list_containers" class="x-row x-padding" style="display:none">
+		<div>
 			{% include 'datatable_ls_faarmer.html' %}
 		</div>
 		<div class="EMBED_EXCLUDE x-container x-col l2 m2">
-			<div class="x-row">
+			<div class="x-row pfa-enum-card">
 				<h5><b>Enumerators</b></h5>
 				<div>
 					<div class="x-bar x-rapid-teal-heavy">
@@ -181,101 +199,5 @@
 			</div>
 		</div>
 	</div>
+	</div>
 </div>
-<script>
-	// var badge = (`
-	// 	<span class="x-small x-animate-opacity" style="margin-left: 2px;margin-top:1px;border:0px" onclick="this.remove()">
-	// 		<span class="x-text-blue x-round">
-	// 			<u class="vals x-hover-text-red" title_="Click to remove [||VALUE||]">||VALUE||</u>
-	// 		</span>
-	// 	</span>
-	// 	`)
-	// function put_COMMODITY(val){
-	// 	var COMMODITY_badge_cont = $ID("COMMODITY_selected")
-	// 	COMMODITY_badge_cont.innerHTML+= badge.replaceAll("||VALUE||",val)
-	// }
-	// function put_FO(val){
-	// 	var FO_badge_cont = $ID("FO_selected")
-	// 	FO_badge_cont.innerHTML+= badge.replaceAll("||VALUE||",val)
-	// }
-	// function put_DIP(val){
-	// 	var DIP_badge_cont = $ID("DIP_selected")
-	// 	DIP_badge_cont.innerHTML+= badge.replaceAll("||VALUE||",val)
-	// }
-	// function put_SEX(val){
-	// 	var SEX_badge_cont = $ID("SEX_selected")
-	// 	SEX_badge_cont.innerHTML+= badge.replaceAll("||VALUE||",val)
-	// }
-	// ============================================================
-	function filter_all(){
-		// var COMMODITY_data = [], FO_data = [], DIP_data = [], SEX_data = []
-
-		// var COMMODITY_badge_cont = $ID("COMMODITY_selected").getElementsByClassName('vals')
-		// for (var i = 0; i < COMMODITY_badge_cont.length; i++) {
-		// 	COMMODITY_data.push(COMMODITY_badge_cont[i].innerText)
-		// }
-
-		// var FO_badge_cont = $ID("FO_selected").getElementsByClassName('vals')
-		// for (var i = 0; i < FO_badge_cont.length; i++) {
-		// 	FO_data.push(FO_badge_cont[i].innerText)
-		// }
-
-		// var DIP_badge_cont = $ID("DIP_selected").getElementsByClassName('vals')
-		// for (var i = 0; i < DIP_badge_cont.length; i++) {
-		// 	DIP_data.push(DIP_badge_cont[i].innerText)
-		// }
-
-		// var SEX_badge_cont = $ID("SEX_selected").getElementsByClassName('vals')
-		// for (var i = 0; i < SEX_badge_cont.length; i++) {
-		// 	SEX_data.push(SEX_badge_cont[i].innerText)
-		// }
-
-		// var data = {
-		// 	"COMMODITY_data": COMMODITY_data,
-		// 	"FO_data": FO_data,
-		// 	"DIP_data": DIP_data,
-		// 	"SEX_data": SEX_data,
-		// }
-
-		// println(data)
-
-
-		// REQ_ERR_DIALOG = true
-		
-		// $send({
-		// 	action : "/feature_0/filter_list_farmers",
-		// 	data : JSON.stringify(data),
-		// 	method : POST,
-		// 	func : function (rest){
-		// 		res = JSON.parse(rest)
-		// 		// list_farmer_data = ""
-		// 		// for (var count = 0; count < res.length; count++) {
-		// 		// 	var farmer_name = res[count]['l_name']+", "+res[count]['f_name']+" "+res[count]['m_name']
-		// 		// 	list_farmer_data += (`
-		// 		// 		<tr>
-		// 		// 			<td>`+farmer_name+`.</td>
-		// 		// 			<td>`+res[count]['addr_city']+ " "+res[count]['addr_prov']+" "+res[count]['addr_region']+`</t>
-		// 		// 			<td>`+res[count]['farmer_primary_crop']+`</td>
-		// 		// 			<td>`+res[count]['farmer_dip_ref']+`</td>
-		// 		// 			<td>`+res[count]['farmer_dip_ref']+`</td>
-		// 		// 		</tr>
-		// 		// 	`)
-		// 		// 	// if(count >=20){break}
-		// 		// }
-		// 		// $ID('list_farmers').innerHTML = list_farmer_data
-				
-
-		// 	},
-		// 	err : function(res){
-		// 		println(res)
-		// 	},
-		// 	headers : {
-		// 		"Content-Type": "application/json",
-		// 	}
-		// })
-
-	}
-</script>
-
-
-

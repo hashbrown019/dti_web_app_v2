@@ -1,26 +1,122 @@
-<div class="x-row x-container">
-	<h2 class="x-text-teal"><b>Farmers' Organization Entry Lists</b></h2>
+<style>
+	.pfb-shell {
+		padding: 14px;
+	}
+	.pfb-helper {
+		background: #ffffff;
+		border: 1px solid #e6edf7;
+		border-radius: 12px;
+		padding: 12px 14px;
+		color: #4a5a6b;
+		line-height: 1.45;
+	}
+	.pfb-stat-card {
+		background: #ffffff;
+		border: 1px solid #e6edf7;
+		border-radius: 12px;
+		box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+		padding: 14px;
+		min-height: 150px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+	.pfb-stats-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: stretch;
+	}
+	.pfb-stats-row > .x-col {
+		display: flex;
+	}
+	.pfb-sex-grid {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+	}
+	.pfb-sex-col {
+		flex: 1;
+	}
+	.pfb-stat-title {
+		font-size: 0.78rem;
+		letter-spacing: .4px;
+		color: #64748b;
+		text-transform: uppercase;
+	}
+	.pfb-stat-main {
+		font-size: 2rem;
+		font-weight: 700;
+		color: #0f766e;
+	}
+	.pfb-action-wrap {
+		background: #ffffff;
+		border: 1px solid #e6edf7;
+		border-radius: 12px;
+		padding: 12px 14px;
+	}
+	.action-btn {
+		cursor: pointer;
+		padding: 8px 12px;
+		border-radius: 8px;
+		transition: all 0.2s ease-in-out;
+		display: inline-block;
+		border: 1px solid #dbe5f2;
+		background: #f8fbff;
+	}
+	.action-btn:hover {
+		background-color: #eef5ff;
+		transform: translateY(-1px);
+	}
+	.action-btn:active {
+		background-color: #e7f0fc;
+		transform: translateY(0px);
+	}
+	.pfb-table-card {
+		background: #ffffff;
+		border: 1px solid #e6edf7;
+		border-radius: 12px;
+		padding: 12px;
+		box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+	}
+	#table_id_fo thead input {
+		border: 1px solid #d4dfef !important;
+		border-radius: 8px;
+		padding: 6px 8px;
+		width: 100%;
+		box-sizing: border-box;
+	}
+	#table_id_fo thead input:focus {
+		outline: none;
+		border-color: #90b4e8 !important;
+		box-shadow: 0 0 0 2px rgba(144, 180, 232, 0.2);
+	}
+</style>
 
-	<div class="x-text-grey">
+<div class="pfb-shell">
+<div class="x-row pfb-stats-row">
+	<h2 class="x-text-teal"><b>Farmers' Organization Entry Lists</b></h2>
+	<div class="x-text-grey pfb-helper">
 		Some entries will not appear nor include to the counting if the entry in a specific consolidation of field data is incorrect, blank or not listed on the baseline lists of dashboards data. Please check entries before submitting or perform regular data cleaning of the records
 	</div>
 </div>
 
-<div class="x-row x-container">
-	<div class="x-col x-card x-zoom x-bottombar gr_body x-round-large x-white x-padding x-margin" style="width:15%">
+<br>
+<div class="x-row" style="display: flex; gap: 12px;">
+	<div class="x-col x-zoom x-card x-bottombar gr_body x-round-large x-white x-padding" style="flex: 0.6; display: flex; flex-direction: column;">
 		<div class="card-inner">
 			<b class=" x-xxlarge x-text-white" id="num_input_fo">{{ num_fo_sex['total_form_b'] }}</b>
 			<!-- <span style="color: #009973;" class="fa fa-users"></span> -->
 			<span class="fa fa-users x-text-light-grey"></span>
 		</div>
-		<div class="card-progress">
+		<div class="card-progress" style="margin-top: auto;">
 			<small class="x-text-light-grey">NO. OF INPUTED FARMERS ORGANIZATION</small>
 		</div>
 		<span class=""></span>
 	</div>
 	<!-- =============== -->
-	<div class="x-col x-zoom x-bottombar x-container x-card x-round-large x-white x-padding x-margin x-border x-border-teal" style="width:20%;">
-		<div class="" style="line-height: 10%;">
+	<div class="x-col x-zoom x-bottombar x-container x-card x-round-large x-white x-padding x-border x-border-teal" style="flex: 0.8; display: flex; flex-direction: column;">
+		<div class="" style="line-height: 10%; flex-grow: 1;">
 			<div class="x-half" >
 				<span class="" style="color: #0099cc">
 					Male&nbsp;<i style="height: 40px;width: 40px; color: #0099cc;" class="fa fa-solid fa-user"></i>
@@ -35,9 +131,6 @@
 				
 			</div>
 		</div>
-		<br>
-		<br>
-		<br>
 		<div class="card-progress" style="line-height: 90%;">
 			<small class="x-text-grey">
 				<b>Respondent's Position in F.O</b><br>
@@ -47,8 +140,8 @@
 		<span class=""></span>
 	</div>
 	<!-- =============== -->
-	<div class="x-col x-zoom x-bottombar x-container x-card x-round-large x-white x-padding x-margin x-border x-border-green" style="width:20%;">
-		<div class="" style="line-height: 10%;">
+	<div class="x-col x-zoom x-bottombar x-container x-card x-round-large x-white x-padding x-border x-border-green" style="flex: 1; display: flex; flex-direction: column;">
+		<div class="" style="line-height: 10%; flex-grow: 1;">
 			<div class="x-half" >
 				<span class="" style="color: #0099cc">
 					Male&nbsp;<i style="height: 40px;width: 40px; color: #0099cc;" class="fa fa-solid fa-user"></i>
@@ -63,42 +156,18 @@
 				
 			</div>
 		</div>
-		<br>
-		<br>
-		<br>
 		<div class="card-progress" style="line-height: 90%;">
 			<small class="x-text-grey">
 				<b>F.O's Decision Making Body group by Sex (Management Committee)</b><br>
 				<span class="x-tiny">Chairperson, Chairwoman, Coop Chairperson, General Manager, Manager, President/Chairman</span>
 			</small>
 		</div>
-		<span class=""></span>
 	</div>
 </div>
+<br>
 
-<style>
-	.action-btn {
-	  cursor: pointer;
-	  padding: 6px 2px;
-	  border-radius: 6px;
-	  transition: all 0.2s ease-in-out;
-	  display: inline-block;
-	}
-	.action-btn:hover {
-	  background-color: #f0f0f0;
-	  transform: scale(1.05);
-	}
-	.action-btn:active {
-	  background-color: #ddd;
-	  transform: scale(0.95);
-	}
-  </style>
-  
-<div style="max-width:100%;" class="x-container">
-	<h3 class="x-text-teal">
-	  <b>Actions</b>
-	</h3>
-	<div>
+<div style="max-width:100%;">
+	<div class="pfb-action-wrap">
 	  <span class="x-text-hover-orange action-btn" onclick="download_login_start('VC_FORM_B.xls')">
 		<b class="x-text-grey">Download Excel Template</b> | 
 		<span class="x-text-orange fa fa-file-text"></span>
@@ -318,7 +387,7 @@ function download_excel(fff){
 {% set session.import_success = None %}
 {% endif %}
 
-<div class="x-row x-container">
+<div class="x-row x-container pfb-table-card">
 	<table class="display" id="table_id_fo" style="width:100%">
 		<thead class="x-rapid-teal-heavy" style="width:100%">
 			<tr class="">
@@ -355,6 +424,7 @@ function download_excel(fff){
 		<tbody id="list_farmers">
 		</tbody>
 	</table>
+</div>
 </div>
 
 <script type="text/javascript">
@@ -410,7 +480,7 @@ function download_excel(fff){
 		"scrollY": '50vh',
 		"scrollX": true,
 		"data": data_,
-		"pageLength": 25,
+		"pageLength": 10,
 		"columnDefs": [
 		{
 			"targets": -1,

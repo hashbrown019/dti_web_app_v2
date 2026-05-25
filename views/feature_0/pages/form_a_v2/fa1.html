@@ -13,7 +13,7 @@
           font-family: Arial, sans-serif;
           line-height: 1.6;
           color: #333;
-          background-color: #f5f7fa;
+          background-color: #F6F9FF;
         }
         
         label {
@@ -28,7 +28,7 @@
         .section.dashboard {
           display: flex;
           height: 95vh;
-          background-color: #f5f7fa;
+          background-color: #F6F9FF;
         }
       
         /* Side Panel Styles */
@@ -212,7 +212,7 @@
                 </div>
                 <div class="col-md-2">
                     <label>Birthday</label>
-                    <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_birthday" placeholder="Birthday (dd/mm/yyyy)" oninput="this.value=this.value.replace(/[^0-9/]/g,'')">
+                    <input type="text" class="FORM_DATA_A form-control" id="frmer_prof_@_basic_Info_@_birthday" placeholder="Birthday (dd/mm/yyyy)" oninput="this.value=this.value.replace(/[^0-9\/\-]/g,'')" onblur="normalizeBirthdayField()">
                 </div>
                 <div class="col-md-2">
                     <label>Birthday not sure</label>

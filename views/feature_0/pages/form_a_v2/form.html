@@ -12,8 +12,9 @@
     {% include 'form_a_v2/fa1.html'%}
     <div class="x-row x-container x-right" style="margin-top:15px; margin-bottom: 15px;">
         <button id="fa1_submit_btn"
+                type="button"
                 class="x-btn x-round-large x-border x-border-green"
-                onclick="submit_form('FORM_DATA_A','excel_import_form_a',)">
+                onclick="submit_form('FORM_DATA_A','excel_import_form_a',null,event)">
             <span class="x-text-green fa fa-save"></span>
             <span class="x-text-grey">Submit Form A</span>
         </button>
@@ -42,7 +43,10 @@ function scrollParentToIframeCenter(){
     }
 }
 
-function submit_form(class_name, table, url) {
+function submit_form(class_name, table, url, evt) {
+    if (evt && typeof evt.preventDefault === "function") {
+        evt.preventDefault();
+    }
     var x_ins = $CLASS(class_name);
     var form_data = {};
     for (let index = 0; index < x_ins.length; index++) {
@@ -71,7 +75,16 @@ function submit_form(class_name, table, url) {
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.reload();
+                        const payload = { id: String(res.id || form_data.id || "") };
+                        try {
+                            window.dispatchEvent(new CustomEvent("pfa-record-saved", { detail: payload }));
+                        } catch (e) {}
+                        try {
+                            if (window.parent && window.parent !== window) {
+                                window.parent.dispatchEvent(new CustomEvent("pfa-record-saved", { detail: payload }));
+                            }
+                        } catch (e) {}
+                        navigateBackToPfaList();
                     }
                 });
             } else {
@@ -86,6 +99,30 @@ function submit_form(class_name, table, url) {
             }
         }
     });
+}
+
+function navigateBackToPfaList() {
+    function switchToList(ctx) {
+        if (!ctx || !ctx.document) return false;
+        const forms = ctx.document.getElementById('forms');
+        const lists = ctx.document.getElementById('lists');
+        const listContainers = ctx.document.getElementById('list_containers');
+        const showListBtn = ctx.document.getElementById('show_list_btn');
+        const pageSections = ctx.document.querySelectorAll('.page_content');
+
+        if (!forms || !lists) return false;
+        if (pageSections && pageSections.length) {
+            pageSections.forEach(div => div.style.display = 'none');
+        }
+        forms.style.display = 'none';
+        lists.style.display = 'block';
+        if (showListBtn) showListBtn.style.display = 'none';
+        if (listContainers) listContainers.style.display = 'block';
+        return true;
+    }
+
+    if (switchToList(window)) return;
+    try { switchToList(window.parent); } catch (e) {}
 }
 
 

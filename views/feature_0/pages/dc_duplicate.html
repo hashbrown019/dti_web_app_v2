@@ -4,81 +4,191 @@
 	  50% { opacity: 1; }
 	  100% { opacity: 0.8; }
 	}
-	
+
+	.dc-shell {
+	  background: linear-gradient(180deg, #f7faff 0%, #f9fbff 100%);
+	  border: 1px solid #e4ebf5;
+	  border-radius: 14px;
+	  padding: 12px;
+	  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+	}
+	.dc-card {
+	  background: #ffffff;
+	  border: 1px solid #e6edf7;
+	  border-radius: 12px;
+	  padding: 12px;
+	  min-height: 92px;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  gap: 6px;
+	}
+	.dc-title {
+	  color: #334155;
+	  font-size: 0.95rem;
+	  font-weight: 600;
+	}
+	.stat-number {
+	  font-size: 1.4rem;
+	  line-height: 1.2;
+	  font-weight: 700;
+	  color: #0f172a;
+	}
+	.stat-label {
+	  font-size: 0.82rem;
+	  color: #64748b;
+	}
+	#dup_res {
+	  background: #ecfdf5;
+	  border-color: #bbf7d0;
+	}
+	#dup_res .stat-number {
+	  color: #166534;
+	}
+	#dup_res .stat-label {
+	  color: #15803d;
+	}
+	#dup_excess {
+	  background: #fef2f2;
+	  border-color: #fecaca;
+	}
+	#dup_excess .stat-number {
+	  color: #b91c1c;
+	}
+	#dup_excess .stat-label {
+	  color: #dc2626;
+	}
+	.dc-primary-btn {
+	  background: #0f766e !important;
+	  color: #ffffff !important;
+	  border-radius: 10px !important;
+	  padding: 10px 14px !important;
+	  border: none !important;
+	  font-weight: 600;
+	}
+	.dc-primary-btn:hover { background: #0b5f59 !important; }
+	.dc-secondary-btn {
+	  background: #e2e8f0 !important;
+	  color: #0f172a !important;
+	  border-radius: 10px !important;
+	  padding: 10px 14px !important;
+	  border: none !important;
+	  font-weight: 600;
+	}
+
 	/* Modal & duplicate group styling */
 	.duplicate-group {
-	  background: #f9fafb;
-	  margin-bottom: 24px;
+	  background: #ffffff;
+	  border: 1px solid #e6edf7;
+	  border-radius: 12px;
+	  margin-bottom: 16px;
 	  overflow: hidden;
-	  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+	  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
 	}
 	.duplicate-group-header {
-	  background: linear-gradient(135deg, #cac9c9, #f1f5f9);
-	  padding: 16px 24px;
-	  border-bottom: 1px solid #e2e8f0;
+	  background: #f8fbff;
+	  padding: 14px 16px;
+	  border-bottom: 1px solid #e6edf7;
 	  font-weight: 600;
-	  font-size: 1.2rem;
+	  font-size: 1rem;
 	  color: #1e293b;
 	}
 	.duplicate-item {
-	  padding: 18px 24px;
-	  border: 1px solid #c0c0c0;
+	  padding: 14px 16px;
+	  border-bottom: 1px solid #edf2f7;
 	  display: flex;
 	  justify-content: space-between;
 	  align-items: center;
 	  transition: background 0.2s ease;
 	}
+	.duplicate-item:last-child { border-bottom: 0; }
 	.duplicate-item:hover { background: #f8fafc; }
 	.duplicate-info { flex: 1; }
-	.duplicate-name { font-weight: 600; color: #0f172a; font-size: 1.1rem; margin-bottom: 6px; }
-	.duplicate-meta { color: #64748b; font-size: 0.95rem; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+	.duplicate-name { font-weight: 600; color: #0f172a; font-size: 1rem; margin-bottom: 6px; }
+	.duplicate-meta { color: #64748b; font-size: 0.88rem; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
 	.meta-item { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
 	.meta-label { color: #94a3b8; font-size: 0.9rem; }
 	.duplicate-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-	.action-btn { border: none; padding: 9px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; font-size: 0.9rem; font-weight: 500; flex: 1 1 auto; text-align: center; min-width: 90px; }
-	.action-btn.view { background: #e0f2fe; color: #0369a1; }
+	.action-btn { border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; font-size: 0.85rem; font-weight: 600; flex: 1 1 auto; text-align: center; min-width: 84px; }
+	.action-btn.view { background: #e0f2fe; color: #0c4a6e; }
 	.action-btn.view:hover { background: #bae6fd; transform: translateY(-1px); }
-	.action-btn.delete { background: #fee2e2; color: #b91c1c; }
+	.action-btn.delete { background: #fee2e2; color: #991b1b; }
 	.action-btn.delete:hover { background: #fecaca; transform: translateY(-1px); }
 	@media (max-width: 768px) { .action-btn { font-size: 0.85rem; padding: 8px 12px; } }
 	@media (max-width: 480px) { .action-btn { font-size: 0.8rem; padding: 7px 10px; flex: 1 1 100%; } }
-	
+
+	#dup_search {
+	  width: 100%;
+	  padding: 10px 12px;
+	  border-radius: 10px;
+	  border: 1px solid #d3dfef;
+	  outline: none;
+	}
+	#dup_search:focus {
+	  border-color: #93c5fd;
+	  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.25);
+	}
+	.dup-pagination {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  margin-top: 10px;
+	}
+	.dup-pagination button {
+	  background: #eef2f7;
+	  color: #0f172a;
+	  border: 1px solid #dbe4f0;
+	  border-radius: 8px;
+	  padding: 7px 12px;
+	  font-weight: 600;
+	  cursor: pointer;
+	}
+	.dup-pagination button:disabled {
+	  opacity: 0.5;
+	  cursor: not-allowed;
+	}
+	#dup_page_info {
+	  color: #475569;
+	  font-size: 0.9rem;
+	  font-weight: 600;
+	}
 	.modal-container { padding: 24px; max-height: 70vh; overflow-y: auto; background-color: #ffffff; border-radius: 12px; }
 	.modal-container::-webkit-scrollbar { width: 8px; }
 	.modal-container::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
 	.modal-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 	.modal-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 	</style>
-	
-	<div class="x-container x-row x-padding">
-	  <div class="x-container x-padding x-col l3 m2 x-topbar x-border-grey">
-		<span>Start scanning for duplicates</span>
-		<button class="x-btn x-round x-orange" onclick="start_scan_dup()">
+
+	<div class="x-container x-padding dc-shell">
+	<div class="x-row">
+	  <div class="x-container x-col l3 m3 s12 x-padding-small">
+		<div class="dc-card">
+		<button class="x-btn dc-primary-btn" onclick="start_scan_dup()">
 		  Scan Duplicates <b class="fa fa-clone x-text-white"></b>
 		</button>
+		</div>
 	  </div>
-	  <div class="x-container x-padding x-col l2 m2 x-topbar x-border-green">
-		<div class="x-row x-container" id="dup_loading"></div>
+	  <div class="x-container x-col l2 m3 s12 x-padding-small">
+		<div class="dc-card" id="dup_loading"></div>
 	  </div>
-	  <div class="x-container x-padding x-col l2 m2 x-topbar x-border-yellow">
-		<div class="x-row x-container" id="dup_res"></div>
+	  <div class="x-container x-col l2 m3 s12 x-padding-small">
+		<div class="dc-card" id="dup_res"></div>
 	  </div>
-	  <div class="x-container x-padding x-col l3 m2 x-topbar x-border-red">
-		<div class="x-row x-container" id="dup_excess"></div>
+	  <div class="x-container x-col l3 m3 s12 x-padding-small">
+		<div class="dc-card" id="dup_excess"></div>
 	  </div>
-	  <div class="x-container x-padding x-col l2 m2 x-topbar x-border-grey">
-		<div class="x-row x-container" id="btn_dup"></div>
+	  <div class="x-container x-col l2 m12 s12 x-padding-small">
+		<div class="dc-card" id="btn_dup"></div>
 	  </div>
+	</div>
 	</div>
 	
 	<div id="dup_modal" style="display: none;">
 	  <div style="margin-bottom: 12px;">
-		<input id="dup_search" type="text" placeholder="Search duplicate groups..." 
-			   style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #c0c0c0;" 
-			   oninput="render_duplicates_page(1,this.value)">
+		<input id="dup_search" type="text" placeholder="Search duplicate groups..." oninput="render_duplicates_page(1,this.value)">
 	  </div>
 	  <div id="dup_list_container" style="overflow-y:scroll;height:60vh;"></div>
-	  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+	  <div class="dup-pagination">
 		<button id="dup_prev" onclick="change_page(-1)">Prev</button>
 		<span id="dup_page_info">Page 1</span>
 		<button id="dup_next" onclick="change_page(1)">Next</button>
@@ -86,11 +196,34 @@
 	</div>
 	
 	<script>
-	var duplicate_modal = null;
-	var DUPLICATE_DATA = [];
-	var CURRENT_PAGE = 1;
-	var PAGE_SIZE = 20;
-	var CURRENT_SEARCH = "";
+var duplicate_modal = null;
+var DUPLICATE_DATA = [];
+var CURRENT_PAGE = 1;
+var PAGE_SIZE = 20;
+var CURRENT_SEARCH = "";
+
+function normalizeDuplicateText(v) {
+  return String(v || "").trim().toLowerCase();
+}
+
+function sortDuplicateData(data) {
+  if (!Array.isArray(data)) return [];
+  const normalizedGroups = data.map(group => {
+    const rows = Array.isArray(group) ? group.slice() : [];
+    rows.sort((a, b) => {
+      return Number(b?.db_id || 0) - Number(a?.db_id || 0);
+    });
+    return rows;
+  }).filter(g => g.length > 0);
+
+  normalizedGroups.sort((g1, g2) => {
+    const aMaxId = Number((g1[0] || {}).db_id || 0);
+    const bMaxId = Number((g2[0] || {}).db_id || 0);
+    return bMaxId - aMaxId;
+  });
+
+  return normalizedGroups;
+}
 	
 	// --- helpers ---
 	function safeKey(s) { return String(s||"group").toLowerCase().replace(/\s+/g,"").replace(/[^a-z0-9]/g,""); }
@@ -117,12 +250,12 @@
 		method: POST,
 		func: function (_r) {
 		  var res = JSON.parse(_r) || [];
-		  DUPLICATE_DATA = res;
-	
-		  var total_excess = res.reduce((acc, g) => acc + g.length, 0);
-		  $ID("dup_res").innerHTML = `<div class="stat-number">${res.length}</div><div class="stat-label">Unique records with duplicates</div>`;
+		  DUPLICATE_DATA = sortDuplicateData(res);
+
+		  var total_excess = DUPLICATE_DATA.reduce((acc, g) => acc + g.length, 0);
+		  $ID("dup_res").innerHTML = `<div class="stat-number">${DUPLICATE_DATA.length}</div><div class="stat-label">Unique records with duplicates</div>`;
 		  $ID("dup_excess").innerHTML = `<div class="stat-number">${total_excess}</div><div class="stat-label">Total Duplicates</div>`;
-		  $ID("btn_dup").innerHTML = `<button class='x-btn x-green x-round-large' onclick="view_duplicates()">View Duplicates</button>`;
+		  $ID("btn_dup").innerHTML = `<button class='x-btn dc-primary-btn' onclick="view_duplicates()">View Duplicates</button>`;
 	
 		  if(!duplicate_modal) {
 			duplicate_modal = $dialog({

@@ -64,7 +64,7 @@ class _main:
 			__TITLE__=_title,
 			URL_ARGS=request.args,
 			USER_DATA = session["USER_DATA"][0],
-			staff_list=dash_api.get_area_staff(limit=50, offset=0),
+			staff_list=dash_api.get_area_staff(),
 			databases=dash_api.get_databases() if "core-system-control" in module else None,
 			dashboard_data=displayform2() if is_dashboard else None,
 			fmi_data=fmi_dashboard_data() if is_dashboard else None,
@@ -76,8 +76,8 @@ class _main:
 			# =====FOR FMI========
 			fmi_list=dash_api.fmi_list(session["USER_DATA"][0]['id']) if "core-tracker-fmi" in module else None ,
 			# =====FOR FILE-MANAGER========
-			folder_list=dash_api.folder_list(session["USER_DATA"][0]['id'], limit=100, offset=0) if "core-file-manager" in module else None ,
-			file_list=dash_api.file_list(session["USER_DATA"][0]['id'], limit=100, offset=0) if "core-file-manager" in module else None ,
+			folder_list=dash_api.folder_list(session["USER_DATA"][0]['id']) if "core-file-manager" in module else None ,
+			file_list = dash_api.file_list(session["USER_DATA"][0]['id']) if "core-file-manager" in module else None ,
 			# =====FOR PFA========
 			pfa_profiles=_main.profiling_form_a('get-profiles') if 'table' in request.args else None,
 			pfa_profile_info=_main.profiling_form_a('get-profiles-info') if 'fields' in request.args else None

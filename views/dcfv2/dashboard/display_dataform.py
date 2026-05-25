@@ -20,18 +20,18 @@ def display():
         
     USER_INFO = session["USER_DATA"]
     # OPTIMIZATION: Add LIMIT to prevent loading all rows (reduces memory by 99%, prevents OOM crashes)
-    form1_datatable=db.select("SELECT * FROM dcf_prep_review_aprv_status LIMIT 1000")
-    form2_datatable=db.select("SELECT * FROM dcf_implementing_unit LIMIT 1000")
-    form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg LIMIT 1000")
-    form4_datatable=db.select("SELECT * FROM dcf_capacity_building LIMIT 1000")
-    form5_datatable=db.select("SELECT * FROM dcf_matching_grant LIMIT 1000")
-    form6_datatable=db.select("SELECT * FROM dcf_product_development LIMIT 1000")
-    form7_datatable=db.select("SELECT * FROM dcf_trade_promotion LIMIT 1000")
-    form8_datatable=db.select("SELECT * FROM form8 LIMIT 1000")
-    form9_datatable=db.select("SELECT * FROM dcf_enablers_activity LIMIT 1000")
-    form10_datatable=db.select("SELECT * FROM dcf_negosyo_center LIMIT 1000")
-    form11_datatable=db.select("SELECT * FROM dcf_access_financing LIMIT 1000")
-    form_c_datatable=db.select("SELECT * FROM form_c LIMIT 1000")
+    form1_datatable=db.select("SELECT * FROM dcf_prep_review_aprv_status")
+    form2_datatable=db.select("SELECT * FROM dcf_implementing_unit")
+    form3_datatable=db.select("SELECT * FROM dcf_bdsp_reg")
+    form4_datatable=db.select("SELECT * FROM dcf_capacity_building")
+    form5_datatable=db.select("SELECT * FROM dcf_matching_grant")
+    form6_datatable=db.select("SELECT * FROM dcf_product_development")
+    form7_datatable=db.select("SELECT * FROM dcf_trade_promotion")
+    form8_datatable=db.select("SELECT * FROM form8")
+    form9_datatable=db.select("SELECT * FROM dcf_enablers_activity")
+    form10_datatable=db.select("SELECT * FROM dcf_negosyo_center")
+    form11_datatable=db.select("SELECT * FROM dcf_access_financing")
+    form_c_datatable=db.select("SELECT * FROM form_c")
 
 
     return{
@@ -2775,15 +2775,8 @@ def displayform():
         'form3_private':form3_private,
         'form3_lgu':form3_lgu,
         'form3_market':form3_market,
-        'form3_fsp_gfi':form3_fsp_gfi,
-        'form3_fsp_coop':form3_fsp_coop,
-        'form3_fsp_private':form3_fsp_private,
-        'form3_fsp_lgu':form3_fsp_lgu,
-        'form3_fsp_market':form3_fsp_market,
-        'form3_fsp_orgfirm':form3_fsp_orgfirm,
         'form3_fsp_indiv':form3_fsp_indiv,
         'form3_fsp_orgfirm':form3_fsp_orgfirm,
-        'form3_fsp_indiv':form3_fsp_indiv,
         'form3_fsp_gfi':form3_fsp_gfi,
         'form3_fsp_coop':form3_fsp_coop,
         'form3_fsp_private':form3_fsp_private,
@@ -2938,36 +2931,15 @@ def displayform2():
         if isinstance(res, dict) and res.get("response") == "error":
             return []
         return res
-
-
-
-    form1_monthly_counts = _select("""
-        SELECT 
-            YEAR(date_created) AS year_val,
-            MONTH(date_created) AS month_val,
-            COUNT(*) AS count
-        FROM dcf_prep_review_aprv_status {} AND date_created >= DATE_SUB(CURDATE(), INTERVAL 10 MONTH)
-        GROUP BY YEAR(date_created), MONTH(date_created)
-        ORDER BY date_created DESC
-    """)
-    
-    # Build month count map
-    month_count_map = {}
-    for record in form1_monthly_counts:
-        key = (record['year_val'], record['month_val'])
-        month_count_map[key] = record['count']
-    
     # Get counts for each month relative to current date
     from datetime import datetime, timedelta
     today = datetime.now()
     
-    # Helper to get count for month
-    def get_month_count(months_back, month_count_map):
-        target_date = today - timedelta(days=30 * months_back)
-        key = (target_date.year, target_date.month)
-        return month_count_map.get(key, 0)
+    def _get_month_year_key(months_ago):
+        target_date = today - timedelta(days=30 * months_ago)
+        return f"{target_date.year}-{target_date.month}"
 
-    def build_month_counts(table_name):
+    def _get_monthly_counts(table_name):
         monthly_counts = _select(f"""
             SELECT 
                 YEAR(date_created) AS year_val,
@@ -2980,35 +2952,24 @@ def displayform2():
 
         month_map = {}
         for record in monthly_counts:
-            key = (record['year_val'], record['month_val'])
+            key = f"{record['year_val']}-{record['month_val']}"
             month_map[key] = record['count']
 
-        return {
-            'sep': get_month_count(10, month_map),
-            'oct': get_month_count(9, month_map),
-            'nov': get_month_count(8, month_map),
-            'dec': get_month_count(7, month_map),
-            'jan': get_month_count(6, month_map),
-            'feb': get_month_count(5, month_map),
-            'mar': get_month_count(4, month_map),
-            'apr': get_month_count(3, month_map),
-            'may': get_month_count(2, month_map),
-            'june': get_month_count(1, month_map),
-            'july': get_month_count(0, month_map),
-        }
+        return month_map
     
     # Extract counts for form1 - order: sep(-10), oct(-9)...july(current)
-    form1_data_sep = get_month_count(10, month_count_map)
-    form1_data_oct = get_month_count(9, month_count_map)
-    form1_data_nov = get_month_count(8, month_count_map)
-    form1_data_dec = get_month_count(7, month_count_map)
-    form1_data_jan = get_month_count(6, month_count_map)
-    form1_data_feb = get_month_count(5, month_count_map)
-    form1_data_mar = get_month_count(4, month_count_map)
-    form1_data_apr = get_month_count(3, month_count_map)
-    form1_data_may = get_month_count(2, month_count_map)
-    form1_data_june = get_month_count(1, month_count_map)
-    form1_data_july = get_month_count(0, month_count_map)
+    form1_counts = _get_monthly_counts("dcf_prep_review_aprv_status")
+    form1_data_sep = form1_counts.get(_get_month_year_key(10), 0)
+    form1_data_oct = form1_counts.get(_get_month_year_key(9), 0)
+    form1_data_nov = form1_counts.get(_get_month_year_key(8), 0)
+    form1_data_dec = form1_counts.get(_get_month_year_key(7), 0)
+    form1_data_jan = form1_counts.get(_get_month_year_key(6), 0)
+    form1_data_feb = form1_counts.get(_get_month_year_key(5), 0)
+    form1_data_mar = form1_counts.get(_get_month_year_key(4), 0)
+    form1_data_apr = form1_counts.get(_get_month_year_key(3), 0)
+    form1_data_may = form1_counts.get(_get_month_year_key(2), 0)
+    form1_data_june = form1_counts.get(_get_month_year_key(1), 0)
+    form1_data_july = form1_counts.get(_get_month_year_key(0), 0)
 
     form1_thismonth = form1_data_july
     form1_lastmonth = form1_data_june
@@ -3027,34 +2988,18 @@ def displayform2():
 
 
     # OPTIMIZED: Single aggregated query for form2 (dcf_implementing_unit)
-    form2_monthly_counts = _select("""
-        SELECT 
-            YEAR(date_created) AS year_val,
-            MONTH(date_created) AS month_val,
-            COUNT(*) AS count
-        FROM dcf_implementing_unit {} AND date_created >= DATE_SUB(CURDATE(), INTERVAL 10 MONTH)
-        GROUP BY YEAR(date_created), MONTH(date_created)
-        ORDER BY date_created DESC
-    """)
-    
-    # Build month count map for form2
-    month_count_map_form2 = {}
-    for record in form2_monthly_counts:
-        key = (record['year_val'], record['month_val'])
-        month_count_map_form2[key] = record['count']
-    
-    # Extract counts for form2
-    form2_data_sep = get_month_count(10, month_count_map_form2)
-    form2_data_oct = get_month_count(9, month_count_map_form2)
-    form2_data_nov = get_month_count(8, month_count_map_form2)
-    form2_data_dec = get_month_count(7, month_count_map_form2)
-    form2_data_jan = get_month_count(6, month_count_map_form2)
-    form2_data_feb = get_month_count(5, month_count_map_form2)
-    form2_data_mar = get_month_count(4, month_count_map_form2)
-    form2_data_apr = get_month_count(3, month_count_map_form2)
-    form2_data_may = get_month_count(2, month_count_map_form2)
-    form2_data_june = get_month_count(1, month_count_map_form2)
-    form2_data_july = get_month_count(0, month_count_map_form2)
+    form2_counts = _get_monthly_counts("dcf_implementing_unit")
+    form2_data_sep = form2_counts.get(_get_month_year_key(10), 0)
+    form2_data_oct = form2_counts.get(_get_month_year_key(9), 0)
+    form2_data_nov = form2_counts.get(_get_month_year_key(8), 0)
+    form2_data_dec = form2_counts.get(_get_month_year_key(7), 0)
+    form2_data_jan = form2_counts.get(_get_month_year_key(6), 0)
+    form2_data_feb = form2_counts.get(_get_month_year_key(5), 0)
+    form2_data_mar = form2_counts.get(_get_month_year_key(4), 0)
+    form2_data_apr = form2_counts.get(_get_month_year_key(3), 0)
+    form2_data_may = form2_counts.get(_get_month_year_key(2), 0)
+    form2_data_june = form2_counts.get(_get_month_year_key(1), 0)
+    form2_data_july = form2_counts.get(_get_month_year_key(0), 0)
 
     form2_thismonth = form2_data_july
     form2_lastmonth = form2_data_june
@@ -3073,18 +3018,18 @@ def displayform2():
 
 
 
-    form3_counts = build_month_counts("dcf_bdsp_reg")
-    form3_data_sep = form3_counts['sep']
-    form3_data_oct = form3_counts['oct']
-    form3_data_nov = form3_counts['nov']
-    form3_data_dec = form3_counts['dec']
-    form3_data_jan = form3_counts['jan']
-    form3_data_feb = form3_counts['feb']
-    form3_data_mar = form3_counts['mar']
-    form3_data_apr = form3_counts['apr']
-    form3_data_may = form3_counts['may']
-    form3_data_june = form3_counts['june']
-    form3_data_july = form3_counts['july']
+    form3_counts = _get_monthly_counts("dcf_bdsp_reg")
+    form3_data_sep = form3_counts.get(_get_month_year_key(10), 0)
+    form3_data_oct = form3_counts.get(_get_month_year_key(9), 0)
+    form3_data_nov = form3_counts.get(_get_month_year_key(8), 0)
+    form3_data_dec = form3_counts.get(_get_month_year_key(7), 0)
+    form3_data_jan = form3_counts.get(_get_month_year_key(6), 0)
+    form3_data_feb = form3_counts.get(_get_month_year_key(5), 0)
+    form3_data_mar = form3_counts.get(_get_month_year_key(4), 0)
+    form3_data_apr = form3_counts.get(_get_month_year_key(3), 0)
+    form3_data_may = form3_counts.get(_get_month_year_key(2), 0)
+    form3_data_june = form3_counts.get(_get_month_year_key(1), 0)
+    form3_data_july = form3_counts.get(_get_month_year_key(0), 0)
 
     form3_thismonth = form3_data_july
     form3_lastmonth = form3_data_june
@@ -3103,18 +3048,18 @@ def displayform2():
 
 
 
-    form4_counts = build_month_counts("dcf_capacity_building")
-    form4_data_sep = form4_counts['sep']
-    form4_data_oct = form4_counts['oct']
-    form4_data_nov = form4_counts['nov']
-    form4_data_dec = form4_counts['dec']
-    form4_data_jan = form4_counts['jan']
-    form4_data_feb = form4_counts['feb']
-    form4_data_mar = form4_counts['mar']
-    form4_data_apr = form4_counts['apr']
-    form4_data_may = form4_counts['may']
-    form4_data_june = form4_counts['june']
-    form4_data_july = form4_counts['july']
+    form4_counts = _get_monthly_counts("dcf_capacity_building")
+    form4_data_sep = form4_counts.get(_get_month_year_key(10), 0)
+    form4_data_oct = form4_counts.get(_get_month_year_key(9), 0)
+    form4_data_nov = form4_counts.get(_get_month_year_key(8), 0)
+    form4_data_dec = form4_counts.get(_get_month_year_key(7), 0)
+    form4_data_jan = form4_counts.get(_get_month_year_key(6), 0)
+    form4_data_feb = form4_counts.get(_get_month_year_key(5), 0)
+    form4_data_mar = form4_counts.get(_get_month_year_key(4), 0)
+    form4_data_apr = form4_counts.get(_get_month_year_key(3), 0)
+    form4_data_may = form4_counts.get(_get_month_year_key(2), 0)
+    form4_data_june = form4_counts.get(_get_month_year_key(1), 0)
+    form4_data_july = form4_counts.get(_get_month_year_key(0), 0)
 
     form4_thismonth = form4_data_july
     form4_lastmonth = form4_data_june
@@ -3133,18 +3078,18 @@ def displayform2():
 
 
 
-    form5_counts = build_month_counts("dcf_matching_grant")
-    form5_data_sep = form5_counts['sep']
-    form5_data_oct = form5_counts['oct']
-    form5_data_nov = form5_counts['nov']
-    form5_data_dec = form5_counts['dec']
-    form5_data_jan = form5_counts['jan']
-    form5_data_feb = form5_counts['feb']
-    form5_data_mar = form5_counts['mar']
-    form5_data_apr = form5_counts['apr']
-    form5_data_may = form5_counts['may']
-    form5_data_june = form5_counts['june']
-    form5_data_july = form5_counts['july']
+    form5_counts = _get_monthly_counts("dcf_matching_grant")
+    form5_data_sep = form5_counts.get(_get_month_year_key(10), 0)
+    form5_data_oct = form5_counts.get(_get_month_year_key(9), 0)
+    form5_data_nov = form5_counts.get(_get_month_year_key(8), 0)
+    form5_data_dec = form5_counts.get(_get_month_year_key(7), 0)
+    form5_data_jan = form5_counts.get(_get_month_year_key(6), 0)
+    form5_data_feb = form5_counts.get(_get_month_year_key(5), 0)
+    form5_data_mar = form5_counts.get(_get_month_year_key(4), 0)
+    form5_data_apr = form5_counts.get(_get_month_year_key(3), 0)
+    form5_data_may = form5_counts.get(_get_month_year_key(2), 0)
+    form5_data_june = form5_counts.get(_get_month_year_key(1), 0)
+    form5_data_july = form5_counts.get(_get_month_year_key(0), 0)
 
     form5_thismonth = form5_data_july
     form5_lastmonth = form5_data_june
@@ -3159,18 +3104,18 @@ def displayform2():
 
 
 
-    form6_counts = build_month_counts("dcf_product_development")
-    form6_data_sep = form6_counts['sep']
-    form6_data_oct = form6_counts['oct']
-    form6_data_nov = form6_counts['nov']
-    form6_data_dec = form6_counts['dec']
-    form6_data_jan = form6_counts['jan']
-    form6_data_feb = form6_counts['feb']
-    form6_data_mar = form6_counts['mar']
-    form6_data_apr = form6_counts['apr']
-    form6_data_may = form6_counts['may']
-    form6_data_june = form6_counts['june']
-    form6_data_july = form6_counts['july']
+    form6_counts = _get_monthly_counts("dcf_product_development")
+    form6_data_sep = form6_counts.get(_get_month_year_key(10), 0)
+    form6_data_oct = form6_counts.get(_get_month_year_key(9), 0)
+    form6_data_nov = form6_counts.get(_get_month_year_key(8), 0)
+    form6_data_dec = form6_counts.get(_get_month_year_key(7), 0)
+    form6_data_jan = form6_counts.get(_get_month_year_key(6), 0)
+    form6_data_feb = form6_counts.get(_get_month_year_key(5), 0)
+    form6_data_mar = form6_counts.get(_get_month_year_key(4), 0)
+    form6_data_apr = form6_counts.get(_get_month_year_key(3), 0)
+    form6_data_may = form6_counts.get(_get_month_year_key(2), 0)
+    form6_data_june = form6_counts.get(_get_month_year_key(1), 0)
+    form6_data_july = form6_counts.get(_get_month_year_key(0), 0)
 
     form6_thismonth = form6_data_july
     form6_lastmonth = form6_data_june
@@ -3184,18 +3129,18 @@ def displayform2():
 
 
 
-    form7_counts = build_month_counts("dcf_trade_promotion")
-    form7_data_sep = form7_counts['sep']
-    form7_data_oct = form7_counts['oct']
-    form7_data_nov = form7_counts['nov']
-    form7_data_dec = form7_counts['dec']
-    form7_data_jan = form7_counts['jan']
-    form7_data_feb = form7_counts['feb']
-    form7_data_mar = form7_counts['mar']
-    form7_data_apr = form7_counts['apr']
-    form7_data_may = form7_counts['may']
-    form7_data_june = form7_counts['june']
-    form7_data_july = form7_counts['july']
+    form7_counts = _get_monthly_counts("dcf_trade_promotion")
+    form7_data_sep = form7_counts.get(_get_month_year_key(10), 0)
+    form7_data_oct = form7_counts.get(_get_month_year_key(9), 0)
+    form7_data_nov = form7_counts.get(_get_month_year_key(8), 0)
+    form7_data_dec = form7_counts.get(_get_month_year_key(7), 0)
+    form7_data_jan = form7_counts.get(_get_month_year_key(6), 0)
+    form7_data_feb = form7_counts.get(_get_month_year_key(5), 0)
+    form7_data_mar = form7_counts.get(_get_month_year_key(4), 0)
+    form7_data_apr = form7_counts.get(_get_month_year_key(3), 0)
+    form7_data_may = form7_counts.get(_get_month_year_key(2), 0)
+    form7_data_june = form7_counts.get(_get_month_year_key(1), 0)
+    form7_data_july = form7_counts.get(_get_month_year_key(0), 0)
 
     form7_thismonth = form7_data_july
     form7_lastmonth = form7_data_june
@@ -3208,18 +3153,18 @@ def displayform2():
     form7_percentages = round(form7_percentage, 2)
 
 
-    form9_counts = build_month_counts("dcf_enablers_activity")
-    form9_data_sep = form9_counts['sep']
-    form9_data_oct = form9_counts['oct']
-    form9_data_nov = form9_counts['nov']
-    form9_data_dec = form9_counts['dec']
-    form9_data_jan = form9_counts['jan']
-    form9_data_feb = form9_counts['feb']
-    form9_data_mar = form9_counts['mar']
-    form9_data_apr = form9_counts['apr']
-    form9_data_may = form9_counts['may']
-    form9_data_june = form9_counts['june']
-    form9_data_july = form9_counts['july']
+    form9_counts = _get_monthly_counts("dcf_enablers_activity")
+    form9_data_sep = form9_counts.get(_get_month_year_key(10), 0)
+    form9_data_oct = form9_counts.get(_get_month_year_key(9), 0)
+    form9_data_nov = form9_counts.get(_get_month_year_key(8), 0)
+    form9_data_dec = form9_counts.get(_get_month_year_key(7), 0)
+    form9_data_jan = form9_counts.get(_get_month_year_key(6), 0)
+    form9_data_feb = form9_counts.get(_get_month_year_key(5), 0)
+    form9_data_mar = form9_counts.get(_get_month_year_key(4), 0)
+    form9_data_apr = form9_counts.get(_get_month_year_key(3), 0)
+    form9_data_may = form9_counts.get(_get_month_year_key(2), 0)
+    form9_data_june = form9_counts.get(_get_month_year_key(1), 0)
+    form9_data_july = form9_counts.get(_get_month_year_key(0), 0)
 
     form9_thismonth = form9_data_july
     form9_lastmonth = form9_data_june
@@ -3238,18 +3183,18 @@ def displayform2():
 
 
 
-    form10_counts = build_month_counts("dcf_negosyo_center")
-    form10_data_sep = form10_counts['sep']
-    form10_data_oct = form10_counts['oct']
-    form10_data_nov = form10_counts['nov']
-    form10_data_dec = form10_counts['dec']
-    form10_data_jan = form10_counts['jan']
-    form10_data_feb = form10_counts['feb']
-    form10_data_mar = form10_counts['mar']
-    form10_data_apr = form10_counts['apr']
-    form10_data_may = form10_counts['may']
-    form10_data_june = form10_counts['june']
-    form10_data_july = form10_counts['july']
+    form10_counts = _get_monthly_counts("dcf_negosyo_center")
+    form10_data_sep = form10_counts.get(_get_month_year_key(10), 0)
+    form10_data_oct = form10_counts.get(_get_month_year_key(9), 0)
+    form10_data_nov = form10_counts.get(_get_month_year_key(8), 0)
+    form10_data_dec = form10_counts.get(_get_month_year_key(7), 0)
+    form10_data_jan = form10_counts.get(_get_month_year_key(6), 0)
+    form10_data_feb = form10_counts.get(_get_month_year_key(5), 0)
+    form10_data_mar = form10_counts.get(_get_month_year_key(4), 0)
+    form10_data_apr = form10_counts.get(_get_month_year_key(3), 0)
+    form10_data_may = form10_counts.get(_get_month_year_key(2), 0)
+    form10_data_june = form10_counts.get(_get_month_year_key(1), 0)
+    form10_data_july = form10_counts.get(_get_month_year_key(0), 0)
 
     form10_thismonth = form10_data_july
     form10_lastmonth = form10_data_june
@@ -3268,18 +3213,18 @@ def displayform2():
 
 
 
-    form11_counts = build_month_counts("dcf_access_financing")
-    form11_data_sep = form11_counts['sep']
-    form11_data_oct = form11_counts['oct']
-    form11_data_nov = form11_counts['nov']
-    form11_data_dec = form11_counts['dec']
-    form11_data_jan = form11_counts['jan']
-    form11_data_feb = form11_counts['feb']
-    form11_data_mar = form11_counts['mar']
-    form11_data_apr = form11_counts['apr']
-    form11_data_may = form11_counts['may']
-    form11_data_june = form11_counts['june']
-    form11_data_july = form11_counts['july']
+    form11_counts = _get_monthly_counts("dcf_access_financing")
+    form11_data_sep = form11_counts.get(_get_month_year_key(10), 0)
+    form11_data_oct = form11_counts.get(_get_month_year_key(9), 0)
+    form11_data_nov = form11_counts.get(_get_month_year_key(8), 0)
+    form11_data_dec = form11_counts.get(_get_month_year_key(7), 0)
+    form11_data_jan = form11_counts.get(_get_month_year_key(6), 0)
+    form11_data_feb = form11_counts.get(_get_month_year_key(5), 0)
+    form11_data_mar = form11_counts.get(_get_month_year_key(4), 0)
+    form11_data_apr = form11_counts.get(_get_month_year_key(3), 0)
+    form11_data_may = form11_counts.get(_get_month_year_key(2), 0)
+    form11_data_june = form11_counts.get(_get_month_year_key(1), 0)
+    form11_data_july = form11_counts.get(_get_month_year_key(0), 0)
 
     form11_thismonth = form11_data_july
     form11_lastmonth = form11_data_june
@@ -5157,6 +5102,13 @@ def displayform2():
         'form3_private':form3_private,
         'form3_lgu':form3_lgu,
         'form3_market':form3_market,
+        'form3_fsp_orgfirm':form3_fsp_orgfirm,
+        'form3_fsp_indiv':form3_fsp_indiv,
+        'form3_fsp_market':form3_fsp_market,
+        'form3_fsp_gfi':form3_fsp_gfi,
+        'form3_fsp_coop':form3_fsp_coop,
+        'form3_fsp_private':form3_fsp_private,
+        'form3_fsp_lgu':form3_fsp_lgu,
         'form4beforedip':form4beforedip,
         'form4afterdip':form4afterdip,
         'dcf_form5male':dcf_form5male,

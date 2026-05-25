@@ -53,21 +53,21 @@ app.secret_key=c.SECRET_KEY
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-app.register_blueprint(login.app);
-app.register_blueprint(home.app);
-app.register_blueprint(api.app);
-app.register_blueprint(feature_0.app);
-app.register_blueprint(feature_0_sub.app);
-# app.register_blueprint(webrep.app);
-app.register_blueprint(webrep_v2.app);
-app.register_blueprint(psalm.app);
-app.register_blueprint(doofen.app);
-app.register_blueprint(fund_tracker.app);
-app.register_blueprint(npco_tracker.app);
-# app.register_blueprint(dcf.app);
-app.register_blueprint(dcfv2.app);
-app.register_blueprint(fmi.app);
-app.register_blueprint(test.app);
+app.register_blueprint(login.app)
+app.register_blueprint(home.app)
+app.register_blueprint(api.app)
+app.register_blueprint(feature_0.app)
+app.register_blueprint(feature_0_sub.app)
+# app.register_blueprint(webrep.app)
+app.register_blueprint(webrep_v2.app)
+app.register_blueprint(psalm.app)
+app.register_blueprint(doofen.app)
+app.register_blueprint(fund_tracker.app)
+app.register_blueprint(npco_tracker.app)
+# app.register_blueprint(dcf.app)
+app.register_blueprint(dcfv2.app)
+app.register_blueprint(fmi.app)
+app.register_blueprint(test.app)
 
 app.register_blueprint(dash.app);
 app.register_blueprint(_micro.app);
@@ -120,7 +120,6 @@ def before_request():
 @app.after_request
 def after_request_func(response):
 	ip_addr = request.access_route[0]
-	agent = request.headers.get('User-Agent')
 	agent = request.headers.get('User-Agent')
 	referer = request.headers.get('referer')
 	# ss = open("l_header.txt","a")

@@ -26,6 +26,7 @@
 	function fill_data_inp_f_a(data_){
 		modeal_basic_info(data_);
 		DICT_TO_INPUT(data_[0][0], 'FORM_DATA_A');
+		normalizeBirthdayField();
 	}
 
 	// ======= Profile panel =======
@@ -117,6 +118,22 @@
 					method: POST,
 					data: $DATA({ id: profileId }),
 					func: function (res) {
+						// Primary path: directly update datatable if helper is in the same page context.
+						try {
+							if (typeof remove_table_row_by_id === "function") {
+								remove_table_row_by_id(profileId);
+							}
+						} catch (e) {}
+
+						// Fallback path: dispatch event for parent/other contexts.
+						try {
+							const payload = { id: String(profileId) };
+							window.dispatchEvent(new CustomEvent("pfa-record-deleted", { detail: payload }));
+							if (window.parent && window.parent !== window) {
+								window.parent.dispatchEvent(new CustomEvent("pfa-record-deleted", { detail: payload }));
+							}
+						} catch (e) {}
+
 						if (profile_panel_basic) profile_panel_basic.destroy();
 						DUPLICATE_DATA.forEach((group, gIndex) => {
 							DUPLICATE_DATA[gIndex] = group.filter(r => String(r.db_id) !== String(profileId));
@@ -156,23 +173,58 @@
 		}, 200);
 	}
 
-	// ======= Youth lock =======
+	// ======= Youth functions =======
 	function excelSerialToDate(serial) {
 		const excelEpoch = new Date(1899, 11, 30);
 		return new Date(excelEpoch.getTime() + Math.floor(serial) * 24 * 60 * 60 * 1000);
 	}
 
-	function getAgeFromBirthday(birthdayValue) {
-		if (!birthdayValue) return null;
-		let birthDate = null;
-		if (typeof birthdayValue === 'number') {
-			birthDate = excelSerialToDate(birthdayValue);
-		} else if (!isNaN(birthdayValue)) {
-			birthDate = excelSerialToDate(parseFloat(birthdayValue));
-		} else {
-			birthDate = new Date(birthdayValue);
+	function parseBirthdayValue(birthdayValue) {
+		if (birthdayValue === null || birthdayValue === undefined || birthdayValue === '') return null;
+		if (typeof birthdayValue === 'number') return excelSerialToDate(birthdayValue);
+
+		let value = String(birthdayValue).trim();
+		if (value === '') return null;
+
+		if (/^\d+(?:\.\d+)?$/.test(value)) {
+			return excelSerialToDate(parseFloat(value));
 		}
-		if (isNaN(birthDate)) return null;
+
+		const dateOnly = value.split('T')[0].trim();
+		const normalized = dateOnly.replace(/\./g, '/').replace(/-/g, '/').replace(/\s+/g, '');
+		const parts = normalized.split('/');
+		if (parts.length === 3) {
+			let [p1, p2, p3] = parts;
+			if (/^\d{4}$/.test(p1) && /^\d{1,2}$/.test(p2) && /^\d{1,2}$/.test(p3)) {
+				return new Date(`${p1}-${p2}-${p3}`);
+			}
+			if (/^\d{4}$/.test(p3) && /^\d{1,2}$/.test(p1) && /^\d{1,2}$/.test(p2)) {
+				return new Date(`${p3}-${p2}-${p1}`);
+			}
+		}
+
+		const parsed = new Date(value);
+		return isNaN(parsed) ? null : parsed;
+	}
+
+	function formatBirthdayValue(birthdayValue) {
+		const date = parseBirthdayValue(birthdayValue);
+		if (!date || isNaN(date)) return '';
+		const day = String(date.getDate()).padStart(2, '0');
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		return `${day}/${month}/${date.getFullYear()}`;
+	}
+
+	function normalizeBirthdayField() {
+		const birthdayInput = document.getElementById("frmer_prof_@_basic_Info_@_birthday");
+		if (!birthdayInput) return;
+		const formatted = formatBirthdayValue(birthdayInput.value || birthdayInput.getAttribute('value'));
+		if (formatted) birthdayInput.value = formatted;
+	}
+
+	function getAgeFromBirthday(birthdayValue) {
+		const birthDate = parseBirthdayValue(birthdayValue);
+		if (!birthDate || isNaN(birthDate)) return null;
 		const today = new Date();
 		let age = today.getFullYear() - birthDate.getFullYear();
 		const m = today.getMonth() - birthDate.getMonth();
@@ -188,14 +240,10 @@
 			if (!birthdayVal) return; 
 			const age = getAgeFromBirthday(birthdayVal);
 			if (age !== null && age >= 15 && age <= 35) {
-				const fieldsToHide = document.querySelectorAll(
-					'#section-household-head-info, #section-household-profile, #section-prod-cost, #section-workers-laborers, #section-post-harvest'
-				);
-				fieldsToHide.forEach(inp => { inp.style.display = 'none'; });
 				Swal.fire({
 					icon: 'info',
 					title: 'Youth Farmer',
-					text: `This farmer is ${age} years old. All fields have been hidden for youth farmers.`,
+					text: `This farmer is ${age} years old. Please note that this is a youth farmer profile.`,
 					confirmButtonText: 'OK',
 					allowOutsideClick: false,
 					allowEscapeKey: false
