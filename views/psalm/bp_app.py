@@ -578,36 +578,35 @@ def download_file_(filename_):
 
 
 # =======================================
-class Filter:
-	def position_data_filter():
+def position_data_filter():
+	_filter = "WHERE 1 "
+	JOB = session["USER_DATA"][0]["job"].lower()
+
+	if(JOB in "admin" or JOB in "super admin" or session["USER_DATA"][0]['sg_info']['user_group']=="NATIONAL" or session["USER_DATA"][0]['sg_info']['user_group']=="ALL_OVERVIEW"):
+		session["USER_DATA"][0]["office"] = "NPCO"
 		_filter = "WHERE 1 "
-		JOB = session["USER_DATA"][0]["job"].lower()
+	else:
+		session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
+		_filter = "WHERE  upload_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"]) 
+	return _filter
 
-		if(JOB in "admin" or JOB in "super admin" or session["USER_DATA"][0]['sg_info']['user_group']=="NATIONAL" or session["USER_DATA"][0]['sg_info']['user_group']=="ALL_OVERVIEW"):
-			session["USER_DATA"][0]["office"] = "NPCO"
-			_filter = "WHERE 1 "
-		else:
-			session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-			_filter = "WHERE  upload_by in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"]) 
-		return _filter
+def strct_dic(dict_):
+	new_dict_ = {};
+	for data in dict_:new_dict_[data['key']] = data['total']
+	return json.loads(json.dumps(new_dict_))
 
-	def strct_dic(dict_):
-		new_dict_ = {};
-		for data in dict_:new_dict_[data['key']] = data['total']
-		return json.loads(json.dumps(new_dict_))
+def strct_clean(dict_):
+	new_dict_ = {};
+	for data in dict_:new_dict_[data['key']] = data['total']
+	return Filter.clean(json.loads(json.dumps(new_dict_)))
 
-	def strct_clean(dict_):
-		new_dict_ = {};
-		for data in dict_:new_dict_[data['key']] = data['total']
-		return Filter.clean(json.loads(json.dumps(new_dict_)))
-
-	def clean(dict_):
-		new_dict_ = {};
-		for key in dict_:
-			KEY = key.lower().replace(" ","").replace(".","").replace("/","").replace("\\","").replace("-","").replace("*","").replace(",","").replace("(","").replace(")","").replace("&","")
-			if(KEY not in new_dict_):
-				new_dict_[KEY] = 0
-			new_dict_[KEY] = new_dict_[KEY]+dict_[key]
-			
-		return json.loads(json.dumps(new_dict_))
+def clean(dict_):
+	new_dict_ = {};
+	for key in dict_:
+		KEY = key.lower().replace(" ","").replace(".","").replace("/","").replace("\\","").replace("-","").replace("*","").replace(",","").replace("(","").replace(")","").replace("&","")
+		if(KEY not in new_dict_):
+			new_dict_[KEY] = 0
+		new_dict_[KEY] = new_dict_[KEY]+dict_[key]
+		
+	return json.loads(json.dumps(new_dict_))
 

@@ -1932,16 +1932,16 @@ _FORM_NAME={
 # if __name__ == "__main__":
 #     app.run(debug=True)
 
-def position_data_filter():
-	_filter = " 1 "
+def position_data_filter(upload_by="upload_by"):
+	_filter = "WHERE 1 "
 	JOB = session["USER_DATA"][0]["job"].lower()
-	print(session["USER_DATA"][0]['sg_info']['user_group'])
+
 	if(JOB in "admin" or JOB in "super admin" or session["USER_DATA"][0]['sg_info']['user_group']=="NATIONAL" or session["USER_DATA"][0]['sg_info']['user_group']=="ALL_OVERVIEW"):
 		session["USER_DATA"][0]["office"] = "NPCO"
-		_filter = " 1 "
+		_filter = "WHERE 1 "
 	else:
 		session["USER_DATA"][0]["office"] = "Regional ({})".format(session["USER_DATA"][0]["rcu"])
-		_filter = " USER_ID in ( SELECT id from users WHERE rcu='{}' )".format(session["USER_DATA"][0]["rcu"])
+		_filter = "WHERE  {} in ( SELECT id from users WHERE rcu='{}' )".format(upload_by, session["USER_DATA"][0]["rcu"]) 
 	return _filter
 
 def strct_dic(dict_):
@@ -1969,6 +1969,7 @@ def clean(dict_):
 # NEW CODE FOR DCF IMPORT DATA 
 #FORM_1############################################################################################################################################
 @app.route('/export_form1', methods=['GET'])
+@c.login_auth_web()
 def export_form1():
     query = '''
         SELECT 
@@ -1996,7 +1997,8 @@ def export_form1():
             dcf.date_created, dcf.date_modified, u.name AS "Uploaded by"
         FROM dcf_prep_review_aprv_status dcf
         INNER JOIN users u ON dcf.upload_by = u.id
-    '''.format(position_data_filter())
+        {}
+    '''.format(position_data_filter("dcf.upload_by"))
     
     data = db.select(query)
     df = pd.DataFrame(data)
@@ -2048,6 +2050,7 @@ def export_form1():
 
 #FORM_2 ############################################################################################################
 @app.route('/export_form2', methods=['GET'])
+@c.login_auth_web()
 def export_form2():
     query = '''
         SELECT 
@@ -2066,7 +2069,8 @@ def export_form2():
             dcf.date_modified, u.name AS 'Uploaded by'
         FROM dcf_implementing_unit dcf
         INNER JOIN users u ON dcf.upload_by = u.id
-    '''.format(position_data_filter())
+        {}
+    '''.format(position_data_filter("dcf.upload_by"))
     data = db.select(query)
     df = pd.DataFrame(data)
 
@@ -2108,6 +2112,7 @@ def export_form2():
 
 #FORM_3 ############################################################################################################
 @app.route('/export_form3', methods=['GET'])
+@c.login_auth_web()
 def export_form3():
     query = '''
         SELECT 
@@ -2127,7 +2132,8 @@ def export_form3():
             dcf_bdsp_reg.form_3_philgeps_registered, dcf_bdsp_reg.date_created, dcf_bdsp_reg.date_modified
         FROM dcf_bdsp_reg
         INNER JOIN users ON dcf_bdsp_reg.upload_by = users.id
-    '''.format(position_data_filter())
+        {}
+    '''.format(position_data_filter("dcf_bdsp_reg.upload_by"))
     data = db.select(query)
     df = pd.DataFrame(data)
 
@@ -2168,6 +2174,7 @@ def export_form3():
 
 #FORM_4 ############################################################################################################
 @app.route('/export_form4', methods=['GET'])
+@c.login_auth_web()
 def export_form4():
 	query = '''
 		SELECT dcf_capacity_building.id,
@@ -2213,7 +2220,8 @@ def export_form4():
 				dcf_capacity_building.date_modified
 		FROM dcf_capacity_building
 		LEFT JOIN users ON dcf_capacity_building.upload_by = users.id
-	'''.format(position_data_filter())
+		{}
+	'''.format(position_data_filter("dcf_capacity_building.upload_by"))
 	data = db.select(query)
 	df = pd.DataFrame(data)
 
@@ -2254,6 +2262,7 @@ def export_form4():
 
 #FORM_5 ############################################################################################################
 @app.route('/export_form5', methods=['GET'])
+@c.login_auth_web()
 def export_form5():
     query = '''
         SELECT mg.id, mg.upload_by, u.name AS uploader_name,
@@ -2308,7 +2317,8 @@ def export_form5():
                mg.date_modified
         FROM dcf_matching_grant mg
         LEFT JOIN users u ON mg.upload_by = u.id
-    '''.format(position_data_filter())
+        {}
+    '''.format(position_data_filter("mg.upload_by"))
     data = db.select(query)
     df = pd.DataFrame(data)
 
@@ -2352,6 +2362,7 @@ def export_form5():
 
 #FORM_6 ############################################################################################################
 @app.route('/export_form6', methods=['GET'])
+@c.login_auth_web()
 def export_form6():
         query = '''
             SELECT dcf_product_development.id,
@@ -2388,7 +2399,8 @@ def export_form6():
                    users.name as 'Uploaded by'
             FROM dcf_product_development
             LEFT JOIN users ON dcf_product_development.upload_by = users.id
-        '''.format(position_data_filter())
+            {}
+        '''.format(position_data_filter("dcf_product_development.upload_by"))
         data = db.select(query)
         df = pd.DataFrame(data)
         headers = [
@@ -2424,6 +2436,7 @@ def export_form6():
 
 #FORM_7 ############################################################################################################
 @app.route('/export_form7', methods=['GET'])
+@c.login_auth_web()
 def export_form7():
 		query = '''SELECT dcf_trade_promotion.id,
 					dcf_trade_promotion.form_7_implementing_unit, dcf_trade_promotion.form_7_title_trade_promotion,
@@ -2441,7 +2454,8 @@ def export_form7():
 					dcf_trade_promotion.date_modified, users.name as 'Uploaded by'
 					FROM dcf_trade_promotion
 					LEFT JOIN users ON dcf_trade_promotion.upload_by = users.id
-				'''.format(position_data_filter())
+					{}
+				'''.format(position_data_filter("dcf_trade_promotion.upload_by"))
 		data = db.select(query)
 		df = pd.DataFrame(data)
 		headers = [
@@ -2476,6 +2490,7 @@ def export_form7():
 
 #FORM_8 ############################################################################################################
 @app.route('/export_form8', methods=['GET'])
+@c.login_auth_web()
 def export_form8():
     query = '''
 		SELECT 
@@ -2533,7 +2548,8 @@ def export_form8():
 			users.name as 'Uploaded by'
 		FROM dcf_fmi
 		LEFT JOIN users ON dcf_fmi.upload_by = users.id
-	'''.format(position_data_filter())
+		{}
+	'''.format(position_data_filter("dcf_fmi.upload_by"))
     data = db.select(query)
     df = pd.DataFrame(data)
     headers = [
@@ -2571,6 +2587,7 @@ def export_form8():
 
 #FORM_9 ############################################################################################################
 @app.route('/export_form9', methods=['GET'])
+@c.login_auth_web()
 def export_form9():
     query = '''SELECT dcf_enablers_activity.id,
                     dcf_enablers_activity.form_9_implementing_unit,
@@ -2589,7 +2606,8 @@ def export_form9():
                     dcf_enablers_activity.date_modified, users.name as 'Uploaded by'
                 FROM dcf_enablers_activity
                 LEFT JOIN users ON dcf_enablers_activity.upload_by = users.id
-            '''.format(position_data_filter())
+                {}
+            '''.format(position_data_filter("dcf_enablers_activity.upload_by"))
     data = db.select(query)
     df = pd.DataFrame(data)
     headers = [
@@ -2628,6 +2646,7 @@ def export_form9():
 
 #FORM_10 ############################################################################################################
 @app.route('/export_form10', methods=['GET'])
+@c.login_auth_web()
 def export_form10():
 	query = '''
 		SELECT dcf_negosyo_center.id,
@@ -2639,7 +2658,8 @@ def export_form10():
 					dcf_negosyo_center.date_modified, users.name as 'Uploaded by'
 					FROM dcf_negosyo_center
 					LEFT JOIN users ON dcf_negosyo_center.upload_by = users.id
-	'''.format(position_data_filter())
+					{}
+	'''.format(position_data_filter("dcf_negosyo_center.upload_by"))
 	data = db.select(query)
 	df = pd.DataFrame(data)
 	headers = [
@@ -2671,6 +2691,7 @@ def export_form10():
 
 #FORM_11 ############################################################################################################
 @app.route('/export_form11', methods=['GET'])
+@c.login_auth_web()
 def export_form11():
     # --- Farmer Profiling ---
     farmer_query = '''
@@ -2730,7 +2751,8 @@ def export_form11():
             users.name AS uploaded_by
         FROM dcf_access_financing
         LEFT JOIN users ON dcf_access_financing.upload_by = users.id
-    '''
+        {}
+    '''.format(position_data_filter("dcf_access_financing.upload_by"))
     
     farmer_headers = [
         'Farmer ID',
@@ -2805,7 +2827,8 @@ def export_form11():
             users.name AS uploaded_by
         FROM dcf_access_financing
         LEFT JOIN users ON dcf_access_financing.upload_by = users.id
-    '''
+        {}
+    '''.format(position_data_filter("dcf_access_financing.upload_by"))
     
     fo_headers = [
         'FO ID',
