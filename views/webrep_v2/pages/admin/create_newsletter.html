@@ -90,16 +90,20 @@
 
                 // 2. Upload file to Flask immediately
                 $.ajax({
-                url: '/webrep_v2/upload-image',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: (res) => {
-                    // 3. Insert the URL into the editor instead of Base64
-                    const range = quill.getSelection();
-                    quill.insertEmbed(range.index, 'image', res.url);
-                }
+                    url: '/webrep_v2/upload-image',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: (res) => {
+                        // 3. Insert the URL into the editor instead of Base64
+                        const range = quill.getSelection();
+                        quill.insertEmbed(range.index, 'image', res.url);
+                    },
+                    error: (err) => {
+                        console.error('Image upload failed:', err);
+                        alert('Failed to upload image. Please try again.');
+                    }
                 });
             };
         }

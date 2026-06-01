@@ -1,4 +1,5 @@
 from multiprocessing import connection
+from xmlrpc import server
 
 from certifi.__main__ import args
 from flask import Blueprint, abort, flash, render_template, render_template_string, request, session, redirect, jsonify, send_file, send_from_directory, Response, current_app, url_for
@@ -26,6 +27,12 @@ from datetime import date, datetime
 from modules.Req_Brorn_util import file_from_request
 from v2_view.core._backend_sub import FILE_REQ
 from views.dcfv2.dashboard.display_dataform import displayform
+
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 
 # from v2_view.core._dashboard import _main as dboard_main
 
@@ -1323,20 +1330,24 @@ class _main:
     
     @app.route('/webrep_v2/upload-image', methods=['POST'])
     def upload_image():
-        base_dir = c.RECORDS+"../static/webrepstatic_v2/img/embedded_images"
-        os.makedirs(base_dir, exist_ok=True)
-        
-        if 'image' not in request.files:
-            return jsonify({'error': 'No file'}), 400
-        
-        file = request.files['image']
-        if file:
-            filename = secure_filename(f"{uuid.uuid4().hex}_{file.filename}")
-            file.save(os.path.join(base_dir, filename))
+        try:
+            base_dir = os.path.join(current_app.root_path, 'static', 'webrepstatic_v2', 'img','embedded_images')
+            # base_dir = c.RECORDS+"../static/webrepstatic_v2/img/embedded_images"
+            os.makedirs(base_dir, exist_ok=True)
             
-            # Return the public URL to the image
-            img_url = url_for('static', filename=f'webrepstatic_v2/img/embedded_images/{filename}', _external=True)
-            return jsonify({'url': img_url})
+            if 'image' not in request.files:
+                return jsonify({'error': 'No file'}), 400
+            
+            file = request.files['image']
+            if file:
+                filename = secure_filename(f"{uuid.uuid4().hex}_{file.filename}")
+                file.save(os.path.join(base_dir, filename))
+                
+                # Return the public URL to the image
+                img_url = url_for('static', filename=f'webrepstatic_v2/img/embedded_images/{filename}', _external=True)
+                return jsonify({'url': img_url})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
     
     @app.route("/webrep_v2/upload_file_webrep",methods=["POST","GET"])
     def upload_file_webrep():
@@ -1491,6 +1502,126 @@ class _main:
             # cursor.execute(sql, values)
             # connection.commit()
 
+        
+        print(">> Newsletter Data:", data)  # Debugging line
+        print(">> Newsletter Data Status:", data.get("status"))  # Debugging line
+        
+        if ( data.get("status") == "published" ):
+            # Send the newsletter email to all subscribers
+            subject = data.get('subject', 'No Subject')
+            content = data.get('content', '')
+            sender_email = "admin@dtirapid.ph"
+            recipients = db.select("SELECT email FROM webrep_subscribers")
+            recipient_emails = [recipient['email'] for recipient in recipients] 
+            
+            # SMTP server configuration
+            SMTP_SERVER = "smtp.gmail.com"   # or your mail server
+            SMTP_PORT = 465                  # 465 for SSL, 587 for TLS
+            USERNAME = "dtirapid.noreply@gmail.com".strip()
+            PASSWORD = "anfg uzlh xlsp wess".replace("\xa0", "").strip()
+
+            # Create the email
+            msg = MIMEMultipart("alternative")
+            msg["From"] = USERNAME
+            msg["To"] = ", ".join([
+                "raymund.matol.dti@gmail.com",
+                "matolraymund@gmail.com"
+            ])
+            msg["Subject"] = "Newsletter with HTML Content"
+
+            # Plain text fallback
+            text = "Hello,\nThis is the plain text version of the email."
+
+            # HTML version  
+            html = f"""
+            <html>
+            <style>
+                .btn {{
+                    display: inline-block;
+                    padding: 5px 10px;
+                    text-align: center;
+                    text-decoration: none;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    user-select: none;
+                    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+                }}
+                .btn:hover {{
+                    color: var(--bs-btn-hover-color);
+                    background-color: var(--bs-btn-hover-bg);
+                    border-color: var(--bs-btn-hover-border-color);
+                }}
+                .btn-primary {{
+                    background-color: #0D6BF7;
+                    color: #fff;
+                    border-color: #0D6BF7;
+                }}
+                .btn-secondary {{
+                    background-color: #6C757D;
+                    color: #fff;
+                    border-color: #6C757D;
+                }}
+                .btn-warning {{
+                    background-color: #FFC107;
+                    color: #000;
+                    border-color: #FFC107;
+                }}
+                .btn-danger {{
+                    background-color: #DC3545;
+                    color: #fff;
+                    border-color: #DC3545;
+                }}
+                .btn-success {{
+                    background-color: #198754;
+                    color: #fff;
+                    border-color: #198754;
+                }}
+                .btn-info {{
+                    background-color: #0DCAF0;
+                    color: #000;
+                    border-color: #0DCAF0;
+                }}
+                .btn-lime {{
+                    background-color: #9AC156;
+                    color: #000;
+                    border-color: #9AC156;
+                }}
+                .btn-cyan {{
+                    background-color: #004450;
+                    color: #fff;
+                    border-color: #004450;
+                }}
+            </style>
+            <body>
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <div style="width: 500px; margin: 0 auto; background-color: #F6F6F6; padding: 20px; border-radius: 5px;">
+                        {content}
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+            
+            print(">> HTML Content:", html)  # Debugging line
+            
+            # Attach both versions
+            msg.attach(MIMEText(text, "plain"))
+            msg.attach(MIMEText(html, "html"))
+
+            # List of recipients
+            recipients = ["raymund.matol.dti@gmail.com"]
+
+            # Send the email
+            # with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            #     server.starttls()
+            #     server.login(USERNAME, PASSWORD)
+            #     server.sendmail(USERNAME, recipients, msg.as_string())
+            
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+                server.login(USERNAME.strip(), PASSWORD.strip())
+                server.sendmail(USERNAME, recipients, msg.as_string())
         
         last_row_id = db.do(sql,values)
         return jsonify({"last_row_id":last_row_id})
