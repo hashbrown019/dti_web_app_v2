@@ -30,6 +30,7 @@ from views.dcfv2.dashboard.display_dataform import displayform
 
 
 import smtplib
+import threading
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -1417,6 +1418,23 @@ class _main:
         last_row_id = db.do(sql,values)
         return jsonify({"last_row_id":last_row_id,"FILES":__f})
     
+    def send_newsletter_email(subject, content, recipients):
+        # SMTP server configuration
+        SMTP_SERVER = "smtp.gmail.com"   # or your mail server
+        SMTP_PORT = 465                  # 465 for SSL, 587 for TLS
+        USERNAME = "dtirapid.noreply@gmail.com".strip()
+        PASSWORD = "anfg uzlh xlsp wess".replace("\xa0", "").strip()
+        
+        msg = MIMEMultipart("alternative")
+        msg["From"] = USERNAME
+        msg["To"] = ", ".join(recipients)
+        msg["Subject"] = subject
+        msg.attach(MIMEText(content, "html"))
+
+        with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+            server.login(USERNAME, PASSWORD)
+            server.sendmail(USERNAME, recipients, msg.as_string())
+            
     @app.route("/webrep_v2/upload_file_webrep_newsletter",methods=["POST","GET"])
     def upload_file_webrep_newsletter():
         print("  * Article Module")
@@ -1514,23 +1532,18 @@ class _main:
             recipients = db.select("SELECT email FROM webrep_subscribers")
             recipient_emails = [recipient['email'] for recipient in recipients] 
             
-            # SMTP server configuration
-            SMTP_SERVER = "smtp.gmail.com"   # or your mail server
-            SMTP_PORT = 465                  # 465 for SSL, 587 for TLS
-            USERNAME = "dtirapid.noreply@gmail.com".strip()
-            PASSWORD = "anfg uzlh xlsp wess".replace("\xa0", "").strip()
 
             # Create the email
-            msg = MIMEMultipart("alternative")
-            msg["From"] = USERNAME
-            msg["To"] = ", ".join([
-                "raymund.matol.dti@gmail.com",
-                "matolraymund@gmail.com"
-            ])
-            msg["Subject"] = "Newsletter with HTML Content"
+            # msg = MIMEMultipart("alternative")
+            # msg["From"] = USERNAME
+            # msg["To"] = ", ".join([
+            #     "raymund.matol.dti@gmail.com",
+            #     "matolraymund@gmail.com"
+            # ])
+            # msg["Subject"] = "Newsletter with HTML Content"
 
-            # Plain text fallback
-            text = "Hello,\nThis is the plain text version of the email."
+            # # Plain text fallback
+            # text = "Hello,\nThis is the plain text version of the email."
 
             # HTML version  
             html = f"""
@@ -1606,22 +1619,24 @@ class _main:
             
             print(">> HTML Content:", html)  # Debugging line
             
-            # Attach both versions
-            msg.attach(MIMEText(text, "plain"))
-            msg.attach(MIMEText(html, "html"))
-
-            # List of recipients
-            recipients = ["raymund.matol.dti@gmail.com"]
-
-            # Send the email
-            # with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            #     server.starttls()
-            #     server.login(USERNAME, PASSWORD)
-            #     server.sendmail(USERNAME, recipients, msg.as_string())
+            threading.Thread(target=_main.send_newsletter_email, args=(data.get('subject','No Subject'), html , recipient_emails)).start()
             
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-                server.login(USERNAME.strip(), PASSWORD.strip())
-                server.sendmail(USERNAME, recipients, msg.as_string())
+            # # Attach both versions
+            # msg.attach(MIMEText(text, "plain"))
+            # msg.attach(MIMEText(html, "html"))
+
+            # # List of recipients
+            # recipients = ["raymund.matol.dti@gmail.com"]
+
+            # # Send the email
+            # # with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            # #     server.starttls()
+            # #     server.login(USERNAME, PASSWORD)
+            # #     server.sendmail(USERNAME, recipients, msg.as_string())
+            
+            # with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            #     server.login(USERNAME.strip(), PASSWORD.strip())
+            #     server.sendmail(USERNAME, recipients, msg.as_string())
         
         last_row_id = db.do(sql,values)
         return jsonify({"last_row_id":last_row_id})
