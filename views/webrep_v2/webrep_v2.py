@@ -1431,9 +1431,14 @@ class _main:
         msg["Subject"] = subject
         msg.attach(MIMEText(content, "html"))
 
-        with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
-            server.login(USERNAME, PASSWORD)
-            server.sendmail(USERNAME, recipients, msg.as_string())
+        try:
+            with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+                server.set_debuglevel(1)  # <-- shows SMTP conversation in logs
+                server.login(USERNAME, PASSWORD)
+                server.sendmail(USERNAME, recipients, msg.as_string())
+            print("✅ Email sent successfully")
+        except Exception as e:
+            print("❌ Email sending failed:", e)
             
     @app.route("/webrep_v2/upload_file_webrep_newsletter",methods=["POST","GET"])
     def upload_file_webrep_newsletter():
@@ -1445,9 +1450,6 @@ class _main:
         key = [];val = [];args=""
         data["createdDate"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         data["createdBy"] = session["USER_DATA"][0]['id']
-        # __f = FILE_REQ.save_file_from_request(request,"file_name",c.RECORDS+"/objects/webrep/",False,True)
-        # data["file_name"] = __f["file_arr_str"]
-        
         is_exist = len(db.select("SELECT * FROM `webrep_newsletters` WHERE `id` ='{}' ;".format(request.form['id'])))
         columns = []
         values = []
@@ -1477,19 +1479,12 @@ class _main:
 
                 values.append(value)
 
-            # Add status column/value
-            # columns.append("`status`")
-            # values.append("pending")
-
             # Build placeholders for parameterization
             placeholders = ", ".join(["%s"] * len(values))
             sql = f"INSERT INTO `webrep_newsletters` ({', '.join(columns)}) VALUES ({placeholders})"
             
         else:
             print(" >> Editing Newsletters")
-            
-            # if data.get("file_name") == "":
-            #  del data["file_name"]
 
             if ( data.get("status") == "published" ):
                 data["publishedDate"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -1515,11 +1510,6 @@ class _main:
 
             # Values in the same order as keys, plus the id
             values = list(data.values()) + [request.form['id']]
-
-            # # Execute safely
-            # cursor.execute(sql, values)
-            # connection.commit()
-
         
         print(">> Newsletter Data:", data)  # Debugging line
         print(">> Newsletter Data Status:", data.get("status"))  # Debugging line
@@ -1528,24 +1518,9 @@ class _main:
             # Send the newsletter email to all subscribers
             subject = data.get('subject', 'No Subject')
             content = data.get('content', '')
-            sender_email = "admin@dtirapid.ph"
             recipients = db.select("SELECT email FROM webrep_subscribers")
             recipient_emails = [recipient['email'] for recipient in recipients] 
-            
 
-            # Create the email
-            # msg = MIMEMultipart("alternative")
-            # msg["From"] = USERNAME
-            # msg["To"] = ", ".join([
-            #     "raymund.matol.dti@gmail.com",
-            #     "matolraymund@gmail.com"
-            # ])
-            # msg["Subject"] = "Newsletter with HTML Content"
-
-            # # Plain text fallback
-            # text = "Hello,\nThis is the plain text version of the email."
-
-            # HTML version  
             html = f"""
             <html>
             <style>
@@ -1619,24 +1594,7 @@ class _main:
             
             print(">> HTML Content:", html)  # Debugging line
             
-            threading.Thread(target=_main.send_newsletter_email, args=(data.get('subject','No Subject'), html , recipient_emails)).start()
+            threading.Thread(target=_main.send_newsletter_email, args=(subject, html , recipient_emails)).start()
             
-            # # Attach both versions
-            # msg.attach(MIMEText(text, "plain"))
-            # msg.attach(MIMEText(html, "html"))
-
-            # # List of recipients
-            # recipients = ["raymund.matol.dti@gmail.com"]
-
-            # # Send the email
-            # # with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            # #     server.starttls()
-            # #     server.login(USERNAME, PASSWORD)
-            # #     server.sendmail(USERNAME, recipients, msg.as_string())
-            
-            # with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            #     server.login(USERNAME.strip(), PASSWORD.strip())
-            #     server.sendmail(USERNAME, recipients, msg.as_string())
-        
         last_row_id = db.do(sql,values)
         return jsonify({"last_row_id":last_row_id})
