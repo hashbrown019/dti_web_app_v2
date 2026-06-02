@@ -180,23 +180,38 @@
                     let node = super.create();
                     node.setAttribute('href', value.url);
                     node.setAttribute('target', '_blank');
-                    node.classList.add('btn'); // base class
-                    if (value.style) {
-                    node.classList.add(`btn-${value.style}`); // e.g. btn-danger
-                    }
+                    // Apply inline base style
+                    let css = ButtonLink.styles[value.style] || ButtonLink.styles['primary'];
+                    node.setAttribute('style', css);
+
+                    // Add a marker attribute for hover CSS
+                    node.setAttribute('data-style', value.style);
+
                     return node;
                 }
 
                 static formats(node) {
                     return {
                     url: node.getAttribute('href'),
-                    style: node.className.replace('btn ', '').replace('btn-', '')
+                    style: node.getAttribute('data-style')
                     };
                 }
             }
 
             ButtonLink.blotName = 'button-link';
             ButtonLink.tagName = 'a'; // still an <a> tag
+            
+            // Define your style mappings
+            ButtonLink.styles = {
+                primary: "background:#007bff;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
+                secondary: "background:#6c757d;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
+                success: "background:#28a745;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
+                danger: "background:#dc3545;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
+                warning: "background:#ffc107;color:#000;padding:6px 12px;border-radius:4px;text-decoration:none;",
+                info: "background:#17a2b8;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
+                "rapid-lime": "background:#32cd32;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
+                "rapid-cyan": "background:#00ffff;color:#000;padding:6px 12px;border-radius:4px;text-decoration:none;"
+            };
 
             Quill.register(ButtonLink);
 

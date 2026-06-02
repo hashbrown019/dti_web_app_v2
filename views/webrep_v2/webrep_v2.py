@@ -1420,22 +1420,29 @@ class _main:
     
     def send_newsletter_email(subject, content, recipients):
         # SMTP server configuration
-        SMTP_SERVER = "smtp.gmail.com"   # or your mail server
-        SMTP_PORT = 465                  # 465 for SSL, 587 for TLS
-        USERNAME = "dtirapid.noreply@gmail.com".strip()
-        PASSWORD = "anfg uzlh xlsp wess".replace("\xa0", "").strip()
+        # SMTP_SERVER = "smtp.gmail.com"   # or your mail server
+        # SMTP_PORT = 465                  # 465 for SSL, 587 for TLS
+        # USERNAME = "dtirapid.noreply@gmail.com".strip()
+        # PASSWORD = "anfg uzlh xlsp wess".replace("\xa0", "").strip()
+        
+        SMTP_SERVER = "email-smtp.ap-southeast-1.amazonaws.com"   # or your mail server
+        SMTP_PORT = 587                  # 465 for SSL, 587 for TLS
+        USERNAME = "AKIAQQ5WGXJBQADSVWUJ".strip()
+        PASSWORD = "BOrNx6WPPZMmFBBjls63N58Whj5AEbKNSHvFce4VE9gU".replace("\xa0", "").strip()
         
         msg = MIMEMultipart("alternative")
-        msg["From"] = USERNAME
+        msg["From"] = "no-reply@dtirapid.ph"
         msg["To"] = ", ".join(recipients)
         msg["Subject"] = subject
         msg.attach(MIMEText(content, "html"))
 
         try:
-            with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
-                server.set_debuglevel(1)  # <-- shows SMTP conversation in logs
+            # ✅ Use STARTTLS with port 587
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                server.set_debuglevel(1)  # logs SMTP conversation
+                server.starttls()         # upgrade to secure connection
                 server.login(USERNAME, PASSWORD)
-                server.sendmail(USERNAME, recipients, msg.as_string())
+                server.sendmail(msg["From"], recipients, msg.as_string())
             print("✅ Email sent successfully")
         except Exception as e:
             print("❌ Email sending failed:", e)
@@ -1595,6 +1602,6 @@ class _main:
             print(">> HTML Content:", html)  # Debugging line
             
             threading.Thread(target=_main.send_newsletter_email, args=(subject, html , recipient_emails)).start()
-            
+
         last_row_id = db.do(sql,values)
         return jsonify({"last_row_id":last_row_id})
