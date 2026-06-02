@@ -1431,21 +1431,24 @@ class _main:
         PASSWORD = "BOrNx6WPPZMmFBBjls63N58Whj5AEbKNSHvFce4VE9gU".replace("\xa0", "").strip()
         
         msg = MIMEMultipart("alternative")
-        msg["From"] = "no-reply@dtirapid.ph"
+        # msg["From"] = "no-reply@dtirapid.ph"
+        msg["From"] = "dtirapid.noreply@gmail.com"
         msg["To"] = ", ".join(recipients)
         msg["Subject"] = subject
         msg.attach(MIMEText(content, "html"))
 
+        print("Sending email to:", recipients)
+
         try:
-            # ✅ Use STARTTLS with port 587
+            # Use STARTTLS with port 587
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
                 server.set_debuglevel(1)  # logs SMTP conversation
                 server.starttls()         # upgrade to secure connection
                 server.login(USERNAME, PASSWORD)
                 server.sendmail(msg["From"], recipients, msg.as_string())
-            print("✅ Email sent successfully")
+            print("Email sent successfully")
         except Exception as e:
-            print("❌ Email sending failed:", e)
+            print("Email sending failed:", e)
             
     @app.route("/webrep_v2/upload_file_webrep_newsletter",methods=["POST","GET"])
     def upload_file_webrep_newsletter():
