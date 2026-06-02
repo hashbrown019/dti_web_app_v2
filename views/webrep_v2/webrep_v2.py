@@ -84,17 +84,26 @@ class _main:
 
     @app.route("/hi_there",methods=["POST","GET"])
     def hi_there():
+        isAdmin = True
+        user_data = ''
         
         if(c.IN_MAINTENANCE):return redirect("/we_will_be_back_later")
         # dashboard_data =  json.loads(dboard_main.system_page())
         # dashboard_data =  dboard_main.system_page()
         
+        if 'USER_DATA' in session:
+            user_data = session['USER_DATA'][0]
+                
+        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+            isAdmin = False
+                
         return render_template(
             "home/home.html",
             sliders_data=_main.getLatestArticles(),
             is_session =_main.is_on_session(),
             g_site_key = g_site_key,
             active_bar = "home",
+            isAdmin = isAdmin
             # dashboard_data=_main.analyticUpdates()
         )
 
@@ -574,9 +583,16 @@ class _main:
 
     @app.route("/webrep_v2/knowledge_and_data",methods=["POST","GET"])
     def knowledge_and_data():
-        
+        isAdmin = True
+        user_data = ''  
         try:
             
+            if 'USER_DATA' in session:
+                user_data = session['USER_DATA'][0]
+                
+            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+                isAdmin = False
+                
             region = request.args.get("region", "all")
             search = request.args.get("search", "").strip()
             
@@ -608,7 +624,8 @@ class _main:
                 pim2025_files = pim2025_files,
                 updates_files = updates_files,
                 vcdt_files = vcdt_files,
-                case_studies = case_studies
+                case_studies = case_studies,
+                isAdmin = isAdmin
             )
         except Exception as e:
             return render_template(
@@ -619,6 +636,9 @@ class _main:
     
     @app.route("/webrep_v2/stories",methods=["POST","GET"])
     def stories():
+        isAdmin = True
+        user_data = ''
+        
         page = request.args.get("page", 1, type=int)
         category = request.args.get("category")
         commodities = request.args.get("commodity")
@@ -648,6 +668,12 @@ class _main:
             str_query += f" AND YEAR(datePosted)='{year}'"
         if search:
             str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"    
+        
+        if 'USER_DATA' in session:
+            user_data = session['USER_DATA'][0]
+                
+        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+            isAdmin = False
             
         per_page = 8
         offset = (page - 1) * per_page
@@ -707,10 +733,13 @@ class _main:
             commodity_selected = commodities,
             region_selected = region,
             year_selected = year,
+            isAdmin = isAdmin
         )
         
     @app.route("/webrep_v2/news_and_updates",methods=["POST","GET"])
     def news_and_updates():
+        isAdmin = True
+        user_data = ''
         page = request.args.get("page", 1, type=int)
         region = request.args.get("region", "")
         year = request.args.get("year", "")
@@ -737,6 +766,12 @@ class _main:
             str_query += f" AND YEAR(datePosted)='{year}'"
         if search:
             str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"    
+        
+        if 'USER_DATA' in session:
+            user_data = session['USER_DATA'][0]
+                
+        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+            isAdmin = False
         
         per_page = 6
         offset = (page - 1) * per_page
@@ -791,6 +826,7 @@ class _main:
             g_site_key = g_site_key,
             active_bar = "newsAndstories",
             is_session =_main.is_on_session(),
+            isAdmin = isAdmin
         )
     
     @app.route("/webrep_v2/what_we_do/network_beneficiaries", methods=["GET","POST"])
@@ -815,6 +851,15 @@ class _main:
     
     @app.route("/webrep_v2/what_we_do",methods=["POST","GET"])
     def what_we_do():
+        isAdmin = True
+        user_data = ''
+        
+        if 'USER_DATA' in session:
+            user_data = session['USER_DATA'][0]
+                
+        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+            isAdmin = False
+            
         fo = db.select("SELECT form_b.organization_registered_name,form_b.office_business_adrress, form_b.respondents_mobile, form_b.respondents_email, form_b.operational_crop_commodity, users.rcu, users.pcu FROM form_b LEFT JOIN users ON users.id = form_b.uploaded_by WHERE form_b.organization_registered_name <> '' ORDER BY form_b.organization_registered_name ASC")
         return render_template(
             "what_we_do/what_we_do.html",
@@ -822,6 +867,7 @@ class _main:
             active_bar = "whatwedo",
             is_session =_main.is_on_session(),
             form_b = fo,
+            isAdmin = isAdmin
         )
     
     @app.route("/webrep_v2/articles",methods=["POST","GET"])
@@ -1083,11 +1129,21 @@ class _main:
        
     @app.route("/webrep_v2/whoweare",methods=["POST","GET"])
     def about():
+        isAdmin = True
+        user_data = ''
+        
+        if 'USER_DATA' in session:
+            user_data = session['USER_DATA'][0]
+                
+        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+            isAdmin = False
+            
         return render_template(
             "about/about.html",
             active_bar = "whoweare",
             g_site_key = g_site_key,
             is_session =_main.is_on_session(),
+            isAdmin = isAdmin
         )
     
     @app.route("/webrep_v2/article/create",methods=["POST","GET"])

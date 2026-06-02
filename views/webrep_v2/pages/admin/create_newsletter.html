@@ -99,6 +99,12 @@
                         // 3. Insert the URL into the editor instead of Base64
                         const range = quill.getSelection();
                         quill.insertEmbed(range.index, 'image', res.url);
+
+                        // Apply inline CSS to the inserted image
+                        const [leaf] = quill.getLeaf(range.index);
+                        if (leaf && leaf.domNode && leaf.domNode.tagName === 'IMG') {
+                            leaf.domNode.setAttribute('style', 'width:100%;');
+                        }
                     },
                     error: (err) => {
                         console.error('Image upload failed:', err);
@@ -174,6 +180,49 @@
 
         $(document).ready(function(){
 
+            function showStyleDropdown(callback) {
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '15%';
+                modal.style.left = '50%';
+                modal.style.transform = 'translate(-50%, -50%)';
+                modal.style.background = '#024450';
+                modal.style.padding = '25px';
+                modal.style.border = '5px solid #fff';
+                modal.style.zIndex = '9999';
+                modal.style.boxShadow = "0px 0px 10px #024450";
+                modal.style.color = '#fff';
+
+                modal.innerHTML = `
+                    <label for="styleSelect">Choose button style:</label>
+                    <select id="styleSelect">
+                        <option value="primary">Blue</option>
+                        <option value="secondary">Grey</option>
+                        <option value="success">Green</option>
+                        <option value="warning">Orange</option>
+                        <option value="danger">Red</option>
+                        <option value="info">Teal</option>
+                        <option value="rapid-lime">Rapid Lime</option>
+                        <option value="rapid-cyan">Rapid Cyan</option>
+                    </select>
+                    <br><br>
+                    <button id="confirmStyle">OK</button>
+                    <button id="cancelStyle">Cancel</button>
+                `;
+
+                document.body.appendChild(modal);
+
+                document.getElementById('confirmStyle').onclick = () => {
+                    const style = document.getElementById('styleSelect').value;
+                    document.body.removeChild(modal);
+                    callback(style);
+                };
+
+                document.getElementById('cancelStyle').onclick = () => {
+                    document.body.removeChild(modal);
+                };
+            }
+
             const Inline = Quill.import('blots/inline');
             class ButtonLink extends Inline {
                 static create(value) {
@@ -203,14 +252,14 @@
             
             // Define your style mappings
             ButtonLink.styles = {
-                primary: "background:#007bff;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
-                secondary: "background:#6c757d;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
-                success: "background:#28a745;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
-                danger: "background:#dc3545;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
-                warning: "background:#ffc107;color:#000;padding:6px 12px;border-radius:4px;text-decoration:none;",
-                info: "background:#17a2b8;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
-                "rapid-lime": "background:#32cd32;color:#fff;padding:6px 12px;border-radius:4px;text-decoration:none;",
-                "rapid-cyan": "background:#00ffff;color:#000;padding:6px 12px;border-radius:4px;text-decoration:none;"
+                primary: "background:#007bff;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
+                secondary: "background:#6c757d;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
+                success: "background:#28a745;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
+                danger: "background:#dc3545;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
+                warning: "background:#ffc107;color:#000;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
+                info: "background:#17a2b8;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
+                "rapid-lime": "background:#9AC156;color:#024450;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
+                "rapid-cyan": "background:#024450;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;"
             };
 
             Quill.register(ButtonLink);
@@ -246,11 +295,12 @@
                                 if (range && range.length > 0) {
                                     const url = prompt("Enter the URL:");
                                     if (url) {
-                                        const style = prompt("Choose style: primary / secondary / warning / danger / success / info / rapid-lime / rapid-cyan" , "primary");
-                                        this.quill.format('button-link', { url, style });
+                                        showStyleDropdown((style) => {
+                                            this.quill.format('button-link', { url, style });
+                                        });
                                     }
                                 } else {
-                                alert("Please select some text first.");
+                                    alert("Please select some text first.");
                                 }
                             }
                         }
