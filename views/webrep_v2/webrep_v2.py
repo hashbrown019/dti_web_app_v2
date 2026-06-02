@@ -93,9 +93,10 @@ class _main:
         
         if 'USER_DATA' in session:
             user_data = session['USER_DATA'][0]
-                
-        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
-            isAdmin = False
+        
+        if user_data != '':        
+            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+                isAdmin = False
                 
         return render_template(
             "home/home.html",
@@ -589,9 +590,10 @@ class _main:
             
             if 'USER_DATA' in session:
                 user_data = session['USER_DATA'][0]
-                
-            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
-                isAdmin = False
+            
+            if user_data != '':
+                if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+                    isAdmin = False
                 
             region = request.args.get("region", "all")
             search = request.args.get("search", "").strip()
@@ -671,9 +673,10 @@ class _main:
         
         if 'USER_DATA' in session:
             user_data = session['USER_DATA'][0]
-                
-        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
-            isAdmin = False
+        
+        if user_data != '':    
+            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+                isAdmin = False
             
         per_page = 8
         offset = (page - 1) * per_page
@@ -769,10 +772,11 @@ class _main:
         
         if 'USER_DATA' in session:
             user_data = session['USER_DATA'][0]
-                
-        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
-            isAdmin = False
-        
+             
+        if user_data != '':
+            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+                isAdmin = False
+
         per_page = 6
         offset = (page - 1) * per_page
 
@@ -856,9 +860,10 @@ class _main:
         
         if 'USER_DATA' in session:
             user_data = session['USER_DATA'][0]
-                
-        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
-            isAdmin = False
+        
+        if user_data != '':    
+            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+                isAdmin = False
             
         fo = db.select("SELECT form_b.organization_registered_name,form_b.office_business_adrress, form_b.respondents_mobile, form_b.respondents_email, form_b.operational_crop_commodity, users.rcu, users.pcu FROM form_b LEFT JOIN users ON users.id = form_b.uploaded_by WHERE form_b.organization_registered_name <> '' ORDER BY form_b.organization_registered_name ASC")
         return render_template(
@@ -929,7 +934,7 @@ class _main:
                 user_rcu = "RCU XIII"
             elif user_data['rcu']=="BARMM":
                 user_rcu = "BARMM"
-                
+               
             if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
                 # str_query += f" AND USER_ID={user_data['id']}"
                 str_query += f" AND postRcu='{user_rcu}'"
@@ -1134,9 +1139,10 @@ class _main:
         
         if 'USER_DATA' in session:
             user_data = session['USER_DATA'][0]
-                
-        if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
-            isAdmin = False
+        
+        if user_data != '':
+            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+                isAdmin = False
             
         return render_template(
             "about/about.html",
