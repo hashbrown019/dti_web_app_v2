@@ -1078,6 +1078,13 @@ class _main:
                 error=str(e)
             ), 500
 
+    
+    @app.route("/webrep_v2/newsletters/get",methods=["GET"])
+    def get_newsletters():
+        id = request.args.get("id")
+        newsletters = db.select("SELECT webrep_newsletters.*,DATE_FORMAT(webrep_newsletters.createdDate, '%M %d, %Y %h:%i %p') AS formatted_createdDate,DATE_FORMAT(webrep_newsletters.publishedDate, '%M %d, %Y %h:%i %p') AS formatted_publishedDate,users.name AS created_by FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.id={} ORDER BY id DESC".format(id))
+        return jsonify({"newsletter": newsletters[0] if newsletters else None})
+
     @app.route("/webrep_v2/newsletters",methods=["POST","GET"])
     def newsletters():
         user_data = ''
@@ -1091,7 +1098,7 @@ class _main:
                 # return "No User data! Please login first.", 400
                 return redirect("/login?next=/webrep_v2/newsletters/create")
             
-            subscribers = db.select("SELECT * FROM webrep_subscribers ORDER BY subscriberID DESC")
+            subscribers = db.select("SELECT * FROM webrep_subscribers ORDER BY email ASC")
             
             # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
             newsletters = db.select("SELECT webrep_newsletters.*,DATE_FORMAT(webrep_newsletters.createdDate, '%M %d, %Y %h:%i %p') AS formatted_createdDate,DATE_FORMAT(webrep_newsletters.publishedDate, '%M %d, %Y %h:%i %p') AS formatted_publishedDate,users.name AS created_by FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id WHERE webrep_newsletters.isDeleted=0 {} ORDER BY id DESC ".format(''))

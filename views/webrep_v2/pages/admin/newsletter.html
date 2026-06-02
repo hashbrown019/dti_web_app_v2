@@ -85,8 +85,11 @@
                                         {% endif %}
                                     </td>
                                     <td class="text-end">
-                                        <a href="/webrep_v2/newsletters/create?ids={{ newsletter.id }}" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/webrep_v2/newsletters/delete?ids={{ newsletter.id }}" class="btn btn-xs btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                        <button class="btn btn-xs btn-outline-info" data-id="{{ newsletter.id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="viewNewsletter(this)"><i class="fa fa-eye"></i></button>
+                                        {% if newsletter.status != 'published' %}
+                                            <a href="/webrep_v2/newsletters/create?ids={{ newsletter.id }}" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i></a>
+                                            <a href="/webrep_v2/newsletters/delete?ids={{ newsletter.id }}" class="btn btn-xs btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -101,12 +104,66 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><b class="newsletter_view_subject"></b></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <div class="bg-light rounded-3 shadow-sm">
+                <span class="badge bg-secondary newsletter_view_status mb-2 ">DRAFT</span>
+                <span class="badge bg-success mb-2"><i class="fa fa-calendar"></i> <i class="newsletter_view_createdDate"></i></span>
+                <span class="badge bg-primary badge-sm "><i class="fa fa-user"></i> <i class="newsletter_view_createdBy"></i></span>
+            </div>
+            <hr>
+            <div class="newsletter_view_contentContainer" style="max-height: 400px; overflow-y: auto;">
+                <div class="newsletter_view_content" style="    width: 500px;
+                    margin: 0px auto;
+                    background: #F6F6F6;
+                    border-radius: 30px;
+                    padding: 20px;
+                    border: 1px solid #7C7C7D;"></div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 
 {% block customScript %}
 <script type="text/javascript">
     
+    function viewNewsletter(data){
+        var id = $(data).attr('data-id');
+        
+        $.ajax({
+            url: "/webrep_v2/newsletters/get?id="+id,
+            method: "GET",
+            success: function(response){
+                var newsletter = response.newsletter;
+                $('.newsletter_view_subject').text(newsletter.subject);
+                $('.newsletter_view_status').text(newsletter.status.toUpperCase());
+                $('.newsletter_view_createdDate').text(newsletter.formatted_createdDate);
+                $('.newsletter_view_createdBy').text(newsletter.created_by);
+                $('.newsletter_view_content').html(newsletter.content);
+            },
+            error: function(){
+                Swal.fire({
+                    title: "Error",
+                    text: "An error occurred while fetching the newsletter details.",
+                    icon: "error"
+                });
+            }
+        });
+    }
+
     $(document).ready(function(){
 
         setTimeout(function(){
