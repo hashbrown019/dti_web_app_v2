@@ -369,8 +369,16 @@ class file_manager:
 
 class file_handling:
 	def download_db_pfa(req,obj):
-		_sql = "SELECT * FROM `{}` WHERE {} ;".format(obj,where_rcu_is(req.args['rcu']))
-		print(_sql)
+		rcu_filter = where_rcu_is(req.args['rcu']).replace("USER_ID", "`{}`.`USER_ID`".format(obj))
+		_sql = '''
+			SELECT
+				`users`.`name` as 'inputed_by',
+				`users`.`rcu` as 'rcu',
+				`{}`.*
+			FROM `{}`
+			INNER JOIN `users` ON `{}`.`USER_ID` = `users`.`id`
+			WHERE {} ;
+		'''.format(obj,obj,obj,rcu_filter)
 		ls_arr = rapid_mysql.select(_sql)
 		return ls_arr
 

@@ -32,7 +32,7 @@ def get_area_staff():
 	if(session["USER_DATA"][0]["security_group"] in [1,19]):
 		return rapid_mysql.select("SELECT * FROM `users`;")
 
-	return rapid_mysql.select("SELECT * FROM `users` WHERE `rcu`='{}' AND `status`='active';".format(session["USER_DATA"][0]['rcu']))
+	return rapid_mysql.select("SELECT * FROM `users` WHERE `rcu`='{}'".format(session["USER_DATA"][0]['rcu']))
 
 def get_security_group():
 	return rapid_mysql.select("SELECT `_securitygroup`.*, `users`.`id` as 'by' , `users`.`name` FROM `_securitygroup` INNER JOIN `users` ON `_securitygroup`.`created_by`= `users`.`id` ;" )

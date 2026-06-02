@@ -26,10 +26,13 @@ class outbound:
 		print(" *  Generating and Running SQL [{}]".format(form))
 		form_a_farm_land = self.db.select('''
 				SELECT
+					`users`.`name` as 'inputed_by',
+					`users`.`rcu` as 'rcu',
 					form_a_farmer_profiles.*,
 					{}.*
 				FROM `form_a_farmer_profiles` 
 				INNER JOIN {} ON form_a_farmer_profiles.farmer_code = {}.farmer_code
+				INNER JOIN `users` ON form_a_farmer_profiles.USER_ID = `users`.`id`
 
 				WHERE
 				   form_a_farmer_profiles.USER_ID in (SELECT users.id from users {} );
@@ -63,9 +66,12 @@ class outbound:
 		print(" *  Generating and Running SQL [For all in Excel Uploads]")
 		EXCEL_UPLOADS = self.db.select('''
 				SELECT
+					`users`.`name` as 'inputed_by',
+					`users`.`rcu` as 'rcu',
 					excel_import_form_a.*
 				   
 				FROM `excel_import_form_a` 
+				INNER JOIN `users` ON excel_import_form_a.user_id = `users`.`id`
 
 				WHERE
 				   excel_import_form_a.user_id in (SELECT users.id from users {} );
