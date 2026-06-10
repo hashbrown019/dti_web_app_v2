@@ -35,8 +35,12 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dotenv import load_dotenv, find_dotenv
 
-load_dotenv(find_dotenv())
+if ( c.IS_ON_SERVER ):
+    load_dotenv(dotenv_path="/var/www/html/dti_web_app_v2/.env")
+else:
+    load_dotenv(find_dotenv())
 
+print("is on server:", c.IS_ON_SERVER)
 print("=================ENV===============")
 print("ENV file here :", find_dotenv())
 print("=================ENV===============")
