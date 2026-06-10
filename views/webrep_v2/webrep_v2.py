@@ -30,10 +30,18 @@ from views.dcfv2.dashboard.display_dataform import displayform
 
 
 import smtplib
-import threading
+import threading, queue, time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv())
+
+smtp_uname = ( os.getenv("SMTP_username") if os.getenv("SMTP_username") else "").strip()
+smtp_password = ( os.getenv("SMTP_password") if os.getenv("SMTP_password") else "").strip()
+smtp_host = ( os.getenv("SMTP_host") if os.getenv("SMTP_host") else "").strip()
+smtp_port = int(os.getenv("SMTP_PORT")) if os.getenv("SMTP_PORT") else 587
+smtp_sender = ( os.getenv("SMTP_SENDER") if os.getenv("SMTP_SENDER") else "").strip()
 
 # from v2_view.core._dashboard import _main as dboard_main
 
@@ -56,7 +64,58 @@ g_verify_url = 'https://www.google.com/recaptcha/api/siteverify'
 
 app.secret_key = "dtirapid2025"
 
+newsletter_queue = queue.Queue()
+
 class _main:
+    def newsletter_worker():
+        while True:
+            job = newsletter_queue.get()
+            if job is None:
+                break
+            subject, content, recipients = job
+            _main.send_newsletter_email(subject, content, recipients)
+            newsletter_queue.task_done()
+
+    def send_newsletter_email(subject, content, recipients):
+        
+        SMTP_SERVER = smtp_host
+        SMTP_PORT = smtp_port                  # 465 for SSL, 587 for TLS
+        USERNAME = smtp_uname
+        PASSWORD = smtp_password.replace("\xa0", "").strip()
+        SMTP_FROM = smtp_sender
+    
+        print("SMTP host:", SMTP_SERVER)
+        print("SMTP port:", SMTP_PORT)
+        print("Username:", repr(USERNAME))
+        print("Password length:", len(PASSWORD))
+
+        MAX_RECIPIENTS_PER_EMAIL = 3 #50
+        MAX_SENDS_PER_SECOND = 1 #14
+        SECONDS_PER_BATCH = 1 / MAX_SENDS_PER_SECOND
+
+        for i in range(0, len(recipients), MAX_RECIPIENTS_PER_EMAIL):
+            batch = recipients[i:i+MAX_RECIPIENTS_PER_EMAIL]
+
+            msg = MIMEMultipart("alternative")
+            msg["From"] = SMTP_FROM
+            msg["To"] = ", ".join(batch)
+            msg["Subject"] = subject
+            msg.attach(MIMEText(content, "html"))
+
+            try:
+                with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                    server.starttls()
+                    server.login(USERNAME, PASSWORD)
+                    server.sendmail(msg["From"], batch, msg.as_string())
+                print(f"✅ Sent batch {i//MAX_RECIPIENTS_PER_EMAIL+1} to {len(batch)} recipients")
+            except Exception as e:
+                print("❌ Email sending failed:", e)
+
+            time.sleep(SECONDS_PER_BATCH)
+            
+    # Start worker thread once at app startup
+    threading.Thread(target=newsletter_worker, daemon=True).start()
+    
     def is_on_session(): return ('USER_DATA' in session)
     def __init__(self, arg):super(_main, self).__init__();self.arg = arg
 
@@ -1487,37 +1546,37 @@ class _main:
         last_row_id = db.do(sql,values)
         return jsonify({"last_row_id":last_row_id,"FILES":__f})
     
-    def send_newsletter_email(subject, content, recipients):
-        # SMTP server configuration
-        # SMTP_SERVER = "smtp.gmail.com"   # or your mail server
-        # SMTP_PORT = 465                  # 465 for SSL, 587 for TLS
-        # USERNAME = "dtirapid.noreply@gmail.com".strip()
-        # PASSWORD = "anfg uzlh xlsp wess".replace("\xa0", "").strip()
+    # def send_newsletter_email(subject, content, recipients):
+    #     # SMTP server configuration
+    #     # SMTP_SERVER = "smtp.gmail.com"   # or your mail server
+    #     # SMTP_PORT = 465                  # 465 for SSL, 587 for TLS
+    #     # USERNAME = "dtirapid.noreply@gmail.com".strip()
+    #     # PASSWORD = "anfg uzlh xlsp wess".replace("\xa0", "").strip()
         
-        SMTP_SERVER = "email-smtp.ap-southeast-1.amazonaws.com"   # or your mail server
-        SMTP_PORT = 587                  # 465 for SSL, 587 for TLS
-        USERNAME = "AKIAQQ5WGXJBQADSVWUJ".strip()
-        PASSWORD = "BOrNx6WPPZMmFBBjls63N58Whj5AEbKNSHvFce4VE9gU".replace("\xa0", "").strip()
+    #     SMTP_SERVER = "email-smtp.ap-southeast-1.amazonaws.com"   # or your mail server
+    #     SMTP_PORT = 587                  # 465 for SSL, 587 for TLS
+    #     USERNAME = "AKIAQQ5WGXJBQADSVWUJ".strip()
+    #     PASSWORD = "BOrNx6WPPZMmFBBjls63N58Whj5AEbKNSHvFce4VE9gU".replace("\xa0", "").strip()
         
-        msg = MIMEMultipart("alternative")
-        msg["From"] = "no-reply@dtirapid.ph"
-        # msg["From"] = "dtirapid.noreply@gmail.com"
-        msg["To"] = ", ".join(recipients)
-        msg["Subject"] = subject
-        msg.attach(MIMEText(content, "html"))
+    #     msg = MIMEMultipart("alternative")
+    #     msg["From"] = "no-reply@dtirapid.ph"
+    #     # msg["From"] = "dtirapid.noreply@gmail.com"
+    #     msg["To"] = ", ".join(recipients)
+    #     msg["Subject"] = subject
+    #     msg.attach(MIMEText(content, "html"))
 
-        print("Sending email to:", recipients)
+    #     print("Sending email to:", recipients)
 
-        try:
-            # Use STARTTLS with port 587
-            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-                server.set_debuglevel(1)  # logs SMTP conversation
-                server.starttls()         # upgrade to secure connection
-                server.login(USERNAME, PASSWORD)
-                server.sendmail(msg["From"], recipients, msg.as_string())
-            print("Email sent successfully")
-        except Exception as e:
-            print("Email sending failed:", e)
+    #     try:
+    #         # Use STARTTLS with port 587
+    #         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+    #             server.set_debuglevel(1)  # logs SMTP conversation
+    #             server.starttls()         # upgrade to secure connection
+    #             server.login(USERNAME, PASSWORD)
+    #             server.sendmail(msg["From"], recipients, msg.as_string())
+    #         print("Email sent successfully")
+    #     except Exception as e:
+    #         print("Email sending failed:", e)
             
     @app.route("/webrep_v2/upload_file_webrep_newsletter",methods=["POST","GET"])
     def upload_file_webrep_newsletter():
@@ -1597,7 +1656,7 @@ class _main:
             # Send the newsletter email to all subscribers
             subject = data.get('subject', 'No Subject')
             content = data.get('content', '')
-            recipients = db.select("SELECT email FROM webrep_subscribers")
+            recipients = db.select("SELECT email FROM webrep_subscribers WHERE isActive=1 AND isDeleted=0")
             recipient_emails = [recipient['email'] for recipient in recipients] 
 
             html = f"""
@@ -1673,7 +1732,8 @@ class _main:
             
             print(">> HTML Content:", html)  # Debugging line
             
-            threading.Thread(target=_main.send_newsletter_email, args=(subject, html , recipient_emails)).start()
-
+            # threading.Thread(target=_main.send_newsletter_email, args=(subject, html , recipient_emails)).start()
+            newsletter_queue.put((subject, html, recipient_emails))
+            
         last_row_id = db.do(sql,values)
-        return jsonify({"last_row_id":last_row_id})
+        return jsonify({"last_row_id":last_row_id, "status": "queued"}) 
