@@ -116,7 +116,7 @@
                                 <div class="card-body p-0 pt-4 pb-3">
                                     <div class="row muted font-12 mb-2 ms-1 me-1">
                                         <div class="col-6">
-                                            <small class=""><i class="fa fa-calendar text-wp-secondary"></i> {{ article.datePosted.strftime('%b %d, %Y') }} </small>
+                                            <small class=""><i class="fa fa-calendar text-wp-secondary"></i> {{ article.datePosted.strftime('%b %d, %Y') if article.datePosted else 'Not yet posted' }} </small>
                                         </div>
                                         <div class="col-6 text-end">
                                             {% if article.status == 'posted' or article.status == 'published' %}
