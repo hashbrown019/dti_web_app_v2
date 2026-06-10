@@ -1,18 +1,37 @@
 import Configurations as c
 from modules.Connections import mysql
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(dotenv_path="/var/www/html/dti_web_app_v2/.env")
 
 def _init_config_():
 	c.SQLITE_DB = c.SQLITE_DB_SERVER
 	c.RECORDS = c.RECORDS_SERVER
 	c.M_APPVER = c.M_APPVER_SERVER
 
-	c._SERVER_PORT = c.SERVER_PORT
-	c._HOST = c.SERVER_HOST
-	c._USER = c.SERVER_USER
-	c._PASSWORD = c.SERVER_PASSWORD
-	c._DATABASE = c.SERVER_DATABASE
-	c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE] # PRODUCTION DB CRED
-	c.PORT = 80
+	# c._SERVER_PORT = c.SERVER_PORT
+	# c._HOST = c.SERVER_HOST
+	# c._USER = c.SERVER_USER
+	# c._PASSWORD = c.SERVER_PASSWORD
+	# c._DATABASE = c.SERVER_DATABASE
+	# c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE] # PRODUCTION DB CRED
+	# c.PORT = 80
+ 
+	SERVER_PORT = ( os.getenv("SERVER_PORT") if os.getenv("SERVER_PORT") else "" )
+	SERVER_HOST = ( os.getenv("SERVER_HOST") if os.getenv("SERVER_HOST") else "" )
+	SERVER_USER = ( os.getenv("SERVER_USER") if os.getenv("SERVER_USER") else "" )
+	SERVER_PASSWORD = ( os.getenv("SERVER_PASSWORD") if os.getenv("SERVER_PASSWORD") else "" )
+	SERVER_DATABASE = ( os.getenv("SERVER_DATABASE") if os.getenv("SERVER_DATABASE") else "" )
+	
+	c._SERVER_PORT = SERVER_PORT
+	c._HOST = SERVER_HOST
+	c._USER = SERVER_USER
+	c._PASSWORD = SERVER_PASSWORD
+	c._DATABASE = SERVER_DATABASE
+	c.DB_CRED = [SERVER_HOST,SERVER_USER,SERVER_PASSWORD,SERVER_DATABASE] # DEV
+	c.PORT = SERVER_PORT
+ 
 	c.IS_ON_SERVER = True
 # ======================================================================
 
