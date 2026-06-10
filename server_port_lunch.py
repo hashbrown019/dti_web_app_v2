@@ -9,14 +9,6 @@ def _init_config_():
 	c.SQLITE_DB = c.SQLITE_DB_SERVER
 	c.RECORDS = c.RECORDS_SERVER
 	c.M_APPVER = c.M_APPVER_SERVER
-
-	# c._SERVER_PORT = c.SERVER_PORT
-	# c._HOST = c.SERVER_HOST
-	# c._USER = c.SERVER_USER
-	# c._PASSWORD = c.SERVER_PASSWORD
-	# c._DATABASE = c.SERVER_DATABASE
-	# c.DB_CRED = [c.SERVER_HOST,c.SERVER_USER,c.SERVER_PASSWORD,c.SERVER_DATABASE] # DEV
-	# c.PORT = 80
  
 	SERVER_PORT = ( os.getenv("SERVER_PORT") if os.getenv("SERVER_PORT") else "" )
 	SERVER_HOST = ( os.getenv("SERVER_HOST") if os.getenv("SERVER_HOST") else "" )
