@@ -37,6 +37,8 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
+print("ENV file here :"+find_dotenv())
+
 smtp_uname = ( os.getenv("SMTP_username") if os.getenv("SMTP_username") else "").strip()
 smtp_password = ( os.getenv("SMTP_password") if os.getenv("SMTP_password") else "").strip()
 smtp_host = ( os.getenv("SMTP_host") if os.getenv("SMTP_host") else "").strip()
