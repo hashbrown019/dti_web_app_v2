@@ -1577,12 +1577,7 @@ class _main:
     def upload_image():
         try:
             
-            if c.IS_ON_SERVER:
-                base_dir = os.path.join("https://dtirapid.ph/", 'static', 'webrepstatic_v2', 'img','embedded_images')
-            else:
-                base_dir = os.path.join(current_app.root_path, 'static', 'webrepstatic_v2', 'img','embedded_images')
-                
-            # base_dir = os.path.join(current_app.root_path, 'static', 'webrepstatic_v2', 'img','embedded_images')
+            base_dir = os.path.join(current_app.root_path, 'static', 'webrepstatic_v2', 'img','embedded_images')
             # base_dir = c.RECORDS+"../static/webrepstatic_v2/img/embedded_images"
             os.makedirs(base_dir, exist_ok=True)
             
@@ -1595,7 +1590,10 @@ class _main:
                 file.save(os.path.join(base_dir, filename))
                 
                 # Return the public URL to the image
-                img_url = url_for('static', filename=f'webrepstatic_v2/img/embedded_images/{filename}', _external=True)
+                if c.IS_ON_SERVER:
+                    img_url = f"https://dtirapid.ph/static/webrepstatic_v2/img/embedded_images/{filename}"
+                else:
+                    img_url = url_for('static', filename=f'webrepstatic_v2/img/embedded_images/{filename}', _external=True)
                 return jsonify({'url': img_url})
         except Exception as e:
             return jsonify({'error': str(e)}), 500
