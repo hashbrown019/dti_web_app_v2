@@ -147,7 +147,7 @@
                                         <a href="/webrep_v2/articles/confirm/{{ article.id }}" class="btn btn-xs btn-outline-success" title="Confirm & Post Article" ><i class="fa fa-check"></i></a> -->
                                         
                                         <a href="/webrep_v2/article/{{ article.id }}" class="btn btn-xs btn-outline-secondary" title="View Article"><i class="fa fa-eye"></i></a>
-                                        {% if article.USER_ID|int==user_data['id']|int %}
+                                        {% if ( (article.USER_ID | int) == (user_data['id'] | int) or isAdmin ) and ( article.status != 'published' or article.status != 'posted' ) %}
                                         <button  class="btn btn-xs btn-outline-primary" title="Edit Article" onclick="article_actions('edit',{{ article.id }})"><i class="fa fa-pencil"></i></button>
                                         <button  class="btn btn-xs btn-outline-danger" title="Delete Article" onclick="article_actions('delete',{{ article.id }})"><i class="fa fa-trash"></i></button> 
                                         {% endif %}

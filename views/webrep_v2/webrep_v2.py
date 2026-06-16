@@ -97,8 +97,8 @@ class _main:
         print("Username:", repr(USERNAME))
         print("Password length:", len(PASSWORD))
 
-        MAX_RECIPIENTS_PER_EMAIL = 3 #50
-        MAX_SENDS_PER_SECOND = 1 #14
+        MAX_RECIPIENTS_PER_EMAIL = 40 #Max = 50
+        MAX_SENDS_PER_SECOND = 10 #Max = 14
         SECONDS_PER_BATCH = 1 / MAX_SENDS_PER_SECOND
 
         for i in range(0, len(recipients), MAX_RECIPIENTS_PER_EMAIL):
@@ -346,16 +346,18 @@ class _main:
             return redirect("/login?force_url=1")
 
     def getLatestArticles():
-        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE status='posted' AND removed=0 ORDER BY id DESC LIMIT 6")
+        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE (status='posted' OR status='published') AND removed=0 ORDER BY id DESC LIMIT 6")
         data = []
-        for article in articles:
-            # print(type(article), article)
-            article['postheader'] = urllib.parse.unquote(article['postheader'])
-            article['postContent'] = urllib.parse.unquote(article['postContent'])
-            article['postdescription'] = urllib.parse.unquote(article['postdescription'])
-            article['postAuthor'] = urllib.parse.unquote(article['postAuthor'])
-            article['postRcu'] = urllib.parse.unquote(article['postRcu'])
-            data.append(article)
+        if articles:
+            for article in articles:
+                # print(type(article), article)
+                article['postheader'] = urllib.parse.unquote(article['postheader'])
+                article['postContent'] = urllib.parse.unquote(article['postContent'])
+                article['postdescription'] = urllib.parse.unquote(article['postdescription'])
+                article['postAuthor'] = urllib.parse.unquote(article['postAuthor'])
+                article['postRcu'] = urllib.parse.unquote(article['postRcu'])
+                data.append(article)
+            
         return data
 
     def analyticUpdates():
@@ -499,6 +501,11 @@ class _main:
             active_bar = "",
         )
     
+    @app.route("/webrep_v2/unsubscribe", methods=["POST","GET"])
+    def unsubscribe():
+        # Implementation for unsubscribe
+        pass
+
     @app.route("/webrep_v2/subscribe", methods=["POST","GET"])
     def insertSubscriber():
         
@@ -748,11 +755,11 @@ class _main:
         per_page = 8
         offset = (page - 1) * per_page
 
-        article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 ORDER BY id DESC LIMIT 3")
+        article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 ORDER BY datePosted DESC LIMIT 3")
         latest_ids =  ",".join(f"{a['id']}" for a in article_latest)
         str_query += f" AND id NOT IN ({latest_ids})"
 
-        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 {} ORDER BY id DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
+        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 {} ORDER BY dateposted DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
         data_articles = []
         data_articles_latest = []
 
@@ -787,6 +794,14 @@ class _main:
         start_page = max(1, page - 2)
         end_page = min(pages, page + 2)
 
+        has_filters = any([
+            category,
+            commodities,
+            region,
+            year,
+            search
+        ])
+        
         return render_template(
             "articles/articles_v2.html",
             stories_latest = data_articles_latest,
@@ -803,13 +818,12 @@ class _main:
             commodity_selected = commodities,
             region_selected = region,
             year_selected = year,
-            isAdmin = isAdmin
+            isAdmin = isAdmin,
+            has_filters = has_filters,
         )
-        
+    
     @app.route("/webrep_v2/news_and_updates",methods=["POST","GET"])
     def news_and_updates():
-        isAdmin = True
-        user_data = ''
         page = request.args.get("page", 1, type=int)
         region = request.args.get("region", "")
         year = request.args.get("year", "")
@@ -837,36 +851,30 @@ class _main:
         if search:
             str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"    
         
-        if 'USER_DATA' in session:
-            user_data = session['USER_DATA'][0]
-             
-        if user_data != '':
-            if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
-                isAdmin = False
-
-        per_page = 6
+        per_page = 10
         offset = (page - 1) * per_page
 
-        article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 ORDER BY id DESC LIMIT 4")
-        latest_ids =  ",".join(f"{a['id']}" for a in article_latest)
-        str_query += f" AND id NOT IN ({latest_ids})"
+        # article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 ORDER BY datePosted,id DESC LIMIT 4")
+        # latest_ids =  ",".join(f"{a['id']}" for a in article_latest)
+        # str_query += f" AND id NOT IN ({latest_ids})"
 
-        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 {} ORDER BY id DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
+        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 {} ORDER BY datePosted DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
         data_articles = []
         data_articles_latest = []
 
         print(f"articles : {articles}")
         
-        for latest in article_latest:
-            latest['postheader'] = urllib.parse.unquote(latest['postheader'])
-            latest['postContent'] = urllib.parse.unquote(latest['postContent'])
-            latest['postAuthor'] = urllib.parse.unquote(latest['postAuthor'])
-            latest['postRcu'] = urllib.parse.unquote(latest['postRcu'])
-            data_articles_latest.append(latest)
+        # for latest in article_latest:
+        #     latest['postheader'] = urllib.parse.unquote(latest['postheader'])
+        #     latest['postContent'] = urllib.parse.unquote(latest['postContent'])
+        #     latest['postAuthor'] = urllib.parse.unquote(latest['postAuthor'])
+        #     latest['postRcu'] = urllib.parse.unquote(latest['postRcu'])
+        #     data_articles_latest.append(latest)
         
         for article in articles:
             article['postheader'] = urllib.parse.unquote(article['postheader'])
             article['postContent'] = urllib.parse.unquote(article['postContent'])
+            article['postdescription'] = urllib.parse.unquote(article['postdescription'])
             article['postAuthor'] = urllib.parse.unquote(article['postAuthor'])
             article['postRcu'] = urllib.parse.unquote(article['postRcu'])
             data_articles.append(article)
@@ -883,6 +891,11 @@ class _main:
         start_page = max(1, page - 2)
         end_page = min(pages, page + 2)
 
+        has_filters = any([
+            region,
+            year,
+            search
+        ])
         return render_template(
             "articles/news_and_updates.html",
             stories_latest = data_articles_latest,
@@ -897,8 +910,103 @@ class _main:
             g_site_key = g_site_key,
             active_bar = "newsAndstories",
             is_session =_main.is_on_session(),
-            isAdmin = isAdmin
+            has_filters = has_filters
         )
+        
+            
+    # @app.route("/webrep_v2/news_and_updates",methods=["POST","GET"])
+    # def news_and_updates():
+    #     isAdmin = True
+    #     user_data = ''
+    #     page = request.args.get("page", 1, type=int)
+    #     region = request.args.get("region", "")
+    #     year = request.args.get("year", "")
+    #     search = request.args.get("search", "")
+        
+    #     # commodities = request.args.getlist("commodities")
+    #     # region = request.args.getlist("region")
+        
+    #     # print(f"commodities : {commodities}")
+    #     # commodities = ','.join(['%s'] * len(commodities))
+    #     # print(f"commodities Join : {commodities}")
+        
+    #     str_query = ""
+    #     # if region:
+    #     #     quoted_rcu = ",".join(f"'{r}'" for r in region)
+    #     #     str_query += f" AND postRcu IN ({quoted_rcu})"
+    #     # if year:
+    #     #     quoted = ",".join(f"'{c}'" for c in year)
+    #     #     str_query += f" AND postCategory IN ({quoted})"
+        
+    #     if region:
+    #         str_query += f" AND postRcu='{region}'"
+    #     if year:
+    #         str_query += f" AND YEAR(datePosted)='{year}'"
+    #     if search:
+    #         str_query += f" AND (postheader LIKE '%{search}%' OR postContent LIKE '%{search}%')"    
+        
+    #     if 'USER_DATA' in session:
+    #         user_data = session['USER_DATA'][0]
+             
+    #     if user_data != '':
+    #         if user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
+    #             isAdmin = False
+
+    #     per_page = 6
+    #     offset = (page - 1) * per_page
+
+    #     article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 ORDER BY id DESC LIMIT 4")
+    #     latest_ids =  ",".join(f"{a['id']}" for a in article_latest)
+    #     str_query += f" AND id NOT IN ({latest_ids})"
+
+    #     articles = db.select("SELECT * FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 {} ORDER BY id DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
+    #     data_articles = []
+    #     data_articles_latest = []
+
+    #     print(f"articles : {articles}")
+        
+    #     for latest in article_latest:
+    #         latest['postheader'] = urllib.parse.unquote(latest['postheader'])
+    #         latest['postContent'] = urllib.parse.unquote(latest['postContent'])
+    #         latest['postAuthor'] = urllib.parse.unquote(latest['postAuthor'])
+    #         latest['postRcu'] = urllib.parse.unquote(latest['postRcu'])
+    #         data_articles_latest.append(latest)
+        
+    #     for article in articles:
+    #         article['postheader'] = urllib.parse.unquote(article['postheader'])
+    #         article['postContent'] = urllib.parse.unquote(article['postContent'])
+    #         article['postAuthor'] = urllib.parse.unquote(article['postAuthor'])
+    #         article['postRcu'] = urllib.parse.unquote(article['postRcu'])
+    #         data_articles.append(article)
+            
+    #     total = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 {}".format(str_query))[0]['total']
+    #     # total_sql = f"""
+    #     #             SELECT COUNT(*) AS total
+    #     #             FROM webrep_articles
+    #     #             WHERE status='posted' AND removed=0 {str_query}
+    #     #         """
+    #     # total = db.select(total_sql, latest_ids)[0]['total']
+
+    #     pages = (total + per_page - 1) // per_page
+    #     start_page = max(1, page - 2)
+    #     end_page = min(pages, page + 2)
+
+    #     return render_template(
+    #         "articles/news_and_updates.html",
+    #         stories_latest = data_articles_latest,
+    #         stories = data_articles,
+    #         page = page,
+    #         pages = pages,    
+    #         start_page = start_page,
+    #         end_page = end_page,
+    #         region_selected = region,
+    #         year_selected = year,
+    #         search_str = search,
+    #         g_site_key = g_site_key,
+    #         active_bar = "newsAndstories",
+    #         is_session =_main.is_on_session(),
+    #         isAdmin = isAdmin
+    #     )
     
     @app.route("/webrep_v2/what_we_do/network_beneficiaries", methods=["GET","POST"])
     def network_beneficiaries():
@@ -1732,6 +1840,53 @@ class _main:
                 <div style="font-family: Arial, sans-serif; padding: 20px;">
                     <div style="width: 500px; margin: 0 auto; background-color: #F6F6F6; padding: 20px; border-radius: 5px;">
                         {content}
+                    </div>
+                    <div style="width: 500px; margin: 15px auto; text-align:center;  margin-top: 30px;">
+                        <h2 style="margin-bottom:30px;"><b>Connect with us online!</b></h2>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom:20px; width:300px;">
+                        <tr>
+                            <td bgcolor="#1977F3" style="border-radius:25px;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <tr>
+                                <!-- Icon cell -->
+                                <td align="left" style="padding:10px; width: 40px;">
+                                    <img src="https://dtirapid.ph/static/webrepstatic_v2/img/icon-fb.png" alt="Facebook" width="24" height="24" style="display:block;">
+                                </td>
+                                <!-- Text cell -->
+                                <td align="center" style="padding:10px; font-size:16px; font-family:Arial, sans-serif; color:#ffffff;">
+                                    <a href="https://www.facebook.com/DTIRapidGrowth" target="_blank" style="color:#ffffff; text-decoration:none;">
+                                    DTI RAPID Growth Project
+                                    </a>
+                                </td>
+                                </tr>
+                            </table>
+                            </td>
+                        </tr>
+                        </table>
+
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom:10px; width:300px;">
+                        <tr>
+                            <td bgcolor="#024450" style="border-radius:25px;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <tr>
+                                <!-- Icon cell -->
+                                <td align="left" style="padding:10px; width: 40px;">
+                                    <img src="https://dtirapid.ph/static/webrepstatic_v2/img/icon-web.png" alt="Website" width="24" height="24" style="display:block;">
+                                </td>
+                                <!-- Text cell -->
+                                <td align="center" style="padding:10px; font-size:16px; font-family:Arial, sans-serif; color:#ffffff;">
+                                    <a href="https://dtirapid.ph" target="_blank" style="color:#ffffff; text-decoration:none;">
+                                    dtirapid.ph
+                                    </a>
+                                </td>
+                                </tr>
+                            </table>
+                            </td>
+                        </tr>
+                        </table>
+                        <br>
+                        <p style="font-weight: bold;">Don't want to receive these emails? <a href="/webrep_v2/unsubscribe" style="color:#000;" target="_blank">Unsubscribe</a></p>
+                        <p style="color: #6f6f6f; font-size: 12px;">National Project Coordination Office | 2/F Mintrade Bldg., Monteverde St. cor. Sales St., Davao City 8000</p>
                     </div>
                 </div>
             </body>

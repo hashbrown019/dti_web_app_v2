@@ -4,19 +4,21 @@
 <div id="news_and_updates">
 <div class="container container-sm mt-5 pt-5 mb-5" style="padding-top: 170px!important;">
     <h1 class="inter-regular text-wp-primary">News & Updates</h1>
+    <!-- Search Portion -->
     <div class="storyFilter mt-5 mb-5">
-        <div class="row">
-            <div class="col-6">
-                <div class="input-group input-group-rounded rounded-pill mb-3">
-                    <input type="text" class="form-control applyfilter applyfilter_search" placeholder="Search" aria-label="Search..." value="{{ search_str }}" style="border: 1px solid #DEE2E6 !important;" aria-describedby="basic-addon2">
-                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+        <div class="row g-2">
+            <div class="col-12 col-md-6 mb-1">
+               <div class="rounded-pill searchBorder ">
+                    <div class=" input-group">
+                        <input type="text" class="form-control applyfilter applyfilter_search searchBarOverride truncate" placeholder="Search by commodity, location, theme or year" aria-label="Search..." value="{{ search_str }}" aria-describedby="basic-addon2">
+                        <span class="input-group-text searchBarOverride" id="basic-addon2"><i class="fa fa-search"></i></span>
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="input-group rounded-pill mb-3">
-                    <select class="form-select field-rounded applyfilter applyfilter_region" >
-                        <option value="" disabled selected>Region</option>
-                        <option value="" {% if region_selected and "all" in region_selected %}selected{% endif %}>All</option>
+            <div class="col-6 col-md marginOverride">
+                <div class="input-group">
+                    <select class="form-select applyfilter applyfilter_region rounded-pill dropdownOverride" >
+                        <option value="" {% if region_selected and "all" in region_selected %}selected{% endif %}>Region</option>
                         <option value="npco" {% if region_selected and "npco" in region_selected %}selected{% endif %}>NPCO</option>
                         <option value="rcu viii" {% if region_selected and "rcu viii" in region_selected %}selected{% endif %}>RCU VIII</option>
                         <option value="rcu ix" {% if region_selected and "rcu ix" in region_selected %}selected{% endif %}>RCU IX</option>
@@ -28,9 +30,9 @@
                     </select>
                 </div>
             </div>
-            <div class="col">
-                <div class="input-group rounded-pill mb-3">
-                    <select class="form-select field-rounded applyfilter applyfilter_year" >
+            <div class="col-6 col-md marginOverride">
+                <div class="input-group ">
+                    <select class="form-select applyfilter applyfilter_year rounded-pill dropdownOverride" >
                         <option value="" disabled selected>Year</option>
                         <option value="" {% if year_selected and "all" in year_selected %}selected{% endif %}>All</option>
                         <option value="2019" {% if year_selected and "2019" in year_selected %}selected{% endif %}>2019</option>
@@ -46,96 +48,158 @@
             </div>
         </div>
     </div>
-    <h5 class="text-wp-primary inter-regular">Most Recent</h5>
-    <div class="row mt-4">
-        {% for article in stories_latest %}
-        <div class="col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch">
-            <div class="card mb-4 shadow-sm wp_article_card" style="border: none;">
-                <img class="card-img-top" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" style="height: 150px;;">
-                <div class="card-body">
-                    <div class="row muted font-12 mb-2">
-                        <div class="col-6">
-                            <small class=""><i class="fa fa-calendar"></i> {{ article.date.strftime('%B %d, %Y') }}</small>
-                        </div>
-                        <div class="col-6 text-end">
-                            <small class="">{{ article.posttype | upper }}</small>
+    <!-- If no user search -->
+    {% if not has_filters %}
+     <h3 class="mt-4 text-center text-lg-start articleHeaderColor">Highlights</h3>
+    <div class="row mt-4 align-items-stretch">
+        {% for article in stories %}
+
+            {% if loop.index == 1 or loop.index ==   6 %}
+             <div class="col-12 col-lg-6 mb-5">
+                        <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none">
+                            <div class="storiesArticleCard storiesArticleCardNews" 
+                                style="position:relative;">
+                        
+                                    <div class="imageGroup">
+                                        <div class="gradientOverlay"></div>
+                                        <img src="/webrep_v2/article/get_img/{{ article.file_name }}" class="horizontalCard" alt="Article Image">
+                                    </div>
+                              
+                                <div style="padding:1rem; position:absolute; bottom:0;text-shadow: 2px 2px 5px #000000; z-index:3">
+                                    <span class="card-title text-white mb-3" style="opacity:0.98">{{ (article.datePosted).strftime('%B %d, %Y') }}</span><br>
+                                    <h6 class="card-title text-white">{{ article.postheader | urldecode_lines | safe }}</h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+            {% else %}
+
+
+            <div class="col-6 col-md-3 mb-5">
+                    <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none">
+                        <div class="overflow-hidden position-relative" style="aspect-ratio: 16/9;">
+                            <!-- <div class="p-2 m-2 rounded-pill shadow-sm> articleTypeBadge text-center fw-bold"">
+                                {{ article.posttype | urldecode_lines | safe }}
+                            </div> -->
+                                <img class="w-100 h-100 highlightImage" src="/webrep_v2/article/get_img/{{article.file_name}}" alt="Article Image">
+            </div>
+                    
+                    <div class="mt-2">
+                        <small class="text-muted font-11">{{ (article.datePosted).strftime('%B %d, %Y') }}</small>
+                        <div class="py-1">
+                            <h5 class="card-title" style="color:#879d5c">{{ article.postheader | urldecode_lines | safe }}</h5>
                         </div>
                     </div>
-                    <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none"><h5 class="card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold">{{ article.postheader }}</h5></a>
-                    <p class="card-text text-muted font-12">{{ article.postContent[0:200]~"..." if article.postContent|length > 200 else article.postContent }}</p>
-                </div>
+                    <div class="py-1">
+                        <p class="mt-2 card-text text-muted font-12">{{ article.postdescription[0:200]~"..." if article.postdescription|length > 200 else article.postdescription | urldecode_lines | safe }}</p>
+                    </div>
+                    </a>
             </div>
-        </div>
+            {% endif %}
+
+    
         {% endfor %}
     </div>
     <br>
-    <div class="row">
-        <div class="col-12">
-            <div class="row">
-                <h5 class="wp_font_roboto_regular text-wp-primary mb-4 fw-bold">Other news & updates</h5>  
-                {% if not stories %}
-                    <div class="col-12">
-                        <p class="text-muted"><i class="fa fa-exclamation-triangle"></i> No news & updates found.</p>
-                    </div>
-                {% endif %}
-                {% for article in stories %}
-                    <div class="col-6 mb-3">
-                        <div class="row">
-                            <div class="col-12 col-md-3" >
-                                <img class="img-fluid" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" 
-                                style="width: 100%;       
-                                    height: 120px;      
-                                    object-fit: cover;  
-                                    display: block; ">
+
+    <!-- If a user searched -->
+    {% else %}
+    <h3 class="mt-4 text-center text-lg-start articleHeaderColor mb-3">Search Results</h3>
+        {% if stories %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mb-5 ps-5 ps-md-3">
+            {% for article in stories %}
+                <div class ="col mb-3">
+                    <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none">
+                        <div class="overflow-hidden rounded position-relative" style="aspect-ratio: 16/9;">
+                            <div class="p-2 m-2 rounded-pill shadow-sm articleTypeBadge text-center fw-bold">
+                                {{ article.posttype | urldecode_lines | safe }}
                             </div>
-                            <div class="col-12 col-md-9">
-                                <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none"><h5 class="card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold">{{ article.postheader }}</h5></a>
-                                <small class=""><i class="fa fa-calendar"></i> {{ article.date.strftime('%B %d, %Y') }}</small> | 
-                                <small class="">{{ article.posttype | upper }}</small>
-                            </div>
+                                <img class="w-100 h-100 highlightImage" src="/webrep_v2/article/get_img/{{article.file_name}}" alt="Article Image">
+            </div>
+                    
+                    <div class="mt-2">
+                        <div>
+                            <h6 class="card-title" style="color:#879d5c">{{ article.postheader | urldecode_lines | safe }}</h6>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-            <div class="mb-5 text-center">
-                {% if pages > 1 %}
-                <!-- <a href="/webrep_v2/stories" class="float-end text-decoration-none text-wp-primary bold " >See all</a> -->
-                {% endif %}
-                <nav aria-label="Page navigation">
-                    <ul class="pagination ">
-                        <!-- Previous button -->
-                        <li class="page-item {% if page == 1 %}disabled{% endif %}">
-                        <a class="page-link" href="/webrep_v2/news_and_updates?str={{ query }}&page={{ page-1 }}"><i class="fa fa-angle-double-left"></i></a>
-                        </li>
-                        <!-- First page -->
-                        {% if page > 3 %}
-                        <li class="page-item">
-                            <a class="page-link font-10" href="/webrep_v2/news_and_updates?str={{ query }}&page=1">1</a>
-                        </li>
-                        <li class="page-item disabled"><span class="page-link">…</span></li>
-                        {% endif %}
-                        <!-- Neighboring pages -->
-                        {% for p in range(start_page, end_page+1) %}
-                        <li class="page-item {% if p == page %}active{% endif %}">
-                            <a class="page-link font-10" href="/webrep_v2/news_and_updates?str={{ query }}&page={{ p }}">{{ p }}</a>
-                        </li>
-                        {% endfor %}
-                        <!-- Last page -->
-                        {% if page < pages-2 %}
-                        <li class="page-item disabled"><span class="page-link">…</span></li>
-                        <li class="page-item">
-                            <a class="page-link font-10" href="/webrep_v2/news_and_updates?str={{ query }}&page={{ pages }}">{{ pages }}</a>
-                        </li>
-                        {% endif %}
-                        <!-- Next button -->
-                        <li class="page-item {% if page == pages or pages <= 1 %}disabled{% endif %}">
-                        <a class="page-link" href="/webrep_v2/news_and_updates?str={{ query }}&page={{ page+1 }}"><i class="fa fa-angle-double-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>   
-            </div>
+                    <div class="py-1">
+                        <small class="text-muted font-11">{{ (article.datePosted).strftime('%B %d, %Y') }}</small>
+                        <p class="mt-2 card-text text-muted font-12">{{ article.postContent[0:200]~"..." if article.postContent|length > 200 else article.postContent }}</p>
+                    </div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
+
+        {% else %}
+            <div class="text-center text-muted p-5 mb-5">
+                <i class="fa-solid fa-magnifying-glass-minus fa-10x mb-5" style="opacity:0.5"></i>
+                <h1>No results found </h1><br>
+                We couldn't find any articles matching your criteria.
+            </div>
+        {% endif %}
+    {% endif %}
+    <!-- Pagination -->
+    {% if stories %}
+    <div class="mb-5 text-center">
+        {% if pages > 1 %}
+        {% endif %}
+
+        <nav class="pagination-simple" aria-label="Page navigation">
+
+            <!-- Previous button -->
+            {% if page == 1 %}
+                <span class="page-control disabled">&lt;</span>
+            {% else %}
+                <a class="page-control"
+                   href="/webrep_v2/news_and_updates?search={{ search_str }}&region={{ region_selected }}&year={{ year_selected }}&page={{ page-1 }}">
+                    &lt;
+                </a>
+            {% endif %}
+
+            <!-- First page -->
+            {% if page > 3 %}
+                <a class="page-number"
+                   href="/webrep_v2/news_and_updates?search={{ search_str }}&region={{ region_selected }}&year={{ year_selected }}&page=1">
+                    1
+                </a>
+                <span class="ellipsis">...</span>
+            {% endif %}
+
+            <!-- Neighboring pages -->
+            {% for p in range(start_page, end_page+1) %}
+                {% if p == page %}
+                    <span class="page-number active">{{ p }}</span>
+                {% else %}
+                    <a class="page-number"
+                       href="/webrep_v2/news_and_updates?search={{ search_str }}&region={{ region_selected }}&year={{ year_selected }}&page={{ p }}">
+                        {{ p }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Last page -->
+            {% if page < pages-2 %}
+                <span class="ellipsis">...</span>
+                <a class="page-number"
+                   href="/webrep_v2/news_and_updates?search={{ search_str }}&region={{ region_selected }}&year={{ year_selected }}&page={{ pages }}">
+                    {{ pages }}
+                </a>
+            {% endif %}
+
+            <!-- Next button -->
+            {% if page == pages or pages <= 1 %}
+                <span class="page-control disabled">&gt;</span>
+            {% else %}
+                <a class="page-control"
+                   href="/webrep_v2/news_and_updates?search={{ search_str }}&region={{ region_selected }}&year={{ year_selected }}&page={{ page+1 }}">
+                    &gt;
+                </a>
+            {% endif %}
+
+        </nav>
     </div>
+{% endif %}
 </div>
 </div>
 {% endblock %}

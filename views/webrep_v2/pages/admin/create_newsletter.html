@@ -224,6 +224,8 @@
             }
 
             const Inline = Quill.import('blots/inline');
+            const BlockEmbed = Quill.import('blots/block/embed');
+
             class ButtonLink extends Inline {
                 static create(value) {
                     let node = super.create();
@@ -247,6 +249,11 @@
                 }
             }
 
+            class DividerBlot extends BlockEmbed {
+                static blotName = 'divider';
+                static tagName = 'hr';
+            }
+
             ButtonLink.blotName = 'button-link';
             ButtonLink.tagName = 'a'; // still an <a> tag
             
@@ -263,6 +270,7 @@
             };
 
             Quill.register(ButtonLink);
+            Quill.register(DividerBlot);
 
             quill = new Quill('#newsletter_content', {
                 theme: 'snow',
@@ -282,7 +290,8 @@
                             [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
                             [{ 'font': [] }],
                             [{ 'align': [] }],
-                            ['link', 'image', 'custom-link'] 
+                            ['link', 'image', 'custom-link'],
+                            ['divider']
                         ],
                         // 2. Define the custom handler for the 'image' button
                         handlers: {
@@ -301,6 +310,16 @@
                                     }
                                 } else {
                                     alert("Please select some text first.");
+                                }
+                            },
+                            'divider': function() {
+                                const range = this.quill.getSelection(true);
+                                
+                                if (range) {
+                                    // Insert the registered 'divider' blot at the cursor placement
+                                    this.quill.insertEmbed(range.index, 'divider', true);
+                                    // Advance the cursor position directly after the line break
+                                    this.quill.setSelection(range.index + 1);
                                 }
                             }
                         }

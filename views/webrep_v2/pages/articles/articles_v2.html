@@ -89,7 +89,8 @@
             </div>
         </div>
     </div>
-    
+<!-- Unfiltered page opening -->
+    {%if not has_filters %}
     <h3 class="mt-4 text-center text-lg-start articleHeaderColor">Latest Stories</h3>
 <!-- Highlights Portion -->
 
@@ -99,10 +100,10 @@
                 <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none">
                     <div class="overflow-hidden rounded position-relative" style="aspect-ratio: 16/9;">
                         <div class="p-2 m-2 rounded-pill shadow-sm> articleTypeBadge text-center fw-bold"">
-                            {{ article.postClass | urldecode_lines | safe }}
+                            {{ article.posttype | urldecode_lines | safe }}
                         </div>
                             <img class="w-100 h-100 highlightImage" src="/webrep_v2/article/get_img/{{article.file_name}}" alt="Article Image">
-        </div>
+                    </div>
                 
                 <div class="mt-2">
                     <div>
@@ -111,8 +112,7 @@
                 </div>
                 <div class="py-1">
                     <small class="text-muted font-11">{{ (article.datePosted).strftime('%B %d, %Y') }}</small>
-                    <p class="mt-2 card-text text-muted font-12">{{ article.postdescription[0:200]~"..." if article.postdescription|length > 200 else article.postdescription }}</p>
-                    <!-- <p class="mt-2 card-text text-muted font-12">{{ article.postContent[0:200]~"..." if article.postContent|length > 200 else article.postContent }}</p> -->
+                    <p class="mt-2 card-text text-muted font-12">{{ article.postdescription[0:200]~"..." if article.postdescription|length > 200 else article.postdescription | urldecode_lines | safe }}</p>
                 </div>
                 </a>
             </div>
@@ -128,7 +128,7 @@
                 <p class="text-muted"><i class="fa fa-exclamation-triangle"></i> No stories found.</p>
             </div>
         </div>
-    {% endif %}
+    {% else %}
     <!-- If there are results -->
     <div class="row mb-5 row-cols-2 row-cols-lg-4 g-2">
         {% for article in stories %}
@@ -141,14 +141,13 @@
                                 <!-- CHANGE COLOR DEPENDING ON ARTICLE POST TYPE -->
                     
                                 <div class="p-2 m-2 rounded-pill shadow-sm articleTypeBadge text-center fw-bold">
-                                    {{ article.postClass | urldecode_lines | safe }}
+                                    {{ article.posttype | urldecode_lines | safe }}
                                 </div>
                         
                                     <div class="imageGroup">
                                         <div class="gradientOverlay"></div>
                                         <img src="/webrep_v2/article/get_img/{{ article.file_name }}" class="horizontalCard" alt="Article Image">
                                     </div>
-                                    
                                 <div style="padding:1rem; position:absolute; bottom:0;text-shadow: 2px 2px 5px #000000; z-index:3">
                                     <h6 class="card-title text-white">{{ article.postheader | urldecode_lines | safe }}</h6>
                                 </div>
@@ -158,6 +157,46 @@
             
         {% endfor %}
     </div>
+    {% endif %}
+<!-- If there is a search or filters are applied -->
+    {% else %}
+    <h3 class="mt-4 text-center text-lg-start articleHeaderColor">Search Results</h3>
+        {% if stories %}
+        <div class="row row-cols-2 row-cols-md-3 g-3 mb-5">
+            {% for article in stories %}
+                <div class ="col">
+                    <a href="/webrep_v2/article/{{ article.id }}" class="text-decoration-none">
+                        <div class="overflow-hidden rounded position-relative" style="aspect-ratio: 16/9;">
+                            <div class="p-2 m-2 rounded-pill shadow-sm> articleTypeBadge text-center fw-bold"">
+                                {{ article.posttype | urldecode_lines | safe }}
+                            </div>
+                                <img class="w-100 h-100 highlightImage" src="/webrep_v2/article/get_img/{{article.file_name}}" alt="Article Image">
+            </div>
+                    
+                    <div class="mt-2">
+                        <div>
+                            <h6 class="card-title" style="color:#879d5c">{{ article.postheader | urldecode_lines | safe }}</h6>
+                        </div>
+                    </div>
+                    <div class="py-1">
+                        <small class="text-muted font-11">{{ (article.datePosted).strftime('%B %d, %Y') }}</small>
+                        <p class="mt-2 card-text text-muted font-12">{{ article.postdescription[0:200]~"..." if article.postdescription|length > 200 else article.postdescription | urldecode_lines | safe }}</p>
+                    </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+                
+        {% else %}
+        <div class="text-center text-muted p-5 mb-5">
+            <i class="fa-solid fa-magnifying-glass-minus fa-10x mb-5" style="opacity:0.5"></i>
+            <h1>No results found </h1><br>
+            We couldn't find any articles matching your criteria.
+        </div>
+        {% endif %}
+    {% endif %}
+    
 <!-- Pagination Tab -->
      <div class="mb-5 text-center">
         {% if pages > 1 %}
