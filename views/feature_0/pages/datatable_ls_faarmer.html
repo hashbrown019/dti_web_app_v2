@@ -72,6 +72,14 @@
 					DIP Ref<br>
 					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="13" />
 				</td>
+				<td>
+					Reference<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="14" />
+				</td>
+				<td>
+					Linked<br>
+					<input style="border:0px; background-color: white; color: black;" type="text" placeholder="Search" data-index="15" />
+				</td>
 			</tr>
 		</thead>
 		<tbody id="list_farmers">
@@ -234,12 +242,17 @@
 			"columnDefs": [
 				{ "width": "10%", "targets": 1 },
 				{
-					"target": 0,
+					"targets": 0,
 					"visible": false,
 					"searchable": false,
 				},
 				{
-					"target": 5,
+					"targets": 5,
+					"visible": false,
+					"searchable": false,
+				},
+				{
+					"targets": 14,
 					"visible": false,
 					"searchable": false,
 				}
@@ -268,7 +281,7 @@
 		} );
 		$('#table_id tbody').off('mousedown').on('mousedown', 'tr', function () {
 			var data = TABLE.row(this).data();
-			form_a_forms(data[0], data[13]);
+					form_a_forms(data[0], data[14]);
 		});
 
 		// $CLASS("dataTables_scroll")[0].style.width="80vh"

@@ -177,57 +177,6 @@ function load_data(record_id, table, class_name) {
     });
 }
 
-function toggleYouthSections(isYouth) {
-    const sectionIds = [
-        'section-household-head-info',
-        'section-household-profile',
-        'section-prod-cost',
-        'section-workers-laborers',
-        'section-post-harvest',
-        'section-farm-basic-info',
-        'section-market-sales',
-        'section-access-to-finance'
-    ];
-
-    sectionIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = isYouth ? 'none' : '';
-    });
-
-    // Hide specific farm info blocks
-    document.querySelectorAll('#section-farm-basic-info .card, #section-farm-basic-info fieldset').forEach(block => {
-        const title = (block.querySelector('.card-title,h4,h5')?.textContent || '').toLowerCase();
-        if (
-            title.includes('topography') ||
-            title.includes('trees') ||
-            title.includes('land tenurial') ||
-            title.includes('primary crop') ||
-            title.includes('secondary crop') ||
-            title.includes('expansion') ||
-            title.includes('rehabilitation')
-        ) {
-            block.style.display = isYouth ? 'none' : '';
-        }
-    });
-}
-
-/** Listen only to "Sectoral Data" dropdown */
-function evaluateYouthMode() {
-    const sectoralSelect = document.getElementById("frmer_prof_@_basic_Info_@_sectoral_data");
-    const sectoralIsYouth = (sectoralSelect && sectoralSelect.value === "Youth");
-    // toggleYouthSections is already defined globally/locally in the script block
-    toggleYouthSections(sectoralIsYouth);
-    return sectoralIsYouth; // Useful for external functions like lockFieldsIfYouth
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const sectoralSelect = document.getElementById("frmer_prof_@_basic_Info_@_sectoral_data");
-    if (sectoralSelect) {
-        // Attach the listener so manual changes still trigger the hide/show logic
-        sectoralSelect.addEventListener('change', evaluateYouthMode);
-    }
-});
-
 function populateDipNames() {
     return fetch('/api/get_dip_names')
         .then(response => {

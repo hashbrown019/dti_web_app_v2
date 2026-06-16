@@ -3,6 +3,7 @@ from tqdm import tqdm
 import Configurations as c
 from modules.Connections import mysql,sqlite
 from controllers.value_cleaner import file_handler as cleaner
+from controllers.excel_template_validator import validate_xlrd_template
 
 import base64
 import sys
@@ -96,6 +97,19 @@ class form_excel_a_handler:
 			sheet =  "VC FORM A" 
 			print("\n= Scanning [{}]".format(_NAME_))
 			try:
+				is_valid, validation_message = validate_xlrd_template(
+					file_name,
+					["VC_FORM_A_v2.xls", "VC_FORM_A_v2_Youth.xls"],
+					sheet,
+					4,
+				)
+				if not is_valid:
+					self.move_to_failed_files(_NAME_)
+					return {
+						"status": "failed",
+						"msg": validation_message,
+						"success_files": FROM_EXCEL_RPOFILES,
+					}
 				resp = self.push_mysql(self.readRows(file_name, sheet),_NAME_)
 				if(resp["err"]):
 					msg = "Error in Moving to Database"
@@ -175,9 +189,20 @@ class form_excel_a_handler:
 		# wb = xlrd.open_workbook(file,encoding_override='utf-8')
 		wb = xlrd.open_workbook(file)
 		sheet = wb.sheet_by_name(s_index)
-		data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
-		counter = 0
+		data = [
+			[
+				self.normalize_excel_cell(sheet.cell(r, c), wb.datemode)
+				for c in range(sheet.ncols)
+			]
+			for r in range(sheet.nrows)
+		]
 		return data[3:]
+
+	def normalize_excel_cell(self, cell, datemode):
+		if cell.ctype == xlrd.XL_CELL_DATE:
+			excel_date = xlrd.xldate_as_datetime(cell.value, datemode)
+			return excel_date.strftime("%d/%m/%Y")
+		return cell.value
 
 	def move_to_done_files(self,FILENAME):
 		# shutil.copy(

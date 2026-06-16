@@ -24,9 +24,36 @@
 
 	// ======= Fill modal data =======
 	function fill_data_inp_f_a(data_){
+		normalizeFormARecordValues(data_[0][0]);
 		modeal_basic_info(data_);
 		DICT_TO_INPUT(data_[0][0], 'FORM_DATA_A');
 		normalizeBirthdayField();
+	}
+
+	function normalizeDecimalWholeNumber(value) {
+		if (value === null || value === undefined) return value;
+		const textValue = String(value).trim();
+		if (/^\d+\.0+$/.test(textValue)) {
+			return textValue.split(".")[0];
+		}
+		return value;
+	}
+
+	function normalizeFormARecordValues(record) {
+		if (!record) return;
+		Object.keys(record).forEach(function (fieldName) {
+			const fieldElement = document.getElementById(fieldName);
+			if (!fieldElement || fieldElement.tagName !== "SELECT") return;
+			const normalizedValue = normalizeDecimalWholeNumber(record[fieldName]);
+			if (normalizedValue === record[fieldName]) return;
+
+			const hasMatchingOption = Array.from(fieldElement.options).some(function (option) {
+				return option.value === normalizedValue;
+			});
+			if (hasMatchingOption) {
+				record[fieldName] = normalizedValue;
+			}
+		});
 	}
 
 	// ======= Profile panel =======

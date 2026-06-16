@@ -46,6 +46,9 @@ app = Blueprint("dcfv2",__name__,template_folder="pages")
 
 def is_on_session(): return ('USER_DATA' in session)
 
+def sql_value(value):
+	return str(value).replace("\\", "\\\\").replace("'", "''")
+
 @app.route('/sample/<item>')
 @c.login_auth_web()
 def sample(item):
@@ -74,11 +77,13 @@ def get_dip_commodity():
 		dip_name = request.args.get('dip_name')
 		if not dip_name:
 			return jsonify({"form_1_commodity": ""})
-		query = "SELECT form_1_commodity FROM dcf_prep_review_aprv_status WHERE form_1_name_dip = %s"
-		result = db.select(query, [dip_name])
+		query = "SELECT form_1_commodity FROM dcf_prep_review_aprv_status WHERE form_1_name_dip = '{}'"
+		result = db.select(query.format(sql_value(dip_name)))
 		if not isinstance(result, list):
 			print("Commodity query error or no result:", result)
 			return jsonify({"error": "Error fetching commodity"})
+		if not result:
+			return jsonify({"form_1_commodity": ""})
 		commodity = result[0]['form_1_commodity']
 		return jsonify({"form_1_commodity": commodity})
 	except Exception as e:
@@ -94,20 +99,20 @@ def get_dip_names_by_region():
 		if region.isdigit():
 			query = (
 				"SELECT form_1_name_dip FROM dcf_prep_review_aprv_status "
-				"WHERE CAST(form_1_rcus AS UNSIGNED) = %s "
+				"WHERE CAST(form_1_rcus AS UNSIGNED) = {} "
 				"AND form_1_name_dip IS NOT NULL AND TRIM(form_1_name_dip) != '' "
 				"GROUP BY form_1_name_dip ORDER BY form_1_name_dip ASC"
 			)
-			params = [int(region)]
+			query = query.format(int(region))
 		else:
 			query = (
 				"SELECT form_1_name_dip FROM dcf_prep_review_aprv_status "
-				"WHERE form_1_rcus = %s "
+				"WHERE form_1_rcus = '{}' "
 				"AND form_1_name_dip IS NOT NULL AND TRIM(form_1_name_dip) != '' "
 				"GROUP BY form_1_name_dip ORDER BY form_1_name_dip ASC"
 			)
-			params = [region]
-		result = db.select(query, params)
+			query = query.format(sql_value(region))
+		result = db.select(query)
 		if not isinstance(result, list):
 			print("DIP query error or no result:", result)
 			return jsonify([])
@@ -126,7 +131,7 @@ def get_dip_names_by_region():
 @app.route('/api/get_dip_names', methods=['GET'])
 def get_dip_names():
     try:
-        query = "SELECT form_1_name_dip FROM dcf_prep_review_aprv_status WHERE form_1_name_dip IS NOT NULL AND form_1_name_dip != '' GROUP BY form_1_name_dip ORDER BY form_1_name_dip ASC"
+        query = "SELECT form_1_name_dip, MAX(form_1_commodity) AS form_1_commodity FROM dcf_prep_review_aprv_status WHERE form_1_name_dip IS NOT NULL AND form_1_name_dip != '' GROUP BY form_1_name_dip ORDER BY form_1_name_dip ASC"
         result = db.select(query)
         dip_data = [dict(form_1_name_dip=row['form_1_name_dip'], form_1_commodity=row['form_1_commodity']) for row in result]
         return jsonify(dip_data)

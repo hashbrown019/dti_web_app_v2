@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'a_v2_head.html'%}
+<body>
+	<script type="text/javascript">
+		{% include '/chunks/core.js'%}
+	</script>
+
+	<main id="core-module-content" class="main" style="margin: 0; padding: 20px;">
+		<section class="section dashboard">
+			<div class="row">
+				{% include module%}
+			</div>
+		</section>
+	</main>
+
+	<script>
+		(function () {
+			document.addEventListener("click", function (event) {
+				const link = event.target.closest("a[href]");
+
+				if (!link ||
+					event.defaultPrevented ||
+					event.button !== 0 ||
+					event.ctrlKey ||
+					event.metaKey ||
+					event.shiftKey ||
+					event.altKey ||
+					link.hasAttribute("download") ||
+					link.target === "_blank") {
+					return;
+				}
+
+				const targetUrl = new URL(link.href, window.location.origin);
+				if (targetUrl.origin === window.location.origin &&
+					targetUrl.pathname.indexOf("/mis-v4/core-") === 0 &&
+					window.parent !== window &&
+					typeof window.parent.misV4Navigate === "function") {
+					event.preventDefault();
+					window.parent.misV4Navigate(targetUrl.href, true);
+				}
+			});
+
+			const moduleContent = document.getElementById("core-module-content");
+			let reportTimer = null;
+			let lastReportedHeight = 0;
+
+			function reportContentHeight() {
+				if (!moduleContent || window.parent === window) {
+					return;
+				}
+
+				const bounds = moduleContent.getBoundingClientRect();
+				const height = Math.ceil(bounds.bottom - Math.min(bounds.top, 0));
+
+				if (height > 0 && Math.abs(height - lastReportedHeight) > 1) {
+					lastReportedHeight = height;
+					window.parent.postMessage({
+						type: "mis-v4-content-height",
+						height: height
+					}, window.location.origin);
+				}
+			}
+
+			function queueHeightReport() {
+				window.clearTimeout(reportTimer);
+				reportTimer = window.setTimeout(reportContentHeight, 50);
+			}
+
+			window.addEventListener("load", queueHeightReport);
+			window.addEventListener("resize", queueHeightReport);
+
+			if (moduleContent && window.MutationObserver) {
+				const observer = new MutationObserver(queueHeightReport);
+				observer.observe(moduleContent, {
+					childList: true,
+					subtree: true,
+					attributes: true,
+					characterData: true
+				});
+			}
+
+			queueHeightReport();
+		})();
+	</script>
+</body>
+</html>

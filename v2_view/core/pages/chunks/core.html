@@ -21,14 +21,129 @@
 
 	</div>
 
-	<main id="main" class="main">
-		<section class="section dashboard">
-			<div class="row">
-				{% include module%}
-			</div>
-		</section>
+	<style>
+		#core-content-loading {
+			position: absolute;
+			inset: 0;
+			z-index: 2;
+			display: grid;
+			place-items: start center;
+			background: #fff;
+			padding-top: 24px;
+			opacity: 1;
+			visibility: visible;
+			transition: opacity 0.5s ease, visibility 0.5s ease;
+		}
+
+		#core-content-loading.is-hidden {
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+		}
+
+		#core-content-loading img {
+			width: 80px;
+			height: auto;
+		}
+	</style>
+
+	<main id="main" class="main" style="position: relative; min-height: 600px;">
+		<div id="core-content-loading" aria-live="polite" aria-label="Loading">
+			<img src="{{ url_for('static', filename='webrepstatic_v2/img/logo-loading.gif') }}" alt="Loading">
+		</div>
+		<iframe
+			id="core-content-frame"
+			title="MIS content"
+			src=""
+			scrolling="no"
+			style="display: block; width: 100%; min-height: 600px; border: 0; opacity: 0; overflow: hidden;"
+		></iframe>
 
 	</main><!-- End #main -->
+
+	<script>
+		(function () {
+			const frame = document.getElementById("core-content-frame");
+			const loading = document.getElementById("core-content-loading");
+
+			if (!frame) {
+				return;
+			}
+
+			function getContentUrl(url) {
+				const contentUrl = new URL(url, window.location.origin);
+
+				if (contentUrl.origin === window.location.origin &&
+					contentUrl.pathname.indexOf("/mis-v4/core-") === 0) {
+					contentUrl.searchParams.set("__content_only", "1");
+				}
+
+				return contentUrl.href;
+			}
+
+			function setLoading(isLoading) {
+				if (loading) {
+					loading.classList.toggle("is-hidden", !isLoading);
+					loading.setAttribute("aria-hidden", isLoading ? "false" : "true");
+				}
+				frame.style.opacity = isLoading ? "0" : "1";
+			}
+
+			window.misV4Navigate = function (url, addHistory) {
+				const targetUrl = new URL(url, window.location.origin);
+				targetUrl.searchParams.delete("__content_only");
+
+				if (targetUrl.origin !== window.location.origin) {
+					window.location.href = targetUrl.href;
+					return;
+				}
+
+				setLoading(true);
+				frame.src = getContentUrl(targetUrl);
+
+				if (addHistory !== false) {
+					window.history.pushState({ misV4Content: true }, "", targetUrl);
+				}
+
+				if (typeof window.misV4SyncSidebar === "function") {
+					window.misV4SyncSidebar(targetUrl);
+				}
+			};
+
+			frame.addEventListener("load", function () {
+				setLoading(false);
+
+				try {
+					const frameTitle = frame.contentDocument && frame.contentDocument.title;
+					if (frameTitle) {
+						document.title = frameTitle;
+					}
+				} catch (error) {
+					// Cross-origin pages can still load; their document cannot be inspected.
+				}
+			});
+
+			window.addEventListener("message", function (event) {
+				if (event.origin !== window.location.origin ||
+					event.source !== frame.contentWindow ||
+					!event.data ||
+					event.data.type !== "mis-v4-content-height") {
+					return;
+				}
+
+				const height = Number(event.data.height);
+				if (Number.isFinite(height) && height > 0) {
+					frame.style.height = Math.max(Math.ceil(height), 600) + "px";
+				}
+			});
+
+			window.addEventListener("popstate", function () {
+				window.misV4Navigate(window.location.href, false);
+			});
+
+			window.misV4Navigate(window.location.href, false);
+		})();
+	</script>
 
 	<!-- ======= Footer ======= -->
 	{% include '/parts/__footer.html'%}

@@ -11,6 +11,7 @@ import json
 import xlrd
 from werkzeug.utils import secure_filename
 from openpyxl import load_workbook
+from controllers.excel_template_validator import validate_openpyxl_template
 import pandas as pd
 
 
@@ -683,6 +684,21 @@ class _main:
         return row[idx] if idx < len(row) and row[idx] is not None else default
 
     def excel_upload_open_mgi(path, impType):  
+        sheet_name = "DDN_SHFs" if impType == "shf" else "DDN_FOs" if impType == "fo" else None
+        if sheet_name is None:
+            flash("Invalid import type.", "error")
+            return "done:Import Type Error"
+
+        is_valid, validation_message = validate_openpyxl_template(
+            path,
+            "MG Implementation_MIS Form.xlsx",
+            sheet_name,
+            9,
+        )
+        if not is_valid:
+            flash(validation_message, "error")
+            return "done:Column Error"
+
         wb = load_workbook(path, data_only=True)
         sheet = wb.active
         insert = None

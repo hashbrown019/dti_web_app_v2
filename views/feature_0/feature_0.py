@@ -313,6 +313,47 @@ class _main:
 				temp_data2[area] = {}
 		return temp_data2
 
+	def _format_linked_status(db_table, dcf_id):
+		if not db_table or not dcf_id:
+			return ""
+		return f"(Linked to {db_table} | DCF ID {dcf_id})"
+
+	def _append_linked_status(rows):
+		if not rows:
+			return rows
+
+		normalized_rows = [list(row) for row in rows]
+		linked_ids = sorted({
+			str(row[0]).strip()
+			for row in normalized_rows
+			if row and str(row[0]).strip().isdigit()
+		})
+
+		linked_map = {}
+		if linked_ids:
+			sql = """
+				SELECT link_to_id, link_from_id, db_table
+				FROM __data_link_1
+				WHERE link_to_id IN ({})
+			""".format(",".join(linked_ids))
+			rows_link = rapid_mysql.select(sql)
+			for r in rows_link:
+				link_to_id = str(r.get("link_to_id", "")).strip()
+				link_from_id = str(r.get("link_from_id", "")).strip()
+				db_table = str(r.get("db_table", "")).strip()
+				if not link_to_id or not link_from_id or not db_table:
+					continue
+				linked_map.setdefault(link_to_id, [])
+				linked_map[link_to_id].append(_main._format_linked_status(db_table, link_from_id))
+
+		for row in normalized_rows:
+			while len(row) <= 15:
+				row.append("")
+			db_id_str = str(row[0]).strip()
+			row[15] = " | ".join(linked_map.get(db_id_str, []))
+
+		return normalized_rows
+
 	@app.route("/feature_0/filter_list_farmers",methods=["POST","GET"])
 	@c.login_auth_web()
 	def feature_0_filter_list_farmers():
@@ -325,8 +366,9 @@ class _main:
 			"SELECT MAX(`id`) AS `max_id`, MAX(`date_modified`) AS `max_sync` FROM `excel_import_form_a` {}".format(filter_suffix),
 			True
 		)[0]
+		rows = _main.feature_0_get_farmer_data_a1()
 		return jsonify({
-			"dash1":_main.feature_0_get_farmer_data_a1(),
+			"dash1": rows,
 			"sync":{
 				"max_id": max_row.get("max_id") or 0,
 				"max_sync": max_row.get("max_sync") or ""
@@ -378,7 +420,7 @@ class _main:
 			ORDER BY `excel_import_form_a`.`id` DESC;
 		'''.format(filter_suffix, delta_clause)
 
-		rows = rapid_mysql.select(sql_excel,False)
+		rows = _main._append_linked_status(rapid_mysql.select(sql_excel,False))
 
 		max_id_sql = "SELECT MAX(`id`) AS `max_id`, MAX(`date_modified`) AS `max_sync` FROM `excel_import_form_a` {}".format(filter_suffix)
 		max_row = rapid_mysql.select(max_id_sql,True)[0]
@@ -455,7 +497,7 @@ class _main:
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id` {}
 			ORDER BY `excel_import_form_a`.`id` DESC;'''.format(Filter.position_data_filter())
 		# RES = rapid_mysql.select(sql_mobile,False) + rapid_mysql.select(sql_excel,False) # DEPRICATED MOBILE DATA
-		return rapid_mysql.select(sql_excel,False)
+		return _main._append_linked_status(rapid_mysql.select(sql_excel,False))
 
 	@app.route("/feature_0/get_farmer_data_a1_row/<record_id>", methods=["POST","GET"])
 	@c.login_auth_web()
@@ -493,7 +535,7 @@ class _main:
 			INNER JOIN `users` ON `excel_import_form_a`.`user_id` = `users`.`id`
 			{};
 		'''.format(filter_suffix)
-		return jsonify(rapid_mysql.select(sql_excel,False))
+		return jsonify(_main._append_linked_status(rapid_mysql.select(sql_excel,False)))
 
 
 	@app.route("/feature_0/get_farmer_data_a1_for_dash",methods=["POST","GET"])  ## FOR CREATING NEW DAsh charts
@@ -902,7 +944,7 @@ class _main:
 				"inputed": datum[1],
 				"ref_code": datum[14],
 				"linked": False,
-				"linked_info": ""   # will store e.g. "(Linked to excel_import_form_a)"
+				"linked_info": ""   # will store e.g. "(Linked to dcf_capacity_building | DCF ID 6144)"
 			}
 			unique_name_arr[unique_name].append(entry)
 			all_db_ids.append(str(datum[0]))
@@ -912,13 +954,21 @@ class _main:
 		if all_db_ids:
 			id_list = ",".join(all_db_ids)
 			sql = f"""
-			SELECT link_to_id, db_table
+			SELECT link_to_id, link_from_id, db_table
 			FROM __data_link_1
 			WHERE link_to_id IN ({id_list})
 			"""
 			rows = rapid_mysql.select(sql)
-			# build map {id: db_table}
-			linked_map = {str(r['link_to_id']): r['db_table'] for r in rows}
+			# build map {id: [status, ...]}
+			linked_map = {}
+			for r in rows:
+				link_to_id = str(r.get("link_to_id", "")).strip()
+				link_from_id = str(r.get("link_from_id", "")).strip()
+				db_table = str(r.get("db_table", "")).strip()
+				if not link_to_id or not link_from_id or not db_table:
+					continue
+				linked_map.setdefault(link_to_id, [])
+				linked_map[link_to_id].append(_main._format_linked_status(db_table, link_from_id))
 
 		# mark linked info
 		for group in unique_name_arr.values():
@@ -926,7 +976,7 @@ class _main:
 				db_id_str = str(entry["db_id"])
 				if db_id_str in linked_map:
 					entry["linked"] = True
-					entry["linked_info"] = f"(Linked to {linked_map[db_id_str]})"
+					entry["linked_info"] = " | ".join(linked_map[db_id_str])
 
 		# keep only duplicates and separate by birthdate
 		duplicates_by_name = [g for g in unique_name_arr.values() if len(g) >= 2]

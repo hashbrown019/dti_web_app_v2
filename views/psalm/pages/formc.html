@@ -73,10 +73,84 @@
 				for (let index = 0; index < x_ins.length; index++) {
 					disabled_ins(res, x_ins, index)
 				}
+				setIndustryClusterSelection(res ? res.industry_cluster : "")
 
 			}
 		})
 	}
+
+	function getIndustryClusterDropdown() {
+		return document.getElementById("industry_cluster_dropdown")
+	}
+
+	function getIndustryClusterCheckboxes() {
+		const list = document.getElementById("industry_cluster_items")
+		return list ? list.querySelectorAll("input[type='checkbox']") : []
+	}
+
+	function updateIndustryClusterDropdown() {
+		const dropdown = getIndustryClusterDropdown()
+		const hiddenField = document.getElementById("industry_cluster")
+		if (!dropdown || !hiddenField) return
+
+		const selected = []
+		getIndustryClusterCheckboxes().forEach(function (checkbox) {
+			if (checkbox.checked) selected.push(checkbox.value)
+		})
+
+		dropdown.querySelector(".anchor").textContent =
+			selected.length ? selected.join(", ") : "Choose your option"
+		hiddenField.value = selected.join(",")
+
+		const pfnSpecify = document.getElementById("pfn_specify")
+		if (pfnSpecify) {
+			const hasPfn = selected.includes("PFN")
+			pfnSpecify.style.display = hasPfn ? "block" : "none"
+			if (!hasPfn) pfnSpecify.value = ""
+		}
+	}
+
+	function setIndustryClusterSelection(valueString) {
+		const hiddenField = document.getElementById("industry_cluster")
+		const dropdown = getIndustryClusterDropdown()
+		const selected = new Set(
+			String(valueString || "")
+				.split(",")
+				.map(function (value) { return value.trim().toLowerCase() })
+				.filter(Boolean)
+		)
+
+		getIndustryClusterCheckboxes().forEach(function (checkbox) {
+			checkbox.checked = selected.has(checkbox.value.toLowerCase())
+			checkbox.disabled = hiddenField ? hiddenField.disabled : false
+		})
+		if (dropdown) dropdown.classList.toggle("disabled", hiddenField && hiddenField.disabled)
+		updateIndustryClusterDropdown()
+	}
+
+	function bindIndustryClusterDropdown() {
+		const dropdown = getIndustryClusterDropdown()
+		if (!dropdown || dropdown.dataset.bound) return
+
+		dropdown.querySelector(".anchor").addEventListener("click", function (event) {
+			const hiddenField = document.getElementById("industry_cluster")
+			if (hiddenField && hiddenField.disabled) return
+			dropdown.classList.toggle("visible")
+			event.stopPropagation()
+		})
+		getIndustryClusterCheckboxes().forEach(function (checkbox) {
+			checkbox.addEventListener("change", updateIndustryClusterDropdown)
+		})
+		document.addEventListener("click", function (event) {
+			if (!dropdown.contains(event.target)) dropdown.classList.remove("visible")
+		})
+		dropdown.dataset.bound = "true"
+	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		bindIndustryClusterDropdown()
+		updateIndustryClusterDropdown()
+	})
 
 	function disabled_ins(res, x_ins, index) {
 		var USER_ID = JSON.parse('{{user_data}}'.replaceAll('&#39;', '"'))['id']

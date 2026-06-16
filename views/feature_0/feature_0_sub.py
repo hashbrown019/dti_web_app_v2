@@ -21,6 +21,7 @@ import time, re
 
 from difflib import SequenceMatcher
 import pandas as pd
+from controllers.excel_template_validator import validate_xlrd_template
 import json
 
 app = Blueprint("feature_0_sub",__name__,template_folder='pages')
@@ -323,6 +324,17 @@ class _main:
 		file = request.files['file']
 		if file.filename == '':
 			return "No selected file"
+
+		is_valid, validation_message = validate_xlrd_template(
+			file,
+			"MIS ATTENDANCE SHEET.xlsx",
+			"Sheet1",
+			1,
+		)
+		file.seek(0)
+		if not is_valid:
+			return jsonify({"status": "error", "msg": validation_message}), 400
+
 		excel_data_df = pd.read_excel(file)
 		thisisjson = excel_data_df.to_json(orient='records')
 		thisisjson_dict = json.loads(thisisjson)

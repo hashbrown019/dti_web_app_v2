@@ -88,7 +88,7 @@
 				</div>
 				<div class="x-col l6 x-container x-padding">
 					<label class="">Types of Training:</label>
-					<div id="cbb_types_of_training" class="dropdown-check-list FORM4_FIELD" tabindex="100">
+					<div id="cbb_types_of_training_dropdown" class="dropdown-check-list" tabindex="100">
 					  <span class="anchor">Choose your option</span>
 					  <ul class="items">
 
@@ -141,15 +141,15 @@
 						<li><input type="checkbox" value="Project Implemente-Networking and Linkage-Building" /> Networking and Linkage-Building (External Relations, Business Membership Organization)</li>
 					  </ul>
 					</div>
-					<input type="hidden" name="cbb_types_of_training" id="cbb_types_of_training_val" />
+					<input type="hidden" class="FORM4_FIELD" name="cbb_types_of_training" id="cbb_types_of_training" />
 				  </div>
 				
 				  <script>
 					document.addEventListener("DOMContentLoaded", function () {
-						var checkList = document.getElementById('cbb_types_of_training');
+						var checkList = document.getElementById('cbb_types_of_training_dropdown');
 						var anchor = checkList.querySelector('.anchor');
 						var checkboxes = checkList.querySelectorAll("input[type='checkbox']");
-						var hiddenInput = document.getElementById('cbb_types_of_training_val');
+						var hiddenInput = document.getElementById('cbb_types_of_training');
 				
 						// Toggle dropdown visibility
 						anchor.addEventListener("click", function (event) {
@@ -162,7 +162,6 @@
 								checkList.classList.remove('visible');
 							}
 						});
-				
 						// Function to update dropdown text and hidden input
 						function updateDropdownText() {
 							let selected = [];
@@ -174,7 +173,6 @@
 							anchor.textContent = selected.length > 0 ? selected.join(", ") : "Choose your option";
 							hiddenInput.value = selected.join(", "); // Store values in hidden input
 						}
-				
 						// Preselect checkboxes if hidden input has values
 						function preselectCheckboxes() {
 							let storedValues = hiddenInput.value ? hiddenInput.value.split(", ") : []; // Get saved values
@@ -193,6 +191,8 @@
 				
 						// Call preselection on page load
 						preselectCheckboxes();
+						window.syncDropdownCheckList = window.syncDropdownCheckList || {};
+						window.syncDropdownCheckList.cbb_types_of_training = preselectCheckboxes;
 					});
 				</script>	
 				
@@ -277,10 +277,64 @@
 						</span> 
 						Name of DIPs:
 					</label>
-					<select class="FORM4_FIELD x-input x-border" name="cbb_name_of_dip" id="cbb_name_of_dip">
-						<option value="">Choose your option</option>
-					</select>
+					<div id="cbb_name_of_dip_dropdown" class="dropdown-check-list" tabindex="100">
+						<span class="anchor">Choose your option</span>
+						<ul class="items" id="cbb_name_of_dip_items"></ul>
+					</div>
+					<input type="hidden" class="FORM4_FIELD" name="cbb_name_of_dip" id="cbb_name_of_dip" />
 				</div>
+				<script>
+					document.addEventListener("DOMContentLoaded", function () {
+						var checkList = document.getElementById('cbb_name_of_dip_dropdown');
+						var anchor = checkList.querySelector('.anchor');
+						var hiddenInput = document.getElementById('cbb_name_of_dip');
+
+						// Toggle dropdown visibility
+						anchor.addEventListener("click", function (event) {
+							checkList.classList.toggle('visible');
+							event.stopPropagation();
+						});
+						// Close dropdown when clicking outside
+						document.addEventListener("click", function (event) {
+							if (!checkList.contains(event.target)) {
+								checkList.classList.remove('visible');
+							}
+						});
+						// Function to update dropdown text and hidden input
+						function updateDropdownText() {
+							let selected = [];
+							let checkboxes = checkList.querySelectorAll("input[type='checkbox']");
+							checkboxes.forEach(function (checkbox) {
+								if (checkbox.checked) {
+									selected.push(checkbox.value);
+								}
+							});
+							anchor.textContent = selected.length > 0 ? selected.join(", ") : "Choose your option";
+							hiddenInput.value = selected.join(", "); // Store values in hidden input
+						}
+						// Preselect checkboxes if hidden input has values
+						function preselectCheckboxes() {
+							let storedValues = hiddenInput.value ? hiddenInput.value.split(", ") : []; // Get saved values
+							let checkboxes = checkList.querySelectorAll("input[type='checkbox']");
+							checkboxes.forEach(function (checkbox) {
+								checkbox.checked = storedValues.includes(checkbox.value);
+							});
+							updateDropdownText(); // Update UI based on selection
+						}
+
+						// Event listeners for checkboxes
+						checkList.addEventListener("change", function (event) {
+							if (event.target.matches("input[type='checkbox']")) {
+								updateDropdownText();
+							}
+						});
+
+						// Call preselection on page load
+						preselectCheckboxes();
+						window.syncDropdownCheckList = window.syncDropdownCheckList || {};
+						window.syncDropdownCheckList.cbb_name_of_dip = preselectCheckboxes;
+					});
+				</script>
 				<script>
 					function populateDipNames() {
 						return fetch('/api/get_dip_names')
@@ -291,15 +345,28 @@
 								return response.json();
 							})
 							.then(data => {
-								const selectElement = document.getElementById('cbb_name_of_dip');
+								const listElement = document.getElementById('cbb_name_of_dip_items');
 								// Clear existing options to prevent duplication
-								selectElement.innerHTML = '<option value="">Choose your option</option>';
+								listElement.innerHTML = '';
 								data.forEach(item => {
-									const option = document.createElement('option');
-									option.value = item.form_1_name_dip;
-									option.textContent = item.form_1_name_dip;
-									selectElement.appendChild(option);
+									const dipName = item.form_1_name_dip;
+									if (!dipName) {
+										return;
+									}
+									const option = document.createElement('li');
+									const checkbox = document.createElement('input');
+									checkbox.type = 'checkbox';
+									checkbox.value = dipName;
+									option.appendChild(checkbox);
+									option.appendChild(document.createTextNode(' ' + dipName));
+									listElement.appendChild(option);
 								});
+								if (
+									window.syncDropdownCheckList != undefined &&
+									window.syncDropdownCheckList.cbb_name_of_dip != undefined
+								) {
+									window.syncDropdownCheckList.cbb_name_of_dip();
+								}
 							})
 							.catch(error => console.error('Error fetching DIP names:', error));
 					}
@@ -309,6 +376,15 @@
 						var table = URL_ARGS["table"];
 						load_data(record_id, table, "FORM4_FIELD");
 						get_participants_data(record_id, table, "FORM4_FIELD");
+					});
+
+					___SAM_FUNC_KAMOWN.push(function () {
+						if (!window.syncDropdownCheckList) {
+							return;
+						}
+						Object.keys(window.syncDropdownCheckList).forEach(function (fieldName) {
+							window.syncDropdownCheckList[fieldName]();
+						});
 					});
 				</script>
 			</div>
@@ -397,7 +473,7 @@
 							anchor.textContent = selected.length > 0 ? selected.join(", ") : "Choose your option";
 							hiddenInput.value = selected.join(", "); // Store values in hidden input
 						}
-				
+
 						// Preselect checkboxes if hidden input has values
 						function preselectCheckboxes() {
 							let storedValues = hiddenInput.value.split(", "); // Get saved values
@@ -408,12 +484,12 @@
 							});
 							updateDropdownText(); // Update UI based on selection
 						}
-				
+
 						// Event listeners for checkboxes
 						checkboxes.forEach(function (checkbox) {
 						checkbox.addEventListener("change", updateDropdownText);
 						});
-			
+
 						// Call preselection on page load
 						preselectCheckboxes();
 					});

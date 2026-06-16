@@ -351,6 +351,37 @@
     <script src="../static/psalm_static/dcf_static/assets/build/js/custom.js"></script>
 </body>
 <script>
+  document.addEventListener("click", function (event) {
+    const deleteLink = event.target.closest(
+      'a[href^="/delete_record/"], a[href^="/delete_form1/"], a[href^="/delete_form2/"], ' +
+      'a[href^="/delete_form3/"], a[href^="/delete_form4/"], a[href^="/delete_form5/"], ' +
+      'a[href^="/delete_form6/"], a[href^="/delete_form7/"], a[href^="/delete_form8/"], ' +
+      'a[href^="/delete_form9/"], a[href^="/delete_form10/"], a[href^="/delete_form11/"]'
+    );
+
+    if (!deleteLink) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    const deleteUrl = deleteLink.href;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This record will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#6c757d",
+      reverseButtons: true
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        window.location.href = deleteUrl;
+      }
+    });
+  }, true);
+
   // $onload(sort_table)
   // sort_table()
   // function sort_table(){

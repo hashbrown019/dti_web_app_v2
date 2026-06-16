@@ -184,8 +184,11 @@
 	</div>
 	
 	<div id="dup_modal" style="display: none;">
-	  <div style="margin-bottom: 12px;">
-		<input id="dup_search" type="text" placeholder="Search duplicate groups..." oninput="render_duplicates_page(1,this.value)">
+	  <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+		<input id="dup_search" type="text" placeholder="Search duplicate groups..." oninput="render_duplicates_page(1,this.value)" style="width:auto;flex:1 1 280px;">
+		<button class="x-btn dc-secondary-btn" onclick="export_duplicates_data()" style="flex:0 0 auto;">
+		  Export CSV <b class="fa fa-download"></b>
+		</button>
 	  </div>
 	  <div id="dup_list_container" style="overflow-y:scroll;height:60vh;"></div>
 	  <div class="dup-pagination">
@@ -278,20 +281,79 @@ function sortDuplicateData(data) {
 	
 	// --- pagination & search ---
 	function change_page(dir) { render_duplicates_page(CURRENT_PAGE+dir, CURRENT_SEARCH); }
+
+	function get_filtered_duplicate_data(searchTerm) {
+	  var searchLower = normalizeDuplicateText(searchTerm);
+	  if (!searchLower) return DUPLICATE_DATA;
+
+	  return DUPLICATE_DATA.filter(group =>
+		group.some(r =>
+		  (r.name && normalizeDuplicateText(r.name).includes(searchLower)) ||
+		  (r.linked_info && normalizeDuplicateText(r.linked_info).includes(searchLower)) ||
+		  (r.bday && normalizeDuplicateText(r.bday).includes(searchLower)) ||
+		  (r.inputed && normalizeDuplicateText(r.inputed).includes(searchLower)) ||
+		  (r.ref_code && normalizeDuplicateText(r.ref_code).includes(searchLower)) ||
+		  (excelDateToDate(r.bday) && normalizeDuplicateText(excelDateToDate(r.bday)).includes(searchLower))
+		)
+	  );
+	}
+
+	function csv_value(value) {
+	  var text = String(value == null ? "" : value);
+	  return `"${text.replace(/"/g, '""')}"`;
+	}
+
+	function export_duplicates_data() {
+	  var filteredData = get_filtered_duplicate_data(CURRENT_SEARCH);
+	  var rows = [[
+		"Group No.",
+		"Duplicate Name",
+		"Birthday",
+		"Database ID",
+		"Inputed By",
+		"Reference Code/File",
+		"Linked Info"
+	  ]];
+
+	  filteredData.forEach(function(group, groupIndex) {
+		group.forEach(function(r) {
+		  rows.push([
+			groupIndex + 1,
+			r.name || "",
+			excelDateToDate(r.bday),
+			r.db_id || "",
+			r.inputed || "",
+			r.ref_code || "",
+			r.linked_info || ""
+		  ]);
+		});
+	  });
+
+	  if (rows.length === 1) {
+		alert("No duplicate records to export.");
+		return;
+	  }
+
+	  var csv = rows.map(function(row) {
+		return row.map(csv_value).join(",");
+	  }).join("\r\n");
+	  var blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+	  var link = document.createElement("a");
+	  var dateKey = new Date().toISOString().slice(0, 10);
+	  var searchKey = normalizeDuplicateText(CURRENT_SEARCH).replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+	  link.href = URL.createObjectURL(blob);
+	  link.download = searchKey ? `duplicated_records_${searchKey}_${dateKey}.csv` : `duplicated_records_${dateKey}.csv`;
+	  document.body.appendChild(link);
+	  link.click();
+	  document.body.removeChild(link);
+	  URL.revokeObjectURL(link.href);
+	}
 	
 	function render_duplicates_page(page, searchTerm) {
   CURRENT_PAGE = Math.max(1, page);
   CURRENT_SEARCH = searchTerm || "";
 
-  var searchLower = CURRENT_SEARCH.toLowerCase();
-  var filteredData = DUPLICATE_DATA.filter(group =>
-    group.some(r =>
-      (r.name && r.name.toLowerCase().includes(searchLower)) ||
-      (r.linked_info && r.linked_info.toLowerCase().includes(searchLower)) ||
-      (r.bday && r.bday.toString().toLowerCase().includes(searchLower)) ||
-      (excelDateToDate(r.bday) && excelDateToDate(r.bday).toLowerCase().includes(searchLower))
-    )
-  );
+  var filteredData = get_filtered_duplicate_data(CURRENT_SEARCH);
 
   var totalPages = Math.ceil(filteredData.length / PAGE_SIZE) || 1;
   CURRENT_PAGE = Math.min(CURRENT_PAGE, totalPages);

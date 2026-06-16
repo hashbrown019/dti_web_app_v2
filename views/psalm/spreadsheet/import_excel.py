@@ -5,6 +5,7 @@ import Configurations as c
 import xlrd
 from werkzeug.utils import secure_filename
 import os
+from controllers.excel_template_validator import validate_xlrd_template
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
@@ -30,6 +31,16 @@ def importcsv(request):
     return redirect("/spreadsheet")
 
 def excel_upload_open(path):  
+    is_valid, validation_message = validate_xlrd_template(
+        path,
+        "VC_FORM_C.xlsx",
+        "Sheet1",
+        6,
+    )
+    if not is_valid:
+        flash(validation_message, "error")
+        return "done:Column Error"
+
     book = xlrd.open_workbook(path)
     sheet = book.sheet_by_index(0)
     data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]

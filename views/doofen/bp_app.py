@@ -11,6 +11,7 @@ from controllers.inbound import inbound as inb
 from controllers.inbound import data_cleaning as  d_c
 from werkzeug.utils import secure_filename
 from controllers.engine_excel_to_sql import form_excel_a_handler
+from controllers.excel_template_validator import validate_xlrd_template
 import os, random, json
 import pandas as pd
 import openpyxl
@@ -384,6 +385,20 @@ def excel_popu_individual_b(_NAME_):
         sheet =  "VC FORM B" 
         print("\n= Scanning [{}]".format(_NAME_))
         try:
+            is_valid, validation_message = validate_xlrd_template(
+                file_name,
+                "VC_FORM_B.xls",
+                sheet,
+                6,
+            )
+            if not is_valid:
+                move_to_failed_files(_NAME_)
+                return {
+                    "status": "failed",
+                    "msg": validation_message,
+                    "success_files": FROM_EXCEL_RPOFILES,
+                    "data": None,
+                }
             rows = readRows(file_name, sheet)
             resp = push_mysql_b(rows, _NAME_)
             move_to_done_files(_NAME_)

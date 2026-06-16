@@ -1,6 +1,79 @@
 
 <div class="card" style="width:85%;  margin: 0 auto; float: none; margin-top: 30px; margin-bottom: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
     <style>
+        .form-c-dropdown-check-list {
+            display: block;
+            position: relative;
+            width: 100%;
+            padding: 0;
+            border: none;
+        }
+
+        .form-c-dropdown-check-list .anchor {
+            position: relative;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            min-height: 38px;
+            padding: 8px 36px 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            background-color: white;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .form-c-dropdown-check-list .anchor::after {
+            position: absolute;
+            content: "";
+            right: 12px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid #333;
+            border-bottom: 2px solid #333;
+            transform: translateY(-70%) rotate(45deg);
+        }
+
+        .form-c-dropdown-check-list .items {
+            display: none;
+            position: absolute;
+            z-index: 1000;
+            width: 100%;
+            max-height: 200px;
+            margin: 0;
+            padding: 5px;
+            overflow-y: auto;
+            border: 1px solid #ced4da;
+            background: white;
+        }
+
+        .form-c-dropdown-check-list .items li {
+            list-style: none;
+            padding: 5px;
+        }
+
+        .form-c-dropdown-check-list .items label {
+            display: block;
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .form-c-dropdown-check-list .items input {
+            margin-right: 8px;
+        }
+
+        .form-c-dropdown-check-list.visible .items {
+            display: block;
+        }
+
+        .form-c-dropdown-check-list.disabled .anchor {
+            cursor: not-allowed;
+            background-color: #e9ecef;
+            color: #6c757d;
+        }
 
         th,td{
         border-color: white !important;
@@ -92,13 +165,16 @@
                         <strong>
                             <label>Industry Cluster:</label>  
                         </strong>
-                        <select class="form-control form_data_c" name="industry_cluster" id="industry_cluster">
-                            <option value="" selected>Please select</option>
-                            <option value="Cacao">Cacao</option>
-                            <option value="Coconut">Coconut</option>
-                            <option value="Coffee">Coffee</option>
-                            <option value="PFN">PFN</option>
-                        </select> 
+                        <div id="industry_cluster_dropdown" class="form-c-dropdown-check-list" tabindex="100">
+                            <span class="anchor">Choose your option</span>
+                            <ul class="items" id="industry_cluster_items">
+                                <li><label><input type="checkbox" value="Cacao"> Cacao</label></li>
+                                <li><label><input type="checkbox" value="Coconut"> Coconut</label></li>
+                                <li><label><input type="checkbox" value="Coffee"> Coffee</label></li>
+                                <li><label><input type="checkbox" value="PFN"> PFN</label></li>
+                            </ul>
+                        </div>
+                        <input class="form_data_c" name="industry_cluster" id="industry_cluster" type="hidden">
                         <input type="text" class="form-control hidden-textboxx form_data_c" name="pfn_specify" id="pfn_specify" placeholder="Please specify" style="display: none;">
                     </div>
 

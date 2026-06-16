@@ -107,6 +107,16 @@
     }
     window.addEventListener('load', toggleBacktotop)
     onscroll(document, toggleBacktotop)
+    backtotop.addEventListener('click', function(e) {
+      e.preventDefault()
+
+      const scrollWindow = window.parent !== window ? window.parent : window
+      scrollWindow.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      })
+    })
   }
 
   /**

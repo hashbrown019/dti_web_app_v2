@@ -5,10 +5,61 @@ import Configurations as c
 import xlrd
 from werkzeug.utils import secure_filename
 import os
+from controllers.excel_template_validator import validate_xlrd_template_sheets
 
 db = mysql(*c.DB_CRED)
 db.err_page = 0
 def is_on_session(): return ('USER_DATA' in session)
+
+EXCEL_TEMPLATE_SPECS = {
+	1: ("DCF_Form_1.xlsx", [("form1", 5)]),
+	2: ("DCF_Form_2.xlsx", [("form2", 5)]),
+	3: ("DCF_Form_3.xlsx", [("form3", 5)]),
+	4: ("DCF_Form_4.xlsx", [("form4", 5)]),
+	5: ("DCF_Form_5.xlsx", [("form5", 6)]),
+	6: ("DCF_Form_6.xlsx", [("form6", 5)]),
+	7: ("DCF_Form_7.xlsx", [("form7", 5)]),
+	8: ("DCF_Form_8.xlsx", [("form8", 4)]),
+	9: ("DCF_Form_9.xlsx", [("form9", 5)]),
+	10: ("DCF_Form_10.xlsx", [("form10", 6)]),
+	11: (
+		"DCF_Form_11.xlsx",
+		[("Farmer Profile", 3), ("FOs-MSMEs Profile", 3)],
+	),
+}
+
+
+def open_validated_excel_workbook(path, form_number):
+	template_filename, sheet_specs = EXCEL_TEMPLATE_SPECS[form_number]
+	is_valid, validation_message = validate_xlrd_template_sheets(
+		path,
+		template_filename,
+		sheet_specs,
+	)
+	if not is_valid:
+		flash(validation_message, "error")
+		return None
+	return xlrd.open_workbook(path)
+
+
+def normalize_excel_cell(cell, datemode):
+	if cell.ctype == xlrd.XL_CELL_DATE:
+		return xlrd.xldate_as_datetime(cell.value, datemode).strftime("%Y-%m-%d")
+	return cell.value
+
+def normalize_excel_date(value, datemode):
+	if isinstance(value, (int, float)) and not isinstance(value, bool):
+		try:
+			return xlrd.xldate_as_datetime(value, datemode).strftime("%Y-%m-%d")
+		except (OverflowError, TypeError, ValueError):
+			return value
+	return value
+
+def read_excel_sheet(sheet, datemode):
+	return [
+		[normalize_excel_cell(sheet.cell(r, c), datemode) for c in range(sheet.ncols)]
+		for r in range(sheet.nrows)
+	]
 
 def importcsvform1(request):
 	from datetime import date, datetime
@@ -30,9 +81,11 @@ def importcsvform1(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open(path):  
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 1)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	data = read_excel_sheet(sheet, book.datemode)
 	header = data[4]
 	if(sheet.name !='form1'):
 		flash(f"Invalid file template!", "error")
@@ -48,11 +101,11 @@ def excel_upload_open(path):
 		form_1_commodity = row[6]
 		form_1_for_development = row[7]
 		form_1_finalized_approved = row[8]
-		form_1_date_of_parallel_review = row[9]
-		form_1_date_of_submission = row[10]
-		form_1_date_of_rtwg = row[11]
-		form_1_date_of_npco_cursory = row[12]
-		form_1_date_of_ifad_no_inssuance = row[13]
+		form_1_date_of_parallel_review = normalize_excel_date(row[9], book.datemode)
+		form_1_date_of_submission = normalize_excel_date(row[10], book.datemode)
+		form_1_date_of_rtwg = normalize_excel_date(row[11], book.datemode)
+		form_1_date_of_npco_cursory = normalize_excel_date(row[12], book.datemode)
+		form_1_date_of_ifad_no_inssuance = normalize_excel_date(row[13], book.datemode)
 		total_large_enterprise = row[14]
 		total_medium_enterprise = row[15]
 		total_small_enterprise = row[16]
@@ -147,9 +200,11 @@ def importcsvform2(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open2(path):  
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 2)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	data = read_excel_sheet(sheet, book.datemode)
 	header = data[3]
 	
 	print(sheet.name)
@@ -183,13 +238,13 @@ def excel_upload_open2(path):
 		form_2_sc = row[22]
 		form_2_address_of_fo_members = row[23]
 		form_2_hectares_covered = row[24]
-		form_2_cpa_date_signing = row[25]
-		form_2_cpa_date_expiration = row[26]
+		form_2_cpa_date_signing = normalize_excel_date(row[25], book.datemode)
+		form_2_cpa_date_expiration = normalize_excel_date(row[26], book.datemode)
 		form_2_days_remaining = row[27]
-		form_2_date_renewed = row[28]
+		form_2_date_renewed = normalize_excel_date(row[28], book.datemode)
 		form_2_notable_cpa_incentives = row[29]
 		form_2_activity_agreements = row[30]
-		form_2_date_conducted = row[31]
+		form_2_date_conducted = normalize_excel_date(row[31], book.datemode)
 		form_2_remarks_status = row[32]
 		filename = UPLOAD_NAME
 
@@ -227,9 +282,11 @@ def importcsvform3(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open3(path):  
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 3)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	data = read_excel_sheet(sheet, book.datemode)
 	header = data[4]
 	
 	print(sheet.name)
@@ -256,7 +313,7 @@ def excel_upload_open3(path):
 		form_3_education = row[13]
 		form_3_expertise = row[14]
 		form_3_prior_rapid_engagements = row[15]
-		form_3_date_registered = row[16]
+		form_3_date_registered = normalize_excel_date(row[16], book.datemode)
 		form_3_rapid_implementing_unit = row[17]
 		form_3_nature_engagements = row[18]
 		form_3_suppliers_evaluation = row[19]
@@ -302,9 +359,11 @@ def importcsvform4(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open4(path):  
-    book = xlrd.open_workbook(path)
+    book = open_validated_excel_workbook(path, 4)
+    if book is None:
+        return "done:Column Error"
     sheet = book.sheet_by_index(0)
-    data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+    data = read_excel_sheet(sheet, book.datemode)
     header = data[4]
     
     if sheet.name != 'form4':
@@ -327,8 +386,8 @@ def excel_upload_open4(path):
         cbb_topic_of_training = row[3]
         cbb_dip_approved_alignment = row[4]
         cbb_name_of_dip = row[5]
-        cbb_date_start = row[6]
-        cbb_date_end = row[7]
+        cbb_date_start = normalize_excel_date(row[6], book.datemode)
+        cbb_date_end = normalize_excel_date(row[7], book.datemode)
         cbb_commodity = row[8]
         cbb_venue = row[9]
         cbb_name_of_resource_person = row[10]
@@ -395,9 +454,11 @@ def importcsvform5(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open5(path):
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 5)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	data = read_excel_sheet(sheet, book.datemode)
 	header = data[4]
 	
 	print(sheet.name)
@@ -412,45 +473,45 @@ def excel_upload_open5(path):
 		mgit_type_of_beneficiary = row[3]
 		mgit_msme_recipient = row[4]
 		mgit_status_of_mga = row[5]
-		mgit_date_signed = row[6]
+		mgit_date_signed = normalize_excel_date(row[6], book.datemode)
 		mgit_total_amount = row[7]
 		mgit_type_of_investment = row[8]
 		mgit_total_num_target_of_fo_expansion = row[9]
 		mgit_total_num_target_members_expansion = row[10]
 		mgit_total_amount_mgrr = row[11]
 		mgit_status_mgrr = row[12]
-		mgit_date = row[13]
+		mgit_date = normalize_excel_date(row[13], book.datemode)
 		mgit_amount_release = row[14]
 		mgit_remaining_balance = row[15]
 		mgit_target_total_amount_of_has = row[16]
-		mgit_inclusive_timeline_implementation_start = row[17]
-		mgit_inclusive_timeline_implementation_end = row[18]
+		mgit_inclusive_timeline_implementation_start = normalize_excel_date(row[17], book.datemode)
+		mgit_inclusive_timeline_implementation_end = normalize_excel_date(row[18], book.datemode)
 		mgit_time_elapse = row[19]
 		mgit_total_num_target_of_fo_rehab = row[20]
 		mgit_total_num_target_members_rehab = row[21]
 		mgit_total_amount_of_mooe = row[22]
 		mgit_total_amount_of_release = row[23]
-		mgit_date_released = row[24]
+		mgit_date_released = normalize_excel_date(row[24], book.datemode)
 		mgit_remaining_balance_rehab = row[25]
 		mgit_total_amount_of_members_received_rehab = row[26]
 		mgit_target_total_amount_of_has_for_rehabilitation = row[27]
-		mgit_inclusive_timeline_implementation_start1 = row[28]
-		mgit_inclusive_timeline_implementation_end1 = row[29]
+		mgit_inclusive_timeline_implementation_start1 = normalize_excel_date(row[28], book.datemode)
+		mgit_inclusive_timeline_implementation_end1 = normalize_excel_date(row[29], book.datemode)
 		mgit_time_elapse1 = row[30]
 		mgit_total_amount_of_mga_signed = row[31]
 		mgit_type_of_investment_prod = row[32]
 		mgit_productive_investment_requested = row[33]
 		mgit_total_amount_in_mgrr = row[34]
 		mgit_status_of_mgrr_prodInv = row[35]
-		mgit_date_productive_investment = row[36]
+		mgit_date_productive_investment = normalize_excel_date(row[36], book.datemode)
 		mgit_mgrr_amount_released_php = row[37]
 		mgit_total_actual_counterpart = row[38]
 		mgit_source_of_funds = row[39]
 		mgit_name_of_source = row[40]
 		mgit_amount_released_in_php = row[41]
 		mgit_remaining_balance_prod = row[42]
-		mgit_timeline_start_prod = row[43]
-		mgit_timeline_end_prod = row[44]
+		mgit_timeline_start_prod = normalize_excel_date(row[43], book.datemode)
+		mgit_timeline_end_prod = normalize_excel_date(row[44], book.datemode)
 		mgit_time_elapse_prod = row[45]
 		filename = UPLOAD_NAME
 
@@ -493,9 +554,11 @@ def importcsvform6(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open6(path):  
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 6)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	data = read_excel_sheet(sheet, book.datemode)
 	header = data[4]
 	
 	print(sheet.name)
@@ -508,8 +571,8 @@ def excel_upload_open6(path):
 		form_6_type_of_assisstance = row [1]
 		form_6_type_of_activity = row [2]
 		form_6_dip_alignment = row [3]
-		form_6_activity_duration_start = row [4]
-		form_6_activity_duration_end = row [5]
+		form_6_activity_duration_start = normalize_excel_date(row[4], book.datemode)
+		form_6_activity_duration_end = normalize_excel_date(row[5], book.datemode)
 		form_6_venue = row [6]
 		form_6_resource_person = row [7]
 		form_6_rapid_actual_budget = row [8]
@@ -521,15 +584,15 @@ def excel_upload_open6(path):
 		form_6_sex = row [14]
 		form_6_sector = row [15]
 		form_6_product_developed = row [16]
-		form_6_date_launched_to_market = row [17]
+		form_6_date_launched_to_market = normalize_excel_date(row[17], book.datemode)
 		form_6_improved_product = row [18]
 		form_6_type_of_product_improvement = row [19]
 		form_6_name_of_product_developed = row [20]
 		form_6_ = row [21]
 		form_6_certification = row [22]
 		form_6_certification2 = row [23]
-		form_6_date_issuance = row [24]
-		form_6_expiration_date = row [25]
+		form_6_date_issuance = normalize_excel_date(row[24], book.datemode)
+		form_6_expiration_date = normalize_excel_date(row[25], book.datemode)
 		form_6_product_certified = row [26]
 		form_6_rating = row [27]
 		form_6_comment_ares_of_improvement = row [28]                                                                                                     
@@ -568,9 +631,11 @@ def importcsvform7(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open7(path):  
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 7)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	data = read_excel_sheet(sheet, book.datemode)
 	header = data[4]
 	
 	print(sheet.name)
@@ -583,8 +648,8 @@ def excel_upload_open7(path):
 		form_7_title_trade_promotion = row [1]
 		form_7_type_of_trade_promotion = row [2]
 		form_7_dip_indicate = row [3]
-		form_7_start_date = row [4]
-		form_7_end_date = row [5]
+		form_7_start_date = normalize_excel_date(row[4], book.datemode)
+		form_7_end_date = normalize_excel_date(row[5], book.datemode)
 		form_7_name_of_po = row [6]
 		form_7_amount = row [7]
 		form_7_venue = row [8]
@@ -634,10 +699,11 @@ def importcsvform8(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open8(path):  
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 8)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
-	header = data[4]
+	data = read_excel_sheet(sheet, book.datemode)
 	
 	print(sheet.name)
 	if(sheet.name !='form8'):
@@ -660,17 +726,17 @@ def excel_upload_open8(path):
 		form_8_profile_commodity = row[7]
 		form_8_profile_appvd_budget_cost = row[8]
 		form_8_profile_relative_weight = row[9]
-		form_8_procurement_itb_posting = row [10]
-		form_8_procurement_openingBids = row [11]
-		form_8_procurement_NOAdate = row [12]
-		form_8_procurement_NTPdate = row [13]
+		form_8_procurement_itb_posting = normalize_excel_date(row[10], book.datemode)
+		form_8_procurement_openingBids = normalize_excel_date(row[11], book.datemode)
+		form_8_procurement_NOAdate = normalize_excel_date(row[12], book.datemode)
+		form_8_procurement_NTPdate = normalize_excel_date(row[13], book.datemode)
 		form_8_procurement_contractorName = row [14]
 		form_8_implementation_ifadLP = row [15]
 		form_8_implementation_LGUcounterpart = row [16]
 		form_8_implementation_totalOrigCC = row [17]
 		form_8_implementation_totalRevisedCC = row [18]
 		form_8_implementation_revisionReason = row [19]
-		form_8_implementation_dateStarted = row [20]
+		form_8_implementation_dateStarted = normalize_excel_date(row[20], book.datemode)
 		form_8_implementation_original = row [21]
 		form_8_implementation_revised = row [22]
 		form_8_implementation_extensionReason = row [23]
@@ -682,19 +748,19 @@ def excel_upload_open8(path):
 		form_8_implementation_target = row [29]
 		form_8_implementation_revised_target = row [30]
 		form_8_implementation_actual = row [31]
-		form_8_implementation_turnoverDate = row [32]
-		form_8_implementation_acceptanceDate = row [33]
+		form_8_implementation_turnoverDate = normalize_excel_date(row[32], book.datemode)
+		form_8_implementation_acceptanceDate = normalize_excel_date(row[33], book.datemode)
 		form_8_remarks = row [34]
 		form_8_financial_fiananceAccomplishment = row [35]
 		form_8_financial_subAllotment = row [36]
-		form_8_financial_issuedDate = row [37]
+		form_8_financial_issuedDate = normalize_excel_date(row[37], book.datemode)
 		form_8_financial_amount = row [38]
 		form_8_financial_difference = row [39]
-		form_8_financial_issuedDatefirstTranche = row [40]
+		form_8_financial_issuedDatefirstTranche = normalize_excel_date(row[40], book.datemode)
 		form_8_financial_amountfirstTranche = row [41]
-		form_8_financial_issuedDatesecondTranche = row [42]
+		form_8_financial_issuedDatesecondTranche = normalize_excel_date(row[42], book.datemode)
 		form_8_financial_amountsecondTranche = row [43]
-		form_8_financial_issuedDatethirdTranche = row [44]
+		form_8_financial_issuedDatethirdTranche = normalize_excel_date(row[44], book.datemode)
 		form_8_financial_amountthirdTranche = row [45]
 		form_8_financial_balance = row [46]
 		filename = UPLOAD_NAME
@@ -731,9 +797,11 @@ def importcsvform9(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open9(path):  
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 9)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	data = read_excel_sheet(sheet, book.datemode)
 	header = data[4]
 	
 	print(sheet.name)
@@ -745,8 +813,8 @@ def excel_upload_open9(path):
 		form_9_implementing_unit = row[0]
 		form_9_title_trade_promotion = row[1]
 		form_9_type_of_training = row[2]
-		form_9_start_date = row[3]
-		form_9_end_date = row[4]
+		form_9_start_date = normalize_excel_date(row[3], book.datemode)
+		form_9_end_date = normalize_excel_date(row[4], book.datemode)
 		form_9_venue = row[5]
 		form_9_rapid_actual_budget = row[6]
 		form_9_name_of_resource_person = row[7]
@@ -799,9 +867,11 @@ def importcsvform10(request):
 	return redirect("/dcfspreadsheet")
 
 def excel_upload_open10(path):  
-	book = xlrd.open_workbook(path)
+	book = open_validated_excel_workbook(path, 10)
+	if book is None:
+		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+	data = read_excel_sheet(sheet, book.datemode)
 	header = data[4]
 	
 	print(sheet.name)
@@ -814,7 +884,7 @@ def excel_upload_open10(path):
 		form_10_name_of_nc = row [1]
 		form_10_title_of_rapid_activity = row [2]
 		form_10_type_of_assistance = row [3]
-		form_10_date = row [4]
+		form_10_date = normalize_excel_date(row[4], book.datemode)
 		form_10_type_of_beneficiary = row [5]
 		form_10_sex_male = row [6]
 		form_10_sex_female = row [7]
@@ -857,7 +927,9 @@ def importcsvform11(request):
 
 
 def excel_upload_open11(path):
-    book = xlrd.open_workbook(path)
+    book = open_validated_excel_workbook(path, 11)
+    if book is None:
+        return "done:Column Error"
 
     # Normalize sheet names (case-insensitive, strip spaces)
     sheet_names = [s.strip().lower() for s in book.sheet_names()]
@@ -878,7 +950,7 @@ def excel_upload_open11(path):
 
     # ---------------- Farmer Profile ----------------
     sheet_farmer = book.sheet_by_name([s for s in book.sheet_names() if s.strip().lower() == "farmer profile"][0])
-    data_farmer = [[sheet_farmer.cell_value(r, c) for c in range(sheet_farmer.ncols)] for r in range(sheet_farmer.nrows)]
+    data_farmer = read_excel_sheet(sheet_farmer, book.datemode)
 
     header_farmer = data_farmer[2]  # headers are on row 3
     for row in data_farmer[3:]:
@@ -956,7 +1028,7 @@ def excel_upload_open11(path):
 
     # ---------------- FO/MSMEs Profile ----------------
     sheet_fo = book.sheet_by_name([s for s in book.sheet_names() if s.strip().lower() == "fos-msmes profile"][0])
-    data_fo = [[sheet_fo.cell_value(r, c) for c in range(sheet_fo.ncols)] for r in range(sheet_fo.nrows)]
+    data_fo = read_excel_sheet(sheet_fo, book.datemode)
 
     header_fo = data_fo[2]
     for row in data_fo[3:]:
@@ -978,6 +1050,7 @@ def excel_upload_open11(path):
          form_11_fo_credit_guarantee, form_11_fo_credit_guarantee_amount, form_11_fo_inkind_fsp, form_11_fo_inkind_grant,
          form_11_fo_cashgrant_fsp, form_11_fo_cashgrant_amount, form_11_fo_digital_fsp, form_11_fo_digital_yes,
          form_11_fo_digital_amount, form_11_fo_rapid_mg, form_11_fo_rapid_amount) = row
+        form_11_fo_equity_date = normalize_excel_date(form_11_fo_equity_date, book.datemode)
 
         querycsv = f"""
         INSERT INTO dcf_access_financing (

@@ -50,6 +50,10 @@ class _main:
 	def core_home_page(module):
 		if(session["USER_DATA"][0]['security_group']==0): return redirect("/warning?type=user-no-role");
 		module = f'chunks{"/"+"-".join(module.split("-")[1:])}/{module}.html'
+		content_only = (
+			request.args.get("__content_only") == "1"
+			or request.headers.get("Sec-Fetch-Dest") == "iframe"
+		)
 
 		_title = module.split("/")[-1].replace("core-","").replace(".html","").replace("-"," ").upper()
 		if 'core-page-embed' in module:
@@ -59,28 +63,28 @@ class _main:
 		is_dashboard = "core-main" in module
 
 		return render_template(
-			f"chunks/core.html",
+			"chunks/core-content.html" if content_only else "chunks/core.html",
 			module=module,
 			__TITLE__=_title,
 			URL_ARGS=request.args,
 			USER_DATA = session["USER_DATA"][0],
-			staff_list=dash_api.get_area_staff(),
-			databases=dash_api.get_databases() if "core-system-control" in module else None,
-			dashboard_data=displayform2() if is_dashboard else None,
-			fmi_data=fmi_dashboard_data() if is_dashboard else None,
-			fmi_data_chart=fmi_dashboard_data_chart() if is_dashboard else None,
-			security_group_ls=dash_api.get_security_group() if "core-system-control" in module else None ,
+			staff_list=dash_api.get_area_staff() if content_only else None,
+			databases=dash_api.get_databases() if content_only and "core-system-control" in module else None,
+			dashboard_data=displayform2() if content_only and is_dashboard else None,
+			fmi_data=fmi_dashboard_data() if content_only and is_dashboard else None,
+			fmi_data_chart=fmi_dashboard_data_chart() if content_only and is_dashboard else None,
+			security_group_ls=dash_api.get_security_group() if content_only and "core-system-control" in module else None ,
 			# =====FOR PERSONAL FORMS========
-			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-personal-forms" in module else None ,
-			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if "core-tools-trackers-specific" in module else None ,
+			personal_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if content_only and "core-personal-forms" in module else None ,
+			specific_forms=dash_api.get_personal_forms(session["USER_DATA"][0]['id']) if content_only and "core-tools-trackers-specific" in module else None ,
 			# =====FOR FMI========
-			fmi_list=dash_api.fmi_list(session["USER_DATA"][0]['id']) if "core-tracker-fmi" in module else None ,
+			fmi_list=dash_api.fmi_list(session["USER_DATA"][0]['id']) if content_only and "core-tracker-fmi" in module else None ,
 			# =====FOR FILE-MANAGER========
-			folder_list=dash_api.folder_list(session["USER_DATA"][0]['id']) if "core-file-manager" in module else None ,
-			file_list = dash_api.file_list(session["USER_DATA"][0]['id']) if "core-file-manager" in module else None ,
+			folder_list=dash_api.folder_list(session["USER_DATA"][0]['id']) if content_only and "core-file-manager" in module else None ,
+			file_list = dash_api.file_list(session["USER_DATA"][0]['id']) if content_only and "core-file-manager" in module else None ,
 			# =====FOR PFA========
-			pfa_profiles=_main.profiling_form_a('get-profiles') if 'table' in request.args else None,
-			pfa_profile_info=_main.profiling_form_a('get-profiles-info') if 'fields' in request.args else None
+			pfa_profiles=_main.profiling_form_a('get-profiles') if content_only and 'table' in request.args else None,
+			pfa_profile_info=_main.profiling_form_a('get-profiles-info') if content_only and 'fields' in request.args else None
 			
 		)
 
