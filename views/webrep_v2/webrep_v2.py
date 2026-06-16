@@ -1276,11 +1276,11 @@ class _main:
             subscribers = db.select("SELECT * FROM webrep_subscribers ORDER BY email ASC")
             
             # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
-            newsletters = db.select("SELECT webrep_newsletters.*,DATE_FORMAT(webrep_newsletters.createdDate, '%M %d, %Y %h:%i %p') AS formatted_createdDate,DATE_FORMAT(webrep_newsletters.publishedDate, '%M %d, %Y %h:%i %p') AS formatted_publishedDate,users.name AS created_by FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id WHERE webrep_newsletters.isDeleted=0 {} ORDER BY id DESC ".format(''))
+            newsletters = db.select("SELECT webrep_newsletters.*,DATE_FORMAT(webrep_newsletters.createdDate, '%M %d, %Y %h:%i %p') AS formatted_createdDate,DATE_FORMAT(webrep_newsletters.publishedDate, '%M %d, %Y %h:%i %p') AS formatted_publishedDate,users.name AS created_by FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.createdBy=users.id WHERE webrep_newsletters.isDeleted=0 {} ORDER BY id DESC ".format(''))
             
-            total = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id  WHERE webrep_newsletters.isDeleted=0 {}".format(''))[0]['total']
-            drafted = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='draft' {}".format(''))[0]['total']
-            published = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.id=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='published' {}".format(''))[0]['total']
+            total = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.createdBy=users.id  WHERE webrep_newsletters.isDeleted=0 {}".format(''))[0]['total']
+            drafted = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.createdBy=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='draft' {}".format(''))[0]['total']
+            published = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.createdBy=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='published' {}".format(''))[0]['total']
             total_subscribers = db.select("SELECT COUNT(*) AS total FROM webrep_subscribers")[0]['total']
             # for_approval = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.USER_ID=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='for_approval' {}".format(rcu_filter))[0]['total']
             # for_revision = db.select("SELECT COUNT(*) AS total FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.USER_ID=users.id WHERE webrep_newsletters.isDeleted=0 AND webrep_newsletters.status='for_revision' {}".format(rcu_filter))[0]['total']
