@@ -1295,7 +1295,7 @@ class _main:
                 # return "No User data! Please login first.", 400
                 return redirect("/login?next=/webrep_v2/newsletters/create")
             
-            subscribers = db.select("SELECT * FROM webrep_subscribers ORDER BY email ASC")
+            subscribers = db.select("SELECT * FROM webrep_subscribers WHERE isActive=1 AND isDelete=0 ORDER BY email ASC")
             
             # articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND removed=0 {} ORDER BY id DESC ".format(str_query))
             newsletters = db.select("SELECT webrep_newsletters.*,DATE_FORMAT(webrep_newsletters.createdDate, '%M %d, %Y %h:%i %p') AS formatted_createdDate,DATE_FORMAT(webrep_newsletters.publishedDate, '%M %d, %Y %h:%i %p') AS formatted_publishedDate,users.name AS created_by FROM webrep_newsletters LEFT JOIN users ON webrep_newsletters.createdBy=users.id WHERE webrep_newsletters.isDeleted=0 {} ORDER BY id DESC ".format(''))
