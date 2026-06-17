@@ -1,0 +1,31 @@
+{% extends 'templates/main.html' %}
+
+{% block content %}
+<section class="unsubscribeSection" style="margin-top: 150px; margin-bottom: 150px;">
+    <div class="container pt-10 pb-10 text-center">
+        <h1><i class="fa fa-bell-slash text-wp-secondary"></i> Unsubscribe</h1>
+        <br>
+        <p class="text-muted">We're sorry to see you go! If you wish to unsubscribe from our newsletter,<br>please confirm your email address below.</p>
+        <br>
+        <form method="POST" id="unsubscribe_form" action="/webrep_v2/unsubscribe/confirm" class="w-50 mx-auto">
+            <div class="input-group mb-3">
+                <input type="email" class="form-control" id="subcriber_email" name="subcriber_email" placeholder="Enter your email address" aria-label="Recipient's email" aria-describedby="button-unsubscribe" required>
+                <button class="btn wr_secondary_btn g-recaptcha" 
+                    data-sitekey="{{ g_site_key }}" 
+                    data-callback='onUnsubscribeSubmit' 
+                    data-action='submit'><i class="fa fa-bell-slash"></i> UNSUBSCRIBE</button>
+            </div>
+        </form> 
+    </div>
+</section>
+{% endblock %}
+
+{% block customScript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        setTimeout(function(){
+            $('.mis_loading').fadeOut('slow');
+        }, 1500);
+    }); 
+</script>
+{% endblock %}

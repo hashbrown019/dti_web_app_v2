@@ -503,9 +503,31 @@ class _main:
     
     @app.route("/webrep_v2/unsubscribe", methods=["POST","GET"])
     def unsubscribe():
-        # Implementation for unsubscribe
-        pass
+        return render_template(
+            "home/unsubscribe.html"
+        )
 
+    @app.route("/webrep_v2/unsubscribe/confirm", methods=["POST","GET"])
+    def confirm_unsubscribe():
+        email = request.form.get("subscriber_email", "").strip()
+        if email == "":
+            session['show_sweetalert'] = {"title": "Error", "text": "Email is required!", "icon": "danger"}
+            return redirect("/webrep_v2/unsubscribe")
+
+        existing = db.select("SELECT * FROM webrep_subscribers WHERE email=%s", (email,))
+        if not existing:
+            session['show_sweetalert'] = {"title": "Warning", "text": "Email is not found in our subscriber list!", "icon": "warning"}
+            return redirect("/webrep_v2/unsubscribe")
+
+        result = db.do("UPDATE webrep_subscribers SET isActive=0, unsubscribe_at=NOW() WHERE email=%s", (email,))
+        if result.get('response') == 'error':
+            session['show_sweetalert'] = {"title": "Error", "text": "Failed to unsubscribe, Please try again later.", "icon": "danger"}
+            return redirect("/webrep_v2/unsubscribe")
+
+        session['show_sweetalert'] = {"title": "Success", "text": "Successfully unsubscribed!", "icon": "success"}
+        return redirect("/webrep_v2/unsubscribe")
+
+    
     @app.route("/webrep_v2/subscribe", methods=["POST","GET"])
     def insertSubscriber():
         
@@ -1845,7 +1867,7 @@ class _main:
                     <div style="width: 500px; margin: 0 auto; background-color: #F6F6F6; padding: 20px; border-radius: 5px;">
                         {content}
                     </div>
-                    <div style="width: 500px; margin: 15px auto; text-align:center;  margin-top: 30px;">
+                    <div style="width: 650px; margin: 15px auto; text-align:center;  margin-top: 30px;">
                         <h2 style="margin-bottom:30px;"><b>Connect with us online!</b></h2>
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom:20px; width:300px;">
                         <tr>
@@ -1889,8 +1911,12 @@ class _main:
                         </tr>
                         </table>
                         <br>
-                        <p style="font-weight: bold;">Don't want to receive these emails? <a href="/webrep_v2/unsubscribe" style="color:#000;" target="_blank">Unsubscribe</a></p>
+                        <p style="font-weight: bold;">Don't want to receive these emails? <a href="https://dtirapid.ph/webrep_v2/unsubscribe" style="color:#000;" target="_blank">Unsubscribe</a></p>
                         <p style="color: #6f6f6f; font-size: 12px;">National Project Coordination Office | 2/F Mintrade Bldg., Monteverde St. cor. Sales St., Davao City 8000</p>
+                        <p style="color: #6f6f6f; font-size: 12px;">This is an automated email newsletter service from the RAPID Growth Project to keep you updated on its activities.<br>
+                            For inquiries and concerns, you may contact us through the following official channels:<br>
+                            Phone: <span style="color: #024450; margin-right: 40px;">(082) 224-0511, local 207</span>      Email: <span style="color: #024450;">rapid.npco@dti.gov.ph</span>
+                        </p>
                     </div>
                 </div>
             </body>
