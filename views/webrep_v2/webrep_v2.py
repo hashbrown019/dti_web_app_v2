@@ -1742,7 +1742,7 @@ class _main:
                 data["publishedDate"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 data["publishedBy"] = session["USER_DATA"][0]['id']
 
-                recipients = db.select("SELECT email FROM webrep_subscribers")
+                recipients = db.select("SELECT email FROM webrep_subscribers WHERE isActive=1 AND isDeleted=0")
                 recipient_emails = [recipient['email'] for recipient in recipients]
                 
                 data['recipients'] = ",".join(recipient_emails)
@@ -1770,7 +1770,7 @@ class _main:
                 data["publishedDate"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 data["publishedBy"] = session["USER_DATA"][0]['id']
                 
-                recipients = db.select("SELECT email FROM webrep_subscribers")
+                recipients = db.select("SELECT email FROM webrep_subscribers WHERE isActive=1 AND isDeleted=0")
                 recipient_emails = [recipient['email'] for recipient in recipients]
                 
                 data['recipients'] = ",".join(recipient_emails)
