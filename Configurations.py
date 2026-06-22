@@ -45,11 +45,13 @@ LOCAL_USER = "root";
 LOCAL_PASSWORD = "";
 LOCAL_DATABASE = "mis_2023";
 
-SERVER_PORT= ( os.getenv("SERVER_PORT") if os.getenv("SERVER_PORT") else "3306").strip();
-SERVER_HOST = ( os.getenv("SERVER_HOST") if os.getenv("SERVER_HOST") else "").strip();
-SERVER_USER = ( os.getenv("SERVER_USER") if os.getenv("SERVER_USER") else "").strip();
-SERVER_PASSWORD = ( os.getenv("SERVER_PASSWORD") if os.getenv("SERVER_PASSWORD") else "").strip();
-SERVER_DATABASE = ( os.getenv("SERVER_DATABASE") if os.getenv("SERVER_DATABASE") else "").strip();
+SERVER_PORT=3306;
+# SERVER_HOST = "database-1.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com"; # OLD ENDPOINTT
+SERVER_HOST = "dti-rapid-database.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
+SERVER_USER = "admin";
+SERVER_PASSWORD = "NRGlBUhehOvi0Yt4fDE5";
+SERVER_DATABASE = "mis_2023";
+# SERVER_PASSWORD = "password123"; # OLD PASSWORD
 
 
 MOCK_DATABASE_TEST = "mis_2023_test";
