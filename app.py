@@ -1,7 +1,3 @@
-import os
-from dotenv import load_dotenv, find_dotenv
-load_dotenv(dotenv_path="/var/www/html/dti_web_app_v2/.env")
-
 import Configurations as c
 from modules.Connections import mysql
 

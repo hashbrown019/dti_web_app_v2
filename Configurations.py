@@ -49,11 +49,12 @@ LOCAL_USER = "root";
 LOCAL_PASSWORD = "";
 LOCAL_DATABASE = "mis_2023";
 
-SERVER_PORT = os.getenv("SERVER_PORT", "3306").strip()
-SERVER_HOST = os.getenv("SERVER_HOST", "127.0.0.1").strip()   # safe default
-SERVER_USER = os.getenv("SERVER_USER", "root").strip()        # safe default
-SERVER_PASSWORD = os.getenv("SERVER_PASSWORD", "").strip()    # empty default
-SERVER_DATABASE = os.getenv("SERVER_DATABASE", "test_db").strip()
+SERVER_PORT=3306;
+# SERVER_HOST = "database-1.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com"; # OLD ENDPOINTT
+SERVER_HOST = "dti-rapid-database.cpnzndp4qz0e.ap-southeast-1.rds.amazonaws.com";
+SERVER_USER = "admin";
+SERVER_PASSWORD = "NRGlBUhehOvi0Yt4fDE5";
+SERVER_DATABASE = "mis_2023";
 # SERVER_PASSWORD = "password123"; # OLD PASSWORD
 
 
