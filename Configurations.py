@@ -11,6 +11,10 @@ IN_MAINTENANCE = False
 print(" ++ Configuration Setting ++")
 host_name = socket.gethostname()
 IP_address = socket.gethostbyname(host_name)
+
+print("SERVER_HOST:", os.getenv("SERVER_HOST"))
+print("SERVER_USER:", os.getenv("SERVER_USER"))
+
 # --- SYSTEM CONFIG --- #
 SECRET_KEY = "@002342562988603673976#131452@HHPLHKHHH"
 # HOST = host_name;
