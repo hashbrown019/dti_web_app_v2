@@ -60,6 +60,12 @@ smtp_host = ( os.getenv("SMTP_host") if os.getenv("SMTP_host") else "").strip()
 smtp_port = int(os.getenv("SMTP_PORT")) if os.getenv("SMTP_PORT") else 587
 smtp_sender = ( os.getenv("SMTP_SENDER") if os.getenv("SMTP_SENDER") else "").strip()
 
+print("SMTP_username:", smtp_uname)
+print("SMTP_password:", smtp_password)
+print("SMTP_host:", smtp_host)
+print("SMTP_port:", smtp_port)
+print("SMTP_sender:", smtp_sender)
+
 # from v2_view.core._dashboard import _main as dboard_main
 
 # from docx2pdf import convert
