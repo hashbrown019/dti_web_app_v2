@@ -52,6 +52,8 @@ server_password = os.getenv("SERVER_PASSWORD") if os.getenv("SERVER_PASSWORD") e
 server_database = os.getenv("SERVER_DATABASE") if os.getenv("SERVER_DATABASE") else "mis_2023"
 server_cred = [server_host, server_user, server_password, server_database]
 
+print("server_cred:", server_cred)
+
 smtp_uname = ( os.getenv("SMTP_username") if os.getenv("SMTP_username") else "").strip()
 smtp_password = ( os.getenv("SMTP_password") if os.getenv("SMTP_password") else "").strip()
 smtp_host = ( os.getenv("SMTP_host") if os.getenv("SMTP_host") else "").strip()
@@ -63,8 +65,8 @@ smtp_sender = ( os.getenv("SMTP_SENDER") if os.getenv("SMTP_SENDER") else "").st
 # from docx2pdf import convert
 # pip install docx2pdf
 
-# db = mysql(*c.DB_CRED)
-db = mysql(*server_cred)
+db = mysql(*c.DB_CRED)
+# db = mysql(*server_cred)
 db.err_page = 0
 
 app = Blueprint("webrep_v2",__name__,template_folder='pages',static_folder='static')
