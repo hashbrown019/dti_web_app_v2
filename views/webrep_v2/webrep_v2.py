@@ -45,14 +45,14 @@ print("=================ENV===============")
 print("ENV file here :", find_dotenv())
 print("=================ENV===============")
 
-server_port = os.getenv("SERVER_PORT") if os.getenv("SERVER_PORT") else 3309
-server_host = os.getenv("SERVER_HOST") if os.getenv("SERVER_HOST") else "localhost"
-server_user = os.getenv("SERVER_USER") if os.getenv("SERVER_USER") else "root"
-server_password = os.getenv("SERVER_PASSWORD") if os.getenv("SERVER_PASSWORD") else ""  
-server_database = os.getenv("SERVER_DATABASE") if os.getenv("SERVER_DATABASE") else "mis_2023"
-server_cred = [server_host, server_user, server_password, server_database]
+# server_port = os.getenv("SERVER_PORT") if os.getenv("SERVER_PORT") else 3309
+# server_host = os.getenv("SERVER_HOST") if os.getenv("SERVER_HOST") else "localhost"
+# server_user = os.getenv("SERVER_USER") if os.getenv("SERVER_USER") else "root"
+# server_password = os.getenv("SERVER_PASSWORD") if os.getenv("SERVER_PASSWORD") else ""  
+# server_database = os.getenv("SERVER_DATABASE") if os.getenv("SERVER_DATABASE") else "mis_2023"
+# server_cred = [server_host, server_user, server_password, server_database]
 
-print("server_cred:", server_cred)
+# print("server_cred:", server_cred)
 
 smtp_uname = ( os.getenv("SMTP_username") if os.getenv("SMTP_username") else "").strip()
 smtp_password = ( os.getenv("SMTP_password") if os.getenv("SMTP_password") else "").strip()
