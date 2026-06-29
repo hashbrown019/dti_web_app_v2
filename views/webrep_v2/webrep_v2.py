@@ -792,11 +792,11 @@ class _main:
         per_page = 8
         offset = (page - 1) * per_page
 
-        article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 ORDER BY datePosted DESC LIMIT 3")
+        article_latest = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND (status='posted' OR status='published') AND removed=0 ORDER BY datePosted DESC LIMIT 3")
         latest_ids =  ",".join(f"{a['id']}" for a in article_latest)
         str_query += f" AND id NOT IN ({latest_ids})"
 
-        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 {} ORDER BY dateposted DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
+        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE posttype='story' AND (status='posted' OR status='published') AND removed=0 {} ORDER BY dateposted DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
         data_articles = []
         data_articles_latest = []
 
@@ -819,7 +819,7 @@ class _main:
             article['postRcu'] = urllib.parse.unquote(article['postRcu'])
             data_articles.append(article)
             
-        total = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE posttype='story' AND status='posted' AND removed=0 {}".format(str_query))[0]['total']
+        total = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE posttype='story' AND (status='posted' OR status='published') AND removed=0 {}".format(str_query))[0]['total']
         # total_sql = f"""
         #             SELECT COUNT(*) AS total
         #             FROM webrep_articles
@@ -895,7 +895,7 @@ class _main:
         # latest_ids =  ",".join(f"{a['id']}" for a in article_latest)
         # str_query += f" AND id NOT IN ({latest_ids})"
 
-        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 {} ORDER BY datePosted DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
+        articles = db.select("SELECT * FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND ( status='posted' OR status='published' ) AND removed=0 {} ORDER BY datePosted DESC LIMIT {} OFFSET {}".format(str_query, per_page, offset))
         data_articles = []
         data_articles_latest = []
 
@@ -916,7 +916,7 @@ class _main:
             article['postRcu'] = urllib.parse.unquote(article['postRcu'])
             data_articles.append(article)
             
-        total = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND status='posted' AND removed=0 {}".format(str_query))[0]['total']
+        total = db.select("SELECT COUNT(*) AS total FROM webrep_articles_v2 WHERE ( posttype='news' OR posttype='event' ) AND ( status='posted' OR status='published' ) AND removed=0 {}".format(str_query))[0]['total']
         # total_sql = f"""
         #             SELECT COUNT(*) AS total
         #             FROM webrep_articles
@@ -1385,7 +1385,7 @@ class _main:
             article = db.select("SELECT * FROM webrep_articles_v2 WHERE id='{}'".format(id))
             if article:
                 article = article[0]
-                if int(article['USER_ID']) != int(user_data['id']) and user_data['job']!="Super Admin":
+                if int(article['USER_ID']) != int(user_data['id']) and user_data['job']!="Super Admin" and user_data['job']!="Communication and Knowledge Management Specialist":
                     # return str(article['USER_ID'])+" | "+str(user_data['id'])+" | "+str(int(article['USER_ID']) != int(user_data['id'])) + " | "+ str(user_data['job']!="Super Admin")+" You don't have permission to edit this article.", 403
                     return "You don't have permission to edit this article.", 403
                 article['postheader'] = urllib.parse.unquote(article['postheader'])
