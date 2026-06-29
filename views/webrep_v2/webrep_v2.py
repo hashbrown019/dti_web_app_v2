@@ -1677,6 +1677,9 @@ class _main:
         else:
             print(" >> Editing Articles")
             
+            del data["USER_ID"]  # Remove USER_ID from update to prevent changing the author
+            del data["postAuthor"]  # Remove postAuthor from update to prevent changing the author
+            
             if data.get("file_name") == "":
              del data["file_name"]
 

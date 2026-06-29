@@ -38,7 +38,18 @@
                 <div class="row g-lg-3 rowMarginOverride">
                     <div class="col-lg-8">
                         <div class="articleHero">
-                            <img class="articleHeroImg" style="object-position: left center;" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image">
+                            {% set ext = article.file_name.split('.')[-1]|lower %}
+
+                            {% if ext in ['jpg','jpeg','png','gif','webp'] %}
+                                <img class="articleHeroImg" style="object-position: left center;" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image">
+                            {% elif ext in ['mp4','webm','ogg'] %}
+                            <video class="articleHeroImg" controls>
+                                <source src="/webrep_v2/article/get_img/{{ article.file_name }}" type="video/{{ ext }}">
+                                Your browser does not support the video tag.
+                            </video>
+                            {% else %}
+                            <p>Unsupported file type</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-lg-2 d-flex flex-column justify-content-between">
