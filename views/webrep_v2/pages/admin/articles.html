@@ -136,7 +136,12 @@
                                             </small>
                                         </div>
                                     </div>
-                                    <img class="card-img-top border-radius-0 border-bottom-1 border-top-1" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" style="height: 150px;;">
+                                    {% if article.file_name and article.file_name.endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+                                        <img class="card-img-top border-radius-0 border-bottom-1 border-top-1" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" style="height: 150px;;">
+                                    {% elif article.file_name and article.file_name.endswith(('.mp4','.avi','.mov')) %}
+                                        <img class="card-img-top border-radius-0 border-bottom-1 border-top-1" src="/static/img/video_file.png" alt="Video Placeholder" style="height: 150px;;">
+                                    {% endif %}
+                                    <!-- <img class="card-img-top border-radius-0 border-bottom-1 border-top-1" src="/webrep_v2/article/get_img/{{ article.file_name }}" alt="Article Image" style="height: 150px;;"> -->
                                     <h5 class="mt-3 mb-3 ms-3 me-3 card-title font-14 text-wp-secondary wp_font_roboto_regular text-wp-primary fw-bold">{{ article.postheader | urldecode_lines | safe }}</h5>
                                     <hr>
                                     <div class="text-end me-3">

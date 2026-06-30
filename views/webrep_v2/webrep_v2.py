@@ -295,13 +295,13 @@ class _main:
         mime_type, _ = mimetypes.guess_type(file_path)    
         if os.path.exists(file_path):
             if mime_type:
-                if mime_type.startswith("image"):
-                    # Serve image
-                    return send_file(file_path, mimetype=mime_type)
-                elif mime_type.startswith("video"):
-                    return send_file( "static/img/video_file.png")
-                else:
-                    abort(415)  # Unsupported Media Type
+                return send_file(file_path, mimetype=mime_type)
+                # if mime_type.startswith("image"):
+                #     return send_file(file_path, mimetype=mime_type)
+                # elif mime_type.startswith("video"):
+                #     return send_file( "static/img/video_file.png")
+                # else:
+                #     abort(415)  # Unsupported Media Type
             else:
                 abort(415)  # Unknown type
                 
