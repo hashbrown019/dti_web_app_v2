@@ -45,6 +45,23 @@
 				for (let i = 0; i < loading.length; i++) { loading[i].style.display = 'none'; }
 			}
 
+			window.addEventListener("message", function (event) {
+				const iframe = document.getElementById("embed_page");
+				if (!iframe ||
+					event.origin !== window.location.origin ||
+					event.source !== iframe.contentWindow ||
+					!event.data ||
+					event.data.type !== "dcf-form-content-height") {
+					return;
+				}
+
+				const height = Number(event.data.height);
+				if (Number.isFinite(height) && height > 0) {
+					iframe.style.height = Math.ceil(height) + "px";
+					iframe.setAttribute("scrolling", "no");
+				}
+			});
+
 			function formcdashboard(_BODY_,obj){
 				try{
 					var in_url =  (urls)=> {return obj.src.split("/").indexOf(urls)>0}

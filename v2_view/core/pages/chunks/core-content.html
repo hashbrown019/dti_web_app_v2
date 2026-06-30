@@ -21,6 +21,7 @@
 				const link = event.target.closest("a[href]");
 
 				if (!link ||
+					link.getAttribute("href").trim().indexOf("#") === 0 ||
 					event.defaultPrevented ||
 					event.button !== 0 ||
 					event.ctrlKey ||

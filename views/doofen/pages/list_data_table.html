@@ -413,11 +413,15 @@ function download_excel(fff){
 				</th>
 				<th>
 					Inputed By<br>
-					<input style="border:0px" type="text" placeholder="Search" data-index="1" />
+					<input style="border:0px" type="text" placeholder="Search" data-index="5" />
 				</th>
 				<th>
 					RCU<br>
-					<input style="border:0px" type="text" placeholder="Search" data-index="1" />
+					<input style="border:0px" type="text" placeholder="Search" data-index="6" />
+				</th>
+				<th hidden>
+					Owner ID<br>
+					<input style="border:0px" type="text" placeholder="Search" data-index="7" />
 				</th>
 			</tr>
 		</thead>
@@ -483,11 +487,16 @@ function download_excel(fff){
 		"pageLength": 10,
 		"columnDefs": [
 		{
-			"targets": -1,
+			"targets": 6,
 			"className": 'compact'
 		},
 		{
-			"target": 0,
+			"targets": 0,
+			"visible": false,
+			"searchable": false,
+		},
+		{
+			"targets": 7,
 			"visible": false,
 			"searchable": false,
 		},
@@ -507,17 +516,20 @@ function download_excel(fff){
 		$('#table_id_fo tbody').on('mousedown', 'tr', function () {
 			var data = TABLE.row(this).data();
 			// show_fo_ind_(data[0]); //got to form details
-			show_dialog_item(data[0],data[1])
+			show_dialog_item(data[0], data[1], data[7])
 		})
 	}
 
-	function show_dialog_item(ids, nameorg) {
+	function show_dialog_item(ids, nameorg, ownerId) {
+		const canModifyProfile = String(ownerId || "") === String(CURRENT_USER_ID);
 		Swal.fire({
 			title: nameorg,
-			text: `Control the data for the entry [${nameorg}]`,
+			text: canModifyProfile
+				? `Control the data for the entry [${nameorg}]`
+				: `View only. This entry was encoded by another user.`,
 			icon: 'info',
 			showCancelButton: true,
-			showDenyButton: true,
+			showDenyButton: canModifyProfile,
 			confirmButtonText: 'View',
 			denyButtonText: 'Delete',
 			cancelButtonText: 'Cancel',
@@ -544,6 +556,14 @@ function download_excel(fff){
 							data: $DATA({ "id": ids }),
 							func: function (r) {
 								var parsed = JSON.parse(r);
+								if (parsed && parsed.status === "failed") {
+									Swal.fire({
+										icon: 'warning',
+										title: 'View only',
+										text: parsed.msg || 'Only the owner can delete this Form B profile.'
+									});
+									return;
+								}
 								window.location.reload();
 							}
 						});
@@ -595,6 +615,56 @@ function download_excel(fff){
     var resp = JSON.parse(rrr);
     println(resp);
 
+    function normalizeDateForInput(value) {
+        if (value === null || value === undefined || value === '') return '';
+        const rawValue = String(value).trim();
+        if (!rawValue) return '';
+        if (/^\d{4}-\d{2}-\d{2}/.test(rawValue)) return rawValue.slice(0, 10);
+
+        const serial = Number(rawValue);
+        if (!Number.isNaN(serial) && serial > 0) {
+            const excelEpoch = Date.UTC(1899, 11, 30);
+            const date = new Date(excelEpoch + Math.floor(serial) * 86400000);
+            return date.toISOString().slice(0, 10);
+        }
+
+        const parts = rawValue.split(/[\/\-\.]/).map(part => part.trim());
+        if (parts.length === 3) {
+            let month = Number(parts[0]);
+            let day = Number(parts[1]);
+            let year = Number(parts[2]);
+            if (parts[0].length === 4) {
+                year = Number(parts[0]);
+                month = Number(parts[1]);
+                day = Number(parts[2]);
+            } else if (month > 12 && day <= 12) {
+                day = Number(parts[0]);
+                month = Number(parts[1]);
+            }
+            if (year < 100) year += 2000;
+            const parsed = new Date(Date.UTC(year, month - 1, day));
+            if (!Number.isNaN(parsed.getTime())) return parsed.toISOString().slice(0, 10);
+        }
+
+        const parsed = new Date(rawValue);
+        return Number.isNaN(parsed.getTime()) ? '' : parsed.toISOString().slice(0, 10);
+    }
+
+    function syncRapidSupportCheckboxes(savedValue, selector, hiddenInputId) {
+        const selectedValues = new Set(
+            String(savedValue || '')
+                .split(',')
+                .map(value => value.trim())
+                .filter(Boolean)
+        );
+        document.querySelectorAll(selector).forEach(function (checkbox) {
+            checkbox.checked = selectedValues.has(checkbox.value);
+        });
+        if ($ID(hiddenInputId)) {
+            $ID(hiddenInputId).value = Array.from(selectedValues).join(',');
+        }
+    }
+
     if ($ID("id")) {
         $ID("id").value = resp[0]["id"];
     }
@@ -603,18 +673,22 @@ function download_excel(fff){
     for (var i = 0; i < form_data_b.length; i++) {
         var input_type = form_data_b[i].type;
         if (form_data_b[i].id == "") { continue }
-        if (["text","textarea","select-one","date","time"].includes(input_type)) {
+        if (["text","textarea","select-one","time"].includes(input_type)) {
             form_data_b[i].value = resp[0][form_data_b[i].id];
+        }
+        else if (["date"].includes(input_type)) {
+            form_data_b[i].value = normalizeDateForInput(resp[0][form_data_b[i].id]);
         }
         else if (["radio"].includes(input_type)) {
             form_data_b[i].checked = resp[0][form_data_b[i].id];
         }
         else if (["checkbox"].includes(input_type)) {
-            if (resp[0][form_data_b[i].id] == true || resp[0][form_data_b[i].id] == 'true') {
-                form_data_b[i].click();
-            }
+            form_data_b[i].checked = (resp[0][form_data_b[i].id] == true || resp[0][form_data_b[i].id] == 'true');
         }
     }
+
+    syncRapidSupportCheckboxes(resp[0].operational_rapid_support, '.operational_rapid_checkbox', 'operational_rapid_support');
+    syncRapidSupportCheckboxes(resp[0].rapid_support, '.capacity_rapid_checkbox', 'rapid_support');
 
 
     if (String(resp[0].uploaded_by) !== String(CURRENT_USER_ID)) {

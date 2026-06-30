@@ -5,7 +5,9 @@
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/build/css/custom.css">
+<link rel="stylesheet" href="/static/psalm_static/dcf_static/assets/vendors2/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="/static/psalm_static/dcf_static/datatables/datatables.min.css">
+<link rel="stylesheet" href="/static/psalm_static/dcf_static/dashboard-ui.css">
 {% endblock stylesheets %}
 
 {% block content %}
@@ -17,16 +19,18 @@
     }
     .x_panel {
         background: #fff;
-        border-radius: 15px;
-        padding: 10px;
-        box-shadow: 0 0 15px 15px rgba(179, 179, 179, 0.1);
+        border-radius: 16px;
+        padding: 0;
+        border: 1px solid rgba(0, 115, 153, 0.12);
+        box-shadow: 0 5px 22px rgba(0, 57, 77, 0.065);
         transition: all 0.3s ease;
     }
     .tile-stats {
         background: #fff;
-        border-radius: 15px;
-        padding: 10px;
-        box-shadow: 0 0 15px 15px rgba(146, 146, 146, 0.1);
+        border-radius: 16px;
+        padding: 22px 20px 18px 74px;
+        border: 1px solid rgba(0, 115, 153, 0.12);
+        box-shadow: 0 5px 20px rgba(0, 57, 77, 0.065);
         transition: all 0.3s ease;
     }
     .tile-stats:hover {
@@ -41,6 +45,50 @@
     .tile-stats .count p b {
         position: absolute;
         right: 0;
+    }
+    .dcf-dashboard-form-8 .dcf-kpi-icon {
+        color: #fff;
+        background: linear-gradient(145deg, #024450 0%, #024450 62%, #167486 100%);
+    }
+    .dcf-dashboard-form-8 .top_tiles > [class*="col-"] {
+        display: flex;
+        margin-bottom: 16px;
+    }
+    .dcf-dashboard-form-8 .top_tiles .tile-stats {
+        width: 100%;
+        min-height: 150px;
+    }
+    .dcf-dashboard-form-8 .top_tiles .dcf-kpi-icon {
+        display: grid;
+        place-items: center;
+        font-family: FontAwesome;
+    }
+    .dcf-dashboard-form-8 .top_tiles .dcf-kpi-icon i {
+        color: #fff;
+        font-family: FontAwesome;
+        font-size: 18px;
+        font-style: normal;
+        line-height: 1;
+    }
+    .dcf-dashboard-form-8 .tile-stats .count {
+        width: 100%;
+        min-width: 0;
+    }
+    .dcf-dashboard-form-8 .tile-stats .count p {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        padding-right: 0;
+    }
+    .dcf-dashboard-form-8 .tile-stats .count p b {
+        position: static;
+        flex: 0 0 auto;
+        text-align: right;
+        white-space: nowrap;
+    }
+    .dcf-dashboard-form-8 .x_title h2[style] {
+        color: #00394d !important;
     }
     .fmi-chart-wrap {
         position: relative;
@@ -62,12 +110,44 @@
     body{
         background-color: #f6f9ff;
     }
+    html,
+    body,
+    main {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        overflow-x: hidden;
+    }
+    html.fmi-embedded,
+    html.fmi-embedded body {
+        overflow-y: hidden;
+    }
 
     .mb-4 {
     margin-bottom: 0 !important;
 }
 </style>
 <div class="container-fluid px-3 px-lg-4 py-3 fmi-dcf-dashboard">
+<section class="dcf-dashboard-hero" aria-labelledby="fmi-dashboard-title">
+    <div class="dcf-dashboard-hero-copy">
+        <div class="dcf-dashboard-eyebrow"><i class="fa fa-line-chart"></i> Data Capture Forms</div>
+        <h1 id="fmi-dashboard-title">FMI Dashboard</h1>
+        <p>Monitor farm-to-market infrastructure projects, implementation status, completed road length, approved budgets, and regional delivery.</p>
+    </div>
+    <div class="dcf-dashboard-actions" aria-label="FMI dashboard shortcuts">
+        <button type="button" class="dcf-hero-action dcf-hero-action-primary" data-fmi-action="records">
+            <i class="fa fa-table" aria-hidden="true"></i><span>View records</span>
+        </button>
+        <button type="button" class="dcf-hero-action" data-fmi-action="export">
+            <i class="fa fa-cloud-download" aria-hidden="true"></i><span>Export data</span>
+        </button>
+        <button type="button" class="dcf-hero-action" data-fmi-action="import">
+            <i class="fa fa-exchange" aria-hidden="true"></i><span>Import tools</span>
+        </button>
+    </div>
+</section>
+
+<div class="dcf-section-heading">Overview</div>
 <div class="row top_tiles">
     <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="tile-stats">
@@ -153,7 +233,7 @@
     </div>
     
 </div>
-<hr>
+<div class="dcf-section-heading">Implementation Status by Batch</div>
 <div class="row g-3">
     <div class="col-12 col-sm-6 col-lg-3">
         <div class="x_panel">
@@ -200,7 +280,7 @@
         </div>
     </div>
 </div>
-<hr>
+<div class="dcf-section-heading">Regional Performance</div>
 <div class="row">
     <div class="col-12">
         <div class="x_panel">
@@ -214,8 +294,8 @@
         </div>
     </div>
 </div>
-<hr>
 
+<div class="dcf-section-heading">Detailed Records</div>
 <div class="row mb-4">
     <div class="col-12">
         <div class="x_panel">
@@ -451,6 +531,8 @@
 		window.location.href = '/export_form8';
 	}
 </script>
+<section class="dcf-management-section" id="fmi-management-section">
+<div class="dcf-section-heading">Data Management</div>
 <div class="x_panel tile">
   <div class="x_title">
     <h2 style="font-weight: bold; color:#73879C;">FORM 8 FMI Tracker <small>SPREADSHEET MANAGEMENT</small></h2>
@@ -497,6 +579,7 @@
     </form>
   </div>
 </div>
+</section>
 
 
 {% endblock content %}
@@ -569,6 +652,67 @@
       language: {
         emptyTable: "No entries found."
       }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.body.classList.add("dcf-dashboard-page", "dcf-dashboard-form-8");
+    if (window.parent !== window) {
+      document.documentElement.classList.add("fmi-embedded");
+    }
+    document.title = "FMI Dashboard";
+
+    var iconMap = {
+      "NO. FMR PROJECTS": "fa-list-alt",
+      "COMPLETED": "fa-check-circle",
+      "ONGOING": "fa-refresh",
+      "FOR NO 1": "fa-file-text-o",
+      "FOR NO 2": "fa-file-text-o",
+      "FOR NO 3": "fa-file-text-o",
+      "ISSUANCE OF NOA": "fa-certificate",
+      "PENDING": "fa-clock-o",
+      "KM. COMPLETED BASE ON % ACCOMPLISHED": "fa-road"
+    };
+
+    document.querySelectorAll(".top_tiles .tile-stats").forEach(function (tile) {
+      var heading = tile.querySelector("h3");
+      var iconClass = heading && iconMap[heading.textContent.trim()] || "fa-list-alt";
+      var icon = document.createElement("span");
+      icon.className = "dcf-kpi-icon";
+      icon.setAttribute("aria-hidden", "true");
+      icon.innerHTML = '<i class="fa ' + iconClass + '"></i>';
+      tile.insertBefore(icon, tile.firstChild);
+    });
+
+    document.querySelectorAll(".panel_toolbox li").forEach(function (tool) {
+      if (tool.querySelector(".dropdown-toggle, .close-link")) {
+        tool.classList.add("dcf-unused-tool");
+      }
+    });
+
+    var recordsPanel = document.getElementById("fmi-datatable");
+    recordsPanel = recordsPanel && recordsPanel.closest(".x_panel");
+    var managementSection = document.getElementById("fmi-management-section");
+
+    function scrollToSection(element) {
+      if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    document.querySelectorAll("[data-fmi-action]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var action = button.getAttribute("data-fmi-action");
+        if (action === "records") {
+          scrollToSection(recordsPanel);
+        } else if (action === "import") {
+          scrollToSection(managementSection);
+        } else if (action === "export") {
+          var exportButton = managementSection && managementSection.querySelector(".export-btn");
+          if (exportButton) exportButton.click();
+          else scrollToSection(managementSection);
+        }
+      });
     });
   });
 </script>

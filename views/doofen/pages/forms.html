@@ -157,6 +157,8 @@ function submit_form(class_name, table, url) {
     for (let index = 0; index < x_ins.length; index++) {
         if (x_ins[index].type === "checkbox") {
             form_data[x_ins[index].id] = x_ins[index].checked;
+        } else if (x_ins[index].type === "select-one" || x_ins[index].type === "select-multiple") {
+            form_data[x_ins[index].id] = String(x_ins[index].value || '').trim();
         } else {
             form_data[x_ins[index].id] = x_ins[index].value;
         }
@@ -198,6 +200,76 @@ function submit_form(class_name, table, url) {
 }
 
 
+function setSelectValueByTrim(element, value) {
+    const rawValue = String(value ?? '');
+    element.value = rawValue;
+    if (element.value === rawValue) return;
+
+    const normalizedValue = rawValue.trim().toLowerCase();
+    for (let index = 0; index < element.options.length; index++) {
+        const option = element.options[index];
+        if (String(option.value || '').trim().toLowerCase() === normalizedValue) {
+            element.value = option.value;
+            return;
+        }
+    }
+}
+
+function normalizeDateForInput(value) {
+    if (value === null || value === undefined || value === '') return '';
+    const rawValue = String(value).trim();
+    if (!rawValue) return '';
+    if (/^\d{4}-\d{2}-\d{2}/.test(rawValue)) {
+        return rawValue.slice(0, 10);
+    }
+
+    const serial = Number(rawValue);
+    if (!Number.isNaN(serial) && serial > 0) {
+        const excelEpoch = Date.UTC(1899, 11, 30);
+        const date = new Date(excelEpoch + Math.floor(serial) * 86400000);
+        return date.toISOString().slice(0, 10);
+    }
+
+    const parts = rawValue.split(/[\/\-\.]/).map(part => part.trim());
+    if (parts.length === 3) {
+        let month = Number(parts[0]);
+        let day = Number(parts[1]);
+        let year = Number(parts[2]);
+        if (parts[0].length === 4) {
+            year = Number(parts[0]);
+            month = Number(parts[1]);
+            day = Number(parts[2]);
+        } else if (day > 12 && month <= 12) {
+            month = Number(parts[0]);
+            day = Number(parts[1]);
+        } else if (month > 12 && day <= 12) {
+            day = Number(parts[0]);
+            month = Number(parts[1]);
+        }
+        if (year < 100) year += 2000;
+        const parsed = new Date(Date.UTC(year, month - 1, day));
+        if (!Number.isNaN(parsed.getTime())) return parsed.toISOString().slice(0, 10);
+    }
+
+    const parsed = new Date(rawValue);
+    return Number.isNaN(parsed.getTime()) ? '' : parsed.toISOString().slice(0, 10);
+}
+
+function syncRapidSupportCheckboxes(savedValue, selector, hiddenInputId) {
+    const selectedValues = new Set(
+        String(savedValue || '')
+            .split(',')
+            .map(value => value.trim())
+            .filter(Boolean)
+    );
+    document.querySelectorAll(selector).forEach(function (checkbox) {
+        checkbox.checked = selectedValues.has(checkbox.value);
+    });
+    if ($ID(hiddenInputId)) {
+        $ID(hiddenInputId).value = Array.from(selectedValues).join(',');
+    }
+}
+
 function load_data(record_id, table, class_name) {
     // http://127.0.0.1:5000/dcf/form8?id=1&table=form8
     $send({
@@ -227,13 +299,19 @@ function load_data(record_id, table, class_name) {
                     }
                 } else if (element.type === "select-one") {
                     try {
-                        element.value = value_from_db || '';
+                        setSelectValueByTrim(element, value_from_db || '');
                     } catch (err) {
                         warnprintln(element.id + " ||| " + err);
                     }
                 } else if (element.type === "number") {
                     try {
                         element.value = sanitizeNumber(value_from_db);
+                    } catch (err) {
+                        warnprintln(element.id + " ||| " + err);
+                    }
+                } else if (element.type === "date") {
+                    try {
+                        element.value = normalizeDateForInput(value_from_db);
                     } catch (err) {
                         warnprintln(element.id + " ||| " + err);
                     }
@@ -245,6 +323,8 @@ function load_data(record_id, table, class_name) {
                     }
                 }
             }
+            syncRapidSupportCheckboxes(res.operational_rapid_support, '.operational_rapid_checkbox', 'operational_rapid_support');
+            syncRapidSupportCheckboxes(res.rapid_support, '.capacity_rapid_checkbox', 'rapid_support');
         }
     });
 }

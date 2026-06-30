@@ -31,6 +31,21 @@
 		}
 	}
 
+	function setSelectValueByTrim(element, value) {
+		const rawValue = String(value ?? '')
+		element.value = rawValue
+		if (element.value === rawValue) return
+
+		const normalizedValue = rawValue.trim().toLowerCase()
+		for (let index = 0; index < element.options.length; index++) {
+			const option = element.options[index]
+			if (String(option.value || '').trim().toLowerCase() === normalizedValue) {
+				element.value = option.value
+				return
+			}
+		}
+	}
+
 	function load_data(record_id, table, class_name) {
 		// http://127.0.0.1:5000/dcf/form8?id=1&table=form8
 		$send({
@@ -54,7 +69,7 @@
 						}
 					} else if (x_ins[index].type == "select-one") {
 						try{
-							x_ins[index].value = res[x_ins[index].id]
+							setSelectValueByTrim(x_ins[index], res[x_ins[index].id])
 							triggerChange(x_ins[index])
 						}catch(err){
 							warnprintln(x_ins[index].id + " ||| " + err)
@@ -182,6 +197,8 @@
 			if (x_ins[index].type == "checkbox") {
 				form_data[x_ins[index].id] = x_ins[index].checked
 
+			} else if (x_ins[index].type == "select-one" || x_ins[index].type == "select-multiple") {
+				form_data[x_ins[index].id] = String(x_ins[index].value || '').trim()
 			} else {
 				form_data[x_ins[index].id] = x_ins[index].value
 			}
@@ -193,7 +210,7 @@
 		func: function (r) {
 			var res = JSON.parse(r)
 			println(res)
-			if (res.id.response == "done") {
+			if (res.status == "success" && res.id && res.id.response == "done") {
 				Swal.fire(
 					'Success!',
 					'Record Saved!',
@@ -205,9 +222,11 @@
 					});
 				}
 				else {
+					var errorMessage = res.msg || 'Unable to save record.'
+					if (res.id && res.id.message) errorMessage = res.id.message
 					Swal.fire(
 						'Error!',
-						res.id,
+						errorMessage,
 						'error'
 						);
 				}

@@ -1,0 +1,1495 @@
+/* Modern DCF form theme. Activated only by dcf-forms-ui.js for forms 1-7 and 9-11. */
+body.dcf-form-page {
+  --dcf-primary: #024450;
+  --dcf-primary-dark: #01343d;
+  --dcf-primary-soft: #eaf4f4;
+  --dcf-highlight: #167486;
+  --dcf-accent: #94be39;
+  --dcf-surface: #ffffff;
+  --dcf-page: #f6f9ff;
+  --dcf-text: #163c42;
+  --dcf-muted: #657b72;
+  --dcf-border: rgba(2, 68, 80, 0.16);
+  --dcf-shadow: 0 8px 28px rgba(0, 57, 77, 0.08);
+  color: var(--dcf-text);
+  background: var(--dcf-page) !important;
+}
+
+html.dcf-form-document,
+html.dcf-form-document body.dcf-form-page {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.dcf-form-page .main_container {
+  background: var(--dcf-page);
+}
+
+.dcf-form-page .dcf-form-shell {
+  width: min(100%, 1540px);
+  margin: 0 auto;
+  padding: 4px 8px 16px;
+}
+
+.dcf-form-page .dcf-form-hero {
+  position: relative;
+  display: flex;
+  min-height: 154px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 0 20px;
+  padding: 28px 32px;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(125deg, var(--dcf-primary-dark), var(--dcf-primary) 62%, var(--dcf-highlight));
+  border-radius: 18px;
+  box-shadow: 0 14px 32px rgba(2, 68, 80, 0.2);
+}
+
+.dcf-form-page .dcf-form-hero::after {
+  content: "";
+  position: absolute;
+  right: -85px;
+  width: 370px;
+  height: 250px;
+  background: linear-gradient(135deg, rgba(148, 190, 57, 0.16), rgba(148, 190, 57, 0.58));
+  clip-path: polygon(42% 0, 100% 0, 58% 100%, 0 100%);
+  transform: rotate(-5deg);
+}
+
+.dcf-form-page .dcf-form-hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.dcf-form-page .dcf-form-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.dcf-form-page .dcf-form-hero h1 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: clamp(25px, 3vw, 38px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.dcf-form-page .dcf-form-hero h1 span {
+  display: block;
+  margin-bottom: 3px;
+  color: #c9e879;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dcf-form-page .dcf-form-hero p {
+  max-width: 720px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.dcf-form-page .dcf-form-number {
+  position: relative;
+  z-index: 1;
+  min-width: 88px;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 88px;
+  font-weight: 800;
+  line-height: 0.9;
+  text-align: center;
+}
+
+.dcf-form-page .dcf-legacy-form-heading {
+  display: none;
+}
+
+.dcf-form-page .x-card,
+.dcf-form-page .card,
+.dcf-form-page .x_panel {
+  background: var(--dcf-surface) !important;
+  border: 1px solid var(--dcf-border);
+  border-radius: 16px !important;
+  box-shadow: var(--dcf-shadow) !important;
+}
+
+.dcf-form-page .x-card {
+  float: none;
+  padding: 20px 18px 24px;
+}
+
+.dcf-form-page .card {
+  overflow: hidden;
+}
+
+.dcf-form-page .card-header,
+.dcf-form-page .section-divider,
+.dcf-form-page .bg-teal {
+  color: #fff !important;
+  background: var(--dcf-primary) !important;
+  border-color: var(--dcf-primary) !important;
+}
+
+.dcf-form-page .card-header {
+  padding: 16px 20px;
+}
+
+.dcf-form-page .card-body {
+  padding: 20px;
+}
+
+.dcf-form-page .dcf-form-section-title {
+  margin: 26px 8px 16px !important;
+  padding: 0 0 10px !important;
+  color: var(--dcf-primary-dark) !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--dcf-border);
+  font-size: 18px !important;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: left !important;
+}
+
+.dcf-form-page .dcf-form-section-title::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 19px;
+  margin-right: 10px;
+  vertical-align: -3px;
+  background: var(--dcf-accent);
+  border-radius: 4px;
+}
+
+.dcf-form-page .dcf-form-notice {
+  margin: 12px 8px 20px !important;
+  padding: 14px 16px !important;
+  color: var(--dcf-primary-dark) !important;
+  background: var(--dcf-primary-soft) !important;
+  border: 1px solid rgba(22, 116, 134, 0.2);
+  border-left: 4px solid var(--dcf-highlight);
+  border-radius: 10px;
+  font-size: 13px !important;
+  font-weight: 500;
+  line-height: 1.55;
+  text-align: left !important;
+}
+
+.dcf-form-page .dcf-form-notice::before {
+  display: none;
+}
+
+.dcf-form-page label,
+.dcf-form-page .form-label,
+.dcf-form-page .x-col > span:not(.badge) {
+  display: inline-block;
+  margin-bottom: 7px;
+  color: var(--dcf-text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.dcf-form-page input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]),
+.dcf-form-page select,
+.dcf-form-page textarea,
+.dcf-form-page .form-control,
+.dcf-form-page .form-select,
+.dcf-form-page .dropdown-check-list .anchor,
+.dcf-form-page .choices__inner {
+  min-height: 42px;
+  padding: 9px 11px;
+  color: var(--dcf-text);
+  background-color: #fff;
+  border: 1px solid rgba(2, 68, 80, 0.22) !important;
+  border-radius: 9px !important;
+  box-shadow: none;
+  font-size: 13px;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.dcf-form-page textarea {
+  min-height: 104px;
+  resize: vertical;
+}
+
+.dcf-form-page input:focus,
+.dcf-form-page select:focus,
+.dcf-form-page textarea:focus,
+.dcf-form-page .form-control:focus,
+.dcf-form-page .form-select:focus,
+.dcf-form-page .choices.is-focused .choices__inner,
+.dcf-form-page .choices.is-open .choices__inner {
+  border-color: var(--dcf-highlight) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(22, 116, 134, 0.12) !important;
+}
+
+.dcf-form-page .dcf-readonly-field,
+.dcf-form-page input[readonly],
+.dcf-form-page textarea[readonly] {
+  color: var(--dcf-primary-dark);
+  background: var(--dcf-primary-soft) !important;
+  border-color: rgba(2, 68, 80, 0.12) !important;
+  font-weight: 700;
+}
+
+.dcf-form-page input[type="checkbox"],
+.dcf-form-page input[type="radio"] {
+  accent-color: var(--dcf-highlight);
+}
+
+.dcf-form-page .form-check {
+  min-height: 40px;
+  margin-bottom: 7px;
+  padding: 9px 12px 9px 34px;
+  background: #f8fbfb;
+  border: 1px solid var(--dcf-border);
+  border-radius: 9px;
+}
+
+.dcf-form-page .form-check-label {
+  margin: 0;
+  font-weight: 600;
+}
+
+.dcf-form-page .choices {
+  margin-bottom: 0;
+}
+
+.dcf-form-page .choices__list--multiple .choices__item {
+  color: #fff;
+  background: var(--dcf-highlight);
+  border-color: var(--dcf-highlight);
+  border-radius: 6px;
+}
+
+.dcf-form-page .dropdown-check-list .items,
+.dcf-form-page .choices__list--dropdown {
+  overflow: auto;
+  background: #fff;
+  border: 1px solid var(--dcf-border) !important;
+  border-radius: 9px !important;
+  box-shadow: 0 12px 26px rgba(0, 57, 77, 0.14);
+}
+
+.dcf-form-page .dropdown-check-list .items li:hover,
+.dcf-form-page .choices__item--choice.is-highlighted {
+  background: var(--dcf-primary-soft);
+}
+
+.dcf-form-page .x-row,
+.dcf-form-page .row {
+  row-gap: 4px;
+}
+
+.dcf-form-page .x-col {
+  min-width: 0;
+}
+
+.dcf-form-page .x-padding,
+.dcf-form-page .x-container {
+  box-sizing: border-box;
+}
+
+.dcf-form-page .dcf-form-table-wrap,
+.dcf-form-page .x-table-responsive-wrap,
+.dcf-form-page .table-responsive {
+  margin: 10px 0 18px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid var(--dcf-border);
+  border-radius: 12px;
+}
+
+.dcf-form-page .dcf-form-table {
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--dcf-text);
+  background: #fff;
+  border: 0 !important;
+  border-collapse: separate !important;
+  border-spacing: 0;
+  font-size: 12px;
+}
+
+.dcf-form-page .dcf-form-table th,
+.dcf-form-page .dcf-form-table td {
+  padding: 11px 10px;
+  border: 0 !important;
+  border-right: 1px solid rgba(2, 68, 80, 0.09) !important;
+  border-bottom: 1px solid rgba(2, 68, 80, 0.09) !important;
+  vertical-align: middle;
+}
+
+.dcf-form-page .dcf-form-table tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.dcf-form-page .dcf-form-table th:last-child,
+.dcf-form-page .dcf-form-table td:last-child {
+  border-right: 0 !important;
+}
+
+.dcf-form-page .dcf-form-table th,
+.dcf-form-page .dcf-form-table thead td,
+.dcf-form-page .dcf-form-table tr:first-child > th {
+  color: #fff !important;
+  background: var(--dcf-primary) !important;
+  font-weight: 700;
+}
+
+.dcf-form-page .dcf-form-table tr:nth-child(even) td {
+  background: rgba(234, 244, 244, 0.45);
+}
+
+.dcf-form-page .dcf-grouped-table .dcf-group-header,
+.dcf-dashboard-page .dcf-edit-modal .dcf-grouped-table .dcf-group-header {
+  background: #024450 !important;
+  letter-spacing: 0.01em;
+}
+
+.dcf-form-page .dcf-grouped-table td.dcf-group-1,
+.dcf-form-page .dcf-grouped-table td.dcf-group-2,
+.dcf-dashboard-page .dcf-edit-modal .dcf-grouped-table td.dcf-group-1,
+.dcf-dashboard-page .dcf-edit-modal .dcf-grouped-table td.dcf-group-2 {
+  background-color: #ffffff !important;
+}
+
+.dcf-form-page .dcf-grouped-table .dcf-group-title-row + tr td,
+.dcf-dashboard-page .dcf-edit-modal .dcf-grouped-table .dcf-group-title-row + tr td {
+  background: #f3f8f8 !important;
+}
+
+.dcf-form-page .dcf-grouped-table .dcf-group-start,
+.dcf-dashboard-page .dcf-edit-modal .dcf-grouped-table .dcf-group-start {
+  position: relative;
+  border-left: 2px solid #bfd2d6 !important;
+  box-shadow: none;
+}
+
+.dcf-form-page .dcf-grouped-table .dcf-group-header.dcf-group-start,
+.dcf-dashboard-page .dcf-edit-modal .dcf-grouped-table .dcf-group-header.dcf-group-start {
+  border-left: 2px solid #bfd2d6 !important;
+  box-shadow: none;
+}
+
+.dcf-form-page .dcf-grouped-table .dcf-group-title-row + tr td,
+.dcf-dashboard-page .dcf-edit-modal .dcf-grouped-table .dcf-group-title-row + tr td {
+  color: var(--dcf-primary-dark, #01343d);
+  font-weight: 700;
+}
+
+.dcf-form-page .dcf-add-row-button,
+.dcf-dashboard-page .dcf-edit-modal .dcf-add-row-button {
+  display: inline-flex !important;
+  float: left !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 34px !important;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: -5px 10px -5px 0 !important;
+  padding: 6px 11px !important;
+  color: var(--dcf-primary, #024450) !important;
+  background: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 3px 9px rgba(0, 39, 49, 0.16) !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dcf-form-page .dcf-add-row-button:hover,
+.dcf-form-page .dcf-add-row-button:focus,
+.dcf-dashboard-page .dcf-edit-modal .dcf-add-row-button:hover,
+.dcf-dashboard-page .dcf-edit-modal .dcf-add-row-button:focus {
+  color: #fff !important;
+  background: var(--dcf-accent, #94be39) !important;
+  border-color: var(--dcf-accent, #94be39) !important;
+  transform: translateY(-1px);
+}
+
+.dcf-form-page .dcf-add-row-button i,
+.dcf-dashboard-page .dcf-edit-modal .dcf-add-row-button i {
+  font-size: 13px;
+}
+
+.dcf-form-page .dcf-form-table input,
+.dcf-form-page .dcf-form-table select {
+  min-width: 112px;
+}
+
+.dcf-form-page .dcf-compact-table-wrap,
+.dcf-dashboard-page .dcf-edit-modal .dcf-compact-table-wrap {
+  overflow-x: hidden !important;
+}
+
+.dcf-form-page .dcf-compact-table,
+.dcf-dashboard-page .dcf-edit-modal .dcf-compact-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed;
+}
+
+.dcf-form-page .dcf-compact-table th,
+.dcf-form-page .dcf-compact-table td,
+.dcf-dashboard-page .dcf-edit-modal .dcf-compact-table th,
+.dcf-dashboard-page .dcf-edit-modal .dcf-compact-table td {
+  min-width: 0 !important;
+  white-space: normal !important;
+}
+
+.dcf-form-page .dcf-compact-table input,
+.dcf-form-page .dcf-compact-table select,
+.dcf-form-page .dcf-compact-table textarea,
+.dcf-dashboard-page .dcf-edit-modal .dcf-compact-table input,
+.dcf-dashboard-page .dcf-edit-modal .dcf-compact-table select,
+.dcf-dashboard-page .dcf-edit-modal .dcf-compact-table textarea {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.dcf-form-page .nav-tabs {
+  gap: 6px;
+  padding: 6px;
+  background: #eaf1f2;
+  border: 0;
+  border-radius: 12px;
+}
+
+.dcf-form-page .nav-tabs .nav-link {
+  padding: 10px 18px;
+  color: var(--dcf-muted);
+  background: transparent;
+  border: 0 !important;
+  border-radius: 8px !important;
+  font-weight: 700;
+}
+
+.dcf-form-page .nav-tabs .nav-link.active {
+  color: #fff !important;
+  background: var(--dcf-primary) !important;
+  box-shadow: 0 4px 12px rgba(2, 68, 80, 0.18);
+}
+
+.dcf-form-page .section-divider {
+  margin: 24px 0 14px !important;
+  padding: 11px 14px !important;
+  border-radius: 9px;
+  font-size: 13px !important;
+  letter-spacing: 0.025em;
+  text-align: left !important;
+}
+
+.dcf-form-page .btn {
+  min-height: 40px;
+  padding: 9px 16px;
+  border-radius: 9px !important;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.dcf-form-page .btn:hover,
+.dcf-form-page .btn:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 15px rgba(0, 57, 77, 0.14);
+}
+
+.dcf-form-page .btn-primary,
+.dcf-form-page .dcf-submit-button {
+  min-width: 130px;
+  color: #fff;
+  background: var(--dcf-primary) !important;
+  border-color: var(--dcf-primary) !important;
+}
+
+.dcf-form-page .dcf-submit-icon {
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+.dcf-form-page .btn-primary:hover,
+.dcf-form-page .dcf-submit-button:hover {
+  background: var(--dcf-highlight) !important;
+  border-color: var(--dcf-highlight) !important;
+}
+
+.dcf-form-page .dcf-form-actions {
+  display: flex;
+  float: none !important;
+  clear: both;
+  width: auto !important;
+  min-height: 72px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 22px -18px -24px !important;
+  padding: 16px 22px !important;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid var(--dcf-border);
+  border-radius: 0 0 16px 16px;
+}
+
+.dcf-form-page p.dcf-form-actions {
+  position: relative;
+  right: auto !important;
+  left: auto !important;
+  max-width: none !important;
+}
+
+.dcf-form-page .card-footer.dcf-form-actions {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 14px 18px !important;
+  border-radius: 0;
+}
+
+.dcf-form-page .card-footer .dcf-form-actions {
+  min-height: 0;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.dcf-form-page #head_note {
+  display: inline-flex;
+  margin: 10px 0 2px;
+  padding: 6px 10px;
+  color: var(--dcf-primary-dark) !important;
+  background: #eaf4f4 !important;
+  border-radius: 20px;
+}
+
+.dcf-form-page .x_panel {
+  margin-top: 22px;
+  overflow: hidden;
+}
+
+.dcf-form-page .x_title {
+  min-height: 58px;
+  margin: 0;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--dcf-border);
+}
+
+.dcf-form-page .x_title h2 {
+  margin: 0;
+  color: var(--dcf-primary-dark);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.dcf-form-page .x_content {
+  padding: 18px;
+}
+
+.dcf-form-page .tool {
+  color: var(--dcf-highlight) !important;
+}
+
+.dcf-form-page .dcf-tooltip-trigger::before,
+.dcf-form-page .dcf-tooltip-trigger::after,
+.dcf-dashboard-page .dcf-edit-modal .dcf-tooltip-trigger::before,
+.dcf-dashboard-page .dcf-edit-modal .dcf-tooltip-trigger::after {
+  display: none !important;
+  content: none !important;
+}
+
+.dcf-form-page .dcf-tooltip-trigger,
+.dcf-dashboard-page .dcf-edit-modal .dcf-tooltip-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: var(--dcf-highlight, #167486) !important;
+  border-radius: 50%;
+  cursor: help;
+  vertical-align: -3px;
+}
+
+/* Tooltip icons follow their surface: teal on light areas, white on teal. */
+.dcf-form-page th .dcf-tooltip-trigger,
+.dcf-form-page .card-header .dcf-tooltip-trigger,
+.dcf-form-page .section-divider .dcf-tooltip-trigger,
+.dcf-form-page .bg-teal .dcf-tooltip-trigger,
+.dcf-form-page .dcf-form-hero .dcf-tooltip-trigger,
+.dcf-dashboard-page .dcf-edit-modal th .dcf-tooltip-trigger,
+.dcf-dashboard-page .dcf-edit-modal .modal-header .dcf-tooltip-trigger,
+.dcf-dashboard-page .dcf-edit-modal .section-divider .dcf-tooltip-trigger,
+.dcf-dashboard-page .dcf-edit-modal .bg-teal .dcf-tooltip-trigger {
+  color: #ffffff !important;
+}
+
+.dcf-form-page td .dcf-tooltip-trigger,
+.dcf-form-page label .dcf-tooltip-trigger,
+.dcf-form-page .form-label .dcf-tooltip-trigger,
+.dcf-dashboard-page .dcf-edit-modal td .dcf-tooltip-trigger,
+.dcf-dashboard-page .dcf-edit-modal label .dcf-tooltip-trigger,
+.dcf-dashboard-page .dcf-edit-modal .form-label .dcf-tooltip-trigger {
+  color: #167486 !important;
+}
+
+.dcf-form-page .dcf-tooltip-trigger:focus,
+.dcf-dashboard-page .dcf-edit-modal .dcf-tooltip-trigger:focus {
+  outline: 2px solid rgba(22, 116, 134, 0.3);
+  outline-offset: 2px;
+}
+
+.dcf-floating-tooltip {
+  position: fixed;
+  z-index: 2147483000;
+  width: max-content;
+  max-width: min(340px, calc(100vw - 24px));
+  padding: 10px 12px;
+  visibility: hidden;
+  color: #fff;
+  background: #01343d;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9px;
+  box-shadow: 0 10px 26px rgba(0, 35, 44, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  transform: translateY(4px);
+  transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease;
+}
+
+.dcf-floating-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 6px solid transparent;
+  border-top-color: #01343d;
+  transform: translateX(-50%);
+}
+
+.dcf-floating-tooltip.dcf-tooltip-below::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: #01343d;
+}
+
+.dcf-floating-tooltip.is-visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 992px) {
+  .dcf-form-page .dcf-form-shell {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .dcf-form-page .dcf-form-hero {
+    min-height: 132px;
+    padding: 22px;
+  }
+
+  .dcf-form-page .dcf-form-number {
+    font-size: 68px;
+  }
+
+  .dcf-form-page .x-card {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .dcf-form-page .x-col[class*="l"] {
+    width: 50%;
+  }
+}
+
+@media (max-width: 700px) {
+  .dcf-form-page .dcf-form-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dcf-form-page .dcf-form-number {
+    position: absolute;
+    right: 18px;
+    bottom: 14px;
+  }
+
+  .dcf-form-page .x-col[class*="l"] {
+    width: 100%;
+  }
+
+  .dcf-form-page .x-padding,
+  .dcf-form-page .x-container {
+    padding-right: 7px !important;
+    padding-left: 7px !important;
+  }
+
+  .dcf-form-page .card-body,
+  .dcf-form-page .x_content {
+    padding: 14px;
+  }
+
+  .dcf-form-page .dcf-form-actions {
+    position: sticky;
+    z-index: 15;
+    bottom: 0;
+    margin-right: -10px !important;
+    margin-left: -10px !important;
+    box-shadow: 0 -8px 18px rgba(0, 57, 77, 0.08);
+  }
+
+  .dcf-form-page .dcf-submit-button {
+    width: 100%;
+  }
+
+  .dcf-form-page .card-footer.dcf-form-actions {
+    margin: 0 !important;
+  }
+}
+
+/* Dashboard edit modals use separate legacy templates, so they receive the
+   same visual language through JS-added classes. Dashboard Form 8 is excluded. */
+.dcf-dashboard-page .dcf-edit-modal {
+  --dcf-form-primary: #024450;
+  --dcf-form-primary-dark: #01343d;
+  --dcf-form-highlight: #167486;
+  --dcf-form-accent: #94be39;
+  --dcf-form-soft: #eaf4f4;
+  --dcf-form-text: #163c42;
+  --dcf-form-muted: #657b72;
+  --dcf-form-border: rgba(2, 68, 80, 0.16);
+  color: var(--dcf-form-text);
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-dialog {
+  width: min(94vw, 1440px) !important;
+  max-width: min(94vw, 1440px) !important;
+  margin: 24px auto;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-content {
+  overflow: hidden;
+  background: #f6f9ff;
+  border: 0;
+  border-radius: 18px !important;
+  box-shadow: 0 22px 60px rgba(0, 44, 57, 0.25);
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-header {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  padding: 18px 24px;
+  color: #fff;
+  background: linear-gradient(
+    120deg,
+    var(--dcf-form-primary-dark),
+    var(--dcf-form-primary) 68%,
+    var(--dcf-form-highlight)
+  ) !important;
+  border: 0;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-title {
+  margin: 0;
+  color: #fff !important;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-title::before {
+  content: "\f044";
+  margin-right: 10px;
+  color: #c9e879;
+  font-family: FontAwesome;
+  font-weight: normal;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-header .close {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin: 0 0 0 auto;
+  padding: 0;
+  place-items: center;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  opacity: 1;
+  text-shadow: none;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-header .close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-body {
+  display: block !important;
+  max-height: calc(100vh - 150px);
+  padding: 20px !important;
+  overflow: auto;
+  background: #f6f9ff !important;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-body > form {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .x-card,
+.dcf-dashboard-page .dcf-edit-modal .card {
+  float: none;
+  width: 100%;
+  margin: 0 0 18px !important;
+  padding: 18px;
+  background: #fff !important;
+  border: 1px solid var(--dcf-form-border);
+  border-radius: 14px !important;
+  box-shadow: 0 7px 22px rgba(0, 57, 77, 0.07) !important;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .x-col.l1:empty,
+.dcf-dashboard-page .dcf-edit-modal .x-col.l1:first-child {
+  display: none;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-section-title {
+  margin: 18px 6px 14px !important;
+  padding: 0 0 10px !important;
+  color: var(--dcf-form-primary-dark) !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--dcf-form-border);
+  font-size: 17px !important;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: left !important;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-section-title::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  margin-right: 9px;
+  vertical-align: -3px;
+  background: var(--dcf-form-accent);
+  border-radius: 4px;
+}
+
+.dcf-dashboard-page .dcf-edit-modal label,
+.dcf-dashboard-page .dcf-edit-modal .x-col > span:not(.text-white) {
+  display: inline-block;
+  margin-bottom: 7px;
+  color: var(--dcf-form-text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.dcf-dashboard-page .dcf-edit-modal input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not([type="submit"]),
+.dcf-dashboard-page .dcf-edit-modal select,
+.dcf-dashboard-page .dcf-edit-modal textarea,
+.dcf-dashboard-page .dcf-edit-modal .form-control,
+.dcf-dashboard-page .dcf-edit-modal .form-select,
+.dcf-dashboard-page .dcf-edit-modal .dropdown-check-list .anchor,
+.dcf-dashboard-page .dcf-edit-modal .choices__inner {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  color: var(--dcf-form-text);
+  background: #fff;
+  border: 1px solid rgba(2, 68, 80, 0.22) !important;
+  border-radius: 9px !important;
+  box-shadow: none;
+  font-size: 13px;
+}
+
+.dcf-dashboard-page .dcf-edit-modal textarea {
+  min-height: 100px;
+}
+
+.dcf-dashboard-page .dcf-edit-modal input:focus,
+.dcf-dashboard-page .dcf-edit-modal select:focus,
+.dcf-dashboard-page .dcf-edit-modal textarea:focus,
+.dcf-dashboard-page .dcf-edit-modal .choices.is-focused .choices__inner {
+  border-color: var(--dcf-form-highlight) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(22, 116, 134, 0.12) !important;
+}
+
+.dcf-dashboard-page .dcf-edit-modal input[readonly],
+.dcf-dashboard-page .dcf-edit-modal textarea[readonly],
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-readonly {
+  color: var(--dcf-form-primary-dark);
+  background: var(--dcf-form-soft) !important;
+  font-weight: 700;
+}
+
+.dcf-dashboard-page .dcf-edit-modal input[type="checkbox"],
+.dcf-dashboard-page .dcf-edit-modal input[type="radio"] {
+  accent-color: var(--dcf-form-highlight);
+}
+
+.dcf-dashboard-page .dcf-edit-modal .x-table-responsive-wrap,
+.dcf-dashboard-page .dcf-edit-modal .table-responsive,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table-wrap {
+  margin: 10px 0 18px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid var(--dcf-form-border);
+  border-radius: 11px;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table {
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--dcf-form-text);
+  background: #fff;
+  border: 0 !important;
+  border-collapse: separate !important;
+  border-spacing: 0;
+  font-size: 12px;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table th,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table td {
+  padding: 10px;
+  border: 0 !important;
+  border-right: 1px solid rgba(2, 68, 80, 0.09) !important;
+  border-bottom: 1px solid rgba(2, 68, 80, 0.09) !important;
+  vertical-align: middle;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table th,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table tr:first-child > th {
+  color: #fff !important;
+  background: var(--dcf-form-primary) !important;
+  font-weight: 700;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table tr:nth-child(even) td {
+  background: rgba(234, 244, 244, 0.45);
+}
+
+.dcf-dashboard-page .dcf-edit-modal .btn,
+.dcf-dashboard-page .dcf-edit-modal input[type="submit"] {
+  min-height: 40px;
+  padding: 9px 18px;
+  border-radius: 9px !important;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-save,
+.dcf-dashboard-page .dcf-edit-modal .btn-primary,
+.dcf-dashboard-page .dcf-edit-modal input[type="submit"] {
+  color: #fff;
+  background: var(--dcf-form-primary) !important;
+  border-color: var(--dcf-form-primary) !important;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-footer {
+  padding: 14px 20px;
+  background: #fff !important;
+  border-top: 1px solid var(--dcf-form-border);
+}
+
+@media (max-width: 992px) {
+  .dcf-dashboard-page .dcf-edit-modal .modal-dialog {
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    margin: 10px auto;
+  }
+
+  .dcf-dashboard-page .dcf-edit-modal .x-col[class*="l"] {
+    width: 50%;
+  }
+}
+
+@media (max-width: 700px) {
+  .dcf-dashboard-page .dcf-edit-modal .modal-body {
+    padding: 10px !important;
+  }
+
+  .dcf-dashboard-page .dcf-edit-modal .x-card {
+    padding: 10px;
+  }
+
+  .dcf-dashboard-page .dcf-edit-modal .x-col[class*="l"] {
+    width: 100%;
+  }
+}
+
+/* Keep table add-row controls visible over dark teal headers. These rules
+   intentionally follow the generic primary-button rules above. */
+.dcf-form-page button.btn.btn-primary.dcf-add-row-button,
+.dcf-form-page button.dcf-add-row-button,
+.dcf-dashboard-page .dcf-edit-modal button.btn.btn-primary.dcf-add-row-button,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-add-row-button {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #01343d !important;
+  background-color: #ffffff !important;
+  border: 2px solid #94be39 !important;
+  box-shadow: 0 3px 10px rgba(0, 35, 44, 0.28) !important;
+}
+
+.dcf-form-page button.dcf-add-row-button i,
+.dcf-form-page button.dcf-add-row-button .dcf-add-row-label,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-add-row-button i,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-add-row-button .dcf-add-row-label {
+  display: inline-block !important;
+  visibility: visible !important;
+  color: #01343d !important;
+  opacity: 1 !important;
+}
+
+.dcf-form-page button.dcf-add-row-button:hover,
+.dcf-form-page button.dcf-add-row-button:focus,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-add-row-button:hover,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-add-row-button:focus {
+  color: #01343d !important;
+  background-color: #c9e879 !important;
+  border-color: #c9e879 !important;
+}
+
+.dcf-form-page button.btn.dcf-remove-row-button,
+.dcf-form-page button.dcf-remove-row-button,
+.dcf-dashboard-page .dcf-edit-modal button.btn.dcf-remove-row-button,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button {
+  display: inline-flex !important;
+  float: right !important;
+  visibility: visible !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 34px !important;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: -5px 0 -5px 10px !important;
+  padding: 6px 11px !important;
+  color: #9f1d2c !important;
+  background-color: #ffffff !important;
+  border: 2px solid #e35464 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 3px 10px rgba(0, 35, 44, 0.2) !important;
+  opacity: 1 !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dcf-form-page button.dcf-remove-row-button i,
+.dcf-form-page button.dcf-remove-row-button .dcf-remove-row-label,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button i,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button .dcf-remove-row-label {
+  display: inline-block !important;
+  visibility: visible !important;
+  color: #9f1d2c !important;
+  opacity: 1 !important;
+}
+
+.dcf-form-page button.dcf-remove-row-button:hover,
+.dcf-form-page button.dcf-remove-row-button:focus,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button:hover,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button:focus {
+  color: #ffffff !important;
+  background-color: #d9364a !important;
+  border-color: #d9364a !important;
+}
+
+.dcf-form-page button.dcf-remove-row-button:hover i,
+.dcf-form-page button.dcf-remove-row-button:hover .dcf-remove-row-label,
+.dcf-form-page button.dcf-remove-row-button:focus i,
+.dcf-form-page button.dcf-remove-row-button:focus .dcf-remove-row-label,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button:hover i,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button:hover .dcf-remove-row-label,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button:focus i,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button:focus .dcf-remove-row-label {
+  color: #ffffff !important;
+}
+
+.dcf-form-page .dcf-table-group-action,
+.dcf-dashboard-page .dcf-edit-modal .dcf-table-group-action {
+  position: relative;
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 106px;
+}
+
+.dcf-form-page .dcf-table-group-action > span,
+.dcf-dashboard-page .dcf-edit-modal .dcf-table-group-action > span {
+  font-weight: 600;
+}
+
+.dcf-form-page .dcf-table-group-action .dcf-add-row-button,
+.dcf-dashboard-page .dcf-edit-modal .dcf-table-group-action .dcf-add-row-button {
+  position: absolute !important;
+  left: 7px;
+  float: none !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 700px) {
+  .dcf-form-page .dcf-table-group-action,
+  .dcf-dashboard-page .dcf-edit-modal .dcf-table-group-action {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 7px;
+    padding: 7px;
+  }
+
+  .dcf-form-page .dcf-table-group-action .dcf-add-row-button,
+  .dcf-dashboard-page .dcf-edit-modal .dcf-table-group-action .dcf-add-row-button {
+    position: static !important;
+    align-self: flex-start;
+  }
+}
+
+.dcf-form-page .dcf-table-title-action,
+.dcf-dashboard-page .dcf-edit-modal .dcf-table-title-action {
+  position: relative;
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 106px;
+}
+
+.dcf-form-page .dcf-table-title-action > span,
+.dcf-dashboard-page .dcf-edit-modal .dcf-table-title-action > span {
+  color: #fff;
+  font-weight: 700;
+}
+
+.dcf-form-page .dcf-table-title-action .dcf-add-row-button,
+.dcf-dashboard-page .dcf-edit-modal .dcf-table-title-action .dcf-add-row-button {
+  position: absolute !important;
+  right: auto !important;
+  left: 7px !important;
+  float: none !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 700px) {
+  .dcf-form-page .dcf-table-title-action,
+  .dcf-dashboard-page .dcf-edit-modal .dcf-table-title-action {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 7px;
+    padding: 7px;
+  }
+
+  .dcf-form-page .dcf-table-title-action .dcf-add-row-button,
+  .dcf-dashboard-page .dcf-edit-modal .dcf-table-title-action .dcf-add-row-button {
+    position: static !important;
+    align-self: flex-start;
+  }
+}
+
+/* Simple modern DCF form pass. Keep the legacy form structure, but give it a
+   clean RAPID-style surface using the requested #024450 teal. */
+body.dcf-form-page {
+  --dcf-primary: #024450;
+  --dcf-primary-dark: #01343d;
+  --dcf-primary-soft: #edf6f7;
+  --dcf-highlight: #0c6a78;
+  --dcf-accent: #8fb83d;
+  --dcf-page: #f5f8fa;
+  --dcf-text: #1f3034;
+  --dcf-muted: #627276;
+  --dcf-border: #d7e1e4;
+  --dcf-shadow: 0 10px 28px rgba(2, 68, 80, 0.08);
+  color: var(--dcf-text);
+}
+
+.dcf-form-page .dcf-form-shell {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+
+.dcf-form-page .dcf-form-hero {
+  display: none !important;
+}
+
+.dcf-form-page .dcf-legacy-form-heading,
+.dcf-form-page .dcf-original-form-heading {
+  display: block !important;
+  margin: 10px 0 14px !important;
+  padding: 11px 14px !important;
+  color: #ffffff !important;
+  background: #024450 !important;
+  border-radius: 10px !important;
+  font-size: 18px !important;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.dcf-form-page #head_note:empty {
+  display: none !important;
+}
+
+.dcf-form-page .x-card,
+.dcf-form-page .card,
+.dcf-form-page .x_panel,
+.dcf-dashboard-page .dcf-edit-modal .x-card,
+.dcf-dashboard-page .dcf-edit-modal .card {
+  background: #ffffff !important;
+  border: 1px solid var(--dcf-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--dcf-shadow) !important;
+}
+
+.dcf-form-page .x-card {
+  padding: 16px !important;
+}
+
+.dcf-form-page .card-header,
+.dcf-form-page .section-divider,
+.dcf-form-page .bg-teal,
+.dcf-dashboard-page .dcf-edit-modal .modal-header,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table th,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table tr:first-child > th {
+  color: #ffffff !important;
+  background: #024450 !important;
+  border-color: #024450 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+.dcf-form-page .dcf-form-section-title,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-section-title {
+  margin: 20px 0 12px !important;
+  padding: 10px 14px !important;
+  color: #ffffff !important;
+  background: #024450 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  font-size: 16px !important;
+  font-weight: 700;
+  text-align: center !important;
+}
+
+.dcf-form-page .dcf-form-section-title::before,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-section-title::before {
+  display: none !important;
+}
+
+.dcf-form-page .dcf-form-notice {
+  margin: 10px 0 15px !important;
+  padding: 10px 12px !important;
+  color: #024450 !important;
+  background: var(--dcf-primary-soft) !important;
+  border: 1px solid #cfe0e4 !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+}
+
+.dcf-form-page label,
+.dcf-form-page .form-label,
+.dcf-form-page .x-col > span:not(.badge),
+.dcf-dashboard-page .dcf-edit-modal label,
+.dcf-dashboard-page .dcf-edit-modal .x-col > span:not(.text-white) {
+  color: var(--dcf-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dcf-form-page input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]),
+.dcf-form-page select,
+.dcf-form-page textarea,
+.dcf-form-page .form-control,
+.dcf-form-page .form-select,
+.dcf-form-page .dropdown-check-list .anchor,
+.dcf-form-page .choices__inner,
+.dcf-dashboard-page .dcf-edit-modal input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not([type="submit"]),
+.dcf-dashboard-page .dcf-edit-modal select,
+.dcf-dashboard-page .dcf-edit-modal textarea,
+.dcf-dashboard-page .dcf-edit-modal .form-control,
+.dcf-dashboard-page .dcf-edit-modal .form-select,
+.dcf-dashboard-page .dcf-edit-modal .dropdown-check-list .anchor,
+.dcf-dashboard-page .dcf-edit-modal .choices__inner {
+  min-height: 36px;
+  padding: 7px 10px;
+  color: var(--dcf-text);
+  background: #ffffff;
+  border: 1px solid #cbd7db !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  font-size: 13px;
+}
+
+.dcf-form-page input:focus,
+.dcf-form-page select:focus,
+.dcf-form-page textarea:focus,
+.dcf-dashboard-page .dcf-edit-modal input:focus,
+.dcf-dashboard-page .dcf-edit-modal select:focus,
+.dcf-dashboard-page .dcf-edit-modal textarea:focus {
+  border-color: #024450 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(2, 68, 80, 0.12) !important;
+}
+
+.dcf-form-page .dcf-readonly-field,
+.dcf-form-page input[readonly],
+.dcf-form-page textarea[readonly],
+.dcf-dashboard-page .dcf-edit-modal input[readonly],
+.dcf-dashboard-page .dcf-edit-modal textarea[readonly],
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-readonly {
+  background: #eef3f4 !important;
+  color: #024450;
+  font-weight: 600;
+}
+
+.dcf-form-page .form-check {
+  min-height: 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.dcf-form-page .dcf-form-table-wrap,
+.dcf-form-page .x-table-responsive-wrap,
+.dcf-form-page .table-responsive,
+.dcf-dashboard-page .dcf-edit-modal .x-table-responsive-wrap,
+.dcf-dashboard-page .dcf-edit-modal .table-responsive,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table-wrap {
+  background: #ffffff;
+  border: 1px solid var(--dcf-border);
+  border-radius: 10px;
+}
+
+.dcf-form-page .dcf-form-table,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table {
+  border-collapse: collapse !important;
+  color: var(--dcf-text);
+}
+
+.dcf-form-page .dcf-form-table th,
+.dcf-form-page .dcf-form-table thead td,
+.dcf-form-page .dcf-form-table tr:first-child > th {
+  color: #ffffff !important;
+  background: #024450 !important;
+}
+
+.dcf-form-page .dcf-form-table th,
+.dcf-form-page .dcf-form-table td,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table th,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table td {
+  padding: 8px;
+  border: 1px solid #dbe4e7 !important;
+}
+
+.dcf-form-page .dcf-form-table tr:nth-child(even) td,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-table tr:nth-child(even) td {
+  background: #f8fbfb;
+}
+
+.dcf-form-page .btn,
+.dcf-dashboard-page .dcf-edit-modal .btn,
+.dcf-dashboard-page .dcf-edit-modal input[type="submit"] {
+  min-height: 34px;
+  padding: 6px 12px;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  font-size: 13px;
+  transform: none !important;
+}
+
+.dcf-form-page .btn:hover,
+.dcf-form-page .btn:focus {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.dcf-form-page .btn-primary,
+.dcf-form-page .dcf-submit-button,
+.dcf-dashboard-page .dcf-edit-modal .dcf-edit-save,
+.dcf-dashboard-page .dcf-edit-modal .btn-primary,
+.dcf-dashboard-page .dcf-edit-modal input[type="submit"] {
+  color: #ffffff;
+  background: #024450 !important;
+  border-color: #024450 !important;
+}
+
+.dcf-form-page .btn-primary:hover,
+.dcf-form-page .dcf-submit-button:hover,
+.dcf-dashboard-page .dcf-edit-modal .btn-primary:hover,
+.dcf-dashboard-page .dcf-edit-modal input[type="submit"]:hover {
+  background: #0c6a78 !important;
+  border-color: #0c6a78 !important;
+}
+
+.dcf-form-page .dcf-form-actions {
+  min-height: 0;
+  margin: 15px 0 0 !important;
+  padding: 10px 0 0 !important;
+  background: transparent;
+  border-top: 1px solid var(--dcf-border);
+  border-radius: 0;
+}
+
+.dcf-form-page button.btn.btn-primary.dcf-add-row-button,
+.dcf-form-page button.dcf-add-row-button,
+.dcf-dashboard-page .dcf-edit-modal button.btn.btn-primary.dcf-add-row-button,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-add-row-button,
+.dcf-form-page button.btn.dcf-remove-row-button,
+.dcf-form-page button.dcf-remove-row-button,
+.dcf-dashboard-page .dcf-edit-modal button.btn.dcf-remove-row-button,
+.dcf-dashboard-page .dcf-edit-modal button.dcf-remove-row-button {
+  min-height: 30px !important;
+  padding: 5px 10px !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-content {
+  border-radius: 12px !important;
+  box-shadow: 0 18px 45px rgba(2, 68, 80, 0.16);
+}
+
+.dcf-dashboard-page .dcf-edit-modal .modal-body {
+  background: #ffffff !important;
+}
+
+@media (max-width: 700px) {
+  .dcf-form-page .dcf-form-actions {
+    position: static;
+    box-shadow: none;
+  }
+}

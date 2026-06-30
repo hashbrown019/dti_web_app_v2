@@ -122,6 +122,69 @@
           background-color: #ffffff;
         }
 
+        .sectoral-dropdown-check-list {
+          position: relative;
+          width: 100%;
+        }
+
+        .sectoral-dropdown-check-list .anchor {
+          position: relative;
+          display: block;
+          width: 100%;
+          min-height: 45px;
+          padding: 9px 36px 9px 15px;
+          border: 2px solid #e5e7eb;
+          background-color: #ffffff;
+          cursor: pointer;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .sectoral-dropdown-check-list .anchor::after {
+          position: absolute;
+          content: "";
+          right: 14px;
+          top: 50%;
+          width: 8px;
+          height: 8px;
+          border-right: 2px solid #333;
+          border-bottom: 2px solid #333;
+          transform: translateY(-70%) rotate(45deg);
+        }
+
+        .sectoral-dropdown-check-list .items {
+          display: none;
+          position: absolute;
+          z-index: 1000;
+          width: 100%;
+          margin: 0;
+          padding: 6px;
+          border: 1px solid #ced4da;
+          background-color: #ffffff;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .sectoral-dropdown-check-list.visible .items {
+          display: block;
+        }
+
+        .sectoral-dropdown-check-list .items li {
+          list-style: none;
+          padding: 4px 6px;
+        }
+
+        .sectoral-dropdown-check-list .items label {
+          display: block;
+          margin: 0;
+          cursor: pointer;
+          font-weight: normal;
+        }
+
+        .sectoral-dropdown-check-list .items input {
+          margin-right: 8px;
+        }
+
         .card {
           width: 100%;
           padding: 12px 15px;
@@ -234,14 +297,106 @@
                 </div>
                 <div class="col-md-2">
                     <label>Sectoral Data</label>
-                    <select class="FORM_DATA_A form-select" id="frmer_prof_@_basic_Info_@_sectoral_data">
-                        <option value="">select option</option>
-                        <option>Youth</option>
-                        <option>IP</option>
-                        <option>PWD</option>
-                        <option>SC</option>
-                    </select>
+                    <div id="sectoral_data_dropdown" class="sectoral-dropdown-check-list" tabindex="0">
+                        <span class="anchor">Choose your option</span>
+                        <ul class="items">
+                            <li><label><input type="checkbox" value="Youth"> Youth</label></li>
+                            <li><label><input type="checkbox" value="IP"> IP</label></li>
+                            <li><label><input type="checkbox" value="PWD"> PWD</label></li>
+                            <li><label><input type="checkbox" value="SC"> SC</label></li>
+                        </ul>
+                    </div>
+                    <input type="hidden" class="FORM_DATA_A"
+                        id="frmer_prof_@_basic_Info_@_sectoral_data" value="">
                 </div>
+                <script>
+                    (function () {
+                        function initSectoralDataDropdown() {
+                            var checkList = document.getElementById("sectoral_data_dropdown");
+                            var hiddenInput = document.getElementById("frmer_prof_@_basic_Info_@_sectoral_data");
+                            if (!checkList || !hiddenInput || checkList.dataset.initialized === "true") return;
+
+                            checkList.dataset.initialized = "true";
+                            var anchor = checkList.querySelector(".anchor");
+                            var checkboxes = checkList.querySelectorAll("input[type='checkbox']");
+                            var nativeValue = Object.getOwnPropertyDescriptor(
+                                HTMLInputElement.prototype,
+                                "value"
+                            );
+
+                            function selectedValues() {
+                                return Array.from(checkboxes)
+                                    .filter(function (checkbox) { return checkbox.checked; })
+                                    .map(function (checkbox) { return checkbox.value; });
+                            }
+
+                            function renderFromValue(value) {
+                                var storedValues = String(value || "")
+                                    .split(",")
+                                    .map(function (item) { return item.trim(); })
+                                    .filter(Boolean);
+
+                                checkboxes.forEach(function (checkbox) {
+                                    checkbox.checked = storedValues.indexOf(checkbox.value) !== -1;
+                                });
+                                anchor.textContent = storedValues.length
+                                    ? storedValues.join(", ")
+                                    : "Choose your option";
+                            }
+
+                            function saveSelection() {
+                                var values = selectedValues();
+                                nativeValue.set.call(hiddenInput, values.join(", "));
+                                anchor.textContent = values.length
+                                    ? values.join(", ")
+                                    : "Choose your option";
+                            }
+
+                            Object.defineProperty(hiddenInput, "value", {
+                                configurable: true,
+                                get: function () {
+                                    return nativeValue.get.call(hiddenInput);
+                                },
+                                set: function (value) {
+                                    nativeValue.set.call(hiddenInput, value || "");
+                                    renderFromValue(value);
+                                }
+                            });
+
+                            anchor.addEventListener("click", function (event) {
+                                checkList.classList.toggle("visible");
+                                event.stopPropagation();
+                            });
+
+                            checkList.addEventListener("keydown", function (event) {
+                                if (event.key === "Enter" || event.key === " ") {
+                                    event.preventDefault();
+                                    checkList.classList.toggle("visible");
+                                } else if (event.key === "Escape") {
+                                    checkList.classList.remove("visible");
+                                }
+                            });
+
+                            checkboxes.forEach(function (checkbox) {
+                                checkbox.addEventListener("change", saveSelection);
+                            });
+
+                            document.addEventListener("click", function (event) {
+                                if (!checkList.contains(event.target)) {
+                                    checkList.classList.remove("visible");
+                                }
+                            });
+
+                            renderFromValue(nativeValue.get.call(hiddenInput));
+                        }
+
+                        if (document.readyState === "loading") {
+                            document.addEventListener("DOMContentLoaded", initSectoralDataDropdown);
+                        } else {
+                            initSectoralDataDropdown();
+                        }
+                    })();
+                </script>
             </form>
         </div>
     </div>

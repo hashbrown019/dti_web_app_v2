@@ -69,7 +69,7 @@ class _main:
 			URL_ARGS=request.args,
 			USER_DATA = session["USER_DATA"][0],
 			staff_list=dash_api.get_area_staff() if content_only else None,
-			databases=dash_api.get_databases() if content_only and "core-system-control" in module else None,
+			databases=dash_api.get_databases() if content_only and "core-personal-forms" in module else None,
 			dashboard_data=displayform2() if content_only and is_dashboard else None,
 			fmi_data=fmi_dashboard_data() if content_only and is_dashboard else None,
 			fmi_data_chart=fmi_dashboard_data_chart() if content_only and is_dashboard else None,

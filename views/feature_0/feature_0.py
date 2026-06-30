@@ -1116,6 +1116,20 @@ class Filter:
 				table, col, session["USER_DATA"][0]["id"], val
 			)
 		else:  # UPDATE
+			if table == "excel_import_form_a":
+				current_user_id = str(session["USER_DATA"][0]["id"])
+				owner_rows = rapid_mysql.select(
+					"SELECT `user_id` FROM `excel_import_form_a` WHERE `id`='{}' LIMIT 1;".format(rec_id.replace("'", "''"))
+				)
+				if not owner_rows:
+					return jsonify({"status": "failed", "msg": "Profile not found.", "id": rec_id}), 404
+				if str(owner_rows[0].get("user_id")) != current_user_id:
+					return jsonify({
+						"status": "failed",
+						"msg": "View only. Only the owner can edit this profile.",
+						"id": rec_id
+					}), 403
+
 			for k, v in form_data.items():
 				args += ",`{}`='{}'".format(k, v.replace("'", "''"))
 			sql = "UPDATE `{}` SET {} ,date_modified=CURRENT_TIMESTAMP WHERE `id`='{}';".format(

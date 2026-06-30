@@ -175,6 +175,21 @@
 		}
 	}
 
+	function setSelectValueByTrim(element, value) {
+		const rawValue = (value ?? "").toString()
+		element.value = rawValue
+		if (element.value === rawValue) return
+
+		const normalizedValue = rawValue.trim().toLowerCase()
+		for (let optionIndex = 0; optionIndex < element.options.length; optionIndex++) {
+			const option = element.options[optionIndex]
+			if ((option.value ?? "").toString().trim().toLowerCase() === normalizedValue) {
+				element.value = option.value
+				return
+			}
+		}
+	}
+
 	function load_data(record_id,table,class_name){
 		// http://127.0.0.1:5000/dcf/form8?id=1&table=form8
 		$send({
@@ -220,13 +235,13 @@
 							try{
 								if(CHOICES_SELECT[x_ins[index].id] != undefined){
 									// alert("kamown")
-									var _val = res[x_ins[index].id].split(",")
+									var _val = (res[x_ins[index].id] ?? "").toString().split(",").map(val => val.trim()).filter(val => val.length)
 									CHOICES_SELECT[x_ins[index].id].setValue(_val);
 									x_ins[index].value = res[x_ins[index].id]
 
 								}else{
 									// println(x_ins[index].classList)
-									x_ins[index].value = res[x_ins[index].id]
+									setSelectValueByTrim(x_ins[index], res[x_ins[index].id])
 								}
 							}catch(err){
 								warnprintln(x_ins[index].id + " ||| " + err)
@@ -305,6 +320,9 @@ function submit_form(class_name,table, url){
 		}
 		else{
 			VAL = x_ins[index].value
+		}
+		if (x_ins[index].tagName === "SELECT") {
+			VAL = String(VAL || "").trim()
 		}
 		form_data[x_ins[index].id] =  VAL
 	}

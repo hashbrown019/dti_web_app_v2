@@ -74,6 +74,20 @@ def set_data_b(table):
             table, col, session["USER_DATA"][0]["id"], val
         )
     else:  # UPDATE
+        if table == "form_b":
+            safe_id = rec_id.replace("'", "''")
+            owner_rows = rapid_mysql.select(
+                "SELECT `uploaded_by` FROM `form_b` WHERE `id`='{}' LIMIT 1;".format(safe_id)
+            )
+            if not owner_rows:
+                return jsonify({"status": "failed", "msg": "Profile not found.", "id": rec_id}), 404
+            if str(owner_rows[0].get("uploaded_by")) != str(session["USER_DATA"][0]["id"]):
+                return jsonify({
+                    "status": "failed",
+                    "msg": "View only. Only the owner can edit this Form B profile.",
+                    "id": rec_id
+                }), 403
+
         for k, v in form_data.items():
             args += ",`{}`='{}'".format(k, v.replace("'", "''"))
         sql = "UPDATE `{}` SET {} ,date_modified=CURRENT_TIMESTAMP WHERE `id`='{}';".format(
@@ -103,7 +117,8 @@ def get_list_fo():
 		`form_b`.`types_of_organization`,
 		`form_b`.`registering_agencies`,
 		`users`.`name` as 'inputed_by',
-		`users`.`rcu` as 'rcu'
+		`users`.`rcu` as 'rcu',
+		`form_b`.`uploaded_by`
 	FROM `form_b` 
 	INNER JOIN `users` ON `form_b`.`uploaded_by` = `users`.`id` {} 
 	ORDER BY `form_b`.`id` DESC;'''.format(Filter.position_data_filter())
@@ -291,7 +306,20 @@ def get_ind_fo():
 @c.login_auth_web()
 def delete_item():
 	ids = request.form['id']
-	sql_form = "DELETE FROM `form_b` WHERE `id`={};".format(ids)
+	safe_id = ids.replace("'", "''")
+	owner_rows = rapid_mysql.select(
+		"SELECT `uploaded_by` FROM `form_b` WHERE `id`='{}' LIMIT 1;".format(safe_id)
+	)
+	if not owner_rows:
+		return jsonify({"status": "failed", "msg": "Profile not found.", "id": ids}), 404
+	if str(owner_rows[0].get("uploaded_by")) != str(session["USER_DATA"][0]["id"]):
+		return jsonify({
+			"status": "failed",
+			"msg": "View only. Only the owner can delete this Form B profile.",
+			"id": ids
+		}), 403
+
+	sql_form = "DELETE FROM `form_b` WHERE `id`='{}';".format(safe_id)
 	ind = rapid_mysql.do(sql_form)
 	return jsonify(ind)
 

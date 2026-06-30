@@ -284,10 +284,10 @@
 		<div class="x-col l3 m6 s12 x-padding">
 			<label class="x-block">RAPID Support</label>
 			<div class="x-row" style="flex-wrap: wrap; gap: 10px;">
-			  <label><input type="checkbox" class="form_data_b rapid_checkbox" value="Seedlings"> Seedlings</label>
-			  <label><input type="checkbox" class="form_data_b rapid_checkbox" value="Tools"> Tools</label><br>
-			  <label><input type="checkbox" class="form_data_b rapid_checkbox" value="Inputs"> Inputs</label>
-			  <label><input type="checkbox" class="form_data_b rapid_checkbox" value="Productive Investments"> Productive Investments</label>
+			  <label><input type="checkbox" class="rapid_checkbox capacity_rapid_checkbox" value="Seedlings"> Seedlings</label>
+			  <label><input type="checkbox" class="rapid_checkbox capacity_rapid_checkbox" value="Tools"> Tools</label><br>
+			  <label><input type="checkbox" class="rapid_checkbox capacity_rapid_checkbox" value="Inputs"> Inputs</label>
+			  <label><input type="checkbox" class="rapid_checkbox capacity_rapid_checkbox" value="Productive Investments"> Productive Investments</label>
 			</div>
 			<!-- Hidden field to capture selections -->
 			<input class="form_data_b" type="hidden" id="rapid_support" >
@@ -305,9 +305,9 @@
 	  
 	  <script>
 		// Script to update hidden field from checkboxes
-		document.querySelectorAll('.rapid_checkbox').forEach(cb => {
+		document.querySelectorAll('.capacity_rapid_checkbox').forEach(cb => {
 		  cb.addEventListener('change', () => {
-			let values = Array.from(document.querySelectorAll('.rapid_checkbox:checked')).map(c => c.value);
+			let values = Array.from(document.querySelectorAll('.capacity_rapid_checkbox:checked')).map(c => c.value);
 			document.getElementById('rapid_support').value = values.join(',');
 		  });
 		});

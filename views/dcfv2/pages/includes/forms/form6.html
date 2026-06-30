@@ -389,6 +389,7 @@
 						])
 						.then(([msmeData, foData]) => {
 							const selectElement = document.getElementById(targetSelectId);
+							const valueToRestore = existingValue || selectElement.value;
 							selectElement.innerHTML = '<option value="">Choose your option</option>';
 
 							if (!filterType || filterType === "") {
@@ -421,8 +422,15 @@
 								});
 							}
 
-							if (existingValue) {
-								selectElement.value = existingValue;
+							if (valueToRestore) {
+								selectElement.value = valueToRestore;
+								if (selectElement.value !== valueToRestore) {
+									const option = document.createElement('option');
+									option.value = valueToRestore;
+									option.textContent = valueToRestore;
+									selectElement.appendChild(option);
+									selectElement.value = valueToRestore;
+								}
 							}
 						})
 						.catch(error => console.error('Error fetching recipient names:', error));
@@ -493,10 +501,13 @@
 						border-collapse: collapse;
 					}
 				</style>
-				<table class="x-table x-container x-table-border" style="border-color: transparent;">
+				<table id="form6_product_development_table" class="x-table x-container x-table-border" style="border-color: transparent;">
 					<tr>
 						<th colspan="4">
-							<center>Outputs for Product Development</center>
+							<div class="dcf-table-title-action">
+								<button type="button" style="float: left;" class="btn btn-primary" onclick="dcf_form6_add_row()"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add</button>
+								<span>Outputs for Product Development</span>
+							</div>
 						</th>
 					</tr>
 
@@ -511,7 +522,7 @@
 
 					<tr>
 						<td>
-							<center><button type="button" style="float: left;" class="btn btn-primary"onclick="add_row2()"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add</button>Name of ProductDeveloped</center>
+							<center>Name of Product Developed</center>
 						</td>
 						<td>
 							<center>Date Launched to Market</center>
@@ -535,8 +546,12 @@
 
 			<script>
             	var k_counter3 = 1
-				function add_row2() {
-					var row2 = form6table2.insertRow(3);
+				function dcf_form6_add_row() {
+					var form6ProductDevelopmentTable = document.getElementById("form6_product_development_table");
+					if (!form6ProductDevelopmentTable) {
+						return;
+					}
+					var row2 = form6ProductDevelopmentTable.insertRow(-1);
 					row2.insertCell(0).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_product_developed_kapown_`+k_counter3+`" type="text" name="form_6_product_developed[]"></td>`
 					row2.insertCell(1).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_date_launched_to_market_kapown_`+k_counter3+`" type="date" name="form_6_date_launched_to_market[]"></td>`
 					row2.insertCell(2).innerHTML = `<td><input class="FORM6_FIELD  x-light-grey x-input" id="form_6_improved_product_kapown_`+k_counter3+`" type="text" name="form_6_improved_product[]"></td>`

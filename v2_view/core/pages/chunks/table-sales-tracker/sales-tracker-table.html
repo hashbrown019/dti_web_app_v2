@@ -197,7 +197,7 @@
           filteredData = [];
           document.querySelector("#salesTrackerTable tbody").innerHTML = `
             <tr>
-              <td colspan="16" class="text-center">No Entries</td>
+              <td colspan="17" class="text-center">No Entries</td>
             </tr>
           `;
           updateTotals([]); // Reset totals to 0
@@ -226,14 +226,14 @@
       Object.entries(totals).forEach(([id, value]) => document.getElementById(id).innerText = value.toLocaleString());
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-  fetchSalesTrackerData();
-});
-
 let salesTrackerRowsPerPage = 15;
 let loggedInUserId;
 let salesTrackerOriginalData = [];
 let salesTrackerFilteredData = [];
+
+function normalizeTrackerId(value) {
+  return value === null || value === undefined ? "" : String(value).trim();
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   fetchSalesTrackerData();
@@ -256,15 +256,17 @@ async function fetchSalesTrackerData() {
     }
 
     const response = await fetch('/get_salesT_data');
-    const data = await response.json();
+    const responseData = await response.json();
+    const data = Array.isArray(responseData) ? responseData : [];
 
     const sessionResponse = await fetch('/mis-v4/get-session');
     const sessionData = await sessionResponse.json();
-    loggedInUserId = sessionData[0]?.id;
+    loggedInUserId = normalizeTrackerId(sessionData[0]?.id);
 
     salesTrackerOriginalData = data.filter(row => {
-      const userMatch = loggedInUserId === 1 || row.upload_by === loggedInUserId;
-      const cpaMatch = !cpaId || row.CPA_id == cpaId;
+      const rowUploaderId = normalizeTrackerId(row.upload_by);
+      const userMatch = loggedInUserId === "1" || rowUploaderId === loggedInUserId;
+      const cpaMatch = !cpaId || normalizeTrackerId(row.CPA_id) === normalizeTrackerId(cpaId);
       return userMatch && cpaMatch;
     });
 
@@ -280,6 +282,16 @@ function renderTable(page = 1) {
   table.innerHTML = "";
   const start = (page - 1) * salesTrackerRowsPerPage;
   const paginatedData = salesTrackerFilteredData.slice(start, start + salesTrackerRowsPerPage);
+
+  if (!paginatedData.length) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="17" class="text-center">No Entries</td>
+      </tr>
+    `;
+    renderPagination(page, salesTrackerRowsPerPage);
+    return;
+  }
 
   paginatedData.forEach(entry => {
     const date = entry.ST_date ? new Date(entry.ST_date).toLocaleDateString() : "";
@@ -317,7 +329,7 @@ function renderTable(page = 1) {
 }
  
     function renderPagination(currentPage, rowsPerPage) {
-      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      const totalPages = Math.ceil(salesTrackerFilteredData.length / rowsPerPage);
       let nav = document.getElementById("pagination");
       if (!nav) {
         nav = document.createElement("nav");
@@ -326,6 +338,9 @@ function renderTable(page = 1) {
         document.querySelector("#salesTrackerTable").parentNode.appendChild(nav);
       }
       nav.innerHTML = "";
+      if (totalPages <= 1) {
+        return;
+      }
       const ul = document.createElement("ul");
       ul.classList.add("pagination");
       const createPageItem = (label, disabled, onClick) => {
@@ -351,15 +366,15 @@ function renderTable(page = 1) {
     }
     document.getElementById("sortButton").addEventListener("click", () => {
       isAscending = !isAscending;
-      filteredData.sort((a, b) => isAscending ? a.ST_id - b.ST_id : b.ST_id - a.ST_id);
+      salesTrackerFilteredData.sort((a, b) => isAscending ? a.ST_id - b.ST_id : b.ST_id - a.ST_id);
       document.getElementById("sortButton").innerText = isAscending ? "Sort ▲" : "Sort ▼";
       renderTable();
     });
     document.getElementById("searchInput").addEventListener("input", (e) => {
       const searchTerm = e.target.value.toLowerCase();
-      filteredData = searchTerm
-        ? originalData.filter(entry => Object.values(entry).some(val => val.toString().toLowerCase().includes(searchTerm)))
-        : [...originalData];
+      salesTrackerFilteredData = searchTerm
+        ? salesTrackerOriginalData.filter(entry => Object.values(entry).some(val => String(val ?? "").toLowerCase().includes(searchTerm)))
+        : [...salesTrackerOriginalData];
       renderTable();
     });
     async function setupCharts() {
@@ -509,7 +524,8 @@ fetchData();
         .then((data) => {
           if (data.status === "success") {
             Swal.fire("Deleted!", "Your record has been deleted.", "success");
-            fetchData(); // Re-fetch data to update the table and charts
+            fetchData(); // Re-fetch data to update the charts
+            fetchSalesTrackerData(); // Re-fetch visible table rows with ownership filter
           } else {
             Swal.fire("Error!", "Failed to delete the record: " + data.message, "error");
           }

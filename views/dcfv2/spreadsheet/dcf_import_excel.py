@@ -48,16 +48,21 @@ def normalize_excel_cell(cell, datemode):
 	return cell.value
 
 def normalize_excel_date(value, datemode):
+	if value in (None, ""):
+		return ""
 	if isinstance(value, (int, float)) and not isinstance(value, bool):
 		try:
 			return xlrd.xldate_as_datetime(value, datemode).strftime("%Y-%m-%d")
 		except (OverflowError, TypeError, ValueError):
-			return value
-	return value
+			return value or ""
+	return value or ""
 
-def read_excel_sheet(sheet, datemode):
+def read_excel_sheet(sheet, datemode, normalize_dates=True):
 	return [
-		[normalize_excel_cell(sheet.cell(r, c), datemode) for c in range(sheet.ncols)]
+		[
+			normalize_excel_cell(sheet.cell(r, c), datemode) if normalize_dates else sheet.cell(r, c).value
+			for c in range(sheet.ncols)
+		]
 		for r in range(sheet.nrows)
 	]
 
@@ -204,14 +209,18 @@ def excel_upload_open2(path):
 	if book is None:
 		return "done:Column Error"
 	sheet = book.sheet_by_index(0)
-	data = read_excel_sheet(sheet, book.datemode)
+	data = read_excel_sheet(sheet, book.datemode, normalize_dates=False)
 	header = data[3]
 	
 	print(sheet.name)
 	if(sheet.name !='form2'):
 		flash(f"Invalid file template!", "error")
 		return "done:Sheet Error"
+	insert = {"response": "done"}
 	for row in data[5:]:
+		if all(value in (None, "") for value in row[:33]):
+			continue
+
 		upload_by = session["USER_DATA"][0]['id']
 		form_2_name_dip = row[0]
 		form_2_rcus = row[1]                                                                       
@@ -223,33 +232,33 @@ def excel_upload_open2(path):
 		form_2_name_owner_manager = row[7]
 		form_2_sex_owner_manager = row[8]
 		form_2_sector_owner_manager = row[9]
-		form_2_business_owner_manager = row[10]
-		form_2_partner_fo_engaged = row[11]
-		form_2_chairperson_manager = row[12]
-		form_2_sex_chairperson_manager = row[13]
-		form_2_sector_chairperson_manager = row[14]
-		form_2_office_address_province = row[15]
-		form_2_total_number_fo = row[16]
-		form_2_male = row[17]
-		form_2_female = row[18]
-		form_2_pwde = row[19]
-		form_2_youth = row[20]
-		form_2_ip = row[21]
-		form_2_sc = row[22]
-		form_2_address_of_fo_members = row[23]
+		form_2_businessname = row[10]
+		form_2_business_owner_manager = row[11]
+		form_2_partner_fo_engaged = row[12]
+		form_2_chairperson_manager = row[13]
+		form_2_sex_chairperson_manager = row[14]
+		form_2_sector_chairperson_manager = row[15]
+		form_2_office_address_province = row[16]
+		form_2_total_number_fo = row[17]
+		form_2_male = row[18]
+		form_2_female = row[19]
+		form_2_pwde = row[20]
+		form_2_youth = row[21]
+		form_2_ip = row[22]
+		form_2_sc = row[23]
+		form_2_address_of_fo_members = ""
 		form_2_hectares_covered = row[24]
 		form_2_cpa_date_signing = normalize_excel_date(row[25], book.datemode)
 		form_2_cpa_date_expiration = normalize_excel_date(row[26], book.datemode)
 		form_2_days_remaining = row[27]
 		form_2_date_renewed = normalize_excel_date(row[28], book.datemode)
 		form_2_notable_cpa_incentives = row[29]
-		form_2_activity_agreements = row[30]
-		form_2_date_conducted = normalize_excel_date(row[31], book.datemode)
-		form_2_remarks_status = row[32]
+		form_2_remarks_status = row[30]
+		form_2_activity_agreements = row[31]
+		form_2_date_conducted = normalize_excel_date(row[32], book.datemode)
 		filename = UPLOAD_NAME
-
-		querycsv = ("INSERT INTO dcf_implementing_unit ( upload_by,form_2_name_dip,form_2_rcus,form_2_pcu,form_2_commodity,form_2_types_of_agreements,form_2_types_of_market,form_2_dip_alignment,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_address_of_fo_members,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,form_2_activity_agreements,form_2_date_conducted,form_2_remarks_status,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
-		format(upload_by,form_2_name_dip,form_2_rcus,form_2_pcu,form_2_commodity,form_2_types_of_agreements,form_2_types_of_market,form_2_dip_alignment,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_address_of_fo_members,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,form_2_activity_agreements,form_2_date_conducted,form_2_remarks_status,filename))
+		querycsv = ("INSERT INTO dcf_implementing_unit ( upload_by,form_2_name_dip,form_2_rcus,form_2_pcu,form_2_commodity,form_2_types_of_agreements,form_2_types_of_market,form_2_dip_alignment,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_businessname,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_address_of_fo_members,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,form_2_activity_agreements,form_2_date_conducted,form_2_remarks_status,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by,form_2_name_dip,form_2_rcus,form_2_pcu,form_2_commodity,form_2_types_of_agreements,form_2_types_of_market,form_2_dip_alignment,form_2_name_owner_manager,form_2_sex_owner_manager,form_2_sector_owner_manager,form_2_businessname,form_2_business_owner_manager,form_2_partner_fo_engaged,form_2_chairperson_manager,form_2_sex_chairperson_manager,form_2_sector_chairperson_manager,form_2_office_address_province,form_2_total_number_fo,form_2_male,form_2_female,form_2_pwde,form_2_youth,form_2_ip,form_2_sc,form_2_address_of_fo_members,form_2_hectares_covered,form_2_cpa_date_signing,form_2_cpa_date_expiration,form_2_days_remaining,form_2_date_renewed,form_2_notable_cpa_incentives,form_2_activity_agreements,form_2_date_conducted,form_2_remarks_status,filename))
 		insert=db.do(querycsv)
 		print(insert)
 		print("===============================================")
@@ -313,21 +322,20 @@ def excel_upload_open3(path):
 		form_3_education = row[13]
 		form_3_expertise = row[14]
 		form_3_prior_rapid_engagements = row[15]
-		form_3_date_registered = normalize_excel_date(row[16], book.datemode)
-		form_3_rapid_implementing_unit = row[17]
-		form_3_nature_engagements = row[18]
-		form_3_suppliers_evaluation = row[19]
-		form_3_other_engagement_outside_rapid = row[20]
-		form_3_lecture_training_seminar = row[21]
-		form_3_training_materials = row[22]
-		form_3_organize_pool = row[23]
-		form_3_demand_basis = row[24]
-		form_3_extension_service_facilitation = row[25]
-		form_3_philgeps_registered = row[26]                                                                                                         
+		form_3_rapid_implementing_unit = row[16]
+		form_3_nature_engagements = row[17]
+		form_3_suppliers_evaluation = row[18]
+		form_3_other_engagement_outside_rapid = row[19]
+		form_3_lecture_training_seminar = row[20]
+		form_3_training_materials = row[21]
+		form_3_organize_pool = row[22]
+		form_3_demand_basis = row[23]
+		form_3_extension_service_facilitation = row[24]
+		form_3_philgeps_registered = row[25]                                                                                                         
 		filename = UPLOAD_NAME
 
-		querycsv = ("INSERT INTO dcf_bdsp_reg ( upload_by,form_3_classification,form_3_types_of_bdsp,form_3_orgfirm,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
-		format(upload_by,form_3_classification,form_3_types_of_bdsp,form_3_orgfirm,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_date_registered,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename))
+		querycsv = ("INSERT INTO dcf_bdsp_reg ( upload_by,form_3_classification,form_3_types_of_bdsp,form_3_orgfirm,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+		format(upload_by,form_3_classification,form_3_types_of_bdsp,form_3_orgfirm,form_3_contact_person,form_3_sex,form_3_office_addr,form_3_email,form_3_breif_description,phone,form_3_choices,form_3_preferred_region,form_3_preferred_province,form_3_name,form_3_education,form_3_expertise,form_3_prior_rapid_engagements,form_3_rapid_implementing_unit,form_3_nature_engagements,form_3_suppliers_evaluation,form_3_other_engagement_outside_rapid,form_3_lecture_training_seminar,form_3_training_materials,form_3_organize_pool,form_3_demand_basis,form_3_extension_service_facilitation,form_3_philgeps_registered,filename))
 		insert=db.do(querycsv)
 		print(insert)
 		print("===============================================")
@@ -957,8 +965,9 @@ def excel_upload_open11(path):
         if not any(str(cell).strip() for cell in row):
             continue  # skip empty rows
 
-        # Pad/trim row to 60 fields
-        row = (row + [""] * 60)[:60]
+        # The Farmer Profile import template has 59 columns. The UI has an
+        # extra "insurance other" field, but the spreadsheet does not.
+        row = (row + [""] * 59)[:59]
 
         (form_11_farmer_region, form_11_farmer_pcu, form_11_farmer_dip_name, form_11_farmer_commodity, form_11_farmer_type_of_enterprise,
          form_11_farmer_name_of_enterprise, form_11_farmer_location, form_11_farmer_beneficiaries_name,
@@ -966,10 +975,10 @@ def excel_upload_open11(path):
 		 farmer_show_savings_section, farmer_show_insurance_section, farmer_show_creditguarantee_section,
 		 farmer_show_paidupcapital_section, farmer_show_inkind_section, farmer_show_cashgrant_section,
 		 farmer_show_cashforwork_section, farmer_show_mortuary_section, farmer_show_digital_section, farmer_show_rapid_section,
-         form_11_farmer_loan_fsp, form_11_farmer_loan_type, form_11_farmer_loan_amount, form_11_farmer_loan_purpose,
-         form_11_farmer_total_loan_amount, form_11_farmer_savings_fsp, form_11_farmer_savings_type,
+         form_11_farmer_loan_fsp, form_11_farmer_loan_type, form_11_farmer_loan_amount, form_11_farmer_total_loan_amount,
+         form_11_farmer_loan_purpose, form_11_farmer_savings_fsp, form_11_farmer_savings_type,
          form_11_farmer_savings_amount, form_11_farmer_insurance_fsp, form_11_farmer_insurance_type,
-         form_11_farmer_insurance_type_other, form_11_farmer_insurance_amount, form_11_farmer_creditguarantee,
+         form_11_farmer_insurance_amount, form_11_farmer_creditguarantee,
          form_11_farmer_creditguarantee_amount, form_11_farmer_paidupcapital, form_11_farmer_with_puc,
          form_11_farmer_paidupcapital_amount, form_11_farmer_inkind_fsp, form_11_farmer_inkind_type,
          form_11_farmer_inkind_with, form_11_farmer_inkind_input, form_11_farmer_cashgrant_fsp,
@@ -979,6 +988,7 @@ def excel_upload_open11(path):
          form_11_farmer_mortuary_with, form_11_farmer_mortuary_amount, form_11_farmer_digital_fsp,
          form_11_farmer_digital_type, form_11_farmer_digital_with, form_11_farmer_digital_amount,
          form_11_farmer_rapid_mg, form_11_farmer_rapid_type) = row
+        form_11_farmer_insurance_type_other = ""
 
         querycsv = f"""
         INSERT INTO dcf_access_financing (
@@ -1044,8 +1054,8 @@ def excel_upload_open11(path):
          form_11_fo_registration_type, others_specify, form_11_fo_lending_members, fo_show_loan_section,
 		 fo_show_equity_section, fo_show_savings_section, fo_show_insurance_section, fo_show_creditguarantee_section, 
 		 fo_show_inkind_section, fo_show_cashgrant_section, fo_show_digital_section, fo_show_rapid_section,
-         form_11_fo_loan_fsp, form_11_fo_loan_type, form_11_fo_loan_amount, form_11_fo_loan_purpose,
-         form_11_fo_total_loan_amount, form_11_fo_equity_availed, form_11_fo_equity_amount, form_11_fo_equity_date,
+         form_11_fo_loan_fsp, form_11_fo_loan_type, form_11_fo_loan_amount, form_11_fo_total_loan_amount,
+         form_11_fo_loan_purpose, form_11_fo_equity_availed, form_11_fo_equity_amount, form_11_fo_equity_date,
          form_11_fo_savings_fsp, form_11_fo_savings_amount, form_11_fo_insurance_fsp, form_11_fo_insurance_amount,
          form_11_fo_credit_guarantee, form_11_fo_credit_guarantee_amount, form_11_fo_inkind_fsp, form_11_fo_inkind_grant,
          form_11_fo_cashgrant_fsp, form_11_fo_cashgrant_amount, form_11_fo_digital_fsp, form_11_fo_digital_yes,

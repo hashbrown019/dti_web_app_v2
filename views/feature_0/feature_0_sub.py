@@ -225,7 +225,20 @@ class _main:
 	def del_profile():
 		if(_main.is_on_session()):
 			ids = request.form["id"]
-			delid = rapid_mysql.do("DELETE FROM `excel_import_form_a` WHERE `id`='{}'; ".format(ids))
+			safe_id = ids.replace("'", "''")
+			owner_rows = rapid_mysql.select(
+				"SELECT `user_id` FROM `excel_import_form_a` WHERE `id`='{}' LIMIT 1;".format(safe_id)
+			)
+			if not owner_rows:
+				return jsonify({"status": "failed", "msg": "Profile not found.", "id": ids}), 404
+			if str(owner_rows[0].get("user_id")) != str(session["USER_DATA"][0]["id"]):
+				return jsonify({
+					"status": "failed",
+					"msg": "View only. Only the owner can delete this profile.",
+					"id": ids
+				}), 403
+
+			delid = rapid_mysql.do("DELETE FROM `excel_import_form_a` WHERE `id`='{}'; ".format(safe_id))
 			return {"id":delid}
 		else:
 			return redirect("/login?force_url=1")

@@ -21,6 +21,16 @@ from views.dcfv2.form_insert import insert_form11 as insertData11
 from views.dcfv2.form_insert import insert_form1 as insertData1
 from views.dcfv2.form_insert import insert_form3 as insertData3
 from views.dcfv2.form_insert import insert_form2 as insertData2
+from views.dcfv2.form_update import update_form1 as update_dataform1
+from views.dcfv2.form_update import update_form2 as update_dataform2
+from views.dcfv2.form_update import update_form3 as update_dataform3
+from views.dcfv2.form_update import update_form4 as update_dataform4
+from views.dcfv2.form_update import update_form5 as update_dataform5
+from views.dcfv2.form_update import update_form6 as update_dataform6
+from views.dcfv2.form_update import update_form7 as update_dataform7
+from views.dcfv2.form_update import update_form9 as update_dataform9
+from views.dcfv2.form_update import update_form10 as update_dataform10
+from views.dcfv2.form_update import update_form11 as update_dataform11
 from views.dcfv2.dashboard import dashboard_count as displayCount
 from views.dcfv2.dashboard import display_dataform as display_dataform
 from modules.Connections import mysql
@@ -150,10 +160,9 @@ def get_msme_names():
 				"FROM form_c "
 				"WHERE reg_businessname IS NOT NULL "
 				"AND TRIM(reg_businessname) != '' "
-				"AND dip_name = %s "
+				"AND dip_name = '{}' "
 				"ORDER BY reg_businessname ASC"
-			)
-			params = [dip_name]
+			).format(sql_value(dip_name))
 		else:
 			# Get all MSME names if no DIP filter is applied
 			query = """
@@ -164,7 +173,7 @@ def get_msme_names():
 				ORDER BY reg_businessname ASC
 			"""
 		
-		result = db.select(query, params) if 'params' in locals() else db.select(query)
+		result = db.select(query)
 		msme_names = [dict(reg_businessname=row['reg_businessname']) for row in result]
 		return jsonify(msme_names)
 	except Exception as e:
@@ -187,12 +196,12 @@ def get_msme_respondents():
 			query = f"""
 				SELECT DISTINCT {name_col} AS respondent{gender_select}
 				FROM form_c
-				WHERE reg_businessname = %s
+				WHERE reg_businessname = '{sql_value(business_name)}'
 				AND {name_col} IS NOT NULL
 				AND TRIM({name_col}) != ''
 				ORDER BY {name_col} ASC
 			"""
-			res = db.select(query, [business_name])
+			res = db.select(query)
 			if isinstance(res, dict) and res.get('response') == 'error':
 				return None
 			if not isinstance(res, list):
@@ -245,10 +254,9 @@ def get_fo_names():
 				"FROM form_b "
 				"WHERE organization_registered_name IS NOT NULL "
 				"AND TRIM(organization_registered_name) != '' "
-				"AND name_of_dip = %s "
+				"AND name_of_dip = '{}' "
 				"ORDER BY organization_registered_name ASC"
-			)
-			params = [dip_name]
+			).format(sql_value(dip_name))
 		else:
 			# Get all FO names if no DIP filter is applied
 			query = """
@@ -259,7 +267,7 @@ def get_fo_names():
 				ORDER BY organization_registered_name ASC
 			"""
 		
-		result = db.select(query, params) if 'params' in locals() else db.select(query)
+		result = db.select(query)
 		fo_names = [dict(organization_registered_name=row['organization_registered_name']) for row in result]
 		return jsonify(fo_names)
 	except Exception as e:
@@ -272,9 +280,9 @@ def get_beneficiary_province():
 		query = (
 			"SELECT business_addr AS province "
 			"FROM form_c "
-			"WHERE reg_businessname = %s LIMIT 1"
-		)
-		res = db.select(query, [safe_name])
+			"WHERE reg_businessname = '{}' LIMIT 1"
+		).format(sql_value(safe_name))
+		res = db.select(query)
 		if isinstance(res, list):
 			return [dict(province=row.get('province', '') or '') for row in res]
 		return []
@@ -283,16 +291,16 @@ def get_beneficiary_province():
 		query = (
 			"SELECT office_business_adrress AS province "
 			"FROM form_b "
-			"WHERE organization_registered_name = %s LIMIT 1"
-		)
-		res = db.select(query, [safe_name])
+			"WHERE organization_registered_name = '{}' LIMIT 1"
+		).format(sql_value(safe_name))
+		res = db.select(query)
 		if isinstance(res, dict) and res.get('response') == 'error':
 			query = (
 				"SELECT office_business_address AS province "
 				"FROM form_b "
-				"WHERE organization_registered_name = %s LIMIT 1"
-			)
-			res = db.select(query, [safe_name])
+				"WHERE organization_registered_name = '{}' LIMIT 1"
+			).format(sql_value(safe_name))
+			res = db.select(query)
 		if isinstance(res, list):
 			return [dict(province=row.get('province', '') or '') for row in res]
 		return []
@@ -335,14 +343,14 @@ def get_pfa_by_coop():
 				)) AS full_name,
 				TRIM(`frmer_prof_@_basic_Info_@_Sex`) AS gender
 			FROM excel_import_form_a
-			WHERE LOWER(TRIM(`frmer_prof_@_Farming_Basic_Info_@_Name_coop`)) = LOWER(%s)
+			WHERE LOWER(TRIM(`frmer_prof_@_Farming_Basic_Info_@_Name_coop`)) = LOWER('{sql_value(safe)}')
 			AND (
 				TRIM(`frmer_prof_@_basic_Info_@_First_name`) <> ''
 				OR TRIM(`frmer_prof_@_basic_Info_@_Last_name`) <> ''
 			)
 			ORDER BY full_name ASC
 		"""
-		result = db.select(query, [safe])
+		result = db.select(query)
 		if not isinstance(result, list):
 			print("PFA query error or no result:", result)
 			return jsonify([])
@@ -779,6 +787,58 @@ def form11_dashboard():
 	form_disp = display_dataform.displayform()
 	count = displayCount.display__()
 	return render_template("form_dashboard/form11_dashboard.html",user_data=session["USER_DATA"][0],**count,**form_disp)
+
+# UPDATE DATA -------------------------------------------------------
+
+@app.route('/updateform1', methods=['POST', 'GET'])
+def updateform1():
+	update_dataform1.updateform1(request)
+	return redirect("/form1_dashboard")
+
+@app.route('/updateform2', methods=['POST', 'GET'])
+def updateform2():
+	update_dataform2.updateform2(request)
+	return redirect("/form2_dashboard")
+
+@app.route('/updateform3', methods=['POST', 'GET'])
+def updateform3():
+	update_dataform3.updateform3(request)
+	return redirect("/form3_dashboard")
+
+@app.route('/updateform4', methods=['POST', 'GET'])
+def updateform4():
+	update_dataform4.updateform4(request)
+	return redirect("/form4_dashboard")
+
+@app.route('/updateform5', methods=['POST', 'GET'])
+def updateform5():
+	update_dataform5.updateform5(request)
+	return redirect("/form5_dashboard")
+
+@app.route('/updateform6', methods=['POST', 'GET'])
+def updateform6():
+	update_dataform6.updateform6(request)
+	return redirect("/form6_dashboard")
+
+@app.route('/updateform7', methods=['POST', 'GET'])
+def updateform7():
+	update_dataform7.updateform7(request)
+	return redirect("/form7_dashboard")
+
+@app.route('/updateform9', methods=['POST', 'GET'])
+def updateform9():
+	update_dataform9.updateform9(request)
+	return redirect("/form9_dashboard")
+
+@app.route('/updateform10', methods=['POST', 'GET'])
+def updateform10():
+	update_dataform10.updateform10(request)
+	return redirect("/form10_dashboard")
+
+@app.route('/updateform11', methods=['POST', 'GET'])
+def updateform11():
+	update_dataform11.updateform11(request)
+	return redirect("/form11_dashboard")
 
 @app.route('/tutorial')
 def tutorial():
@@ -1855,34 +1915,49 @@ def get_data(ids,dbs):
 @c.login_auth_web()
 def set_data(table):
 	form_data = request.form
-	col = "";val = "";args = ""
+	if not re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', table):
+		return jsonify({"status": "failed", "msg": "Invalid table name", "id": {"response": "error", "message": "Invalid table name"}})
 
-	is_exist = len(db.select("SELECT * FROM `{}` WHERE `id` ='{}' ;".format(table,request.form['id'])))
+	table_meta = db.select("SHOW COLUMNS FROM `{}`;".format(table))
+	table_columns = [row["Field"] for row in table_meta]
+	date_columns = {
+		row["Field"]
+		for row in table_meta
+		if "date" in str(row.get("Type", "")).lower() or "time" in str(row.get("Type", "")).lower()
+	}
+	data = {key: value for key, value in form_data.items() if key in table_columns}
+	data = {key: (None if key in date_columns and value == "" else value) for key, value in data.items()}
+	record_id = data.get("id", "")
+
+	if "id" not in table_columns:
+		return jsonify({"status": "failed", "msg": "Invalid table: missing id column", "id": {"response": "error", "message": "Invalid table: missing id column"}})
+
+	is_exist = len(db.select("SELECT * FROM `{}` WHERE `id` = '{}' ;".format(table, record_id.replace("'", "''"))))
 	if(is_exist==0):
 		print("Adding")
-		for data_ in form_data:
-			col += ",`{}`".format(data_)
-			val += ",'{}'".format(form_data[data_])
-		sql = "INSERT INTO `{}` (`upload_by`,{}) VALUES ('{}',{})".format(table,col[1:], session["USER_DATA"][0]["id"], val[1:])
+		insert_data = {key: value for key, value in data.items() if key != "id"}
+		columns = ["`upload_by`"] + ["`{}`".format(key) for key in insert_data]
+		placeholders = ["%s"] * len(columns)
+		values = [session["USER_DATA"][0]["id"]] + list(insert_data.values())
+		sql = "INSERT INTO `{}` ({}) VALUES ({})".format(table, ",".join(columns), ",".join(placeholders))
 	else:
 		print("Editing")
-		for data_ in form_data:
-			args += ",`{}`='{}'".format(data_,form_data[data_])
-		sql = "UPDATE `{}` SET {},date_modified=CURRENT_TIMESTAMP WHERE `id`='{}';".format(table,args[1:],request.form['id'])
-		pass
+		update_data = {key: value for key, value in data.items() if key != "id"}
+		set_clause = ["`{}` = %s".format(key) for key in update_data]
+		values = list(update_data.values()) + [record_id]
+		sql = "UPDATE `{}` SET {},date_modified=CURRENT_TIMESTAMP WHERE `id` = %s;".format(table, ",".join(set_clause))
 
 
 	last_row_id ="None"
 	status = "Unfinished"
 	msg = "Unfinished"
-	try:
-		last_row_id = db.do(sql)
+	last_row_id = db.do(sql, values)
+	if isinstance(last_row_id, dict) and last_row_id.get("response") == "error":
+		status = "failed"
+		msg = last_row_id.get("message", "Database error")
+	else:
 		status = "success"
 		msg = "Data was added to the database"
-	except Exception as e:
-		status = "failed"
-		msg = "[{}]".format(e)
-		last_row_id ="None"
 	res__ = {"status":status,"msg":msg,"id":last_row_id}
 	return jsonify(res__)
 

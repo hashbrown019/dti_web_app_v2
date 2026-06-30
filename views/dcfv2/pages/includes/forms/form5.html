@@ -911,13 +911,20 @@
             </table>
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
+                    function setSelectValueIfOption(selectId, value) {
+                        const select = document.getElementById(selectId);
+                        if (!select) return;
+                        const hasOption = Array.from(select.options).some(option => option.value === value);
+                        select.value = hasOption ? value : '';
+                    }
+
                     // Set initial values for history fields
                     const typeVal = document.getElementById('mgit_type_of_investment_prod').value;
                     const dateVal = document.getElementById('mgit_date_productive_investment').value;
                     const statusVal = document.getElementById('mgit_status_of_mgrr_prodInv').value;
                     if (typeVal) {
                         const arr = typeVal.split(',');
-                        document.getElementById('mgit_type_of_investment_prod').value = arr[arr.length - 1];
+                        setSelectValueIfOption('mgit_type_of_investment_prod_history', arr[arr.length - 1]);
                     }
                     if (dateVal) {
                         const arr = dateVal.split(',');
@@ -936,6 +943,9 @@
                         const tbody = document.getElementById('mgrr-history-table-prodInv').querySelector('tbody');
                         tbody.innerHTML = '';
                         const maxLen = Math.max(typeArr.length, dateArr.length, statusArr.length);
+                        setSelectValueIfOption('mgit_type_of_investment_prod_history', typeArr[maxLen - 1] || '');
+                        document.getElementById('mgit_date_history_productive_investment').value = dateArr[maxLen - 1] || '';
+                        document.getElementById('mgit_status_mgrr_history_prodInv').value = statusArr[maxLen - 1] || '';
                         for (let i = 0; i < maxLen; i++) {
                             if (
                                 (typeArr[i] && typeArr[i].trim()) ||
@@ -1008,7 +1018,7 @@
                             }
                         });
                     }
-                    updateHistoryField('mgit_type_of_investment_prod', 'mgit_type_of_investment_prod', true);
+                    updateHistoryField('mgit_type_of_investment_prod_history', 'mgit_type_of_investment_prod', true);
                     updateHistoryField('mgit_date_history_productive_investment', 'mgit_date_productive_investment', true);
                     updateHistoryField('mgit_status_mgrr_history_prodInv', 'mgit_status_of_mgrr_prodInv', false);
                 });

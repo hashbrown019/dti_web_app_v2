@@ -77,7 +77,7 @@
 		</div>
 		<div class="x-col l4 x-container x-padding">
 			<label for="phone">Phone/Tel number:</label><br>
-			<input class="x-borderFORM_3_FIELD x-input " id="phone" name="phone">
+			<input class="x-border FORM_3_FIELD x-input " id="phone" name="phone">
 		</div>
 
 		<div class="x-col l9 x-container x-padding">
@@ -176,9 +176,9 @@
 				</thead>
 				<tbody id="main_">
 					<tr id="main_row">
-						<td><input class=" x-light-greyFORM_3_FIELD x-input" type="text" name="form_3_name[]"></td>
-						<td><input class=" x-light-greyFORM_3_FIELD x-input" type="text" name="form_3_education[]"></td>
-						<td><input class=" x-light-greyFORM_3_FIELD x-input" type="text" name="form_3_expertise[]"></td>
+						<td><input class=" x-light-grey FORM_3_FIELD x-input" id="form_3_name_kapown_0" type="text" name="form_3_name[]"></td>
+						<td><input class=" x-light-grey FORM_3_FIELD x-input" id="form_3_education_kapown_0" type="text" name="form_3_education[]"></td>
+						<td><input class=" x-light-grey FORM_3_FIELD x-input" id="form_3_expertise_kapown_0" type="text" name="form_3_expertise[]"></td>
 					</tr>
 
 				</tbody>
@@ -187,6 +187,7 @@
 	</div>
 	<script>
 		let og_row = $ID('main_row').parentNode.innerHTML
+		let form3TeamRowCounter = 1
 		// Find a <table> element with id="myTable":
 		var form3_table_org_comp = document.getElementById("form3_table_org_comp");
 
@@ -195,9 +196,10 @@
 			// Create an empty <tr> element and add it to the 1st position of the form3_table_org_comp:
 			var row = form3_table_org_comp.insertRow(2);
 			// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-			row.insertCell(0).innerHTML = `<td><input class=" x-light-greyFORM_3_FIELD x-input" type="text" name="form_3_name[]"></td>`
-			row.insertCell(1).innerHTML = `<td><input class=" x-light-greyFORM_3_FIELD x-input" type="text" name="form_3_education[]"></td>`
-			row.insertCell(2).innerHTML = `<td><input class=" x-light-greyFORM_3_FIELD x-input" type="text" name="form_3_expertise[]"></td>`
+			const rowIndex = form3TeamRowCounter++
+			row.insertCell(0).innerHTML = `<td><input class=" x-light-grey FORM_3_FIELD x-input" id="form_3_name_kapown_${rowIndex}" type="text" name="form_3_name[]"></td>`
+			row.insertCell(1).innerHTML = `<td><input class=" x-light-grey FORM_3_FIELD x-input" id="form_3_education_kapown_${rowIndex}" type="text" name="form_3_education[]"></td>`
+			row.insertCell(2).innerHTML = `<td><input class=" x-light-grey FORM_3_FIELD x-input" id="form_3_expertise_kapown_${rowIndex}" type="text" name="form_3_expertise[]"></td>`
 
 			// Add some text to the new cells:
 		}
@@ -254,12 +256,12 @@
 	<div class="x-row x-container x-padding">
 		<div class="x-col l7 x-container x-padding">
 			<label class="">Suppliers' Evaluation (Refer to ISO/Procurement ratings)</label>
-			<textarea class=" x-borderFORM_3_FIELD x-input" id="form_3_suppliers_evaluation" placeholder="Write here"
+			<textarea class=" x-border FORM_3_FIELD x-input" id="form_3_suppliers_evaluation" placeholder="Write here"
 				type="text" name="form_3_suppliers_evaluation"></textarea>
 		</div>
 		<div class="x-col l7 x-container x-padding">
 			<label class="">other engagement outside RAPID</label>
-			<textarea class=" x-borderFORM_3_FIELD x-input" id="form_3_other_engagement_outside_rapid"
+			<textarea class=" x-border FORM_3_FIELD x-input" id="form_3_other_engagement_outside_rapid"
 				name="form_3_other_engagement_outside_rapid" placeholder="Write here" type="text"></textarea>
 		</div>
 	</div>

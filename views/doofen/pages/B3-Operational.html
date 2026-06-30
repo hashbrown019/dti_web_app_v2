@@ -63,7 +63,7 @@
 									<option value="Processing">Processing (ex. Tablea, roasted coffee, etc.)</option>
 									<option value="Others">Others</option>
 								</select>
-								<input class="form_data_b x-input x-animate-top" id="enterprise_others_ps_dropdown_specify" type="text" placeholder="Others, please specify" style="display: none; margin-top: 8px; width: 100%;">
+								<input class="form_data_b x-input x-animate-top" id="operational_es_specify" type="text" placeholder="Others, please specify" style="display: none; margin-top: 8px; width: 100%;">
 							</div>
 						</div>
 					</div>
@@ -251,10 +251,10 @@
 						<div class="x-col l3 m6 s12 x-padding">
 							<label class="x-block">RAPID Support</label>
 							<div class="x-row" style="flex-wrap: wrap; gap: 15px;">
-								<label><input type="checkbox" class="rapid_checkbox" value="Seedlings"> Seedlings</label>
-								<label><input type="checkbox" class="rapid_checkbox" value="Tools"> Tools</label><br>
-								<label><input type="checkbox" class="rapid_checkbox" value="Inputs"> Inputs</label>
-								<label><input type="checkbox" class="rapid_checkbox" value="Productive Investments"> Productive Investments</label>
+								<label><input type="checkbox" class="rapid_checkbox operational_rapid_checkbox" value="Seedlings"> Seedlings</label>
+								<label><input type="checkbox" class="rapid_checkbox operational_rapid_checkbox" value="Tools"> Tools</label><br>
+								<label><input type="checkbox" class="rapid_checkbox operational_rapid_checkbox" value="Inputs"> Inputs</label>
+								<label><input type="checkbox" class="rapid_checkbox operational_rapid_checkbox" value="Productive Investments"> Productive Investments</label>
 							</div>
 							<!-- Hidden input field -->
 							<input class="form_data_b" type="hidden" id="operational_rapid_support">
@@ -270,14 +270,14 @@
 					  <script>
 						function updateRapidSupport() {
 						  let selected = [];
-						  document.querySelectorAll(".rapid_checkbox:checked").forEach(cb => {
+						  document.querySelectorAll(".operational_rapid_checkbox:checked").forEach(cb => {
 							selected.push(cb.value);
 						  });
 						  document.getElementById("operational_rapid_support").value = selected.join(",");
 						}
 					  
 						// Attach listener
-						document.querySelectorAll(".rapid_checkbox").forEach(cb => {
+						document.querySelectorAll(".operational_rapid_checkbox").forEach(cb => {
 						  cb.addEventListener("change", updateRapidSupport);
 						});
 					  

@@ -73,7 +73,7 @@
             </label>
                 <select class="FORM2_FIELD withother x-border x-select x-border" id="form_2_dip_alignment" name="form_2_dip_alignment" required>
                     <option value="none">Choose your option</option>
-                    <option value="M/A">N/A</option>
+                    <option value="N/A">N/A</option>
                     <option value="Yes">Yes</option>
                     <option value="No DIP Alignment">No</option>
                 </select>
@@ -114,7 +114,7 @@
                     <option value="Sultan Kudarat">Sultan Kudarat</option>
                     <option value="Sarangani">Sarangani</option>
                     <option value="Agusan del Norte">Agusan del Norte</option>
-                    <option value="Agusan del Su">Agusan del Sur</option>
+                    <option value="Agusan del Sur">Agusan del Sur</option>
                     <option value="Surigao del Sur">Surigao del Sur</option>
                     <option value="Maguindanao">Maguindanao</option>
                 </select>
@@ -156,6 +156,8 @@
                     <optgroup label="Coffee">
                         <option value="Coffee - Red Cherries">Red Cherries</option>
                         <option value="Coffee - Green Coffee Beans">Green Coffee Beans</option>
+                        <option value="Coffee - Roasted Coffee">Roasted Coffee</option>
+                        <option value="Coffee - Ground Coffee">Ground Coffee</option>
                     </optgroup>
             
                     <optgroup label="PFN">
@@ -360,26 +362,26 @@
                 <label class=""><span style="color: #007399;" class="tool"  data-tip="Input number of hectares with four decimal places. (example: 143.1433)" tabindex="1"><i class="fa fa-info-circle"></i></span> Hectares Covered:</label>
                 <input class="FORM2_FIELD x-input x-border" id="form_2_hectares_covered" name="form_2_hectares_covered"placeholder="">
             </div>
-            <div class="x-col l2 x-container x-padding">
+            <div class="x-col l3 x-container x-padding">
                 <label for="form_2_cpa_date_signing">Date of CPA Signing:</label>
                 <input class="FORM2_FIELD x-input x-border" type="date" id="form_2_cpa_date_signing" style="width: 100%;"name="form_2_cpa_date_signing" onchange="computeDaysRemaining()">
             </div>
-            <div class="x-col l2 x-container x-padding">
+            <div class="x-col l3 x-container x-padding">
                 <label for="form_2_cpa_date_expiration">CPA Expiration Date:</label>
                 <input class="FORM2_FIELD x-input x-border" type="date" id="form_2_cpa_date_expiration" style="width: 100%"name="form_2_cpa_date_expiration" onchange="computeDaysRemaining()">
             </div>
-            <div class="x-col l2 x-container x-padding">
+            <div class="x-col l3 x-container x-padding">
                 <label for="form_2_days_remaining">Days Remaining:</label>
                 <input oninput="alert('sdsads')" class="FORM2_FIELD x-input x-border" type="number" id="form_2_days_remaining" style="width: 100%;" name="form_2_days_remaining" readonly>
             </div>
-            <div class="x-col l2 x-container x-padding x-hide">
+            <div class="x-col l3 x-container x-padding x-hide">
                 <label class="">Date Renewed:</label>
                 <input class="FORM2_FIELD x-input x-border" id="form_2_date_renewed" name="form_2_date_renewed" type="date" placeholder="">
             </div>
         </div>
 
         <div class="x-row x-container x-padding">
-            <div class="x-col l2 x-container x-padding">
+            <div class="x-col l4 x-container x-padding">
                 <label class="">Notable CPA incentives(Optional entry):</label>
                 <input class="FORM2_FIELD x-input x-border" id="form_2_notable_cpa_incentives" name="form_2_notable_cpa_incentives"
                     style="width: 100%;" type="text" placeholder="">
@@ -411,7 +413,7 @@
                     }
                 </script>
             </div> -->
-            <div class="x-col l7 x-container x-padding" style="width: 55%;">
+            <div class="x-col l8 x-container x-padding">
                 <style>
                     table,
                     th,
@@ -424,8 +426,7 @@
                     <tr>
                         <th colspan="2">
                             <center><button type="button" style="float: left;" class="btn btn-primary"
-                                    onclick="add_row()"><i class="fa fa-plus-circle"></i></button>CPA
-                                Implementation</center>
+                                    onclick="add_row()"><i class="fa fa-plus-circle"></i></button>CPA Implementation</center>
                         </th>
                     </tr>
                     <tr>
@@ -600,6 +601,24 @@
 
         let editMode = false; // Flag for edit detection
 
+        function restoreSelectValue(selectElement, selectedValue) {
+            const value = String(selectedValue || "").trim();
+            if (!selectElement || !value) return;
+
+            selectElement.value = value;
+            if (selectElement.value === value) return;
+
+            const normalizedValue = value.toLowerCase();
+            for (const option of selectElement.options) {
+                if (String(option.value || "").trim().toLowerCase() === normalizedValue) {
+                    selectElement.value = option.value;
+                    return;
+                }
+            }
+
+            selectElement.value = "";
+        }
+
         // === Load DIP Names (optionally filtered by region) ===
         async function populateDipNames(region = null, selectedValue = null) {
             try {
@@ -620,9 +639,7 @@
                 });
 
                 // ✅ Restore the selected DIP name after population (for edit mode)
-                if (selectedValue) {
-                    dipSelect.value = selectedValue;
-                }
+                restoreSelectValue(dipSelect, selectedValue);
 
             } catch (error) {
                 console.error("Error fetching DIP names:", error);
@@ -649,9 +666,7 @@
                 });
 
                 // ✅ Restore FO if already selected (edit mode)
-                if (selectedValue) {
-                    foSelect.value = selectedValue;
-                }
+                restoreSelectValue(foSelect, selectedValue);
 
             } catch (error) {
                 console.error("Error fetching FO names:", error);
@@ -676,17 +691,26 @@
 
         if (recordId) {
             editMode = true;
+            const table = urlParams.get("table") || "dcf_implementing_unit";
 
-            // Wait a bit for json_to_input() to fill the fields before populating
-            setTimeout(() => {
-                const currentRegion = rcuSelect.value;
-                const currentDip = dipSelect.getAttribute("value") || dipSelect.value;
-                const currentFO = foSelect.getAttribute("value") || foSelect.value;
+            fetch(`/get_data/${encodeURIComponent(recordId)}/${encodeURIComponent(table)}`, { method: "POST" })
+                .then(response => response.json())
+                .then(records => {
+                    const record = Array.isArray(records) ? records[0] : null;
+                    if (!record) {
+                        populateDipNames();
+                        populateFONames();
+                        return;
+                    }
 
-                // Load all DIPs first, then restore selected
-                populateDipNames(currentRegion || null, currentDip);
-                populateFONames(currentFO);
-            }, 700);
+                    populateDipNames(record.form_2_rcus || null, record.form_2_name_dip);
+                    populateFONames(record.form_2_partner_fo_engaged);
+                })
+                .catch(error => {
+                    console.error("Error restoring Form 2 edit values:", error);
+                    populateDipNames();
+                    populateFONames();
+                });
         } else {
             populateDipNames();
             populateFONames();

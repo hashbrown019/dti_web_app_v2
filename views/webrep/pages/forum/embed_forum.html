@@ -50,6 +50,40 @@
 	<script src="../static/a_v2_static/vendor/simple-datatables/simple-datatables.js"></script>
 	<script src="../static/a_v2_static/vendor/tinymce/tinymce.min.js"></script>
 	<script src="../static/a_v2_static/vendor/php-email-form/validate.js"></script>
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			overflow: hidden;
+		}
+
+		#nav-tabContent,
+		#nav-discussion,
+		#nav-discussion > .texttheme {
+			height: 100%;
+			min-height: 0;
+		}
+
+		#nav-discussion > .texttheme {
+			display: flex;
+			flex-direction: column;
+		}
+
+		#input_rep_container {
+			flex: 0 0 auto;
+		}
+
+		#reply_container {
+			flex: 1 1 auto;
+			min-height: 0;
+			overflow-y: auto;
+			overflow-x: hidden;
+			padding-right: 4px;
+			padding-bottom: 12px;
+			overscroll-behavior: contain;
+		}
+	</style>
 	<title>MIS Forum | {{forum['topic']}}</title>
 </head>
 
@@ -79,7 +113,7 @@
 					</div>
 				</div>	
 				<!-- Reply -->
-				<div id="reply_container" style="overflow-y: scroll;height: 700px;">
+				<div id="reply_container">
 					<div class="">
 						<div class="">
 							<i class="fa-solid">Loading. . .</i>
