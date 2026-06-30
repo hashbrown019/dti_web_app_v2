@@ -14,7 +14,7 @@ import os
 from modules.Req_Brorn_util import file_from_request
 import urllib.parse
 import requests
-
+import mimetypes
 
 # from PIL import Image
 from io import BytesIO
@@ -289,11 +289,28 @@ class _main:
         
         img = img.replace('C:fakepath', '').replace(" ","_").replace(")","").replace("(","")
         file_path = os.path.join(c.RECORDS, "objects", "webrep", img)
-       
+
+        
+        
+        mime_type, _ = mimetypes.guess_type(file_path)    
         if os.path.exists(file_path):
+            if mime_type:
+                if mime_type.startswith("image"):
+                    # Serve image
+                    return send_file(file_path, mimetype=mime_type)
+                elif mime_type.startswith("video"):
+                    return send_file( "static/img/video_file.png")
+                else:
+                    abort(415)  # Unsupported Media Type
+            else:
+                abort(415)  # Unknown type
+                
             return send_file(file_path)
         else:
-            return send_file( "static/img/no_img.png")
+            if mime_type and mime_type.startswith("video"):
+                return send_file( "static/img/no_video.png")
+            else:
+                return send_file( "static/img/no_img.png")
             # return send_from_directory(os.path.join(app.static_folder, "img"), "no_img.png")
             # return send_from_directory(os.path.join(app.static_folder, "img", "no_img.png"))
 
