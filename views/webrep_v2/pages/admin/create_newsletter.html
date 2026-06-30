@@ -21,7 +21,8 @@
 		</div>
 		<div id="submit_btn_handler" style="width: 360px;">
 			<button class="btn btn-outline-success btn-sm rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate" data-status="draft"  onclick="submit_newsletter()"><i class="fa fa-pencil"></i> Save As Draft</button>
-			<button class="btn btn-success btn-sm rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate" data-status="published" onclick="submit_newsletter()"><i class="fa fa-paper-plane"></i> Send</button>
+			<button class="btn btn-warning btn-sm rounded-5" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate" data-status="sendtest" onclick="submit_newsletter()"><i class="fa fa-paper-plane"></i> Send Test Email</button>
+            <button class="btn btn-success btn-sm rounded-5 mt-2 w-100" type="submit" data-bs-toggle="modal" data-bs-target="#createPostConfirmation" id="doneCreate" data-status="published" onclick="submit_newsletter()"><i class="fa fa-paper-plane"></i> Publish & Send</button>
 		</div>
 	</div>
 	<hr>
@@ -226,25 +227,37 @@
             const Inline = Quill.import('blots/inline');
             const BlockEmbed = Quill.import('blots/block/embed');
 
-            class ButtonLink extends Inline {
+                class ButtonLink extends Inline {
                 static create(value) {
                     let node = super.create();
+                    node.classList.add('button-link'); // marker
                     node.setAttribute('href', value.url);
                     node.setAttribute('target', '_blank');
+
                     // Apply inline base style
                     let css = ButtonLink.styles[value.style] || ButtonLink.styles['primary'];
                     node.setAttribute('style', css);
 
-                    // Add a marker attribute for hover CSS
+                    // Save style marker
                     node.setAttribute('data-style', value.style);
 
                     return node;
                 }
 
                 static formats(node) {
+                    if (!node.classList.contains('button-link')) return null; // skip normal links
                     return {
-                    url: node.getAttribute('href'),
-                    style: node.getAttribute('data-style')
+                        url: node.getAttribute('href'),
+                        style: node.getAttribute('data-style')
+                    };
+                }
+
+                // This tells Quill how to store the blot in Delta
+                static value(node) {
+                    if (!node.classList.contains('button-link')) return null;
+                    return {
+                        url: node.getAttribute('href'),
+                        style: node.getAttribute('data-style')
                     };
                 }
             }
@@ -256,19 +269,24 @@
 
             ButtonLink.blotName = 'button-link';
             ButtonLink.tagName = 'a'; // still an <a> tag
-            
+            ButtonLink.className = 'button-link'; 
+
             // Define your style mappings
             ButtonLink.styles = {
-                primary: "background:#007bff;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
-                secondary: "background:#6c757d;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
-                success: "background:#28a745;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
-                danger: "background:#dc3545;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
-                warning: "background:#ffc107;color:#000;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
-                info: "background:#17a2b8;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
-                "rapid-lime": "background:#9AC156;color:#024450;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;",
-                "rapid-cyan": "background:#024450;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-size:18px;"
+                primary: "background:#007bff;color:#fff;padding:5px 15px;border-radius:20px;text-decoration:none;font-size:16px;",
+                secondary: "background:#6c757d;color:#fff;padding:5px 15px;border-radius:20px;text-decoration:none;font-size:16px;",
+                success: "background:#28a745;color:#fff;padding:5px 15px;border-radius:20px;text-decoration:none;font-size:16px;",
+                danger: "background:#dc3545;color:#fff;padding:5px 15px;border-radius:20px;text-decoration:none;font-size:16px;",
+                warning: "background:#ffc107;color:#000;padding:5px 15px;border-radius:20px;text-decoration:none;font-size:16px;",
+                info: "background:#17a2b8;color:#fff;padding:5px 15px;border-radius:20px;text-decoration:none;font-size:16px;",
+                "rapid-lime": "background:#9AC156;color:#024450;padding:5px 15px;border-radius:20px;text-decoration:none;font-size:16px;",
+                "rapid-cyan": "background:#024450;color:#fff;padding:5px 15px;border-radius:20px;text-decoration:none;font-size:16px;"
             };
 
+            const Link = Quill.import('formats/link');
+            const Delta = Quill.import('delta');
+            
+            Quill.register(Link, true);
             Quill.register(ButtonLink);
             Quill.register(DividerBlot);
 
@@ -325,6 +343,17 @@
                         }
                     }
                 }
+            });
+
+            quill.clipboard.addMatcher('a', function(node, delta) {
+                // If it's a button-link, keep it as-is
+                if (node.classList.contains('button-link')) {
+                    return new Delta().insert(node.innerText, { 'button-link': {
+                    url: node.getAttribute('href'),
+                    style: node.getAttribute('data-style')
+                    }});
+                }
+                return delta; // fallback for normal links
             });
 
             quill.clipboard.dangerouslyPasteHTML(0,{{ newsletter.content|default("")|tojson|safe }});

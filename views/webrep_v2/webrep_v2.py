@@ -1783,7 +1783,6 @@ class _main:
                 data['recipients'] = ",".join(recipient_emails)
                 data['totalRecipients'] = len(recipient_emails)
             
-            
             for datum in data:
                 columns.append(f"`{datum}`")
                 value = data[datum]
@@ -1829,13 +1828,17 @@ class _main:
         print(">> Newsletter Data:", data)  # Debugging line
         print(">> Newsletter Data Status:", data.get("status"))  # Debugging line
         
-        if ( data.get("status") == "published" ):
+        if ( data.get("status") == "published" or data.get("status") == "sendtest" ):
             # Send the newsletter email to all subscribers
             subject = data.get('subject', 'No Subject')
             content = data.get('content', '')
-            recipients = db.select("SELECT email FROM webrep_subscribers WHERE isActive=1 AND isDeleted=0")
-            recipient_emails = [recipient['email'] for recipient in recipients] 
-
+            
+            if ( data.get("status") == "published" ):
+                recipients = db.select("SELECT email FROM webrep_subscribers WHERE isActive=1 AND isDeleted=0")
+                recipient_emails = [recipient['email'] for recipient in recipients] 
+            else:
+                recipient_emails = ['matolraymund@gmail.com','lgpobadora@gmail.com','raymund_matol@umindanao.edu.ph']
+                
             html = f"""
             <html>
             <style>

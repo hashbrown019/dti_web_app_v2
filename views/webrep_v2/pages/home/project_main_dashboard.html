@@ -49,201 +49,39 @@
     </div>
     <br>
     <br>
-    <div id="carouselAnalyticUpdates" class="carousel carousel-dark slide" data-bs-ride="carousel">
-        <div class="carousel-indicators" style="bottom: -100px;">
-            <button type="button" data-bs-target="#carouselAnalyticUpdates" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselAnalyticUpdates" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselAnalyticUpdates" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="container">
-                    <h5 class="" style="margin-bottom: 20px; color: #7CA03F!important; font-weight: bold;">
-                    <img src="/static/psalm_static/assets/img/icons/Sectors_Smallholder Farmer.png" width="30px" style="margin-right:5px;"/>
-                    SMALL HOLDER FARMERS</h5>
-                    <div class="row">
-                        <div class="col-6 col-lg-4 col-md-6">
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                <table class="analyticUpdateTbl table table-striped" style="font-size: 10px!important;">
-                                    <tbody>
-                                        <tr>
-                                            <th>TOTAL # OF SHFs</th>
-                                            <th class="text-end"><span class="SHF_total">{{ dashboard_data.SHF_Total }}</span></th>
-                                        </tr>
-                                        <tr>
-                                            <th>TOTAL # OF MALE</th>
-                                            <th class="text-end"><span class="SHF_total_male">{{ dashboard_data.SHF_Total_Male }}</span></th>
-                                        </tr>
-                                        <tr>
-                                            <th>TOTAL # OF FEMALE</th>
-                                            <th class="text-end"><span class="SHF_total_female">{{ dashboard_data.SHF_Total_Female }}</span></th>
-                                        </tr>
-                                        <tr>
-                                            <th>TOTAL # OF IP</th>
-                                            <th class="text-end"><span class="SHF_total_ip">{{ dashboard_data.SHF_Total_IP }}</span></th>
-                                        </tr>
-                                        <tr>
-                                            <th>TOTAL # OF YOUTH</th>
-                                            <th class="text-end"><span class="SHF_total_youth">{{ dashboard_data.SHF_Total_PWD }}</span></th>
-                                        </tr>
-                                        <tr>
-                                            <th>TOTAL # OF PWD</th>
-                                            <th class="text-end"><span class="SHF_total_pwd">{{ dashboard_data.SHF_Total_Youth }}</span></th>
-                                        </tr>
-                                        <tr>
-                                            <th>TOTAL # OF SC</th>
-                                            <th class="text-end"><span class="SHF_total_sc">{{ dashboard_data.SHF_Total_SC }}</span></th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="card analyticCard">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="/static/psalm_static/assets/img/icons/Sectors_Smallholder Farmer.png" style="width: 100%;" class="img-fluid" loading="lazy">
                             </div>
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                    <div style="width: 100%; margin: auto;">
-                                        <canvas id="SHF_HH_Head_barchart" height="300"></canvas>
-                                    </div>
-                                </div>
+                            <div class="col-9">
+                                <b class="font-28">78,000 SHFs</b><br>
+                                EOP Targets
                             </div>
-                        </div>  
-                        <div class="col-6 col-lg-5 col-md-6">
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                    <div style="width: 100%; margin: auto;">
-                                        <canvas id="SHF_region_piechart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="SHF_Comm_Dashboard"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container">
-                    <h5 class="" style="margin-bottom: 20px; color: #2C9196!important; font-weight: bold;">
-                    <img src="/static/psalm_static/assets/img/icons/Sectors_Farmer Organization.png" width="30px" style="margin-right:5px;"/>
-                    FARMER ORGANIZATION </h5>
-                    <div class="row">
-                        <div class="col-6 col-lg-4 col-md-6">
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                    <table class="analyticUpdateTbl table table-striped" style="font-size: 10px;">
-                                        <tbody>
-                                            <tr>
-                                                <th>TOTAL # OF FO's</th>
-                                                <th class="text-end"><span class="FO_total">{{ dashboard_data.FO_Total }}</span></th>
-                                            </tr>
-                                            <tr>
-                                                <th>TOTAL # OF COOP</th>
-                                                <th class="text-end"><span class="FO_total_coop">{{ dashboard_data.FO_Total_Coop }}</span></th>
-                                            </tr>
-                                            <tr>
-                                                <th>TOTAL # OF ASSOC</th>
-                                                <th class="text-end"><span class="FO_total_assoc">{{ dashboard_data.FO_Total_Assoc }}</span></th>
-                                            </tr>
-                                            <tr>
-                                                <th>TOTAL # OF MEMBERS</th>
-                                                <th class="text-end"><span class="FO_total_members">{{ dashboard_data.FO_Total_Members }}</span></th>
-                                            </tr>
-                                            <tr>
-                                                <th>TOTAL # OF MALE</th>
-                                                <th class="text-end"><span class="FO_total_male">{{ dashboard_data.FO_Total_Male }}</span></th>
-                                            </tr>
-                                            <tr>
-                                                <th>TOTAL # OF FEMALE</th>
-                                                <th class="text-end"><span class="FO_total_female">{{ dashboard_data.FO_Total_Female }}</span></th>
-                                            </tr>
-                                        </tbody>
-                                    </table> 
-                                </div>
-                            </div>
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                    <div style="width: 100%; margin: auto;">
-                                        <canvas id="FO_TO_barchart" height="300"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-5 col-md-6">
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                    <div style="width: 100%; margin: auto;">
-                                        <canvas id="FO_region_piechart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="FO_Comm_Dashboard"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container">
-                    <h5 class="" style="margin-bottom: 20px; color: #ce8e04!important; font-weight: bold;">
-                    <img src="/static/psalm_static/assets/img/icons/Sectors_MSME.png" width="30px" style="margin-right:5px;"/>
-                    MICRO, SMALL, MEDIUM ENTERPRISES </h5>
-                    <div class="row">
-                        <div class="col-6 col-lg-4 col-md-6">
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                    <table class="analyticUpdateTbl table table-striped" style="font-size: 10px;">
-                                        <tbody>
-                                            <tr>
-                                                <th>TOTAL # OF MSME's</th>
-                                                <th class="text-end"><span class="MSME_total">{{ dashboard_data.MSME_Total }}</span></th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                    <div style="width: 100%; margin: auto;">
-                                        <canvas id="MSME_byType_barchart" height="300"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-5 col-md-6">
-                            <div class="card analyticCard">
-                                <div class="card-body">
-                                    <div style="width: 100%; margin: auto;">
-                                        <canvas id="MSME_region_piechart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="MSME_Comm_Dashboard text-center"></div>
-                        </div>
+                <div class="card analyticCard">
+                    <div class="card-body">
+                        <div id="sample"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <button style="width: 5%!important; " class="carousel-control-prev text-dark" type="button" data-bs-target="#carouselAnalyticUpdates" data-bs-slide="prev">
-            <span style="color: #7CA03F!important;" class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button style="width: 5%!important; " class="carousel-control-next text-dark" type="button" data-bs-target="#carouselAnalyticUpdates" data-bs-slide="next">
-            <span style="color: #7CA03F!important;" class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
+    <br>
 </div>
 </section>
-{% include 'home/project_dashboard.html' %}
 {% endblock %}
 
 {% block addScriptLibrary %}
 		<script type="text/javascript" src="../static/a_v2_static/vendor/chart.js/chart.umd.js"></script>
 		<script type="text/javascript" src="../static/a_v2_static/vendor/echarts/echarts.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/5.3.5/apexcharts.min.js"></script>
 {% endblock%}
 
 
@@ -251,512 +89,94 @@
 <script>
     $(document).ready(function(){
 
+        var options = {
+        series: [75],
+        chart: {
+            height: 350,
+            type: 'radialBar',
+            toolbar: {
+            show: true,
+            },
+        },
+        plotOptions: {
+            radialBar: {
+            startAngle: -135,
+            endAngle: 225,
+            hollow: {
+                margin: 0,
+                size: '70%',
+                background: '#fff',
+                image: undefined,
+                imageOffsetX: 0,
+                imageOffsetY: 0,
+                position: 'front',
+                dropShadow: {
+                enabled: true,
+                top: 3,
+                left: 0,
+                blur: 4,
+                opacity: 0.5,
+                },
+            },
+            track: {
+                background: '#fff',
+                strokeWidth: '67%',
+                margin: 0, // margin is in pixels
+                dropShadow: {
+                enabled: true,
+                top: -3,
+                left: 0,
+                blur: 4,
+                opacity: 0.7,
+                },
+            },
+
+            dataLabels: {
+                show: true,
+                name: {
+                offsetY: -10,
+                show: true,
+                color: '#888',
+                fontSize: '17px',
+                },
+                value: {
+                formatter: function (val) {
+                    return parseInt(val)
+                },
+                color: '#111',
+                fontSize: '36px',
+                show: true,
+                },
+            },
+            },
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+            shade: 'dark',
+            type: 'horizontal',
+            shadeIntensity: 0.5,
+            gradientToColors: ['#7CA03F'],
+            inverseColors: true,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 100],
+            },
+        },
+        stroke: {
+            lineCap: 'round',
+        },
+        labels: ['Percent'],
+        }
+
+        var chart = new ApexCharts(document.querySelector('#sample'), options)
+        chart.render()
+
         setTimeout(function(){
             $('.mis_loading').fadeOut('slow');
         }, 1500);
         
-        $('.SHF_Comm_Dashboard').html(getCommodityDashboard("# of SHF's / Commodity",{{dashboard_data.SHF_byComm[0]}},{{dashboard_data.SHF_byComm[1]}},{{dashboard_data.SHF_byComm[2]}},{{dashboard_data.SHF_byComm[3]}},{{dashboard_data.SHF_byComm[4]}})); 
-        $('.FO_Comm_Dashboard').html(getCommodityDashboard("# of FO's / Commodity",{{dashboard_data.FO_byComm[0]}},{{dashboard_data.FO_byComm[1]}},{{dashboard_data.FO_byComm[2]}},{{dashboard_data.FO_byComm[3]}},{{dashboard_data.FO_byComm[4]}})); 
-        $('.MSME_Comm_Dashboard').html(getCommodityDashboard("# of MSME's / Commodity",{{dashboard_data.MSME_byComm[0]}},{{dashboard_data.MSME_byComm[1]}},{{dashboard_data.MSME_byComm[2]}},{{dashboard_data.MSME_byComm[3]}},{{dashboard_data.MSME_byComm[4]}})); 
 
-        var background_colors = ["#629DDD","#A4BF7F","#A48BC1","#E2918F","#F4D470","#E8AA78","#A5D7D8","#7173A9","#77838E"];
-
-        var ctx_SHF = document.getElementById('SHF_region_piechart').getContext('2d');
-        const chartSHF = new Chart(ctx_SHF, {
-            type: 'pie',
-            data: {
-                labels: ["R-8","R-9","R-10","R-11","R-12","R-13","BARMM"],
-                datasets: [{
-                    label: '',
-                    data: JSON.parse("{{dashboard_data.SHF_byRegion}}"),
-                    backgroundColor: background_colors,
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            boxWidth: 15,
-                            boxHeight: 15,
-                            font: {
-                                size: 12
-                            }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: "SHF's / Region"
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.parsed+"%";
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        var ctx_SHF_HH_head = document.getElementById('SHF_HH_Head_barchart').getContext('2d');
-        var chartSHF_HH_Head = new Chart(ctx_SHF_HH_head, {
-            type: 'bar',
-            data: {
-                labels: ['Male','Female','Untagged'],
-                datasets: [{
-                    label: "Household - Head / Sex",
-                    data: {{ dashboard_data.SHF_byHHHead }},
-                    backgroundColor: ['#248CFB','#FF1B95','#7B7B7B'],
-                    borderColor: '#fff',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        var ctx_FO = document.getElementById('FO_region_piechart').getContext('2d');
-        const chartFO = new Chart(ctx_FO, {
-            type: 'pie',
-            data: {
-                labels: ["R-8","R-9","R-10","R-11","R-12","R-13","BARMM"],
-                datasets: [{
-                    label: '',
-                    data: JSON.parse("{{ dashboard_data.FO_byRegion }}"),
-                    backgroundColor: background_colors,
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            boxWidth: 15,
-                            boxHeight: 15,
-                            font: {
-                                size: 12
-                            }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: "FO's / Region"
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.parsed+"%";
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        var ctx_FO_TO = document.getElementById('FO_TO_barchart').getContext('2d');
-        var chartFO_TO = new Chart(ctx_FO_TO, {
-            type: 'bar',
-            data: {
-                labels: ["Association","Cooperative","Others"],
-                datasets: [{
-                    label: "# of Members / Type of FO's",
-                    data: JSON.parse("{{ dashboard_data.FO_byOrgType }}"),
-                    backgroundColor: background_colors,
-                    borderColor: '#fff',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: "# of Members / Type of FO's"
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        var ctx_MSME = document.getElementById('MSME_region_piechart').getContext('2d');
-        const chartMSME = new Chart(ctx_MSME, {
-            type: 'pie',
-            data: {
-                labels: ["R-8","R-9","R-10","R-11","R-12","R-13","BARMM"],
-                datasets: [{
-                    label: '',
-                    data: JSON.parse("{{ dashboard_data.MSME_byRegion }}"),
-                    backgroundColor: background_colors,
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            boxWidth: 15,
-                            boxHeight: 15,
-                            font: {
-                                size: 12
-                            }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: "MSME's / Region"
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.parsed+"%";
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        var ctx_MSME_PC = document.getElementById('MSME_byType_barchart').getContext('2d');
-        var chartMSME_PC = new Chart(ctx_MSME_PC, {
-            type: 'bar',
-            data: {
-                labels: ["Micro","Small","Medium","Large"],
-                datasets: [{
-                    label: "MSME's / Asset Size",
-                    data: JSON.parse("{{ dashboard_data.MSME_byType }}"),
-                    backgroundColor: background_colors,
-                    borderColor: '#fff',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-
-        function getCommodityDashboard(title,cacao,coconut,coffee,pfn,untagged){
-            var html = "";
-            html += '<div class="card analyticCard">';
-            html +=   '<div class="card-body">';
-            html += 	'<small style="display: block; margin-bottom: 10px; color:#666666;"><b>'+title+'</b></small>';
-            html += 	'<div class="row">';
-            html += 		'<div class="col-md-6 col-6">';
-            html += 			'<div class="card card-stats" style="margin-bottom: 15px!important; border: none; padding: 0px;">';
-            html += 				'<div class="card-body" style="padding: 10px; background: rgb(242 166 32 / 40%);">';
-            html += 					'<div class="icon icon-shape text-center" style="margin-top: 10px; ">';
-            html += 						'<img src="/static/psalm_static/assets/img/icons/Commodities_Cacao.png" style="width: 80%;" class="img-fluid" loading="lazy">';
-            html += 					'</div>';
-            html += 					'<h5 class="card-title text-uppercase text-muted mb-0 text-center" style="font-size:0.6em; margin: 0px; padding: 0px; margin-top: 10px; color: #EF8D22 !important;">Cacao</h5>';
-            html += 					'<span class="d-block h1 font-weight-bold mb-0 text-center SHF_comm_cacao" style="font-size: 1em;">'+Money(cacao)+'</span>';
-            html += 				'</div>';
-            html += 			'</div>';
-            html += 		'</div>';
-            html += 		'<div class="col-md-6 col-6">';
-            html += 			'<div class="card card-stats" style="margin-bottom: 15px!important; border: none; padding: 0px;">';
-            html += 				'<div class="card-body" style="padding: 10px; background: rgb(124 160 102 / 40%);;">';
-            html += 					'<div class="icon icon-shape text-center" style="margin-top: 10px;">';
-            html += 						'<img src="/static/psalm_static/assets/img/icons/Commodities_Coconut.png" style="width: 80%;" class="img-fluid" loading="lazy">';
-            html += 					'</div>';
-            html += 					'<h5 class="card-title text-uppercase text-muted mb-0 text-center" style="font-size:0.6em; margin: 0px; padding: 0px; margin-top: 10px; color: #6D8C31 !important;">Coconut</h5>';
-            html += 					'<span class="d-block h1 font-weight-bold mb-0 text-center SHF_comm_coconut" style="font-size: 1em;">'+Money(coconut)+'</span>';
-            html += 				'</div>';
-            html += 			'</div>';
-            html += 		'</div>';
-            html += 		'<div class="col-md-6 col-6">';
-            html += 			'<div class="card card-stats" style="margin-bottom: 15px!important; border: none; padding: 0px;">';
-            html += 				'<div class="card-body" style="padding: 10px; background: rgb(179 24 0 / 30%);">';
-            html += 					'<div class="icon icon-shape text-center" style="margin-top: 10px;">';
-            html += 						'<img src="/static/psalm_static/assets/img/icons/Commodities_Coffee.png" style="width: 80%;" class="img-fluid" loading="lazy">';
-            html += 					'</div>';
-            html += 					'<h5 class="card-title text-uppercase text-muted mb-0 text-center" style="font-size:0.6em; margin: 0px; padding: 0px; margin-top: 10px; color: #9E1204!important;">Coffee</h5>';
-            html += 					'<span class="d-block h1 font-weight-bold mb-0 text-center SHF_comm_coffee" style="font-size: 1em;">'+Money(coffee)+'</span>';
-            html += 				'</div>';
-            html += 			'</div>';
-            html += 		'</div>';
-            html += 		'<div class="col-md-6 col-6">';
-            html += 			'<div class="card card-stats" style="margin-bottom: 15px!important; border: none; padding: 0px;">';
-            html += 				'<div class="card-body" style="padding: 10px; background:rgb(29 168 168 / 30%);">';
-            html += 					'<div class="icon icon-shape text-center" style="margin-top: 10px;">';
-            html += 						'<img src="/static/psalm_static/assets/img/icons/Commodities_PFN.png" style="width: 80%;" class="img-fluid" loading="lazy">';
-            html += 					'</div>';
-            html += 					'<h5 class="card-title text-uppercase text-muted mb-0 text-center" style="font-size:0.6em; margin: 0px; padding: 0px; margin-top: 10px; color: #189B97 !important;">PFN</h5>';
-            html += 					'<span class="d-block h1 font-weight-bold mb-0 text-center SHF_comm_pfn" style="font-size: 1em;">'+Money(pfn)+'</span>';
-            html += 				'</div>';
-            html += 			'</div>';
-            html += 		'</div>';
-            html += 		'<p class="text-center" style="font-size:0.8em;">UNTAGGED : <b>'+Money(untagged)+'</b></p>';
-            html += 	'</div>';
-            html +=   '</div>';
-            html += '</div>';
-
-            return html;
-        }
-
-
-
-
-        // Projected vs Actual
-        $('.map_ch').on('click', function(){
-            var area_name = $(this).attr('id');
-            var region = $(this).attr('data-region');
-            var data = AREAS['region_'+region];
-            var color = AREAS_COLORS['region_'+region];
-
-            $('.wp_area_loading').removeClass('d-none'); 
-            $('.wp_area_dashboard_info').addClass('d-none');
-
-            setTimeout(function(){
-                $('.wp_area_dashboard_info').removeClass('d-none');
-                $('.wp_region').html(data['name']);
-                $('.wp_region').css('background-color', color );
-                $('.wp_region_value').css('color', color );
-
-                $('.wp_region_projected_shf_value').html(data['projected']['SHF_value']);
-                $('.wp_region_projected_shf_percent').html(data['projected']['SHF_percent'] + '%');
-                $('.wp_region_projected_fo_value').html(data['projected']['FO_value']);
-                $('.wp_region_projected_fo_percent').html(data['projected']['FO_percent'] + '%');
-                $('.wp_region_projected_msme_value').html(data['projected']['MSME_value']);
-                $('.wp_region_projected_msme_percent').html(data['projected']['MSME_percent'] + '%');
-
-                $('.wp_region_actual_shf_value').html(data['actual']['SHF_value']);
-                $('.wp_region_actual_shf_percent').html(data['actual']['SHF_percent'] + '%');
-                $('.wp_region_actual_fo_value').html(data['actual']['FO_value']);
-                $('.wp_region_actual_fo_percent').html(data['actual']['FO_percent'] + '%');
-                $('.wp_region_actual_msme_value').html(data['actual']['MSME_value']);
-                $('.wp_region_actual_msme_percent').html(data['actual']['MSME_percent'] + '%');
-                $('.wp_area_loading').addClass('d-none');   
-            },1000);
-            
-            $('.viewMoreDashboard').attr('data-region',region);
-            $('.wp_overall_link').css('display','block');
-
-        });
-
-        var AREAS = {
-            'overall' : { 
-                'name' : 'Overall',
-                'projected' : {
-                    'SHF_value' : '83,599',
-                    'SHF_percent' : '103',
-                    'FO_value' : '822',
-                    'FO_percent' : '274',
-                    'MSME_value' : '722',
-                    'MSME_percent' : '69',
-                },
-                'actual' :  {
-                    'SHF_value' : '68,118',
-                    'SHF_percent' : '85',
-                    'FO_value' : '769',
-                    'FO_percent' : '94',
-                    'MSME_value' : '926',
-                    'MSME_percent' : '128',
-                },
-            }, 
-            'region_8' : { 
-                'name' : 'Region 8',
-                'projected' : {
-                    'SHF_value' : '8,589',
-                    'SHF_percent' : '9',
-                    'FO_value' : '158',
-                    'FO_percent' : '17.8',
-                    'MSME_value' : '128',
-                    'MSME_percent' : '17.5',
-                },
-                'actual' :  {
-                    'SHF_value' : '5,056',
-                    'SHF_percent' : '7.7',
-                    'FO_value' : '141',
-                    'FO_percent' : '18.8',
-                    'MSME_value' : '79',
-                    'MSME_percent' : '8.5',
-                },
-            },
-            'region_9' : { 
-                'name' : 'Region 9',
-                'projected' : {
-                    'SHF_value' : '12,803',
-                    'SHF_percent' : '13',
-                    'FO_value' : '112',
-                    'FO_percent' : '12.6',
-                    'MSME_value' : '66',
-                    'MSME_percent' : '9',
-                },
-                'actual' :  {
-                    'SHF_value' : '5,373',
-                    'SHF_percent' : '8.2',
-                    'FO_value' : '32',
-                    'FO_percent' : '4.3',
-                    'MSME_value' : '121',
-                    'MSME_percent' : '13.1',
-                },
-            },
-            'region_10' : { 
-                'name' : 'Region 10',
-                'projected' : {
-                    'SHF_value' : '23,417',
-                    'SHF_percent' : '25',
-                    'FO_value' : '191',
-                    'FO_percent' : '21.5',
-                    'MSME_value' : '150',
-                    'MSME_percent' : '20.5',
-                },
-                'actual' :  {
-                    'SHF_value' : '21,386',
-                    'SHF_percent' : '32.8',
-                    'FO_value' : '183',
-                    'FO_percent' : '24.4',
-                    'MSME_value' : '150',
-                    'MSME_percent' : '16.2',
-                },
-            },
-            'region_11' : { 
-                'name' : 'Region 11',
-                'projected' : {
-                    'SHF_value' : '22,016',
-                    'SHF_percent' : '23',
-                    'FO_value' : '132',
-                    'FO_percent' : '14.9',
-                    'MSME_value' : '72',
-                    'MSME_percent' : '9.8',
-                },
-                'actual' :  {
-                    'SHF_value' : '9,434',
-                    'SHF_percent' : '14.5',
-                    'FO_value' : '114',
-                    'FO_percent' : '15.2',
-                    'MSME_value' : '243',
-                    'MSME_percent' : '26.2',
-                },
-            },
-            'region_12' : { 
-                'name' : 'Region 12',
-                'projected' : {
-                    'SHF_value' : '15,554',
-                    'SHF_percent' : '16',
-                    'FO_value' : '127',
-                    'FO_percent' : '14.3',
-                    'MSME_value' : '156',
-                    'MSME_percent' : '21.3',
-                },
-                'actual' :  {
-                    'SHF_value' : '15,554',
-                    'SHF_percent' : '23.9',
-                    'FO_value' : '127',
-                    'FO_percent' : '16.9',
-                    'MSME_value' : '211',
-                    'MSME_percent' : '22.8',
-                },
-            },
-            'region_13' : { 
-                'name' : 'Region 13',
-                'projected' : {
-                    'SHF_value' : '10,473',
-                    'SHF_percent' : '11',
-                    'FO_value' : '135',
-                    'FO_percent' : '15.2',
-                    'MSME_value' : '131',
-                    'MSME_percent' : '17.9',
-                },
-                'actual' :  {
-                    'SHF_value' : '7,338',
-                    'SHF_percent' : '11.3',
-                    'FO_value' : '144',
-                    'FO_percent' : '19.2',
-                    'MSME_value' : '118',
-                    'MSME_percent' : '12.7',
-                },
-            },
-            'region_barmm' : { 
-                'name' : 'BARMM',
-                'projected' : {
-                    'SHF_value' : '2,122',
-                    'SHF_percent' : '2',
-                    'FO_value' : '30',
-                    'FO_percent' : '3.4',
-                    'MSME_value' : '29',
-                    'MSME_percent' : '3.9',
-                },
-                'actual' :  {
-                    'SHF_value' : '1,023',
-                    'SHF_percent' : '1.6',
-                    'FO_value' : '9',
-                    'FO_percent' : '1.2',
-                    'MSME_value' : '4',
-                    'MSME_percent' : '0.4',
-                },
-            },
-        };
-
-        var AREAS_COLORS = {
-            'region_8' : '#50A6A7',
-            'region_9' : '#477E83',
-            'region_10' : '#E7A943',
-            'region_11' : '#1B434D',
-            'region_12' : '#B3D26E',
-            'region_13' : '#839F4D',
-            'region_barmm' : '#ED712E'
-        };
-
-        $('.r8').hover( function() { $('.r8').css('fill', '#33b4b5'); $('.r8').css('stroke', '#33b4b5'); }, function() { $('.r8').css('fill', '#50A6A7'); $('.r8').css('stroke', '#50A6A7'); } );
-        $('.r9').hover( function() { $('.r9').css('fill', '#28585c'); $('.r9').css('stroke', '#28585c'); }, function() { $('.r9').css('fill', '#477E83'); $('.r9').css('stroke', '#477E83'); } );
-        $('.r10').hover( function() { $('.r10').css('fill', '#e89917'); $('.r10').css('stroke', '#e89917'); }, function() { $('.r10').css('fill', '#E7A943'); $('.r10').css('stroke', '#E7A943'); } );
-        $('.r11').hover( function() { $('.r11').css('fill', '#0f343d'); $('.r11').css('stroke', '#0f343d'); }, function() { $('.r11').css('fill', '#1B434D'); $('.r11').css('stroke', '#1B434D'); } );
-        $('.r12').hover( function() { $('.r12').css('fill', '#99bf45'); $('.r12').css('stroke', '#99bf45'); }, function() { $('.r12').css('fill', '#B3D26E'); $('.r12').css('stroke', '#B3D26E'); } );
-        $('.r13').hover( function() { $('.r13').css('fill', '#617a31'); $('.r13').css('stroke', '#617a31'); }, function() { $('.r13').css('fill', '#839F4D'); $('.r13').css('stroke', '#839F4D'); } );
-        $('.barmm').hover( function() { $('.barmm').css('fill', '#bd551c'); $('.barmm').css('stroke', '#bd551c'); }, function() { $('.barmm').css('fill', '#E08553'); $('.barmm').css('stroke', '#E08553'); } );
-
-        $('.wp_overall_link').on('click', function(e){
-            
-            var data = AREAS['overall'];
-            $('.wp_area_loading').removeClass('d-none'); 
-            $('.wp_area_dashboard_info').addClass('d-none');
-
-            setTimeout(function(){
-                $('.wp_area_dashboard_info').removeClass('d-none');
-                $('.wp_region').html('OVERALL');
-                $('.wp_region').css('background-color', '#024450');
-                $('.wp_region_value').css('color', '#024450');
-
-                $('.wp_region_projected_shf_value').html(data['projected']['SHF_value']);
-                $('.wp_region_projected_shf_percent').html(data['projected']['SHF_percent'] + '%');
-                $('.wp_region_projected_fo_value').html(data['projected']['FO_value']);
-                $('.wp_region_projected_fo_percent').html(data['projected']['FO_percent'] + '%');
-                $('.wp_region_projected_msme_value').html(data['projected']['MSME_value']);
-                $('.wp_region_projected_msme_percent').html(data['projected']['MSME_percent'] + '%');
-
-                $('.wp_region_actual_shf_value').html(data['actual']['SHF_value']);
-                $('.wp_region_actual_shf_percent').html(data['actual']['SHF_percent'] + '%');
-                $('.wp_region_actual_fo_value').html(data['actual']['FO_value']);
-                $('.wp_region_actual_fo_percent').html(data['actual']['FO_percent'] + '%');
-                $('.wp_region_actual_msme_value').html(data['actual']['MSME_value']);
-                $('.wp_region_actual_msme_percent').html(data['actual']['MSME_percent'] + '%');
-                $('.wp_area_loading').addClass('d-none');   
-            },1000);
-
-            $('.viewMoreDashboard').attr('data-region','all');
-            $('.wp_overall_link').css('display','none');
-            e.preventDefault();
-        });
-
-        $('.wp_overall_link').click();
     });
 </script>
 {% endblock %}
