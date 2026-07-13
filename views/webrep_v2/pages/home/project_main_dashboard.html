@@ -23,11 +23,11 @@
         <div class="row">
             <div class="col-12 col-md-3">
                 <div class="input-group">
-                    <select class="form-select applyfilter applyfilter_region rounded-pill dropdownOverride" >
-                        <option value="" {% if region_selected and "all" in region_selected %}selected{% endif %}>Category</option>
-                        <option value="npco" {% if region_selected and "SHF" in region_selected %}selected{% endif %}>SMALL HOLDER FARMERS</option>
-                        <option value="rcu viii" {% if region_selected and "FO viii" in region_selected %}selected{% endif %}>FARMER ORGANIZATION</option>
-                        <option value="rcu ix" {% if region_selected and "MSME" in region_selected %}selected{% endif %}>MICRO, SMALL, MEDIUM ENTERPRISES</option>
+                    <select class="form-select applyfilter applyfilter_type rounded-pill dropdownOverride" >
+                        <option value="" {% if type_selected and "all" in type_selected %}selected{% endif %}>Category</option>
+                        <option value="SHF" {% if type_selected and "SHF" in type_selected %}selected{% endif %}>SMALL HOLDER FARMERS</option>
+                        <option value="FO" {% if type_selected and "FO" in type_selected %}selected{% endif %}>FARMER ORGANIZATION</option>
+                        <option value="MSME" {% if type_selected and "MSME" in type_selected %}selected{% endif %}>MICRO, SMALL, MEDIUM ENTERPRISES</option>
                     </select>
                 </div>
             </div>
@@ -35,15 +35,18 @@
                 <div class="input-group">
                     <select class="form-select applyfilter applyfilter_region rounded-pill dropdownOverride" >
                         <option value="" {% if region_selected and "all" in region_selected %}selected{% endif %}>Region</option>
-                        <option value="rcu viii" {% if region_selected and "rcu viii" in region_selected %}selected{% endif %}>RCU VIII</option>
-                        <option value="rcu ix" {% if region_selected and "rcu ix" in region_selected %}selected{% endif %}>RCU IX</option>
-                        <option value="rcu x" {% if region_selected and "rcu x" in region_selected %}selected{% endif %}>RCU X</option>
-                        <option value="rcu xi" {% if region_selected and "rcu xi" in region_selected %}selected{% endif %}>RCU XI</option>
-                        <option value="rcu xii" {% if region_selected and "rcu xii" in region_selected %}selected{% endif %}>RCU XII</option>
-                        <option value="rcu xiii" {% if region_selected and "rcu xiii" in region_selected %}selected{% endif %}>RCU XIII</option>
-                        <option value="barmm" {% if region_selected and "barmm" in region_selected %}selected{% endif %}>BARMM</option>
+                        <option value="R8" {% if region_selected and "R8" in region_selected %}selected{% endif %}>RCU VIII</option>
+                        <option value="R9" {% if region_selected and "R9" in region_selected %}selected{% endif %}>RCU IX</option>
+                        <option value="R10" {% if region_selected and "R10" in region_selected %}selected{% endif %}>RCU X</option>
+                        <option value="R11" {% if region_selected and "R11" in region_selected %}selected{% endif %}>RCU XI</option>
+                        <option value="R12" {% if region_selected and "R12" in region_selected %}selected{% endif %}>RCU XII</option>
+                        <option value="R13" {% if region_selected and "R13" in region_selected %}selected{% endif %}>RCU XIII</option>
+                        <option value="BARMM" {% if region_selected and "BARMM" in region_selected %}selected{% endif %}>BARMM</option>
                     </select>
                 </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <button class="rounded-pill w-100 btn wr_primary_btn  applyfilter applyfilter_region" onclick="applyFilter()"><i class="fa fa-filter "></i> Apply Filter <span class="fa fa-spin fa-spinner d-none"></span></button>
             </div>
         </div>
     </div>
@@ -51,23 +54,250 @@
     <br>
     <div class="container">
         <div class="row">
-            <div class="col-4">
+            <div class="col-5">
+                <p class="font-18 fw-bold text-muted">Projected vs Actual Reach of Smallholder Farmers</p>
                 <div class="card analyticCard">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <img src="/static/psalm_static/assets/img/icons/Sectors_Smallholder Farmer.png" style="width: 100%;" class="img-fluid" loading="lazy">
                             </div>
-                            <div class="col-9">
-                                <b class="font-28">78,000 SHFs</b><br>
+                            <div class="col-8">
+                                <b class="font-22">78,000 SHFs</b><br>
                                 EOP Targets
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card analyticCard p-0">
+                            <div class="card-body">
+                                <div id="shf_approvedDIP"></div>
+                                <div class="text-center">
+                                    <span class="font-18 text-wp-secondary fw-bold shf_based_approvedDIP_label">94,501 SHFS</span><br>
+                                    <small class="text-muted">Based on Approved DIPs</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card analyticCard p-0">
+                            <div class="card-body">
+                                <div id="shf_actualReach" width="70%"></div>
+                                <div class="text-center">
+                                    <span class="font-18 text-wp-secondary fw-bold shf_based_actualReach_label">75,028 SHFS</span><br>
+                                    <small class="text-muted">Actual Reach 79% vs Reach of Approved DIPs</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7">
+                <p class="font-18 fw-bold text-muted">Reach of Smallholder Farmers by Sector</p>
                 <div class="card analyticCard">
                     <div class="card-body">
-                        <div id="sample"></div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <span style="width: 15px; height: 15px; border-radius:50%; background-color: #7B9E3E; display: inline-block;"></span> Actual Reach &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style="width: 15px; height: 15px; border-radius:50%; background-color: #004450; display: inline-block;"></span> EOP
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                <span class="badge bg-wp-primary w-100">Women</span>
+                            </div>
+                            <div class="col-10">
+                                <div id="shf_bysector_women"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                <span class="badge bg-wp-primary w-100">Youth</span>
+                            </div>
+                            <div class="col-10">
+                                <div id="shf_bysector_youth"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                <span class="badge bg-wp-primary w-100">IP</span>
+                            </div>
+                            <div class="col-10">
+                                <div id="shf_bysector_ip"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <p class="font-18 fw-bold text-muted m-0">Projected Reach of Smallholder Farmers by Commodity</p>
+                <small class="text-muted">Based on Approved DIPs</small>
+            </div>
+            <div class="col-3">
+                <div class="card analyticCard">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <img src="/static/psalm_static/assets/img/icons/Commodities_Cacao.png" class="w-50 img-fluid" loading="lazy">
+                                <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Cacao<br><b>(14,586)</b></span>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">44%</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">8%</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">14%</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card analyticCard">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <img src="/static/psalm_static/assets/img/icons/Commodities_Coconut.png" class="w-50 img-fluid" loading="lazy">
+                                <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Coconut<br><b>(54,699)</b></span>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">47%</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">6%</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">5%</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card analyticCard">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <img src="/static/psalm_static/assets/img/icons/Commodities_Coffee.png" class="w-50 img-fluid" loading="lazy">
+                                <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Coffee<br><b>(17,849)</b></span>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">45%</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">17%</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">36%</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card analyticCard">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <img src="/static/psalm_static/assets/img/icons/Commodities_PFN.png" class="w-50 img-fluid" loading="lazy">
+                                <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Processed Fruits <br>and Nuts<br><b>(7,367)</b></span>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">45%</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">17%</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <b class="font-20">30%</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,15 +317,14 @@
 
 {% block customScript %}
 <script>
-    $(document).ready(function(){
 
-        var options = {
+    var options = {
         series: [75],
         chart: {
             height: 350,
             type: 'radialBar',
             toolbar: {
-            show: true,
+            show: false,
             },
         },
         plotOptions: {
@@ -119,7 +348,7 @@
                 },
             },
             track: {
-                background: '#fff',
+                background: '#CCCCCC',
                 strokeWidth: '67%',
                 margin: 0, // margin is in pixels
                 dropShadow: {
@@ -141,10 +370,10 @@
                 },
                 value: {
                 formatter: function (val) {
-                    return parseInt(val)
+                    return parseInt(val) + '%';
                 },
                 color: '#111',
-                fontSize: '36px',
+                fontSize: '18px',
                 show: true,
                 },
             },
@@ -156,27 +385,239 @@
             shade: 'dark',
             type: 'horizontal',
             shadeIntensity: 0.5,
-            gradientToColors: ['#7CA03F'],
+            gradientToColors: ['#004450'],
             inverseColors: true,
             opacityFrom: 1,
             opacityTo: 1,
             stops: [0, 100],
             },
         },
+        colors: ['#7B9E3E'], 
         stroke: {
             lineCap: 'round',
         },
-        labels: ['Percent'],
-        }
+        labels: [''],
+    }
 
-        var chart = new ApexCharts(document.querySelector('#sample'), options)
-        chart.render()
+    var groupBar_options = {
+        series: [
+            {
+                name: 'actual reach',
+                data: [36656]
+            },
+            {
+                name: 'EOP',
+                data: [31200]
+            }
+        ],
+        chart: {
+            type: 'bar',
+            height: 100,
+            toolbar: {
+                show: false,
+            }
+        },
+        plotOptions: {
+            bar: {
+            horizontal: true,
+            dataLabels: {
+                position: 'center' // base position
+            }
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: function (val, opts) {
+            if (opts.seriesIndex === 0) {
+                return val.toLocaleString() + ' (' + 0 + '%)';
+            } else {
+                return val.toLocaleString();
+            }
+            },
+            style: {
+            colors: ['#fff'],
+            fontSize: '12px'
+            },
+            offsetX: 0, // adjust left/right
+            offsetY: 0  // adjust up/down
+        },
+        stroke: {
+            show: true,
+            width: 1,
+            colors: ['#fff'],
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            y: {
+                formatter: function (val) {
+                    return val.toLocaleString();
+                }
+            }
+        },
+        xaxis: {
+            categories: [''],
+            labels: {
+                show: false, // no text at all
+            },
+        },
+        legend: {
+            show: false
+        },
+        colors: ['#7B9E3E', '#004450']
+    }
+
+    var shf_based_approvedDIP_chart = null;
+    var shf_based_actualReach_chart = null;
+    var shf_bysector_women_chart = null;
+    var shf_bysector_youth_chart = null;
+    var shf_bysector_ip_chart = null;
+
+    $(document).ready(function(){
+
+        
+
+
+        options.series = [124];
+        shf_based_approvedDIP_chart = new ApexCharts(document.querySelector('#shf_approvedDIP'), options);
+        shf_based_approvedDIP_chart.render();
+
+        options.series = [96];
+        shf_based_actualReach_chart = new ApexCharts(document.querySelector('#shf_actualReach'), options);
+        shf_based_actualReach_chart.render();
+
+        
+        shf_bysector_women_chart = new ApexCharts(document.querySelector('#shf_bysector_women'), groupBar_options);
+        shf_bysector_women_chart.render()
+
+        groupBar_options.series = [
+                    { name: 'actual reach', data: [14158] },
+                    { name: 'EOP', data: [15600] }];
+        shf_bysector_youth_chart = new ApexCharts(document.querySelector('#shf_bysector_youth'), groupBar_options);
+        shf_bysector_youth_chart.render()
+
+        groupBar_options.series = [
+                    { name: 'actual reach', data: [13088] },
+                    { name: 'EOP', data: [7800] }];
+        shf_bysector_ip_chart = new ApexCharts(document.querySelector('#shf_bysector_ip'), groupBar_options);
+        shf_bysector_ip_chart.render()
 
         setTimeout(function(){
             $('.mis_loading').fadeOut('slow');
         }, 1500);
         
+        
+        var shf_based_approvedDIP = {
+            all : { value: 94501, percentage: 121.16 },
+            R8 : { value: 8589, percentage: 11.01 },
+            R9 : { value: 14721, percentage: 18.87 },
+            R10 : { value: 23417, percentage: 30.02 },
+            R11 : { value: 18795, percentage: 24.10 },
+            R12 : { value: 16384, percentage: 21.01 },
+            R13 : { value: 10473, percentage: 13.43 },
+            BARMM : { value: 2122, percentage: 2.72 }
+        };
 
+        var shf_based_actualReach = {
+            all : { value: 75028, percentage: 100 },
+            R8 : { value: 36656, percentage: 48.85 },
+            R9 : { value: 14158, percentage: 18.87 },
+            R10 : { value: 13088, percentage: 17.45 },
+            R11 : { value: 7800, percentage: 10.39 },
+            R12 : { value: 15600, percentage: 20.78 },
+            R13 : { value: 13088, percentage: 17.45 },
+            BARMM : { value: 2122, percentage: 2.83 }
+        };
+
+        
+
+        
     });
+
+    var eop = 78000;
+    var approved_dip = 94501;
+    var actual_reach = 78797;
+    var shf_data = {
+        R8 : { 
+            projected : { projected : 8589, male : 4647, female : 3942, youth : 143, ip : 0, pwd : 30 },
+            actual : { actual : 7378, male : 3474, female :3904, youth : 1368, ip : 0, pwd : 3 }
+        },
+        R9 : { 
+            projected : { projected : 14721, male : 7720, female : 7001, youth : 578, ip : 2097, pwd : 136 },
+            actual : { actual : 5526, male : 2149, female :3377, youth : 614, ip : 1042, pwd : 42 }
+        },
+        R10 : { 
+            projected : { projected : 23417, male : 11781, female : 11636, youth : 2850, ip : 2244, pwd : 3 },
+            actual : { actual : 23192, male : 11249, female : 11943, youth : 4086, ip : 1873, pwd : 1 }
+        },
+        R11 : { 
+            projected : { projected : 18795, male : 10684, female : 8111, youth : 733, ip : 3051, pwd : 5 },
+            actual : { actual : 14389, male : 7893, female : 6496, youth : 2847, ip : 4355, pwd : 19 }
+        },
+        R12 : { 
+            projected : { projected : 16384, male : 9030, female : 7354, youth : 3490, ip : 3339, pwd : 71 },
+            actual : { actual : 16384, male : 9030, female : 7354, youth : 3490, ip : 3339, pwd : 71 }
+        },
+        R13 : { 
+            projected : { projected : 10473, male : 5776, female : 4697, youth : 2171, ip : 2553, pwd : 25 },
+            actual : { actual : 10577, male : 5596, female : 4981, youth : 1834, ip : 2133, pwd : 30 }
+        },
+        BARMM : { 
+            projected : { projected : 2122, male : 1530, female : 592, youth : 554, ip : 184, pwd : 17 },
+            actual : { actual : 1351, male : 678, female : 673, youth : 211, ip : 202, pwd : 1 }
+        }
+    };
+    
+    function applyFilter(){
+        var type_selected = $('.applyfilter_type').val();
+        var region_selected = $('.applyfilter_region').val();
+
+        if ( type_selected == "" || type_selected == "all" ) {
+            type_selected = "all";  
+        }else if ( type_selected == "SHF" ) {
+            if ( region_selected == "" || region_selected == "all" ) {
+                region_selected = "all";
+            }else{
+                var basedApprovedDIP_percent = (parseInt(shf_data[region_selected]['projected']['projected'])/approved_dip) * 100;
+                shf_based_approvedDIP_chart.updateSeries([basedApprovedDIP_percent]);
+                $('.shf_based_approvedDIP_label').text(shf_data[region_selected]['projected']['projected'].toLocaleString() + " SHFS");
+                
+                var basedActualReach_percent = (parseInt(shf_data[region_selected]['actual']['actual'])/parseInt(shf_data[region_selected]['projected']['projected'])) * 100;
+                shf_based_actualReach_chart.updateSeries([basedActualReach_percent]);
+                $('.shf_based_actualReach_label').text(shf_data[region_selected]['actual']['actual'].toLocaleString() + " SHFS");
+            
+                var shf_bysector_women = (parseInt(shf_data[region_selected]['actual']['female'])/parseInt(shf_data[region_selected]['projected']['female'])) * 100;
+                
+                shf_bysector_women_chart.updateOptions({
+                    plotOptions: {
+                        bar: {
+                        horizontal: true,
+                        dataLabels: {
+                            position: 'center' // base position
+                        }
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val, opts) {
+                        if (opts.seriesIndex === 0) {
+                            return val.toLocaleString() + ' (' + shf_bysector_women.toFixed(1) + '%)';
+                        } else {
+                            return val.toLocaleString();
+                        }
+                        },
+                        style: {
+                        colors: ['#fff'],
+                        fontSize: '12px'
+                        },
+                        offsetX: 0, // adjust left/right
+                        offsetY: 0  // adjust up/down
+                    }
+                    });
+                shf_bysector_women_chart.updateSeries([{ name: 'actual reach', data: [shf_data[region_selected]['actual']['female']] }, { name: 'Projected', data: [shf_data[region_selected]['projected']['female']] }]);
+                
+            }
+        }
+    }
 </script>
 {% endblock %}

@@ -112,7 +112,7 @@ class _main:
         print("Username:", repr(USERNAME))
         print("Password length:", len(PASSWORD))
 
-        MAX_RECIPIENTS_PER_EMAIL = 40 #Max = 50
+        MAX_RECIPIENTS_PER_EMAIL = 20 #Max = 50
         MAX_SENDS_PER_SECOND = 10 #Max = 14
         SECONDS_PER_BATCH = 1 / MAX_SENDS_PER_SECOND
 
@@ -1909,7 +1909,7 @@ class _main:
                         <h2 style="margin-bottom:30px;"><b>Connect with us online!</b></h2>
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom:20px; width:300px;">
                         <tr>
-                            <td bgcolor="#1977F3" style="border-radius:25px;">
+                            <td bgcolor="#1977F3" style="background-color:#1977F3; border-radius:25px;">
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                 <tr>
                                 <!-- Icon cell -->
@@ -1930,7 +1930,7 @@ class _main:
 
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom:10px; width:300px;">
                         <tr>
-                            <td bgcolor="#024450" style="border-radius:25px;">
+                            <td bgcolor="#024450" style="background-color:#024450; border-radius:25px;">
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                 <tr>
                                 <!-- Icon cell -->
