@@ -45,8 +45,9 @@
 		$("select#form_3_types_of_bdsp").change(function(){
 			var currentVal = $(this).val();
 			var hiddenTextbox = $(".hidden-textbox3");
+			var triggers = hiddenTextbox.attr("show-trigger").split(",");
 			
-			if (currentVal == "Organization/Firm") {
+			if (triggers.includes(currentVal)) {
 				hiddenTextbox.show();
 				hiddenTextbox.prop("required", true); 
 			} else {
