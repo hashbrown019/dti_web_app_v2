@@ -2,19 +2,19 @@
 
 {% block title %} Dashboard {% endblock %} 
 
-<!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
-	<div class="x-container x-card " style="margin-top: 20px; margin-bottom: 20px; background-color: #1F2937;">
-            <div class="card" style="margin-bottom: 25px; margin-top: 15px;">
-                <div class="card-header align-items-center text-center bg-gray-800 text-white">
-                    <h2 class="card-title mb-0">Form 8 FMI Tracker</h2>
-                </div>
+<div class="dcf-form-shell">
+	<div class="x-container x-card" style="margin-top: 10px; margin-bottom: 20px;">
+            <div class="col-md-12 col-sm-12">
+                <center>
+                  <h2 class="dcf-original-form-heading x-container text-white x-padding">FORM 8 - FMI TRACKER</h2>
+			            <span class="badge" style=" background-color: #334257; color: #ffb366;" id="head_note"></span>
+                </center>
+                
                 <div class="card-body">
                     <form id="fmi-manual-form">
                         <input type="hidden" id="id" name="id" value="" class="FMI_FIELD">
-                        <h6 class="text-uppercase text-muted">Project Profile</h6>
+                        <h2 class="dcf-form-section-title">Project Profile</h2>
                         <div class="row g-3">
                             <div class="col-md-2">
                                 <label class="form-label" for="form_8_profile_batch">Batch</label>
@@ -109,9 +109,7 @@
                             </div>
                         </div>
 
-                        <hr class="my-4">
-
-                        <h6 class="text-uppercase text-muted">Procurement</h6>
+                        <h2 class="dcf-form-section-title">Procurement</h2>
                         <div class="row g-3">
                             <div class="col-md-3">
                                 <label class="form-label" for="form_8_procurement_itb_posting">ITB Posting Date</label>
@@ -135,9 +133,7 @@
                             </div>
                         </div>
 
-                        <hr class="my-4">
-
-                        <h6 class="text-uppercase text-muted">Implementation</h6>
+                        <h2 class="dcf-form-section-title">Implementation</h2>
                         <div class="row g-3">
                             <div class="col-md-3">
                                 <label class="form-label" for="form_8_implementation_ifadLP">IFAD LP</label>
@@ -227,18 +223,14 @@
                             </div>
                         </div>
 
-                        <hr class="my-4">
-
-                        <h6 class="text-uppercase text-muted">Remarks</h6>
+                        <h2 class="dcf-form-section-title">Remarks</h2>
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <textarea class="form-control FMI_FIELD" id="form_8_remarks" name="form_8_remarks" rows="3"></textarea>
                             </div>
                         </div>
 
-                        <hr class="my-4">
-
-                        <h6 class="text-uppercase text-muted">Financial</h6>
+                        <h2 class="dcf-form-section-title">Financial</h2>
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="form_8_financial_fiananceAccomplishment">Finance Accomplishment</label>
@@ -290,8 +282,8 @@
                             </div>
                         </div>
 
-                        <div class="mt-4 d-flex flex-wrap gap-2">
-                            <button type="submit" class="btn btn-primary">Save Record</button>
+                        <div class="dcf-form-actions mt-4 d-flex flex-wrap gap-2">
+                            <button type="submit" class="btn btn-primary dcf-submit-button"><i class="fa fa-paper-plane dcf-submit-icon" aria-hidden="true"></i>Submit</button>
                             <button type="reset" class="btn btn-outline-secondary">Clear</button>
                         </div>
                     </form>
@@ -299,9 +291,17 @@
             </div>
 		</div>
 	</div>
+</div>
 
     {% endblock content %}
     {% block javascripts %}
+    <script>
+      document.documentElement.classList.add("dcf-form-document");
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.body.classList.add("dcf-form-page", "dcf-form-8", "fmi-form-a-page");
+      });
+    </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("fmi-manual-form");
