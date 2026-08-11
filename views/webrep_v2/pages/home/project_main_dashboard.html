@@ -25,7 +25,7 @@
                 <div class="input-group">
                     <select class="form-select applyfilter applyfilter_type rounded-pill dropdownOverride" >
                         <option value="" {% if type_selected and "all" in type_selected %}selected{% endif %}>Category</option>
-                        <option value="SHF" {% if type_selected and "SHF" in type_selected %}selected{% endif %}>SMALL HOLDER FARMERS</option>
+                        <option value="SHF" selected {% if type_selected and "SHF" in type_selected %}selected{% endif %}>SMALL HOLDER FARMERS</option>
                         <option value="FO" {% if type_selected and "FO" in type_selected %}selected{% endif %}>FARMER ORGANIZATION</option>
                         <option value="MSME" {% if type_selected and "MSME" in type_selected %}selected{% endif %}>MICRO, SMALL, MEDIUM ENTERPRISES</option>
                     </select>
@@ -53,127 +53,179 @@
     <br>
     <br>
     <div class="container">
-        <div class="row">
-            <div class="col-5">
-                <p class="font-18 fw-bold text-muted">Projected vs Actual Reach of Smallholder Farmers</p>
-                <div class="card analyticCard">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="/static/psalm_static/assets/img/icons/Sectors_Smallholder Farmer.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                            </div>
-                            <div class="col-8">
-                                <b class="font-22">78,000 SHFs</b><br>
-                                EOP Targets
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card analyticCard p-0">
-                            <div class="card-body">
-                                <div id="shf_approvedDIP"></div>
-                                <div class="text-center">
-                                    <span class="font-18 text-wp-secondary fw-bold shf_based_approvedDIP_label">94,501 SHFS</span><br>
-                                    <small class="text-muted">Based on Approved DIPs</small>
+        <div class="msme_container categoryContainer d-none" data-category="msme">
+            <p class="font-18 fw-bold text-muted">Projected vs Actual Reach of MSMEs</p>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img src="/static/psalm_static/assets/img/icons/Sectors_MSME.png" style="width: 100%;" class="img-fluid" loading="lazy">
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card analyticCard p-0">
-                            <div class="card-body">
-                                <div id="shf_actualReach" width="70%"></div>
-                                <div class="text-center">
-                                    <span class="font-18 text-wp-secondary fw-bold shf_based_actualReach_label">75,028 SHFS</span><br>
-                                    <small class="text-muted">Actual Reach 79% vs Reach of Approved DIPs</small>
+                                <div class="col-9">
+                                    <b class="font-22">1050 MSMEs</b><br>
+                                    EOP Targets
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-7">
-                <p class="font-18 fw-bold text-muted">Reach of Smallholder Farmers by Sector</p>
-                <div class="card analyticCard">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <span style="width: 15px; height: 15px; border-radius:50%; background-color: #7B9E3E; display: inline-block;"></span> Actual Reach &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span style="width: 15px; height: 15px; border-radius:50%; background-color: #004450; display: inline-block;"></span> EOP
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card analyticCard p-0">
+                        <div class="card-body">
+                            <div id="msme_actualReach"></div>
+                            <div class="text-center">
+                                <span class="font-18 text-wp-secondary fw-bold msme_actualreach_label">978 MSMEs</span><br>
+                                <small class="text-muted">Actual Reach</small>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                <span class="badge bg-wp-primary w-100">Women</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card analyticCard p-0">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <span class="font-18 text-wp-secondary fw-bold msme_nondip_label">354 MSMEs</span><br>
+                                <small class="text-muted fw-bold">NON-DIP Based</small>
                             </div>
-                            <div class="col-10">
-                                <div id="shf_bysector_women"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                <span class="badge bg-wp-primary w-100">Youth</span>
-                            </div>
-                            <div class="col-10">
-                                <div id="shf_bysector_youth"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                <span class="badge bg-wp-primary w-100">IP</span>
-                            </div>
-                            <div class="col-10">
-                                <div id="shf_bysector_ip"></div>
+                            <div class="text-center">
+                                <span class="font-18 text-wp-secondary fw-bold msme_dip_label">624 MSMEs</span><br>
+                                <small class="text-muted fw-bold">DIP Based <span class="msme_dip_percentage_label">84</span>% vs <span class="msme_approved_dip_label">745</span> MSMEs of Approved DIPs</small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col-12">
-                <p class="font-18 fw-bold text-muted m-0">Projected Reach of Smallholder Farmers by Commodity</p>
-                <small class="text-muted">Based on Approved DIPs</small>
-            </div>
-            <div class="col-3">
-                <div class="card analyticCard">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <img src="/static/psalm_static/assets/img/icons/Commodities_Cacao.png" class="w-50 img-fluid" loading="lazy">
-                                <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Cacao<br><b>(14,586)</b></span>
-                                <br>
-                                <br>
+        <div class="fo_container categoryContainer d-none" data-category="fo">
+            <div class="row">
+                <div class="col-lg-5 col-md-6 col-12">
+                    <p class="font-18 fw-bold text-muted">Projected vs Actual Reach of Smallholder Farmers</p>
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img src="/static/psalm_static/assets/img/icons/Sectors_Farmer Organization.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                </div>
+                                <div class="col-9">
+                                    <b class="font-22">300 Fos</b><br>
+                                    EOP Targets
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                    </div>
-                                    <div class="col-8">
-                                        <b class="font-20">44%</b>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                    </div>
-                                    <div class="col-8">
-                                        <b class="font-20">8%</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card analyticCard p-0">
+                                <div class="card-body">
+                                    <div id="fo_approvedDIP"></div>
+                                    <div class="text-center">
+                                        <span class="font-18 text-wp-secondary fw-bold fo_based_approvedDIP_label">872 FOs</span><br>
+                                        <small class="text-muted">Based on Approved DIPs</small>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card analyticCard p-0">
+                                <div class="card-body">
+                                    <div id="fo_actualReach" width="70%"></div>
+                                    <div class="text-center">
+                                        <span class="font-18 text-wp-secondary fw-bold fo_based_actualReach_label">792 FOs</span><br>
+                                        <small class="text-muted">Actual Reach <span class="all_only">90.73%</span> vs Reach of Approved DIPs</small>
                                     </div>
-                                    <div class="col-8">
-                                        <b class="font-20">14%</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 font-18 fw-bold text-muted">Farmer Organizations by Asset Size <small>(Based on Approved DIPs)</small></p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card analyticCard">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div id="fo_byAssetSize" style="width: 100%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-6 col-12">
+                    <p class="font-18 fw-bold text-muted">Number of members per type of FO</p>
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="w-8 m-auto">
+                                        <div id="fo_bytype" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12 border-end text-center">
+                                    <div class="p-2">
+                                        <span style="width: 15px; height: 15px; border-radius:50%; background-color: #004450; display: inline-block;"></span> Association
+                                        (<small class="fo_approved_assoc_label">-</small>)
+                                    </div>
+                                    <div class="w-75 m-auto">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                            </div>
+                                            <div class="col-8">
+                                                <b class="font-20 fo_byType_assoc_women">47%</b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                            </div>
+                                            <div class="col-8">
+                                                <b class="font-20 fo_byType_assoc_youth">6%</b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                            </div>
+                                            <div class="col-8">
+                                                <b class="font-20 fo_byType_assoc_ip">5%</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12 text-center">
+                                    <div class="p-2">
+                                        <span style="width: 15px; height: 15px; border-radius:50%; background-color: #7B9E3E; display: inline-block;"></span> Cooperative
+                                        (<small class="fo_approved_coop_label">-</small>)
+                                    </div>
+                                    <div class="w-75 m-auto">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                            </div>
+                                            <div class="col-8">
+                                                <b class="font-20 fo_byType_coop_women">47%</b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                            </div>
+                                            <div class="col-8">
+                                                <b class="font-20 fo_byType_coop_youth">6%</b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                            </div>
+                                            <div class="col-8">
+                                                <b class="font-20 fo_byType_coop_ip">5%</b>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -181,119 +233,250 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
-                <div class="card analyticCard">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <img src="/static/psalm_static/assets/img/icons/Commodities_Coconut.png" class="w-50 img-fluid" loading="lazy">
-                                <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Coconut<br><b>(54,699)</b></span>
-                                <br>
-                                <br>
+        </div>
+        <div class="shf_container categoryContainer" data-category="shf">
+            <div class="row">
+                <div class="col-lg-5 col-md-6 col-12">
+                    <p class="font-18 fw-bold text-muted">Projected vs Actual Reach of Smallholder Farmers</p>
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="/static/psalm_static/assets/img/icons/Sectors_Smallholder Farmer.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                </div>
+                                <div class="col-8">
+                                    <b class="font-22">78,000 SHFs</b><br>
+                                    EOP Targets
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                    </div>
-                                    <div class="col-8">
-                                        <b class="font-20">47%</b>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                    </div>
-                                    <div class="col-8">
-                                        <b class="font-20">6%</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card analyticCard p-0">
+                                <div class="card-body">
+                                    <div id="shf_approvedDIP"></div>
+                                    <div class="text-center">
+                                        <span class="font-18 text-wp-secondary fw-bold shf_based_approvedDIP_label">94,501 SHFS</span><br>
+                                        <small class="text-muted">Based on Approved DIPs</small>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                    </div>
-                                    <div class="col-8">
-                                        <b class="font-20">5%</b>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card analyticCard p-0">
+                                <div class="card-body">
+                                    <div id="shf_actualReach" width="70%"></div>
+                                    <div class="text-center">
+                                        <span class="font-18 text-wp-secondary fw-bold shf_based_actualReach_label">75,028 SHFS</span><br>
+                                        <small class="text-muted">Actual Reach <span class="all_only">79%</span> vs Reach of Approved DIPs</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-3">
-                <div class="card analyticCard">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <img src="/static/psalm_static/assets/img/icons/Commodities_Coffee.png" class="w-50 img-fluid" loading="lazy">
-                                <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Coffee<br><b>(17,849)</b></span>
-                                <br>
-                                <br>
+                <div class="col-lg-7 col-md-6 col-12">
+                    <p class="font-18 fw-bold text-muted">Reach of Smallholder Farmers by Sector</p>
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <span style="width: 15px; height: 15px; border-radius:50%; background-color: #7B9E3E; display: inline-block;"></span> Actual Reach &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span style="width: 15px; height: 15px; border-radius:50%; background-color: #004450; display: inline-block;"></span> <span class="shf_sector_legend_label">EOP</span>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                    </div>
-                                    <div class="col-8">
-                                        <b class="font-20">45%</b>
-                                    </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-2 col-12">
+                                    <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    <span class="badge bg-wp-primary w-100">Women</span>
                                 </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                    </div>
-                                    <div class="col-8">
-                                        <b class="font-20">17%</b>
-                                    </div>
+                                <div class="col-md-10 col-12">
+                                    <div id="shf_bysector_women"></div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
-                                    </div>
-                                    <div class="col-8">
-                                        <b class="font-20">36%</b>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-12">
+                                    <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    <span class="badge bg-wp-primary w-100">Youth</span>
+                                </div>
+                                <div class="col-md-10 col-12">
+                                    <div id="shf_bysector_youth"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-12">
+                                    <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                    <span class="badge bg-wp-primary w-100">IP</span>
+                                </div>
+                                <div class="col-md-10 col-12">
+                                    <div id="shf_bysector_ip"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-3">
-                <div class="card analyticCard">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <img src="/static/psalm_static/assets/img/icons/Commodities_PFN.png" class="w-50 img-fluid" loading="lazy">
-                                <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Processed Fruits <br>and Nuts<br><b>(7,367)</b></span>
-                                <br>
-                                <br>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <p class="font-18 fw-bold text-muted m-0">Projected Reach of Smallholder Farmers by Commodity</p>
+                    <small class="text-muted">Based on Approved DIPs</small>
+                </div>
+                <div class="col-3">
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <img src="/static/psalm_static/assets/img/icons/Commodities_Cacao.png" class="w-50 img-fluid" loading="lazy">
+                                    <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Cacao<br><b class="shf_comm_cacao_total"> (14,586) </b></span>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_cacao_women">44%</b>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_cacao_youth">8%</b>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_cacao_ip">14%</b>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <img src="/static/psalm_static/assets/img/icons/Commodities_Coconut.png" class="w-50 img-fluid" loading="lazy">
+                                    <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Coconut<br><b class="shf_comm_coconut_total"> (54,699) </b></span>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_coconut_women">47%</b>
+                                        </div>
                                     </div>
-                                    <div class="col-8">
-                                        <b class="font-20">45%</b>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_coconut_youth">6%</b>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_coconut_ip">5%</b>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <img src="/static/psalm_static/assets/img/icons/Commodities_Coffee.png" class="w-50 img-fluid" loading="lazy">
+                                    <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Coffee<br><b class="shf_comm_coffee_total"> (17,849) </b></span>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_coffee_women">45%</b>
+                                        </div>
                                     </div>
-                                    <div class="col-8">
-                                        <b class="font-20">17%</b>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_coffee_youth">17%</b>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_coffee_ip">36%</b>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card analyticCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <img src="/static/psalm_static/assets/img/icons/Commodities_PFN.png" class="w-50 img-fluid" loading="lazy">
+                                    <span class="mt-3 badge bg-wp-secondary w-100 font-18" style="border-radius: 30px;">Processed Fruits <br>and Nuts<br><b class="shf_comm_pfn_total"> (7,367) </b></span>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_Women.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_pfn_women">45%</b>
+                                        </div>
                                     </div>
-                                    <div class="col-8">
-                                        <b class="font-20">30%</b>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_Youth.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_pfn_youth">17%</b>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="/static/psalm_static/assets/img/icons/Special_Sector_IP.png" style="width: 100%;" class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="col-8">
+                                            <b class="font-20 shf_comm_pfn_ip">30%</b>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -317,6 +500,129 @@
 
 {% block customScript %}
 <script>
+    var eop = 78000;
+    var approved_dip = 94501;
+    var actual_reach = 78797;
+    var fo_eop = 300;
+    var fo_approved_dip = 874;
+    var fo_actual_reach = 792;
+    var fo_approved_byType_total = 874;
+    var msme_eop = 1050;
+
+    var fo_approved_byType = {
+        association : { total : 598, total_percent: 68.42 ,male : 57, female : 43, youth : 6, ip : 16, pwd : 0 },
+        cooperative : { total : 276, total_percent: 31.58, male : 53, female : 47, youth : 7, ip : 12, pwd : 0 }
+    };
+
+    var shf_commodity_data = {
+        cacao : { total : 14586, male : 8197, female : 6389, youth : 1144, ip : 1971, pwd : 67 },
+        coffee : { total : 17849, male : 9802, female : 8047, youth : 3018, ip : 6421, pwd : 38 },
+        coconut : { total : 54699, male : 29112, female : 25587, youth : 3297, ip : 2715, pwd : 170 },
+        pfn : { total : 7367, male : 4057, female : 3310, youth : 1297, ip : 2218, pwd : 5 }
+    };
+    var shf_sector_data = {
+        women : { actual : 36656, eop : 31200 },
+        youth : { actual : 7879, eop : 7800 },
+        ip : { actual : 13325, eop : 7800 }
+    };
+
+    var shf_data = {
+        total : {
+            fo_byassetsize : { large : 9, medium : 20, small : 48, micro : 797 },
+            actual_reach : { shf : 75028, fo : 7879, msme : 978 , msme_dip : 624, msme_nondip : 354 , msme_approved_dip : 745},
+        },
+        R8 : { 
+            projected : { projected : 8589, male : 4647, female : 3942, youth : 143, ip : 0, pwd : 30, projected_fo : 160 , projected_msme : 128 },
+            actual : { actual : 7378, male : 3474, female :3904, youth : 1368, ip : 0, pwd : 3, actual_fo : 159, actual_msme : 79, msme_dip : 79, msme_nondip : 0 , msme_approved_dip : 128},
+            commodity_cacao : { total : 486, percent : 3.33, male : 272, female : 214, youth : 11, ip : 0, pwd : 12 },
+            commodity_coffee : { total : 0, percent : 0, male : 0, female : 0, youth : 0, ip : 0, pwd : 0 },
+            commodity_coconut : { total : 8103, percent : 14.81, male : 4375, female : 3728, youth : 132, ip : 0, pwd : 18 },
+            commodity_pfn : { total : 0, percent : 0, male : 0, female : 0, youth : 0, ip : 0, pwd : 0 },
+            fo_association : { total : 145, total_percent : 90.6, total_member : 7466,  male : 4118, female : 3348, youth : 139, ip : 0, pwd : 15 },
+            fo_cooperative : { total : 15, total_percent : 9.4, total_member : 1088, male : 489, female : 599, youth : 16, ip : 0, pwd : 3 },
+            fo_byassetsize : { large : 0, medium : 0, small : 0, micro : 160 }
+        },
+        R9 : { 
+            projected : { projected : 14721, male : 7720, female : 7001, youth : 578, ip : 2097, pwd : 136, projected_fo : 95, projected_msme : 79 },
+            actual : { actual : 5526, male : 2149, female :3377, youth : 614, ip : 1042, pwd : 42, actual_fo : 28, actual_msme : 165, msme_dip : 59, msme_nondip : 106, msme_approved_dip : 79 },
+            commodity_cacao : { total : 909, percent : 6.23, male : 477, female : 432, youth : 145, ip : 115, pwd : 40 },
+            commodity_coffee : { total : 0, percent : 0, male : 0, female : 0, youth : 0, ip : 0, pwd : 0 },
+            commodity_coconut : { total : 13043, percent : 23.85, male : 6841, female : 6202, youth : 399, ip : 1762, pwd : 89 },
+            commodity_pfn : { total : 769, percent : 10.44, male : 402, female : 367, youth : 34, ip : 220, pwd : 0 },
+            fo_association : { total : 61, total_percent : 64.2, total_member : 1771,  male : 912, female : 859, youth : 136, ip : 284, pwd : 10 },
+            fo_cooperative : { total : 34, total_percent : 35.8, total_member : 12738, male : 6703, female : 6035, youth : 491, ip : 1790, pwd : 127 },
+            fo_byassetsize : { large : 4, medium : 5, small : 7, micro : 79 }
+        },
+        R10 : { 
+            projected : { projected : 23417, male : 11781, female : 11636, youth : 2850, ip : 2244, pwd : 3, projected_fo : 191, projected_msme : 150 },
+            actual : { actual : 23192, male : 11249, female : 11943, youth : 4086, ip : 1873, pwd : 1, actual_fo : 191, actual_msme : 156, msme_dip : 152, msme_nondip : 4, msme_approved_dip : 150 },
+            commodity_cacao : { total : 2997, percent : 20.55, male : 1646, female : 1351, youth : 23, ip : 160, pwd : 0 },
+            commodity_coffee : { total : 5030, percent : 28.18, male : 2590, female : 2440, youth : 534, ip : 1933, pwd : 0 },
+            commodity_coconut : { total : 15055, percent : 27.52, male : 7407, female : 7648, youth : 486, ip : 0, pwd : 0 },
+            commodity_pfn : { total : 335, percent : 4.55, male : 138, female : 197, youth : 44, ip : 8, pwd : 3 },
+            fo_association : { total : 97, total_percent : 50.8, total_member : 9379,  male : 4765, female : 4614, youth : 196, ip : 736, pwd : 1 },
+            fo_cooperative : { total : 94, total_percent : 49.2, total_member : 13972, male : 7017, female : 6955, youth : 1019, ip : 1500, pwd : 1 },
+            fo_byassetsize : { large : 4, medium : 4, small : 10, micro : 173 }
+        },
+        R11 : { 
+            projected : { projected : 18795, male : 10684, female : 8111, youth : 733, ip : 3051, pwd : 5, projected_fo : 132, projected_msme : 72 },
+            actual : { actual : 14389, male : 7893, female : 6496, youth : 2847, ip : 4355, pwd : 19, actual_fo : 114, actual_msme : 243, msme_dip : 81, msme_nondip : 162, msme_approved_dip : 72 },
+            commodity_cacao : { total : 6220, percent : 42.64, male : 3486, female : 2734, youth : 307, ip : 509, pwd : 4 },
+            commodity_coffee : { total : 3635, percent : 20.37, male : 1921, female : 1714, youth : 329, ip : 2054, pwd : 1 },
+            commodity_coconut : { total : 7538, percent : 13.78, male : 4377, female : 3161, youth : 0, ip : 0, pwd : 0 },
+            commodity_pfn : { total : 1402, percent : 19.03, male : 900, female : 502, youth : 97, ip : 488, pwd : 0 },
+            fo_association : { total : 77, total_percent : 58.3, total_member : 6485,  male : 3749, female : 2736, youth : 413, ip : 2222, pwd : 0 },
+            fo_cooperative : { total : 55, total_percent : 41.7, total_member : 6006, male : 3666, female : 2340, youth : 240, ip : 974, pwd : 2 },
+            fo_byassetsize : { large : 1, medium : 6, small : 22, micro : 103 }
+        },
+        R12 : { 
+            projected : { projected : 16384, male : 9030, female : 7354, youth : 3490, ip : 3339, pwd : 71, projected_fo : 131, projected_msme : 156 },
+            actual : { actual : 16384, male : 9030, female : 7354, youth : 3490, ip : 3339, pwd : 71, actual_fo : 131, actual_msme : 211, msme_dip : 155, msme_nondip : 56, msme_approved_dip : 156 },
+            commodity_cacao : { total : 2023, percent : 13.87, male : 1238, female : 785, youth : 336, ip : 405, pwd : 1 },
+            commodity_coffee : { total : 6426, percent : 36, male : 3499, female : 2927, youth : 1694, ip : 1806, pwd : 16 },
+            commodity_coconut : { total : 4875, percent : 8.91, male : 2622, female : 2253, youth : 721, ip : 256, pwd : 52 },
+            commodity_pfn : { total : 3060, percent : 41.54, male : 1671, female : 1389, youth : 739, ip : 872, pwd : 2 },
+            fo_association : { total : 100, total_percent : 76.3, total_member : 10667,  male : 5906, female : 4761, youth : 1258, ip : 2650, pwd : 34 },
+            fo_cooperative : { total : 31, total_percent : 23.7, total_member : 5487, male : 2973, female : 2514, youth : 581, ip : 854, pwd : 35 },
+            fo_byassetsize : { large : 0, medium : 5, small : 2, micro : 124 }
+        },
+        R13 : { 
+            projected : { projected : 10473, male : 5776, female : 4697, youth : 2171, ip : 2553, pwd : 25, projected_fo : 135, projected_msme : 131 },
+            actual : { actual : 10577, male : 5596, female : 4981, youth : 1834, ip : 2133, pwd : 30, actual_fo : 146, actual_msme : 120, msme_dip : 94, msme_nondip : 26, msme_approved_dip : 131 },
+            commodity_cacao : { total : 1951, percent : 13.38, male : 1078, female : 873, youth : 322, ip : 782, pwd : 10 },
+            commodity_coffee : { total : 2388, percent : 13.38, male : 1502, female : 886, youth : 369, ip : 445, pwd : 9 },
+            commodity_coconut : { total : 4333, percent : 7.92, male : 2250, female : 2083, youth : 1097, ip : 696, pwd : 6 },
+            commodity_pfn : { total : 1801, percent : 24.45, male : 946, female : 855, youth : 383, ip : 630, pwd : 0 },
+            fo_association : { total : 109, total_percent : 80.7, total_member : 7322,  male : 4827, female : 2495, youth : 197, ip : 829, pwd : 10 },
+            fo_cooperative : { total : 26, total_percent : 19.3, total_member : 3395, male : 1718, female : 1677, youth : 377, ip : 229, pwd : 9 },
+            fo_byassetsize : { large : 0, medium : 0, small : 5, micro : 130 }
+        },
+        BARMM : { 
+            projected : { projected : 2122, male : 1530, female : 592, youth : 554, ip : 184, pwd : 17, projected_fo : 30, projected_msme : 29 },
+            actual : { actual : 1351, male : 678, female : 673, youth : 211, ip : 202, pwd : 1, actual_fo : 24, actual_msme : 4, msme_dip : 4, msme_nondip : 0, msme_approved_dip : 29 },
+            commodity_cacao : { total : 0, percent : 0, male : 0, female : 0, youth : 0, ip : 0, pwd : 0 },
+            commodity_coffee : { total : 370, percent : 2.07, male : 290, female : 80, youth : 92, ip : 183, pwd : 12 },
+            commodity_coconut : { total : 1752, percent : 3.20, male : 1240, female : 512, youth : 462, ip : 1, pwd : 5 },
+            commodity_pfn : { total : 0, percent : 0, male : 0, female : 0, youth : 0, ip : 0, pwd : 0 },
+            fo_association : { total : 9, total_percent : 30, total_member : 295,  male : 255, female : 40, youth : 69, ip : 74, pwd : 0 },
+            fo_cooperative : { total : 21, total_percent : 70, total_member : 1169, male : 849, female : 320, youth : 324, ip : 110, pwd : 15 },
+            fo_byassetsize : { large : 0, medium : 0, small : 2, micro : 28 }
+        }
+    };
+
+    var shf_based_approvedDIP_chart = null;
+    var shf_based_actualReach_chart = null;
+    var shf_bysector_women_chart = null;
+    var shf_bysector_youth_chart = null;
+    var shf_bysector_ip_chart = null;
+
+    var fo_approvedDIP_chart = null;
+    var fo_actualReach_chart = null;
+    var fo_perType_chart = null;
+    var fo_byassetsize_chart = null;
+
+    var msme_actualReach_chart = null;
+
 
     var options = {
         series: [75],
@@ -429,7 +735,7 @@
             enabled: true,
             formatter: function (val, opts) {
             if (opts.seriesIndex === 0) {
-                return val.toLocaleString() + ' (' + 0 + '%)';
+                return val.toLocaleString() + ' (' + (val / groupBar_options.series[1].data[0] * 100).toFixed(1) + '%)';
             } else {
                 return val.toLocaleString();
             }
@@ -467,106 +773,204 @@
         colors: ['#7B9E3E', '#004450']
     }
 
-    var shf_based_approvedDIP_chart = null;
-    var shf_based_actualReach_chart = null;
-    var shf_bysector_women_chart = null;
-    var shf_bysector_youth_chart = null;
-    var shf_bysector_ip_chart = null;
+    var options_columnChart = {
+        series: [
+            {
+            name: 'Total',
+            data: [ shf_data.total.fo_byassetsize.large, shf_data.total.fo_byassetsize.medium, shf_data.total.fo_byassetsize.small, shf_data.total.fo_byassetsize.micro ],
+            },
+        ],
+        chart: {
+            height: 350,
+            type: 'bar',
+            toolbar : false
+        },
+        plotOptions: {
+            bar: {
+            borderRadius: 10,
+            columnWidth: '50%',
+            distributed: true
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        stroke: {
+            width: 0,
+        },
+        grid: {
+            row: {
+            colors: ['#fff', '#f2f2f2'],
+            },
+        },
+        xaxis: {
+            labels: {
+            rotate: -45,
+            },
+            categories: [
+            'Large',
+            'Medium',
+            'Small',
+            'Micro'
+            ],
+            tickPlacement: 'on',
+        },
+        yaxis: {
+            title: {
+            text: 'Total',
+            },
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+            shade: 'light',
+            type: 'horizontal',
+            shadeIntensity: 0.25,
+            gradientToColors: undefined,
+            inverseColors: true,
+            opacityFrom: 0.85,
+            opacityTo: 0.85,
+            stops: [50, 0, 100],
+            },
+        },
+        colors: ['#B2D848','#7CA03F','#2C9196','#02444F']
+    }
 
     $(document).ready(function(){
 
-        
-
-
+    
         options.series = [124];
         shf_based_approvedDIP_chart = new ApexCharts(document.querySelector('#shf_approvedDIP'), options);
         shf_based_approvedDIP_chart.render();
+
+        options.series = [291.33];
+        fo_approvedDIP_chart = new ApexCharts(document.querySelector('#fo_approvedDIP'), options);
+        fo_approvedDIP_chart.render();
 
         options.series = [96];
         shf_based_actualReach_chart = new ApexCharts(document.querySelector('#shf_actualReach'), options);
         shf_based_actualReach_chart.render();
 
-        
+        options.series = [264.33];
+        fo_actualReach_chart = new ApexCharts(document.querySelector('#fo_actualReach'), options);
+        fo_actualReach_chart.render();
+
+        groupBar_options.series = [
+                    { name: 'actual reach', data: [shf_sector_data.women.actual] },
+                    { name: 'EOP', data: [shf_sector_data.women.eop] }];
         shf_bysector_women_chart = new ApexCharts(document.querySelector('#shf_bysector_women'), groupBar_options);
         shf_bysector_women_chart.render()
 
         groupBar_options.series = [
-                    { name: 'actual reach', data: [14158] },
-                    { name: 'EOP', data: [15600] }];
+                    { name: 'actual reach', data: [shf_sector_data.youth.actual] },
+                    { name: 'EOP', data: [shf_sector_data.youth.eop] }];
         shf_bysector_youth_chart = new ApexCharts(document.querySelector('#shf_bysector_youth'), groupBar_options);
         shf_bysector_youth_chart.render()
 
         groupBar_options.series = [
-                    { name: 'actual reach', data: [13088] },
-                    { name: 'EOP', data: [7800] }];
+                    { name: 'actual reach', data: [shf_sector_data.ip.actual] },
+                    { name: 'EOP', data: [shf_sector_data.ip.eop] }];
         shf_bysector_ip_chart = new ApexCharts(document.querySelector('#shf_bysector_ip'), groupBar_options);
         shf_bysector_ip_chart.render()
+
+        $('.shf_comm_cacao_total').text('(' + shf_commodity_data['cacao']['total'].toLocaleString() + ')');
+        $('.shf_comm_coffee_total').text('(' + shf_commodity_data['coffee']['total'].toLocaleString() + ')');
+        $('.shf_comm_coconut_total').text('(' + shf_commodity_data['coconut']['total'].toLocaleString() + ')');
+        $('.shf_comm_pfn_total').text('(' + shf_commodity_data['pfn']['total'].toLocaleString() + ')');
+
+        $('.shf_comm_cacao_women').text( isNaN(parseFloat(shf_commodity_data['cacao']['female']) / parseFloat(shf_commodity_data['cacao']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['cacao']['female']) / parseFloat(shf_commodity_data['cacao']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_cacao_youth').text( isNaN(parseFloat(shf_commodity_data['cacao']['youth']) / parseFloat(shf_commodity_data['cacao']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['cacao']['youth']) / parseFloat(shf_commodity_data['cacao']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_cacao_ip').text( isNaN(parseFloat(shf_commodity_data['cacao']['ip']) / parseFloat(shf_commodity_data['cacao']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['cacao']['ip']) / parseFloat(shf_commodity_data['cacao']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_coconut_women').text( isNaN(parseFloat(shf_commodity_data['coconut']['female']) / parseFloat(shf_commodity_data['coconut']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coconut']['female']) / parseFloat(shf_commodity_data['coconut']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_coconut_youth').text( isNaN(parseFloat(shf_commodity_data['coconut']['youth']) / parseFloat(shf_commodity_data['coconut']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coconut']['youth']) / parseFloat(shf_commodity_data['coconut']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_coconut_ip').text( isNaN(parseFloat(shf_commodity_data['coconut']['ip']) / parseFloat(shf_commodity_data['coconut']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coconut']['ip']) / parseFloat(shf_commodity_data['coconut']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_coffee_women').text( isNaN(parseFloat(shf_commodity_data['coffee']['female']) / parseFloat(shf_commodity_data['coffee']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coffee']['female']) / parseFloat(shf_commodity_data['coffee']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_coffee_youth').text( isNaN(parseFloat(shf_commodity_data['coffee']['youth']) / parseFloat(shf_commodity_data['coffee']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coffee']['youth']) / parseFloat(shf_commodity_data['coffee']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_coffee_ip').text( isNaN(parseFloat(shf_commodity_data['coffee']['ip']) / parseFloat(shf_commodity_data['coffee']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coffee']['ip']) / parseFloat(shf_commodity_data['coffee']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_pfn_women').text( isNaN(parseFloat(shf_commodity_data['pfn']['female']) / parseFloat(shf_commodity_data['pfn']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['pfn']['female']) / parseFloat(shf_commodity_data['pfn']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_pfn_youth').text( isNaN(parseFloat(shf_commodity_data['pfn']['youth']) / parseFloat(shf_commodity_data['pfn']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['pfn']['youth']) / parseFloat(shf_commodity_data['pfn']['total']) * 100).toFixed(1) + '%');
+        $('.shf_comm_pfn_ip').text( isNaN(parseFloat(shf_commodity_data['pfn']['ip']) / parseFloat(shf_commodity_data['pfn']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['pfn']['ip']) / parseFloat(shf_commodity_data['pfn']['total']) * 100).toFixed(1) + '%');    
+
+        
+        // FO CHART
+        var options1 = {
+            series: [fo_approved_byType.cooperative.total_percent, fo_approved_byType.association.total_percent],
+            chart: {
+                type: 'donut',
+            },
+            fill: {
+                type: 'gradient',
+            },
+            labels: ['Cooperative', 'Association'],
+            legend: {
+                show: false,
+            },
+            plotOptions: {
+                pie: {
+                dataLabels: {
+                    external: {
+                    show: true,
+                    },
+                },
+                },
+            },
+            tooltip: {
+                enabled: true,
+                y: {
+                formatter: function (val) {
+                    return val + " points"; // customize tooltip text
+                }
+                }
+            },
+            responsive: [
+                {
+                breakpoint: 480,
+                options: {
+                    chart: {
+                    width: 320,
+                    },
+                },
+                },
+            ],
+            colors: ['#7B9E3E', '#004450']
+        }
+
+
+        fo_perType_chart = new ApexCharts(document.querySelector('#fo_bytype'), options1)
+        fo_perType_chart.render()
+
+        fo_byassetsize_chart = new ApexCharts(document.querySelector('#fo_byAssetSize'), options_columnChart)
+        fo_byassetsize_chart.render()
+        
+        $('.fo_approved_assoc_label').text(fo_approved_byType.association.total.toLocaleString());
+        $('.fo_approved_coop_label').text(fo_approved_byType.cooperative.total.toLocaleString());
+        $('.fo_byType_coop_women').text(fo_approved_byType.cooperative.female.toLocaleString()+"%");
+        $('.fo_byType_coop_youth').text(fo_approved_byType.cooperative.youth.toLocaleString()+"%");
+        $('.fo_byType_coop_ip').text(fo_approved_byType.cooperative.ip.toLocaleString()+"%");
+        $('.fo_byType_assoc_women').text(fo_approved_byType.association.female.toLocaleString()+"%");
+        $('.fo_byType_assoc_youth').text(fo_approved_byType.association.youth.toLocaleString()+"%");
+        $('.fo_byType_assoc_ip').text(fo_approved_byType.association.ip.toLocaleString()+"%");
+
+        // MSME CHART
+        var msme_actualReach_percent = parseInt(( parseFloat(shf_data.total.actual_reach['msme']) / parseFloat(msme_eop) ) * 100);
+        options.series = [msme_actualReach_percent];
+        msme_actualReach_chart = new ApexCharts(document.querySelector('#msme_actualReach'), options);
+        msme_actualReach_chart.render();
+
+        $('.msme_actualreach_label').text(shf_data.total.actual_reach['msme'].toLocaleString()+" MSMEs");
+        $('.msme_nondip_label').text(shf_data.total.actual_reach['msme_nondip'].toLocaleString()+" MSMEs");
+        $('.msme_dip_label').text(shf_data.total.actual_reach['msme_dip'].toLocaleString()+" MSMEs");
+       
+        $('.msme_approved_dip_label').text(shf_data.total.actual_reach['msme_approved_dip'].toLocaleString());
+        var msme_approved_dip_percent = (parseFloat(shf_data.total.actual_reach['msme_dip']) / parseFloat(shf_data.total.actual_reach['msme_approved_dip']) * 100).toFixed(0);
+        $('.msme_dip_percentage_label').text(msme_approved_dip_percent);
 
         setTimeout(function(){
             $('.mis_loading').fadeOut('slow');
         }, 1500);
         
-        
-        var shf_based_approvedDIP = {
-            all : { value: 94501, percentage: 121.16 },
-            R8 : { value: 8589, percentage: 11.01 },
-            R9 : { value: 14721, percentage: 18.87 },
-            R10 : { value: 23417, percentage: 30.02 },
-            R11 : { value: 18795, percentage: 24.10 },
-            R12 : { value: 16384, percentage: 21.01 },
-            R13 : { value: 10473, percentage: 13.43 },
-            BARMM : { value: 2122, percentage: 2.72 }
-        };
-
-        var shf_based_actualReach = {
-            all : { value: 75028, percentage: 100 },
-            R8 : { value: 36656, percentage: 48.85 },
-            R9 : { value: 14158, percentage: 18.87 },
-            R10 : { value: 13088, percentage: 17.45 },
-            R11 : { value: 7800, percentage: 10.39 },
-            R12 : { value: 15600, percentage: 20.78 },
-            R13 : { value: 13088, percentage: 17.45 },
-            BARMM : { value: 2122, percentage: 2.83 }
-        };
-
-        
-
-        
     });
 
-    var eop = 78000;
-    var approved_dip = 94501;
-    var actual_reach = 78797;
-    var shf_data = {
-        R8 : { 
-            projected : { projected : 8589, male : 4647, female : 3942, youth : 143, ip : 0, pwd : 30 },
-            actual : { actual : 7378, male : 3474, female :3904, youth : 1368, ip : 0, pwd : 3 }
-        },
-        R9 : { 
-            projected : { projected : 14721, male : 7720, female : 7001, youth : 578, ip : 2097, pwd : 136 },
-            actual : { actual : 5526, male : 2149, female :3377, youth : 614, ip : 1042, pwd : 42 }
-        },
-        R10 : { 
-            projected : { projected : 23417, male : 11781, female : 11636, youth : 2850, ip : 2244, pwd : 3 },
-            actual : { actual : 23192, male : 11249, female : 11943, youth : 4086, ip : 1873, pwd : 1 }
-        },
-        R11 : { 
-            projected : { projected : 18795, male : 10684, female : 8111, youth : 733, ip : 3051, pwd : 5 },
-            actual : { actual : 14389, male : 7893, female : 6496, youth : 2847, ip : 4355, pwd : 19 }
-        },
-        R12 : { 
-            projected : { projected : 16384, male : 9030, female : 7354, youth : 3490, ip : 3339, pwd : 71 },
-            actual : { actual : 16384, male : 9030, female : 7354, youth : 3490, ip : 3339, pwd : 71 }
-        },
-        R13 : { 
-            projected : { projected : 10473, male : 5776, female : 4697, youth : 2171, ip : 2553, pwd : 25 },
-            actual : { actual : 10577, male : 5596, female : 4981, youth : 1834, ip : 2133, pwd : 30 }
-        },
-        BARMM : { 
-            projected : { projected : 2122, male : 1530, female : 592, youth : 554, ip : 184, pwd : 17 },
-            actual : { actual : 1351, male : 678, female : 673, youth : 211, ip : 202, pwd : 1 }
-        }
-    };
     
     function applyFilter(){
         var type_selected = $('.applyfilter_type').val();
@@ -577,6 +981,62 @@
         }else if ( type_selected == "SHF" ) {
             if ( region_selected == "" || region_selected == "all" ) {
                 region_selected = "all";
+                $('.shf_sector_legend_label').text('EOP');
+                $('.all_only').show();
+
+                var shf_bysector_women_percent = (shf_sector_data.women.actual / shf_sector_data.women.eop * 100).toFixed(1);
+                shf_bysector_women_chart.updateOptions({
+                    dataLabels: {
+                        enabled: true,
+                        formatter: (val, opts) =>
+                        opts.seriesIndex === 0
+                            ? `${val.toLocaleString()} (${shf_bysector_women_percent}%)`
+                            : val.toLocaleString()
+                    }
+                });
+                shf_bysector_women_chart.updateSeries([{ name: 'actual reach', data: [shf_sector_data.women.actual] }, { name: 'Projected', data: [shf_sector_data.women.eop] }]);
+                var shf_bysector_youth_percent = (shf_sector_data.youth.actual / shf_sector_data.youth.eop * 100).toFixed(1);
+                shf_bysector_youth_chart.updateOptions({
+                    dataLabels: {
+                        enabled: true,
+                        formatter: (val, opts) =>
+                        opts.seriesIndex === 0
+                            ? `${val.toLocaleString()} (${shf_bysector_youth_percent}%)`
+                            : val.toLocaleString()
+                    }
+                });
+                shf_bysector_youth_chart.updateSeries([{ name: 'actual reach', data: [shf_sector_data.youth.actual] }, { name: 'Projected', data: [shf_sector_data.youth.eop] }]);
+                var shf_bysector_ip_percent = (shf_sector_data.ip.actual / shf_sector_data.ip.eop * 100).toFixed(1);
+                shf_bysector_ip_chart.updateOptions({
+                    dataLabels: {
+                        enabled: true,
+                        formatter: (val, opts) =>
+                        opts.seriesIndex === 0
+                            ? `${val.toLocaleString()} (${shf_bysector_ip_percent}%)`
+                            : val.toLocaleString()
+                    }
+                });
+                shf_bysector_ip_chart.updateSeries([{ name: 'actual reach', data: [shf_sector_data.ip.actual] }, { name: 'Projected', data: [shf_sector_data.ip.eop] }]);
+
+
+                $('.shf_comm_cacao_total').text('(' + shf_commodity_data['cacao']['total'].toLocaleString() + ')');
+                $('.shf_comm_coffee_total').text('(' + shf_commodity_data['coffee']['total'].toLocaleString() + ')');
+                $('.shf_comm_coconut_total').text('(' + shf_commodity_data['coconut']['total'].toLocaleString() + ')');
+                $('.shf_comm_pfn_total').text('(' + shf_commodity_data['pfn']['total'].toLocaleString() + ')');
+                
+                $('.shf_comm_cacao_women').text( isNaN(parseFloat(shf_commodity_data['cacao']['female']) / parseFloat(shf_commodity_data['cacao']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['cacao']['female']) / parseFloat(shf_commodity_data['cacao']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_cacao_youth').text( isNaN(parseFloat(shf_commodity_data['cacao']['youth']) / parseFloat(shf_commodity_data['cacao']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['cacao']['youth']) / parseFloat(shf_commodity_data['cacao']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_cacao_ip').text( isNaN(parseFloat(shf_commodity_data['cacao']['ip']) / parseFloat(shf_commodity_data['cacao']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['cacao']['ip']) / parseFloat(shf_commodity_data['cacao']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coconut_women').text( isNaN(parseFloat(shf_commodity_data['coconut']['female']) / parseFloat(shf_commodity_data['coconut']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coconut']['female']) / parseFloat(shf_commodity_data['coconut']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coconut_youth').text( isNaN(parseFloat(shf_commodity_data['coconut']['youth']) / parseFloat(shf_commodity_data['coconut']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coconut']['youth']) / parseFloat(shf_commodity_data['coconut']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coconut_ip').text( isNaN(parseFloat(shf_commodity_data['coconut']['ip']) / parseFloat(shf_commodity_data['coconut']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coconut']['ip']) / parseFloat(shf_commodity_data['coconut']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coffee_women').text( isNaN(parseFloat(shf_commodity_data['coffee']['female']) / parseFloat(shf_commodity_data['coffee']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coffee']['female']) / parseFloat(shf_commodity_data['coffee']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coffee_youth').text( isNaN(parseFloat(shf_commodity_data['coffee']['youth']) / parseFloat(shf_commodity_data['coffee']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coffee']['youth']) / parseFloat(shf_commodity_data['coffee']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coffee_ip').text( isNaN(parseFloat(shf_commodity_data['coffee']['ip']) / parseFloat(shf_commodity_data['coffee']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['coffee']['ip']) / parseFloat(shf_commodity_data['coffee']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_pfn_women').text( isNaN(parseFloat(shf_commodity_data['pfn']['female']) / parseFloat(shf_commodity_data['pfn']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['pfn']['female']) / parseFloat(shf_commodity_data['pfn']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_pfn_youth').text( isNaN(parseFloat(shf_commodity_data['pfn']['youth']) / parseFloat(shf_commodity_data['pfn']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['pfn']['youth']) / parseFloat(shf_commodity_data['pfn']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_pfn_ip').text( isNaN(parseFloat(shf_commodity_data['pfn']['ip']) / parseFloat(shf_commodity_data['pfn']['total']) * 100) ? '0.0%' : (parseFloat(shf_commodity_data['pfn']['ip']) / parseFloat(shf_commodity_data['pfn']['total']) * 100).toFixed(1) + '%');    
+                
             }else{
                 var basedApprovedDIP_percent = (parseInt(shf_data[region_selected]['projected']['projected'])/approved_dip) * 100;
                 shf_based_approvedDIP_chart.updateSeries([basedApprovedDIP_percent]);
@@ -587,37 +1047,173 @@
                 $('.shf_based_actualReach_label').text(shf_data[region_selected]['actual']['actual'].toLocaleString() + " SHFS");
             
                 var shf_bysector_women = (parseInt(shf_data[region_selected]['actual']['female'])/parseInt(shf_data[region_selected]['projected']['female'])) * 100;
+                var shf_bysector_youth = (parseInt(shf_data[region_selected]['actual']['youth'])/parseInt(shf_data[region_selected]['projected']['youth'])) * 100;
+                var shf_bysector_ip = (parseInt(shf_data[region_selected]['actual']['ip'])/parseInt(shf_data[region_selected]['projected']['ip'])) * 100;
                 
                 shf_bysector_women_chart.updateOptions({
-                    plotOptions: {
-                        bar: {
-                        horizontal: true,
-                        dataLabels: {
-                            position: 'center' // base position
-                        }
-                        }
-                    },
                     dataLabels: {
                         enabled: true,
-                        formatter: function (val, opts) {
-                        if (opts.seriesIndex === 0) {
-                            return val.toLocaleString() + ' (' + shf_bysector_women.toFixed(1) + '%)';
-                        } else {
-                            return val.toLocaleString();
-                        }
-                        },
-                        style: {
-                        colors: ['#fff'],
-                        fontSize: '12px'
-                        },
-                        offsetX: 0, // adjust left/right
-                        offsetY: 0  // adjust up/down
+                        formatter: (val, opts) =>
+                        opts.seriesIndex === 0
+                            ? `${val.toLocaleString()} (${shf_bysector_women.toFixed(1)}%)`
+                            : val.toLocaleString()
                     }
-                    });
+                });
                 shf_bysector_women_chart.updateSeries([{ name: 'actual reach', data: [shf_data[region_selected]['actual']['female']] }, { name: 'Projected', data: [shf_data[region_selected]['projected']['female']] }]);
+                shf_bysector_youth_chart.updateOptions({
+                    dataLabels: {
+                        enabled: true,
+                        formatter: (val, opts) =>
+                        opts.seriesIndex === 0
+                            ? `${val.toLocaleString()} (${shf_bysector_youth.toFixed(1)}%)`
+                            : val.toLocaleString()
+                    }
+                });
+                shf_bysector_youth_chart.updateSeries([{ name: 'actual reach', data: [shf_data[region_selected]['actual']['youth']] }, { name: 'Projected', data: [shf_data[region_selected]['projected']['youth']] }]);
+                shf_bysector_ip_chart.updateOptions({
+                    dataLabels: {
+                        enabled: true,
+                        formatter: (val, opts) =>
+                        opts.seriesIndex === 0
+                            ? `${val.toLocaleString()} (${shf_bysector_ip.toFixed(1)}%)`
+                            : val.toLocaleString()
+                    }
+                });
+                shf_bysector_ip_chart.updateSeries([{ name: 'actual reach', data: [shf_data[region_selected]['actual']['ip']] }, { name: 'Projected', data: [shf_data[region_selected]['projected']['ip']] }]);
+
+                $('.shf_sector_legend_label').text('Projected');
+                $('.all_only').hide();
+
+                $('.shf_comm_cacao_total').text('(' + shf_data[region_selected]['commodity_cacao']['total'].toLocaleString() + ')');
+                $('.shf_comm_coffee_total').text('(' + shf_data[region_selected]['commodity_coffee']['total'].toLocaleString() + ')');
+                $('.shf_comm_coconut_total').text('(' + shf_data[region_selected]['commodity_coconut']['total'].toLocaleString() + ')');
+                $('.shf_comm_pfn_total').text('(' + shf_data[region_selected]['commodity_pfn']['total'].toLocaleString() + ')');
+
+                $('.shf_comm_cacao_women').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_cacao']['female']) / parseFloat(shf_data[region_selected]['commodity_cacao']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_cacao']['female']) / parseFloat(shf_data[region_selected]['commodity_cacao']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_cacao_youth').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_cacao']['youth']) / parseFloat(shf_data[region_selected]['commodity_cacao']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_cacao']['youth']) / parseFloat(shf_data[region_selected]['commodity_cacao']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_cacao_ip').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_cacao']['ip']) / parseFloat(shf_data[region_selected]['commodity_cacao']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_cacao']['ip']) / parseFloat(shf_data[region_selected]['commodity_cacao']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coconut_women').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_coconut']['female']) / parseFloat(shf_data[region_selected]['commodity_coconut']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_coconut']['female']) / parseFloat(shf_data[region_selected]['commodity_coconut']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coconut_youth').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_coconut']['youth']) / parseFloat(shf_data[region_selected]['commodity_coconut']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_coconut']['youth']) / parseFloat(shf_data[region_selected]['commodity_coconut']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coconut_ip').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_coconut']['ip']) / parseFloat(shf_data[region_selected]['commodity_coconut']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_coconut']['ip']) / parseFloat(shf_data[region_selected]['commodity_coconut']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coffee_women').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_coffee']['female']) / parseFloat(shf_data[region_selected]['commodity_coffee']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_coffee']['female']) / parseFloat(shf_data[region_selected]['commodity_coffee']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coffee_youth').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_coffee']['youth']) / parseFloat(shf_data[region_selected]['commodity_coffee']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_coffee']['youth']) / parseFloat(shf_data[region_selected]['commodity_coffee']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_coffee_ip').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_coffee']['ip']) / parseFloat(shf_data[region_selected]['commodity_coffee']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_coffee']['ip']) / parseFloat(shf_data[region_selected]['commodity_coffee']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_pfn_women').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_pfn']['female']) / parseFloat(shf_data[region_selected]['commodity_pfn']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_pfn']['female']) / parseFloat(shf_data[region_selected]['commodity_pfn']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_pfn_youth').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_pfn']['youth']) / parseFloat(shf_data[region_selected]['commodity_pfn']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_pfn']['youth']) / parseFloat(shf_data[region_selected]['commodity_pfn']['total']) * 100).toFixed(1) + '%');
+                $('.shf_comm_pfn_ip').text( isNaN(( parseFloat(shf_data[region_selected]['commodity_pfn']['ip']) / parseFloat(shf_data[region_selected]['commodity_pfn']['total']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['commodity_pfn']['ip']) / parseFloat(shf_data[region_selected]['commodity_pfn']['total']) * 100).toFixed(1) + '%');
+
+            }
+
+            $('.categoryContainer').addClass('d-none');
+            $('.categoryContainer[data-category="shf"]').removeClass('d-none');
+
+        }else if ( type_selected == "FO" ) {
+
+            if ( region_selected == "" || region_selected == "all" ) {
+                region_selected = "all";
+                $('.fo_sector_legend_label').text('EOP');
+
+                fo_perType_chart.updateOptions({
+                    series: [fo_approved_byType.cooperative.total_percent, fo_approved_byType.association.total_percent]
+                });
+
+                $('.fo_approved_assoc_label').text(fo_approved_byType.association.total.toLocaleString());
+                $('.fo_approved_coop_label').text(fo_approved_byType.cooperative.total.toLocaleString());
+                $('.fo_byType_coop_women').text(fo_approved_byType.cooperative.female.toLocaleString()+"%");
+                $('.fo_byType_coop_youth').text(fo_approved_byType.cooperative.youth.toLocaleString()+"%");
+                $('.fo_byType_coop_ip').text(fo_approved_byType.cooperative.ip.toLocaleString()+"%");
+                $('.fo_byType_assoc_women').text(fo_approved_byType.association.female.toLocaleString()+"%");
+                $('.fo_byType_assoc_youth').text(fo_approved_byType.association.youth.toLocaleString()+"%");
+                $('.fo_byType_assoc_ip').text(fo_approved_byType.association.ip.toLocaleString()+"%");
+                
+                fo_byassetsize_chart.updateOptions({
+                    series: [{
+                        name: 'Total',
+                        data: [
+                            shf_data?.total?.fo_byassetsize?.large || 0,
+                            shf_data?.total?.fo_byassetsize?.medium || 0,
+                            shf_data?.total?.fo_byassetsize?.small || 0,
+                            shf_data?.total?.fo_byassetsize?.micro || 0
+                        ]
+                    }]
+                });
+
+                $('.all_only').show();
+            }else {
+                var basedApprovedDIP_percent = (parseInt(shf_data[region_selected]['projected']['projected_fo'])/fo_approved_dip) * 100;
+                fo_approvedDIP_chart.updateSeries([basedApprovedDIP_percent]);
+                $('.fo_based_approvedDIP_label').text(shf_data[region_selected]['projected']['projected_fo'].toLocaleString() + " FOs");
+                
+                var basedActualReach_percent = (parseInt(shf_data[region_selected]['actual']['actual_fo'])/parseInt(shf_data[region_selected]['projected']['projected_fo'])) * 100;
+                fo_actualReach_chart.updateSeries([basedActualReach_percent]);
+                $('.fo_based_actualReach_label').text(shf_data[region_selected]['actual']['actual_fo'].toLocaleString() + " FOs");
+                
+                fo_perType_chart.updateOptions({
+                    series: [shf_data[region_selected]['fo_cooperative']['total_percent'], shf_data[region_selected]['fo_association']['total_percent']]
+                });
+
+                $('.fo_approved_assoc_label').text(shf_data[region_selected]['fo_association']['total'].toLocaleString());
+                $('.fo_approved_coop_label').text(shf_data[region_selected]['fo_cooperative']['total'].toLocaleString());
+                $('.fo_byType_coop_women').text( isNaN(( parseFloat(shf_data[region_selected]['fo_cooperative']['female']) / parseFloat(shf_data[region_selected]['fo_cooperative']['total_member']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['fo_cooperative']['female']) / parseFloat(shf_data[region_selected]['fo_cooperative']['total_member']) * 100).toFixed(1) + '%');
+                $('.fo_byType_coop_youth').text( isNaN(( parseFloat(shf_data[region_selected]['fo_cooperative']['youth']) / parseFloat(shf_data[region_selected]['fo_cooperative']['total_member']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['fo_cooperative']['youth']) / parseFloat(shf_data[region_selected]['fo_cooperative']['total_member']) * 100).toFixed(1) + '%');
+                $('.fo_byType_coop_ip').text( isNaN(( parseFloat(shf_data[region_selected]['fo_cooperative']['ip']) / parseFloat(shf_data[region_selected]['fo_cooperative']['total_member']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['fo_cooperative']['ip']) / parseFloat(shf_data[region_selected]['fo_cooperative']['total_member']) * 100).toFixed(1) + '%');
+                $('.fo_byType_assoc_women').text( isNaN(( parseFloat(shf_data[region_selected]['fo_association']['female']) / parseFloat(shf_data[region_selected]['fo_association']['total_member']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['fo_association']['female']) / parseFloat(shf_data[region_selected]['fo_association']['total_member']) * 100).toFixed(1) + '%');
+                $('.fo_byType_assoc_youth').text( isNaN(( parseFloat(shf_data[region_selected]['fo_association']['youth']) / parseFloat(shf_data[region_selected]['fo_association']['total_member']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['fo_association']['youth']) / parseFloat(shf_data[region_selected]['fo_association']['total_member']) * 100).toFixed(1) + '%');
+                $('.fo_byType_assoc_ip').text( isNaN(( parseFloat(shf_data[region_selected]['fo_association']['ip']) / parseFloat(shf_data[region_selected]['fo_association']['total_member']) * 100)) ? '0.0%' : ( parseFloat(shf_data[region_selected]['fo_association']['ip']) / parseFloat(shf_data[region_selected]['fo_association']['total_member']) * 100).toFixed(1) + '%');
+                
+                fo_byassetsize_chart.updateOptions({
+                    series: [{
+                        name: 'Total',
+                        data: [
+                            shf_data?.[region_selected]?.fo_byassetsize?.large || 0,
+                            shf_data?.[region_selected]?.fo_byassetsize?.medium || 0,
+                            shf_data?.[region_selected]?.fo_byassetsize?.small || 0,
+                            shf_data?.[region_selected]?.fo_byassetsize?.micro || 0
+                        ]
+                    }]
+                });
+
+                $('.all_only').hide();
+            }
+
+            $('.categoryContainer').addClass('d-none');
+            $('.categoryContainer[data-category="fo"]').removeClass('d-none');
+        }else if ( type_selected == "MSME" ) {
+
+            if ( region_selected == "" || region_selected == "all" ) {
+                region_selected = "all";
+
+                var msme_actualReach_percent = parseInt(( parseFloat(shf_data.total.actual_reach['msme']) / parseFloat(msme_eop) ) * 100);
+                msme_actualReach_chart.updateSeries([msme_actualReach_percent]);
+                $('.msme_actualreach_label').text(shf_data.total.actual_reach['msme'].toLocaleString()+" MSMEs");
+                $('.msme_nondip_label').text(shf_data.total.actual_reach['msme_nondip'].toLocaleString()+" MSMEs");
+                $('.msme_dip_label').text(shf_data.total.actual_reach['msme_dip'].toLocaleString()+" MSMEs");
+
+                $('.msme_approved_dip_label').text(shf_data.total.actual_reach['msme_approved_dip'].toLocaleString());
+                var msme_approved_dip_percent = (parseFloat(shf_data.total.actual_reach['msme_dip']) / parseFloat(shf_data.total.actual_reach['msme_approved_dip']) * 100).toFixed(0);
+                $('.msme_dip_percentage_label').text(msme_approved_dip_percent);
+
+                // $('.shf_based_approvedDIP_label').text(shf_data[region_selected]['projected']['projected'].toLocaleString() + " SHFS");
+                
+            }else {
+
+                var msme_actualReach_byRCU_percent = parseInt(( parseFloat(shf_data[region_selected]['actual']['actual_msme']) / parseFloat(msme_eop) ) * 100);
+                msme_actualReach_chart.updateSeries([msme_actualReach_byRCU_percent]);
+                $('.msme_actualreach_label').text(shf_data[region_selected]['actual']['actual_msme']+" MSMEs");
+                $('.msme_nondip_label').text(shf_data[region_selected]['actual']['msme_nondip']+" MSMEs");
+                $('.msme_dip_label').text(shf_data[region_selected]['actual']['msme_dip']+" MSMEs");
+
+                $('.msme_approved_dip_label').text(shf_data[region_selected]['actual']['msme_approved_dip'].toLocaleString());
+                var msme_approved_dip_percent = (parseFloat(shf_data[region_selected]['actual']['msme_dip']) / parseFloat(shf_data[region_selected]['actual']['msme_approved_dip']) * 100).toFixed(0);
+                $('.msme_dip_percentage_label').text(msme_approved_dip_percent);
                 
             }
+
+            $('.categoryContainer').addClass('d-none');
+            $('.categoryContainer[data-category="msme"]').removeClass('d-none');
+
+            
         }
     }
 </script>
-{% endblock %}
+{% endblock %}  

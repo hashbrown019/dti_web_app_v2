@@ -42,7 +42,7 @@ class sqlite:
 		return d
 
 class mysql:
-	def __init__(self, host, user, password, database, use_pure=False):
+	def __init__(self, host, user, password, database, use_pure=True):
 		'''
 			@params: host = Hostname of the database
 			@params: user = Username of the database
