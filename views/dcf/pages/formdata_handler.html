@@ -188,6 +188,18 @@
 				return
 			}
 		}
+
+		// Additional numeric normalization: treat "11.0" the same as "11"
+		if (/^\d+(?:\.0+)?$/.test(normalizedValue)) {
+			const numericNormalized = String(parseInt(parseFloat(normalizedValue)))
+			for (let optionIndex = 0; optionIndex < element.options.length; optionIndex++) {
+				const option = element.options[optionIndex]
+				if ((option.value ?? "").toString().trim().toLowerCase() === numericNormalized) {
+					element.value = option.value
+					return
+				}
+			}
+		}
 	}
 
 	function load_data(record_id,table,class_name){

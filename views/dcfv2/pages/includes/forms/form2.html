@@ -622,6 +622,15 @@
         // === Load DIP Names (optionally filtered by region) ===
         async function populateDipNames(region = null, selectedValue = null) {
             try {
+                // Normalize numeric region values like "11.0" -> "11" to match server-side logic
+                if (region !== null && region !== undefined) {
+                    if (typeof region === 'string' && /^\d+(?:\.0+)?$/.test(region)) {
+                        region = parseInt(parseFloat(region)).toString();
+                    } else if (typeof region === 'number') {
+                        region = String(region);
+                    }
+                }
+
                 const endpoint = region
                     ? `/api/get_dip_names_by_region?region=${encodeURIComponent(region)}`
                     : "/api/get_dip_names";

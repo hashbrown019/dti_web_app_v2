@@ -14,15 +14,35 @@ function load_data(record_id,table,class_name){
     func : function(r){
       var res = JSON.parse(r)[0]
       var x_ins = $CLASS(class_name)
+      var JSON__ = `{{user_data}}`.replaceAll('&#39;','"')
+      println(JSON__)
+      var USER_ID = JSON.parse(JSON__)['id']
       for (let index = 0; index < x_ins.length; index++) {
-        x_ins[index].value = res[x_ins[index].id]
-		var JSON__ = `{{user_data}}`.replaceAll('&#39;','"')
-		println(JSON__)
-        var USER_ID = JSON.parse(JSON__)['id']
+        var el = x_ins[index]
+        var val = res[el.id]
+        if(val === null || val === undefined) val = ''
+
+        // Normalize numeric region values like "11.0" to "11" for select elements so options match
+        if(el.tagName && el.tagName.toLowerCase() === 'select'){
+          if(typeof val === 'string' && /^\d+(?:\.0+)?$/.test(val)){
+            val = parseInt(parseFloat(val)).toString()
+          } else if(typeof val === 'number'){
+            val = val.toString()
+          }
+        }
+
+        el.value = val
+
+        // dispatch change so dependent dropdowns (PCU, DIP) react when editing
+        try{
+          var evt = new Event('change', { bubbles: true })
+          el.dispatchEvent(evt)
+        }catch(e){}
+
         if(USER_ID==parseInt(res['upload_by'])){
-          x_ins[index].disabled = false
+          el.disabled = false
         }else{
-          x_ins[index].disabled = true
+          el.disabled = true
           $ID('submit_btn_holder').innerHTML = "<br><i class='x-text-red'>This Record is not yours</i>"
         }
       }
