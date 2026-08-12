@@ -855,6 +855,9 @@
         fo_actualReach_chart = new ApexCharts(document.querySelector('#fo_actualReach'), options);
         fo_actualReach_chart.render();
 
+        $('.shf_based_approvedDIP_label').text(approved_dip.toLocaleString() + " SHFS");
+        $('.shf_based_actualReach_label').text(actual_reach.toLocaleString() + " SHFS");
+
         groupBar_options.series = [
                     { name: 'actual reach', data: [shf_sector_data.women.actual] },
                     { name: 'EOP', data: [shf_sector_data.women.eop] }];
@@ -984,6 +987,11 @@
                 $('.shf_sector_legend_label').text('EOP');
                 $('.all_only').show();
 
+                shf_based_approvedDIP_chart.updateSeries([124]);
+                shf_based_actualReach_chart.updateSeries([96]);
+                $('.shf_based_approvedDIP_label').text(approved_dip.toLocaleString() + " SHFS");
+                $('.shf_based_actualReach_label').text(actual_reach.toLocaleString() + " SHFS");
+
                 var shf_bysector_women_percent = (shf_sector_data.women.actual / shf_sector_data.women.eop * 100).toFixed(1);
                 shf_bysector_women_chart.updateOptions({
                     dataLabels: {
@@ -1112,6 +1120,11 @@
             if ( region_selected == "" || region_selected == "all" ) {
                 region_selected = "all";
                 $('.fo_sector_legend_label').text('EOP');
+
+                fo_approvedDIP_chart.updateSeries([291]);
+                $('.fo_based_approvedDIP_label').text(fo_approved_dip.toLocaleString() + " FOs");
+                fo_actualReach_chart.updateSeries([264]);
+                $('.fo_based_actualReach_label').text(fo_actual_reach.toLocaleString() + " FOs");
 
                 fo_perType_chart.updateOptions({
                     series: [fo_approved_byType.cooperative.total_percent, fo_approved_byType.association.total_percent]

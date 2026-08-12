@@ -243,7 +243,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="mb-3">
                                 <label for="FOInfo_Head_Sector" class="form-label">Sector</label>
                                 <select class="form-select" id="FOInfo_Head_Sector" name="FOInfo_Head_Sector" >
@@ -254,6 +254,39 @@
                                     <option value="SC">Senior Citizen</option>
                                 </select>
                             </div>
+                        </div> -->
+                        <dv class="col-12"><h6 class="mt-4 border-bot">Sector</h6></dv>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="PWD" name="FOInfo_Head_Sector" id="FOInfo_Head_Sector_isPWD">
+                                <label class="form-check-label" for="FOInfo_Head_Sector_isPWD">
+                                    PWD
+                                </label>
+                            </div>  
+                        </div>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Youth" name="FOInfo_Head_Sector" id="FOInfo_Head_Sector_isYouth">
+                                <label class="form-check-label" for="FOInfo_Head_Sector_isYouth">
+                                    Youth
+                                </label>
+                            </div>  
+                        </div>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="IP" name="FOInfo_Head_Sector" id="FOInfo_Head_Sector_isIP">
+                                <label class="form-check-label" for="FOInfo_Head_Sector_isIP">
+                                    IP
+                                </label>
+                            </div>  
+                        </div>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="SC" name="FOInfo_Head_Sector" id="FOInfo_Head_Sector_isSC">
+                                <label class="form-check-label" for="FOInfo_Head_Sector_isSC">
+                                    Senior Citizen
+                                </label>
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -268,59 +301,68 @@
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionMGIFO">
                 <div class="accordion-body">
                     <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="AcknowOfFarmExp_NotPartOfMG" id="AcknowOfFarmExp_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="AcknowOfFarmExp_NotPartOfMG">
+                                    Farm Expansion is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_TargetArea" class="form-label">Target area for Expansion in hectares</label>
-                                <input type="text" class="form-control number" id="AcknowOfFarmExp_TargetArea" name="AcknowOfFarmExp_TargetArea" >
+                                <input type="text" class="form-control number AcknowOfFarmExp_item" id="AcknowOfFarmExp_TargetArea" name="AcknowOfFarmExp_TargetArea" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_ItemName" class="form-label">Name/Particulars of items/seedlings received</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmExp_ItemName" name="AcknowOfFarmExp_ItemName" >
+                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_ItemName" name="AcknowOfFarmExp_ItemName" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_QtyReceived" class="form-label">Qty of<br>items received</label>
-                                <input type="number" class="form-control" id="AcknowOfFarmExp_QtyReceived" name="AcknowOfFarmExp_QtyReceived" >
+                                <input type="number" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_QtyReceived" name="AcknowOfFarmExp_QtyReceived" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_DateReceived" class="form-label">Date<br>received</label>
-                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_DateReceived" name="AcknowOfFarmExp_DateReceived" >
+                                <input type="text" class="form-control datemasked AcknowOfFarmExp_item" id="AcknowOfFarmExp_DateReceived" name="AcknowOfFarmExp_DateReceived" >
                             </div>
                         </div>
                         <h6 class="mt-4 border-bot">Farmer Representative</h6>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_FarmerRep_Fname" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Fname" name="AcknowOfFarmExp_FarmerRep_Fname" >
+                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_FarmerRep_Fname" name="AcknowOfFarmExp_FarmerRep_Fname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_FarmerRep_Mname" class="form-label">Middle Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Mname" name="AcknowOfFarmExp_FarmerRep_Mname" >
+                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_FarmerRep_Mname" name="AcknowOfFarmExp_FarmerRep_Mname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_FarmerRep_Lname" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Lname" name="AcknowOfFarmExp_FarmerRep_Lname" >
+                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_FarmerRep_Lname" name="AcknowOfFarmExp_FarmerRep_Lname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_FarmerRep_Extname" class="form-label">Ext. Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Extname" name="AcknowOfFarmExp_FarmerRep_Extname" >
+                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_FarmerRep_Extname" name="AcknowOfFarmExp_FarmerRep_Extname" >
                             </div>
                         </div>
                         <div class="col-8">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmExp_FarmerRep_Designation" class="form-label">Designation</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmExp_FarmerRep_Designation" name="AcknowOfFarmExp_FarmerRep_Designation" >
+                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_FarmerRep_Designation" name="AcknowOfFarmExp_FarmerRep_Designation" >
                             </div>
                         </div>
                     </div>
@@ -348,25 +390,25 @@
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness1_ValidatorName" class="form-label">Full name of validator</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness1_ValidatorName" name="AcknowOfFarmExp_Witness1_ValidatorName" >
+                                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness1_ValidatorName" name="AcknowOfFarmExp_Witness1_ValidatorName" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness1_ValidationDate" class="form-label">Date validation</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness1_ValidationDate" name="AcknowOfFarmExp_Witness1_ValidationDate" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness1_ValidationDate" name="AcknowOfFarmExp_Witness1_ValidationDate" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness1_Designation" class="form-label">Designation</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness1_Designation" name="AcknowOfFarmExp_Witness1_Designation" >
+                                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness1_Designation" name="AcknowOfFarmExp_Witness1_Designation" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness1_DateWitnessed" class="form-label">Date witnessed</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness1_DateWitnessed" name="AcknowOfFarmExp_Witness1_DateWitnessed" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness1_DateWitnessed" name="AcknowOfFarmExp_Witness1_DateWitnessed" >
                                             </div>
                                         </div>
                                     </div>
@@ -377,19 +419,19 @@
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness2_ValidatorName" class="form-label">Full name of validator</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness2_ValidatorName" name="AcknowOfFarmExp_Witness2_ValidatorName" >
+                                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness2_ValidatorName" name="AcknowOfFarmExp_Witness2_ValidatorName" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness2_ValidationDate" class="form-label">Date validation</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness2_ValidationDate" name="AcknowOfFarmExp_Witness2_ValidationDate" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness2_ValidationDate" name="AcknowOfFarmExp_Witness2_ValidationDate" >
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness2_Remarks" class="form-label">Remarks/Challenges</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness2_Remarks" name="AcknowOfFarmExp_Witness2_Remarks" >
+                                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness2_Remarks" name="AcknowOfFarmExp_Witness2_Remarks" >
                                             </div>
                                         </div>
                                     </div>
@@ -402,25 +444,25 @@
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness1Raw_ValidatorName" class="form-label">Full name of validator</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness1Raw_ValidatorName" name="AcknowOfFarmExp_Witness1Raw_ValidatorName" >
+                                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness1Raw_ValidatorName" name="AcknowOfFarmExp_Witness1Raw_ValidatorName" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness1Raw_ValidationDate" class="form-label">Date validation</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness1Raw_ValidationDate" name="AcknowOfFarmExp_Witness1Raw_ValidationDate" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness1Raw_ValidationDate" name="AcknowOfFarmExp_Witness1Raw_ValidationDate" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness1Raw_Designation" class="form-label">Designation</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness1Raw_Designation" name="AcknowOfFarmExp_Witness1Raw_Designation" >
+                                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness1Raw_Designation" name="AcknowOfFarmExp_Witness1Raw_Designation" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness1Raw_DateWitnessed" class="form-label">Date witnessed</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness1Raw_DateWitnessed" name="AcknowOfFarmExp_Witness1Raw_DateWitnessed" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness1Raw_DateWitnessed" name="AcknowOfFarmExp_Witness1Raw_DateWitnessed" >
                                             </div>
                                         </div>
                                     </div>
@@ -431,19 +473,19 @@
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness2Raw_ValidatorName" class="form-label">Full name of validator</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness2Raw_ValidatorName" name="AcknowOfFarmExp_Witness2Raw_ValidatorName" >
+                                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness2Raw_ValidatorName" name="AcknowOfFarmExp_Witness2Raw_ValidatorName" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness2Raw_ValidationDate" class="form-label">Date validation</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmExp_Witness2Raw_ValidationDate" name="AcknowOfFarmExp_Witness2Raw_ValidationDate" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness2Raw_ValidationDate" name="AcknowOfFarmExp_Witness2Raw_ValidationDate" >
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmExp_Witness2Raw_Remarks" class="form-label">Remarks/Challenges</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmExp_Witness2Raw_Remarks" name="AcknowOfFarmExp_Witness2Raw_Remarks" >
+                                                <input type="text" class="form-control AcknowOfFarmExp_item" id="AcknowOfFarmExp_Witness2Raw_Remarks" name="AcknowOfFarmExp_Witness2Raw_Remarks" >
                                             </div>
                                         </div>
                                     </div>
@@ -463,59 +505,68 @@
                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionMGIFO">
                 <div class="accordion-body">
                     <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="AcknowOfFarmInten_NotPartOfMG" id="AcknowOfFarmInten_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="AcknowOfFarmInten_NotPartOfMG">
+                                    Farm Intensification is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_TargetArea" class="form-label">Target area for Intensification in hec.</label>
-                                <input type="text" class="form-control number" id="AcknowOfFarmInten_TargetArea" name="AcknowOfFarmInten_TargetArea" >
+                                <input type="text" class="form-control number AcknowOfFarmInten_item" id="AcknowOfFarmInten_TargetArea" name="AcknowOfFarmInten_TargetArea" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_ItemName" class="form-label">Name/Particulars of items/seedlings received</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmInten_ItemName" name="AcknowOfFarmInten_ItemName" >
+                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_ItemName" name="AcknowOfFarmInten_ItemName" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_QtyReceived" class="form-label">Qty of<br>items received</label>
-                                <input type="number" class="form-control" id="AcknowOfFarmInten_QtyReceived" name="AcknowOfFarmInten_QtyReceived" >
+                                <input type="number" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_QtyReceived" name="AcknowOfFarmInten_QtyReceived" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_DateReceived" class="form-label">Date<br>received</label>
-                                <input type="text" class="form-control datemasked" id="AcknowOfFarmInten_DateReceived" name="AcknowOfFarmInten_DateReceived" >
+                                <input type="text" class="form-control datemasked AcknowOfFarmInten_item" id="AcknowOfFarmInten_DateReceived" name="AcknowOfFarmInten_DateReceived" >
                             </div>
                         </div>
                         <h6 class="mt-4 border-bot">Farmer Representative</h6>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_FarmerRep_Fname" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Fname" name="AcknowOfFarmInten_FarmerRep_Fname" >
+                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_FarmerRep_Fname" name="AcknowOfFarmInten_FarmerRep_Fname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_FarmerRep_Mname" class="form-label">Middle Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Mname" name="AcknowOfFarmInten_FarmerRep_Mname" >
+                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_FarmerRep_Mname" name="AcknowOfFarmInten_FarmerRep_Mname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_FarmerRep_Lname" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Lname" name="AcknowOfFarmInten_FarmerRep_Lname" >
+                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_FarmerRep_Lname" name="AcknowOfFarmInten_FarmerRep_Lname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_FarmerRep_Extname" class="form-label">Ext. Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Extname" name="AcknowOfFarmInten_FarmerRep_Extname" >
+                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_FarmerRep_Extname" name="AcknowOfFarmInten_FarmerRep_Extname" >
                             </div>
                         </div>
                         <div class="col-8">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmInten_FarmerRep_Designation" class="form-label">Designation</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmInten_FarmerRep_Designation" name="AcknowOfFarmInten_FarmerRep_Designation" >
+                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_FarmerRep_Designation" name="AcknowOfFarmInten_FarmerRep_Designation" >
                             </div>
                         </div>
                     </div>
@@ -537,25 +588,25 @@
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmInten_Withness1_ValidatorName" class="form-label">Full name of validator</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmInten_Withness1_ValidatorName" name="AcknowOfFarmInten_Withness1_ValidatorName" >
+                                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_Withness1_ValidatorName" name="AcknowOfFarmInten_Withness1_ValidatorName" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmInten_Withness1_ValidationDate" class="form-label">Date validation</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmInten_Withness1_ValidationDate" name="AcknowOfFarmInten_Withness1_ValidationDate" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmInten_item" id="AcknowOfFarmInten_Withness1_ValidationDate" name="AcknowOfFarmInten_Withness1_ValidationDate" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmInten_Withness1_Designation" class="form-label">Designation</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmInten_Withness1_Designation" name="AcknowOfFarmInten_Withness1_Designation" >
+                                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_Withness1_Designation" name="AcknowOfFarmInten_Withness1_Designation" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmInten_Withness1_DateWitnessed" class="form-label">Date witnessed</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmInten_Withness1_DateWitnessed" name="AcknowOfFarmInten_Withness1_DateWitnessed" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmInten_item" id="AcknowOfFarmInten_Withness1_DateWitnessed" name="AcknowOfFarmInten_Withness1_DateWitnessed" >
                                             </div>
                                         </div>
                                     </div>
@@ -566,19 +617,19 @@
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmInten_Withness2_ValidatorName" class="form-label">Full name of validator</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmInten_Withness2_ValidatorName" name="AcknowOfFarmInten_Withness2_ValidatorName" >
+                                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_Withness2_ValidatorName" name="AcknowOfFarmInten_Withness2_ValidatorName" >
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmInten_Withness2_ValidationDate" class="form-label">Date validation</label>
-                                                <input type="text" class="form-control datemasked" id="AcknowOfFarmInten_Withness2_ValidationDate" name="AcknowOfFarmInten_Withness2_ValidationDate" >
+                                                <input type="text" class="form-control datemasked AcknowOfFarmInten_item" id="AcknowOfFarmInten_Withness2_ValidationDate" name="AcknowOfFarmInten_Withness2_ValidationDate" >
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-3">
                                                 <label for="AcknowOfFarmInten_Withness2_Remarks" class="form-label">Remarks/Challenges</label>
-                                                <input type="text" class="form-control" id="AcknowOfFarmInten_Withness2_Remarks" name="AcknowOfFarmInten_Withness2_Remarks" >
+                                                <input type="text" class="form-control AcknowOfFarmInten_item" id="AcknowOfFarmInten_Withness2_Remarks" name="AcknowOfFarmInten_Withness2_Remarks" >
                                             </div>
                                         </div>
                                     </div>
@@ -598,10 +649,19 @@
                 <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionMGIFO">
                 <div class="accordion-body">
                     <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="AcknowOfFarmRehab_NotPartOfMG" id="AcknowOfFarmRehab_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="AcknowOfFarmRehab_NotPartOfMG">
+                                    Farm Rehabilitation is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_TargetArea" class="form-label">Target area for Rehabilitation in hectares</label>
-                                <input type="text" class="form-control number" id="AcknowOfFarmRehab_TargetArea" name="AcknowOfFarmRehab_TargetArea" >
+                                <input type="text" class="form-control number AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_TargetArea" name="AcknowOfFarmRehab_TargetArea" >
                             </div>
                         </div>
                     </div>
@@ -610,25 +670,25 @@
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw" class="form-label">High Pruner Saw</label>
-                                <input type="number" class="form-control" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw" >
+                                <input type="number" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw" class="form-label">Mini Chainsaw</label>
-                                <input type="number" class="form-control" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw" >
+                                <input type="number" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer" class="form-label">Knapsack Sprayer</label>
-                                <input type="number" class="form-control" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer" >
+                                <input type="number" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer" name="AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_DateReceived" class="form-label">Date Received</label>
-                                <input type="text" class="form-control datemasked" id="AcknowOfFarmRehab_DateReceived" name="AcknowOfFarmRehab_DateReceived" >
+                                <input type="text" class="form-control datemasked AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_DateReceived" name="AcknowOfFarmRehab_DateReceived" >
                             </div>
                         </div>
                     </div>
@@ -637,31 +697,31 @@
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_FarmerRep_Fname" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Fname" name="AcknowOfFarmRehab_FarmerRep_Fname" >
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_FarmerRep_Fname" name="AcknowOfFarmRehab_FarmerRep_Fname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_FarmerRep_Mname" class="form-label">Middle Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Mname" name="AcknowOfFarmRehab_FarmerRep_Mname" >
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_FarmerRep_Mname" name="AcknowOfFarmRehab_FarmerRep_Mname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_FarmerRep_Lname" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Lname" name="AcknowOfFarmRehab_FarmerRep_Lname" >
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_FarmerRep_Lname" name="AcknowOfFarmRehab_FarmerRep_Lname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_FarmerRep_Extname" class="form-label">Ext. Name</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Extname" name="AcknowOfFarmRehab_FarmerRep_Extname" >
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_FarmerRep_Extname" name="AcknowOfFarmRehab_FarmerRep_Extname" >
                             </div>
                         </div>
                         <div class="col-8">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_FarmerRep_Designation" class="form-label">Designation</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmRehab_FarmerRep_Designation" name="AcknowOfFarmRehab_FarmerRep_Designation" >
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_FarmerRep_Designation" name="AcknowOfFarmRehab_FarmerRep_Designation" >
                             </div>
                         </div>
                     </div>
@@ -670,19 +730,19 @@
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_ValidatorName" class="form-label">Full name of validator</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmRehab_ValidatorName" name="AcknowOfFarmRehab_ValidatorName" >
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_ValidatorName" name="AcknowOfFarmRehab_ValidatorName" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_ValidationDate" class="form-label">Date validation</label>
-                                <input type="text" class="form-control datemasked" id="AcknowOfFarmRehab_ValidationDate" name="AcknowOfFarmRehab_ValidationDate" >
+                                <input type="text" class="form-control datemasked AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_ValidationDate" name="AcknowOfFarmRehab_ValidationDate" >
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="AcknowOfFarmRehab_Remarks" class="form-label">Remarks/Challenges and other Observable Adopted</label>
-                                <input type="text" class="form-control" id="AcknowOfFarmRehab_Remarks" name="AcknowOfFarmRehab_Remarks" >
+                                <input type="text" class="form-control AcknowOfFarmRehab_item" id="AcknowOfFarmRehab_Remarks" name="AcknowOfFarmRehab_Remarks" >
                             </div>
                         </div>
                     </div>
@@ -698,22 +758,31 @@
                 <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionMGIFO">
                 <div class="accordion-body">
                     <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="AcknowOfProd_NotPartOfMG" id="AcknowOfProd_NotPartOfMG">
+                                <label class="form-check-label bold text-danger" for="AcknowOfProd_NotPartOfMG">
+                                    Farm Rehabilitation is not part of the MG assistance to be received by farmer
+                                </label>
+                            </div>  
+                            <hr>
+                        </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_TypeOfProdInv" class="form-label">Specific/Type of Productive Investments</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_TypeOfProdInv" name="AcknowOfProd_TypeOfProdInv" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_TypeOfProdInv" name="AcknowOfProd_TypeOfProdInv" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_QtyItemReceived" class="form-label">Qty of Items Received</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_QtyItemReceived" name="AcknowOfProd_QtyItemReceived" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_QtyItemReceived" name="AcknowOfProd_QtyItemReceived" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_DateReceived" class="form-label">Date Received</label>
-                                <input type="text" class="form-control datemasked" id="AcknowOfProd_DateReceived" name="AcknowOfProd_DateReceived" >
+                                <input type="text" class="form-control datemasked AcknowOfProd_item" id="AcknowOfProd_DateReceived" name="AcknowOfProd_DateReceived" >
                             </div>
                         </div>
                     </div>
@@ -722,31 +791,31 @@
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_FarmerRep_Fname" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Fname" name="AcknowOfProd_FarmerRep_Fname" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_FarmerRep_Fname" name="AcknowOfProd_FarmerRep_Fname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_FarmerRep_Mname" class="form-label">Middle Name</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Mname" name="AcknowOfProd_FarmerRep_Mname" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_FarmerRep_Mname" name="AcknowOfProd_FarmerRep_Mname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_FarmerRep_Lname" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Lname" name="AcknowOfProd_FarmerRep_Lname" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_FarmerRep_Lname" name="AcknowOfProd_FarmerRep_Lname" >
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_FarmerRep_Extname" class="form-label">Ext. Name</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Extname" name="AcknowOfProd_FarmerRep_Extname" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_FarmerRep_Extname" name="AcknowOfProd_FarmerRep_Extname" >
                             </div>
                         </div>
                         <div class="col-8">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_FarmerRep_Designation" class="form-label">Designation</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_FarmerRep_Designation" name="AcknowOfProd_FarmerRep_Designation" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_FarmerRep_Designation" name="AcknowOfProd_FarmerRep_Designation" >
                             </div>
                         </div>
                     </div>
@@ -755,19 +824,19 @@
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_ValidatorName" class="form-label">Full name of validator</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_ValidatorName" name="AcknowOfProd_ValidatorName" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_ValidatorName" name="AcknowOfProd_ValidatorName" >
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_ValidationDate" class="form-label">Date validation</label>
-                                <input type="text" class="form-control datemasked" id="AcknowOfProd_ValidationDate" name="AcknowOfProd_ValidationDate" >
+                                <input type="text" class="form-control datemasked AcknowOfProd_item" id="AcknowOfProd_ValidationDate" name="AcknowOfProd_ValidationDate" >
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="AcknowOfProd_Remarks" class="form-label">Remarks/Challenges/Notable Results</label>
-                                <input type="text" class="form-control" id="AcknowOfProd_Remarks" name="AcknowOfProd_Remarks" >
+                                <input type="text" class="form-control AcknowOfProd_item" id="AcknowOfProd_Remarks" name="AcknowOfProd_Remarks" >
                             </div>
                         </div>
                     </div>
@@ -826,11 +895,17 @@
                                 if (!address.includes(key)){
                                     $('#'+key).val(data[key]);
                                 }
-
                                 if( action=='view' ){
                                     $('#'+key).prop('disabled',true);
                                 }
                             }
+                        }
+
+                        if ( action=='view' ){
+                            $('#FOInfo_Head_Sector_isPWD').prop('disabled',true);
+                            $('#FOInfo_Head_Sector_isYouth').prop('disabled',true);
+                            $('#FOInfo_Head_Sector_isIP').prop('disabled',true);
+                            $('#FOInfo_Head_Sector_isSC').prop('disabled',true);
                         }
 
                         selectRCU();
@@ -936,6 +1011,32 @@
                         $('#AcknowOfProd_DateReceived').val(AcknowOfProd_DateReceived);
                         $('#AcknowOfProd_ValidationDate').val(AcknowOfProd_ValidationDate);
 
+                        // Load & Trigger Checkbox for NOT PART OF MG
+
+                        sector = data['FOInfo_Head_Sector'].split(',');
+                        
+                        if ( sector.includes('PWD') ){ $('#FOInfo_Head_Sector_isPWD').prop('checked', true); }
+                        if ( sector.includes('Youth') ){ $('#FOInfo_Head_Sector_isYouth').prop('checked', true); }
+                        if ( sector.includes('IP') ){ $('#FOInfo_Head_Sector_isIP').prop('checked', true); }
+                        if ( sector.includes('SC') ){ $('#FOInfo_Head_Sector_isSC').prop('checked', true); }
+                        
+                        if ( data['AcknowOfFarmExp_NotPartOfMG']==1 ){ 
+                            $('#AcknowOfFarmExp_NotPartOfMG').prop('checked', true);
+                            $('#AcknowOfFarmExp_NotPartOfMG').trigger('change');
+                        }
+                        if ( data['AcknowOfFarmInten_NotPartOfMG']==1 ){ 
+                            $('#AcknowOfFarmInten_NotPartOfMG').prop('checked', true);
+                            $('#AcknowOfFarmInten_NotPartOfMG').trigger('change');
+                        }
+                        if ( data['AcknowOfFarmRehab_NotPartOfMG']==1 ){ 
+                            $('#AcknowOfFarmRehab_NotPartOfMG').prop('checked', true);
+                            $('#AcknowOfFarmRehab_NotPartOfMG').trigger('change');
+                        }
+                        if ( data['AcknowOfProd_NotPartOfMG']==1 ){ 
+                            $('#AcknowOfProd_NotPartOfMG').prop('checked', true);
+                            $('#AcknowOfProd_NotPartOfMG').trigger('change');
+                        }
+
                     },1000);
                 }
             },
@@ -1032,6 +1133,50 @@
         loadFOFormData();
 
         console.log(ALL_LOCATION);
+
+        $('#AcknowOfFarmExp_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.AcknowOfFarmExp_item').prop('disabled', true);
+                $('.AcknowOfFarmExp_item').val('');
+                $('.AcknowOfFarmExp_item').val('NA');
+            }else{
+                $('.AcknowOfFarmExp_item').prop('disabled', false);
+                $('.AcknowOfFarmExp_item').val('');
+            }
+        });
+
+        $('#AcknowOfFarmInten_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.AcknowOfFarmInten_item').prop('disabled', true);
+                $('.AcknowOfFarmInten_item').val('');
+                $('.AcknowOfFarmInten_item').val('NA');
+            }else{
+                $('.AcknowOfFarmInten_item').prop('disabled', false);
+                $('.AcknowOfFarmInten_item').val('');
+            }
+        });
+
+        $('#AcknowOfFarmRehab_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.AcknowOfFarmRehab_item').prop('disabled', true);
+                $('.AcknowOfFarmRehab_item').val('');
+                $('.AcknowOfFarmRehab_item').val('NA');
+            }else{
+                $('.AcknowOfFarmRehab_item').prop('disabled', false);
+                $('.AcknowOfFarmRehab_item').val('');
+            }
+        });
+        
+        $('#AcknowOfProd_NotPartOfMG').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                $('.AcknowOfProd_item').prop('disabled', true);
+                $('.AcknowOfProd_item').val('');
+                $('.AcknowOfProd_item').val('NA');
+            }else{
+                $('.AcknowOfProd_item').prop('disabled', false);
+                $('.AcknowOfProd_item').val('');
+            }
+        });
 
     });
 </script>

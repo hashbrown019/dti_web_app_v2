@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="/static/psalm_static/dcf_static/dashboard-ui.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
 <style>
 .btn-xs {
@@ -110,10 +111,6 @@
 #mgi_table>tbody>tr>td:first-child {
     width: 4%!important;
 }
-/* #mgi_table>thead>tr>th:last-child,
-#mgi_table>tbody>tr>td:last-child {
-    width: 150px!important;
-} */
 #mgi_table>tbody  {
     height: 400px; 
     overflow: auto;
@@ -124,8 +121,681 @@
         font-size: 17px;
     }
 }
+/* Match the Data Capture Forms 1 Enterprise Participation KPI-card treatment. */
+#mgi_dashboard_content .tile-stats {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-height: 142px;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 0;
+    padding: 22px 20px 18px 74px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(2, 68, 80, 0.15);
+    border-radius: 16px !important;
+    box-shadow: 0 5px 20px rgba(0, 57, 77, 0.065);
+}
+
+#mgi_dashboard_content .tile-stats .count {
+    margin: 0 0 4px;
+    color: #012f37;
+    font-size: clamp(28px, 3vw, 38px) !important;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#mgi_dashboard_content .tile-stats h3 {
+    margin: 3px 0 5px;
+    color: #163c42;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#mgi_dashboard_content .tile-stats p {
+    margin: 0;
+    color: #657b72;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* MG cards already include icons, so position them like DCF1's generated KPI icons. */
+#mgi_dashboard_content .tile-stats > .icon,
+#mgi_dashboard_content .tile-stats > .tile-icon {
+    position: absolute;
+    top: 22px;
+    left: 18px;
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    margin: 0;
+    color: #024450;
+    background: #eef6dc;
+    border-radius: 13px;
+    font-size: 18px;
+    line-height: 1;
+}
+
+#mgi_dashboard_content .tile-stats::after {
+    border-radius: 16px 0 0 16px;
+}
+
+/* Add mgi-kpi-wide to a KPI column when its content needs more room. */
+#mgi_dashboard_content .mgi-kpi-wide .tile-stats .count,
+#mgi_dashboard_content .mgi-kpi-wide .tile-stats h3,
+#mgi_dashboard_content .mgi-kpi-wide .tile-stats p,
+#mgi_dashboard_content .tile-stats.mgi-kpi-wide .count,
+#mgi_dashboard_content .tile-stats.mgi-kpi-wide h3,
+#mgi_dashboard_content .tile-stats.mgi-kpi-wide p {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+}
+
+/* Wide KPI cards adapt to the available screen space instead of using a fixed width. */
+@media (min-width: 768px) and (max-width: 991px) {
+    #mgi_dashboard_content .top_tiles {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+    }
+
+    #mgi_dashboard_content .top_tiles > [class*="col-"] {
+        grid-column: span 1;
+        width: auto;
+        max-width: none;
+    }
+
+    #mgi_dashboard_content .top_tiles > [class*="col-"].mgi-kpi-wide,
+    #mgi_dashboard_content .top_tiles > [class*="col-"]:has(> .tile-stats.mgi-kpi-wide) {
+        grid-column: span 2;
+    }
+}
+
+/* The dashboard summary always keeps its three KPIs together in one row. */
+@media (min-width: 768px) {
+    #mgi_dashboard_content #mgi_dashboard_topbar {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #mgi_dashboard_content #mgi_dashboard_topbar > [class*="col-"] {
+        grid-column: span 1;
+    }
+}
+
+/* Use grids so wide cards reserve space cleanly without shifting other KPI cards. */
+@media (min-width: 992px) {
+    #mgi_dashboard_content .top_tiles {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: stretch;
+    }
+
+    #mgi_dashboard_content .top_tiles > [class*="col-"] {
+        grid-column: span 1;
+        width: auto;
+        max-width: none;
+    }
+
+    #mgi_dashboard_content .top_tiles > [class*="col-"].mgi-kpi-wide,
+    #mgi_dashboard_content .top_tiles > [class*="col-"]:has(> .tile-stats.mgi-kpi-wide) {
+        grid-column: span 2;
+    }
+    /* Sectoral Data and implementation KPI groups use three cards per row. */
+    #mgiA-shf .top_tiles,
+    #mgi_tabarea2 .top_tiles {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Service Statistics has its own intentional KPI layouts. */
+@media (min-width: 992px) {  
+
+    #mgi_dashboard_content #ss-tab-expansion > .top_tiles,
+    #mgi_dashboard_content #ss-tab-rehab > .top_tiles {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #mgi_dashboard_content #ss-tab-productive > .top_tiles,
+    #mgi_dashboard_content #ss-tab-productive .x_content > .top_tiles {
+        display: block;
+    }
+
+    #mgi_dashboard_content #ss-tab-productive .x_content > .top_tiles > [class*="col-"] {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
 </style>
 <div class="col-lg-9">
+    <div class="d-flex justify-content-end" style="margin-bottom: 15px; margin-top: -15px;">
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="dipMgSecondaryBtn" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #024450; color: white; align-items: center; display: flex;">
+                <i class="fa fa-navicon"></i>&nbsp;<span id="mgiSelectedView">Dashboard</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dipMgSecondaryBtn">
+                <li><a class="dropdown-item active" href="#" data-mgi-view="dashboard">Dashboard</a></li>
+                <li><a class="dropdown-item" href="#" data-mgi-view="forms">Forms</a></li>
+            </ul>
+        </div>
+    </div>
+<!-- ============ MG IMPLEMENTATION DASHBOARD ============ -->
+<div id="mgi_dashboard_content">
+
+<!-- ── TOP SUMMARY TILES (ON TOP OF THE TAB AREA) ────────────────────────── -->
+<h4 id="mgi_main_title" style="font-weight: 700; color: #024450; margin-bottom: 14px; display: none;">MG Implementation Dashboard</h4>
+<div class="row top_tiles " id="mgi_dashboard_topbar" style="display:none;">
+    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12 mgi-kpi-wide">
+        <div class="tile-stats" style="border-radius:15px;">
+            <div class="icon"><i class="fa fa-sitemap"></i></div>
+            <div class="count _money_tag" id="mgi_top_fo_service">0</div>
+            <h3># of FO's (Service Count)</h3>
+            <p>Total availed services by FOs</p>
+        </div>
+    </div>
+    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12 mgi-kpi-wide">
+        <div class="tile-stats" style="border-radius:15px;">
+            <div class="icon"><i class="fa fa-users"></i></div>
+            <div class="count _money_tag" id="mgi_top_shf_service">0</div>
+            <h3># of SHF's (Service Count)</h3>
+            <p>Total availed services by SHFs</p>
+        </div>
+    </div>
+    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12 mgi-kpi-wide">
+        <div class="tile-stats" style="border-radius:15px;">
+            <div class="icon"><i class="fa fa-building"></i></div>
+            <div class="count _money_tag" id="mgi_top_msme_service">0</div>
+            <h3># of MSME's</h3>
+            <p>Total MSMEs served (placeholder)</p>
+        </div>
+    </div>
+</div>
+
+<!-- ── MAIN DASHBOARD TAB TOGGLE ─────────────────────────────────────────── -->
+<div id="mgi_main_tabs_nav" style="display:none; margin-bottom: 0;">
+    <ul class="nav nav-pills" id="mgiMainTabs" role="tablist" style="margin-bottom: 10px; gap: 6px; width: 100%;">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="mgi-overview-tab" data-bs-toggle="pill"
+                data-bs-target="#mgi_tabarea_overview" type="button" role="tab"
+                aria-controls="mgi_tabarea_overview" aria-selected="false"
+                style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;">
+                <i class="fa fa-bar-chart" style="margin-right:5px;"></i>Services Overview
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="mgi-stats-tab" data-bs-toggle="pill"
+                data-bs-target="#mgi_tabarea_stats" type="button" role="tab"
+                aria-controls="mgi_tabarea_stats" aria-selected="false"
+                style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;">
+                <i class="fa fa-table" style="margin-right:5px;"></i>Service Statistics
+            </button>
+        </li>
+        <li class="nav-item ms-auto" id="mgi-back-to-summary-li" style="display: none;">
+            <button class="btn btn-outline-secondary btn-sm" id="mgi-back-to-summary-btn"
+                style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; border-radius: 4px; border-color: #024450; color: #024450;">
+                <i class="fa fa-arrow-left" style="margin-right:5px;"></i>Back to Summary
+            </button>
+        </li>
+    </ul>
+</div>
+
+<div class="tab-content">
+
+<!-- ── PANEL 1: SERVICES OVERVIEW ─────────────────────────────────────────── -->
+<div class="tab-pane fade" id="mgi_tabarea_overview" role="tabpanel">
+
+<!-- ── DASHBOARD TABS AREA ────────────────────────────────────────────────── -->
+<div id="mgi_tabarea">
+    <!-- <h6 id="mgi_services_overview_label" style="font-weight: 600; color: #657b72; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; margin-bottom: 8px;">Services Overview</h6> -->
+    <br>
+    <ul class="nav nav-tabs" id="mgiDashboardTabs" role="tablist" style="margin-bottom:0;">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-expansion" type="button" role="tab">Expansion</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-rehab" type="button" role="tab">Rehab</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-productive" type="button" role="tab">Productive Investments</button>
+        </li>
+    </ul>
+    <div class="tab-content border border-top-0 p-3" style="border-radius:0 0 12px 12px; background:#fff; margin-bottom:20px;">
+
+        <!-- Tab 1: Expansion (Unique) -->
+        <div class="tab-pane fade show active" id="tab-expansion" role="tabpanel">
+            <!-- 2 KPI Cards per row -->
+            <div class="row" style="margin-top:12px; margin-bottom:15px;">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-sitemap"></i></div>
+                        <div class="count" id="exp_fo_kpi">0</div>
+                        <h3>Total No. of FO's</h3>
+                        <p>Unique FOs in Expansion</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-users"></i></div>
+                        <div class="count" id="exp_shf_kpi">0</div>
+                        <h3>Total No. of SHF's</h3>
+                        <p>Unique SHFs in Expansion</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Graphs row: 2 Bar charts beside each other -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>FO's by Region</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="expFORegionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>SHF's by Region</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="expSHFRegionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pie chart row below: centered -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>Per Commodity (FO)</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="expCommodityPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Rehab (Unique) -->
+        <div class="tab-pane fade" id="tab-rehab" role="tabpanel">
+            <!-- 2 KPI Cards per row -->
+            <div class="row" style="margin-top:12px; margin-bottom:15px;">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-sitemap"></i></div>
+                        <div class="count" id="rehab_fo_kpi">0</div>
+                        <h3>Total No. of FO's</h3>
+                        <p>Unique FOs in Rehabilitation</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-users"></i></div>
+                        <div class="count" id="rehab_shf_kpi">0</div>
+                        <h3>Total No. of SHF's</h3>
+                        <p>Unique SHFs in Rehabilitation</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Graphs row: 2 Bar charts beside each other -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>FO's by Region</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="rehabFORegionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>SHF's by Region</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="rehabSHFRegionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pie chart row below: centered -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>Per Commodity (FO)</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="rehabCommodityPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Productive Investments (Unique) -->
+        <div class="tab-pane fade" id="tab-productive" role="tabpanel">
+            <!-- 2 KPI Cards per row -->
+            <div class="row" style="margin-top:12px; margin-bottom:15px;">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-sitemap"></i></div>
+                        <div class="count" id="prod_fo_kpi">0</div>
+                        <h3>Total No. of FO's</h3>
+                        <p>Unique FOs in Productive Investments</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-building"></i></div>
+                        <div class="count" id="prod_msme_kpi">0</div>
+                        <h3>Total No. of MSME's</h3>
+                        <p>Unique MSMEs in Productive Investments</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Graphs row: 2 Bar charts beside each other -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>FO's by Region</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="prodFORegionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>MSME's by Region</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="prodMSMERegionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pie chart row below: split into FO on the left and MSME on the right -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2 style="font-size: 16px; font-weight: 500; float: left; margin: 5px 0 6px; font-weight: bold">Per Commodity (FO)</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="prodFOCommodityPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2 style="font-size: 16px; font-weight: 500; float: left; margin: 5px 0 6px; font-weight: bold">Per Commodity (MSME)</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="prodMSMECommodityPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- END SERVICES OVERVIEW PANEL -->
+</div>
+
+<!-- ── PANEL 2: SERVICE STATISTICS ───────────────────────────────────────── -->
+<div class="tab-pane fade" id="mgi_tabarea_stats" role="tabpanel">
+
+    <!-- <h6 style="font-weight: 600; color: #657b72; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; margin-bottom: 8px;">Service Statistics</h6> -->
+     <br>
+    <ul class="nav nav-tabs" id="mgiStatsTabs" role="tablist" style="margin-bottom:0;">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ss-tab-expansion" type="button" role="tab">Expansion</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#ss-tab-rehab" type="button" role="tab">Rehab</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#ss-tab-productive" type="button" role="tab">Productive Investments</button>
+        </li>
+    </ul>
+    <div class="tab-content border border-top-0 p-3" style="border-radius:0 0 12px 12px; background:#fff; margin-bottom:20px;">
+
+        <!-- SS Tab 1: Expansion -->
+        <div class="tab-pane fade show active" id="ss-tab-expansion" role="tabpanel">
+            <div class="row top_tiles" style="margin-top:12px;">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-map"></i></div>
+                        <div class="count" id="ss_exp_ha_target">0</div>
+                        <h3>No. of Ha's Target</h3>
+                        <p>Total hectares targeted for expansion</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-check-circle"></i></div>
+                        <div class="count" id="ss_exp_ha_expanded">0</div>
+                        <h3>No. of Ha's Expanded</h3>
+                        <p>Total hectares actually expanded</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-leaf"></i></div>
+                        <div class="count" id="ss_exp_seedling_target">0</div>
+                        <h3>No. of Seedling Target</h3>
+                        <p>Total seedlings targeted</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-truck"></i></div>
+                        <div class="count" id="ss_exp_seedlings_distributed">0</div>
+                        <h3>No. of Seedlings Distributed</h3>
+                        <p>Seedlings distributed to farmers</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-tree"></i></div>
+                        <div class="count" id="ss_exp_seedlings_planted_b">0</div>
+                        <h3>No. of Seedlings Planted</h3>
+                        <p>Seedlings planted by farmers</p>
+                    </div>
+                </div>
+
+                <div></div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-exclamation-triangle"></i></div>
+                        <div class="count" id="ss_exp_mortality_before">0</div>
+                        <h3>No. of Mortality Before Planting</h3>
+                        <p>Seedlings lost before planting</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-times-circle"></i></div>
+                        <div class="count" id="ss_exp_mortality_after_a">0</div>
+                        <h3>No. of Mortality After Planting</h3>
+                        <p>Seedlings lost after planting</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-percent"></i></div>
+                        <div class="count" id="ss_exp_mortality_pct">0%</div>
+                        <h3>% of Mortality</h3>
+                        <p>Mortality rate after planting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SS Tab 2: Rehab -->
+        <div class="tab-pane fade" id="ss-tab-rehab" role="tabpanel">
+            <!-- KPI Cards -->
+            <div class="row top_tiles" style="margin-top:12px; margin-bottom:15px;">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-map"></i></div>
+                        <div class="count" id="ss_rehab_ha_target">0</div>
+                        <h3>No. of Ha's Target</h3>
+                        <p>Total hectares targeted for rehab</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-check-circle"></i></div>
+                        <div class="count" id="ss_rehab_ha_rehabbed">0</div>
+                        <h3>No. of Ha's Rehabilitated</h3>
+                        <p>Total hectares actually rehabilitated</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-tree"></i></div>
+                        <div class="count" id="ss_rehab_trees_rehab_b">0</div>
+                        <h3>No. of Trees Rehab </h3>
+                        <p>Total trees under rehab (base value)</p>
+                    </div>
+                </div>
+
+                <div></div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-times-circle"></i></div>
+                        <div class="count" id="ss_rehab_mortality_during_a">0</div>
+                        <h3>No. of Mortality During Rehab</h3>
+                        <p>Trees lost during rehabilitation</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="tile-stats" style="border-radius:15px; margin-bottom:15px;">
+                        <div class="icon"><i class="fa fa-percent"></i></div>
+                        <div class="count" id="ss_rehab_mortality_pct">0%</div>
+                        <h3>% of Mortality</h3>
+                        <p>Mortality rate during rehabilitation</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Charts: Tools Distributed (FO & SHF) -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>Tools Distributed <small>FO Level</small></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="ssRehabFOToolsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom:20px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title">
+                            <h2>Tools Distributed <small>SHF Level</small></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:280px; position:relative;">
+                            <canvas id="ssRehabSHFToolsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SS Tab 3: Productive Investments -->
+        <div class="tab-pane fade" id="ss-tab-productive" role="tabpanel">
+            <div class="row top_tiles" style="margin-top:12px; margin-bottom:15px;">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom:15px;">
+                    <div class="tile-stats" style="border-radius:15px;">
+                        <div class="icon"><i class="fa fa-cubes"></i></div>
+                        <div class="count" id="ss_prod_total">0</div>
+                        <h3>Total No. of Productive Investments</h3>
+                        <p style="font-size:11px; color:#657b72;">Equipment + Facilities + Logistics</p>
+                    </div>
+                </div>
+            </div>
+            <h6 style="font-weight:700; color:#657b72; text-transform:uppercase; letter-spacing:.08em; font-size:12px; margin:0 0 10px;">Target and Actual</h6>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom:15px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title"><h2>Target</h2><div class="clearfix"></div></div>
+                        <div class="x_content">
+                            <div class="row top_tiles">
+                                <div class="col-12"><div class="tile-stats" style="margin-bottom:12px;"><div class="icon"><i class="fa fa-cogs"></i></div><div class="count" id="ss_prod_equip_target">0</div><h3>No. of Equipment</h3><p>Target</p></div></div>
+                                <div class="col-12"><div class="tile-stats" style="margin-bottom:12px;"><div class="icon"><i class="fa fa-building"></i></div><div class="count" id="ss_prod_facil_target">0</div><h3>No. of Facilities</h3><p>Target</p></div></div>
+                                <div class="col-12"><div class="tile-stats" style="margin-bottom:0;"><div class="icon"><i class="fa fa-truck"></i></div><div class="count" id="ss_prod_logis_target">0</div><h3>No. of Logistics</h3><p>Target</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom:15px;">
+                    <div class="x_panel" style="border-radius:15px; width:100%;">
+                        <div class="x_title"><h2>Actual</h2><div class="clearfix"></div></div>
+                        <div class="x_content">
+                            <div class="row top_tiles">
+                                <div class="col-12"><div class="tile-stats" style="margin-bottom:12px;"><div class="icon"><i class="fa fa-cogs"></i></div><div class="count" id="ss_prod_equip_actual">0</div><h3>No. of Equipment</h3><p>Actual received</p></div></div>
+                                <div class="col-12"><div class="tile-stats" style="margin-bottom:12px;"><div class="icon"><i class="fa fa-building"></i></div><div class="count" id="ss_prod_facil_actual">0</div><h3>No. of Facilities</h3><p>Actual received</p></div></div>
+                                <div class="col-12"><div class="tile-stats" style="margin-bottom:0;"><div class="icon"><i class="fa fa-truck"></i></div><div class="count" id="ss_prod_logis_actual">0</div><h3>No. of Logistics</h3><p>Actual received</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- END SERVICE STATISTICS PANEL -->
+
+</div><!-- end .tab-content for main tabs -->
+
+<!-- ============ END DASHBOARD ============ -->
+</div>
+
+
+<div id="mgi_forms_content" style="display:none;">
 	<section class="section profile">
         <div class="row">
             <div class="col-6">
@@ -136,9 +806,8 @@
             </div>
             <div class="col-6">
                 <button class="btn btn-primary btn-sm" id="loadDataBtn"><i class="fa fa-refresh"></i> Load Data</button>
-                <a href="/mis-v4/core-mg-implementation-form?form=fo&action=addnew" class="btn btn-success btn-sm" id="addDataBtn"><i class="fa fa-plus"></i> Add New - FO</a>
-                <a href="/mis-v4/core-mg-implementation-form?form=shf&action=addnew" class="btn btn-success btn-sm" id="addDataBtn"><i class="fa fa-plus"></i> Add New - SHF</a>
-                <!-- <button class="btn btn-info btn-sm" id="exportDataBtn"><i class="fa fa-cloud-download"></i> Export</button> -->
+                <a href="/mis-v4/core-mg-implementation-form?form=fo&action=addnew" class="btn btn-success btn-sm" id="addDataBtnFO"><i class="fa fa-plus"></i> Add New - FO</a>
+                <a href="/mis-v4/core-mg-implementation-form?form=shf&action=addnew" class="btn btn-success btn-sm" id="addDataBtnSHF"><i class="fa fa-plus"></i> Add New - SHF</a>
             </div>
         </div>
         <hr>
@@ -213,7 +882,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Table rows will be populated dynamically -->
+                <!-- Table rows populated dynamically -->
             </tbody>
         </table>
         <br>
@@ -221,46 +890,9 @@
         <div class="x_panel tile" style="border-radius: 15px;">
             <div class="x_title">
                 <h2>DIP/MG IMPLEMENTATION <small>SPREADSHEET MANAGEMENT</small></h2>
-                <!-- <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul> -->
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <!-- <form action="/dcf" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col">
-                                <select id="export_type" name="export_type" class="form-select">
-                                    <option value="mgi_fo">MG Implementation - FO</option>
-                                    <option value="mgi_shs">MG Implementation - SHS</option>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="form-row">
-                            <div class="col">
-                                <strong>
-                                    <label for="position">Export Data:</label>
-                                </strong><br>
-                                <button type="button" class="btn btn-sm btn-dark" onclick="exportForm1Data()">
-                                    <span><i class="fa fa-cloud-download"></i></span> Export
-                                </button>
-                            </div>
-                        </div> 
-                    </div>
-                </form>
-                <br> -->
                 <form action="/importcsv_mgimplementation" method="POST" enctype="multipart/form-data">
                     {% include "includes/sweetalert.html" %}
                     <div class="form-group">
@@ -299,10 +931,9 @@
             </div>
 	</section>
 </div>
+</div>
 
 <script>
-
-
     function exportMGIData(){
         var selectedType = $('#import_type').val();
         let a= document.createElement('a');
@@ -312,27 +943,26 @@
     }
 
     function filterTable(trigger) {   
-                 
         const table = document.getElementById('mgi_table');
         const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
         
-        var selectedRCU = document.querySelector('#filterRCU').value; // Get the selected RCU value
-        var searchDIP = document.querySelector('#filterDIPName').value.toLowerCase(); // Get the search input value and convert to lowercase
-        var searchName = document.querySelector('#filterName').value.toLowerCase(); // Get the search input value and convert to lowercase
+        var selectedRCU = document.querySelector('#filterRCU').value;
+        var searchDIP = document.querySelector('#filterDIPName').value.toLowerCase();
+        var searchName = document.querySelector('#filterName').value.toLowerCase();
 
         if ( trigger === 'rcu' ) {
             if ( selectedRCU === 'All' ) {
-                $('#filterPCU').children('option').show(); // Show all PCU options if 'All' is selected
+                $('#filterPCU').children('option').show();
             } else {
-                $('#filterPCU').children('option[data-rcu="'+selectedRCU+'"]').show(); // Show PCU options for the selected RCU
-                $('#filterPCU').children('option[data-rcu!="'+selectedRCU+'"]').hide(); // Hide PCU options for other RCUs
-                $('#filterPCU').children('option[value="All"]').show(); // Show PCU options for the selected RCU
-                $('#filterPCU').val('All'); // Reset PCU filter to 'All'
+                $('#filterPCU').children('option[data-rcu="'+selectedRCU+'"]').show();
+                $('#filterPCU').children('option[data-rcu!="'+selectedRCU+'"]').hide();
+                $('#filterPCU').children('option[value="All"]').show();
+                $('#filterPCU').val('All');
             }
         }
 
-        var selectedPCU = document.querySelector('#filterPCU').value; // Get the selected PCU value
-        var selectedCommodity = document.querySelector('#filterCommodity').value; // Get the selected Commodity value
+        var selectedPCU = document.querySelector('#filterPCU').value;
+        var selectedCommodity = document.querySelector('#filterCommodity').value;
 
         for (let i = 0; i < rows.length; i++) {
             const cellRCU = rows[i].getElementsByTagName('td')[1];
@@ -346,25 +976,21 @@
 
                 let showRow = true;
 
-                // Commodity filter
                 if (selectedCommodity !== 'All' &&
                     cellTextComm.trim().toLowerCase() !== selectedCommodity.toLowerCase()) {
                     showRow = false;
                 }
 
-                // RCU filter
                 if (showRow && selectedRCU !== 'All' &&
                     cellTextRCU.trim().toLowerCase().indexOf(selectedRCU.toLowerCase()) === -1) {
                     showRow = false;
                 }
 
-                // PCU filter
                 if (showRow && selectedPCU !== 'All' &&
                     cellTextPCU.trim().toLowerCase() !== selectedPCU.toLowerCase()) {
                     showRow = false;
                 }
 
-                // DIP filter
                 if (showRow && searchDIP) {
                     const cellNameDIP = rows[i].getElementsByTagName('td')[4];
                     const cellTextNameDIP = cellNameDIP.textContent || cellNameDIP.innerText;
@@ -373,7 +999,6 @@
                     }
                 }
 
-                // Name filter (independent of DIP)
                 if (showRow && searchName) {
                     const cellName = rows[i].getElementsByTagName('td')[5];
                     const cellTextName = cellName.textContent || cellName.innerText;
@@ -385,9 +1010,6 @@
                 rows[i].style.display = showRow ? '' : 'none';
             }
         }
-
-
-        // resetTableStripe(); // Reset the table to reapply striping and clear filters
     }
 
     function download_login_start(fff){
@@ -410,11 +1032,9 @@
             data: { type : selectedType },
             success: function(response) {
                 console.log('Data fetched successfully');
-                console.log(response);
                 var data = response.data;
                 var userData = response.user_detail;
                 var tableBody = '';
-                // var counter = 1;
                 if ( data.length === 0 ){
                     tableBody = '<tr><td colspan="7" class="text-center">No data available</td></tr>';
                 }else{
@@ -446,7 +1066,263 @@
                 }
                 
                 $('#mgi_table tbody').html(tableBody);
+                // The Forms request is complete once its table has been updated.
+                // Dashboard chart rendering below must not keep this button spinning.
                 $('#loadDataBtn').children('i').removeClass('fa-spin');
+
+                if (response.kpis) {
+                    var kpis = response.kpis;
+                    window.currentKPIs = kpis; // store globally for filtering
+
+                    // Show sections
+                    $('#mgi_main_title').show();
+                    $('#mgi_main_tabs_nav').show();
+
+                    // Show top summary tiles only if no main tab is active
+                    if ($('#mgiMainTabs button.active').length === 0) {
+                        $('#mgi_dashboard_topbar').show();
+                        $('#mgi-back-to-summary-li').hide();
+                    } else {
+                        $('#mgi_dashboard_topbar').hide();
+                        $('#mgi-back-to-summary-li').show();
+                    }
+                    // mgi_tabarea is now always visible inside the overview pane (no display:none)
+
+                    // TOP BAR
+                    $('#mgi_top_fo_service').text(Number(kpis.fo_service_count || 0).toLocaleString('en-US'));
+                    $('#mgi_top_shf_service').text(Number(kpis.shf_service_count || 0).toLocaleString('en-US'));
+                    $('#mgi_top_msme_service').text(Number(kpis.msme_service_count || 0).toLocaleString('en-US'));
+
+                    // TAB 1: Expansion
+                    $('#exp_fo_kpi').text(Number(kpis.fo_expansion || 0).toLocaleString('en-US'));
+                    $('#exp_shf_kpi').text(Number(kpis.shf_expansion || 0).toLocaleString('en-US'));
+
+                    // TAB 2: Rehab
+                    $('#rehab_fo_kpi').text(Number(kpis.fo_rehab || 0).toLocaleString('en-US'));
+                    $('#rehab_shf_kpi').text(Number(kpis.shf_rehab || 0).toLocaleString('en-US'));
+
+                    // TAB 3: Productive Investments
+                    $('#prod_fo_kpi').text(Number(kpis.fo_productive || 0).toLocaleString('en-US'));
+                    $('#prod_msme_kpi').text(Number(kpis.msme_productive || 0).toLocaleString('en-US'));
+
+                    // Chart logic and Colors
+                    if (!window.destroyChart) {
+                        window.destroyChart = function(name) {
+                            if (window[name] && typeof window[name].destroy === 'function') { 
+                                window[name].destroy(); 
+                                window[name] = null; 
+                            }
+                        };
+                    }
+                    var destroyChart = window.destroyChart;
+                    var COLORS = { green: '#26B99A', blue: '#3498DB', amber: '#F39C12', purple: '#9B59B6', red: '#E74C3C', teal: '#1ABB9C', grey: '#7F8C8D', dark: '#34495E', ltgrey: '#ACADAC' };
+                    var CHART_COLORS = [COLORS.green, COLORS.blue, COLORS.amber, COLORS.purple, COLORS.red, COLORS.teal, COLORS.grey, COLORS.dark];
+                    var REGION_NAMES = {
+                        '8': 'Region VIII', 'REGION 8': 'Region VIII', 'REGION VIII': 'Region VIII',
+                        '9': 'Region IX', 'REGION 9': 'Region IX', 'REGION IX': 'Region IX',
+                        '10': 'Region X', 'REGION 10': 'Region X', 'REGION X': 'Region X',
+                        '11': 'Region XI', 'REGION 11': 'Region XI', 'REGION XI': 'Region XI',
+                        '12': 'Region XII', 'REGION 12': 'Region XII', 'REGION XII': 'Region XII',
+                        '13': 'Region XIII', 'REGION 13': 'Region XIII', 'REGION XIII': 'Region XIII',
+                        'BARMM': 'BARMM'
+                    };
+
+                    function fullRegionNames(labels) {
+                        return labels.map(function(label) {
+                            var key = String(label).trim().toUpperCase();
+                            return REGION_NAMES[key] || label;
+                        });
+                    }
+
+                    function chartColors(labels) {
+                        return labels.map(function(label, index) { return CHART_COLORS[index % CHART_COLORS.length]; });
+                    }
+
+                    // ── EXPANSION TABS CHARTS ──────────────────────────
+                    destroyChart('_expFORegion');
+                    var expFOEl = document.getElementById('expFORegionChart');
+                    if (expFOEl && kpis.fo_exp_by_region && kpis.fo_exp_by_region.labels && kpis.fo_exp_by_region.labels.length) {
+                        window._expFORegion = new Chart(expFOEl, {
+                            type: 'bar',
+                            data: {
+                                labels: fullRegionNames(kpis.fo_exp_by_region.labels),
+                                datasets: [{ label: 'FO Count', backgroundColor: chartColors(kpis.fo_exp_by_region.labels), data: kpis.fo_exp_by_region.data }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }] } }
+                        });
+                    }
+
+                    destroyChart('_expSHFRegion');
+                    var expSHFEl = document.getElementById('expSHFRegionChart');
+                    if (expSHFEl && kpis.shf_exp_by_region && kpis.shf_exp_by_region.labels && kpis.shf_exp_by_region.labels.length) {
+                        window._expSHFRegion = new Chart(expSHFEl, {
+                            type: 'bar',
+                            data: {
+                                labels: fullRegionNames(kpis.shf_exp_by_region.labels),
+                                datasets: [{ label: 'SHF Count', backgroundColor: chartColors(kpis.shf_exp_by_region.labels), data: kpis.shf_exp_by_region.data }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }] } }
+                        });
+                    }
+
+                    destroyChart('_expCommodityPie');
+                    var expCommEl = document.getElementById('expCommodityPieChart');
+                    if (expCommEl && kpis.fo_exp_by_commodity && kpis.fo_exp_by_commodity.labels && kpis.fo_exp_by_commodity.labels.length) {
+                        window._expCommodityPie = new Chart(expCommEl, {
+                            type: 'pie',
+                            data: {
+                                labels: kpis.fo_exp_by_commodity.labels,
+                                datasets: [{ data: kpis.fo_exp_by_commodity.data, backgroundColor: chartColors(kpis.fo_exp_by_commodity.labels) }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { position: 'bottom' } }
+                        });
+                    }
+
+                    // ── REHAB TABS CHARTS ──────────────────────────────
+                    destroyChart('_rehabFORegion');
+                    var rehabFOEl = document.getElementById('rehabFORegionChart');
+                    if (rehabFOEl && kpis.fo_rehab_by_region && kpis.fo_rehab_by_region.labels && kpis.fo_rehab_by_region.labels.length) {
+                        window._rehabFORegion = new Chart(rehabFOEl, {
+                            type: 'bar',
+                            data: {
+                                labels: fullRegionNames(kpis.fo_rehab_by_region.labels),
+                                datasets: [{ label: 'FO Count', backgroundColor: chartColors(kpis.fo_rehab_by_region.labels), data: kpis.fo_rehab_by_region.data }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }] } }
+                        });
+                    }
+
+                    destroyChart('_rehabSHFRegion');
+                    var rehabSHFEl = document.getElementById('rehabSHFRegionChart');
+                    if (rehabSHFEl && kpis.shf_rehab_by_region && kpis.shf_rehab_by_region.labels && kpis.shf_rehab_by_region.labels.length) {
+                        window._rehabSHFRegion = new Chart(rehabSHFEl, {
+                            type: 'bar',
+                            data: {
+                                labels: fullRegionNames(kpis.shf_rehab_by_region.labels),
+                                datasets: [{ label: 'SHF Count', backgroundColor: chartColors(kpis.shf_rehab_by_region.labels), data: kpis.shf_rehab_by_region.data }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }] } }
+                        });
+                    }
+
+                    destroyChart('_rehabCommodityPie');
+                    var rehabCommEl = document.getElementById('rehabCommodityPieChart');
+                    if (rehabCommEl && kpis.fo_rehab_by_commodity && kpis.fo_rehab_by_commodity.labels && kpis.fo_rehab_by_commodity.labels.length) {
+                        window._rehabCommodityPie = new Chart(rehabCommEl, {
+                            type: 'pie',
+                            data: {
+                                labels: kpis.fo_rehab_by_commodity.labels,
+                                datasets: [{ data: kpis.fo_rehab_by_commodity.data, backgroundColor: chartColors(kpis.fo_rehab_by_commodity.labels) }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { position: 'bottom' } }
+                        });
+                    }
+
+                    // ── PRODUCTIVE INVESTMENTS CHARTS ──────────────────
+                    destroyChart('_prodFORegion');
+                    var prodFOEl = document.getElementById('prodFORegionChart');
+                    if (prodFOEl && kpis.fo_prod_by_region && kpis.fo_prod_by_region.labels && kpis.fo_prod_by_region.labels.length) {
+                        window._prodFORegion = new Chart(prodFOEl, {
+                            type: 'bar',
+                            data: {
+                                labels: fullRegionNames(kpis.fo_prod_by_region.labels),
+                                datasets: [{ label: 'FO Count', backgroundColor: chartColors(kpis.fo_prod_by_region.labels), data: kpis.fo_prod_by_region.data }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }] } }
+                        });
+                    }
+
+                    destroyChart('_prodMSMERegion');
+                    var prodMSMEEl = document.getElementById('prodMSMERegionChart');
+                    if (prodMSMEEl && kpis.msme_prod_by_region && kpis.msme_prod_by_region.labels && kpis.msme_prod_by_region.labels.length) {
+                        window._prodMSMERegion = new Chart(prodMSMEEl, {
+                            type: 'bar',
+                            data: {
+                                labels: fullRegionNames(kpis.msme_prod_by_region.labels),
+                                datasets: [{ label: 'MSME Count', backgroundColor: chartColors(kpis.msme_prod_by_region.labels), data: kpis.msme_prod_by_region.data }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }] } }
+                        });
+                    }
+
+                    // ── PRODUCTIVE INVESTMENTS COMMODITY PIE CHARTS ────
+                    destroyChart('_prodFOCommodityPie');
+                    var prodFOCommEl = document.getElementById('prodFOCommodityPieChart');
+                    if (prodFOCommEl && kpis.fo_prod_by_commodity && kpis.fo_prod_by_commodity.labels && kpis.fo_prod_by_commodity.labels.length) {
+                        window._prodFOCommodityPie = new Chart(prodFOCommEl, {
+                            type: 'pie',
+                            data: {
+                                labels: kpis.fo_prod_by_commodity.labels,
+                                datasets: [{ data: kpis.fo_prod_by_commodity.data, backgroundColor: chartColors(kpis.fo_prod_by_commodity.labels) }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { position: 'bottom' } }
+                        });
+                    }
+
+                    destroyChart('_prodMSMECommodityPie');
+                    var prodMSMECommEl = document.getElementById('prodMSMECommodityPieChart');
+                    if (prodMSMECommEl && kpis.msme_prod_by_commodity && kpis.msme_prod_by_commodity.labels && kpis.msme_prod_by_commodity.labels.length) {
+                        window._prodMSMECommodityPie = new Chart(prodMSMECommEl, {
+                            type: 'pie',
+                            data: {
+                                labels: kpis.msme_prod_by_commodity.labels,
+                                datasets: [{ data: kpis.msme_prod_by_commodity.data, backgroundColor: chartColors(kpis.msme_prod_by_commodity.labels) }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { position: 'bottom' } }
+                        });
+                    }
+                    // ── SERVICE STATISTICS TAB — KPI Cards ─────────────────
+                    $('#ss_exp_ha_target').text(Number(kpis.ss_exp_ha_target || 0).toLocaleString('en-US'));
+                    $('#ss_exp_ha_expanded').text(Number(kpis.ss_exp_ha_expanded || 0).toLocaleString('en-US'));
+                    $('#ss_exp_seedling_target').text(Number(kpis.ss_exp_seedling_target || 0).toLocaleString('en-US'));
+                    $('#ss_exp_seedlings_distributed').text(Number(kpis.ss_exp_seedlings_distributed || 0).toLocaleString('en-US'));
+                    $('#ss_exp_seedlings_planted_b').text(Number(kpis.ss_exp_seedlings_planted_b || 0).toLocaleString('en-US'));
+                    $('#ss_exp_mortality_before').text(Number(kpis.ss_exp_mortality_before || 0).toLocaleString('en-US'));
+                    $('#ss_exp_mortality_after_a').text(Number(kpis.ss_exp_mortality_after_a || 0).toLocaleString('en-US'));
+                    $('#ss_exp_mortality_pct').text((kpis.ss_exp_mortality_pct || 0) + '%');
+
+                    $('#ss_rehab_ha_target').text(Number(kpis.ss_rehab_ha_target || 0).toLocaleString('en-US'));
+                    $('#ss_rehab_ha_rehabbed').text(Number(kpis.ss_rehab_ha_rehabbed || 0).toLocaleString('en-US'));
+                    $('#ss_rehab_trees_rehab_b').text(Number(kpis.ss_rehab_trees_rehab_b || 0).toLocaleString('en-US'));
+                    $('#ss_rehab_mortality_during_a').text(Number(kpis.ss_rehab_mortality_during_a || 0).toLocaleString('en-US'));
+                    $('#ss_rehab_mortality_pct').text((kpis.ss_rehab_mortality_pct || 0) + '%');
+
+                    $('#ss_prod_total').text(Number(kpis.ss_prod_total || 0).toLocaleString('en-US'));
+                    $('#ss_prod_equip_target').text(Number(kpis.ss_prod_equip_target || 0).toLocaleString('en-US'));
+                    $('#ss_prod_equip_actual').text(Number(kpis.ss_prod_equip_actual || 0).toLocaleString('en-US'));
+                    $('#ss_prod_facil_target').text(Number(kpis.ss_prod_facil_target || 0).toLocaleString('en-US'));
+                    $('#ss_prod_facil_actual').text(Number(kpis.ss_prod_facil_actual || 0).toLocaleString('en-US'));
+                    $('#ss_prod_logis_target').text(Number(kpis.ss_prod_logis_target || 0).toLocaleString('en-US'));
+                    $('#ss_prod_logis_actual').text(Number(kpis.ss_prod_logis_actual || 0).toLocaleString('en-US'));
+
+                    // ── SERVICE STATISTICS TAB — Tools Distributed Bar Charts ──
+                    destroyChart('_ssRehabFOTools');
+                    var ssRehabFOEl = document.getElementById('ssRehabFOToolsChart');
+                    if (ssRehabFOEl && kpis.ss_rehab_fo_tools && kpis.ss_rehab_fo_tools.labels && kpis.ss_rehab_fo_tools.labels.length) {
+                        window._ssRehabFOTools = new Chart(ssRehabFOEl, {
+                            type: 'bar',
+                            data: {
+                                labels: kpis.ss_rehab_fo_tools.labels,
+                                datasets: [{ label: 'Qty Distributed', backgroundColor: chartColors(kpis.ss_rehab_fo_tools.labels), data: kpis.ss_rehab_fo_tools.data }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }] } }
+                        });
+                    }
+
+                    destroyChart('_ssRehabSHFTools');
+                    var ssRehabSHFEl = document.getElementById('ssRehabSHFToolsChart');
+                    if (ssRehabSHFEl && kpis.ss_rehab_shf_tools && kpis.ss_rehab_shf_tools.labels && kpis.ss_rehab_shf_tools.labels.length) {
+                        window._ssRehabSHFTools = new Chart(ssRehabSHFEl, {
+                            type: 'bar',
+                            data: {
+                                labels: kpis.ss_rehab_shf_tools.labels,
+                                datasets: [{ label: 'Qty Distributed', backgroundColor: chartColors(kpis.ss_rehab_shf_tools.labels), data: kpis.ss_rehab_shf_tools.data }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }] } }
+                        });
+                    }
+
+                }
             },
             error: function(error) {
                 $('#loadDataBtn').children('i').removeClass('fa-spin');
@@ -456,7 +1332,64 @@
     }
 
     $(document).ready(function() {
-        
+        $('body').addClass('dcf-dashboard-page dcf-dashboard-form-5');
+
+
+
+        function showMgiView(view) {
+            var showDashboard = view === 'dashboard';
+            $('#mgi_dashboard_content').toggle(showDashboard);
+            $('#mgi_forms_content').toggle(!showDashboard);
+            $('#mgiSelectedView').text(showDashboard ? 'Dashboard' : 'Forms');
+            $('[data-mgi-view]').removeClass('active').attr('aria-current', 'false');
+            $('[data-mgi-view="' + view + '"]').addClass('active').attr('aria-current', 'page');
+
+            if (showDashboard) {
+                // Initial view only shows the 3 initial KPI cards, hides main tab contents
+                $('#mgi_dashboard_topbar').show();
+                $('#mgiMainTabs button').removeClass('active').attr('aria-selected', 'false');
+                $('#mgi_tabarea_overview, #mgi_tabarea_stats').removeClass('show active');
+                $('#mgi-back-to-summary-li').hide();
+            }
+        }
+
+        // Dashboard is the default view; the dropdown switches between it and Forms.
+        showMgiView('dashboard');
+
+        $('[data-mgi-view]').on('click', function(event) {
+            event.preventDefault();
+            showMgiView($(this).data('mgi-view'));
+        });
+
+        // When a main tab button is clicked, tuck away the initial KPI cards and show the back to summary button
+        $('#mgiMainTabs button').on('click', function() {
+            $('#mgi_dashboard_topbar').slideUp();
+            $('#mgi-back-to-summary-li').show();
+        });
+
+        // Click handler for "Back to Summary"
+        $('#mgi-back-to-summary-btn').on('click', function(e) {
+            e.preventDefault();
+            $('#mgi_dashboard_topbar').slideDown();
+            $('#mgiMainTabs button').removeClass('active').attr('aria-selected', 'false');
+            $('#mgi_tabarea_overview, #mgi_tabarea_stats').removeClass('show active');
+            $('#mgi-back-to-summary-li').hide();
+        });
+
+        // Handle shown events for tabs (both main and sub-tabs) to resize charts correctly
+        $('#mgiMainTabs button, #mgiDashboardTabs button, #mgiStatsTabs button').on('shown.bs.tab', function() {
+            setTimeout(function() {
+                ['_expFORegion', '_expSHFRegion', '_expCommodityPie',
+                 '_rehabFORegion', '_rehabSHFRegion', '_rehabCommodityPie',
+                 '_prodFORegion', '_prodMSMERegion', '_prodFOCommodityPie', '_prodMSMECommodityPie',
+                 '_ssRehabFOTools', '_ssRehabSHFTools'].forEach(function(chartName) {
+                    if (window[chartName] && typeof window[chartName].resize === 'function') {
+                        window[chartName].resize();
+                    }
+                });
+            }, 100);
+        });
+
         loadData();
 
         $('#loadDataBtn').on('click', function() {
@@ -465,7 +1398,6 @@
                 loadData();
             }, 1000);
         });
-
 
         $(document).on('click','.mgi_delete_item',function(){
             var type = $(this).attr('data-type');
@@ -485,27 +1417,18 @@
                 method: 'POST',
                 data: { type : type, id : id },
                 success: function(response) {
-                    // if ( response.success ){
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: response.message,
-                            icon: "success"
-                        });
-                        $('#loadDataBtn').trigger('click');
-                    // }else{
-                    //     Swal.fire({
-                    //         title: "Server Error!",
-                    //         text: response.message,
-                    //         icon: "error"
-                    //     });
-                    // }
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: response.message,
+                        icon: "success"
+                    });
+                    $('#loadDataBtn').trigger('click');
                 },
                 error: function(error) {
                     $('#loadDataBtn').children('i').removeClass('fa-spin');
-                    console.error('Error fetching data:', error);
+                    console.error('Error deleting data:', error);
                 }
             });
         });
-        
     });
 </script>

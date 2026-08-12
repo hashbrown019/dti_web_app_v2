@@ -6,7 +6,6 @@ from modules.Connections import mysql,sqlite
 import Configurations as c
 import os
 import json
-import re
 # from views.dcfv2.dashboard.display_dataform import displayform
 # from views.dcfv2.spreadsheet import dcf_import_excel as importcsv_mgimplementation
 import xlrd
@@ -27,213 +26,6 @@ app = Blueprint("_mg_implementation",__name__,template_folder='templates')
 rapid_sql = mysql(*c.DB_CRED)
 api_key = "dtirapid@2025!"
 
-
-def _canonical_rcu(value):
-    """Convert equivalent RCU labels (for example, RCU 9/Region IX) to one code."""
-    if value is None:
-        return ""
-
-    val_str = str(value).strip()
-    if val_str.endswith(".0"):
-        val_str = val_str[:-2]
-
-    compact_value = re.sub(r"\s+", "", val_str.upper())
-    compact_value = re.sub(r"^(RCU|REGION)", "", compact_value)
-    roman_to_code = {
-        "VIII": "8", "IX": "9", "X": "10", "XI": "11",
-        "XII": "12", "XIII": "13",
-    }
-    return roman_to_code.get(compact_value, compact_value)
-
-
-def _rcu_sql_condition(column, rcu):
-    """Return a SQL condition that accepts common legacy spellings of an RCU."""
-    canonical_rcu = _canonical_rcu(rcu)
-    if not canonical_rcu:
-        return "1=0"
-
-    code_to_roman = {
-        "8": "VIII", "9": "IX", "10": "X", "11": "XI",
-        "12": "XII", "13": "XIII",
-    }
-    if canonical_rcu == "BARMM":
-        variants = {"BARMM"}
-    else:
-        roman = code_to_roman.get(canonical_rcu)
-        bases = [canonical_rcu]
-        if roman:
-            bases.append(roman)
-
-        raw_variants = set()
-        for base in bases:
-            raw_variants.add(base)
-            raw_variants.add("RCU" + base)
-            raw_variants.add("REGION" + base)
-
-            if base.isdigit():
-                dec_base = base + ".0"
-                raw_variants.add(dec_base)
-                raw_variants.add("RCU" + dec_base)
-                raw_variants.add("REGION" + dec_base)
-
-        variants = {v.replace(" ", "").upper() for v in raw_variants}
-
-    quoted_variants = ", ".join("'{}'".format(item.replace("'", "''")) for item in variants)
-    return "UPPER(REPLACE(TRIM({}), ' ', '')) IN ({})".format(column, quoted_variants)
-
-
-def _aggregate_region_counts(rows):
-    """Merge legacy region labels into one chart category per RCU."""
-    totals = {}
-    for row in rows:
-        region = _canonical_rcu(row.get("region"))
-        totals[region] = totals.get(region, 0) + int(row.get("count") or 0)
-
-    def sort_key(item):
-        r = item[0]
-        return (0, int(r)) if r.isdigit() else (1, r)
-
-    return [{"region": region, "count": count} for region, count in sorted(totals.items(), key=sort_key)]
-
-
-def _is_super_admin():
-    """Return whether the current user is the only role allowed all regions."""
-    return (
-        is_on_session()
-        and session["USER_DATA"]
-        and session["USER_DATA"][0].get("job", "").strip().lower() == "super admin"
-    )
-
-
-def _safe_select(sql):
-    """
-    Execute a SELECT query and return rows, always closing the connection.
-    This is used as a connection-safe alternative to rapid_sql.select() for
-    the MG Implementation dashboard, preventing connection leaks under load.
-    """
-    conn = None
-    cur = None
-    try:
-        conn = rapid_sql.init_db()
-        cur = conn.cursor(dictionary=True)
-        cur.execute(sql)
-        return cur.fetchall()
-    except Exception as e:
-        raise e
-    finally:
-        if cur:
-            cur.close()
-        if conn:
-            conn.close()
-
-
-def _visible_mg_select(sql):
-    """
-    Execute a SELECT query against the MG Implementation tables and return all rows.
-
-    --- ORIGINAL PURPOSE (currently disabled) ---
-    This function was originally designed to enforce row-level security based on the
-    signed-in user's assigned Regional Coordinating Unit (RCU). The intent was:
-      - Super Admins: receive all rows from all regions (no filter applied).
-      - Regional users: receive only rows whose ImpUnits_RCU column matches their
-        assigned region, preventing them from viewing data from other RCUs.
-
-    The enforcement was done by dynamically injecting a WHERE condition into every
-    SQL query at runtime using regex substitution, targeting the two main tables:
-        mg_implementation_fo  → filtered by ImpUnits_RCU
-        mg_implementation_shf → filtered by ImpUnits_RCU
-
-    --- WHY IT IS COMMENTED OUT ---
-    The per-region filter defeats the purpose of the dashboard's charts and KPI cards.
-    The overview graphs (e.g., FO by Region, SHF by Region, commodity breakdowns) are
-    designed to display a full national picture across all regions simultaneously.
-    Filtering the data source to a single region means those charts would only ever
-    show one region's bar, making the regional comparison graphs meaningless.
-
-    If per-region access control is needed in the future, it should be applied at the
-    *page/route level* (i.e., hide certain pages from regional users) rather than at
-    the *query level*, so the dashboard charts remain accurate for all viewers.
-
-    --- HOW TO RE-ENABLE ---
-    Uncomment the block below and remove the pass-through `return _safe_select(sql)`.
-    """
-
-    # ── DISABLED: per-RCU row-level filter ───────────────────────────────────
-    # if _is_super_admin() or "mg_implementation_" not in sql.lower():
-    #     return _safe_select(sql)
-    #
-    # rcu = session["USER_DATA"][0].get("rcu")
-    # if not rcu:
-    #     # A user without an assigned region must not receive regional data.
-    #     return []
-    #
-    # table_columns = {
-    #     "mg_implementation_fo": "ImpUnits_RCU",
-    #     "mg_implementation_shf": "ImpUnits_RCU",
-    # }
-    #
-    # for table, region_column in table_columns.items():
-    #     region_condition = _rcu_sql_condition(region_column, rcu)
-    #     # Every MG select in this module already has a WHERE clause, except
-    #     # exports. Add the region condition immediately after each table's
-    #     # WHERE so nested subqueries are restricted too.
-    #     sql = re.sub(
-    #         rf"(FROM\s+`?{table}`?\s+WHERE\s+)",
-    #         rf"\1{region_condition} AND ",
-    #         sql,
-    #         flags=re.IGNORECASE,
-    #     )
-    #     # Handle selects without a WHERE clause (the export queries).
-    #     sql = re.sub(
-    #         rf"(FROM\s+`?{table}`?)(?=\s*(?:GROUP\s+BY|ORDER\s+BY|LIMIT|$))",
-    #         rf"\1 WHERE {region_condition}",
-    #         sql,
-    #         flags=re.IGNORECASE,
-    #     )
-    #
-    # return _safe_select(sql)
-    # ── END DISABLED BLOCK ───────────────────────────────────────────────────
-
-    # Pass-through: return full data for all regions so dashboard charts are accurate.
-    return _safe_select(sql)
-
-
-def _regional_upload_filter():
-    """
-    Return a SQL condition that restricts upload-based records to the signed-in user's RCU.
-
-    --- ORIGINAL PURPOSE (currently disabled) ---
-    This function was designed to filter records on pages that display uploaded entries,
-    ensuring regional users could only see records uploaded by users in their own RCU.
-    The condition was built as:
-        upload_by IN (SELECT id FROM users WHERE rcu = '<user_rcu>')
-    Super Admins bypassed this with a '1=1' condition (no filter).
-
-    --- WHY IT IS COMMENTED OUT ---
-    Consistent with the change to _visible_mg_select above, the regional filter is
-    disabled so that all dashboard and data views reflect the complete national dataset.
-    Re-enable this if per-RCU upload visibility is required again in the future.
-
-    --- HOW TO RE-ENABLE ---
-    Uncomment the block below and remove the pass-through `return "1=1"`.
-    """
-
-    # ── DISABLED: per-RCU upload filter ──────────────────────────────────────
-    # if _is_super_admin():
-    #     return "1=1"
-    #
-    # rcu = session["USER_DATA"][0].get("rcu")
-    # if not rcu:
-    #     return "1=0"
-    #
-    # safe_rcu = str(rcu).replace("'", "''")
-    # return "upload_by IN (SELECT id FROM users WHERE rcu = '{}')".format(safe_rcu)
-    # ── END DISABLED BLOCK ───────────────────────────────────────────────────
-
-    # Pass-through: no upload-source filter applied; all records are visible.
-    return "1=1"
-
-
 class _main:
     def __init__(self, arg):
         
@@ -242,25 +34,12 @@ class _main:
     
     @app.route('/mgimplementation/delete', methods=['POST'])
     def mgimplementation_delete():
-        if not is_on_session():
-            return jsonify({'success': False, 'message': 'Authentication required.'}), 401
-
-        try:
-            id = int(request.form.get('id'))
-        except (TypeError, ValueError):
-            return jsonify({'success': False, 'message': 'Invalid record identifier.'}), 400
-
+        id = request.form.get('id')
         type = request.form.get('type')
-        if type == 'fo':
-            if not _visible_mg_select("SELECT MGI_ID FROM mg_implementation_fo WHERE MGI_ID = {}".format(id)):
-                return jsonify({'success': False, 'message': 'Record not found.'}), 404
+        if ( type == 'fo'):
             sql = "UPDATE mg_implementation_fo SET isDeleted=1, deletedDate=NOW() WHERE MGI_ID={}".format(id)
-        elif type == 'shf':
-            if not _visible_mg_select("SELECT MGI_ID FROM mg_implementation_shf WHERE MGI_ID = {}".format(id)):
-                return jsonify({'success': False, 'message': 'Record not found.'}), 404
-            sql = "UPDATE mg_implementation_shf SET isDeleted=1, deletedDate=NOW() WHERE MGI_ID={}".format(id)
         else:
-            return jsonify({'success': False, 'message': 'Invalid record type.'}), 400
+            sql = "UPDATE mg_implementation_shf SET isDeleted=1, deletedDate=NOW() WHERE MGI_ID={}".format(id)
         
         result = rapid_sql.do(sql)
         
@@ -278,14 +57,8 @@ class _main:
             return redirect("/login")
 
         if request.form.get("action") == "addnew":
-            
-            sectors = request.form.getlist("FOInfo_Head_Sector")
-            sector_text = ",".join(sectors)
-            
             UploadedBy = session["USER_DATA"][0]['id']
             ImpUnits_RCU = request.form.get("ImpUnits_RCU")
-            if not _is_super_admin():
-                ImpUnits_RCU = _canonical_rcu(session["USER_DATA"][0].get("rcu"))
             ImpUnits_PCU = request.form.get("ImpUnits_PCU")
             DIP_Name = request.form.get("DIP_Name")
             DIP_Commodity = request.form.get("DIP_Commodity")
@@ -300,9 +73,7 @@ class _main:
             FOInfo_Head_Lname = request.form.get("FOInfo_Head_Lname")
             FOInfo_Head_Extname = request.form.get("FOInfo_Head_Extname")
             FOInfo_Head_Sex = request.form.get("FOInfo_Head_Sex")
-            FOInfo_Head_Sector = sector_text 
-            
-            AcknowOfFarmExp_NotPartOfMG = ( 1 if request.form.get("AcknowOfFarmExp_NotPartOfMG") else 0 )
+            FOInfo_Head_Sector = request.form.get("FOInfo_Head_Sector")
             AcknowOfFarmExp_TargetArea = request.form.get("AcknowOfFarmExp_TargetArea")
             AcknowOfFarmExp_ItemName = request.form.get("AcknowOfFarmExp_ItemName")
             AcknowOfFarmExp_QtyReceived = request.form.get("AcknowOfFarmExp_QtyReceived")
@@ -326,8 +97,6 @@ class _main:
             AcknowOfFarmExp_Witness2Raw_ValidatorName = request.form.get("AcknowOfFarmExp_Witness2Raw_ValidatorName")
             AcknowOfFarmExp_Witness2Raw_ValidationDate = request.form.get("AcknowOfFarmExp_Witness2Raw_ValidationDate")
             AcknowOfFarmExp_Witness2Raw_Remarks = request.form.get("AcknowOfFarmExp_Witness2Raw_Remarks")
-            
-            AcknowOfFarmInten_NotPartOfMG = ( 1 if request.form.get("AcknowOfFarmInten_NotPartOfMG") else 0 )
             AcknowOfFarmInten_TargetArea = request.form.get("AcknowOfFarmInten_TargetArea")
             AcknowOfFarmInten_ItemName = request.form.get("AcknowOfFarmInten_ItemName")
             AcknowOfFarmInten_QtyReceived = request.form.get("AcknowOfFarmInten_QtyReceived")
@@ -344,8 +113,6 @@ class _main:
             AcknowOfFarmInten_Withness2_ValidatorName = request.form.get("AcknowOfFarmInten_Withness2_ValidatorName")
             AcknowOfFarmInten_Withness2_ValidationDate = request.form.get("AcknowOfFarmInten_Withness2_ValidationDate")
             AcknowOfFarmInten_Withness2_Remarks = request.form.get("AcknowOfFarmInten_Withness2_Remarks")
-            
-            AcknowOfFarmRehab_NotPartOfMG = ( 1 if request.form.get("AcknowOfFarmRehab_NotPartOfMG") else 0 )
             AcknowOfFarmRehab_TargetArea = request.form.get("AcknowOfFarmRehab_TargetArea")
             AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw = request.form.get("AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw")
             AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw = request.form.get("AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw")
@@ -359,8 +126,6 @@ class _main:
             AcknowOfFarmRehab_ValidatorName = request.form.get("AcknowOfFarmRehab_ValidatorName")
             AcknowOfFarmRehab_ValidationDate = request.form.get("AcknowOfFarmRehab_ValidationDate")
             AcknowOfFarmRehab_Remarks = request.form.get("AcknowOfFarmRehab_Remarks")
-            
-            AcknowOfProd_NotPartOfMG = ( 1 if request.form.get("AcknowOfProd_NotPartOfMG") else 0 )
             AcknowOfProd_TypeOfProdInv = request.form.get("AcknowOfProd_TypeOfProdInv")
             AcknowOfProd_QtyItemReceived = request.form.get("AcknowOfProd_QtyItemReceived")
             AcknowOfProd_DateReceived = request.form.get("AcknowOfProd_DateReceived")
@@ -374,8 +139,8 @@ class _main:
             AcknowOfProd_Remarks = request.form.get("AcknowOfProd_Remarks")
             filename = ''
 
-            newMGIFO = ("INSERT INTO mg_implementation_fo (UploadedBy,ImpUnits_RCU,ImpUnits_PCU,DIP_Name,DIP_Commodity,FOInfo_FOName,FOInfo_Address_Region,FOInfo_Address_Province,FOInfo_Address_Municipality,FOInfo_Address_Brgy,FOInfo_Address_Street,FOInfo_Head_Fname,FOInfo_Head_Mname,FOInfo_Head_Lname,FOInfo_Head_Extname,FOInfo_Head_Sex,FOInfo_Head_Sector,AcknowOfFarmExp_NotPartOfMG,AcknowOfFarmExp_TargetArea,AcknowOfFarmExp_ItemName,AcknowOfFarmExp_QtyReceived,AcknowOfFarmExp_DateReceived,AcknowOfFarmExp_FarmerRep_Fname,AcknowOfFarmExp_FarmerRep_Mname,AcknowOfFarmExp_FarmerRep_Lname,AcknowOfFarmExp_FarmerRep_Extname,AcknowOfFarmExp_FarmerRep_Designation,AcknowOfFarmExp_Witness1_ValidatorName,AcknowOfFarmExp_Witness1_ValidationDate,AcknowOfFarmExp_Witness1_Designation,AcknowOfFarmExp_Witness1_DateWitnessed,AcknowOfFarmExp_Witness2_ValidatorName,AcknowOfFarmExp_Witness2_ValidationDate,AcknowOfFarmExp_Witness2_Remarks,AcknowOfFarmExp_Witness1Raw_ValidatorName,AcknowOfFarmExp_Witness1Raw_ValidationDate,AcknowOfFarmExp_Witness1Raw_Designation,AcknowOfFarmExp_Witness1Raw_DateWitnessed,AcknowOfFarmExp_Witness2Raw_ValidatorName,AcknowOfFarmExp_Witness2Raw_ValidationDate,AcknowOfFarmExp_Witness2Raw_Remarks,AcknowOfFarmInten_NotPartOfMG,AcknowOfFarmInten_TargetArea,AcknowOfFarmInten_ItemName,AcknowOfFarmInten_QtyReceived,AcknowOfFarmInten_DateReceived,AcknowOfFarmInten_FarmerRep_Fname,AcknowOfFarmInten_FarmerRep_Mname,AcknowOfFarmInten_FarmerRep_Lname,AcknowOfFarmInten_FarmerRep_Extname,AcknowOfFarmInten_FarmerRep_Designation,AcknowOfFarmInten_Withness1_ValidatorName,AcknowOfFarmInten_Withness1_ValidationDate,AcknowOfFarmInten_Withness1_Designation,AcknowOfFarmInten_Withness1_DateWitnessed,AcknowOfFarmInten_Withness2_ValidatorName,AcknowOfFarmInten_Withness2_ValidationDate,AcknowOfFarmInten_Withness2_Remarks,AcknowOfFarmRehab_NotPartOfMG,AcknowOfFarmRehab_TargetArea,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer,AcknowOfFarmRehab_DateReceived,AcknowOfFarmRehab_FarmerRep_Fname,AcknowOfFarmRehab_FarmerRep_Mname,AcknowOfFarmRehab_FarmerRep_Lname,AcknowOfFarmRehab_FarmerRep_Extname,AcknowOfFarmRehab_FarmerRep_Designation,AcknowOfFarmRehab_ValidatorName,AcknowOfFarmRehab_ValidationDate,AcknowOfFarmRehab_Remarks,AcknowOfProd_NotPartOfMG,AcknowOfProd_TypeOfProdInv,AcknowOfProd_QtyItemReceived,AcknowOfProd_DateReceived,AcknowOfProd_FarmerRep_Fname,AcknowOfProd_FarmerRep_Mname,AcknowOfProd_FarmerRep_Lname,AcknowOfProd_FarmerRep_Extname,AcknowOfProd_FarmerRep_Designation,AcknowOfProd_ValidatorName,AcknowOfProd_ValidationDate,AcknowOfProd_Remarks,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
-            format(UploadedBy,ImpUnits_RCU,ImpUnits_PCU,DIP_Name,DIP_Commodity,FOInfo_FOName,FOInfo_Address_Region,FOInfo_Address_Province,FOInfo_Address_Municipality,FOInfo_Address_Brgy,FOInfo_Address_Street,FOInfo_Head_Fname,FOInfo_Head_Mname,FOInfo_Head_Lname,FOInfo_Head_Extname,FOInfo_Head_Sex,FOInfo_Head_Sector,AcknowOfFarmExp_NotPartOfMG,AcknowOfFarmExp_TargetArea,AcknowOfFarmExp_ItemName,AcknowOfFarmExp_QtyReceived,AcknowOfFarmExp_DateReceived,AcknowOfFarmExp_FarmerRep_Fname,AcknowOfFarmExp_FarmerRep_Mname,AcknowOfFarmExp_FarmerRep_Lname,AcknowOfFarmExp_FarmerRep_Extname,AcknowOfFarmExp_FarmerRep_Designation,AcknowOfFarmExp_Witness1_ValidatorName,AcknowOfFarmExp_Witness1_ValidationDate,AcknowOfFarmExp_Witness1_Designation,AcknowOfFarmExp_Witness1_DateWitnessed,AcknowOfFarmExp_Witness2_ValidatorName,AcknowOfFarmExp_Witness2_ValidationDate,AcknowOfFarmExp_Witness2_Remarks,AcknowOfFarmExp_Witness1Raw_ValidatorName,AcknowOfFarmExp_Witness1Raw_ValidationDate,AcknowOfFarmExp_Witness1Raw_Designation,AcknowOfFarmExp_Witness1Raw_DateWitnessed,AcknowOfFarmExp_Witness2Raw_ValidatorName,AcknowOfFarmExp_Witness2Raw_ValidationDate,AcknowOfFarmExp_Witness2Raw_Remarks,AcknowOfFarmInten_NotPartOfMG,AcknowOfFarmInten_TargetArea,AcknowOfFarmInten_ItemName,AcknowOfFarmInten_QtyReceived,AcknowOfFarmInten_DateReceived,AcknowOfFarmInten_FarmerRep_Fname,AcknowOfFarmInten_FarmerRep_Mname,AcknowOfFarmInten_FarmerRep_Lname,AcknowOfFarmInten_FarmerRep_Extname,AcknowOfFarmInten_FarmerRep_Designation,AcknowOfFarmInten_Withness1_ValidatorName,AcknowOfFarmInten_Withness1_ValidationDate,AcknowOfFarmInten_Withness1_Designation,AcknowOfFarmInten_Withness1_DateWitnessed,AcknowOfFarmInten_Withness2_ValidatorName,AcknowOfFarmInten_Withness2_ValidationDate,AcknowOfFarmInten_Withness2_Remarks,AcknowOfFarmRehab_NotPartOfMG,AcknowOfFarmRehab_TargetArea,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer,AcknowOfFarmRehab_DateReceived,AcknowOfFarmRehab_FarmerRep_Fname,AcknowOfFarmRehab_FarmerRep_Mname,AcknowOfFarmRehab_FarmerRep_Lname,AcknowOfFarmRehab_FarmerRep_Extname,AcknowOfFarmRehab_FarmerRep_Designation,AcknowOfFarmRehab_ValidatorName,AcknowOfFarmRehab_ValidationDate,AcknowOfFarmRehab_Remarks,AcknowOfProd_NotPartOfMG,AcknowOfProd_TypeOfProdInv,AcknowOfProd_QtyItemReceived,AcknowOfProd_DateReceived,AcknowOfProd_FarmerRep_Fname,AcknowOfProd_FarmerRep_Mname,AcknowOfProd_FarmerRep_Lname,AcknowOfProd_FarmerRep_Extname,AcknowOfProd_FarmerRep_Designation,AcknowOfProd_ValidatorName,AcknowOfProd_ValidationDate,AcknowOfProd_Remarks,filename))
+            newMGIFO = ("INSERT INTO mg_implementation_fo (UploadedBy,ImpUnits_RCU,ImpUnits_PCU,DIP_Name,DIP_Commodity,FOInfo_FOName,FOInfo_Address_Region,FOInfo_Address_Province,FOInfo_Address_Municipality,FOInfo_Address_Brgy,FOInfo_Address_Street,FOInfo_Head_Fname,FOInfo_Head_Mname,FOInfo_Head_Lname,FOInfo_Head_Extname,FOInfo_Head_Sex,FOInfo_Head_Sector,AcknowOfFarmExp_TargetArea,AcknowOfFarmExp_ItemName,AcknowOfFarmExp_QtyReceived,AcknowOfFarmExp_DateReceived,AcknowOfFarmExp_FarmerRep_Fname,AcknowOfFarmExp_FarmerRep_Mname,AcknowOfFarmExp_FarmerRep_Lname,AcknowOfFarmExp_FarmerRep_Extname,AcknowOfFarmExp_FarmerRep_Designation,AcknowOfFarmExp_Witness1_ValidatorName,AcknowOfFarmExp_Witness1_ValidationDate,AcknowOfFarmExp_Witness1_Designation,AcknowOfFarmExp_Witness1_DateWitnessed,AcknowOfFarmExp_Witness2_ValidatorName,AcknowOfFarmExp_Witness2_ValidationDate,AcknowOfFarmExp_Witness2_Remarks,AcknowOfFarmExp_Witness1Raw_ValidatorName,AcknowOfFarmExp_Witness1Raw_ValidationDate,AcknowOfFarmExp_Witness1Raw_Designation,AcknowOfFarmExp_Witness1Raw_DateWitnessed,AcknowOfFarmExp_Witness2Raw_ValidatorName,AcknowOfFarmExp_Witness2Raw_ValidationDate,AcknowOfFarmExp_Witness2Raw_Remarks,AcknowOfFarmInten_TargetArea,AcknowOfFarmInten_ItemName,AcknowOfFarmInten_QtyReceived,AcknowOfFarmInten_DateReceived,AcknowOfFarmInten_FarmerRep_Fname,AcknowOfFarmInten_FarmerRep_Mname,AcknowOfFarmInten_FarmerRep_Lname,AcknowOfFarmInten_FarmerRep_Extname,AcknowOfFarmInten_FarmerRep_Designation,AcknowOfFarmInten_Withness1_ValidatorName,AcknowOfFarmInten_Withness1_ValidationDate,AcknowOfFarmInten_Withness1_Designation,AcknowOfFarmInten_Withness1_DateWitnessed,AcknowOfFarmInten_Withness2_ValidatorName,AcknowOfFarmInten_Withness2_ValidationDate,AcknowOfFarmInten_Withness2_Remarks,AcknowOfFarmRehab_TargetArea,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer,AcknowOfFarmRehab_DateReceived,AcknowOfFarmRehab_FarmerRep_Fname,AcknowOfFarmRehab_FarmerRep_Mname,AcknowOfFarmRehab_FarmerRep_Lname,AcknowOfFarmRehab_FarmerRep_Extname,AcknowOfFarmRehab_FarmerRep_Designation,AcknowOfFarmRehab_ValidatorName,AcknowOfFarmRehab_ValidationDate,AcknowOfFarmRehab_Remarks,AcknowOfProd_TypeOfProdInv,AcknowOfProd_QtyItemReceived,AcknowOfProd_DateReceived,AcknowOfProd_FarmerRep_Fname,AcknowOfProd_FarmerRep_Mname,AcknowOfProd_FarmerRep_Lname,AcknowOfProd_FarmerRep_Extname,AcknowOfProd_FarmerRep_Designation,AcknowOfProd_ValidatorName,AcknowOfProd_ValidationDate,AcknowOfProd_Remarks,filename) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".
+            format(UploadedBy,ImpUnits_RCU,ImpUnits_PCU,DIP_Name,DIP_Commodity,FOInfo_FOName,FOInfo_Address_Region,FOInfo_Address_Province,FOInfo_Address_Municipality,FOInfo_Address_Brgy,FOInfo_Address_Street,FOInfo_Head_Fname,FOInfo_Head_Mname,FOInfo_Head_Lname,FOInfo_Head_Extname,FOInfo_Head_Sex,FOInfo_Head_Sector,AcknowOfFarmExp_TargetArea,AcknowOfFarmExp_ItemName,AcknowOfFarmExp_QtyReceived,AcknowOfFarmExp_DateReceived,AcknowOfFarmExp_FarmerRep_Fname,AcknowOfFarmExp_FarmerRep_Mname,AcknowOfFarmExp_FarmerRep_Lname,AcknowOfFarmExp_FarmerRep_Extname,AcknowOfFarmExp_FarmerRep_Designation,AcknowOfFarmExp_Witness1_ValidatorName,AcknowOfFarmExp_Witness1_ValidationDate,AcknowOfFarmExp_Witness1_Designation,AcknowOfFarmExp_Witness1_DateWitnessed,AcknowOfFarmExp_Witness2_ValidatorName,AcknowOfFarmExp_Witness2_ValidationDate,AcknowOfFarmExp_Witness2_Remarks,AcknowOfFarmExp_Witness1Raw_ValidatorName,AcknowOfFarmExp_Witness1Raw_ValidationDate,AcknowOfFarmExp_Witness1Raw_Designation,AcknowOfFarmExp_Witness1Raw_DateWitnessed,AcknowOfFarmExp_Witness2Raw_ValidatorName,AcknowOfFarmExp_Witness2Raw_ValidationDate,AcknowOfFarmExp_Witness2Raw_Remarks,AcknowOfFarmInten_TargetArea,AcknowOfFarmInten_ItemName,AcknowOfFarmInten_QtyReceived,AcknowOfFarmInten_DateReceived,AcknowOfFarmInten_FarmerRep_Fname,AcknowOfFarmInten_FarmerRep_Mname,AcknowOfFarmInten_FarmerRep_Lname,AcknowOfFarmInten_FarmerRep_Extname,AcknowOfFarmInten_FarmerRep_Designation,AcknowOfFarmInten_Withness1_ValidatorName,AcknowOfFarmInten_Withness1_ValidationDate,AcknowOfFarmInten_Withness1_Designation,AcknowOfFarmInten_Withness1_DateWitnessed,AcknowOfFarmInten_Withness2_ValidatorName,AcknowOfFarmInten_Withness2_ValidationDate,AcknowOfFarmInten_Withness2_Remarks,AcknowOfFarmRehab_TargetArea,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer,AcknowOfFarmRehab_DateReceived,AcknowOfFarmRehab_FarmerRep_Fname,AcknowOfFarmRehab_FarmerRep_Mname,AcknowOfFarmRehab_FarmerRep_Lname,AcknowOfFarmRehab_FarmerRep_Extname,AcknowOfFarmRehab_FarmerRep_Designation,AcknowOfFarmRehab_ValidatorName,AcknowOfFarmRehab_ValidationDate,AcknowOfFarmRehab_Remarks,AcknowOfProd_TypeOfProdInv,AcknowOfProd_QtyItemReceived,AcknowOfProd_DateReceived,AcknowOfProd_FarmerRep_Fname,AcknowOfProd_FarmerRep_Mname,AcknowOfProd_FarmerRep_Lname,AcknowOfProd_FarmerRep_Extname,AcknowOfProd_FarmerRep_Designation,AcknowOfProd_ValidatorName,AcknowOfProd_ValidationDate,AcknowOfProd_Remarks,filename))
             
             insert = db.do(newMGIFO)
             
@@ -391,12 +156,7 @@ class _main:
             print("MGI_ID raw value:", request.form.get("id"), type(int(request.form.get("id"))))
 
             id = int(request.form.get("id"))
-            if not _visible_mg_select("SELECT MGI_ID FROM mg_implementation_fo WHERE MGI_ID = {}".format(id)):
-                flash("You do not have access to this record.", "error")
-                return redirect("/mis-v4/core-mg-implementation")
             ImpUnits_RCU = request.form.get("ImpUnits_RCU")
-            if not _is_super_admin():
-                ImpUnits_RCU = _canonical_rcu(session["USER_DATA"][0].get("rcu"))
             ImpUnits_PCU = request.form.get("ImpUnits_PCU")
             DIP_Name = request.form.get("DIP_Name")
             DIP_Commodity = request.form.get("DIP_Commodity")
@@ -411,13 +171,7 @@ class _main:
             FOInfo_Head_Lname = request.form.get("FOInfo_Head_Lname")
             FOInfo_Head_Extname = request.form.get("FOInfo_Head_Extname")
             FOInfo_Head_Sex = request.form.get("FOInfo_Head_Sex")
-            
-            sectors = request.form.getlist("FOInfo_Head_Sector")
-            sector_text = ",".join(sectors)
-                        
-            FOInfo_Head_Sector = sector_text
-            
-            AcknowOfFarmExp_NotPartOfMG = ( 1 if request.form.get("AcknowOfFarmExp_NotPartOfMG") else 0 )
+            FOInfo_Head_Sector = request.form.get("FOInfo_Head_Sector")
             AcknowOfFarmExp_TargetArea = 0 if not request.form.get("AcknowOfFarmExp_TargetArea") else float(request.form.get("AcknowOfFarmExp_TargetArea")) 
             AcknowOfFarmExp_ItemName = request.form.get("AcknowOfFarmExp_ItemName")
             AcknowOfFarmExp_QtyReceived = 0 if not request.form.get("AcknowOfFarmExp_QtyReceived") else int(request.form.get("AcknowOfFarmExp_QtyReceived"))
@@ -441,8 +195,6 @@ class _main:
             AcknowOfFarmExp_Witness2Raw_ValidatorName = request.form.get("AcknowOfFarmExp_Witness2Raw_ValidatorName")
             AcknowOfFarmExp_Witness2Raw_ValidationDate = request.form.get("AcknowOfFarmExp_Witness2Raw_ValidationDate")
             AcknowOfFarmExp_Witness2Raw_Remarks = request.form.get("AcknowOfFarmExp_Witness2Raw_Remarks")
-            
-            AcknowOfFarmInten_NotPartOfMG = ( 1 if request.form.get("AcknowOfFarmInten_NotPartOfMG") else 0 )
             AcknowOfFarmInten_TargetArea = 0 if not request.form.get("AcknowOfFarmInten_TargetArea") else float(request.form.get("AcknowOfFarmInten_TargetArea"))
             AcknowOfFarmInten_ItemName = request.form.get("AcknowOfFarmInten_ItemName")
             AcknowOfFarmInten_QtyReceived = 0 if not request.form.get("AcknowOfFarmInten_QtyReceived") else int(request.form.get("AcknowOfFarmInten_QtyReceived"))
@@ -459,8 +211,6 @@ class _main:
             AcknowOfFarmInten_Withness2_ValidatorName = request.form.get("AcknowOfFarmInten_Withness2_ValidatorName")
             AcknowOfFarmInten_Withness2_ValidationDate = request.form.get("AcknowOfFarmInten_Withness2_ValidationDate")
             AcknowOfFarmInten_Withness2_Remarks = request.form.get("AcknowOfFarmInten_Withness2_Remarks")
-            
-            AcknowOfFarmRehab_NotPartOfMG = ( 1 if request.form.get("AcknowOfFarmRehab_NotPartOfMG") else 0 )
             AcknowOfFarmRehab_TargetArea = 0 if not request.form.get("AcknowOfFarmRehab_TargetArea") else float(request.form.get("AcknowOfFarmRehab_TargetArea"))
             AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw = 0 if not request.form.get("AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw") else int(request.form.get("AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw"))
             AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw = 0 if not request.form.get("AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw") else int(request.form.get("AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw"))
@@ -474,8 +224,6 @@ class _main:
             AcknowOfFarmRehab_ValidatorName = request.form.get("AcknowOfFarmRehab_ValidatorName")
             AcknowOfFarmRehab_ValidationDate = request.form.get("AcknowOfFarmRehab_ValidationDate")
             AcknowOfFarmRehab_Remarks = request.form.get("AcknowOfFarmRehab_Remarks")
-            
-            AcknowOfProd_NotPartOfMG = ( 1 if request.form.get("AcknowOfProd_NotPartOfMG") else 0 )
             AcknowOfProd_TypeOfProdInv = request.form.get("AcknowOfProd_TypeOfProdInv")
             AcknowOfProd_QtyItemReceived = 0 if not request.form.get("AcknowOfProd_QtyItemReceived") else int(request.form.get("AcknowOfProd_QtyItemReceived"))
             AcknowOfProd_DateReceived = request.form.get("AcknowOfProd_DateReceived")
@@ -513,8 +261,6 @@ class _main:
         if request.form.get("action") == "addnew":
             UploadedBy = session["USER_DATA"][0]['id']
             ImpUnits_RCU = request.form.get("ImpUnits_RCU")
-            if not _is_super_admin():
-                ImpUnits_RCU = _canonical_rcu(session["USER_DATA"][0].get("rcu"))
             ImpUnits_PCU = request.form.get("ImpUnits_PCU")
             DIP_Name = request.form.get("DIP_Name")
             DIP_Commodity = request.form.get("DIP_Commodity")
@@ -647,12 +393,7 @@ class _main:
             print("MGI_ID raw value:", request.form.get("id"), type(int(request.form.get("id"))))
 
             id = int(request.form.get("id"))
-            if not _visible_mg_select("SELECT MGI_ID FROM mg_implementation_shf WHERE MGI_ID = {}".format(id)):
-                flash("You do not have access to this record.", "error")
-                return redirect("/mis-v4/core-mg-implementation")
             ImpUnits_RCU = request.form.get("ImpUnits_RCU")
-            if not _is_super_admin():
-                ImpUnits_RCU = _canonical_rcu(session["USER_DATA"][0].get("rcu"))
             ImpUnits_PCU = request.form.get("ImpUnits_PCU")
             DIP_Name = request.form.get("DIP_Name")
             DIP_Commodity = request.form.get("DIP_Commodity")
@@ -801,14 +542,14 @@ class _main:
         if (action=="edit" or action=="view"):
             if (form=="fo"):
                 if (id):
-                    row = _visible_mg_select("SELECT * FROM mg_implementation_fo WHERE MGI_ID = {}".format(id))
+                    row = rapid_sql.select("SELECT * FROM mg_implementation_fo WHERE MGI_ID = {}".format(id))
                     data['data'] = row
                 else:
                     flash(f"No Record Identifier Found!", "error")
                     return redirect("/mis-v4/core-mg-implementation")
             elif (form=="shf"):
                 if (id):
-                    row = _visible_mg_select("SELECT * FROM mg_implementation_shf WHERE MGI_ID = {}".format(id))
+                    row = rapid_sql.select("SELECT * FROM mg_implementation_shf WHERE MGI_ID = {}".format(id))
                     data['data'] = row
                 else:
                     flash(f"No Record Identifier Found!", "error")
@@ -824,423 +565,30 @@ class _main:
         # print(f"data here...... : ", data)
         return jsonify(data)
     
-    #for the mg implementation data table
-    # Modified: 2026-07-10 - Redesigned to return comprehensive dashboard KPIs for new 2-tabbed layout
-@app.route('/mgimplementation_data', methods=['GET'])
-def mgimplementation_data():
+    @app.route('/mgimplementation_data', methods=['GET'])
+    def mgimplementation_data():
+        
+        if(session["USER_DATA"][0]['security_group']==0): return redirect("/warning?type=user-no-role");
+  
+        type = request.args.get("type") 
+        data = []
+        if ( type == "fo" ):
+            data = rapid_sql.select("SELECT *, FOInfo_FOName AS Name,'fo' AS 'MGI_Type' FROM mg_implementation_fo WHERE isDeleted=0")
+        else:
+            data = rapid_sql.select("SELECT *, CONCAT(FarmerInfo_Fname, ' ', FarmerInfo_Mname, ' ', FarmerInfo_Lname,' ', FarmerInfo_ExtName) AS Name,'shf' AS 'MGI_Type' FROM mg_implementation_shf WHERE isDeleted=0")
+        
+        result = {
+            'data' : data,
+            'user_detail' : session["USER_DATA"][0]
+        }
 
-    if(session["USER_DATA"][0]['security_group']==0): return redirect("/warning?type=user-no-role");
-
-    req_type = request.args.get("type")
-    data = []
-    # MSME region filter and queries are disabled (no actual data). Using placeholders instead.
-
-    # ── Row data for the table (driven by selector) ──────────────────────────
-    if req_type == "fo":
-        data = _visible_mg_select("SELECT *, FOInfo_FOName AS Name,'fo' AS 'MGI_Type' FROM mg_implementation_fo WHERE isDeleted=0")
-    else:
-        data = _visible_mg_select("SELECT *, CONCAT(FarmerInfo_Fname, ' ', FarmerInfo_Mname, ' ', FarmerInfo_Lname,' ', FarmerInfo_ExtName) AS Name,'shf' AS 'MGI_Type' FROM mg_implementation_shf WHERE isDeleted=0")
-
-    def safe_int(v): return int(float(v)) if v not in (None, '') else 0
-    def safe_float(v): return float(v) if v not in (None, '') else 0.0
-
-    # ── CONSOLIDATED FO KPI AGGREGATION QUERY ─────────────────────────────────
-    fo_agg = _visible_mg_select("""
-        SELECT
-            COUNT(*) AS fo_total,
-            COUNT(DISTINCT FOInfo_FOName) AS unique_fo,
-            SUM(CASE WHEN AcknowOfFarmExp_TargetArea > 0 THEN 1 ELSE 0 END) AS fo_expansion,
-            SUM(CASE WHEN AcknowOfFarmRehab_TargetArea > 0 THEN 1 ELSE 0 END) AS fo_rehab,
-            SUM(CASE WHEN AcknowOfProd_TypeOfProdInv IS NOT NULL AND TRIM(AcknowOfProd_TypeOfProdInv) != '' AND TRIM(AcknowOfProd_TypeOfProdInv) != 'None' THEN 1 ELSE 0 END) AS fo_productive,
-            
-            SUM(CASE WHEN AcknowOfFarmExp_TargetArea > 0 THEN CAST(NULLIF(AcknowOfFarmExp_TargetArea, '') AS DECIMAL(18, 2)) ELSE 0 END) AS ss_exp_fo_ha_target,
-            SUM(CASE WHEN AcknowOfFarmExp_TargetArea > 0 THEN CAST(NULLIF(AcknowOfFarmExp_QtyReceived, '') AS DECIMAL(18, 2)) ELSE 0 END) AS ss_exp_fo_seedling_target,
-            
-            SUM(CASE WHEN AcknowOfFarmRehab_TargetArea > 0 THEN CAST(NULLIF(AcknowOfFarmRehab_TargetArea, '') AS DECIMAL(18, 2)) ELSE 0 END) AS ss_rehab_fo_ha_target,
-            
-            SUM(COALESCE(AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw, 0)) AS high_pruner_saw,
-            SUM(COALESCE(AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw, 0)) AS mini_chain_saw,
-            SUM(COALESCE(AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer, 0)) AS knapsack_sprayer,
-            
-            SUM(CASE WHEN LOWER(AcknowOfProd_TypeOfProdInv) LIKE '%equipment%' THEN 1 ELSE 0 END) AS prod_target_equipment,
-            SUM(CASE WHEN LOWER(AcknowOfProd_TypeOfProdInv) LIKE '%facilit%' THEN 1 ELSE 0 END) AS prod_target_facilities,
-            SUM(CASE WHEN LOWER(AcknowOfProd_TypeOfProdInv) LIKE '%logistics%' THEN 1 ELSE 0 END) AS prod_target_logistics
-        FROM mg_implementation_fo
-        WHERE isDeleted=0
-    """)[0]
-
-    fo_total = safe_int(fo_agg.get('fo_total'))
-    unique_fo = safe_int(fo_agg.get('unique_fo'))
-    fo_expansion = safe_int(fo_agg.get('fo_expansion'))
-    fo_rehab = safe_int(fo_agg.get('fo_rehab'))
-    fo_productive = safe_int(fo_agg.get('fo_productive'))
-    
-    ss_exp_fo_ha_target = safe_float(fo_agg.get('ss_exp_fo_ha_target'))
-    ss_exp_fo_seedling_target = safe_float(fo_agg.get('ss_exp_fo_seedling_target'))
-    ss_rehab_fo_ha_target = safe_float(fo_agg.get('ss_rehab_fo_ha_target'))
-    
-    fo_rehab_tools_dist = {
-        'high_pruner_saw': safe_int(fo_agg.get('high_pruner_saw')),
-        'mini_chain_saw': safe_int(fo_agg.get('mini_chain_saw')),
-        'knapsack_sprayer': safe_int(fo_agg.get('knapsack_sprayer'))
-    }
-    fo_prod_target_equipment = safe_int(fo_agg.get('prod_target_equipment'))
-    fo_prod_target_facilities = safe_int(fo_agg.get('prod_target_facilities'))
-    fo_prod_target_logistics = safe_int(fo_agg.get('prod_target_logistics'))
-    
-    ss_prod_actual = {
-        'equipment': fo_prod_target_equipment,
-        'facilities': fo_prod_target_facilities,
-        'logistics': fo_prod_target_logistics
-    }
-
-    # ── CONSOLIDATED SHF KPI AGGREGATION QUERY ────────────────────────────────
-    shf_agg = _visible_mg_select("""
-        SELECT
-            COUNT(*) AS shf_total,
-            SUM(CASE WHEN Acknowledgement_TargetArea > 0 THEN 1 ELSE 0 END) AS shf_expansion_total,
-            SUM(CASE WHEN AcknowOfFarmRehab_TargetArea > 0 THEN 1 ELSE 0 END) AS shf_rehab_total,
-            SUM(CASE WHEN AccessToProdInvestment_TypeOfProdInvestments IS NOT NULL AND TRIM(AccessToProdInvestment_TypeOfProdInvestments) != '' AND TRIM(AccessToProdInvestment_TypeOfProdInvestments) != 'None' THEN 1 ELSE 0 END) AS shf_productive_total,
-
-            -- Expansion Stats
-            SUM(CASE WHEN Acknowledgement_TargetArea > 0 THEN COALESCE(Acknowledgement_TargetArea, 0) ELSE 0 END) AS exp_ha_target,
-            SUM(CASE WHEN Acknowledgement_TargetArea > 0 THEN COALESCE(PlantedArea_GAP_TotalAreaPlanted, 0) ELSE 0 END) AS exp_ha_expanded,
-            SUM(CASE WHEN Acknowledgement_TargetArea > 0 THEN COALESCE(Acknowledgement_Qty, 0) ELSE 0 END) AS exp_seedling_target,
-            SUM(CASE WHEN Acknowledgement_TargetArea > 0 THEN COALESCE(PlantedArea_GAP_NoOfSeedlingsPlanted, 0) ELSE 0 END) AS exp_seedlings_planted,
-            SUM(CASE WHEN Acknowledgement_TargetArea > 0 THEN COALESCE(PlantedArea_GAP_NoOfSeedlingsNotPlanted, 0) ELSE 0 END) AS exp_mortality_count,
-            AVG(CASE WHEN Acknowledgement_TargetArea > 0 AND PlantedArea_GAP_MortalityRate IS NOT NULL AND PlantedArea_GAP_MortalityRate != '' THEN CAST(PlantedArea_GAP_MortalityRate AS DECIMAL(10,2)) END) AS exp_avg_mortality_rate,
-            
-            SUM(CASE WHEN Acknowledgement_TargetArea > 0 THEN 
-                CASE 
-                    WHEN CAST(NULLIF(PlantedArea_GAP_MortalityRate, '') AS DECIMAL(18, 4)) > 0 
-                    THEN CAST(NULLIF(PlantedArea_GAP_NoOfSeedlingsPlanted, '') AS DECIMAL(18, 2)) * CAST(NULLIF(PlantedArea_GAP_MortalityRate, '') AS DECIMAL(18, 4)) / 100 
-                    ELSE 0 
-                END 
-            ELSE 0 END) AS exp_mortality_after,
-
-            -- Rehab Stats
-            SUM(CASE WHEN AcknowOfFarmRehab_TargetArea > 0 THEN COALESCE(AcknowOfFarmRehab_TargetArea, 0) ELSE 0 END) AS rehab_ha_target,
-            SUM(CASE WHEN AcknowOfFarmRehab_TargetArea > 0 THEN COALESCE(RehabFarmArea_GAP_TotalAreaRehab, 0) ELSE 0 END) AS rehab_ha_rehabbed,
-            SUM(CASE WHEN AcknowOfFarmRehab_TargetArea > 0 THEN COALESCE(RehabFarmArea_GAP_NoOfTreesRehab, 0) ELSE 0 END) AS rehab_trees_rehab_b,
-
-            -- Tools distributed
-            SUM(COALESCE(AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningShear, 0)) AS prunning_shear,
-            SUM(COALESCE(AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningSaw, 0))   AS prunning_saw,
-            SUM(COALESCE(AcknowOfFarmRehab_QtyRehabToolsReceived_BuddingKnife, 0))  AS budding_knife,
-            SUM(COALESCE(AcknowOfFarmRehab_QtyRehabToolsReceived_GraftingTape, 0))  AS grafting_tape,
-            SUM(COALESCE(AcknowOfFarmRehab_QtyRehabToolsReceived_Others, 0))        AS others,
-
-            -- Productive target parts
-            SUM(CASE WHEN LOWER(AccessToProdInvestment_TypeOfProdInvestments) LIKE '%equipment%' THEN 1 ELSE 0 END) AS prod_target_equipment,
-            SUM(CASE WHEN LOWER(AccessToProdInvestment_TypeOfProdInvestments) LIKE '%facilit%' THEN 1 ELSE 0 END) AS prod_target_facilities,
-            SUM(CASE WHEN LOWER(AccessToProdInvestment_TypeOfProdInvestments) LIKE '%logistics%' THEN 1 ELSE 0 END) AS prod_target_logistics
-        FROM mg_implementation_shf
-        WHERE isDeleted=0
-    """)[0]
-
-    shf_total = safe_int(shf_agg.get('shf_total'))
-    shf_expansion_total = safe_int(shf_agg.get('shf_expansion_total'))
-    shf_rehab_total = safe_int(shf_agg.get('shf_rehab_total'))
-    shf_productive_total = safe_int(shf_agg.get('shf_productive_total'))
-    
-    msme_total = 120
-    service_count = fo_total + shf_total
-    unique_fo = unique_fo
-
-    # ── FIRST TAB AREA — Tab 2: Total # of MSMEs ─────────────────────────────
-    msme_productive = 45
-    prod_fo_count   = fo_productive
-    prod_msme_count = msme_productive
-
-    # ── SECOND TAB AREA — Tab 1: Expansion ───────────────────────────────────
-    exp_stats = {
-        'shf_count': shf_expansion_total,
-        'ha_target': safe_float(shf_agg.get('exp_ha_target')),
-        'ha_expanded': safe_float(shf_agg.get('exp_ha_expanded')),
-        'seedling_target': safe_int(shf_agg.get('exp_seedling_target')),
-        'seedlings_planted': safe_int(shf_agg.get('exp_seedlings_planted')),
-        'mortality_count': safe_int(shf_agg.get('exp_mortality_count')),
-        'avg_mortality_rate': safe_float(shf_agg.get('exp_avg_mortality_rate'))
-    }
-    exp_fo_count = fo_expansion
-
-    # ── SECOND TAB AREA — Tab 2: Rehab ───────────────────────────────────────
-    rehab_stats = {
-        'shf_count': shf_rehab_total,
-        'target_ha': safe_float(shf_agg.get('rehab_ha_target')),
-        'actual_rehab': safe_float(shf_agg.get('rehab_ha_rehabbed'))
-    }
-    rehab_fo_count = fo_rehab
-
-    # ── SECOND TAB AREA — Tab 3: Productive Investment ───────────────────────
-    # Count distinct productive investment types (facilities vs equipment) from FO
-    prod_types_fo = _visible_mg_select("""
-        SELECT AcknowOfProd_TypeOfProdInv, COUNT(*) AS cnt
-        FROM mg_implementation_fo WHERE isDeleted=0
-        AND AcknowOfProd_TypeOfProdInv IS NOT NULL AND TRIM(AcknowOfProd_TypeOfProdInv) != '' AND TRIM(AcknowOfProd_TypeOfProdInv) != 'None'
-        GROUP BY AcknowOfProd_TypeOfProdInv
-    """)
-    prod_types_shf = _visible_mg_select("""
-        SELECT AccessToProdInvestment_TypeOfProdInvestments AS type_val, COUNT(*) AS cnt
-        FROM mg_implementation_shf WHERE isDeleted=0
-        AND AccessToProdInvestment_TypeOfProdInvestments IS NOT NULL AND TRIM(AccessToProdInvestment_TypeOfProdInvestments) != '' AND TRIM(AccessToProdInvestment_TypeOfProdInvestments) != 'None'
-        GROUP BY AccessToProdInvestment_TypeOfProdInvestments
-    """)
-    prod_total_investments = fo_productive + shf_productive_total + msme_productive
-
-    # ── Charts data — FO/SHF by region & commodity per intervention ─────────
-    fo_by_region = _aggregate_region_counts(_visible_mg_select(
-        "SELECT ImpUnits_RCU AS region, COUNT(*) AS count FROM mg_implementation_fo WHERE isDeleted=0 GROUP BY ImpUnits_RCU"
-    ))
-    fo_by_commodity = _visible_mg_select("SELECT DIP_Commodity AS commodity, COUNT(*) AS count FROM mg_implementation_fo WHERE isDeleted=0 GROUP BY DIP_Commodity ORDER BY DIP_Commodity ASC")
-
-    # Expansion — FO & SHF by region
-    fo_exp_by_region = _aggregate_region_counts(_visible_mg_select(
-        "SELECT ImpUnits_RCU AS region, COUNT(*) AS count FROM mg_implementation_fo WHERE isDeleted=0 AND AcknowOfFarmExp_TargetArea > 0 GROUP BY ImpUnits_RCU"
-    ))
-    shf_exp_by_region = _aggregate_region_counts(_visible_mg_select(
-        "SELECT ImpUnits_RCU AS region, COUNT(*) AS count FROM mg_implementation_shf WHERE isDeleted=0 AND Acknowledgement_TargetArea > 0 GROUP BY ImpUnits_RCU"
-    ))
-    fo_exp_by_commodity = _visible_mg_select(
-        "SELECT DIP_Commodity AS commodity, COUNT(*) AS count FROM mg_implementation_fo WHERE isDeleted=0 AND AcknowOfFarmExp_TargetArea > 0 GROUP BY DIP_Commodity ORDER BY DIP_Commodity ASC"
-    )
-
-    # Rehab — FO & SHF by region
-    fo_rehab_by_region = _aggregate_region_counts(_visible_mg_select(
-        "SELECT ImpUnits_RCU AS region, COUNT(*) AS count FROM mg_implementation_fo WHERE isDeleted=0 AND AcknowOfFarmRehab_TargetArea > 0 GROUP BY ImpUnits_RCU"
-    ))
-    shf_rehab_by_region = _aggregate_region_counts(_visible_mg_select(
-        "SELECT ImpUnits_RCU AS region, COUNT(*) AS count FROM mg_implementation_shf WHERE isDeleted=0 AND AcknowOfFarmRehab_TargetArea > 0 GROUP BY ImpUnits_RCU"
-    ))
-    fo_rehab_by_commodity = _visible_mg_select(
-        "SELECT DIP_Commodity AS commodity, COUNT(*) AS count FROM mg_implementation_fo WHERE isDeleted=0 AND AcknowOfFarmRehab_TargetArea > 0 GROUP BY DIP_Commodity ORDER BY DIP_Commodity ASC"
-    )
-
-    # Productive — FO & SHF by region
-    fo_prod_by_region = _aggregate_region_counts(_visible_mg_select(
-        "SELECT ImpUnits_RCU AS region, COUNT(*) AS count FROM mg_implementation_fo WHERE isDeleted=0 AND AcknowOfProd_TypeOfProdInv IS NOT NULL AND TRIM(AcknowOfProd_TypeOfProdInv) != '' AND TRIM(AcknowOfProd_TypeOfProdInv) != 'None' GROUP BY ImpUnits_RCU"
-    ))
-    fo_prod_by_commodity = _visible_mg_select(
-        "SELECT DIP_Commodity AS commodity, COUNT(*) AS count FROM mg_implementation_fo WHERE isDeleted=0 AND AcknowOfProd_TypeOfProdInv IS NOT NULL AND TRIM(AcknowOfProd_TypeOfProdInv) != '' AND TRIM(AcknowOfProd_TypeOfProdInv) != 'None' GROUP BY DIP_Commodity ORDER BY DIP_Commodity ASC"
-    )
-
-    # ── SERVICE STATISTICS — Expansion detailed KPIs ─────────────────────────
-    ss_exp = {
-        'ha_target': ss_exp_fo_ha_target + safe_float(shf_agg.get('exp_ha_target')),
-        'ha_expanded': safe_float(shf_agg.get('exp_ha_expanded')),
-        'seedling_target': ss_exp_fo_seedling_target + safe_float(shf_agg.get('exp_seedling_target')),
-        'seedlings_distributed': ss_exp_fo_seedling_target + safe_float(shf_agg.get('exp_seedling_target')),
-        'seedlings_planted': safe_int(shf_agg.get('exp_seedlings_planted')),
-        'mortality_before': safe_int(shf_agg.get('exp_mortality_count')),
-        'mortality_after': safe_float(shf_agg.get('exp_mortality_after'))
-    }
-    
-    ss_exp_seedlings_planted_b = float(ss_exp['seedlings_planted'] or 0)
-    ss_exp_mortality_a = float(ss_exp['mortality_after'] or 0)
-    ss_exp_mortality_pct = round((ss_exp_mortality_a / ss_exp_seedlings_planted_b * 100), 2) if ss_exp_seedlings_planted_b else 0.0
-
-    # ── SERVICE STATISTICS — Rehab detailed KPIs ──────────────────────────────
-    ss_rehab = {
-        'ha_target': ss_rehab_fo_ha_target + safe_float(shf_agg.get('rehab_ha_target')),
-        'ha_rehabbed': safe_float(shf_agg.get('rehab_ha_rehabbed')),
-        'trees_rehab_b': safe_int(shf_agg.get('rehab_trees_rehab_b')),
-        'mortality_during_a': 0
-    }
-    ss_rehab_trees_b = float(ss_rehab['trees_rehab_b'] or 0)
-    ss_rehab_mortality_a = float(ss_rehab['mortality_during_a'] or 0)
-    ss_rehab_mortality_pct = round((ss_rehab_mortality_a / ss_rehab_trees_b * 100), 2) if ss_rehab_trees_b else 0.0
-
-    shf_rehab_tools_dist = {
-        'prunning_shear': safe_int(shf_agg.get('prunning_shear')),
-        'prunning_saw': safe_int(shf_agg.get('prunning_saw')),
-        'budding_knife': safe_int(shf_agg.get('budding_knife')),
-        'grafting_tape': safe_int(shf_agg.get('grafting_tape')),
-        'others': safe_int(shf_agg.get('others'))
-    }
-    
-    ss_prod_target = {
-        'equipment': fo_prod_target_equipment + safe_int(shf_agg.get('prod_target_equipment')),
-        'facilities': fo_prod_target_facilities + safe_int(shf_agg.get('prod_target_facilities')),
-        'logistics': fo_prod_target_logistics + safe_int(shf_agg.get('prod_target_logistics'))
-    }
-    ss_prod_total = (
-        safe_int(ss_prod_target['equipment'])
-        + safe_int(ss_prod_target['facilities'])
-        + safe_int(ss_prod_target['logistics'])
-    )
-
-
-    kpis = {
-        # ── Top bar ──────────────────────────────────────────────────────────
-        'service_count': int(service_count),
-        'unique_count': int(unique_fo),
-        'overall_total': int(service_count),
-        # Keys expected by the JS top-bar cards
-        'fo_service_count':   int(fo_total),
-        'shf_service_count':  int(shf_total),
-        'msme_service_count': int(msme_total),
-
-        # ── Tab Area 1 — FO tab ──────────────────────────────────────────────
-        'fo_total': int(fo_total),
-        'fo_expansion': int(fo_expansion),
-        'fo_rehab': int(fo_rehab),
-        'fo_productive': int(fo_productive),
-
-        # ── Tab Area 1 — MSME tab ────────────────────────────────────────────
-        'msme_total': int(msme_total),
-        'msme_productive': int(msme_productive),
-
-        # ── Tab Area 1 — SHF by sector tab ──────────────────────────────────
-        'shf_total': int(shf_total),
-        'shf_expansion': int(shf_expansion_total),
-        'shf_rehab': int(shf_rehab_total),
-        'shf_productive': int(shf_productive_total),
-
-        # ── Tab Area 2 — Expansion tab (Services Overview) ───────────────────
-        'exp_fo_count': exp_fo_count,
-        'exp_shf_count': int(exp_stats['shf_count'] or 0),
-        'exp_ha_target': float(exp_stats['ha_target'] or 0),
-        'exp_ha_expanded': float(exp_stats['ha_expanded'] or 0),
-        'exp_seedling_target': int(exp_stats['seedling_target'] or 0),
-        'exp_seedlings_received': int(exp_stats['seedling_target'] or 0),
-        'exp_seedlings_planted': int(exp_stats['seedlings_planted'] or 0),
-        'exp_mortality_count': int(exp_stats['mortality_count'] or 0),
-        'exp_mortality_rate': round(float(exp_stats['avg_mortality_rate'] or 0), 2),
-
-        # ── Tab Area 2 — Rehab tab (Services Overview) ───────────────────────
-        'rehab_fo_count': rehab_fo_count,
-        'rehab_shf_count': int(rehab_stats['shf_count'] or 0),
-        'rehab_target_ha': float(rehab_stats['target_ha'] or 0),
-        'rehab_actual': float(rehab_stats['actual_rehab'] or 0),
-
-        # ── Tab Area 2 — Productive Investment tab (Services Overview) ────────
-        'prod_fo_count': prod_fo_count,
-        'prod_msme_count': prod_msme_count,
-        'prod_total_investments': int(prod_total_investments),
-        'prod_types_fo': [{'type': r['AcknowOfProd_TypeOfProdInv'], 'count': r['cnt']} for r in prod_types_fo],
-        'prod_types_shf': [{'type': r['type_val'], 'count': r['cnt']} for r in prod_types_shf],
-
-        # ── Charts — Services Overview tabs ───────────────────────────────────
-        'fo_by_region': {
-            'labels': [row['region'] for row in fo_by_region],
-            'data': [row['count'] for row in fo_by_region]
-        },
-        'fo_by_commodity': {
-            'labels': [row['commodity'] for row in fo_by_commodity],
-            'data': [row['count'] for row in fo_by_commodity]
-        },
-        'msme_by_region': {
-            'labels': ['Region VIII', 'Region IX', 'Region X', 'Region XI', 'Region XII', 'Region XIII'],
-            'data': [15, 25, 20, 30, 18, 12]
-        },
-        # Expansion
-        'fo_exp_by_region': {
-            'labels': [row['region'] for row in fo_exp_by_region],
-            'data': [row['count'] for row in fo_exp_by_region]
-        },
-        'shf_exp_by_region': {
-            'labels': [row['region'] for row in shf_exp_by_region],
-            'data': [row['count'] for row in shf_exp_by_region]
-        },
-        'fo_exp_by_commodity': {
-            'labels': [row['commodity'] for row in fo_exp_by_commodity],
-            'data': [row['count'] for row in fo_exp_by_commodity]
-        },
-        # Rehab
-        'fo_rehab_by_region': {
-            'labels': [row['region'] for row in fo_rehab_by_region],
-            'data': [row['count'] for row in fo_rehab_by_region]
-        },
-        'shf_rehab_by_region': {
-            'labels': [row['region'] for row in shf_rehab_by_region],
-            'data': [row['count'] for row in shf_rehab_by_region]
-        },
-        'fo_rehab_by_commodity': {
-            'labels': [row['commodity'] for row in fo_rehab_by_commodity],
-            'data': [row['count'] for row in fo_rehab_by_commodity]
-        },
-        # Productive
-        'fo_prod_by_region': {
-            'labels': [row['region'] for row in fo_prod_by_region],
-            'data': [row['count'] for row in fo_prod_by_region]
-        },
-        'fo_prod_by_commodity': {
-            'labels': [row['commodity'] for row in fo_prod_by_commodity],
-            'data': [row['count'] for row in fo_prod_by_commodity]
-        },
-        'msme_prod_by_region': {
-            'labels': ['Region VIII', 'Region IX', 'Region X', 'Region XI', 'Region XII', 'Region XIII'],
-            'data': [15, 25, 20, 30, 18, 12]
-        },
-        'msme_prod_by_commodity': {
-            'labels': ['Cacao', 'Coconut', 'Coffee'],
-            'data': [40, 30, 30]
-        },
-
-        # ── SERVICE STATISTICS — Expansion KPIs ───────────────────────────────
-        'ss_exp_ha_target':           float(ss_exp['ha_target'] or 0),
-        'ss_exp_ha_expanded':         float(ss_exp['ha_expanded'] or 0),
-        'ss_exp_seedling_target':     safe_int(ss_exp['seedling_target']),
-        'ss_exp_seedlings_distributed': safe_int(ss_exp['seedlings_distributed']),
-        'ss_exp_seedlings_planted_b': safe_int(ss_exp['seedlings_planted']),
-        'ss_exp_mortality_before':    safe_int(ss_exp['mortality_before']),
-        'ss_exp_mortality_after_a':   safe_int(ss_exp['mortality_after']),
-        'ss_exp_mortality_pct':       ss_exp_mortality_pct,
-
-        # ── SERVICE STATISTICS — Rehab KPIs ───────────────────────────────────
-        'ss_rehab_ha_target':         float(ss_rehab['ha_target'] or 0),
-        'ss_rehab_ha_rehabbed':       float(ss_rehab['ha_rehabbed'] or 0),
-        'ss_rehab_trees_rehab_b':     safe_int(ss_rehab['trees_rehab_b']),
-        'ss_rehab_mortality_during_a':safe_int(ss_rehab['mortality_during_a']),
-        'ss_rehab_mortality_pct':     ss_rehab_mortality_pct,
-        # Tools distributed bar-chart data
-        'ss_rehab_fo_tools': {
-            'labels': ['High Pruner Saw', 'Mini Chain Saw', 'Knapsack Sprayer'],
-            'data': [
-                safe_int(fo_rehab_tools_dist['high_pruner_saw']),
-                safe_int(fo_rehab_tools_dist['mini_chain_saw']),
-                safe_int(fo_rehab_tools_dist['knapsack_sprayer'])
-            ]
-        },
-        'ss_rehab_shf_tools': {
-            'labels': ['Prunning Shear', 'Prunning Saw', 'Budding Knife', 'Grafting Tape', 'Others'],
-            'data': [
-                safe_int(shf_rehab_tools_dist['prunning_shear']),
-                safe_int(shf_rehab_tools_dist['prunning_saw']),
-                safe_int(shf_rehab_tools_dist['budding_knife']),
-                safe_int(shf_rehab_tools_dist['grafting_tape']),
-                safe_int(shf_rehab_tools_dist['others'])
-            ]
-        },
-
-        # ── SERVICE STATISTICS — Productive Investment KPIs ───────────────────
-        'ss_prod_total': int(ss_prod_total),
-        'ss_prod_equip_target': safe_int(ss_prod_target['equipment']),
-        'ss_prod_equip_actual': safe_int(ss_prod_actual['equipment']),
-        'ss_prod_facil_target': safe_int(ss_prod_target['facilities']),
-        'ss_prod_facil_actual': safe_int(ss_prod_actual['facilities']),
-        'ss_prod_logis_target': safe_int(ss_prod_target['logistics']),
-        'ss_prod_logis_actual': safe_int(ss_prod_actual['logistics']),
-
-        # ── Role/region context for frontend ─────────────────────────────────
-        'is_super_admin': _is_super_admin(),
-    }
-
-    result = {
-        'data': data,
-        'user_detail': session["USER_DATA"][0],
-        'kpis': kpis
-    }
-
-    return jsonify(result)
-
-
+        return jsonify(result)
 
     @app.route('/export_mgimplementation', methods=['GET','POST'])
     def export_mgimplementation():
         mgi_type = request.args.get("type")
         if mgi_type == "fo":
-            data = _visible_mg_select("SELECT * FROM mg_implementation_fo")
+            data = rapid_sql.select("SELECT * FROM mg_implementation_fo")
             df = pd.json_normalize(data).astype(str)
 
             new_column_names = 'MGI_ID,UploadedBy,ImpUnits_RCU,ImpUnits_PCU,DIP_Name,DIP_Commodity,FOInfo_FOName,FOInfo_Address_Region,FOInfo_Address_Province,FOInfo_Address_Municipality,FOInfo_Address_Brgy,FOInfo_Address_Street,FOInfo_Head_Fname,FOInfo_Head_Mname,FOInfo_Head_Lname,FOInfo_Head_Extname,FOInfo_Head_Sex,FOInfo_Head_Sector,AcknowOfFarmExp_TargetArea,AcknowOfFarmExp_ItemName,AcknowOfFarmExp_QtyReceived,AcknowOfFarmExp_DateReceived,AcknowOfFarmExp_FarmerRep_Fname,AcknowOfFarmExp_FarmerRep_Mname,AcknowOfFarmExp_FarmerRep_Lname,AcknowOfFarmExp_FarmerRep_Extname,AcknowOfFarmExp_FarmerRep_Designation,AcknowOfFarmExp_Witness1_ValidatorName,AcknowOfFarmExp_Witness1_ValidationDate,AcknowOfFarmExp_Witness1_Designation,AcknowOfFarmExp_Witness1_DateWitnessed,AcknowOfFarmExp_Witness2_ValidatorName,AcknowOfFarmExp_Witness2_ValidationDate,AcknowOfFarmExp_Witness2_Remarks,AcknowOfFarmExp_Witness1Raw_ValidatorName,AcknowOfFarmExp_Witness1Raw_ValidationDate,AcknowOfFarmExp_Witness1Raw_Designation,AcknowOfFarmExp_Witness1Raw_DateWitnessed,AcknowOfFarmExp_Witness2Raw_ValidatorName,AcknowOfFarmExp_Witness2Raw_ValidationDate,AcknowOfFarmExp_Witness2Raw_Remarks,AcknowOfFarmInten_TargetArea,AcknowOfFarmInten_ItemName,AcknowOfFarmInten_QtyReceived,AcknowOfFarmInten_DateReceived,AcknowOfFarmInten_FarmerRep_Fname,AcknowOfFarmInten_FarmerRep_Mname,AcknowOfFarmInten_FarmerRep_Lname,AcknowOfFarmInten_FarmerRep_Extname,AcknowOfFarmInten_FarmerRep_Designation,AcknowOfFarmInten_Withness1_ValidatorName,AcknowOfFarmInten_Withness1_ValidationDate,AcknowOfFarmInten_Withness1_Designation,AcknowOfFarmInten_Withness1_DateWitnessed,AcknowOfFarmInten_Withness2_ValidatorName,AcknowOfFarmInten_Withness2_ValidationDate,AcknowOfFarmInten_Withness2_Remarks,AcknowOfFarmRehab_TargetArea,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_HighPrunerSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_MiniChainSaw,AcknowOfFarmRehab_QtyOfFarmRehabToolsRec_KnapsackSprayer,AcknowOfFarmRehab_DateReceived,AcknowOfFarmRehab_FarmerRep_Fname,AcknowOfFarmRehab_FarmerRep_Mname,AcknowOfFarmRehab_FarmerRep_Lname,AcknowOfFarmRehab_FarmerRep_Extname,AcknowOfFarmRehab_FarmerRep_Designation,AcknowOfFarmRehab_ValidatorName,AcknowOfFarmRehab_ValidationDate,AcknowOfFarmRehab_Remarks,AcknowOfProd_TypeOfProdInv,AcknowOfProd_QtyItemReceived,AcknowOfProd_DateReceived,AcknowOfProd_FarmerRep_Fname,AcknowOfProd_FarmerRep_Mname,AcknowOfProd_FarmerRep_Lname,AcknowOfProd_FarmerRep_Extname,AcknowOfProd_FarmerRep_Designation,AcknowOfProd_ValidatorName,AcknowOfProd_ValidationDate,AcknowOfProd_Remarks,DateModified,filename' 
@@ -1270,7 +618,7 @@ def mgimplementation_data():
                     worksheet.set_column(col_num, col_num, column_width)
             return send_file(file_path)
         elif mgi_type == "shf":
-            data = _visible_mg_select("SELECT * FROM mg_implementation_shf")
+            data = rapid_sql.select("SELECT * FROM mg_implementation_shf")
             df = pd.json_normalize(data).astype(str)
 
             new_column_names = 'MGI_ID,UploadedBy,ImpUnits_RCU,ImpUnits_PCU,DIP_Name,DIP_Commodity,MembershipToCOOP,FarmerInfo_Fname,FarmerInfo_Mname,FarmerInfo_Lname,FarmerInfo_ExtName,FarmerInfo_DOB,FarmerInfo_Sex,FarmerInfo_isPWD,FarmerInfo_isYouth,FarmerInfo_isIP,FarmerInfo_isSC,FarmerInfo_address_Region,FarmerInfo_address_Province,FarmerInfo_address_municipality,FarmerInfo_address_brgy,FarmerInfo_address_street,FarmerInfo_farmLoc_long,FarmerInfo_farmLoc_lat,Acknowledgement_TargetArea,Acknowledgement_Name,Acknowledgement_Qty,Acknowledgement_DateReceived,Acknowledgement_ValidatorName,Acknowledgement_DateValidation,Acknowledgement_Remarks,PlantedArea_GAP_PACE_isPlantingDistance,PlantedArea_GAP_PACE_isDiggingHoles,PlantedArea_GAP_PACE_isSeparateTopSoil,PlantedArea_GAP_PACE_isRemovingPlasticBag,PlantedArea_GAP_PACE_isApplyingMulching,PlantedArea_GAP_PACE_isShadingEstablishment,PlantedArea_SOI_isOwn,PlantedArea_SOI_isGovAgency,PlantedArea_SOI_isLoan,PlantedArea_SOI_Others,PlantedArea_GAP_SANM_isBasal,PlantedArea_GAP_SANM_isFoliar,PlantedArea_GAP_SANM_isPesticide,PlantedArea_GAP_SANM_isPlantBased,PlantedArea_ValidatorName,PlantedArea_DateValidation,PlantedArea_ValidationRemarks,AcknowOfFarmIntensification_TargetArea,AcknowOfFarmIntensification_Name,AcknowOfFarmIntensification_Qty,AcknowOfFarmIntensification_DateReceived,AcknowOfFarmIntensification_ValidatorName,AcknowOfFarmIntensification_DateValidation,AcknowOfFarmIntensification_ValidationRemarks,PlantedAreaForIntens_PlantingTimeline,PlantedAreaForIntens_TotalAreaPlanted,PlantedAreaForIntens_NoOfSeedlingsPlanted,PlantedAreaForIntens_NoOfSeedlingsNotPlanted,PlantedAreaForIntens_PlantingDistance,PlantedAreaForIntens_HoleDepth,PlantedAreaForIntens_MortalityRate,PlantedAreaForIntens_ValidatedBy,PlantedAreaForIntens_DateValidation,PlantedAreaForIntens_ValidationRemarks,AcknowOfFarmRehab_TargetArea,AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningShear,AcknowOfFarmRehab_QtyRehabToolsReceived_PrunningSaw,AcknowOfFarmRehab_QtyRehabToolsReceived_BuddingKnife,AcknowOfFarmRehab_QtyRehabToolsReceived_GraftingTape,AcknowOfFarmRehab_QtyRehabToolsReceived_Others,AcknowOfFarmRehab_DateReceived,AcknowOfFarmRehab_ValidatorName,AcknowOfFarmRehab_DateValidation,AcknowOfFarmRehab_ValidationRemarks,RehabFarmArea_GAP_isShadingMaintenance,RehabFarmArea_GAP_isTipPruning,RehabFarmArea_GAP_isShapePruning,RehabFarmArea_GAP_isAccessPruning,RehabFarmArea_GAP_isSanitaryPruning,RehabFarmArea_GAP_isMaintenancePruning,RehabFarmArea_GAP_isUsingApprTools,RehabFarmArea_GAP_isFarmRecordKeeping,RehabFarmArea_GAP_isChupon,RehabFarmArea_GAP_isFoliarFertilizer,RehabFarmArea_GAP_isSealing,RehabFarmArea_GAP_isObservance,RehabFarmArea_GAP_isGrafting,RehabFarmArea_GAP_ValidatorName,RehabFarmArea_GAP_DateValidation,RehabFarmArea_GAP_ValidationRemarks,AccessToProdInvestment_TypeOfProdInvestments,AccessToProdInvestment_ValidatorName,AccessToProdInvestment_DateValidation,AccessToProdInvestment_ValidationRemarks,DateModified,filename' 
